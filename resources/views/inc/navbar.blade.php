@@ -1,3 +1,7 @@
+<div class="d-flex">
+  <img class="p-2 align-self-end" src="/storage/idsi.png" style="width: auto; height: 90px; border-right:1px solid #3333">
+  <h3 class="p-2 align-self-end" style="color: #0d1a80;font-family: arial; font-weight: bold; font-size:25px;">MAIN WAREHOUSE STOCK MONITORING SYSTEM</h3>
+</div>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">

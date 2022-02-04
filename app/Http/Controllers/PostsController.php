@@ -20,10 +20,34 @@ class PostsController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->hasanyRole('admin'))
+        {
+            return redirect('/');
+        }
         //$posts = Post::all();
         //$posts = Post::orderBy('created_at', 'desc')->get();
         // $posts = Post::orderBy('created_at', 'desc')->take(1)->get();
         // return Post::where('title', 'POST TWO')->get();
+        
+        // $title = 'HOME';
+        // Role::create(['name'=>'admin']);
+        // Role::create(['name'=>'user']);
+        // Role::create(['name'=>'purchasing']);
+        // Role::create(['name'=>'warehouse']);
+        // Permission::create(['name'=>'save post']);
+        // auth()->user()->assignRole('admin');
+        // auth()->user()->assignRole('user');
+        // auth()->user()->assignRole('purchasing');
+        // auth()->user()->assignRole('warehouse');
+        //return User::role('admin')->get();
+        
+        // $users = new User;
+        // $users->name = 'Lance Nacabuan';
+        // $users->email = 'c4lance@yahoo.com';
+        // $users->password = '123456';
+        // $users->assignRole('admin');
+        // $users->save();
+        // return $users;
         $posts = DB::select('SELECT * FROM posts ORDER BY created_at DESC');
         return view('posts.index')->with('posts', $posts);
     }

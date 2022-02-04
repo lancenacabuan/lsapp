@@ -11,7 +11,7 @@
             <div class="form-inline" style="margin-left:35px;">
                 <label class="form-control form-control-sm" style="width:160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="daterequest"style="width:280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM D, YYYY')}}">
-                <label class="form-control form-control-sm" style="width:160px;">Stock Request #</label>
+                <label class="form-control form-control-sm" style="width:160px;">Stock Request No.</label>
                 <input class="form-control form-control-sm" id="request_num" style="width:280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
@@ -34,7 +34,7 @@
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
                 <span style="width:450px;">&nbsp;</span>
-                <label class="form-control form-control-sm" style="width:160px;">Reference SO/PO #</label>
+                <label class="form-control form-control-sm" style="width:160px;">Reference SO/PO No.</label>
                 <input class="form-control form-control-sm" id="reference" style="width:280px; margin-right: 10px;" type="text">
             </div>
         </div>

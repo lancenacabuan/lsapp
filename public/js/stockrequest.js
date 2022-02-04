@@ -246,6 +246,10 @@ $(document).ready(function(){
                 "targets": [12],
                 "visible": false
             },
+            {
+                "targets": [13],
+                "visible": false
+            },
         ],
         language: {
             processing: "Loading...",
@@ -268,7 +272,8 @@ $(document).ready(function(){
             { data: 'sched'},
             { data: 'user_id'},
             { data: 'client_name'},
-            { data: 'location'}
+            { data: 'location'},
+            { data: 'reason'}
         ]
     });
             
@@ -389,8 +394,7 @@ $(document).on('click','#modalClose', function(){
 });
 
 $(document).on('click','#requestSave', function(){
-
-    if($('#request_num').val() && $('#request_type').val())
+    if($('#request_type').val() && $('#client_name').val() && $('#location').val())
     {
         $.ajax({
             type:'post',
@@ -447,8 +451,34 @@ $(document).on('click','#requestSave', function(){
         });
     }
     else{
-        swal('','Fill up all fields!','error');
-        return false;
+        if(!$('#request_type').val() && !$('#client_name').val() && !$('#location').val()){
+            swal('Fill up all required fields!','*Request Type\n*Client Name\n*Address / Branch','error');
+            return false;
+        }
+        if(!$('#request_type').val() && !$('#client_name').val()){
+            swal('Fill up all required fields!','*Request Type\n*Client Name','error');
+            return false;
+        }
+        if(!$('#client_name').val() && !$('#location').val()){
+            swal('Fill up all required fields!','*Client Name\n*Address / Branch','error');
+            return false;
+        }
+        if(!$('#request_type').val() && !$('#location').val()){
+            swal('Fill up all required fields!','*Request Type\n*Address / Branch','error');
+            return false;
+        }
+        if(!$('#request_type').val()){
+            swal('Fill up all required fields!','*Request Type','error');
+            return false;
+        }
+        if(!$('#client_name').val()){
+            swal('Fill up all required fields!','*Client Name','error');
+            return false;
+        }
+        if(!$('#location').val()){
+            swal('Fill up all required fields!','*Address / Branch','error');
+            return false;
+        }
     }   
 });
 
@@ -536,6 +566,8 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             $('#location_details').val(location);
         var reference = data.reference;
             $('#reference_details').val(reference);
+        var reason = data.reason;
+            $('#reason_details').val(reason);
 
             $('.modal-body').html();
             $('#stockRequestDetails').modal('show');
@@ -551,6 +583,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             }
             if(data.status_id == '7'){
                 $("#btnDisapprove").hide();
+                $("#reason_details").show();
             }
             if(data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
                 $("#btnDelete").hide();
@@ -1016,7 +1049,15 @@ $(document).on('click','#btnApprove', function(){
     }); 
 });
 
-$(document).on('click','#btnDisapprove', function(){
+$(document).on("click", "#btnDisapprove", function() {
+    $('#reasonModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $('#reasonModal').modal('show');
+});
+
+$(document).on('click','#btnReason', function(){
     swal({
         title: "DISAPPROVE STOCK REQUEST?",
         text: "You are about to DISAPPROVE this STOCK REQUEST!",
@@ -1026,7 +1067,6 @@ $(document).on('click','#btnDisapprove', function(){
     })
     .then((willDelete) => {
         if (willDelete) {
-            var req_num = $('#request_num_details').val();      
             $.ajax({
                 type:'get',
                 url:'/disapproveRequest',
@@ -1034,11 +1074,13 @@ $(document).on('click','#btnDisapprove', function(){
                     'X-CSRF-TOKEN': $("#csrf").val(),
                         },
                 data:{
-                    'request_number': req_num
+                    'request_number': $('#request_num_details').val(),
+                    'reason': $('#reason').val()
                 },
                 success:function()
                 {   
                     $('#stockRequestDetails').hide();
+                    $('#reasonModal').modal('hide');
                     sweetAlert("DISAPPROVED", "STOCK REQUEST", "warning");
                     setTimeout(function(){location.href="/stockrequest"} , 2000);  
                 },
@@ -1046,7 +1088,7 @@ $(document).on('click','#btnDisapprove', function(){
                     if(data.status == 401) {
                         window.location.href = '/stockrequest';
                     }
-                        alert(data.responseText);
+                    alert(data.responseText);
                 }
             });
         }

@@ -67,7 +67,7 @@ class StockRequestController extends Controller
     public function request_data()
     {
         if(auth()->user()->hasanyRole('approver')){ //---ROLES---//
-            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.request_type AS req_type, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference')
+            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.request_type AS req_type, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason')
             ->whereIn('requests.status', ['6','7'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -76,7 +76,7 @@ class StockRequestController extends Controller
             ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
-            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.request_type AS req_type, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference')
+            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.request_type AS req_type, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason')
             ->whereNotIn('requests.status', ['7'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -85,7 +85,7 @@ class StockRequestController extends Controller
             ->get();
         }
         else{
-            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.request_type AS req_type, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference')
+            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.request_type AS req_type, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason')
             ->where('requests.requested_by', auth()->user()->id)
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -212,14 +212,14 @@ class StockRequestController extends Controller
 
     public function approveRequest(Request $request){
         Requests::where('request_number', $request->request_number)
-            ->update(['status' => '1']);
+            ->update(['status' => '1', 'reason' => '']);
         
         return true;
     }
 
     public function disapproveRequest(Request $request){
         Requests::where('request_number', $request->request_number)
-            ->update(['status' => '7']);
+            ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
         
         return true;
     }

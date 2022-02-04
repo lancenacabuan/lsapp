@@ -11,7 +11,7 @@
             <div class="form-inline" style="margin-left:35px;">
                 <label class="form-control form-control-sm" style="width:160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="daterequestdetails"style="width:280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" style="width:160px;">Stock Request #</label>
+                <label class="form-control form-control-sm" style="width:160px;">Stock Request No.</label>
                 <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width:280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
@@ -35,9 +35,15 @@
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width:160px;">Status</label>
                 <input class="form-control form-control-sm" id="status_details" style="width:280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" style="width:160px;">Reference SO/PO #</label>
+                <label class="form-control form-control-sm" style="width:160px;">Reference SO/PO No.</label>
                 <input class="form-control form-control-sm" id="reference_details" onclick="copyRefNum()" style="width:280px; margin-right: 10px;" type="text" readonly>
             </div>
+            @role('sales|approver') {{---ROLES---}}
+            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+                <span style="width:160px;"></span>
+                <textarea style="width:280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" class="form-control" rows="5" name="reason_details" id="reason_details" readonly></textarea>
+            </div>
+            @endrole
         </div>
         <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
@@ -102,6 +108,7 @@
             <button type="button" id="btnDelete" class="btn btn-dark mr-auto bp">
                 DELETE</button>
             @endrole
+            <br>
             </div>
         </div>
         <div id="requestItems" style="display: none;">
@@ -166,8 +173,9 @@
                 </thead>    
             </table> 
             @endrole
-            @role('admin|encoder')           
+            <br>
             <hr>
+            @role('admin|encoder')           
             <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnTransit" class="button" value="FOR RECEIVING">
             @endrole
             <button type="button" class="btnPrint btn btn-primary mr-auto bp">
@@ -216,6 +224,7 @@
                 </table> 
                 @endrole
                 <br>
+                <hr>
                 @role('sales')  {{---ROLES---}}
                 <button type="button" id="btnReceive" class="btn btn-primary mr-auto float-right bp">
                     RECEIVE</button>
@@ -248,19 +257,19 @@
     </div>
     </div>
 </div>
-{{-- <div class="modal fade in" id="disapproveReason">
+<div class="modal fade in" id="reasonModal" style="margin-top: 100px;">
     <div class="modal-dialog  modal-sm" >
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">
-            <h6 class="modal-title w-100">DISAPPROVAL REASON</h6>            
+            <h6 class="modal-title w-100">REASON FOR DISAPPROVAL</h6>            
             <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body" style="background-color:white;color:black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <textarea style="margin-bottom: 8px; font-size: 12px; resize: none;" class="form-control" rows="5" name="x_item" id="x_item" readonly></textarea>
-            <button type="button" id="btnDisapprove" class="btn btn-primary mr-auto float-right bp">
-                DISAPPROVE</button>
+            <textarea style="margin-bottom: 8px; font-size: 12px; resize: none;" class="form-control" rows="8" name="reason" id="reason"></textarea>
+            <button type="button" id="btnReason" class="btn btn-primary mr-auto float-right bp">
+                OK</button>
         </div>
     </div>
     </div>
-</div> --}}
+</div>

@@ -20,14 +20,14 @@
             <td colspan="2" height="20" style="font-weight: bold;">Date Requested:</td>
             <td colspan="2">{{$list->req_date}}</td>
             <td>&nbsp;</td>
-            <td colspan="2" style="font-weight: bold;">Stock Request No:</td>
+            <td colspan="2" style="font-weight: bold;">Stock Request No.:</td>
             <td colspan="2">{{$list->req_num}}</td>
         </tr>
         <tr height="20">
             <td colspan="2" height="20" style="font-weight: bold;">Requested By:</td>
             <td colspan="2">{{$list->req_by}}</td>
             <td>&nbsp;</td>
-            <td colspan="2" style="font-weight: bold;">Reference SO/PO #:</td>
+            <td colspan="2" style="font-weight: bold;">Reference SO/PO No.:</td>
             <td colspan="2">{{$list->reference}}</td>
         </tr>
         <tr height="20">

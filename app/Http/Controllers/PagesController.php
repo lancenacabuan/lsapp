@@ -74,14 +74,31 @@ class PagesController extends Controller
 
     public function password_save(Request $request)
     {
-        if (Hash::check($request->current, auth()->user()->password))
+        if(Hash::check($request->current, auth()->user()->password))
         {
             $users = User::find(auth()->user()->id);
-            $users->password = Hash::make($request->pass2);
-            $users->save();
-            return response('true');
+            $users->password = Hash::make($request->new);
+            $sql = $users->save();
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+            }
         }
-        return response('false');
+        else{
+            $result = 'error';
+        }
+
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "CHANGE PASSWORD: User successfully changed own account password!";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 
     public function users(){
@@ -135,20 +152,49 @@ class PagesController extends Controller
         $users->email = strtolower($request->email);
         $users->password = Hash::make('qwerty');
         $users->assignRole($request->role);
-        $users->save();
+        $sql = $users->save();
+        $id = $users->id;
 
-        return response()->json($users);   
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$id!";
+            $userlogs->save();
+        }
+
+        return response($result);   
     }
 
     public function users_update(Request $request)
     { 
         $users = User::find($request->input('id1'));
-        $users->name = $request->name1;
-        $users->email = $request->email1;
+        $users->name = ucwords($request->name1);
+        $users->email = strtolower($request->email1);
         $users->removeRole($request->role2);
         $users->assignRole($request->role1);
-        $users->save();
+        $sql = $users->save();
 
-        return response()->json($users);
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "USER UPDATED: User successfully updated details of UserID#$request->id1!";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 }

@@ -40,8 +40,8 @@
             </div>
             @role('sales|approver') {{---ROLES---}}
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
-                <span style="width:160px;"></span>
-                <textarea style="width:280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" class="form-control" rows="5" name="reason_details" id="reason_details" readonly></textarea>
+                <label name="reason_label" id="reason_label" class="form-control form-control-sm" style="margin-top: -56px; width:160px; display: none;">Disapproval Reason</label>
+                <textarea style="width:280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" class="form-control" rows="4" name="reason_details" id="reason_details" readonly></textarea>
             </div>
             @endrole
         </div>
@@ -266,10 +266,24 @@
         </div>
         <div class="modal-body" style="background-color:white;color:black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <textarea style="margin-bottom: 8px; font-size: 12px; resize: none;" class="form-control" rows="8" name="reason" id="reason"></textarea>
+            <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="50"></textarea><br>
+            <span id='limit' style="font-size: 12px;"></span>
             <button type="button" id="btnReason" class="btn btn-primary mr-auto float-right bp">
                 OK</button>
         </div>
     </div>
     </div>
 </div>
+<script>
+$(document).ready(function() {
+    var max = 50;
+    $('#limit').html(max + ' characters remaining');
+
+    $('#reason').keyup(function() {
+        var text_length = $('#reason').val().length;
+        var text_remaining = max - text_length;
+
+        $('#limit').html(text_remaining + ' characters remaining');
+    });
+});
+</script>

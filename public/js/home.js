@@ -14,7 +14,7 @@ $(document).ready(function () {
         columnDefs: [
             {
                 "targets": [0],
-                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'dddd, MMMM D, YYYY, h:mm:ss a')
+                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMMM D, YYYY, h:mm A')
             },
         ],
         columns: [
@@ -23,6 +23,5 @@ $(document).ready(function () {
             { data: 'role'},
             { data: 'activity'}
         ]
-    }); 
-
+    });
 });

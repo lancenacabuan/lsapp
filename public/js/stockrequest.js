@@ -583,6 +583,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             }
             if(data.status_id == '7'){
                 $("#btnDisapprove").hide();
+                $("#reason_label").show();
                 $("#reason_details").show();
             }
             if(data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
@@ -908,7 +909,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
                 else{
                     if(data.count == 0){
                         $('#stockRequestDetails').hide();
-                        sweetAlert("DELETED", "STOCK REQUEST", "success");
+                        sweetAlert("DELETE SUCCESS", "STOCK REQUEST", "success");
                         setTimeout(function(){window.location.reload()} , 2000);
                     }
                     else{
@@ -999,7 +1000,7 @@ $(document).on('click','#btnDelete', function(){
                 success:function() 
                     {   
                         $('#stockRequestDetails').hide();
-                        sweetAlert("DELETED", "STOCK REQUEST", "success");
+                        sweetAlert("DELETE SUCCESS", "STOCK REQUEST", "success");
                         setTimeout(function(){location.href="/stockrequest"} , 2000);  
                     },
                 error: function (data) {

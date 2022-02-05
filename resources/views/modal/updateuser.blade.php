@@ -50,7 +50,7 @@
                     </select>
                 </div> 
                 <div class="col-md-12 mb-4">
-                    <button type="submit" id="userupdate" class="btn btn-xs btn-dark submit float-right bp" style="width:180px; font-size:12px;">
+                    <button type="submit" id="userupdate" class="btn btn-primary float-right bp">
                     UPDATE</button>  
                 </div>    
         </div>

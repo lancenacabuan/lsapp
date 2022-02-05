@@ -396,59 +396,81 @@ $(document).on('click','#modalClose', function(){
 $(document).on('click','#requestSave', function(){
     if($('#request_type').val() && $('#client_name').val() && $('#location').val())
     {
-        $.ajax({
-            type:'post',
-            url:'/saveReqNum',
-            headers: {
-                'X-CSRF-TOKEN': $("#csrf").val(),
-            },
-            data:{
-                'request_number': $('#request_num').val(),
-                'requested_by': $('#requested_by').val(),
-                'request_type': $('#request_type').val(),
-                'client_name': $('#client_name').val(),
-                'location': $('#location').val(),
-                'reference': $('#reference').val(),
-            },
-            success:function(data) 
-            {
-                if(data == 'true'){
-                    var myTable = $('#stockRequestTable').DataTable();
-                    var form_data  = myTable.rows().data();
-                    $.each( form_data, function( key, value ) {
-                        $.ajax({
-                            type:'post',
-                            url:'/saveRequest',
-                            headers: {
-                                'X-CSRF-TOKEN': $("#csrf").val(),
-                            },
-                            data:{
-                                'request_number':$('#request_num').val(),
-                                'category':value[0],
-                                'item':value[1],
-                                'quantity':value[2]
-                            },
-                            error: function (data) {
-                                if(data.status == 401) {
-                                    window.location.href = '/stockrequest';
-                                }
-                                    alert(data.responseText);
-                            }
-                        });
-                    });
-
-                    $('#newStockRequest').hide();
-                    sweetAlert("SAVED", "STOCK REQUEST", "success");
-                    setTimeout(function(){location.href="/stockrequest"} , 2000);
-                }
-            },
-            error: function (data) {
-                if(data.status == 401) {
-                    window.location.href = '/stockrequest';
-                }
-                    alert(data.responseText);
+        swal({
+            title: "SAVE STOCK REQUEST?",
+            text: "You are about to SAVE this STOCK REQUEST!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type:'post',
+                    url:'/saveReqNum',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                    },
+                    data:{
+                        'request_number': $('#request_num').val(),
+                        'requested_by': $('#requested_by').val(),
+                        'request_type': $('#request_type').val(),
+                        'client_name': $('#client_name').val(),
+                        'location': $('#location').val(),
+                        'reference': $('#reference').val(),
+                    },
+                    success: function (data){
+                        if(data == 'true'){
+                            var myTable = $('#stockRequestTable').DataTable();
+                            var form_data  = myTable.rows().data();
+                            $.each( form_data, function( key, value ) {
+                                $.ajax({
+                                    type:'post',
+                                    url:'/saveRequest',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $("#csrf").val(),
+                                    },
+                                    data:{
+                                        'request_number':$('#request_num').val(),
+                                        'category':value[0],
+                                        'item':value[1],
+                                        'quantity':value[2]
+                                    },
+                                    success: function (data){
+                                        if(data == 'true'){
+                                            $('#newStockRequest').hide();
+                                            sweetAlert("SAVE SUCCESS", "STOCK REQUEST", "success");
+                                            setTimeout(function(){location.href="/stockrequest"} , 2000);
+                                        }
+                                        else{
+                                            $('#newStockRequest').hide();
+                                            sweetAlert("SAVE FAILED", "STOCK REQUEST", "error");
+                                            setTimeout(function(){location.href="/stockrequest"} , 2000);
+                                        }
+                                    },
+                                    error: function (data) {
+                                        if(data.status == 401) {
+                                            window.location.href = '/stockrequest';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
+                            });
+                        }
+                        else{
+                            $('#newStockRequest').hide();
+                            sweetAlert("SAVE FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"} , 2000);
+                        }
+                    },
+                    error: function (data){
+                        if(data.status == 401) {
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
+                    }
+                });
             }
-        });
+        }); 
     }
     else{
         if(!$('#request_type').val() && !$('#client_name').val() && !$('#location').val()){

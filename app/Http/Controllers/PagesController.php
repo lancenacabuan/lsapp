@@ -94,7 +94,7 @@ class PagesController extends Controller
         if($result == 'true'){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "CHANGE PASSWORD: User successfully changed own account password!";
+            $userlogs->activity = "CHANGE PASSWORD: User successfully changed own account password.";
             $userlogs->save();
         }
 
@@ -165,7 +165,7 @@ class PagesController extends Controller
         if($result == 'true'){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$id!";
+            $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$id.";
             $userlogs->save();
         }
 
@@ -191,7 +191,7 @@ class PagesController extends Controller
         if($result == 'true'){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "USER UPDATED: User successfully updated details of UserID#$request->id1!";
+            $userlogs->activity = "USER UPDATED: User successfully updated details of UserID#$request->id1.";
             $userlogs->save();
         }
 

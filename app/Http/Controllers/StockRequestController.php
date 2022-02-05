@@ -14,6 +14,7 @@ use App\Models\Status;
 use App\Models\Prepare;
 use App\Models\Item;
 use App\Models\User;
+use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 
@@ -236,16 +237,30 @@ class StockRequestController extends Controller
                 ->where('item',htmlspecialchars_decode($request->item))
                 ->first();
 
-            $stockRequest = new StockRequest;
-            $stockRequest->request_number = $request->request_number;
-            $stockRequest->category = $items->category_id;
-            $stockRequest->item = $items->id;
-            $stockRequest->quantity = $request->quantity;
-            $stockRequest->served = '0';
-            $stockRequest->pending = $request->quantity;
-            $stockRequest->save();
+        $stockRequest = new StockRequest;
+        $stockRequest->request_number = $request->request_number;
+        $stockRequest->category = $items->category_id;
+        $stockRequest->item = $items->id;
+        $stockRequest->quantity = $request->quantity;
+        $stockRequest->served = '0';
+        $stockRequest->pending = $request->quantity;
+        $sql = $stockRequest->save();
 
-            return response()->json($stockRequest);
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "NEW STOCK REQUEST: User successfully saved Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 
     public function saveReqNum(Request $request){

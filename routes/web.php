@@ -58,6 +58,7 @@ Route::get('/itemsreq', [StockRequestController::class, 'itemsreq']);
 // Route::any('/itemsstock', [StockRequestController::class, 'itemsstock']);
 Route::get('/generatedr', [StockRequestController::class, 'generatedr']);
 Route::any('/prepareItems', [StockRequestController::class, 'prepareItems']);
+Route::any('/logSched', [StockRequestController::class, 'logSched']);
 Route::any('/approveRequest', [StockRequestController::class, 'approveRequest']);
 Route::any('/disapproveRequest', [StockRequestController::class, 'disapproveRequest']);
 Route::any('/receiveRequest', [StockRequestController::class,'receiveRequest']);

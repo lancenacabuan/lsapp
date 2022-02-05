@@ -158,9 +158,9 @@ class StockRequestController extends Controller
             ->where('request_number',$request->request_number)
             ->count();
             if($dr == 0){
-                return response('false');
+                return response('unique');
             }
-            return response('true');
+            return response('duplicate');
     }
 
     public function prepareItems(Request $request){
@@ -211,25 +211,76 @@ class StockRequestController extends Controller
         return response($result);
     }
 
-    public function approveRequest(Request $request){
-        Requests::where('request_number', $request->request_number)
-            ->update(['status' => '1', 'reason' => '']);
+    public function logSched(Request $request){
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "SCHEDULED STOCK REQUEST: User successfully scheduled on $request->schedOn Stock Request No. $request->request_number.";
+        $userlogs->save();
         
         return true;
+    }
+
+    public function approveRequest(Request $request){
+        $sql = Requests::where('request_number', $request->request_number)
+            ->update(['status' => '1', 'reason' => '']);
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "APPROVED STOCK REQUEST: User successfully approved Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        
+        return response($result);
     }
 
     public function disapproveRequest(Request $request){
-        Requests::where('request_number', $request->request_number)
+        $sql = Requests::where('request_number', $request->request_number)
             ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
         
-        return true;
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "DISAPPROVED STOCK REQUEST: User successfully disapproved Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        
+        return response($result);
     }
 
     public function receiveRequest(Request $request){
-        Requests::where('request_number', $request->request_number)
+        $sql = Requests::where('request_number', $request->request_number)
             ->update(['status' => '8']);
         
-        return true;
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED STOCK REQUEST: User successfully received Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 
     public function saveRequest(Request $request){
@@ -303,8 +354,28 @@ class StockRequestController extends Controller
     }
     
     public function deleteRequest(Request $request){
-        StockRequest::where('request_number', $request->request_number)->delete();
-        Requests::where('request_number', $request->request_number)->delete();
+        do{
+            $sqlquery = StockRequest::where('request_number', $request->request_number)->delete();
+        }
+        while(!$sqlquery);
+        
+        $sql = Requests::where('request_number', $request->request_number)->delete();
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "DELETED STOCK REQUEST: User successfully deleted Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 
     public function delReqItem(Request $request){
@@ -369,7 +440,13 @@ class StockRequestController extends Controller
                     ->update(['status' => 'out']);
             }
         }
-        return response($return);
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "FOR RECEIVING STOCK REQUEST: User successfully processed for receiving Stock Request No. $request->request_number.";
+        $userlogs->save();
+
+        return response('true');
     }
 
     public function printRequest(Request $request){

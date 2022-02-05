@@ -91,12 +91,12 @@ class PagesController extends Controller
             $result = 'error';
         }
 
-        if($result == 'true'){
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "CHANGE PASSWORD: User successfully changed own account password.";
-            $userlogs->save();
-        }
+        // if($result == 'true'){
+        //     $userlogs = new UserLogs;
+        //     $userlogs->user_id = auth()->user()->id;
+        //     $userlogs->activity = "CHANGE PASSWORD: User successfully changed own account password.";
+        //     $userlogs->save();
+        // }
 
         return response($result);
     }

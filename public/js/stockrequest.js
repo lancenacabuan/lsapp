@@ -149,7 +149,7 @@ $(document).ready(function(){
                         else{
                             swal({
                                 title: "SCHEDULE STOCK REQUEST?",
-                                text: "You are about to SCHEDULE your STOCK REQUEST!",
+                                text: "You are about to SCHEDULE this STOCK REQUEST!",
                                 icon: "warning",
                                 buttons: true,
                             })

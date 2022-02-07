@@ -11,14 +11,15 @@ class emailNewUser extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $details;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($details)
     {
-        //
+        $this->details = $details;
     }
 
     /**
@@ -29,6 +30,7 @@ class emailNewUser extends Mailable
     public function build()
     {
         return $this->subject('IDSI Main Warehouse Stock Monitoring System')
+            ->from('noreply@ideaserv.com.ph')
             ->view('emails/emailNewUser');
     }
 }

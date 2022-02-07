@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>IDSI</title>
-</head>
 <body>
-    <h1></h1>
-    <p>Hello, {{$_SESSION['name']}}! Your new account password is:</p><br />
-    <h3>{{$_SESSION['password']}}</h3>
-   
-    <p>Thank you!</p>
+    <p>Hello, {{$details['name']}}!<br/>Your new account password is:<br /></p>
+    <strong>{{$details['password']}}</strong><br />
+    <p>Kindly login via link below and change your password...<br />Thank you!<br /></p>
+    <a href="https://lance.idsi.com.ph/login">https://lance.idsi.com.ph/login</a><br/>
+    <img src="{{ asset('/storage/changepassword.jpg') }}">
 </body>
 </html>

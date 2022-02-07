@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\emailNewUser;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -131,26 +133,19 @@ class PagesController extends Controller
     }
 
     public function users_store(Request $request){
-        // $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        // $pass = array();
-        // $charLength = strlen($char) - 1;
-        // for ($i = 0; $i < 8; $i++) {
-        //     $n = rand(0, $charLength);
-        //     $pass[] = $char[$n];
-        // }
-        // $password = implode($pass);
-
-        // $_SESSION['email'] = strtolower($request->email);
-        // $_SESSION['name'] = ucwords($request->name);
-        // $_SESSION['password'] = $password;
-
-        //return $_SESSION['email'].' '.$_SESSION['name'].' '.$_SESSION['password'];
-        //return view('emails/emailNewUser');
+        $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array();
+        $charLength = strlen($char) - 1;
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $charLength);
+            $pass[] = $char[$n];
+        }
+        $password = implode($pass);
 
         $users = new User;
         $users->name = ucwords($request->name);
         $users->email = strtolower($request->email);
-        $users->password = Hash::make('qwerty');
+        $users->password = Hash::make($password);
         $users->assignRole($request->role);
         $sql = $users->save();
         $id = $users->id;
@@ -168,6 +163,9 @@ class PagesController extends Controller
             $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$id.";
             $userlogs->save();
         }
+
+        $details = ['name' => ucwords($request->name), 'password' => $password];
+        Mail::to($request->email)->send(new emailNewUser($details));
 
         return response($result);   
     }

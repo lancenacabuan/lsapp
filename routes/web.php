@@ -72,10 +72,4 @@ Route::any('/inTransit', [StockRequestController::class, 'inTransit']);
 Route::any('/printRequest', [StockRequestController::class, 'printRequest']);
 //
 
-//Email
-Route::get('/send-mail', function () {
-    $details = ['title' => 'IDSI Main Warehouse Stock Monitoring System'];
-    \Mail::to($_SESSION['email'])->send(new \App\Mail\emailNewUser($details));
-});
-//
 

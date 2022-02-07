@@ -4,7 +4,11 @@ function generatedr() {
     if(month <= 9){
         month = '0'+month;
     }
-    var date = today.getFullYear()+'-'+month+today.getDate()+'-';
+    var day = today.getDate();
+    if(day <= 9){
+        day = '0'+day;
+    }
+    var date = today.getFullYear()+'-'+month+day+'-';
     var result = '';
     var characters = '123456789';
 

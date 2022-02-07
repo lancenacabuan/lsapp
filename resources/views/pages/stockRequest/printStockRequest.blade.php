@@ -95,13 +95,24 @@
             <td colspan="2">______________________________</td>
         </tr>
         <tr height="20">
-            <td height="20">&nbsp;</td>
+            <td height="20"></td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td colspan="2" style="font-weight: bold;">Date Received:</td>
             <td colspan="2">______________________________</td>
+        </tr>
+        <tr height="20">
+            <td height="20"><img src='https://chart.googleapis.com/chart?cht=qr&chl={{$list->req_num}}&chs=150x150&choe=UTF-8&chld=L|2' alt=''></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
         </tr>
     </table>
 </div>

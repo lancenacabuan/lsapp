@@ -21,7 +21,7 @@
                     <div class="col-sm-5">
                         <a href="stockrequest" style="text-decoration:none">
                             <div class="container" style="background-color: #0d1a80; color: white; border-radius: 100%; height: 150px; width: 150px; font-size: 30px; text-align: center; display: inline-flex; align-items: center; justify-content: center;">
-                            <center>{{DB::table('requests')->whereNotIn('requests.status',['7'])->get()->count();}}</center>
+                            <center>{{DB::table('requests')->whereNotIn('requests.status',['7','8'])->get()->count();}}</center>
                             </div>
                             <br>
                             <strong style="color: #0d1a80; font-size: 20px;">STOCK REQUEST</strong>

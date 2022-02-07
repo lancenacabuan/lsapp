@@ -102,6 +102,9 @@ $(document).ready(function () {
                     else if(data == 'invalid'){
                         sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
                     }
+                    else if(data == 'duplicate'){
+                        sweetAlert("DUPLICATE EMAIL", "USER ACCOUNT", "error");
+                    }
                     else{
                         $('#addUser').hide();
                         sweetAlert("SAVE FAILED", "USER ACCOUNT", "error");

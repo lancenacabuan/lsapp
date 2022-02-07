@@ -135,7 +135,16 @@ class PagesController extends Controller
     }
 
     public function users_store(Request $request){
-        if(filter_var($request->email, FILTER_VALIDATE_EMAIL)){
+        $email = User::query()->select()
+            ->where('email',$request->email)
+            ->count();
+        if(!filter_var($request->email, FILTER_VALIDATE_EMAIL)){
+            return response('invalid');
+        }
+        else if($email != 0){
+            return response('duplicate');
+        }
+        else {
             $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
             $pass = array();
             $charLength = strlen($char) - 1;
@@ -173,7 +182,6 @@ class PagesController extends Controller
             
             return response($result);   
         }
-        return response('invalid');
     }
 
     public function users_update(Request $request)

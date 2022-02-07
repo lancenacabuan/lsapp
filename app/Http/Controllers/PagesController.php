@@ -135,42 +135,45 @@ class PagesController extends Controller
     }
 
     public function users_store(Request $request){
-        $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        $pass = array();
-        $charLength = strlen($char) - 1;
-        for ($i = 0; $i < 8; $i++) {
-            $n = rand(0, $charLength);
-            $pass[] = $char[$n];
+        if(filter_var($request->email, FILTER_VALIDATE_EMAIL)){
+            $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+            $pass = array();
+            $charLength = strlen($char) - 1;
+            for ($i = 0; $i < 8; $i++) {
+                $n = rand(0, $charLength);
+                $pass[] = $char[$n];
+            }
+            $password = implode($pass);
+
+            $users = new User;
+            $users->name = ucwords($request->name);
+            $users->email = strtolower($request->email);
+            $users->password = Hash::make($password);
+            $users->assignRole($request->role);
+            $sql = $users->save();
+            $id = $users->id;
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+            }
+
+            if($result == 'true'){
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$id.";
+                $userlogs->save();
+            }
+
+            // $details = ['name' => ucwords($request->name), 'password' => $password];
+            // Mail::to($request->email)->send(new emailNewUser($details));
+            $response = Password::broker()->sendResetLink(['email'=>$request->email]);
+            
+            return response($result);   
         }
-        $password = implode($pass);
-
-        $users = new User;
-        $users->name = ucwords($request->name);
-        $users->email = strtolower($request->email);
-        $users->password = Hash::make($password);
-        $users->assignRole($request->role);
-        $sql = $users->save();
-        $id = $users->id;
-
-        if(!$sql){
-            $result = 'false';
-        }
-        else {
-            $result = 'true';
-        }
-
-        if($result == 'true'){
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$id.";
-            $userlogs->save();
-        }
-
-        // $details = ['name' => ucwords($request->name), 'password' => $password];
-        // Mail::to($request->email)->send(new emailNewUser($details));
-        $response =Password::broker()->sendResetLink(['email'=>$request->email]);
-
-        return response($result);   
+        return response('invalid');
     }
 
     public function users_update(Request $request)

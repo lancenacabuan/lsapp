@@ -99,6 +99,9 @@ $(document).ready(function () {
                         sweetAlert("SAVE SUCCESS", "USER ACCOUNT", "success");
                         setTimeout(function(){window.location.href="/users"} , 2000);
                     }
+                    else if(data == 'invalid'){
+                        sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
+                    }
                     else{
                         $('#addUser').hide();
                         sweetAlert("SAVE FAILED", "USER ACCOUNT", "error");

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\emailNewUser;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -164,8 +166,9 @@ class PagesController extends Controller
             $userlogs->save();
         }
 
-        $details = ['name' => ucwords($request->name), 'password' => $password];
-        Mail::to($request->email)->send(new emailNewUser($details));
+        // $details = ['name' => ucwords($request->name), 'password' => $password];
+        // Mail::to($request->email)->send(new emailNewUser($details));
+        $response =Password::broker()->sendResetLink(['email'=>$request->email]);
 
         return response($result);   
     }

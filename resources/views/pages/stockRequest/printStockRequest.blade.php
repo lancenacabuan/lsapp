@@ -8,6 +8,12 @@
 </div>
 <br/>
 <div id="printPage" class="panel-body table-responsive" style="font-size: 12px; width: 100%;">
+    <div>
+    <img src="/storage/idsi.png" style="width: auto; height: 70px; border-right:1px solid #3333">
+    <span style="vertical-align: center; font-weight: bold; color: #0d1a80; font-family: Arial; font-size:22px; text-decoration: none;">
+    MAIN WAREHOUSE STOCK MONITORING SYSTEM</span>
+    </div>
+    <br/>
     <table cellspacing="0" cellpadding="0" style="width: 100%;">
         <col span="9" />
         <tr height="20">
@@ -18,7 +24,7 @@
         </tr>
         <tr height="20">
             <td colspan="2" height="20" style="font-weight: bold;">Date Requested:</td>
-            <td colspan="2">{{$list->req_date}}</td>
+            <td colspan="2" id="req_date">{{$list->req_date}}</td>
             <td>&nbsp;</td>
             <td colspan="2" style="font-weight: bold;">Stock Request No.:</td>
             <td colspan="2">{{$list->req_num}}</td>
@@ -32,10 +38,10 @@
         </tr>
         <tr height="20">
             <td colspan="2" height="20" style="font-weight: bold;">Date Prepared:</td>
-            <td colspan="2">{{$list2->prep_date}}</td>
+            <td colspan="2" id="prep_date">{{$list2->prep_date}}</td>
             <td>&nbsp;</td>
             <td colspan="2" style="font-weight: bold;">Date Scheduled:</td>
-            <td colspan="2">{{$list->sched}}</td>
+            <td colspan="2" id="sched">{{$list->sched}}</td>
         </tr>
         <tr height="20">
             <td colspan="2" height="20" style="font-weight: bold;">Prepared By:</td>
@@ -86,7 +92,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td colspan="2" style="font-weight: bold;">Received By:</td>
-            <td colspan="2">____________________</td>
+            <td colspan="2">______________________________</td>
         </tr>
         <tr height="20">
             <td height="20">&nbsp;</td>
@@ -95,7 +101,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td colspan="2" style="font-weight: bold;">Date Received:</td>
-            <td colspan="2">____________________</td>
+            <td colspan="2">______________________________</td>
         </tr>
     </table>
 </div>
@@ -103,5 +109,17 @@
 document.addEventListener("contextmenu", function(e){
     e.preventDefault();
 }, false);
+
+$(document).ready(function(){
+    var req_date = $('#req_date').html();
+    req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
+    $('#req_date').html(req_date);
+    var prep_date = $('#prep_date').html();
+    prep_date = moment(prep_date).format('dddd, MMMM D, YYYY, h:mm A');
+    $('#prep_date').html(prep_date);
+    var sched = $('#sched').html();
+    sched = moment(sched).format('dddd, MMMM D, YYYY');
+    $('#sched').html(sched);
+});
 </script>
 @endsection

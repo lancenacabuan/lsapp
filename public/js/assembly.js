@@ -25,7 +25,7 @@ $(document).on('change', '#categoryItm', function(){
         data:{'category_id':id}, 
         success: function(data) 
             {
-                var itemcode = $.map(data, function(value) { 
+                var itemcode = $.map(data, function(value, index) { 
                     return [value];
                 });
                 descOp+='<option selected disabled>Select Item</option>'; 

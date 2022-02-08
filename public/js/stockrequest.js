@@ -449,7 +449,7 @@ $(document).on('click','#requestSave', function(){
                         if(data == 'true'){
                             var myTable = $('#stockRequestTable').DataTable();
                             var form_data  = myTable.rows().data();
-                            $.each(form_data, function(value) {
+                            $.each( form_data, function( key, value ) {
                                 $.ajax({
                                     type:'post',
                                     url:'/saveRequest',
@@ -540,7 +540,7 @@ $(document).on('change', '#categoryReq', function(){
         data:{'category_id':id}, 
         success:function(data) 
             {
-                var itemcode = $.map(data, function(value) { 
+                var itemcode = $.map(data, function(value, index) { 
                     return [value];
                 });
                 descOp+='<option selected disabled>Select Item</option>'; 
@@ -773,7 +773,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
                 "visible": false
             },
             {   
-                "render": function(meta) {
+                "render": function (data, type, row, meta) {
                         return '<button class="btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                 },
                 "defaultContent": '',
@@ -824,7 +824,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
                 "visible": false
             },
             {   
-                "render": function(meta) {
+                "render": function ( data, type, row, meta ) {
                         return '<button class="btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                 },
                 "defaultContent": '',
@@ -886,8 +886,8 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
                 "visible": false
             },
             {   
-                "render": function(meta) {
-                        return '<button class="btn-primary bp btnReceive" id="'+ meta.row +'">RECEIVE</button>';
+                "render": function ( data, type, row, meta ) {
+                        return '<button class="btn-primary bp btnReceive">RECEIVE</button>';
                 },
                 "defaultContent": '',
                 "data": null,

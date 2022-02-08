@@ -11,8 +11,6 @@
             <div class="form-inline" style="margin-left:35px;">
                 <label class="form-control form-control-sm" style="width:160px;">Created By</label>
                 <input class="form-control form-control-sm" id="created_by" style="width:280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
-            </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width:160px;">Item Category</label>
                 <select class="form-select" id="category" class="form-control-sm" style="width:280px; margin-right: 10px; font-size: 12px;" required>
                     <option selected disabled>Select Category</option>
@@ -22,8 +20,8 @@
                 </select>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width:160px; margin-top: -56px;">Item Description</label>
-                <textarea style="width:280px; margin-right: 10px; font-size: 12px; resize: none;" class="form-control" rows="4" name="item_description" id="item_description" required></textarea>
+                <label class="form-control form-control-sm" style="width:160px;">Item Description</label>
+                <input class="form-control form-control-sm" style="width:730px; margin-right: 10px;" name="item_description" id="item_description" required></textarea>
             </div>
         </div>
         <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">

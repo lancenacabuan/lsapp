@@ -81,7 +81,7 @@
             </div>
             @endrole
             @role('admin|encoder|viewer')  {{---ROLES---}}
-            <table id="stockDetailsrequest" class="table stockDetails display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+            <table id="stockDetailsrequest" class="table stockDetails table-hover display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
                 <thead>                            
                     <tr>
                         <th>CATEGORY</th>

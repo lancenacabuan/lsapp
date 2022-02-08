@@ -11,7 +11,7 @@
     <div class="container-fluid"  id="stockTableMain">
     <input type="hidden" id="current_user" value="{{auth()->user()->id}}">
     <input type="hidden" id="current_role" value="{{auth()->user()->getRoleNames()}}">
-    <table id="stockreqDetails" class="table stock_request display" style="zoom: 80%">
+    <table id="stockreqDetails" class="table stock_request table-hover display" style="zoom: 80%; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">                            
             <tr>
                 <th>DATE REQUESTED</th>

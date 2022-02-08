@@ -13,9 +13,6 @@
             <thead style="background-color: #0d1a80 !important; color: white !important;">                            
                 <tr>
                     <th>CATEGORY</th>
-                    <th>DEFECTIVE</th>
-                    <th>DEMO</th>
-                    <th>ASSEMBLY</th>
                     <th>A1</th>
                     <th>A2</th>
                     <th>A3</th>
@@ -35,9 +32,6 @@
             <thead style="background-color: #0d1a80 !important; color: white !important;">                            
                 <tr>
                     <th>ITEM DESCRIPTION</th>
-                    <th>DEFECTIVE</th>
-                    <th>DEMO</th>
-                    <th>ASSEMBLY</th>
                     <th>A1</th>
                     <th>A2</th>
                     <th>A3</th>

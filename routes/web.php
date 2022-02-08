@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StocksController;
 use App\Http\Controllers\StockRequestController;
+use App\Http\Controllers\AssemblyController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\Auth\LoginController;
@@ -16,7 +17,6 @@ Route::get('/index_data', [PagesController::class, 'index_data']);
 //
 
 // Route::get('/joborder', [PagesController::class, 'joborder']);
-Route::get('/assembly', [PagesController::class, 'assembly']);
 // Route::get('/pullout', [PagesController::class, 'pullout']);
 Route::get('/filemaintenance', [PagesController::class, 'filemaintenance']);
 
@@ -72,4 +72,8 @@ Route::any('/inTransit', [StockRequestController::class, 'inTransit']);
 Route::any('/printRequest', [StockRequestController::class, 'printRequest']);
 //
 
+//Assembly
+Route::get('/assembly', [AssemblyController::class, 'assembly']);
+Route::get('/itemsItm', [AssemblyController::class, 'itemsItm']);
+//
 

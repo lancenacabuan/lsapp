@@ -17,7 +17,7 @@
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width:160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="requested_by_details" style="width:280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" style="width:160px;">Client Name</label>
+                <label class="form-control form-control-sm" id="client_name_label" style="width:160px;">Client Name</label>
                 <input class="form-control form-control-sm" id="client_name_details" style="width:280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
@@ -29,13 +29,13 @@
                         <option value="{{$req_type->id}}">{{strtoupper($req_type->name)}}</option>
                     @endforeach
                 </select> --}}
-                <label class="form-control form-control-sm" style="width:160px;">Address / Branch</label>
+                <label class="form-control form-control-sm" id="location_label" style="width:160px;">Address / Branch</label>
                 <input class="form-control form-control-sm" id="location_details" style="width:280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width:160px;">Status</label>
                 <input class="form-control form-control-sm" id="status_details" style="width:280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" style="width:160px;">Reference SO/PO No.</label>
+                <label class="form-control form-control-sm" id="reference_label" style="width:160px;">Reference SO/PO No.</label>
                 <input class="form-control form-control-sm" id="reference_details" onclick="copyRefNum()" style="width:280px; margin-right: 10px;" type="text" readonly>
             </div>
             @role('sales|approver') {{---ROLES---}}

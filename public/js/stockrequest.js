@@ -311,7 +311,7 @@ $(document).ready(function(){
         var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
         var ctr='false';
         if(category == "Select Category" || item == "Select Item" || qty == ""){
-            swal('','Please select item!','error');
+            swal('REQUIRED','Please select item!','error');
             return false;
         }
         else{
@@ -620,7 +620,14 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
 
             $('.modal-body').html();
             $('#stockRequestDetails').modal('show');
-
+            if(data.req_type_id == '1'){
+                $("#client_name_label").hide();
+                $("#client_name_details").hide();
+                $("#location_label").hide();
+                $("#location_details").hide();
+                $("#reference_label").hide();
+                $("#reference_details").hide();
+            }
             if(data.user_id != $('#current_user').val()){
                 $("#btnDelete").hide();
                 $("#sd1").show();

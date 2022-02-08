@@ -30,7 +30,8 @@
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
     {{-- <link href="css/jquery.dataTables.min.css" rel="stylesheet"> --}}
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"> --}}
-    
+    <link href="css/chosen.css" rel="Stylesheet" type="text/css" />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> --}}
     <script src="js/inc/jquery.min.js"></script>
@@ -45,6 +46,7 @@
     {{-- <script src="https://cdn.datatables.net/plug-ins/1.11.3/dataRender/datetime.js"></script> --}}
     <script src="js/inc/datetime.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/inc/chosen.jquery.js"></script>
     <style>
         nav {
             background: #0d1a80;
@@ -72,11 +74,28 @@
         .close {
             color: white;
         }
+        .chosen-container-single .chosen-single {
+            height: 30px !important;
+            border-radius: 3px !important;
+            border: 1px solid #CCCCCC !important;
+        }
+        .chosen-container-single .chosen-single span {
+            padding-top: 2px !important;
+        }
+        .chosen-container-single .chosen-single div b {
+            margin-top: 2px !important;
+        }
+        .chosen-container-active .chosen-single,
+        .chosen-container-active.chosen-with-drop .chosen-single {
+            border-color: #ccc !important;
+            border-color: rgba(82, 168, 236, .8) !important;
+            outline: 0 !important;
+            outline: thin dotted \9 !important;
+            -moz-box-shadow: 0 0 8px rgba(82, 168, 236, .6) !important;
+            box-shadow: 0 0 8px rgba(82, 168, 236, .6) !important;
+        }
     </style>
 </head>
-<?php
-  session_start();
-?>
 <body>
     @if (Auth::guest())
     @else
@@ -104,6 +123,9 @@
     @endif
     @if(Request::is('changepassword'))
         <script src="{{ asset('js/changepassword.js') }}"></script>   
+    @endif
+    @if(Request::is('assembly'))
+        <script src="{{ asset('js/assembly.js') }}"></script>   
     @endif
     @if(Request::is('filemaintenance'))
         <script src="{{ asset('js/filemaintenance.js') }}"></script>   

@@ -45,26 +45,26 @@
 
         <form class="mt-2 mb-2">
             <div class="form-inline" style="margin-left:50px;">
-                <select class="form-select" id="categoryReq" class="form-control" style="font-size: .85rem; padding: 0.25rem 0.5rem; height:30px !important;width:300px;" required>
+                <select class="form-select" id="categoryReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height:30px !important; width:300px;" required>
                         <option selected disabled>Select Category</option>
                         @foreach($categories as $category)
                             <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
                         @endforeach
                 </select>
                 
-                <select class="form-select" id="itemReq" class="form-control" style="font-size: .85rem; padding: 0.25rem 0.5rem; height:30px !important; width:450px; margin-left: 10px;">
+                <select class="form-select" id="itemReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height:30px !important; width:450px; margin-left: 10px;">
                     <option selected disabled>Select Item</option>
                 </select>
             
-                <input class="form-control" id="qtyReq" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="number" placeholder="Qty">
-                {{-- <input class="form-control" id="qtyStock" min="0" style="font-size: .85rem; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="number" placeholder="Qty" readonly>&nbsp;   --}}
+                <input class="form-control" id="qtyReq" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="number" placeholder="Qty">
+                {{-- <input class="form-control" id="qtyStock" min="0" style="font-size: 12px; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="number" placeholder="Qty" readonly>&nbsp;   --}}
             
                 <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="font-size:12px; width:100px; height:30px; margin-left: 10px;">
             </div>          
         </form>
 
         <div class="container-fluid"  id="#stockRequestDiv">
-            <table id='stockRequestTable' class="table" style="cursor:pointer; border:0px; font-size:10px; display:none;">
+            <table id='stockRequestTable' class="table" style="cursor:pointer; border:0px; font-size:12px; display:none;">
                 <thead>                            
                     <tr>
                         {{-- <th>ID</th> --}}

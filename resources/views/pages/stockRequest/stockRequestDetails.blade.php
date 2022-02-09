@@ -57,7 +57,7 @@
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>QTY REQUESTED</th>
-                        <th>QTY SERVED</th>
+                        {{-- <th>QTY SERVED</th> --}}
                         <th>QTY PENDING</th>
                         <th></th>
                     </tr>
@@ -71,7 +71,7 @@
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>QTY REQUESTED</th>
-                        <th>QTY SERVED</th>
+                        {{-- <th>QTY SERVED</th> --}}
                         <th>QTY PENDING</th>
                         <th></th>
                         <th></th>
@@ -81,16 +81,26 @@
             </div>
             @endrole
             @role('admin|encoder|viewer')  {{---ROLES---}}
-            <table id="stockDetailsrequest" class="table stockDetails table-hover display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+            <table id="stockDetailsrequest" class="table stockDetails table-hover display nowrap" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
                 <thead>                            
                     <tr>
-                        <th>CATEGORY</th>
-                        <th>ITEM DESCRIPTION</th>
-                        <th>QTY REQUESTED</th>
-                        <th>QTY SERVED</th>
-                        <th>QTY PENDING</th>
-                        <th>QTY IN STOCK</th>
+                        <th style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            CATEGORY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </th>
+                        <th style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            ITEM DESCRIPTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </th>
+                        <th style="text-align: center;">QTY REQUESTED</th>
+                        {{-- <th style="text-align: center;">QTY SERVED</th> --}}
+                        <th style="text-align: center;">QTY PENDING</th>
+                        <th style="text-align: center;">QTY IN STOCK<br>TOTAL MAIN BRANCH</th>
                         <th></th>
+                        <th style="text-align: center;">QTY IN STOCK<br>A1</th>
+                        <th style="text-align: center;">QTY IN STOCK<br>A2</th>
+                        <th style="text-align: center;">QTY IN STOCK<br>A3</th>
+                        <th style="text-align: center;">QTY IN STOCK<br>A4</th>
+                        <th style="text-align: center; color: red;">QTY IN STOCK<br>BALINTAWAK</th>
+                        <th style="text-align: center; color: red;">QTY IN STOCK<br>MALABON</th>
                     </tr>
                 </thead>    
             </table>

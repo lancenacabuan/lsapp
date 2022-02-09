@@ -3,7 +3,7 @@
 <div class="container d-flex"> 
     <button class="btn btn-primary bp" id="backBtn" type="btn" style="font-weight:bold;display:none">BACK</button>
     <button class="btn btn-primary bp ml-auto" type="btn" data-target="#addStock" data-toggle="modal" style="font-weight:bold;" data-backdrop="static" data-keyboard="false">ADD STOCK</button>&nbsp;
-    <button class="btn btn-primary bp" type="btn" data-target="#stocktrans" data-toggle="modal" style="font-weight:bold;" data-backdrop="static" data-keyboard="false">STOCK TRANSFER</button>
+    {{-- <button class="btn btn-primary bp" type="btn" data-target="#stocktrans" data-toggle="modal" style="font-weight:bold;" data-backdrop="static" data-keyboard="false">STOCK TRANSFER</button> --}}
     {{-- <button class="btn btn-primary bp" type="submit" style="font-weight:bold;">IMPORT</button> --}}
 </div>
 <br><br>

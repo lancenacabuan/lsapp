@@ -44,6 +44,15 @@ class PagesController extends Controller
         return DataTables::of($list)->make(true);
     }
 
+    public function stocktransfer(){
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver'))
+        {
+            return redirect('/stockrequest');
+        }
+        $title = 'STOCK TRANSFER';
+        return view('pages/stocktransfer')->with('title', $title);
+    }
+
     // public function joborder(){
     //     $title = 'JOB ORDER';
     //     return view('pages/joborder')->with('title', $title);

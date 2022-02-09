@@ -13,7 +13,10 @@
                 </li>     
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('stocks') ? 'active' : '' }}" href="{{ url('/stocks') }}">STOCKS</a>
-                </li>                   
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
+                </li>                    
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}" href="{{ url('/stockrequest') }}">STOCK REQUEST</a>
                 </li>            

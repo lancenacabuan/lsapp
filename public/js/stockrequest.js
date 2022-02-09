@@ -46,16 +46,28 @@ $(document).ready(function(){
     });
 
     var items = [];
-    $('#stockDetailsrequest tbody').on( 'click', 'tr', function () {
-        var req = $('#stockDetailsrequest').DataTable().cell(this,2).data();
-        var serv = $('#stockDetailsrequest').DataTable().cell(this,3).data();
-        var stock = $('#stockDetailsrequest').DataTable().cell(this,5).data();
-        var item_id = $('#stockDetailsrequest').DataTable().cell(this,6).data();
+    $('.stockDetails tbody').on( 'click', 'tr', function () {
+        var pend = $('#stockDetailsrequest').DataTable().cell(this,3).data();
+        var stock = $('#stockDetailsrequest').DataTable().cell(this,4).data();
+        var item_id = $('#stockDetailsrequest').DataTable().cell(this,5).data();
+        var bal = $('#stockDetailsrequest').DataTable().cell(this,10).data();
+        var mal = $('#stockDetailsrequest').DataTable().cell(this,11).data();
 
         if(stock == 0){
-            swal('Item out of stock!','','error');
+            if(bal != 0 && mal !=0){
+                swal('Item out of stock!','Request Stock Transfer from Balintawak and/or Malabon.','warning');
+            }
+            else if(bal != 0 && mal ==0){
+                swal('Item out of stock!','Request Stock Transfer from Balintawak.','warning');
+            }
+            else if(bal == 0 && mal !=0){
+                swal('Item out of stock!','Request Stock Transfer from Malabon.','warning');
+            }
+            else{
+                swal('Item out of stock!','','error');
+            }
         }
-        else if(req == serv){
+        else if(pend == 0){
             swal('Item is fullfiled!','','success');
         }
         else{
@@ -246,37 +258,9 @@ $(document).ready(function(){
                 "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'dddd, MMMM D, YYYY, h:mm A')
             },
             {
-                "targets": [6],
+                "targets": [6,7,8,9,10,11,12,13],
                 "visible": false
-            },
-            {
-                "targets": [7],
-                "visible": false
-            },
-            {
-                "targets": [8],
-                "visible": false
-            },
-            {
-                "targets": [9],
-                "visible": false
-            },
-            {
-                "targets": [10],
-                "visible": false
-            },
-            {
-                "targets": [11],
-                "visible": false
-            },
-            {
-                "targets": [12],
-                "visible": false
-            },
-            {
-                "targets": [13],
-                "visible": false
-            },
+            }
         ],
         language: {
             processing: "Loading...",
@@ -682,16 +666,41 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
     $('table.stockDetails').DataTable({ 
         columnDefs: [
             {
-                "targets": [6],
+                "targets": [5],
                 "visible": false
+            },
+            {
+                render: function(data,type,full,meta){
+                    return "<div class='text-wrap' style='width: 200px; text-align: center;'>"+data+"</div>";
+                },
+                targets:[0]
+            },
+            {
+                render: function(data,type,full,meta){
+                    return "<div class='text-wrap' style='width: 300px; text-align: center;'>"+data+"</div>";
+                },
+                targets:[1]
+            },
+            {
+                render: function(data,type,full,meta){
+                    return "<div style='text-align: center;'>"+data+"</div>";
+                },
+                targets:[2,3,4,5,6,7,8,9]
+            },
+            {
+                render: function(data,type,full,meta){
+                    return "<div style='text-align: center; color: red;'>"+data+"</div>";
+                },
+                targets:[10,11]
             }
         ],
+        scrollX: true,
         paging: false,
         ordering: false,
         info: false,
         language: {
-            "emptyTable": " ",
-            "processing":"Searching",
+            "emptyTable": "No data found!",
+            "processing": "Loading",
         },
         processing: true,
         serverSide: false,
@@ -713,10 +722,17 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             { data: 'category'},
             { data: 'item'},
             { data: 'quantity'},
-            { data: 'served'},
+            // { data: 'served'},
             { data: 'pending'},
             { data: 'qtystock'},
-            { data: 'item_id'}
+            { data: 'item_id'},
+            { data: 'qtya1'},
+            { data: 'qtya2'},
+            { data: 'qtya3'},
+            { data: 'qtya4'},
+            { data: 'qtybal'},
+            { data: 'qtymal'},
+
         ],
         orderCellsTop: true,
         fixedHeader: true,            
@@ -726,7 +742,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
     $('table.stockDetails1').DataTable({ 
         columnDefs: [
             {
-                "targets": [5],
+                "targets": [4],
                 "visible": false
             }
         ],
@@ -734,8 +750,8 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
         ordering: false,
         info: false,
         language: {
-            "emptyTable": " ",
-            "processing":"Searching",
+            "emptyTable": "No data found!",
+            "processing": "Loading",
         },
         processing: true,
         serverSide: false,
@@ -757,7 +773,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             { data: 'category'},
             { data: 'item'},
             { data: 'quantity'},
-            { data: 'served'},
+            // { data: 'served'},
             { data: 'pending'},
             { data: 'item_id'}
         ],
@@ -769,7 +785,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
     $('table.stockDetails2').DataTable({ 
         columnDefs: [
             {
-                "targets": [6],
+                "targets": [5],
                 "visible": false
             },
             {   
@@ -785,8 +801,8 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
         ordering: false,
         info: false,
         language: {
-            "emptyTable": " ",
-            "processing":"Searching",
+            "emptyTable": "No data found!",
+            "processing": "Loading",
         },
         processing: true,
         serverSide: false,
@@ -808,7 +824,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             { data: 'category'},
             { data: 'item'},
             { data: 'quantity'},
-            { data: 'served'},
+            // { data: 'served'},
             { data: 'pending'},
             { data: 'item_id'},
             { data: 'item_id'}
@@ -887,7 +903,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             },
             {   
                 "render": function ( data, type, row, meta ) {
-                        return '<button class="btn-primary bp btnReceive">RECEIVE</button>';
+                        return '<button class="btn-primary bp btnReceive" id="'+ meta.row +'">RECEIVE</button>';
                 },
                 "defaultContent": '',
                 "data": null,

@@ -18,6 +18,7 @@ Route::get('/index_data', [PagesController::class, 'index_data']);
 
 // Route::get('/joborder', [PagesController::class, 'joborder']);
 // Route::get('/pullout', [PagesController::class, 'pullout']);
+Route::get('/stocktransfer', [PagesController::class, 'stocktransfer']);
 Route::get('/filemaintenance', [PagesController::class, 'filemaintenance']);
 
 //Change Password

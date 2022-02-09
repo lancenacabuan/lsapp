@@ -345,7 +345,55 @@ class StockRequestController extends Controller
         ->addColumn('qtystock', function (StockRequest $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
+                ->whereNotIn('location_id', ['5','6'])
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtya1', function (StockRequest $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '1')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtya2', function (StockRequest $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '2')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtya3', function (StockRequest $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '3')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtya4', function (StockRequest $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '4')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtybal', function (StockRequest $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '5')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtymal', function (StockRequest $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '6')
                 ->where('status', 'in')
                 ->count();
             return $stocks;

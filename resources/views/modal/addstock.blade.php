@@ -53,7 +53,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text">Serial</label>
                     </div>
-                    <input type="text" id="serial" style="width:700px" placeholder="Enter serial" name="serial" required>
+                    <input type="text" id="serial" style="width:700px" placeholder="Enter serial" name="serial">
                 </div> 
             </form>
                 <div class="col-md-12 mb-4">

@@ -36,7 +36,7 @@ class StocksController extends Controller
             return redirect('/stockrequest');
         }
         $categories= Category::select('id','category')->get()->sortBy('category');
-        $locations= Location::select('id','location')->get()->sortBy('location');
+        $locations= Location::select('id','location')->whereNotIn('id', ['7','8'])->get()->sortBy('location');
         $items= Item::select('id','item')->get()->sortBy('item');
         $list = DB::table('stocks')->get();
         return view('/pages/stocks', compact('list','categories','locations','items'));

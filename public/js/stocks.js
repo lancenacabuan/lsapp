@@ -67,7 +67,7 @@ $(document).on('click', '#butsave', function() {
     var item = $('#item').val();
     var location = $('#location').val();
     var serial = $('#serial').val();
-    if(category!="" && item!="" && location!="" && serial!=""){
+    if(category && item && location){
         $.ajax({
             url: "stocks/save",
             type: "POST",

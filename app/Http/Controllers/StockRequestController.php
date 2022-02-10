@@ -76,6 +76,7 @@ class StockRequestController extends Controller
                 ->first();
             $stocks = str_replace('{"serial":"','',$stocks);
             $stocks = str_replace('"}','',$stocks);
+            $stocks = str_replace('{"serial":null}','',$stocks);
             return $stocks;
         })
         ->toJson();

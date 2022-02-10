@@ -47,5 +47,6 @@
     </div>
 </div>
 @include('modal.addstock')
+@include('modal.stock')
 @include('modal.stocktransfer')
 @endsection

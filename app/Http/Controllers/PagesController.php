@@ -26,7 +26,7 @@ class PagesController extends Controller
     }
 
     public function index(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('warehouse approver'))
         {
             return redirect('/stockrequest');
         }
@@ -45,7 +45,7 @@ class PagesController extends Controller
     }
 
     public function stocktransfer(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('warehouse approver'))
         {
             return redirect('/stockrequest');
         }
@@ -59,7 +59,7 @@ class PagesController extends Controller
     // }
 
     public function assembly(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('warehouse approver'))
         {
             return redirect('/stockrequest');
         }
@@ -73,7 +73,7 @@ class PagesController extends Controller
     // }
 
     public function filemaintenance(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('warehouse approver'))
         {
             return redirect('/stockrequest');
         }
@@ -115,7 +115,7 @@ class PagesController extends Controller
     }
 
     public function users(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('warehouse approver'))
         {
             return redirect('/stockrequest');
         }

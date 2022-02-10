@@ -51,10 +51,9 @@
                 </div> 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text">Quantity</label>
+                        <label class="input-group-text">Serial</label>
                     </div>
-                    <input type="number" id="quantity" placeholder="Enter Quantity" name="quantity" required>
-                &nbsp; &nbsp; &nbsp;
+                    <input type="text" id="serial" style="width:700px" placeholder="Enter serial" name="serial" required>
                 </div> 
             </form>
                 <div class="col-md-12 mb-4">

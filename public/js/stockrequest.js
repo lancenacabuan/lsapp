@@ -116,47 +116,109 @@ $(document).ready(function(){
                         }
                         for(var k=0; k < l; k++)
                         {
-                            var id = document.createElement("INPUT");
+                            var id = document.createElement("input");
                             id.setAttribute("id", "item_id"+j);
                             id.setAttribute("type", "hidden");
                             id.setAttribute("value", value.item_id);
-                            var x = document.createElement("INPUT");
+                            var x = document.createElement("input");
                             x.setAttribute("id", "category"+j);
                             x.setAttribute("type", "text");
                             x.setAttribute("class", "form-control");
                             x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
                             x.setAttribute("value", value.category);
-                            var y = document.createElement("INPUT");
+                            var y = document.createElement("input");
                             y.setAttribute("id", "item"+j);
                             y.setAttribute("type", "text");
                             y.setAttribute("class", "form-control");
-                            y.setAttribute("style", "width: 550px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            y.setAttribute("style", "width: 550px; font-size: 12px; margin-left: 10px; margin-bottom: 10px; margin-right: 200px;");
                             y.setAttribute("value", value.item);
-                            var z = document.createElement("INPUT");
-                            z.setAttribute("id", "serial"+j);
-                            z.setAttribute("type", "text");
-                            z.setAttribute("class", "form-control serials");
-                            z.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                            z.setAttribute("placeholder", "Input Serial Number");
+                            var z = document.createElement("select");
+                            z.setAttribute("id", "location"+j);
+                            z.setAttribute("class", "form-control");
+                            z.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px; margin-left: 100px;");
+                            var serial = document.createElement("select");
+                            serial.setAttribute("id", "serial"+j);
+                            serial.setAttribute("class", "form-control serials");
+                            serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px; margin-right: 500px;");
                             document.getElementById("reqContents").appendChild(id);
                             document.getElementById("reqContents").appendChild(x);
                             document.getElementById("reqContents").appendChild(y);
                             document.getElementById("reqContents").appendChild(z);
+                            document.getElementById("reqContents").appendChild(serial);
                             $("#category"+j).prop('readonly', true);
                             $("#item"+j).prop('readonly', true);
+                            $("#location"+j).prop('disabled', true);
+                            $("#serial"+j).append("<option value='' selected>Select Serial</option>");
+                            $.ajax({ 
+                                type:'get', 
+                                url:'/setserials', 
+                                data:{
+                                    'item_id': value.item_id
+                                }, 
+                                success:function(d) {   
+                                    var s = $.map(d, function(v) { 
+                                        return [v];
+                                    });
+                
+                                    s.forEach(v => {             
+                                        var option = document.createElement("option");
+                                        option.value = v.location_id;
+                                        option.text = v.serial;
+                                        serial.appendChild(option);
+                                    });
+                                },
+                                error: function (data) {
+                                    if(data.status == 401) {
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
                             j++;
                         }
                     });
                     for(var m=0; m < j; m++){
-                        $(document).on('input', "#serial"+m, function(){
+                        let id = '#location'+m;
+                        $('#serial'+m).on('change', function(){
                             if($('.serials').filter(function() { return !!this.value; }).length > 0){
                                 $('#btnSubmit').prop('disabled', false);
                             }
                             else{
                                 $('#btnSubmit').prop('disabled', true);
                             }
+                            var serial_id = $(this).find('option:selected').text();
+                            $.ajax({
+                                type:'get', 
+                                url:'/setlocation', 
+                                data:{
+                                    'serial_id': serial_id
+                                }, 
+                                success:function(data) {
+                                    $(id).find('option').remove().end()
+                                    $(id).append($('<option>', {
+                                        value: data.location_id,
+                                        text: data.location
+                                    }));
+                                },
+                                error: function (data) {
+                                    if(data.status == 401) {
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
                         });
                     }
+                    // for(var m=0; m < j; m++){
+                    //     $(document).on('input', "#serial"+m, function(){
+                    //         if($('.serials').filter(function() { return !!this.value; }).length > 0){
+                    //             $('#btnSubmit').prop('disabled', false);
+                    //         }
+                    //         else{
+                    //             $('#btnSubmit').prop('disabled', true);
+                    //         }
+                    //     });
+                    // }
                     $("#btnSubmit").unbind('click').click(function(){
                         if(!$("#schedOn").val()){
                             swal('Scheduled On is required!','','error');
@@ -184,7 +246,8 @@ $(document).ready(function(){
                                                     'item_id': $('#item_id'+n).val(),
                                                     'category': $('#category'+n).val(),
                                                     'item': $('#item'+n).val(),
-                                                    'serial': $('#serial'+n).val(),
+                                                    'location': $('#location'+n).val(),
+                                                    'serial': $('#serial'+n).find('option:selected').text(),
                                                     'schedOn': $('#schedOn').val()
                                                 },
                                                 success: function (data){
@@ -666,7 +729,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
     $('table.stockDetails').DataTable({ 
         columnDefs: [
             {
-                "targets": [5],
+                "targets": [5,6,7,8,9],
                 "visible": false
             },
             {
@@ -836,7 +899,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
     $('table.schedItems').DataTable({
         columnDefs: [
             {
-                "targets": [5],
+                "targets": [4,5],
                 "visible": false
             },
             {   

@@ -66,8 +66,8 @@ $(document).on('click', '#butsave', function() {
     var category = $('#category').val();
     var item = $('#item').val();
     var location = $('#location').val();
-    var qty = $('#quantity').val();
-    if(category!="" && item!="" && location!="" && qty!=""){
+    var serial = $('#serial').val();
+    if(category!="" && item!="" && location!="" && serial!=""){
         $.ajax({
             url: "stocks/save",
             type: "POST",
@@ -79,12 +79,12 @@ $(document).on('click', '#butsave', function() {
                 category: category,
                 item: item,
                 location: location,
-                qty: qty
+                serial: serial
             },
             success: function(dataResult){                      
                 $('#addStock').hide();
-                sweetAlert("SAVED", "ITEM SUCCESFULLY", "success");
-                setTimeout(function(){window.location.href="/stocks"} , 2000);                                   
+                sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success");
+                setTimeout(function(){location.reload()} , 2000);                                   
             },
             error: function (data) {
                 if(data.status == 401) {

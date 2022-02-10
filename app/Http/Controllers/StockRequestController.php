@@ -47,7 +47,7 @@ class StockRequestController extends Controller
     }
 
     public function stockreq(Request $request){       
-        $list = StockRequest::select('categories.category AS category', 'items.item AS item', 'items.id AS item_id', 'stock_request.quantity AS qty', 'stock_request.served AS served', 'stock_request.pending AS pending', 
+        $list = StockRequest::select('categories.category AS category', 'items.item AS item', 'items.id AS item_id', 'stock_request.quantity AS qty', 'stock_request.served AS served', 'stock_request.pending AS pending', 'locations.location AS location', 'stocks.serial AS serial', 
             DB::raw
             (
                 "SUM(CASE WHEN stocks.status = 'in' THEN 1 ELSE 0 END) as qtystock"
@@ -55,19 +55,43 @@ class StockRequestController extends Controller
             ->where('stock_request.item', $request->item_id)
             ->where('stock_request.request_number', $request->reqnum)
             ->where('stocks.status','in')
-            ->where('stocks.location_id','1')
+            ->whereIn('stocks.location_id',['1','2','3','4'])
             ->join('categories','categories.id','=','stock_request.category')
             ->join('items','items.id','=','stock_request.item')
             ->join('stocks','stocks.item_id','stock_request.item')
-            ->groupBy('category','item','item_id','qty','served','pending')
+            ->join('locations','locations.id','stocks.location_id')
+            ->groupBy('category','item','item_id','qty','served','pending','location','serial')
             ->get();
 
         return response()->json($list);
     }
+
+    public function setserials(Request $request){
+        $list = Stock::select('serial','location_id')
+            ->where('stocks.item_id', $request->item_id)
+            ->where('stocks.status','in')
+            ->whereIn('stocks.location_id',['1','2','3','4'])
+            ->get();
+        
+        return response()->json($list);
+    }
     
+    public function setlocation(Request $request){       
+        $list = Stock::query()->select('stocks.location_id AS location_id','locations.location AS location')
+            ->join('locations','locations.id','stocks.location_id')
+            ->where('stocks.serial',$request->serial_id)
+            ->get();
+
+        $list = str_replace('[','',$list);
+        $list = str_replace(']','',$list);
+        $list = json_decode($list);
+
+        return ($list);
+    }
+
     public function request_data()
     {
-        if(auth()->user()->hasanyRole('approver')){ //---ROLES---//
+        if(auth()->user()->hasanyRole('warehouse approver')){ //---ROLES---//
             $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.request_type AS req_type, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason')
             ->whereIn('requests.status', ['6','7'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
@@ -168,6 +192,7 @@ class StockRequestController extends Controller
         $prepare->request_number = $request->request_number;
         $prepare->user_id = auth()->user()->id;
         $prepare->items_id = $request->item_id;
+        $prepare->location = $request->location;
         $prepare->serial = $request->serial;
         $prepare->qty = '1';
         $prepare->intransit = 'no';

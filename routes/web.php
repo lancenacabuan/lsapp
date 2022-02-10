@@ -47,11 +47,14 @@ Route::get('/locations',[StocksController::class,'locations']);
 Route::get('/stocksAvailable',[StocksController::class,'stocksAvailable']);
 Route::get('/stockItem',[StocksController::class,'stockItem']);
 Route::get('item',[StocksController::class,'item']);
+Route::get('stock_data',[StocksController::class,'stock_data']);
 //
 
 //Stock Requests
 Route::get('/stockrequest', [StockRequestController::class, 'stockrequest']);
 Route::get('/stockreq', [StockRequestController::class, 'stockreq']);
+Route::get('/setserials', [StockRequestController::class, 'setserials']);
+Route::get('/setlocation', [StockRequestController::class, 'setlocation']);
 Route::get('/request_data', [StockRequestController::class, 'request_data']);
 Route::get('/schedItems', [StockRequestController::class, 'schedItems']);
 Route::get('/itemsreq', [StockRequestController::class, 'itemsreq']);

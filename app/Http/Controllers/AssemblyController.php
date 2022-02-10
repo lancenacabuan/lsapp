@@ -20,7 +20,7 @@ class AssemblyController extends Controller
     }
 
     public function assembly(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('warehouse approver'))
         {
             return redirect('/stockrequest');
         }

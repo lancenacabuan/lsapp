@@ -31,7 +31,7 @@ class StocksController extends Controller
 
     public function stocks()
     {
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('warehouse approver'))
         {
             return redirect('/stockrequest');
         }
@@ -145,30 +145,6 @@ class StocksController extends Controller
         )
         ->where('items.category_id', $request->CategoryId)->get();
          return DataTables::of($list)
-            // ->addColumn('Defective', function (Item $Item){
-            //     $Defective = Stock::query()
-            //         ->where('item_id', $Item->id)
-            //         ->where('location_id', 'Defective')
-            //         ->where('status', 'in')
-            //         ->count();
-            //     return $Defective;
-            // })
-            // ->addColumn('Demo', function (Item $Item){
-            //     $A1 = Stock::query()
-            //         ->where('item_id', $Item->id)
-            //         ->where('location_id', 'Demo')
-            //         ->where('status', 'in')
-            //         ->count();
-            //     return $A1;
-            // })
-            // ->addColumn('Assembly', function (Item $Item){
-            //     $Assembly = Stock::query()
-            //         ->where('item_id', $Item->id)
-            //         ->where('location_id', 7)
-            //         ->where('status', 'in')
-            //         ->count();
-            //     return $Assembly;
-            // })
             ->addColumn('A1', function (Item $Item){
                 $A1 = Stock::query()
                     ->where('item_id', $Item->id)
@@ -230,6 +206,15 @@ class StocksController extends Controller
          ->make(true);
     }
 
+    public function stock_data(Request $request)
+    {
+        $stock = Stock::select('location_id','serial','item_id','stocks.id', 'item')
+            ->where('item_id', $request->id)
+            ->join('items', 'items.id', 'item_id')
+            ->get();
+        return DataTables::of($stock)->make(true);
+    }
+
     public function addStockitem(Request $request){
         $list = Item::query()->select('id','item')
             ->where('category_id',$request->category_id)
@@ -280,40 +265,19 @@ class StocksController extends Controller
                 ->get();
         return $list;
     }
-        
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
+     
     public function store(Request $request)
     {
-        for ($i=0; $i < $request->qty ; $i++) { 
-            $stocks = new Stock;
-            $stocks->item_id = $request->item;
-            $stocks->category_id = $request->category;
-            $stocks->user_id =auth()->user()->id;
-            $stocks->location_id =$request->location;
-            $stocks->status = 'in';
-            $save= $stocks->save();                   
-        }   
+        $stocks = new Stock;
+        $stocks->item_id = $request->item;
+        $stocks->category_id = $request->category;
+        $stocks->user_id =auth()->user()->id;
+        $stocks->location_id =$request->location;
+        $stocks->status = 'in';
+        $stocks->serial = $request->serial;
+        $save= $stocks->save();                   
         return response()->json($stocks);
                
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
     }
 
     public function update(Request $request)
@@ -331,8 +295,5 @@ class StocksController extends Controller
 
     }
 
-    public function destroy($id)
-    {
-        //
-    }
+
 }

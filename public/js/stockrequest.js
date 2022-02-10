@@ -978,7 +978,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
     $('table.schedItems').DataTable({
         columnDefs: [
             {
-                "targets": [4,5],
+                "targets": [6,7],
                 "visible": false
             },
             {   
@@ -987,7 +987,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
                 },
                 "defaultContent": '',
                 "data": null,
-                "targets": [4]
+                "targets": [6]
             }
         ],
         paging: false,
@@ -1008,7 +1008,9 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             { data: 'category'},
             { data: 'item'},
             { data: 'qty'},
+            { data: 'uom'},
             { data: 'serial'},
+            { data: 'location'},
             { data: 'id'},
             { data: 'id'}
         ]
@@ -1033,7 +1035,9 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             { data: 'category'},
             { data: 'item'},
             { data: 'qty'},
-            { data: 'serial'}
+            { data: 'uom'},
+            { data: 'serial'},
+            { data: 'location'}
         ]
     });
 
@@ -1070,7 +1074,9 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             { data: 'category'},
             { data: 'item'},
             { data: 'qty'},
+            { data: 'uom'},
             { data: 'serial'},
+            { data: 'location'},
             { data: 'serial'},
             { data: 'item_id'}
         ]
@@ -1095,7 +1101,9 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             { data: 'category'},
             { data: 'item'},
             { data: 'qty'},
-            { data: 'serial'}
+            { data: 'uom'},
+            { data: 'serial'},
+            { data: 'location'}
         ]
     });
 

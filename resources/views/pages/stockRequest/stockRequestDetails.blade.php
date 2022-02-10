@@ -164,7 +164,9 @@
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
+                        <th>UOM</th>
                         <th>SERIAL</th>
+                        <th>LOCATION</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -178,7 +180,9 @@
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
+                        <th>UOM</th>
                         <th>SERIAL</th>
+                        <th>LOCATION</th>
                     </tr>
                 </thead>    
             </table> 
@@ -214,7 +218,9 @@
                             <th>CATEGORY</th>
                             <th>ITEM DESCRIPTION</th>
                             <th>QTY</th>
+                            <th>UOM</th>
                             <th>SERIAL</th>
+                            <th>LOCATION</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -228,7 +234,9 @@
                             <th>CATEGORY</th>
                             <th>ITEM DESCRIPTION</th>
                             <th>QTY</th>
+                            <th>UOM</th>
                             <th>SERIAL</th>
+                            <th>LOCATION</th>
                         </tr>
                     </thead>    
                 </table> 

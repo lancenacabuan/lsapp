@@ -151,10 +151,11 @@ class StockRequestController extends Controller
 
     public function schedItems(Request $request)
     {
-        $list = Prepare::query()->selectRaw('categories.category AS category, items.item AS item, prepared_items.serial AS serial, prepared_items.qty AS qty, prepared_items.items_id AS item_id, prepared_items.id AS id')
+        $list = Prepare::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, prepared_items.serial AS serial, prepared_items.qty AS qty, prepared_items.items_id AS item_id, prepared_items.id AS id, locations.location AS location')
             ->where('request_number', $request->request_number)
             ->join('items','items.id','prepared_items.items_id')
             ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','prepared_items.location')
             ->get()
             ->sortBy('item')
             ->sortBy('category');
@@ -556,10 +557,11 @@ class StockRequestController extends Controller
             ->orderBy('prepared_items.id','DESC')
             ->first();
         
-        $list3 = Prepare::query()->selectRaw('categories.category AS category, items.item AS item, prepared_items.serial AS serial, prepared_items.qty AS qty, prepared_items.items_id AS item_id, prepared_items.id AS id')
+        $list3 = Prepare::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, prepared_items.serial AS serial, prepared_items.qty AS qty, prepared_items.items_id AS item_id, prepared_items.id AS id, locations.location AS location')
             ->where('request_number', $request->request_number)
             ->join('items','items.id','prepared_items.items_id')
             ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','prepared_items.location')
             ->get()
             ->sortBy('item')
             ->sortBy('category');

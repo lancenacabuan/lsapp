@@ -47,11 +47,7 @@ class StockRequestController extends Controller
     }
 
     public function stockreq(Request $request){       
-        $list = StockRequest::select('categories.category AS category', 'items.item AS item', 'items.id AS item_id', 'stock_request.quantity AS qty', 'stock_request.served AS served', 'stock_request.pending AS pending', 'locations.location AS location', 'stocks.serial AS serial', 
-            DB::raw
-            (
-                "SUM(CASE WHEN stocks.status = 'in' THEN 1 ELSE 0 END) as qtystock"
-            ))
+        $list = StockRequest::select('categories.category AS category', 'items.item AS item', 'items.id AS item_id', 'stock_request.quantity AS qty', 'stock_request.served AS served', 'stock_request.pending AS pending', 'items.UOM AS uom')
             ->where('stock_request.item', $request->item_id)
             ->where('stock_request.request_number', $request->reqnum)
             ->where('stocks.status','in')
@@ -60,10 +56,29 @@ class StockRequestController extends Controller
             ->join('items','items.id','=','stock_request.item')
             ->join('stocks','stocks.item_id','stock_request.item')
             ->join('locations','locations.id','stocks.location_id')
-            ->groupBy('category','item','item_id','qty','served','pending','location','serial')
+            ->groupBy('category','item','item_id','qty','served','pending', 'uom')
             ->get();
 
-        return response()->json($list);
+        return DataTables::of($list)
+        ->addColumn('qtystock', function (StockRequest $list){
+            $stocks = Stock::query()
+                ->where('item_id', $list->item_id)
+                ->whereIn('location_id', ['1','2','3','4'])
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('serial', function (StockRequest $list){
+            $stocks = Stock::query()->select('serial')
+                ->where('item_id', $list->item_id)
+                ->whereIn('location_id', ['1','2','3','4'])
+                ->where('status', 'in')
+                ->first();
+            $stocks = str_replace('{"serial":"','',$stocks);
+            $stocks = str_replace('"}','',$stocks);
+            return $stocks;
+        })
+        ->toJson();
     }
 
     public function setserials(Request $request){
@@ -194,7 +209,7 @@ class StockRequestController extends Controller
         $prepare->items_id = $request->item_id;
         $prepare->location = $request->location;
         $prepare->serial = $request->serial;
-        $prepare->qty = '1';
+        $prepare->qty = $request->qty;
         $prepare->intransit = 'no';
         $prepare->schedule = $request->schedOn;
         $saved = $prepare->save();

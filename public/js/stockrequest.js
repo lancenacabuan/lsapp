@@ -269,7 +269,6 @@ $(document).ready(function(){
                     });
                     for(var m=0; m < j; m++){
                         let id = '#location'+m;
-                        let qid = '#qty'+m;
                         $('#serial'+m).on('change', function(){
                             if($('.serials').filter(function() { return !!this.value; }).length == 0) {
                                 $('#btnSubmit').prop('disabled', true);
@@ -278,12 +277,6 @@ $(document).ready(function(){
                                 $('#btnSubmit').prop('disabled', false);
                             }
                             var serial_id = $(this).find('option:selected').text();
-                            if($(this).children("option:selected").val()==''){
-                                $(qid).val('1');
-                            }
-                            else{
-                                $(qid).val('1');
-                            }
                             $.ajax({
                                 type:'get', 
                                 url:'/setlocation', 

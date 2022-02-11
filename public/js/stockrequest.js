@@ -397,7 +397,7 @@ $(document).ready(function(){
         columnDefs: [
             {
                 "targets": [0],
-                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'dddd, MMMM D, YYYY, h:mm A')
+                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. D, YYYY, h:mm A')
             },
             {
                 "targets": [6,7,8,9,10,11,12,13],

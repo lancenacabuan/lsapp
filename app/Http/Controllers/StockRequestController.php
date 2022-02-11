@@ -25,8 +25,7 @@ class StockRequestController extends Controller
         $this->middleware('auth');
     }
 
-    public function stockrequest()
-    {      
+    public function stockrequest(){      
         $categories= Category::select('id','category')->get()->sortBy('category');
         if(auth()->user()->hasanyRole('sales')){
             $req_types= RequestType::select('id','name')
@@ -222,19 +221,29 @@ class StockRequestController extends Controller
             $result = 'true';
         }
         if($result == 'true'){
-            Stock::where('item_id',$request->item_id)
-                ->where('location_id','1')
-                ->where('status','in')
-                ->orderBy('id')->limit(1)
-                ->update(['status' => 'prep']);
+            if($request->serial != ''){
+                Stock::where('item_id',$request->item_id)
+                    ->whereIn('location_id',['1','2','3','4'])
+                    ->where('status','in')
+                    ->where('serial',$request->serial)
+                    ->orderBy('id')->limit(1)
+                    ->update(['status' => 'out']);
+            }
+            else{
+                Stock::where('item_id',$request->item_id)
+                    ->whereIn('location_id',['1','2','3','4'])
+                    ->where('status','in')
+                    ->orderBy('id')->limit($request->qty)
+                    ->update(['status' => 'out']);
+            }
             
             StockRequest::where('request_number', $request->request_number)
                 ->where('item',$request->item_id)
-                ->increment('served', 1);
+                ->increment('served', $request->qty);
 
             StockRequest::where('request_number', $request->request_number)
                 ->where('item',$request->item_id)
-                ->decrement('pending', 1);
+                ->decrement('pending', $request->qty);
 
             Requests::where('request_number', $request->request_number)
                 ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn]);
@@ -515,21 +524,21 @@ class StockRequestController extends Controller
         Prepare::where('request_number', $request->request_number)
             ->update(['intransit' => 'yes']);
 
-        $return = StockRequest::select('item','served')
-            ->where('request_number', $request->request_number)
-            ->where('served','>',0)
-            ->get();
+        // $return = StockRequest::select('item','served')
+        //     ->where('request_number', $request->request_number)
+        //     ->where('served','>',0)
+        //     ->get();
 
-        foreach($return as $val){
-            $item = $val->item;
-            $served = $val->served;
-            for($i = 0; $i < $served; $i++){
-                Stock::where('item_id',$item)
-                    ->where('status','prep')
-                    ->orderBy('id')->limit(1)
-                    ->update(['status' => 'out']);
-            }
-        }
+        // foreach($return as $val){
+        //     $item = $val->item;
+        //     $served = $val->served;
+        //     for($i = 0; $i < $served; $i++){
+        //         Stock::where('item_id',$item)
+        //             ->where('status','prep')
+        //             ->orderBy('id')->limit(1)
+        //             ->update(['status' => 'out']);
+        //     }
+        // }
 
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;

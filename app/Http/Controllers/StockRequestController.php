@@ -334,6 +334,25 @@ class StockRequestController extends Controller
         return response($result);
     }
 
+    public function saveReqNum(Request $request){
+        $requests = new Requests;
+        $requests->request_number = $request->request_number;
+        $requests->requested_by = auth()->user()->id;
+        $requests->request_type = $request->request_type;
+        $requests->status = '6';
+        $requests->client_name = ucwords($request->client_name);
+        $requests->location = ucwords($request->location);
+        $requests->reference = strtoupper($request->reference);
+        $saved = $requests->save();
+        if(!$saved){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        return response($result);
+    }
+    
     public function saveRequest(Request $request){
         $items = Item::query()->select('id','category_id')
                 ->where('item',htmlspecialchars_decode($request->item))
@@ -355,33 +374,16 @@ class StockRequestController extends Controller
             $result = 'true';
         }
 
-        if($result == 'true'){
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "NEW STOCK REQUEST: User successfully saved Stock Request No. $request->request_number.";
-            $userlogs->save();
-        }
-
         return response($result);
     }
 
-    public function saveReqNum(Request $request){
-        $requests = new Requests;
-        $requests->request_number = $request->request_number;
-        $requests->requested_by = auth()->user()->id;
-        $requests->request_type = $request->request_type;
-        $requests->status = '6';
-        $requests->client_name = ucwords($request->client_name);
-        $requests->location = ucwords($request->location);
-        $requests->reference = strtoupper($request->reference);
-        $saved = $requests->save();
-        if(!$saved){
-            $result = 'false';
-        }
-        else {
-            $result = 'true';
-        }
-        return response($result);
+    public function logSave(Request $request){
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "NEW STOCK REQUEST: User successfully saved Stock Request No. $request->request_number.";
+        $userlogs->save();
+        
+        return true;
     }
 
     public function requestDetails(Request $request){

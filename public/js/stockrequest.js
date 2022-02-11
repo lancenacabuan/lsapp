@@ -583,10 +583,10 @@ $(document).on('click','#requestSave', function(){
                                         'X-CSRF-TOKEN': $("#csrf").val(),
                                     },
                                     data:{
-                                        'request_number':$('#request_num').val(),
-                                        'category':value[0],
-                                        'item':value[1],
-                                        'quantity':value[2]
+                                        'request_number': $('#request_num').val(),
+                                        'category': value[0],
+                                        'item': value[1],
+                                        'quantity': value[2]
                                     },
                                     success: function (data){
                                         if(data == 'true'){
@@ -607,6 +607,26 @@ $(document).on('click','#requestSave', function(){
                                         alert(data.responseText);
                                     }
                                 });
+                            });
+                            $.ajax({
+                                type:'post',
+                                url:'/logSave',
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'request_number': $('#request_num').val(),
+                                },
+                                success: function (){
+                                    $('#newStockRequest').hide();
+                                    setTimeout(function(){location.href="/stockrequest"} , 2000);
+                                },
+                                error: function (data) {
+                                    if(data.status == 401) {
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
                             });
                         }
                         else{

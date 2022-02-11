@@ -53,7 +53,10 @@ $(document).ready(function(){
         var bal = $('#stockDetailsrequest').DataTable().cell(this,10).data();
         var mal = $('#stockDetailsrequest').DataTable().cell(this,11).data();
 
-        if(stock == 0){
+        if(pend == 0){
+            swal('Item is fullfiled!','','success');
+        }
+        else if(stock == 0){
             if(bal != 0 && mal !=0){
                 swal('Item out of stock!','Request Stock Transfer from Balintawak and/or Malabon.','warning');
             }
@@ -66,9 +69,6 @@ $(document).ready(function(){
             else{
                 swal('Item out of stock!','','error');
             }
-        }
-        else if(pend == 0){
-            swal('Item is fullfiled!','','success');
         }
         else{
             $(this).toggleClass('selected');

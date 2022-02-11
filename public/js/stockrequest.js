@@ -114,7 +114,7 @@ $(document).ready(function(){
                         else{
                             var l = value.pending;
                         }
-                        if(value.serial == '' || value.serial == ' ' || value.serial == null || value.serial == 'N/A' || value.serial == 'n/a' || value.serial == 'NONE' || value.serial == 'None' || value.serial == 'none'){
+                        if(value.serial == '' || value.serial == ' ' || value.serial == null || value.serial == 'N\\\/A' || value.serial == 'n\\\/a' || value.serial == 'NONE' || value.serial == 'None' || value.serial == 'none'){
                             $('#btnSubmit').prop('disabled', false);
                             var id = document.createElement("input");
                             id.setAttribute("id", "item_id"+j);

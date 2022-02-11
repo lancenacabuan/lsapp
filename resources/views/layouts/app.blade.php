@@ -77,6 +77,8 @@
             color: white;
         }
         .chosen-container-single .chosen-single {
+            margin-top: -12px !important;
+            margin-left: 10px !important;
             height: 30px !important;
             border-radius: 3px !important;
             border: 1px solid #CCCCCC !important;

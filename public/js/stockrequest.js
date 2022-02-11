@@ -236,6 +236,7 @@ $(document).ready(function(){
                                                 text: v.serial
                                             }));
                                         });
+                                        $(vid).chosen();
                                     },
                                     error: function (data) {
                                         if(data.status == 401) {
@@ -262,6 +263,7 @@ $(document).ready(function(){
                             });
                         });
                         $('select option:contains("Select Serial")').show();
+                        $('.serials').trigger("chosen:updated");
                         // $('select option:contains("Select Serial")').attr('disabled', false);
                         // $('select option:contains("Select Serial")').attr('style', 'background-color: white');
                     });

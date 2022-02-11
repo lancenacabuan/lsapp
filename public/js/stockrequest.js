@@ -189,7 +189,7 @@ $(document).ready(function(){
                                 qty.setAttribute("type", "number");
                                 qty.setAttribute("class", "form-control");
                                 qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                                qty.setAttribute("value", '0');
+                                qty.setAttribute("value", '1');
                                 var uom = document.createElement("input");
                                 uom.setAttribute("id", "uom"+j);
                                 uom.setAttribute("type", "text");
@@ -279,7 +279,7 @@ $(document).ready(function(){
                             }
                             var serial_id = $(this).find('option:selected').text();
                             if($(this).children("option:selected").val()==''){
-                                $(qid).val('0');
+                                $(qid).val('1');
                             }
                             else{
                                 $(qid).val('1');
@@ -807,7 +807,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
                 $("#reason_label").show();
                 $("#reason_details").show();
             }
-            if(data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
+            if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
                 $("#btnDelete").hide();
             }
             if(data.status_id == '6'){
@@ -830,7 +830,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
                 $("#sd2").show();
                 $("#sd1").hide();
             }
-            if(data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
+            if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
                 $("#sd1").show();
                 $("#sd2").hide();
             }

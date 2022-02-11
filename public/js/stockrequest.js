@@ -232,7 +232,7 @@ $(document).ready(function(){
                                             // option.text = v.serial;
                                             // serial.appendChild(option);
                                             $(vid).append($('<option>', {
-                                                value: v.location_id,
+                                                value: v.serial,
                                                 text: v.serial
                                             }));
                                         });
@@ -247,6 +247,23 @@ $(document).ready(function(){
                                 j++;
                             }
                         }
+                    });
+                    $('.serials').change(function(){
+                        // $('.serials option').attr('disabled', false);
+                        // $('.serials option').attr('style', 'background-color: white');
+                        $('.serials option').show();
+                        $('.serials').each(function(){
+                            var $this = $(this);
+                            $('.serials').not($this).find('option').each(function(){
+                                if($(this).attr('value') == $this.val()){
+                                    // $(this).attr({ disabled: 'true', style: 'background-color: darkgrey' });
+                                    $(this).hide();
+                                }
+                            });
+                        });
+                        $('select option:contains("Select Serial")').show();
+                        // $('select option:contains("Select Serial")').attr('disabled', false);
+                        // $('select option:contains("Select Serial")').attr('style', 'background-color: white');
                     });
                     for(var m=0; m < j; m++){
                         let id = '#location'+m;

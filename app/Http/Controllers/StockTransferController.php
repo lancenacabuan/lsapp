@@ -37,4 +37,52 @@ class StockTransferController extends Controller
             }
             return response('duplicate');
     }
+
+    public function setcategory(Request $request){
+        $list = Category::query()->select('categories.id AS category_id','categories.category AS category')
+            ->join('stocks','category_id','categories.id')
+            ->where('stocks.location_id',$request->location_id)
+            ->where('stocks.status','in')
+            ->groupBy('category_id')
+            ->orderBy('category','ASC')
+            ->get();
+        
+        return response()->json($list);
+    }
+
+    public function setitems(Request $request){
+        $list = Item::query()->select('items.id AS item_id','items.item AS item')
+            ->join('stocks','item_id','items.id')
+            ->where('items.category_id',$request->category_id)
+            ->where('stocks.location_id',$request->location_id)
+            ->where('stocks.status','in')
+            ->groupBy('item_id')
+            ->orderBy('item','ASC')
+            ->get();
+        
+        return response()->json($list);
+    }
+
+    public function qtystock(Request $request){       
+        $list = Stock::query()->select('items.id')
+            ->join('items','items.id','item_id')
+            ->where('stocks.status','in')
+            ->where('stocks.location_id',$request->location_id)
+            ->where('stocks.item_id',$request->item_id)
+            ->count();
+
+        return response($list);
+    }
+
+    public function qtystockless(Request $request){       
+        $list = Stock::query()->select('items.id')
+            ->join('items','items.id','item_id')
+            ->where('stocks.status','in')
+            ->where('stocks.location_id',$request->location_id)
+            ->where('stocks.item_id',$request->item_id)
+            ->count();
+        $list=$list-$request->qty;
+        
+        return response($list);
+    }
 }

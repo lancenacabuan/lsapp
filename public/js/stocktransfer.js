@@ -141,9 +141,20 @@ $('#item').on('change', function(){
             'location_id': $('#locfrom').val()
         }, 
         success:function(data) {
-            $('#qtystock').val(data);
+            var table = document.getElementById('tblNewStockTransfer');
+            var qtyminus = 0;
+            if(table.rows.length > 1){
+                for (var r = 1, n = table.rows.length; r < n; r++) {
+                    for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
+                        if(table.rows[r].cells[1].innerHTML == $("#item option:selected").text()){
+                            qtyminus = table.rows[r].cells[2].innerHTML;
+                        }
+                    }
+                }
+            }
+            $('#qtystock').val(data - qtyminus);
             $('#qty').attr({
-                "max" : data,
+                "max" : data - qtyminus,
                 "min" : 0
             });
         },
@@ -210,6 +221,11 @@ $(".add-row").click(function(){
 });
 
 $("#tblNewStockTransfer").on('click','.delete-row',function(){
+    category = $("#category").val('');
+    item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
+    qty = $("#qty").val('');
+    qtystock = $("#qtystock").val('');
+    $('#qty').prop('disabled', true);
     $(this).closest("tr").remove();
     if ($('#tblNewStockTransfer tbody').children().length==0) {
         $('#tblNewStockTransfer').hide();

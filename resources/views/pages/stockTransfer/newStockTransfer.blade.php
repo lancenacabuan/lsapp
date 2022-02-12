@@ -48,7 +48,7 @@
                 <select class="form-select" id="item" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height:30px !important; width:450px; margin-left: 10px;">
                         <option selected disabled>Select Item</option>
                 </select>
-                <input class="form-control" id="qty" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="number" placeholder="Qty">
+                <input class="form-control" id="qty" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="number" placeholder="Qty" disabled>
                 <input class="form-control" id="qtystock" style="font-size: .85rem; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="text" placeholder="Stock" readonly>
                 <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="font-size:12px; width:100px; height:30px; margin-left: 10px;">
             </div>          

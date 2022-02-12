@@ -95,6 +95,8 @@ $('#locfrom').on('change', function(){
 });
 
 $('#category').on('change', function(){
+    $('#qty').prop('disabled', true);
+    $("#qty").val('');
     var category_id = $(this).val();
     $.ajax({
         type:'get', 
@@ -127,6 +129,8 @@ $('#category').on('change', function(){
 });
 
 $('#item').on('change', function(){
+    $('#qty').prop('disabled', false);
+    $("#qty").val('1');
     var item_id = $(this).val();
     $.ajax({
         type:'get', 
@@ -152,10 +156,10 @@ $('#item').on('change', function(){
 });
 
 $(".add-row").click(function(){
-    $('#locfrom').prop('disabled', true);
     var category = $("#category option:selected").text();
     var item = $("#item option:selected").text();
-    let qty = $("#qty").val();
+    var qty = $("#qty").val();
+    var qtystock = $("#qtystock").val();
     var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
     var ctr='false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0"){
@@ -163,35 +167,44 @@ $(".add-row").click(function(){
         return false;
     }
     else{
-        var table = document.getElementById('tblNewStockTransfer');
-        var count = table.rows.length;
-        for (i = 1; i < count; i++) {
-
-            var objCells = table.rows.item(i).cells;
-
-            if(item==objCells.item(1).innerHTML){
-                objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
-                ctr='true';
-                category = $("#category").val('Select Category');
-                item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
-                qty = $("#qty").val('');
-                qtystock = $("#qtystock").val('');
-                return false;
-            }
-            else {
-                ctr='false';
-            }
+        if(qty > qtystock){
+            swal('EXCEED LIMIT','Item quantity exceeds available stock!','error');
+            return false;
         }
-        if(ctr=='false')
-        { $("#tblNewStockTransfer tbody").append(markup); }
-        category = $("#category").val('Select Category');
-        item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
-        qty = $("#qty").val('');
-        qty = $("#qtystock").val('');
-        $('#tblNewStockTransfer').show();
-        $('#divNewStockTransfer').toggle();
-        $('#btnClose').show();
-        $('#btnSave').show();
+        else{
+            $('#locfrom').prop('disabled', true);
+            var table = document.getElementById('tblNewStockTransfer');
+            var count = table.rows.length;
+            for (i = 1; i < count; i++) {
+
+                var objCells = table.rows.item(i).cells;
+
+                if(item==objCells.item(1).innerHTML){
+                    objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
+                    ctr='true';
+                    category = $("#category").val('');
+                    item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
+                    qty = $("#qty").val('');
+                    qtystock = $("#qtystock").val('');
+                    $('#qty').prop('disabled', true);
+                    return false;
+                }
+                else {
+                    ctr='false';
+                }
+            }
+            if(ctr=='false')
+            { $("#tblNewStockTransfer tbody").append(markup); }
+            category = $("#category").val('');
+            item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
+            qty = $("#qty").val('');
+            qtystock = $("#qtystock").val('');
+            $('#qty').prop('disabled', true);
+            $('#tblNewStockTransfer').show();
+            $('#divNewStockTransfer').toggle();
+            $('#btnClose').show();
+            $('#btnSave').show();
+        }
     } 
 });
 

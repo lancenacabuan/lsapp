@@ -83,8 +83,6 @@ Route::get('/generateReqNum', [StockTransferController::class, 'generateReqNum']
 Route::get('/setcategory', [StockTransferController::class, 'setcategory']);
 Route::get('/setitems', [StockTransferController::class, 'setitems']);
 Route::get('/qtystock', [StockTransferController::class, 'qtystock']);
-Route::get('/qtystockless', [StockTransferController::class, 'qtystockless']);
-
 //
 
 //Assembly

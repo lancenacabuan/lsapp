@@ -73,16 +73,4 @@ class StockTransferController extends Controller
 
         return response($list);
     }
-
-    public function qtystockless(Request $request){       
-        $list = Stock::query()->select('items.id')
-            ->join('items','items.id','item_id')
-            ->where('stocks.status','in')
-            ->where('stocks.location_id',$request->location_id)
-            ->where('stocks.item_id',$request->item_id)
-            ->count();
-        $list=$list-$request->qty;
-        
-        return response($list);
-    }
 }

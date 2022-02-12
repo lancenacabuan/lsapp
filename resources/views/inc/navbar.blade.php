@@ -6,7 +6,7 @@
 
         <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales'))
+            @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales') && !auth()->user()->hasanyRole('approver - warehouse'))
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">HOME</a>
@@ -15,11 +15,11 @@
                     <a class="nav-link n {{ Request::is('stocks') ? 'active' : '' }}" href="{{ url('/stocks') }}">STOCKS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
-                </li>                    
-                <li class="nav-item">
                     <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}" href="{{ url('/stockrequest') }}">STOCK REQUEST</a>
-                </li>            
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
+                </li>             
                 {{-- <li class="nav-item">
                     <a class="nav-link n {{ Request::is('joborder') ? 'active' : '' }}" href="{{ url('/joborder') }}">JOB ORDER</a>
                 </li> --}}
@@ -43,6 +43,13 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}"  href="{{ url('/stockrequest') }}">HOME</a>
+                </li>     
+            </ul>
+            @endif
+            @if(auth()->user()->hasanyRole('approver - warehouse'))
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}"  href="{{ url('/stocktransfer') }}">HOME</a>
                 </li>     
             </ul>
             @endif

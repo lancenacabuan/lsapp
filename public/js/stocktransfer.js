@@ -164,7 +164,7 @@ $(".add-row").click(function(){
     var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
     var ctr='false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0"){
-        swal('REQUIRED','Please select item!','error');
+        swal('REQUIRED','Please select an item!','error');
         return false;
     }
     else{

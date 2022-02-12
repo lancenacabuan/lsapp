@@ -6,7 +6,7 @@
 
         <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('warehouse approver'))
+            @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales'))
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">HOME</a>
@@ -39,7 +39,7 @@
                 @endrole
             </ul>
             @endif
-            @if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('warehouse approver'))
+            @if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}"  href="{{ url('/stockrequest') }}">HOME</a>

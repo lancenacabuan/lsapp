@@ -31,7 +31,7 @@ class StocksController extends Controller
 
     public function stocks()
     {
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('warehouse approver'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
         {
             return redirect('/stockrequest');
         }

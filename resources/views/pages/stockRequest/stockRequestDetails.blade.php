@@ -38,7 +38,7 @@
                 <label class="form-control form-control-sm" id="reference_label" style="width:160px;">Reference SO/PO No.</label>
                 <input class="form-control form-control-sm" id="reference_details" onclick="copyRefNum()" style="width:280px; margin-right: 10px;" type="text" readonly>
             </div>
-            @role('sales|warehouse approver') {{---ROLES---}}
+            @role('sales|approver - sales') {{---ROLES---}}
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
                 <label name="reason_label" id="reason_label" class="form-control form-control-sm" style="margin-top: -56px; width:160px; display: none;">Disapproval Reason</label>
                 <textarea style="width:280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" class="form-control" rows="4" name="reason_details" id="reason_details" readonly></textarea>
@@ -49,7 +49,7 @@
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
         </div><br>      
         <div class="modal-body">
-            @role('sales|warehouse approver') {{---ROLES---}}
+            @role('sales|approver - sales') {{---ROLES---}}
             <div id="sd1" style="display: none;">
             <table id="stockDetailsrequest" class="table stockDetails1 display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
                 <thead>                            
@@ -107,7 +107,7 @@
             @endrole
             <div class="col-md-12 mt-2 mb-4">
             <br>
-            @role('warehouse approver')  {{---ROLES---}}
+            @role('approver - sales')  {{---ROLES---}}
             <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnApprove" value="APPROVE">
             <input type="button" class="btn btn-primary mr-auto bp" id="btnDisapprove" value="DISAPPROVE">
             @endrole
@@ -173,7 +173,7 @@
                 </thead>    
             </table>
             @endrole
-            @role('sales|viewer|warehouse approver')  {{---ROLES---}}
+            @role('sales|viewer|approver - sales')  {{---ROLES---}}
             <table id="schedItems1" class="table schedItems1 display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
                 <thead>                            
                     <tr>
@@ -227,7 +227,7 @@
                     </thead>    
                 </table>
                 @endrole
-                @role('admin|encoder|sales|viewer|warehouse approver')  {{---ROLES---}}
+                @role('admin|encoder|sales|viewer|approver - sales')  {{---ROLES---}}
                 <table id="transItems1" class="table transItems1 display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
                     <thead>                            
                         <tr>

@@ -26,9 +26,13 @@ class PagesController extends Controller
     }
 
     public function index(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
         {
             return redirect('/stockrequest');
+        }
+        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
+        {
+            return redirect('/stocktransfer');
         }
         return view('pages/index');        
     }
@@ -44,28 +48,20 @@ class PagesController extends Controller
         return DataTables::of($list)->make(true);
     }
 
-    public function stocktransfer(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
-        {
-            return redirect('/stockrequest');
-        }
-        $title = 'STOCK TRANSFER';
-        return view('pages/stocktransfer')->with('title', $title);
-    }
+    // public function stocktransfer(){
+    //     $title = 'STOCK TRANSFER';
+    //     return view('pages/stocktransfer')->with('title', $title);
+    // }
 
     // public function joborder(){
     //     $title = 'JOB ORDER';
     //     return view('pages/joborder')->with('title', $title);
     // }
 
-    public function assembly(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
-        {
-            return redirect('/stockrequest');
-        }
-        $title = 'ASSEMBLY';
-        return view('pages/assembly')->with('title', $title);
-    }
+    // public function assembly(){
+    //     $title = 'ASSEMBLY';
+    //     return view('pages/assembly')->with('title', $title);
+    // }
 
     // public function pullout(){
     //     $title = 'PULLOUT';
@@ -115,11 +111,15 @@ class PagesController extends Controller
     }
 
     public function users(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
         {
             return redirect('/stockrequest');
         }
-        if(!auth()->user()->hasanyRole('admin'))
+        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
+        {
+            return redirect('/stocktransfer');
+        }
+        if(!auth()->user()->hasanyRole('admin')) //---ROLES---//
         {
             return redirect('/');
         }

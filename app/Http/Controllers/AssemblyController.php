@@ -20,9 +20,13 @@ class AssemblyController extends Controller
     }
 
     public function assembly(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
         {
             return redirect('/stockrequest');
+        }
+        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
+        {
+            return redirect('/stocktransfer');
         }
         $categories= Category::select('id','category')->get()->sortBy('category');
         return view('/pages/assembly', compact('categories'));

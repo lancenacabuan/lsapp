@@ -29,11 +29,14 @@ class StocksController extends Controller
     }
 
 
-    public function stocks()
-    {
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
+    public function stocks(){
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
         {
             return redirect('/stockrequest');
+        }
+        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
+        {
+            return redirect('/stocktransfer');
         }
         $categories= Category::select('id','category')->get()->sortBy('category');
         $locations= Location::select('id','location')->whereNotIn('id', ['7','8'])->get()->sortBy('location');
@@ -42,8 +45,7 @@ class StocksController extends Controller
         return view('/pages/stocks', compact('list','categories','locations','items'));
     }
 
-    public function category_data()
-    {
+    public function category_data(){
         $list = Category::query()->select('categories.id',
             DB::raw
             (

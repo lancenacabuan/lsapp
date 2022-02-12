@@ -21,7 +21,7 @@ class StockTransferController extends Controller
     }
 
     public function stocktransfer(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
         {
             return redirect('/stockrequest');
         }

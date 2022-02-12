@@ -25,7 +25,11 @@ class StockRequestController extends Controller
         $this->middleware('auth');
     }
 
-    public function stockrequest(){      
+    public function stockrequest(){
+        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
+        {
+            return redirect('/stocktransfer');
+        }  
         $categories= Category::select('id','category')->get()->sortBy('category');
         if(auth()->user()->hasanyRole('sales')){
             $req_types= RequestType::select('id','name')

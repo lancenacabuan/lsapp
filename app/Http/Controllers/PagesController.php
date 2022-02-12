@@ -69,9 +69,13 @@ class PagesController extends Controller
     // }
 
     public function filemaintenance(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
         {
             return redirect('/stockrequest');
+        }
+        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
+        {
+            return redirect('/stocktransfer');
         }
         $title = 'FILE MAINTENANCE';
         return view('pages/filemaintenance')->with('title', $title);   

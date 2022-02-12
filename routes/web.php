@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StocksController;
 use App\Http\Controllers\StockRequestController;
+use App\Http\Controllers\StockTransferController;
 use App\Http\Controllers\AssemblyController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
@@ -18,7 +19,6 @@ Route::get('/index_data', [PagesController::class, 'index_data']);
 
 // Route::get('/joborder', [PagesController::class, 'joborder']);
 // Route::get('/pullout', [PagesController::class, 'pullout']);
-Route::get('/stocktransfer', [PagesController::class, 'stocktransfer']);
 Route::get('/filemaintenance', [PagesController::class, 'filemaintenance']);
 
 //Change Password
@@ -75,6 +75,12 @@ Route::any('/delReqItem', [StockRequestController::class, 'delReqItem']);
 Route::any('/editSerial', [StockRequestController::class, 'editSerial']);
 Route::any('/inTransit', [StockRequestController::class, 'inTransit']);
 Route::any('/printRequest', [StockRequestController::class, 'printRequest']);
+//
+
+//Stock Transfer
+Route::get('/stocktransfer', [StockTransferController::class, 'stocktransfer']);
+Route::get('/items', [StockTransferController::class, 'items']);
+Route::get('/generateReqNum', [StockTransferController::class, 'generateReqNum']);
 //
 
 //Assembly

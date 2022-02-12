@@ -97,6 +97,7 @@ $('#locfrom').on('change', function(){
 $('#category').on('change', function(){
     $('#qty').prop('disabled', true);
     $("#qty").val('');
+    $("#qtystock").val('');
     var category_id = $(this).val();
     $.ajax({
         type:'get', 

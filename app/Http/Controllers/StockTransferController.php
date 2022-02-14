@@ -129,7 +129,7 @@ class StockTransferController extends Controller
     public function transfer_data()
     {
         if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
-            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, reason, needdate, locfrom, locto')
+            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, prepared_by, reason, needdate, locfrom, locto')
             ->whereIn('request_transfer.status', ['6','7'])
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
@@ -138,7 +138,7 @@ class StockTransferController extends Controller
             ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
-            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, reason, needdate, locfrom, locto')
+            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, prepared_by, reason, needdate, locfrom, locto')
             ->whereNotIn('request_transfer.status', ['7','8'])
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
@@ -147,7 +147,7 @@ class StockTransferController extends Controller
             ->get();
         }
         else{
-            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, reason, needdate, locfrom, locto')
+            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, prepared_by, reason, needdate, locfrom, locto')
             ->where('request_transfer.requested_by', auth()->user()->id)
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
@@ -160,7 +160,7 @@ class StockTransferController extends Controller
         ->addColumn('prep_by', function (RequestTransfer $list){
             $users = User::query()
                 ->select('name')
-                ->where('id', $list-> prepared_by)
+                ->where('id', $list->prepared_by)
                 ->get();
             $users = str_replace("[{\"name\":\"","",$users);
             $users = str_replace("\"}]","",$users);

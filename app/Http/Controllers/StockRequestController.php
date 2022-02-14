@@ -142,7 +142,7 @@ class StockRequestController extends Controller
         ->addColumn('prep_by', function (Requests $list){
             $users = User::query()
                 ->select('name')
-                ->where('id', $list-> prepared_by)
+                ->where('id', $list->prepared_by)
                 ->get();
             $users = str_replace("[{\"name\":\"","",$users);
             $users = str_replace("\"}]","",$users);

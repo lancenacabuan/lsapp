@@ -562,3 +562,172 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         fixedHeader: true,            
     });
 });
+
+$(document).on("click", ".btndelItem", function() {
+    var id = $(this).attr("id");
+    var data = $('table.transferDetails').DataTable().row(id).data();
+
+    $.ajax({
+        url: '/delTransItem',
+        headers: {
+            'X-CSRF-TOKEN': $("#csrf").val(),
+        },
+        dataType: 'json',
+        type: 'DELETE',
+        data: {
+            req_num: $('#reqnum_details').val(),
+            item_id: data.item_id
+        },
+        success: function(data) {
+            if(data.result == 'false'){
+                $('#detailsStockTransfer').hide();
+                sweetAlert("DELETE FAILED", "STOCK TRANSFER REQUEST", "error");
+                setTimeout(function(){window.location.reload()} , 2000);
+            }
+            else{
+                if(data.count == 0){
+                    $('#detailsStockTransfer').hide();
+                    sweetAlert("DELETE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                    setTimeout(function(){window.location.reload()} , 2000);
+                }
+                else{
+                    $('table.transferDetails').DataTable().ajax.reload();
+                }
+            }
+        },
+        error: function(data) {
+            alert(data.responseText);
+        }
+    });
+});
+
+$(document).on('click','#btnDelete', function(){
+    swal({
+        title: "DELETE STOCK TRANSFER REQUEST?",
+        text: "You are about to DELETE your STOCK TRANSFER REQUEST!\n This will be permanently deleted from the system.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {     
+            $.ajax({
+                type:'get', 
+                url:'/deleteTransfer', 
+                data:{
+                    'request_number': $('#reqnum_details').val()
+                },
+                success: function (data){
+                    if(data == 'true'){
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("DELETE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                    }
+                    else{
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("DELETE FAILED", "STOCK TRANSFER REQUEST", "error");
+                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                    }
+                },
+                error: function (data) {
+                    if(data.status == 401) {
+                        window.location.href = '/stocktransfer';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });   
+});
+
+$(document).on('click','#btnApprove', function(){
+    swal({
+        title: "APPROVE STOCK TRANSFER REQUEST?",
+        text: "You are about to APPROVE this STOCK TRANSFER REQUEST!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type:'get',
+                url:'/approveTransfer',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                        },
+                data:{
+                    'request_number': $('#reqnum_details').val()
+                },
+                success: function (data){
+                    if(data == 'true'){
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("APPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                    }
+                    else{
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("APPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                    }
+                },
+                error: function (data) {
+                    if(data.status == 401) {
+                        window.location.href = '/stocktransfer';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    }); 
+});
+
+$(document).on("click", "#btnDisapprove", function() {
+    $('#reasonModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $('#reasonModal').modal('show');
+});
+
+$(document).on('click','#btnReason', function(){
+    swal({
+        title: "DISAPPROVE STOCK TRANSFER REQUEST?",
+        text: "You are about to DISAPPROVE this STOCK TRANSFER REQUEST!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type:'get',
+                url:'/disapproveTransfer',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                        },
+                data:{
+                    'request_number': $('#reqnum_details').val(),
+                    'reason': $('#reason').val()
+                },
+                success: function (data){
+                    if(data == 'true'){
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("DISAPPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                    }
+                    else{
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("DISAPPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                    }
+                },
+                error: function (data) {
+                    if(data.status == 401) {
+                        window.location.href = '/stocktransfer';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    }); 
+});

@@ -423,3 +423,89 @@ $('table.stocktransferTable').DataTable({
         { data: 'reason'}
     ]
 });
+
+$('#stocktransferTable tbody').on('click', 'tr', function () {
+    $('#detailsStockTransfer').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    var table =  $('table.stocktransferTable').DataTable(); 
+    var data = table.row( this ).data();
+    var req_date = data.date;
+        req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
+        $('#reqdate_details').val(req_date);
+    var need_date = data.needdate;
+        need_date = moment(need_date).format('dddd, MMMM D, YYYY');
+        $('#needdate_details').val(need_date);
+    var req_num = data.req_num;
+        $('#reqnum_details').val(req_num);
+    var req_by = data.req_by;
+        $('#reqby_details').val(req_by);
+    var status = data.status;
+        $('#status_details').val(status);
+    var prep_by = data.prep_by;
+        $('#prep_by').val(prep_by);
+        $('#prep_by1').val(prep_by);
+    var sched = data.sched;
+        sched = moment(sched).format('dddd, MMMM D, YYYY');
+        $('#sched').val(sched);
+        $('#sched1').val(sched);
+    var locfrom = data.locfrom;
+        $('#locfrom_details').val(locfrom);
+    var locto = data.locto;
+        $('#locto_details').val(locto);
+    var reason = data.reason;
+        $('#reason_details').val(reason);
+
+    $('.modal-body').html();
+    $('#detailsStockTransfer').modal('show');
+    if(data.user_id != $('#current_user').val()){
+        $("#btnDelete").hide();
+        $("#sd1").show();
+        $("#sd2").hide();
+    }
+    else{
+        $("#sd2").show();
+        $("#sd1").hide();
+    }
+    if(data.status_id == '7'){
+        $("#btnDisapprove").hide();
+        $("#reason_label").show();
+        $("#reason_details").show();
+    }
+    if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
+        $("#btnDelete").hide();
+    }
+    if(data.status_id == '6'){
+        $("#btnProceed").hide();
+    }
+    if(data.status_id == '2' || data.status_id == '5'){
+        $("#schedItemsModal").show();
+    }
+    if(data.status_id == '3' || data.status_id == '4'){
+        $("#transitItemsModal").show();
+        $("#btnProceed").hide();
+    }
+    if(data.status_id == '8'){
+        $("#transitItemsModal").show();
+        $("#btnProceed").hide();
+        $("#btnReceive").hide();
+        document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+    }
+    if($("#current_role").val() == '["sales"]'){
+        $("#sd2").show();
+        $("#sd1").hide();
+    }
+    if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
+        $("#sd1").show();
+        $("#sd2").hide();
+    }
+    else{
+        $("#sd2").show();
+        $("#sd1").hide();
+    }
+    if($("#current_role").val() != '["sales"]'){
+        $("#sd1").show();
+        $("#sd2").hide();
+    }
+});

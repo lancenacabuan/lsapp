@@ -47,26 +47,46 @@
             </div>
             @endrole
         </div>
-    </div>
-    </div>
-    </div>
-</div>
-<div class="modal fade in" id="editSerialModal">
-    <div class="modal-dialog  modal-sm" >
-    <div class="modal-content">
-        <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">
-            <h6 class="modal-title w-100">EDIT ITEM SERIAL</h6>            
-            <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+        <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">
+            <h6 class="modal-title w-100">REQUEST DETAILS</h6>
+        </div><br>      
+        <div class="modal-body">
+            <table id="transferDetails" class="table transferDetails table-hover display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
+                <thead>                            
+                    <tr>
+                        <th>CATEGORY</th>
+                        <th>ITEM DESCRIPTION</th>
+                        <th>QTY REQUESTED</th>
+                        <th>QTY PENDING</th>
+                        <th>QTY IN STOCK<br>TOTAL MAIN BRANCH</th>
+                        <th></th>
+                        <th>QTY IN STOCK<br>A1</th>
+                        <th>QTY IN STOCK<br>A2</th>
+                        <th>QTY IN STOCK<br>A3</th>
+                        <th>QTY IN STOCK<br>A4</th>
+                        <th>QTY IN STOCK<br>BALINTAWAK</th>
+                        <th>QTY IN STOCK<br>MALABON</th>
+                        <th></th>
+                    </tr>
+                </thead>    
+            </table>
+            <div class="col-md-12 mt-2 mb-4">
+            <br>
+            @role('approver - warehouse')  {{---ROLES---}}
+            <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnApprove" value="APPROVE">
+            <input type="button" class="btn btn-primary mr-auto bp" id="btnDisapprove" value="DISAPPROVE">
+            @endrole
+            @role('admin|encoder')  {{---ROLES---}}
+            <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnProceed" value="PROCEED" disabled>
+            @endrole
+            @role('admin|encoder')  {{---ROLES---}}
+            <button type="button" id="btnDelete" class="btn btn-dark mr-auto bp">
+                DELETE</button>
+            @endrole
+            <br>
+            </div>
         </div>
-        <div class="modal-body" style="background-color:white;color:black;">                          
-            <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <input type="hidden" name="x_id" id="x_id">
-            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_category" id="x_category" readonly>
-            <textarea style="margin-bottom: 8px; font-size: 12px; resize: none;" class="form-control" rows="5" name="x_item" id="x_item" readonly></textarea>
-            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_serial" id="x_serial" placeholder="Input Item Serial...">
-            <button type="button" id="btnEdit" class="btn btn-primary mr-auto float-right bp">
-                EDIT</button>
-        </div>
+    </div>
     </div>
     </div>
 </div>

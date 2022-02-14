@@ -169,4 +169,72 @@ class StockTransferController extends Controller
         })
         ->make(true);
     }
+
+    public function transferDetails(Request $request){
+        $stockreq = StockTransfer::query()->select('categories.category','items.item','items.id as item_id','quantity','served','pending')
+            ->join('categories', 'categories.id', 'stock_transfer.category')
+            ->join('items', 'items.id', 'stock_transfer.item')
+            ->where('request_number',$request->reqnum)
+            ->groupBy('category','items.item','quantity','served','pending','item_id')
+            ->get();        
+        
+        return DataTables::of($stockreq)
+        ->addColumn('qtystock', function (StockTransfer $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->whereNotIn('location_id', ['5','6'])
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtya1', function (StockTransfer $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '1')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtya2', function (StockTransfer $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '2')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtya3', function (StockTransfer $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '3')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtya4', function (StockTransfer $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '4')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtybal', function (StockTransfer $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '5')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtymal', function (StockTransfer $stockreq){
+            $stocks = Stock::query()
+                ->where('item_id', $stockreq->item_id)
+                ->where('location_id', '6')
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->make(true);
+    }
 }

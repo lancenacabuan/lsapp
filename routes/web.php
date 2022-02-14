@@ -87,7 +87,8 @@ Route::get('/qtystock', [StockTransferController::class, 'qtystock']);
 Route::post('/saveTransReqNum', [StockTransferController::class, 'saveTransReqNum']);
 Route::any('/saveTransRequest', [StockTransferController::class, 'saveTransRequest']);
 Route::any('/logTransSave', [StockTransferController::class, 'logTransSave']);
-Route::any('/transfer_data', [StockTransferController::class, 'transfer_data']);
+Route::get('/transfer_data', [StockTransferController::class, 'transfer_data']);
+Route::get('/transferDetails', [StockTransferController::class, 'transferDetails']);
 //
 
 //Assembly

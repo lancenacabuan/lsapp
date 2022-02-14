@@ -383,6 +383,10 @@ $(document).on('click','#btnClose', function(){
     }    
 });
 
+$(document).on('click','#modalClose', function(){
+    window.location.href = '/stocktransfer'; 
+});
+
 $('table.stocktransferTable').dataTable().fnDestroy();
 $('table.stocktransferTable').DataTable({ 
     columnDefs: [
@@ -456,17 +460,23 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         $('#locto_details').val(locto);
     var reason = data.reason;
         $('#reason_details').val(reason);
+    var btnDel = '';
+    var hideCol = '';
 
     $('.modal-body').html();
     $('#detailsStockTransfer').modal('show');
+    if(locfrom == 5){
+        hideCol = 11;
+    }
+    if(locfrom == 6){
+        hideCol = 10;
+    }
     if(data.user_id != $('#current_user').val()){
         $("#btnDelete").hide();
-        $("#sd1").show();
-        $("#sd2").hide();
+        btnDel = 12;
     }
     else{
-        $("#sd2").show();
-        $("#sd1").hide();
+        $("#btnDelete").show();
     }
     if(data.status_id == '7'){
         $("#btnDisapprove").hide();
@@ -475,6 +485,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
     }
     if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
         $("#btnDelete").hide();
+        btnDel = 12;
     }
     if(data.status_id == '6'){
         $("#btnProceed").hide();
@@ -492,20 +503,62 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         $("#btnReceive").hide();
         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
     }
-    if($("#current_role").val() == '["sales"]'){
-        $("#sd2").show();
-        $("#sd1").hide();
-    }
-    if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
-        $("#sd1").show();
-        $("#sd2").hide();
-    }
-    else{
-        $("#sd2").show();
-        $("#sd1").hide();
-    }
-    if($("#current_role").val() != '["sales"]'){
-        $("#sd1").show();
-        $("#sd2").hide();
-    }
+
+    $('table.transferDetails').DataTable({ 
+        columnDefs: [
+            {
+                "targets": [4,5,6,7,8,9,hideCol,btnDel],
+                "visible": false
+            },
+            {   
+                "render": function (data, type, row, meta) {
+                        return '<button class="btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                },
+                "defaultContent": '',
+                "data": null,
+                "targets": [12]
+            }
+        ],
+        paging: false,
+        ordering: false,
+        info: false,
+        language: {
+            "emptyTable": "No data found!",
+            "processing": "Loading",
+        },
+        processing: true,
+        serverSide: false,
+        
+        ajax: {
+            url: '/transferDetails',
+            data: {
+                reqnum: req_num,
+            },
+            dataType: 'json',
+            error: function(data) {
+                if(data.status == 401) {
+                    window.location.href = '/stocktransfer';
+                }
+                alert(data.responseText);
+            },
+        },
+        columns: [
+            { data: 'category'},
+            { data: 'item'},
+            { data: 'quantity'},
+            { data: 'pending'},
+            { data: 'qtystock'},
+            { data: 'item_id'},
+            { data: 'qtya1'},
+            { data: 'qtya2'},
+            { data: 'qtya3'},
+            { data: 'qtya4'},
+            { data: 'qtybal'},
+            { data: 'qtymal'},
+            { data: 'item_id'}
+
+        ],
+        orderCellsTop: true,
+        fixedHeader: true,            
+    });
 });

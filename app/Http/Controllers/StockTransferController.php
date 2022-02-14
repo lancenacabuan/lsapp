@@ -237,4 +237,113 @@ class StockTransferController extends Controller
         })
         ->make(true);
     }
+
+    public function approveTransfer(Request $request){
+        $sql = RequestTransfer::where('request_number', $request->request_number)
+            ->update(['status' => '1', 'reason' => '']);
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "APPROVED STOCK TRANSFER REQUEST: User successfully approved Stock Transfer Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        
+        return response($result);
+    }
+
+    public function disapproveTransfer(Request $request){
+        $sql = RequestTransfer::where('request_number', $request->request_number)
+            ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "DISAPPROVED STOCK TRANSFER REQUEST: User successfully disapproved Stock Transfer Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        
+        return response($result);
+    }
+
+    public function receiveTransfer(Request $request){
+        $sql = RequestTransfer::where('request_number', $request->request_number)
+            ->update(['status' => '8']);
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED STOCK TRANSFER REQUEST: User successfully received Stock Transfer Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
+    }
+
+    public function deleteTransfer(Request $request){
+        do{
+            $sqlquery = StockTransfer::where('request_number', $request->request_number)->delete();
+        }
+        while(!$sqlquery);
+        
+        $sql = RequestTransfer::where('request_number', $request->request_number)->delete();
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "DELETED STOCK TRANSFER REQUEST: User successfully deleted Stock Transfer Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
+    }
+
+    public function delTransItem(Request $request){
+        $transitems = StockTransfer::where('request_number', $request->req_num)
+            ->where('item', $request->item_id)
+            ->delete();
+        
+        if(!$transitems){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        $count = StockTransfer::where('request_number', $request->req_num)->count();
+        if($count == 0){
+            RequestTransfer::where('request_number', $request->req_num)->delete();
+        }
+
+        $data = array('result' => $result, 'count' => $count);
+        return response()->json($data);
+    }
 }

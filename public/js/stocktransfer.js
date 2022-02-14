@@ -1,3 +1,16 @@
+function copyReqNum() {
+    var copyText = document.getElementById("reqnum_details");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value);
+    swal({
+        title: copyText.value,
+        text: "Copied to Clipboard!",
+        icon: "success",
+        timer: 2000
+    });
+}
+
 function generateReqNum() {
     var today = new Date();
     var month = today.getMonth()+1;
@@ -41,7 +54,7 @@ function generateReqNum() {
     });
 }
 
-$(".btnNewStockTransfer").click(function(){
+$(".btnNewStockTransfer").on('click', function(){
     generateReqNum();
 });
 
@@ -167,7 +180,7 @@ $('#item').on('change', function(){
     });
 });
 
-$(".add-row").click(function(){
+$(".add-row").on('click', function(){
     var category = $("#category option:selected").text();
     var item = $("#item option:selected").text();
     var qty = $("#qty").val();
@@ -220,7 +233,7 @@ $(".add-row").click(function(){
     } 
 });
 
-$("#tblNewStockTransfer").on('click','.delete-row',function(){
+$("#tblNewStockTransfer").on('click', '.delete-row', function(){
     category = $("#category").val('');
     item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
     qty = $("#qty").val('');
@@ -236,7 +249,7 @@ $("#tblNewStockTransfer").on('click','.delete-row',function(){
     }
 });
 
-$(document).on('click','#btnSave', function(){
+$(document).on('click', '#btnSave', function(){
     if($('#needdate').val() && $('#locfrom').val() && $('#locto').val())
     {
         swal({
@@ -365,7 +378,7 @@ $(document).on('click','#btnSave', function(){
     }   
 });
 
-$(document).on('click','#close', function(){
+$(document).on('click', '#close', function(){
     if (confirm("IF YOU CANCEL THE FORM, YOU WILL NOT BE ABLE TO SAVE ALL THE ENTRIES.\n\nDO YOU WANT TO PROCEED?")) {
         window.location.href = '/stocktransfer';
     }
@@ -374,7 +387,7 @@ $(document).on('click','#close', function(){
     }    
 });
 
-$(document).on('click','#btnClose', function(){
+$(document).on('click', '#btnClose', function(){
     if (confirm("IF YOU CANCEL THE FORM, YOU WILL NOT BE ABLE TO SAVE ALL THE ENTRIES.\n\nDO YOU WANT TO PROCEED?")) {
         window.location.href = '/stocktransfer';
     }
@@ -383,7 +396,7 @@ $(document).on('click','#btnClose', function(){
     }    
 });
 
-$(document).on('click','#modalClose', function(){
+$(document).on('click', '#modalClose', function(){
     window.location.href = '/stocktransfer'; 
 });
 
@@ -434,7 +447,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         keyboard: false
     });
     var table =  $('table.stocktransferTable').DataTable(); 
-    var data = table.row( this ).data();
+    var data = table.row(this).data();
     var req_date = data.date;
         req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
         $('#reqdate_details').val(req_date);
@@ -563,7 +576,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
     });
 });
 
-$(document).on("click", ".btndelItem", function() {
+$(document).on('click', '.btndelItem', function() {
     var id = $(this).attr("id");
     var data = $('table.transferDetails').DataTable().row(id).data();
 
@@ -601,7 +614,7 @@ $(document).on("click", ".btndelItem", function() {
     });
 });
 
-$(document).on('click','#btnDelete', function(){
+$(document).on('click', '#btnDelete', function(){
     swal({
         title: "DELETE STOCK TRANSFER REQUEST?",
         text: "You are about to DELETE your STOCK TRANSFER REQUEST!\n This will be permanently deleted from the system.",
@@ -640,7 +653,7 @@ $(document).on('click','#btnDelete', function(){
     });   
 });
 
-$(document).on('click','#btnApprove', function(){
+$(document).on('click', '#btnApprove', function(){
     swal({
         title: "APPROVE STOCK TRANSFER REQUEST?",
         text: "You are about to APPROVE this STOCK TRANSFER REQUEST!",
@@ -681,7 +694,7 @@ $(document).on('click','#btnApprove', function(){
     }); 
 });
 
-$(document).on("click", "#btnDisapprove", function() {
+$(document).on('click', '#btnDisapprove', function() {
     $('#reasonModal').modal({
         backdrop: 'static',
         keyboard: false
@@ -689,7 +702,7 @@ $(document).on("click", "#btnDisapprove", function() {
     $('#reasonModal').modal('show');
 });
 
-$(document).on('click','#btnReason', function(){
+$(document).on('click', '#btnReason', function(){
     swal({
         title: "DISAPPROVE STOCK TRANSFER REQUEST?",
         text: "You are about to DISAPPROVE this STOCK TRANSFER REQUEST!",

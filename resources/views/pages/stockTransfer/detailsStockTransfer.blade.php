@@ -12,7 +12,7 @@
                 <label class="form-control form-control-sm" style="width:160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate_details"style="width:280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM D, YYYY')}}">
                 <label class="form-control form-control-sm" style="width:200px;">Stock Transfer Request No.</label>
-                <input class="form-control form-control-sm" id="reqnum_details" style="width:280px; margin-right: 10px;" type="text" readonly>
+                <input class="form-control form-control-sm" id="reqnum_details" onclick="copyReqNum()" style="width:280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width:160px;">Date Needed</label>

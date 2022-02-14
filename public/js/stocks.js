@@ -31,6 +31,8 @@ function category() {
 }
 $(document).ready(function () {   
     category();
+    $('#serialdiv').hide();
+    $('#qtydiv').hide();
 });
 
 $(document).on('click', '#CategoryTable tbody tr', function () {
@@ -67,36 +69,78 @@ $(document).on('click', '#butsave', function() {
     var item = $('#item').val();
     var location = $('#location').val();
     var serial = $('#serial').val();
-    if(category && item && location){
-        $.ajax({
-            url: "stocks/save",
-            type: "POST",
-            headers: {
-                'X-CSRF-TOKEN': $("#csrf").val(),
-            },
-            data: {
-                _token: $("#csrf").val(),
-                category: category,
-                item: item,
-                location: location,
-                serial: serial
-            },
-            success: function(dataResult){                      
-                $('#addStock').hide();
-                sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function() {
-                    window.location.href = 'stocks';
-                });
-                setTimeout(function(){window.location.href = 'stocks';} , 2000);                                   
-            },
-            error: function (data) {
-                if(data.status == 401) {
-                    window.location.href = '/login';
+    if (!$('#serial').val()) {
+        serial = 'N/A';
+    }
+    var qty = $('#qty').val();
+    if ($('#serial').is(':visible')) {
+        if(category && item && location){
+            $.ajax({
+                url: "stocks/save",
+                type: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                },
+                data: {
+                    _token: $("#csrf").val(),
+                    category: category,
+                    item: item,
+                    location: location,
+                    serial: serial
+                },
+                success: function(dataResult){                      
+                    $('#addStock').hide();
+                    sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function() {
+                        window.location.href = 'stocks';
+                    });
+                    setTimeout(function(){window.location.href = 'stocks';} , 2000);                                   
+                },
+                error: function (data) {
+                    if(data.status == 401) {
+                        window.location.href = '/login';
+                    }
+                    alert(data.responseText);
                 }
-                alert(data.responseText);
-            }
-        });
+            });
+        }else{
+            AddStockForm[0].reportValidity();
+        }
     }else{
-        AddStockForm[0].reportValidity();
+        if (qty && qty != 0) {
+            if(category && item && location){
+                $.ajax({
+                    url: "stocks/save",
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                    },
+                    data: {
+                        _token: $("#csrf").val(),
+                        category: category,
+                        item: item,
+                        location: location,
+                        qty:qty
+                    },
+                    success: function(dataResult){                      
+                        $('#addStock').hide();
+                        sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function() {
+                            window.location.href = 'stocks';
+                        });
+                        setTimeout(function(){window.location.href = 'stocks';} , 2000);                                   
+                    },
+                    error: function (data) {
+                        if(data.status == 401) {
+                            window.location.href = '/login';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }else{
+                AddStockForm[0].reportValidity();
+            }
+        }else{
+            AddStockForm[0].reportValidity();
+        }
     }
 });
 
@@ -125,7 +169,36 @@ $(document).on('change', '#category', function(){
                 alert(data.responseText);
             }
         });
+    $('#serialdiv').hide();
+    $('#qtydiv').hide();
 });
+
+$(document).on('change', '#item', function(){
+    var id=$('#item').val();
+    var descOp = " ";
+        $.ajax({
+            type:'get',
+            url:'getUOM',
+            data:{'id':id},            
+            success:function(data)
+                {
+                    if (data.uom == "Unit") {
+                        $('#serialdiv').show();
+                        $('#qtydiv').hide();
+                    }else{
+                        $('#serialdiv').hide();
+                        $('#qtydiv').show();
+                    }
+                },
+            error: function (data) {
+                if(data.status == 401) {
+                    window.location.href = '/stocks';
+                }
+                alert(data.responseText);
+            }
+        });
+});
+
 $(document).on('click', '#backBtn', function(){
     category();
 });

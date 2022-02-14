@@ -224,6 +224,13 @@ class StocksController extends Controller
         return response()->json($list);
     }
 
+    public function getUOM(Request $request){
+        $uom = Item::query()->select('UOM as uom')
+            ->where('id',$request->id)
+            ->first();
+        return response()->json($uom);
+    }
+
     public function items(Request $request){ //chef //$request = orders
         $list = Item::query()->select('item_id','item')
             ->join('stocks', 'stocks.item_id', 'items.id')
@@ -270,16 +277,28 @@ class StocksController extends Controller
      
     public function store(Request $request)
     {
-        $stocks = new Stock;
-        $stocks->item_id = $request->item;
-        $stocks->category_id = $request->category;
-        $stocks->user_id =auth()->user()->id;
-        $stocks->location_id =$request->location;
-        $stocks->status = 'in';
-        $stocks->serial = $request->serial;
-        $save= $stocks->save();                   
+        if ($request->serial) {
+            $stocks = new Stock;
+            $stocks->item_id = $request->item;
+            $stocks->category_id = $request->category;
+            $stocks->user_id =auth()->user()->id;
+            $stocks->location_id =$request->location;
+            $stocks->status = 'in';
+            $stocks->serial = $request->serial;
+            $save= $stocks->save();             
+        }else if($request->qty > 0){
+            for ($i=0; $i < $request->qty; $i++) { 
+                $stocks = new Stock;
+                $stocks->item_id = $request->item;
+                $stocks->category_id = $request->category;
+                $stocks->user_id =auth()->user()->id;
+                $stocks->location_id =$request->location;
+                $stocks->status = 'in';
+                $stocks->serial = 'N\A';
+                $save= $stocks->save(); 
+            }
+        }
         return response()->json($stocks);
-               
     }
 
     public function update(Request $request)

@@ -1346,11 +1346,13 @@ $(document).on('click','#btnReason', function(){
                 },
                 success: function (data){
                     if(data == 'true'){
+                        $('#reasonModal').modal('hide');
                         $('#stockRequestDetails').hide();
                         sweetAlert("DISAPPROVE SUCCESS", "STOCK REQUEST", "success");
                         setTimeout(function(){location.href="/stockrequest"} , 2000);
                     }
                     else{
+                        $('#reasonModal').modal('hide');
                         $('#stockRequestDetails').hide();
                         sweetAlert("DISAPPROVE FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"} , 2000);

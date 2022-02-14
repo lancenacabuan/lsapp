@@ -711,11 +711,13 @@ $(document).on('click','#btnReason', function(){
                 },
                 success: function (data){
                     if(data == 'true'){
+                        $('#reasonModal').modal('hide');
                         $('#detailsStockTransfer').hide();
                         sweetAlert("DISAPPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
                         setTimeout(function(){location.href="/stocktransfer"} , 2000);
                     }
                     else{
+                        $('#reasonModal').modal('hide');
                         $('#detailsStockTransfer').hide();
                         sweetAlert("DISAPPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
                         setTimeout(function(){location.href="/stocktransfer"} , 2000);

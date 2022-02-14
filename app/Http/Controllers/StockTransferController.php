@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Item;
 use App\Models\Stock;
 use App\Models\RequestTransfer;
+use App\Models\StockTransfer;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -72,5 +73,100 @@ class StockTransferController extends Controller
             ->count();
 
         return response($list);
+    }
+
+    public function saveTransReqNum(Request $request){
+        $requests = new RequestTransfer;
+        $requests->request_number = $request->request_number;
+        $requests->requested_by = auth()->user()->id;
+        $requests->needdate = $request->needdate;
+        $requests->locfrom = $request->locfrom;
+        $requests->locto = $request->locto;
+        $requests->status = '6';
+        $sql = $requests->save();
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        return response($result);
+    }
+    
+    public function saveTransRequest(Request $request){
+        $items = Item::query()->select('id','category_id')
+                ->where('item',htmlspecialchars_decode($request->item))
+                ->first();
+
+        $stockTransfer = new StockTransfer;
+        $stockTransfer->request_number = $request->request_number;
+        $stockTransfer->category = $items->category_id;
+        $stockTransfer->item = $items->id;
+        $stockTransfer->quantity = $request->quantity;
+        $stockTransfer->served = '0';
+        $stockTransfer->pending = $request->quantity;
+        $sql = $stockTransfer->save();
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        return response($result);
+    }
+
+    public function logTransSave(Request $request){
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "NEW STOCK TRANSFER REQUEST: User successfully saved Stock Transfer Request No. $request->request_number.";
+        $userlogs->save();
+        
+        return true;
+    }
+
+    public function transfer_data()
+    {
+        if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
+            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, reason, needdate, locfrom, locto')
+            ->whereIn('request_transfer.status', ['6','7'])
+            ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+            ->join('status', 'status.id', '=', 'request_transfer.status')
+            ->join('locations', 'locations.id', '=', 'request_transfer.locto')
+            ->orderBy('request_transfer.created_at', 'DESC')
+            ->get();
+        }
+        else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
+            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, reason, needdate, locfrom, locto')
+            ->whereNotIn('request_transfer.status', ['7','8'])
+            ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+            ->join('status', 'status.id', '=', 'request_transfer.status')
+            ->join('locations', 'locations.id', '=', 'request_transfer.locto')
+            ->orderBy('request_transfer.created_at', 'DESC')
+            ->get();
+        }
+        else{
+            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, reason, needdate, locfrom, locto')
+            ->where('requests.requested_by', auth()->user()->id)
+            ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+            ->join('status', 'status.id', '=', 'request_transfer.status')
+            ->join('locations', 'locations.id', '=', 'request_transfer.locto')
+            ->orderBy('request_transfer.created_at', 'DESC')
+            ->get();
+        }
+
+        return DataTables::of($list)
+        ->addColumn('prep_by', function (RequestTransfer $list){
+            $users = User::query()
+                ->select('name')
+                ->where('id', $list-> prepared_by)
+                ->get();
+            $users = str_replace("[{\"name\":\"","",$users);
+            $users = str_replace("\"}]","",$users);
+            
+            return $users;
+        })
+        ->make(true);
     }
 }

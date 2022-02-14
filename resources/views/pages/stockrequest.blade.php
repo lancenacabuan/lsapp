@@ -4,7 +4,7 @@
     <div class="animate fadeInDown two">
         @if(auth()->user()->hasanyRole('sales'))
             <div class="col-md-12 mb-4">
-                <button id="newstockreq" class="btn btn-primary bp newstockreq" data-toggle="modal" data-target="#newStockRequest"  data-backdrop="static" style="font-weight:bold;">
+                <button id="newstockreq" class="btn btn-primary bp newstockreq" data-toggle="modal" data-target="#newStockRequest" data-backdrop="static">
                 NEW STOCK REQUEST</button>
             </div>
         @endif

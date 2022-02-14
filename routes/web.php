@@ -41,6 +41,7 @@ Route::get('/category_data', [StocksController::class, 'category_data']);
 Route::get('/item_data', [StocksController::class, 'item_data']);
 
 Route::get('/items',[StocksController::class,'items']);
+Route::get('/getUOM',[StocksController::class,'getUOM']);
 Route::get('/addStockitem',[StocksController::class,'addStockitem']);
 Route::get('/itemstrans',[StocksController::class,'itemstrans']);
 Route::get('/locations',[StocksController::class,'locations']);
@@ -83,6 +84,10 @@ Route::get('/generateReqNum', [StockTransferController::class, 'generateReqNum']
 Route::get('/setcategory', [StockTransferController::class, 'setcategory']);
 Route::get('/setitems', [StockTransferController::class, 'setitems']);
 Route::get('/qtystock', [StockTransferController::class, 'qtystock']);
+Route::post('/saveTransReqNum', [StockTransferController::class, 'saveTransReqNum']);
+Route::any('/saveTransRequest', [StockTransferController::class, 'saveTransRequest']);
+Route::any('/logTransSave', [StockTransferController::class, 'logTransSave']);
+Route::any('/transfer_data', [StockTransferController::class, 'transfer_data']);
 //
 
 //Assembly

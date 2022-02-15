@@ -119,11 +119,14 @@
     @if(Request::is('stockrequest'))
         <script src="{{ asset('js/stockrequest.js') }}"></script>  
     @endif
+    @if(Request::is('printRequest'))
+        <script src="{{ asset('js/stockrequest.js') }}"></script>  
+    @endif
     @if(Request::is('stocktransfer'))
         <script src="{{ asset('js/stocktransfer.js') }}"></script>  
     @endif
-    @if(Request::is('printRequest'))
-        <script src="{{ asset('js/stockrequest.js') }}"></script>  
+    @if(Request::is('printTransferRequest'))
+        <script src="{{ asset('js/stocktransfer.js') }}"></script>  
     @endif
     @if(Request::is('users'))
         <script src="{{ asset('js/users.js') }}"></script>   

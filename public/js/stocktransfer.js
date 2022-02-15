@@ -1169,6 +1169,47 @@ $(document).on('click', '#btnTransit', function(){
     });    
 });
 
+$(document).on('click', '#btnReceive', function(){
+    swal({
+        title: "RECEIVE STOCK TRANSFER REQUEST?",
+        text: "You are about to RECEIVE this Stock Transfer Request!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type:'get',
+                url:'/receiveTransfer',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                        },
+                data:{
+                    'request_number': $('#reqnum_details').val()
+                },
+                success: function (data){
+                    if(data == 'true'){
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("RECEIVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                    }
+                    else{
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("RECEIVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                    }
+                },
+                error: function (data) {
+                    if(data.status == 401) {
+                        window.location.href = '/stocktransfer';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });    
+});
+
 $(document).on('click', '.btnPrint', function(){
     window.location.href = '/printTransferRequest?request_number='+$('#reqnum_details').val();
 });

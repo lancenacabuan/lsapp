@@ -512,29 +512,43 @@ class StockTransferController extends Controller
     }
 
     public function forReceiving(Request $request){
-        // RequestTransfer::where('request_number', $request->request_number)
-        //     ->where('status','2')
-        //     ->update(['status' => '3']);
+        RequestTransfer::where('request_number', $request->request_number)
+            ->where('status','2')
+            ->update(['status' => '3']);
 
-        // RequestTransfer::where('request_number', $request->request_number)
-        //     ->where('status','5')
-        //     ->update(['status' => '4']);
+        RequestTransfer::where('request_number', $request->request_number)
+            ->where('status','5')
+            ->update(['status' => '4']);
         
-        // Transfer::where('request_number', $request->request_number)
-        //     ->update(['intransit' => 'yes']);
+        Transfer::where('request_number', $request->request_number)
+            ->update(['intransit' => 'yes']);
 
         $list = Transfer::select('items_id','request_number','locfrom','locto','serial','qty')
             ->where('request_number', $request->request_number)
             ->get();
+        foreach ($list as $key) {
+            if($key->serial == ''){
+                for($x=0; $x<$key->qty; $x++){
+                    Stock::where('item_id',$key->items_id)
+                    ->where('location_id',$key->locto)
+                    ->where('status', 'trans')
+                    ->limit(1)
+                    ->update(['status' => 'in']);
+                }
+            }
+            else{
+                Stock::where('serial',$key->serial)
+                ->where('status', 'trans')
+                ->update(['status' => 'in']);
+            }         
+        }
+        
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "FOR RECEIVING STOCK TRANSFER REQUEST: User successfully processed for receiving Stock Transfer Request No. $request->request_number.";
+        $userlogs->save();
 
-        return response()->json($list);
-
-        // $userlogs = new UserLogs;
-        // $userlogs->user_id = auth()->user()->id;
-        // $userlogs->activity = "FOR RECEIVING STOCK TRANSFER REQUEST: User successfully processed for receiving Stock Transfer Request No. $request->request_number.";
-        // $userlogs->save();
-
-        // return response('true');
+        return response('true');
     }
 
     public function printTransferRequest(Request $request){

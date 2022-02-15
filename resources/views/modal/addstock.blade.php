@@ -53,13 +53,13 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text">Serial</label>
                     </div>
-                    <input type="text" id="serial" style="width:700px" placeholder="Enter serial" name="serial">
+                    <input type="text" id="serial" style="width:700px" placeholder="Enter serial" name="serial" autocomplete="off">
                 </div>
                 <div class="input-group mb-3" id="qtydiv">
                     <div class="input-group-prepend">
                         <label class="input-group-text">Quantity</label>
                     </div>
-                    <input type="number" id="qty" min="1" style="width:680px" placeholder="0" name="qty">
+                    <input type="number" id="qty" min="1" style="width:680px" placeholder="0" name="qty" autocomplete="off">
                 </div> 
             </form>
                 <div class="col-md-12 mb-4">

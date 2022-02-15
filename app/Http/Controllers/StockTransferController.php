@@ -480,4 +480,18 @@ class StockTransferController extends Controller
         
         return true;
     }
+
+    public function transItems(Request $request)
+    {
+        $list = Transfer::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, transferred_items.serial AS serial, transferred_items.qty AS qty, transferred_items.items_id AS item_id, transferred_items.id AS id, locations.location AS location')
+            ->where('request_number', $request->request_number)
+            ->join('items','items.id','transferred_items.items_id')
+            ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','transferred_items.locfrom')
+            ->get()
+            ->sortBy('item')
+            ->sortBy('category');
+
+        return DataTables::of($list)->make(true);
+    }
 }

@@ -590,6 +590,32 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         orderCellsTop: true,
         fixedHeader: true,            
     });
+    
+    $('table.transItems').dataTable().fnDestroy();
+    $('table.transItems').DataTable({
+        paging: false,
+        ordering: false,
+        info: false,
+        language: {
+            processing: "Loading...",
+            emptyTable: "No data found!"
+        },
+        order: [],
+        ajax: {
+            url: '/transItems',
+            data: {
+                request_number: $('#reqnum_details').val(),
+            }
+        },
+        columns: [
+            { data: 'category'},
+            { data: 'item'},
+            { data: 'qty'},
+            { data: 'uom'},
+            { data: 'serial'},
+            { data: 'location'}
+        ]
+    });
 });
 
 $(document).on('click', '.btndelItem', function() {
@@ -1016,8 +1042,8 @@ $("#btnProceed").unbind('click').click(function(){
                     }
                     else{
                         swal({
-                            title: "SCHEDULE STOCK REQUEST?",
-                            text: "You are about to SCHEDULE this STOCK REQUEST!",
+                            title: "SCHEDULE STOCK TRANSFER REQUEST?",
+                            text: "You are about to SCHEDULE this STOCK TRANSFER REQUEST!",
                             icon: "warning",
                             buttons: true,
                         })

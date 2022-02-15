@@ -198,60 +198,60 @@
         </div>
         </div>
         <div id="transitItemsModal" style="display: none;">
-            <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">
-                <h6 id="modalheader" class="modal-title w-100">FOR RECEIVING ITEM DETAILS</h6>
-            </div><br>      
-            <div class="modal-body">
-                <div class="form-inline" style="margin-left:35px;">
-                    <label class="form-control form-control-sm" style="width:160px; margin-bottom: 10px;">Scheduled By</label>
-                    <input class="form-control form-control-sm" id="prep_by1" style="width:280px; margin-bottom: 10px;" type="text" readonly>
-                </div>
-                <div class="form-inline" style="margin-left:35px;">
-                    <label class="form-control form-control-sm" style="width:160px;">Scheduled On</label>
-                    <input class="form-control form-control-sm" id="sched1" style="width:280px;" type="text" readonly>
-                </div>
-                <br>
-                @role('client')  {{---ROLES---}}
-                <table id="transItems" class="table transItems display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
-                    <thead>                            
-                        <tr>
-                            <th>CATEGORY</th>
-                            <th>ITEM DESCRIPTION</th>
-                            <th>QTY</th>
-                            <th>UOM</th>
-                            <th>SERIAL</th>
-                            <th>LOCATION</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>    
-                </table>
-                @endrole
-                @role('admin|encoder|sales|viewer|approver - sales')  {{---ROLES---}}
-                <table id="transItems1" class="table transItems1 display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
-                    <thead>                            
-                        <tr>
-                            <th>CATEGORY</th>
-                            <th>ITEM DESCRIPTION</th>
-                            <th>QTY</th>
-                            <th>UOM</th>
-                            <th>SERIAL</th>
-                            <th>LOCATION</th>
-                        </tr>
-                    </thead>    
-                </table> 
-                @endrole
-                <br>
-                <hr>
-                @role('sales')  {{---ROLES---}}
-                <button type="button" id="btnReceive" class="btn btn-primary mr-auto float-right bp">
-                    RECEIVE</button>
-                @endrole
-                <button type="button" class="btnPrint btn btn-primary mr-auto bp">
-                    PRINT PREVIEW</button>
-                <br><br>
+        <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">
+            <h6 id="modalheader" class="modal-title w-100">FOR RECEIVING ITEM DETAILS</h6>
+        </div><br>      
+        <div class="modal-body">
+            <div class="form-inline" style="margin-left:35px;">
+                <label class="form-control form-control-sm" style="width:160px; margin-bottom: 10px;">Scheduled By</label>
+                <input class="form-control form-control-sm" id="prep_by1" style="width:280px; margin-bottom: 10px;" type="text" readonly>
             </div>
+            <div class="form-inline" style="margin-left:35px;">
+                <label class="form-control form-control-sm" style="width:160px;">Scheduled On</label>
+                <input class="form-control form-control-sm" id="sched1" style="width:280px;" type="text" readonly>
             </div>
+            <br>
+            @role('client')  {{---ROLES---}}
+            <table id="transItems" class="table transItems display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+                <thead>                            
+                    <tr>
+                        <th>CATEGORY</th>
+                        <th>ITEM DESCRIPTION</th>
+                        <th>QTY</th>
+                        <th>UOM</th>
+                        <th>SERIAL</th>
+                        <th>LOCATION</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>    
+            </table>
+            @endrole
+            @role('admin|encoder|sales|viewer|approver - sales')  {{---ROLES---}}
+            <table id="transItems1" class="table transItems1 display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+                <thead>                            
+                    <tr>
+                        <th>CATEGORY</th>
+                        <th>ITEM DESCRIPTION</th>
+                        <th>QTY</th>
+                        <th>UOM</th>
+                        <th>SERIAL</th>
+                        <th>LOCATION</th>
+                    </tr>
+                </thead>    
+            </table> 
+            @endrole
+            <br>
+            <hr>
+            @role('sales')  {{---ROLES---}}
+            <button type="button" id="btnReceive" class="btn btn-primary mr-auto float-right bp">
+                RECEIVE</button>
+            @endrole
+            <button type="button" class="btnPrint btn btn-primary mr-auto bp">
+                PRINT PREVIEW</button>
+            <br><br>
+        </div>
+        </div>
     </div>
     </div>
     </div>

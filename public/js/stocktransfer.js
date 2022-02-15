@@ -910,7 +910,7 @@ $("#btnProceed").unbind('click').click(function(){
                         uom.setAttribute("id", "uom"+j);
                         uom.setAttribute("type", "text");
                         uom.setAttribute("class", "form-control");
-                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px; margin-right: 300px;");
                         uom.setAttribute("value", value.uom);
                         document.getElementById("reqContents").appendChild(id);
                         document.getElementById("reqContents").appendChild(x);
@@ -962,7 +962,7 @@ $("#btnProceed").unbind('click').click(function(){
                             var serial = document.createElement("select");
                             serial.setAttribute("id", "serial"+j);
                             serial.setAttribute("class", "form-control serials");
-                            serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px; margin-right: 400px;");
                             document.getElementById("reqContents").appendChild(id);
                             document.getElementById("reqContents").appendChild(x);
                             document.getElementById("reqContents").appendChild(y);

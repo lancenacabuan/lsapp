@@ -413,10 +413,15 @@ class StockTransferController extends Controller
     }
 
     public function transferItems(Request $request){
-        $count = Transfer::query()
-            ->where('request_number', $request->request_number)
-            ->where('items_id',$request->item_id)
-            ->count();
+        if($request->serial == ''){
+            $count = Transfer::query()
+                ->where('request_number', $request->request_number)
+                ->where('items_id',$request->item_id)
+                ->count();
+        }
+        else{
+            $count = 0;
+        }
         if($count == 0){
             $transfer = new Transfer;
             $transfer->request_number = $request->request_number;
@@ -438,7 +443,7 @@ class StockTransferController extends Controller
         if(!$sql){
             $result = 'false';
         }
-        else {
+        else{
             $result = 'true';
         }
         if($result == 'true'){

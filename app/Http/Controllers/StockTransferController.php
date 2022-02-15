@@ -494,4 +494,33 @@ class StockTransferController extends Controller
 
         return DataTables::of($list)->make(true);
     }
+
+    public function printTransferRequest(Request $request){
+        $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS req_date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, users.name AS req_by, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, needdate, locfrom, locto')
+            ->where('request_number', $request->request_number)
+            ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+            ->join('status', 'status.id', '=', 'request_transfer.status')
+            ->orderBy('request_transfer.created_at', 'DESC')
+            ->get();
+        $list = str_replace('[','',$list);
+        $list = str_replace(']','',$list);
+        $list = json_decode($list);
+
+        $list2 = Transfer::selectRaw('users.name AS prep_by, transferred_items.updated_at AS prep_date')
+            ->where('request_number', $request->request_number)
+            ->join('users', 'users.id', '=', 'transferred_items.user_id')
+            ->orderBy('transferred_items.id','DESC')
+            ->first();
+        
+        $list3 = Transfer::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, transferred_items.serial AS serial, transferred_items.qty AS qty, transferred_items.items_id AS item_id, transferred_items.id AS id, locations.location AS location')
+            ->where('request_number', $request->request_number)
+            ->join('items','items.id','transferred_items.items_id')
+            ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','transferred_items.locfrom')
+            ->get()
+            ->sortBy('item')
+            ->sortBy('category');
+            
+        return view('/pages/stockTransfer/printStockTransfer', compact('list','list2','list3'));
+    }
 }

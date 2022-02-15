@@ -413,18 +413,29 @@ class StockTransferController extends Controller
     }
 
     public function transferItems(Request $request){
-        $transfer = new Transfer;
-        $transfer->request_number = $request->request_number;
-        $transfer->user_id = auth()->user()->id;
-        $transfer->items_id = $request->item_id;
-        $transfer->locfrom = $request->locfrom;
-        $transfer->locto = $request->locto;
-        $transfer->serial = $request->serial;
-        $transfer->qty = $request->qty;
-        $transfer->intransit = 'no';
-        $transfer->schedule = $request->schedOn;
-        $saved = $transfer->save();
-        if(!$saved){
+        $count = Transfer::query()
+            ->where('request_number', $request->request_number)
+            ->where('items_id',$request->item_id)
+            ->count();
+        if($count == 0){
+            $transfer = new Transfer;
+            $transfer->request_number = $request->request_number;
+            $transfer->user_id = auth()->user()->id;
+            $transfer->items_id = $request->item_id;
+            $transfer->locfrom = $request->locfrom;
+            $transfer->locto = $request->locto;
+            $transfer->serial = $request->serial;
+            $transfer->qty = $request->qty;
+            $transfer->intransit = 'no';
+            $transfer->schedule = $request->schedOn;
+            $sql = $transfer->save();
+        }
+        else{
+            $sql = Transfer::where('request_number', $request->request_number)
+                ->where('items_id',$request->item_id)
+                ->increment('qty', $request->qty);
+        }
+        if(!$sql){
             $result = 'false';
         }
         else {

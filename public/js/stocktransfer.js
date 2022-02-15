@@ -611,8 +611,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
             { data: 'item'},
             { data: 'qty'},
             { data: 'uom'},
-            { data: 'serial'},
-            { data: 'location'}
+            { data: 'serial'}
         ]
     });
 });
@@ -878,7 +877,7 @@ $("#btnProceed").unbind('click').click(function(){
                     else{
                         var l = value.pending;
                     }
-                    if(ser == '' || ser == ' ' || ser == null || ser == 'N\\\/A' || ser == 'n\\\/a' || ser == 'NONE' || ser == 'None' || ser == 'none'){
+                    if(ser == '' || ser == ' ' || ser == null || ser == 'N\\\\A' || ser == 'N\\\/A' || ser == 'n\\\/a' || ser == 'NONE' || ser == 'None' || ser == 'none'){
                         $('#btnSubmit').prop('disabled', false);
                         var id = document.createElement("input");
                         id.setAttribute("id", "item_id"+j);
@@ -918,7 +917,7 @@ $("#btnProceed").unbind('click').click(function(){
                         document.getElementById("reqContents").appendChild(y);
                         document.getElementById("reqContents").appendChild(qty);
                         document.getElementById("reqContents").appendChild(uom);
-                        document.getElementById("reqContents").appendChild(z);
+                        // document.getElementById("reqContents").appendChild(z);
                         $("#item"+j).html(value.item); 
                         $("#category"+j).prop('readonly', true);
                         $("#item"+j).prop('readonly', true);
@@ -970,7 +969,7 @@ $("#btnProceed").unbind('click').click(function(){
                             document.getElementById("reqContents").appendChild(qty);
                             document.getElementById("reqContents").appendChild(uom);
                             document.getElementById("reqContents").appendChild(serial);
-                            document.getElementById("reqContents").appendChild(z);
+                            // document.getElementById("reqContents").appendChild(z);
                             $("#item"+j).html(value.item); 
                             $("#category"+j).prop('readonly', true);
                             $("#item"+j).prop('readonly', true);
@@ -1129,11 +1128,11 @@ $("#btnBack").on('click', function(){
     $("#reqContents").empty();      
 });
 
-$(document).on('click','.btnPrint', function(){
+$(document).on('click', '.btnPrint', function(){
     window.location.href = '/printTransferRequest?request_number='+$('#reqnum_details').val();
 });
 
-$(document).on('click','#btnPrint', function(){
+$(document).on('click', '#btnPrint', function(){
     var printContents=document.getElementById('printPage').innerHTML;
     var originalContents=document.body.innerHTML;
     document.body.innerHTML=printContents;
@@ -1141,7 +1140,7 @@ $(document).on('click','#btnPrint', function(){
     document.body.innerHTML=originalContents;
 });
 
-$(document).on('click','#btnSavePDF', function(){
+$(document).on('click', '#btnSavePDF', function(){
     swal({
         title: "SAVE AS PDF?",
         text: "You are about to SAVE this Stock Request as PDF!",

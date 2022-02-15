@@ -1128,6 +1128,47 @@ $("#btnBack").on('click', function(){
     $("#reqContents").empty();      
 });
 
+$(document).on('click', '#btnTransit', function(){
+    swal({
+        title: "FOR RECEIVING?",
+        text: "You are about to move these items FOR RECEIVING!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type:'get',
+                url:'/forReceiving',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                        },
+                data:{
+                    'request_number': $('#reqnum_details').val()
+                },
+                success: function (data){
+                    if(data == 'true'){
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("FOR RECEIVING SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                    }
+                    else{
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("FOR RECEIVING FAILED", "STOCK TRANSFER REQUEST", "error");
+                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                    }
+                },
+                error: function (data) {
+                    if(data.status == 401) {
+                        window.location.href = '/stocktransfer';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });    
+});
+
 $(document).on('click', '.btnPrint', function(){
     window.location.href = '/printTransferRequest?request_number='+$('#reqnum_details').val();
 });

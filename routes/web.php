@@ -99,6 +99,7 @@ Route::get('/settransserials', [StockTransferController::class, 'settransserials
 Route::any('/transferItems', [StockTransferController::class, 'transferItems']);
 Route::any('/logTransSched', [StockTransferController::class, 'logTransSched']);
 Route::get('/transItems', [StockTransferController::class, 'transItems']);
+Route::any('/forReceiving', [StockTransferController::class, 'forReceiving']);
 Route::get('/printTransferRequest', [StockTransferController::class, 'printTransferRequest']);
 //
 

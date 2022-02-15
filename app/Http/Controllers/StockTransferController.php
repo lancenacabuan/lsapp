@@ -511,6 +511,32 @@ class StockTransferController extends Controller
         return DataTables::of($list)->make(true);
     }
 
+    public function forReceiving(Request $request){
+        // RequestTransfer::where('request_number', $request->request_number)
+        //     ->where('status','2')
+        //     ->update(['status' => '3']);
+
+        // RequestTransfer::where('request_number', $request->request_number)
+        //     ->where('status','5')
+        //     ->update(['status' => '4']);
+        
+        // Transfer::where('request_number', $request->request_number)
+        //     ->update(['intransit' => 'yes']);
+
+        $list = Transfer::select('items_id','request_number','locfrom','locto','serial','qty')
+            ->where('request_number', $request->request_number)
+            ->get();
+
+        return response()->json($list);
+
+        // $userlogs = new UserLogs;
+        // $userlogs->user_id = auth()->user()->id;
+        // $userlogs->activity = "FOR RECEIVING STOCK TRANSFER REQUEST: User successfully processed for receiving Stock Transfer Request No. $request->request_number.";
+        // $userlogs->save();
+
+        // return response('true');
+    }
+
     public function printTransferRequest(Request $request){
         $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS req_date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, users.name AS req_by, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, needdate, locfrom, locto')
             ->where('request_number', $request->request_number)

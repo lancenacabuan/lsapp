@@ -208,17 +208,33 @@ class StockRequestController extends Controller
     }
 
     public function prepareItems(Request $request){
-        $prepare = new Prepare;
-        $prepare->request_number = $request->request_number;
-        $prepare->user_id = auth()->user()->id;
-        $prepare->items_id = $request->item_id;
-        $prepare->location = $request->location;
-        $prepare->serial = $request->serial;
-        $prepare->qty = $request->qty;
-        $prepare->intransit = 'no';
-        $prepare->schedule = $request->schedOn;
-        $saved = $prepare->save();
-        if(!$saved){
+        if($request->serial == ''){
+            $count = Prepare::query()
+                ->where('request_number', $request->request_number)
+                ->where('items_id',$request->item_id)
+                ->count();
+        }
+        else{
+            $count = 0;
+        }
+        if($count == 0){
+            $prepare = new Prepare;
+            $prepare->request_number = $request->request_number;
+            $prepare->user_id = auth()->user()->id;
+            $prepare->items_id = $request->item_id;
+            $prepare->location = $request->location;
+            $prepare->serial = $request->serial;
+            $prepare->qty = $request->qty;
+            $prepare->intransit = 'no';
+            $prepare->schedule = $request->schedOn;
+            $sql = $prepare->save();
+        }
+        else{
+            $sql = Prepare::where('request_number', $request->request_number)
+                ->where('items_id',$request->item_id)
+                ->increment('qty', $request->qty);
+        }
+        if(!$sql){
             $result = 'false';
         }
         else {

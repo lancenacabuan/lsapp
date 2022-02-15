@@ -801,7 +801,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
             if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
                 $("#btnDelete").hide();
             }
-            if(data.status_id == '6'){
+            if(data.status_id == '6' || data.status_id == '2'){
                 $("#btnProceed").hide();
             }
             if(data.status_id == '2' || data.status_id == '5'){

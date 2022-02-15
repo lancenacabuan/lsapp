@@ -515,7 +515,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         $("#btnDelete").hide();
         btnDel = 12;
     }
-    if(data.status_id == '6'){
+    if(data.status_id == '6' || data.status_id == '2'){
         $("#btnProceed").hide();
     }
     if(data.status_id == '2' || data.status_id == '5'){

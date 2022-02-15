@@ -92,7 +92,6 @@ $(document).ready(function(){
         var j = 0;
         $("#stockDetailsrequest *").prop('disabled',true);
         $("#btnProceed").hide();
-        $("#btnDelete").hide();
         $("#requestItems").slideDown();
         for(var i=0; i < items.length; i++){
             $.ajax({ 
@@ -400,7 +399,6 @@ $(document).ready(function(){
         $('#btnSubmit').prop('disabled', true);
         $("#requestItems").hide();
         $("#btnProceed").show();
-        $("#btnDelete").show();
         $("#reqContents").empty();      
     });
     

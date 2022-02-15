@@ -9,6 +9,7 @@ use App\Models\Item;
 use App\Models\Stock;
 use App\Models\RequestTransfer;
 use App\Models\StockTransfer;
+use App\Models\Transfer;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -344,5 +345,139 @@ class StockTransferController extends Controller
 
         $data = array('result' => $result, 'count' => $count);
         return response()->json($data);
+    }
+
+    public function stocktrans(Request $request){       
+        $list = StockTransfer::select('categories.category AS category', 'items.item AS item', 'items.id AS item_id', 'stock_transfer.quantity AS qty', 'stock_transfer.served AS served', 'stock_transfer.pending AS pending', 'items.UOM AS uom')
+            ->where('stock_transfer.item', $request->item_id)
+            ->where('stock_transfer.request_number', $request->reqnum)
+            ->where('stocks.status','in')
+            ->whereIn('stocks.location_id',[$request->location])
+            ->join('categories','categories.id','=','stock_transfer.category')
+            ->join('items','items.id','=','stock_transfer.item')
+            ->join('stocks','stocks.item_id','stock_transfer.item')
+            ->join('locations','locations.id','stocks.location_id')
+            ->groupBy('category','item','item_id','qty','served','pending', 'uom')
+            ->get();
+
+        return DataTables::of($list)
+        ->addColumn('qtybal', function (StockTransfer $list){
+            $stocks = Stock::query()
+                ->where('item_id', $list->item_id)
+                ->whereIn('location_id', ['5'])
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('qtymal', function (StockTransfer $list){
+            $stocks = Stock::query()
+                ->where('item_id', $list->item_id)
+                ->whereIn('location_id', ['6'])
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('serialbal', function (StockTransfer $list){
+            $stocks = Stock::query()->select('serial')
+                ->where('item_id', $list->item_id)
+                ->whereIn('location_id', ['5'])
+                ->where('status', 'in')
+                ->first();
+            $stocks = str_replace('{"serial":"','',$stocks);
+            $stocks = str_replace('"}','',$stocks);
+            $stocks = str_replace('{"serial":null}','',$stocks);
+            return $stocks;
+        })
+        ->addColumn('serialmal', function (StockTransfer $list){
+            $stocks = Stock::query()->select('serial')
+                ->where('item_id', $list->item_id)
+                ->whereIn('location_id', ['6'])
+                ->where('status', 'in')
+                ->first();
+            $stocks = str_replace('{"serial":"','',$stocks);
+            $stocks = str_replace('"}','',$stocks);
+            $stocks = str_replace('{"serial":null}','',$stocks);
+            return $stocks;
+        })
+        ->toJson();
+    }
+
+    public function settransserials(Request $request){
+        $list = Stock::select('serial','location_id')
+            ->where('stocks.item_id', $request->item_id)
+            ->where('stocks.status','in')
+            ->whereIn('stocks.location_id',[$request->location])
+            ->get();
+        
+        return response()->json($list);
+    }
+
+    public function transferItems(Request $request){
+        $transfer = new Transfer;
+        $transfer->request_number = $request->request_number;
+        $transfer->user_id = auth()->user()->id;
+        $transfer->items_id = $request->item_id;
+        $transfer->locfrom = $request->locfrom;
+        $transfer->locto = $request->locto;
+        $transfer->serial = $request->serial;
+        $transfer->qty = $request->qty;
+        $transfer->intransit = 'no';
+        $transfer->schedule = $request->schedOn;
+        $saved = $transfer->save();
+        if(!$saved){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        if($result == 'true'){
+            if($request->serial != ''){
+                Stock::where('item_id',$request->item_id)
+                    ->whereIn('location_id',[$request->locfrom])
+                    ->where('status','in')
+                    ->where('serial',$request->serial)
+                    ->orderBy('id')->limit(1)
+                    ->update(['status' => 'trans', 'location_id' => $request->locto]);
+            }
+            else{
+                Stock::where('item_id',$request->item_id)
+                    ->whereIn('location_id',[$request->locfrom])
+                    ->where('status','in')
+                    ->orderBy('id')->limit($request->qty)
+                    ->update(['status' => 'trans', 'location_id' => $request->locto]);
+            }
+            
+            StockTransfer::where('request_number', $request->request_number)
+                ->where('item',$request->item_id)
+                ->increment('served', $request->qty);
+
+            StockTransfer::where('request_number', $request->request_number)
+                ->where('item',$request->item_id)
+                ->decrement('pending', $request->qty);
+
+            RequestTransfer::where('request_number', $request->request_number)
+                ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn]);
+
+            $total = StockTransfer::where('request_number', $request->request_number)->sum('pending');
+            if($total == 0){
+                RequestTransfer::where('request_number', $request->request_number)
+                    ->update(['status' => '2']);
+            }
+            else{
+                RequestTransfer::where('request_number', $request->request_number)
+                    ->update(['status' => '5']);
+            }
+        }
+        
+        return response($result);
+    }
+
+    public function logTransSched(Request $request){
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "SCHEDULED STOCK TRANSFER REQUEST: User successfully scheduled on $request->schedOn Stock Transfer Request No. $request->request_number.";
+        $userlogs->save();
+        
+        return true;
     }
 }

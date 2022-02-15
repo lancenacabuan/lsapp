@@ -94,6 +94,10 @@ Route::any('/disapproveTransfer', [StockTransferController::class, 'disapproveTr
 Route::any('/receiveTransfer', [StockTransferController::class, 'receiveTransfer']);
 Route::any('/deleteTransfer', [StockTransferController::class, 'deleteTransfer']);
 Route::any('/delTransItem', [StockTransferController::class, 'delTransItem']);
+Route::get('/stocktrans', [StockTransferController::class, 'stocktrans']);
+Route::get('/settransserials', [StockTransferController::class, 'settransserials']);
+Route::any('/transferItems', [StockTransferController::class, 'transferItems']);
+Route::any('/logTransSched', [StockTransferController::class, 'logTransSched']);
 //
 
 //Assembly

@@ -73,6 +73,21 @@ $(function(){
     $('#needdate').attr('min', maxDate);
 });
 
+$(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();    
+    var maxDate = year + '-' + month + '-' + day;
+
+    $('#schedOn').attr('min', maxDate);
+});
+
 $('#locfrom').on('change', function(){
     $("#item").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
     $('#qty').val('');
@@ -517,6 +532,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
     }
 
+    $('table.transferDetails').dataTable().fnDestroy();
     $('table.transferDetails').DataTable({ 
         columnDefs: [
             {
@@ -745,4 +761,345 @@ $(document).on('click', '#btnReason', function(){
             });
         }
     }); 
+});
+
+$('table.transferDetails').DataTable().on('select', function () {
+    var rowselected = stockdetails.rows( { selected: true } ).data();
+    var rowcount = stockdetails.rows( { selected: true } ).count();
+    if(rowselected.length > 0){
+        for(var i=0; i<rowcount; i++){
+            if(rowselected[i].stock == 0){
+                $('#btnProceed').prop('disabled', true);
+                requestdetails.rows( { selected: true } ).deselect();
+                return false;
+            }
+            else{
+                $('#btnProceed').prop('disabled', false);
+            }
+        }  
+    }
+});
+
+var items = [];
+$('.transferDetails tbody').on('click', 'tr', function(){
+    var pend = $('#transferDetails').DataTable().cell(this,3).data();
+    var item_id = $('#transferDetails').DataTable().cell(this,5).data();
+    var bal = $('#transferDetails').DataTable().cell(this,10).data();
+    var mal = $('#transferDetails').DataTable().cell(this,11).data();
+    if($('#locfrom_details').val() == 5){
+        var stock = bal;
+    }
+    if($('#locfrom_details').val() == 6){
+        var stock = mal;
+    }
+
+    if(pend == 0){
+        swal('Item is fullfiled!','','success');
+    }
+    else if(stock == 0){
+        swal('Item out of stock!','','error');
+    }
+    else{
+        $(this).toggleClass('selected');
+        if(items.includes(item_id) == true){
+            items = items.filter(item => item !== item_id);
+        }
+        else {
+            items.push(item_id);
+        }
+    }
+    if(items.length == 0){
+        $('#btnProceed').prop('disabled', true);
+    }
+    else{
+        $('#btnProceed').prop('disabled', false);
+    }
+});
+
+$("#btnProceed").unbind('click').click(function(){
+    var reqnum = $('#reqnum_details').val();
+    var j = 0;
+    $("#transferDetails *").prop('disabled',true);
+    $("#btnProceed").hide();
+    $("#requestItems").slideDown();
+    for(var i=0; i < items.length; i++){
+        $.ajax({ 
+            type:'get', 
+            url:'/stocktrans', 
+            data:{
+                'reqnum': reqnum,
+                'location': $('#locfrom_details').val(),
+                'item_id': items[i]
+            }, 
+            success:function(data) {
+                var transitem = $.map(data.data, function(value) { 
+                    return [value];
+                });
+
+                transitem.forEach(value => {
+                    if($('#locfrom_details').val() == 5){
+                        var qtystock = value.qtybal;
+                        var ser = value.serialbal;
+                        var selOption = "<option value='5' selected>BALINTAWAK</option>";
+                    }
+                    if($('#locfrom_details').val() == 6){
+                        var qtystock = value.qtymal;
+                        var ser = value.serialmal;
+                        var selOption = "<option value='6' selected>MALABON</option>";
+                    }
+                    if(qtystock <= value.pending){
+                        var l = qtystock;
+                    }
+                    else{
+                        var l = value.pending;
+                    }
+                    if(ser == '' || ser == ' ' || ser == null || ser == 'N\\\/A' || ser == 'n\\\/a' || ser == 'NONE' || ser == 'None' || ser == 'none'){
+                        $('#btnSubmit').prop('disabled', false);
+                        var id = document.createElement("input");
+                        id.setAttribute("id", "item_id"+j);
+                        id.setAttribute("type", "hidden");
+                        id.setAttribute("value", value.item_id);
+                        var x = document.createElement("input");
+                        x.setAttribute("id", "category"+j);
+                        x.setAttribute("type", "text");
+                        x.setAttribute("class", "form-control");
+                        x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
+                        x.setAttribute("value", value.category);
+                        var y = document.createElement("textarea");
+                        y.setAttribute("id", "item"+j);
+                        y.setAttribute("class", "form-control");
+                        y.setAttribute("rows", "4");
+                        y.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-top: 52px; margin-bottom: 10px; resize: none;");
+                        var z = document.createElement("select");
+                        z.setAttribute("id", "location"+j);
+                        z.setAttribute("class", "form-control");
+                        z.setAttribute("style", "width: 150px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        var qty = document.createElement("input");
+                        qty.setAttribute("id", "qty"+j);
+                        qty.setAttribute("type", "number");
+                        qty.setAttribute("class", "form-control qty");
+                        qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        qty.setAttribute("max", l);
+                        qty.setAttribute("min", '1');
+                        qty.setAttribute("value", l);
+                        var uom = document.createElement("input");
+                        uom.setAttribute("id", "uom"+j);
+                        uom.setAttribute("type", "text");
+                        uom.setAttribute("class", "form-control");
+                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        uom.setAttribute("value", value.uom);
+                        document.getElementById("reqContents").appendChild(id);
+                        document.getElementById("reqContents").appendChild(x);
+                        document.getElementById("reqContents").appendChild(y);
+                        document.getElementById("reqContents").appendChild(qty);
+                        document.getElementById("reqContents").appendChild(uom);
+                        document.getElementById("reqContents").appendChild(z);
+                        $("#item"+j).html(value.item); 
+                        $("#category"+j).prop('readonly', true);
+                        $("#item"+j).prop('readonly', true);
+                        $("#uom"+j).prop('readonly', true);
+                        $("#location"+j).prop('disabled', true);
+                        $("#location"+j).append(selOption);
+                        j++;
+                    }
+                    else{
+                        for(var k=0; k < l; k++){
+                            var id = document.createElement("input");
+                            id.setAttribute("id", "item_id"+j);
+                            id.setAttribute("type", "hidden");
+                            id.setAttribute("value", value.item_id);
+                            var x = document.createElement("input");
+                            x.setAttribute("id", "category"+j);
+                            x.setAttribute("type", "text");
+                            x.setAttribute("class", "form-control");
+                            x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
+                            x.setAttribute("value", value.category);
+                            var y = document.createElement("textarea");
+                            y.setAttribute("id", "item"+j);
+                            y.setAttribute("class", "form-control");
+                            y.setAttribute("rows", "4");
+                            y.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-top: 52px; margin-bottom: 10px; resize: none;");
+                            var z = document.createElement("select");
+                            z.setAttribute("id", "location"+j);
+                            z.setAttribute("class", "form-control");
+                            z.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            var qty = document.createElement("input");
+                            qty.setAttribute("id", "qty"+j);
+                            qty.setAttribute("type", "number");
+                            qty.setAttribute("class", "form-control");
+                            qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            qty.setAttribute("value", '1');
+                            var uom = document.createElement("input");
+                            uom.setAttribute("id", "uom"+j);
+                            uom.setAttribute("type", "text");
+                            uom.setAttribute("class", "form-control");
+                            uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            uom.setAttribute("value", value.uom);
+                            var serial = document.createElement("select");
+                            serial.setAttribute("id", "serial"+j);
+                            serial.setAttribute("class", "form-control serials");
+                            serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            document.getElementById("reqContents").appendChild(id);
+                            document.getElementById("reqContents").appendChild(x);
+                            document.getElementById("reqContents").appendChild(y);
+                            document.getElementById("reqContents").appendChild(qty);
+                            document.getElementById("reqContents").appendChild(uom);
+                            document.getElementById("reqContents").appendChild(serial);
+                            document.getElementById("reqContents").appendChild(z);
+                            $("#item"+j).html(value.item); 
+                            $("#category"+j).prop('readonly', true);
+                            $("#item"+j).prop('readonly', true);
+                            $("#qty"+j).prop('readonly', true);
+                            $("#uom"+j).prop('readonly', true);
+                            $("#location"+j).prop('disabled', true);
+                            $("#location"+j).append(selOption);
+                            $("#serial"+j).append("<option value='' selected>Select Serial</option>");
+                            let vid = "#serial"+j;
+                            $.ajax({ 
+                                type:'get', 
+                                url:'/settransserials', 
+                                data:{
+                                    'item_id': value.item_id,
+                                    'location': $('#locfrom_details').val()
+                                }, 
+                                success:function(d) {   
+                                    var s = $.map(d, function(v) { 
+                                        return [v];
+                                    });
+                
+                                    s.forEach(v => {             
+                                        $(vid).append($('<option>', {
+                                            value: v.serial,
+                                            text: v.serial
+                                        }));
+                                    });
+                                    $(vid).chosen();
+                                },
+                                error: function (data) {
+                                    if(data.status == 401) {
+                                        window.location.href = '/stocktransfer';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                            j++;
+                        }
+                    }
+                });
+                $('.serials').on('change', function(){
+                    $('.serials option').show();
+                    $('.serials').each(function(){
+                        var $this = $(this);
+                        $('.serials').not($this).find('option').each(function(){
+                            if($(this).attr('value') == $this.val()){
+                                $(this).hide();
+                            }
+                        });
+                    });
+                    $('select option:contains("Select Serial")').show();
+                    $('.serials').trigger("chosen:updated");
+                });
+                for(var m=0; m < j; m++){
+                    $('#serial'+m).on('change', function(){
+                        if($('.serials').filter(function() { return !!this.value; }).length == 0) {
+                            $('#btnSubmit').prop('disabled', true);
+                        }
+                        else{
+                            $('#btnSubmit').prop('disabled', false);
+                        }
+                    });
+                }
+                $("#btnSubmit").unbind('click').click(function(){
+                    if(!$("#schedOn").val()){
+                        swal('Scheduled On is required!','','error');
+                        return false;
+                    }
+                    else{
+                        swal({
+                            title: "SCHEDULE STOCK REQUEST?",
+                            text: "You are about to SCHEDULE this STOCK REQUEST!",
+                            icon: "warning",
+                            buttons: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                for(var n=0; n < j; n++){
+                                    if($('#serial'+n).val() != ''){
+                                        $.ajax({
+                                            type:'post',
+                                            url:'/transferItems',
+                                            headers: {
+                                                'X-CSRF-TOKEN': $("#csrf").val()
+                                            },
+                                            data:{
+                                                'request_number': reqnum,
+                                                'item_id': $('#item_id'+n).val(),
+                                                'category': $('#category'+n).val(),
+                                                'item': $('#item'+n).val(),
+                                                'qty': $('#qty'+n).val(),
+                                                'serial': $('#serial'+n).find('option:selected').text(),
+                                                'locfrom': $('#locfrom_details').val(),
+                                                'locto': $('#locto_details').val(),
+                                                'schedOn': $('#schedOn').val()
+                                            },
+                                            success: function (data){
+                                                if(data == 'true'){
+                                                    return true;
+                                                }
+                                                else{
+                                                    return false;
+                                                }
+                                            },
+                                            error: function (data) {
+                                                if(data.status == 401) {
+                                                    window.location.href = '/stocktransfer';
+                                                }
+                                                alert(data.responseText);
+                                            }
+                                        });
+                                    }
+                                }
+                                $.ajax({
+                                    type:'post',
+                                    url:'/logTransSched',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                    },
+                                    data:{
+                                        'request_number': reqnum,
+                                        'schedOn': $('#schedOn').val()
+                                    },
+                                    success: function (){
+                                        $('#stockRequestDetails').hide();
+                                        sweetAlert("SCHEDULED SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                                    },
+                                    error: function (data) {
+                                        if(data.status == 401) {
+                                            window.location.href = '/stocktransfer';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
+                            }
+                        }); 
+                    }
+                });
+            },
+            error: function (data) {
+                if(data.status == 401) {
+                    window.location.href = '/stocktransfer';
+                }
+                alert(data.responseText);
+            }
+        }); 
+    }
+});
+
+$("#btnBack").on('click', function(){
+    $("#transferDetails *").prop('disabled',false);
+    $('#btnSubmit').prop('disabled', true);
+    $("#requestItems").hide();
+    $("#btnProceed").show();
+    $("#reqContents").empty();      
 });

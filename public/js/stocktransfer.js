@@ -268,8 +268,8 @@ $(document).on('click', '#btnSave', function(){
     if($('#needdate').val() && $('#locfrom').val() && $('#locto').val())
     {
         swal({
-            title: "SAVE STOCK TRANSFER REQUEST?",
-            text: "You are about to SAVE this STOCK TRANSFER REQUEST!",
+            title: "SUBMIT STOCK TRANSFER REQUEST?",
+            text: "You are about to SUBMIT this STOCK TRANSFER REQUEST!",
             icon: "warning",
             buttons: true,
         })
@@ -307,12 +307,12 @@ $(document).on('click', '#btnSave', function(){
                                     success: function (data){
                                         if(data == 'true'){
                                             $('#newStockTransfer').hide();
-                                            sweetAlert("SAVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                                            sweetAlert("SUBMIT SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                             setTimeout(function(){location.href="/stocktransfer"} , 2000);
                                         }
                                         else{
                                             $('#newStockTransfer').hide();
-                                            sweetAlert("SAVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                                            sweetAlert("SUBMIT FAILED", "STOCK TRANSFER REQUEST", "error");
                                             setTimeout(function(){location.href="/stocktransfer"} , 2000);
                                         }
                                     },
@@ -347,7 +347,7 @@ $(document).on('click', '#btnSave', function(){
                         }
                         else{
                             $('#newStockTransfer').hide();
-                            sweetAlert("SAVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                            sweetAlert("SUBMIT FAILED", "STOCK TRANSFER REQUEST", "error");
                             setTimeout(function(){location.href="/stocktransfer"} , 2000);
                         }
                     },

@@ -560,8 +560,8 @@ $(document).on('click','#requestSave', function(){
     if($('#request_type').val() && $('#client_name').val() && $('#location').val())
     {
         swal({
-            title: "SAVE STOCK REQUEST?",
-            text: "You are about to SAVE this STOCK REQUEST!",
+            title: "SUBMIT STOCK REQUEST?",
+            text: "You are about to SUBMIT this STOCK REQUEST!",
             icon: "warning",
             buttons: true,
         })
@@ -601,12 +601,12 @@ $(document).on('click','#requestSave', function(){
                                     success: function (data){
                                         if(data == 'true'){
                                             $('#newStockRequest').hide();
-                                            sweetAlert("SAVE SUCCESS", "STOCK REQUEST", "success");
+                                            sweetAlert("SUBMIT SUCCESS", "STOCK REQUEST", "success");
                                             setTimeout(function(){location.href="/stockrequest"} , 2000);
                                         }
                                         else{
                                             $('#newStockRequest').hide();
-                                            sweetAlert("SAVE FAILED", "STOCK REQUEST", "error");
+                                            sweetAlert("SUBMIT FAILED", "STOCK REQUEST", "error");
                                             setTimeout(function(){location.href="/stockrequest"} , 2000);
                                         }
                                     },
@@ -641,7 +641,7 @@ $(document).on('click','#requestSave', function(){
                         }
                         else{
                             $('#newStockRequest').hide();
-                            sweetAlert("SAVE FAILED", "STOCK REQUEST", "error");
+                            sweetAlert("SUBMIT FAILED", "STOCK REQUEST", "error");
                             setTimeout(function(){location.href="/stockrequest"} , 2000);
                         }
                     },

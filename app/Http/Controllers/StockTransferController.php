@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Mail\emailForApproval;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Stock;
@@ -14,6 +15,7 @@ use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class StockTransferController extends Controller
 {
@@ -121,6 +123,55 @@ class StockTransferController extends Controller
     }
 
     public function logTransSave(Request $request){
+        $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, needdate, locfrom, locto')
+            ->where('request_transfer.request_number', $request->request_number)
+            ->get();
+
+            $request_details = str_replace('[','',$request_details);
+            $request_details = str_replace(']','',$request_details);
+            $request_details = json_decode($request_details);
+        
+        $items = StockTransfer::query()->select('categories.category AS category','items.item AS item','quantity')
+            ->join('categories', 'categories.id', 'stock_transfer.category')
+            ->join('items', 'items.id', 'stock_transfer.item')
+            ->where('request_number', $request->request_number)
+            ->get();
+        
+        if($request_details->locfrom == 5){
+            $locfrom = 'BALINTAWAK';
+        }
+        if($request_details->locfrom == 5){
+            $locfrom = 'MALABON';
+        }
+        if($request_details->locto == 1){
+            $locto = 'A1';
+        }
+        if($request_details->locto == 2){
+            $locto = 'A2';
+        }
+        if($request_details->locto == 3){
+            $locto = 'A3';
+        }
+        if($request_details->locto == 4){
+            $locto = 'A4';
+        }
+        $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
+        $user = User::role('approver - warehouse')->get();
+        foreach($user as $key){
+            $details = [
+                'name' => ucwords($key->name),
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => auth()->user()->name,
+                'needdate' => $request_details->needdate,
+                'locfrom' => $locfrom,
+                'locto' => $locto,
+                'role' => 'Approver - Warehouse',
+                'items' => $items
+            ];
+            Mail::to($key->email)->send(new emailForApproval($details, $subject));
+        }
+        
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "NEW STOCK TRANSFER REQUEST: User successfully saved Stock Transfer Request No. $request->request_number.";
@@ -305,11 +356,11 @@ class StockTransferController extends Controller
 
     public function deleteTransfer(Request $request){
         do{
-            $sqlquery = StockTransfer::where('request_number', $request->request_number)->delete();
+            $sqlquery = RequestTransfer::where('request_number', $request->request_number)->delete();
         }
         while(!$sqlquery);
         
-        $sql = RequestTransfer::where('request_number', $request->request_number)->delete();
+        $sql = StockTransfer::where('request_number', $request->request_number)->delete();
         
         if(!$sql){
             $result = 'false';

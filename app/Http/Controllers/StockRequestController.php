@@ -477,11 +477,11 @@ class StockRequestController extends Controller
     
     public function deleteRequest(Request $request){
         do{
-            $sqlquery = StockRequest::where('request_number', $request->request_number)->delete();
+            $sqlquery = Requests::where('request_number', $request->request_number)->delete();
         }
         while(!$sqlquery);
         
-        $sql = Requests::where('request_number', $request->request_number)->delete();
+        $sql = StockRequest::where('request_number', $request->request_number)->delete();
         
         if(!$sql){
             $result = 'false';

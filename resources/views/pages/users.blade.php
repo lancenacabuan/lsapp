@@ -7,7 +7,7 @@
     <div class="animate fadeInDown two">
         <h4 class="text-center">USER ACCOUNTS</h4>        
         <div class="container-fluid">
-            <table id="userTable" class="table userTable" style="cursor:pointer; width:100%; border:0px; font-size:12px;">
+            <table id="userTable" class="table userTable" style="cursor:pointer; width:100%; border:0px; font-size:14px;">
                 <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">
                     <tr>
                         <th>ID</th>

@@ -138,8 +138,9 @@ class StockTransferController extends Controller
             ->orderBy('request_transfer.created_at', 'DESC')
             ->get();
         }
-        else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
+        else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
             $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, prepared_by, reason, needdate, locfrom, locto')
+            ->whereNotIn('request_transfer.status', ['7','8'])
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
             ->join('locations', 'locations.id', '=', 'request_transfer.locto')

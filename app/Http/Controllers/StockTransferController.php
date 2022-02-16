@@ -85,12 +85,14 @@ class StockTransferController extends Controller
         $requests->locto = $request->locto;
         $requests->status = '6';
         $sql = $requests->save();
+
         if(!$sql){
             $result = 'false';
         }
         else {
             $result = 'true';
         }
+
         return response($result);
     }
     
@@ -127,8 +129,7 @@ class StockTransferController extends Controller
         return true;
     }
 
-    public function transfer_data()
-    {
+    public function transfer_data(){
         if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
             $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, prepared_by, reason, needdate, locfrom, locto')
             ->whereIn('request_transfer.status', ['6','7'])

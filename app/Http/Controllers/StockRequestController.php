@@ -30,17 +30,17 @@ class StockRequestController extends Controller
         {
             return redirect('/stocktransfer');
         }  
-        $categories= Category::select('id','category')->get()->sortBy('category');
+        $categories = Category::select('id','category')->get()->sortBy('category');
         if(auth()->user()->hasanyRole('sales')){
-            $req_types= RequestType::select('id','name')
+            $req_types = RequestType::select('id','name')
             ->whereIn('id',['2','3','4'])
             ->get();            
         }
         else{
-            $req_types= RequestType::select('id','name')->get()->sortBy('name');
+            $req_types = RequestType::select('id','name')->get()->sortBy('name');
         }
-        $items= Item::select('id','item')->get()->sortBy('item');
-        // $categories= Category::select('categories.id','category')
+        $items = Item::select('id','item')->get()->sortBy('item');
+        // $categories = Category::select('categories.id','category')
         //     ->join('stocks','category_id','categories.id')
         //     ->where('status','in')
         //     ->groupBy('categories.id')
@@ -108,8 +108,7 @@ class StockRequestController extends Controller
         return ($list);
     }
 
-    public function request_data()
-    {
+    public function request_data(){
         if(auth()->user()->hasanyRole('approver - sales')){ //---ROLES---//
             $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.request_type AS req_type, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason')
             ->whereIn('requests.status', ['6','7'])
@@ -192,7 +191,7 @@ class StockRequestController extends Controller
     //         ->where('stocks.status','in')
     //         ->where('stocks.item_id',$request->item_id)
     //         ->count();
-    //     $list=$list-$request->qty;
+    //     $list = $list - $request->qty;
         
     //     return response($list);
     // }
@@ -363,13 +362,15 @@ class StockRequestController extends Controller
         $requests->client_name = ucwords($request->client_name);
         $requests->location = ucwords($request->location);
         $requests->reference = strtoupper($request->reference);
-        $saved = $requests->save();
-        if(!$saved){
+        $sql = $requests->save();
+
+        if(!$sql){
             $result = 'false';
         }
         else {
             $result = 'true';
         }
+
         return response($result);
     }
     

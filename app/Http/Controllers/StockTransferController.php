@@ -526,9 +526,9 @@ class StockTransferController extends Controller
         $list = Transfer::select('items_id','request_number','locfrom','locto','serial','qty')
             ->where('request_number', $request->request_number)
             ->get();
-        foreach ($list as $key) {
+        foreach($list as $key){
             if($key->serial == ''){
-                for($x=0; $x<$key->qty; $x++){
+                for($x = 0; $x < $key->qty; $x++){
                     Stock::where('item_id',$key->items_id)
                     ->where('location_id',$key->locto)
                     ->where('status', 'trans')
@@ -538,7 +538,10 @@ class StockTransferController extends Controller
             }
             else{
                 Stock::where('serial',$key->serial)
+                ->where('item_id',$key->items_id)
+                ->where('location_id',$key->locto)
                 ->where('status', 'trans')
+                ->limit(1)
                 ->update(['status' => 'in']);
             }         
         }

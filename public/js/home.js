@@ -5,6 +5,7 @@ $(document).ready(function () {
             processing: "Loading...",
             emptyTable: "No data found!"
         },
+        scrollX: true,
         processing: true,
         serverSide: true,
         order: [],

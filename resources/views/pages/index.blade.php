@@ -42,7 +42,7 @@
     <div class="container-fluid">
         <div class="panel-body table-responsive "><br>
             <div class="animate fadeInDown two">
-                <table id="user_logs" class="table user_logs" style="width:100%;font-size:12px;">
+                <table id="user_logs" class="table user_logs display nowrap" style="width:100%;font-size:12px;">
                     <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">
                         <tr>
                             <th>DATE</th>

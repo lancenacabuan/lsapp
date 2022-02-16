@@ -24,25 +24,25 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" style="width: 150px;">Fullname</label>
                     </div>
-                    <input type="text" id="name1" name="name1"  style="width: 80%;">
+                    <input type="text" id="name1" name="name1" style="width: 600px;">
                 </div> 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <label class="input-group-text" style="width: 150px;">Email</label>
                     </div>
-                    <input type="email" id="email1" name="email1"  style="width: 80%;">
+                    <input type="email" id="email1" name="email1" style="width: 600px;">
                 </div>
                 {{-- <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <label class="input-group-text" style="width: 150px;">Password</label>
                     </div>
-                    <input type="password" id="password1" name="password1"  style="width: 80%;">
+                    <input type="password" id="password1" name="password1" style="width: 600px;">
                 </div> --}}
                 <div class="input-group mb-3" >
                     <div class="input-group-prepend">
                         <label class="input-group-text" style="width: 150px;">Role</label>
                     </div>
-                    <select class="form-select" id="role1" name="role1" class="form-control">
+                    <select id="role1" name="role1" style="width: 600px !important;">
                         <option selected disabled>Select Role</option>
                         @foreach($role as $roles)
                             <option value="{{$roles->name}}">{{strtoupper($roles->name)}}</option>

@@ -11,7 +11,7 @@
                 <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">
                     <tr>
                         <th>ID</th>
-                        <th>NAME</th>
+                        <th>FULLNAME</th>
                         <th>EMAIL</th>
                         <th>USER LEVEL</th>
                     </tr>

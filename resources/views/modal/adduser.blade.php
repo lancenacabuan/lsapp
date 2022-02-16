@@ -20,7 +20,7 @@
                 <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" style="width: 150px;">Name</label>
+                        <label class="input-group-text" style="width: 150px;">Fullname</label>
                     </div>
                     <input type="text" id="name" name="name"  style="width: 80%;">
                 </div> 

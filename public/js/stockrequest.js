@@ -48,7 +48,7 @@ $(document).ready(function(){
     });
 
     var items = [];
-    $('.stockDetails tbody').on( 'click', 'tr', function () {
+    $('.stockDetails tbody').on('click', 'tr', function () {
         var pend = $('#stockDetailsrequest').DataTable().cell(this,3).data();
         var stock = $('#stockDetailsrequest').DataTable().cell(this,4).data();
         var item_id = $('#stockDetailsrequest').DataTable().cell(this,5).data();
@@ -59,13 +59,13 @@ $(document).ready(function(){
             swal('Item is fullfiled!','','success');
         }
         else if(stock == 0){
-            if(bal != 0 && mal !=0){
+            if(bal != 0 && mal != 0){
                 swal('Item out of stock!','Request Stock Transfer from Balintawak and/or Malabon.','warning');
             }
-            else if(bal != 0 && mal ==0){
+            else if(bal != 0 && mal == 0){
                 swal('Item out of stock!','Request Stock Transfer from Balintawak.','warning');
             }
-            else if(bal == 0 && mal !=0){
+            else if(bal == 0 && mal != 0){
                 swal('Item out of stock!','Request Stock Transfer from Malabon.','warning');
             }
             else{
@@ -87,7 +87,7 @@ $(document).ready(function(){
         else{
             $('#btnProceed').prop('disabled', false);
         }
-    } );
+    });
 
     $("#btnProceed").unbind('click').click(function(){
         var reqnum = $('#request_num_details').val();
@@ -115,7 +115,7 @@ $(document).ready(function(){
                         else{
                             var l = value.pending;
                         }
-                        if(value.serial == '' || value.serial == ' ' || value.serial == null || value.serial == 'N\\\/A' || value.serial == 'n\\\/a' || value.serial == 'NONE' || value.serial == 'None' || value.serial == 'none'){
+                        if(value.serial == '' || value.serial == ' ' || value.serial == null || value.serial == 'N\\\\A' || value.serial == 'N\\\/A' || value.serial == 'n\\\/a' || value.serial == 'NONE' || value.serial == 'None' || value.serial == 'none'){
                             $('#btnSubmit').prop('disabled', false);
                             var id = document.createElement("input");
                             id.setAttribute("id", "item_id"+j);

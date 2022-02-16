@@ -40,6 +40,8 @@ function generatedr() {
         }
     });
 }
+
+$('table.stockDetails').DataTable().on('select', function(){});
 $(document).ready(function(){
     $(".newstockreq").click(function(){
         generatedr();
@@ -1483,22 +1485,6 @@ $(document).on('click','#btnSavePDF', function(){
             html2pdf(content, options);
         }
     });  
-});
-
-$('table.stockDetails').DataTable().on('select', function () {
-    var rowselected = stockdetails.rows( { selected: true } ).data();
-    var rowcount = stockdetails.rows( { selected: true } ).count();
-    if(rowselected.length > 0){
-        for(var i=0;i<rowcount;i++){
-            if (rowselected[i].stock == 0) {
-                $('#btnProceed').prop('disabled', true);
-                requestdetails.rows( { selected: true } ).deselect();
-                return false;
-            }else{
-                $('#btnProceed').prop('disabled', false);
-            }
-        }  
-    }
 });
 
 $(function(){

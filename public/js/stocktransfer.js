@@ -787,23 +787,7 @@ $(document).on('click', '#btnReason', function(){
     }); 
 });
 
-$('table.transferDetails').DataTable().on('select', function () {
-    var rowselected = stockdetails.rows( { selected: true } ).data();
-    var rowcount = stockdetails.rows( { selected: true } ).count();
-    if(rowselected.length > 0){
-        for(var i=0; i<rowcount; i++){
-            if(rowselected[i].stock == 0){
-                $('#btnProceed').prop('disabled', true);
-                requestdetails.rows( { selected: true } ).deselect();
-                return false;
-            }
-            else{
-                $('#btnProceed').prop('disabled', false);
-            }
-        }  
-    }
-});
-
+$('table.transferDetails').DataTable().on('select', function(){});
 var items = [];
 $('.transferDetails tbody').on('click', 'tr', function(){
     var pend = $('#transferDetails').DataTable().cell(this,3).data();

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class emailForApproval extends Mailable
+class emailForRequest extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,6 +32,6 @@ class emailForApproval extends Mailable
     {
         return $this->subject($this->subject)
             ->from('noreply@ideaserv.com.ph')
-            ->view('emails/emailForApproval');
+            ->view('emails/emailForRequest');
     }
 }

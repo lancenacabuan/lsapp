@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Mail\emailForRequest;
 use App\Models\Category;
 use App\Models\Location;
 use App\Models\Stock;
@@ -17,6 +18,7 @@ use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class StockRequestController extends Controller
 {
@@ -399,6 +401,40 @@ class StockRequestController extends Controller
     }
 
     public function logSave(Request $request){
+        $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, reference')
+            ->where('requests.request_number', $request->request_number)
+            ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+            ->get();
+
+            $request_details = str_replace('[','',$request_details);
+            $request_details = str_replace(']','',$request_details);
+            $request_details = json_decode($request_details);
+        
+        $items = StockRequest::query()->select('categories.category AS category','items.item AS item','quantity')
+            ->join('categories', 'categories.id', 'stock_request.category')
+            ->join('items', 'items.id', 'stock_request.item')
+            ->where('request_number', $request->request_number)
+            ->get();
+        
+        $subject = 'STOCK REQUEST NO. '.$request->request_number;
+        $user = User::role('approver - sales')->get();
+        foreach($user as $key){
+            $details = [
+                'name' => ucwords($key->name),
+                'action' => 'STOCK REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => auth()->user()->name,
+                'reqtype' => $request_details->reqtype,
+                'client_name' => $request_details->client_name,
+                'location' => $request_details->location,
+                'reference' => $request_details->reference,
+                'role' => 'Approver - Sales',
+                'items' => $items
+            ];
+            Mail::to($key->email)->send(new emailForRequest($details, $subject));
+        }
+
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "NEW STOCK REQUEST: User successfully saved Stock Request No. $request->request_number.";

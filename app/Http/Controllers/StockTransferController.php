@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Mail\emailForApproval;
+use App\Mail\emailForTransfer;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Stock;
@@ -160,6 +160,7 @@ class StockTransferController extends Controller
         foreach($user as $key){
             $details = [
                 'name' => ucwords($key->name),
+                'action' => 'STOCK TRANSFER REQUEST',
                 'request_number' => $request->request_number,
                 'reqdate' => $request_details->reqdate,
                 'requested_by' => auth()->user()->name,
@@ -169,7 +170,7 @@ class StockTransferController extends Controller
                 'role' => 'Approver - Warehouse',
                 'items' => $items
             ];
-            Mail::to($key->email)->send(new emailForApproval($details, $subject));
+            Mail::to($key->email)->send(new emailForTransfer($details, $subject));
         }
         
         $userlogs = new UserLogs;

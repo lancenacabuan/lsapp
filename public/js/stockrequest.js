@@ -1,3 +1,19 @@
+var minDate;
+$(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();    
+    minDate = year + '-' + month + '-' + day;
+
+    $('#schedOn').attr('min', minDate);
+});
+
 function generatedr() {
     var today = new Date();
     var month = today.getMonth()+1;
@@ -312,7 +328,11 @@ $(document).ready(function(){
                     // }
                     $("#btnSubmit").unbind('click').click(function(){
                         if(!$("#schedOn").val()){
-                            swal('Scheduled On is required!','','error');
+                            swal('Scheduled On is required!','Select within date range starting from today onwards.','error');
+                            return false;
+                        }
+                        else if($("#schedOn").val() < minDate){
+                            swal('Minimum Date is today!','Select within date range starting from today onwards.','error');
                             return false;
                         }
                         else{
@@ -1906,21 +1926,6 @@ $(document).on('click','#btnSavePDF', function(){
             html2pdf(content, options);
         }
     });  
-});
-
-$(function(){
-    var dtToday = new Date();
-    
-    var month = dtToday.getMonth() + 1;
-    var day = dtToday.getDate();
-    var year = dtToday.getFullYear();
-    if(month < 10)
-        month = '0' + month.toString();
-    if(day < 10)
-        day = '0' + day.toString();    
-    var maxDate = year + '-' + month + '-' + day;
-
-    $('#schedOn').attr('min', maxDate);
 });
 
 function copyReqNum() {

@@ -58,6 +58,8 @@ $(".btnNewStockTransfer").on('click', function(){
     generateReqNum();
 });
 
+var minDate;
+var maxDate;
 $(function(){
     var dtToday = new Date();
     
@@ -68,24 +70,10 @@ $(function(){
         month = '0' + month.toString();
     if(day < 10)
         day = '0' + day.toString();    
-    var maxDate = year + '-' + month + '-' + day;
+    minDate = year + '-' + month + '-' + day;
 
-    $('#needdate').attr('min', maxDate);
-});
-
-$(function(){
-    var dtToday = new Date();
-    
-    var month = dtToday.getMonth() + 1;
-    var day = dtToday.getDate();
-    var year = dtToday.getFullYear();
-    if(month < 10)
-        month = '0' + month.toString();
-    if(day < 10)
-        day = '0' + day.toString();    
-    var maxDate = year + '-' + month + '-' + day;
-
-    $('#schedOn').attr('min', maxDate);
+    $('#needdate').attr('min', minDate);
+    $('#schedOn').attr('min', minDate);
 });
 
 $('#locfrom').on('change', function(){
@@ -482,6 +470,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
                     $('#reqdate_details').val(req_date);
                 var need_date = value.needdate;
+                    maxDate = need_date;
                     need_date = moment(need_date).format('dddd, MMMM D, YYYY');
                     $('#needdate_details').val(need_date);
                 var req_num = value.req_num;
@@ -653,6 +642,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
         $('#reqdate_details').val(req_date);
     var need_date = data.needdate;
+        maxDate = need_date;
         need_date = moment(need_date).format('dddd, MMMM D, YYYY');
         $('#needdate_details').val(need_date);
     var req_num = data.req_num;
@@ -1021,6 +1011,7 @@ $("#btnProceed").unbind('click').click(function(){
     $("#transferDetails *").prop('disabled',true);
     $("#btnProceed").hide();
     $("#requestItems").slideDown();
+    $('#schedOn').attr('max', maxDate);
     for(var i=0; i < items.length; i++){
         $.ajax({ 
             type:'get', 
@@ -1210,7 +1201,15 @@ $("#btnProceed").unbind('click').click(function(){
                 }
                 $("#btnSubmit").unbind('click').click(function(){
                     if(!$("#schedOn").val()){
-                        swal('Scheduled On is required!','','error');
+                        swal('Scheduled On is required!','Select within date range from today up to Date Needed.','error');
+                        return false;
+                    }
+                    else if($("#schedOn").val() < minDate){
+                        swal('Minimum Date is today!','Select within date range from today up to Date Needed.','error');
+                        return false;
+                    }
+                    else if($("#schedOn").val() > maxDate){
+                        swal('Exceed Date Needed deadline!','Select within date range from today up to Date Needed.','error');
                         return false;
                     }
                     else{

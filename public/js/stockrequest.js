@@ -795,7 +795,12 @@ $('#stockreqDetails tbody').on('click', 'tr', function () {
                 $("#sd2").show();
                 $("#sd1").hide();
             }
+            if(data.status_id != '6'){
+                $("#btnApprove").hide();
+                $("#btnDisapprove").hide();
+            }
             if(data.status_id == '7'){
+                $("#btnApprove").show();
                 $("#btnDisapprove").hide();
                 $("#reason_label").show();
                 $("#reason_details").show();

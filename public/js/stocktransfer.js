@@ -308,12 +308,12 @@ $(document).on('click', '#btnSave', function(){
                                         if(data == 'true'){
                                             $('#newStockTransfer').hide();
                                             sweetAlert("SUBMIT SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                                            setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                                            setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                         }
                                         else{
                                             $('#newStockTransfer').hide();
                                             sweetAlert("SUBMIT FAILED", "STOCK TRANSFER REQUEST", "error");
-                                            setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                                            setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                         }
                                     },
                                     error: function (data) {
@@ -335,7 +335,7 @@ $(document).on('click', '#btnSave', function(){
                                 },
                                 success: function (){
                                     $('#newStockTransfer').hide();
-                                    setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                                    setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                 },
                                 error: function (data) {
                                     if(data.status == 401) {
@@ -348,7 +348,7 @@ $(document).on('click', '#btnSave', function(){
                         else{
                             $('#newStockTransfer').hide();
                             sweetAlert("SUBMIT FAILED", "STOCK TRANSFER REQUEST", "error");
-                            setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                            setTimeout(function(){location.href="/stocktransfer"}, 2000);
                         }
                     },
                     error: function (data){
@@ -456,6 +456,193 @@ $('table.stocktransferTable').DataTable({
     ]
 });
 
+if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
+    url = window.location.search;
+    reqnum = url.replace('?request_number=', '');
+    var table = $('table.stocktransferTable').DataTable();
+    $.ajax({
+        url: '/transModal',
+        headers: {
+            'X-CSRF-TOKEN': $("#csrf").val(),
+        },
+        dataType: 'json',
+        type: 'get',
+        data: {
+            request_number: reqnum,
+        },
+        success: function(data) {
+            $('#detailsStockTransfer').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            var transitem = $.map(data.data, function(value) { 
+                return [value];
+            });
+            transitem.forEach(value => {
+                var req_date = value.date;
+                    req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
+                    $('#reqdate_details').val(req_date);
+                var need_date = value.needdate;
+                    need_date = moment(need_date).format('dddd, MMMM D, YYYY');
+                    $('#needdate_details').val(need_date);
+                var req_num = value.req_num;
+                    $('#reqnum_details').val(req_num);
+                var req_by = value.req_by;
+                    $('#reqby_details').val(req_by);
+                var status = value.status;
+                    $('#status_details').val(status);
+                var prep_by = value.prep_by;
+                    $('#prep_by').val(prep_by);
+                    $('#prep_by1').val(prep_by);
+                var sched = value.sched;
+                    sched = moment(sched).format('dddd, MMMM D, YYYY');
+                    $('#sched').val(sched);
+                    $('#sched1').val(sched);
+                var locfrom = value.locfrom;
+                    $('#locfrom_details').val(locfrom);
+                var locto = value.locto;
+                    $('#locto_details').val(locto);
+                var reason = value.reason;
+                    $('#reason_details').val(reason);
+                var btnDel = '';
+                var hideCol = '';
+            
+                $('.modal-body').html();
+                $('#detailsStockTransfer').modal('show');
+                if(locfrom == 5){
+                    hideCol = 11;
+                }
+                if(locfrom == 6){
+                    hideCol = 10;
+                }
+                if(value.user_id != $('#current_user').val()){
+                    $("#btnDelete").hide();
+                    btnDel = 12;
+                }
+                else{
+                    $("#btnDelete").show();
+                }
+                if(value.status_id != '6'){
+                    $("#btnApprove").hide();
+                    $("#btnDisapprove").hide();
+                }
+                if(value.status_id == '7'){
+                    $("#btnApprove").show();
+                    $("#btnDisapprove").hide();
+                    $("#reason_label").show();
+                    $("#reason_details").show();
+                }
+                if(value.status_id == '1'|| value.status_id == '2'|| value.status_id == '3' || value.status_id == '4' || value.status_id == '5' || value.status_id == '8'){
+                    $("#btnDelete").hide();
+                    btnDel = 12;
+                }
+                if(value.status_id == '6' || value.status_id == '2'){
+                    $("#btnProceed").hide();
+                }
+                if(value.status_id == '2' || value.status_id == '5'){
+                    $("#schedItemsModal").show();
+                }
+                if(value.status_id == '3' || value.status_id == '4'){
+                    $("#transitItemsModal").show();
+                    $("#btnProceed").hide();
+                }
+                if(value.status_id == '8'){
+                    $("#transitItemsModal").show();
+                    $("#btnProceed").hide();
+                    $("#btnReceive").hide();
+                    document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                }
+            
+                $('table.transferDetails').dataTable().fnDestroy();
+                $('table.transferDetails').DataTable({ 
+                    columnDefs: [
+                        {
+                            "targets": [4,5,6,7,8,9,hideCol,btnDel],
+                            "visible": false
+                        },
+                        {   
+                            "render": function (data, type, row, meta) {
+                                    return '<button class="btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                            },
+                            "defaultContent": '',
+                            "data": null,
+                            "targets": [12]
+                        }
+                    ],
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    language: {
+                        "emptyTable": "No data found!",
+                        "processing": "Loading",
+                    },
+                    processing: true,
+                    serverSide: false,
+                    
+                    ajax: {
+                        url: '/transferDetails',
+                        data: {
+                            reqnum: req_num,
+                        },
+                        dataType: 'json',
+                        error: function(data) {
+                            if(data.status == 401) {
+                                window.location.href = '/stocktransfer';
+                            }
+                            alert(data.responseText);
+                        },
+                    },
+                    columns: [
+                        { data: 'category'},
+                        { data: 'item'},
+                        { data: 'quantity'},
+                        { data: 'pending'},
+                        { data: 'qtystock'},
+                        { data: 'item_id'},
+                        { data: 'qtya1'},
+                        { data: 'qtya2'},
+                        { data: 'qtya3'},
+                        { data: 'qtya4'},
+                        { data: 'qtybal'},
+                        { data: 'qtymal'},
+                        { data: 'item_id'}
+            
+                    ],
+                    orderCellsTop: true,
+                    fixedHeader: true,            
+                });
+                
+                $('table.transItems').DataTable({
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    language: {
+                        processing: "Loading...",
+                        emptyTable: "No data found!"
+                    },
+                    order: [],
+                    ajax: {
+                        url: '/transItems',
+                        data: {
+                            request_number: $('#reqnum_details').val(),
+                        }
+                    },
+                    columns: [
+                        { data: 'category'},
+                        { data: 'item'},
+                        { data: 'qty'},
+                        { data: 'uom'},
+                        { data: 'serial'}
+                    ]
+                });
+            });
+        },
+        error: function(data) {
+            alert(data.responseText);
+        }
+    });
+}
+
 $('#stocktransferTable tbody').on('click', 'tr', function () {
     $('#detailsStockTransfer').modal({
         backdrop: 'static',
@@ -506,7 +693,12 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
     else{
         $("#btnDelete").show();
     }
+    if(data.status_id != '6'){
+        $("#btnApprove").hide();
+        $("#btnDisapprove").hide();
+    }
     if(data.status_id == '7'){
+        $("#btnApprove").show();
         $("#btnDisapprove").hide();
         $("#reason_label").show();
         $("#reason_details").show();
@@ -635,13 +827,13 @@ $(document).on('click', '.btndelItem', function() {
             if(data.result == 'false'){
                 $('#detailsStockTransfer').hide();
                 sweetAlert("DELETE FAILED", "STOCK TRANSFER REQUEST", "error");
-                setTimeout(function(){window.location.reload()} , 2000);
+                setTimeout(function(){window.location.reload()}, 2000);
             }
             else{
                 if(data.count == 0){
                     $('#detailsStockTransfer').hide();
                     sweetAlert("DELETE SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                    setTimeout(function(){window.location.reload()} , 2000);
+                    setTimeout(function(){window.location.reload()}, 2000);
                 }
                 else{
                     $('table.transferDetails').DataTable().ajax.reload();
@@ -674,12 +866,12 @@ $(document).on('click', '#btnDelete', function(){
                     if(data == 'true'){
                         $('#detailsStockTransfer').hide();
                         sweetAlert("DELETE SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                     else{
                         $('#detailsStockTransfer').hide();
                         sweetAlert("DELETE FAILED", "STOCK TRANSFER REQUEST", "error");
-                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                 },
                 error: function (data) {
@@ -715,12 +907,12 @@ $(document).on('click', '#btnApprove', function(){
                     if(data == 'true'){
                         $('#detailsStockTransfer').hide();
                         sweetAlert("APPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                     else{
                         $('#detailsStockTransfer').hide();
                         sweetAlert("APPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
-                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                 },
                 error: function (data) {
@@ -767,13 +959,13 @@ $(document).on('click', '#btnReason', function(){
                         $('#reasonModal').modal('hide');
                         $('#detailsStockTransfer').hide();
                         sweetAlert("DISAPPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                     else{
                         $('#reasonModal').modal('hide');
                         $('#detailsStockTransfer').hide();
                         sweetAlert("DISAPPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
-                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                 },
                 error: function (data) {
@@ -1080,7 +1272,7 @@ $("#btnProceed").unbind('click').click(function(){
                                     success: function (){
                                         $('#stockRequestDetails').hide();
                                         sweetAlert("SCHEDULED SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                     },
                                     error: function (data) {
                                         if(data.status == 401) {
@@ -1134,12 +1326,12 @@ $(document).on('click', '#btnTransit', function(){
                     if(data == 'true'){
                         $('#detailsStockTransfer').hide();
                         sweetAlert("FOR RECEIVING SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                     else{
                         $('#detailsStockTransfer').hide();
                         sweetAlert("FOR RECEIVING FAILED", "STOCK TRANSFER REQUEST", "error");
-                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                 },
                 error: function (data) {
@@ -1175,12 +1367,12 @@ $(document).on('click', '#btnReceive', function(){
                     if(data == 'true'){
                         $('#detailsStockTransfer').hide();
                         sweetAlert("RECEIVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                     else{
                         $('#detailsStockTransfer').hide();
                         sweetAlert("RECEIVE FAILED", "STOCK TRANSFER REQUEST", "error");
-                        setTimeout(function(){location.href="/stocktransfer"} , 2000);
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                 },
                 error: function (data) {

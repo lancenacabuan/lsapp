@@ -27,10 +27,10 @@
             @endforeach 
         </table>
         <br /><br />
-        Kindly login to your {{$details['role']}} account to process this request.<br />
+        Kindly login to your {{$details['role']}} account to process this request on the link below.<br />
         Thank you!
     </p>
-    <a href="https://lance.idsi.com.ph/login">https://lance.idsi.com.ph/login</a>
+    <a href="https://lance.idsi.com.ph/stocktransfer?request_number={{$details['request_number']}}">https://lance.idsi.com.ph/stocktransfer?request_number={{$details['request_number']}}</a>
     <br/><br/>
     This is a system-generated email. Please do not reply.
 </body>

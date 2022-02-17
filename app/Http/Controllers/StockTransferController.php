@@ -224,6 +224,29 @@ class StockTransferController extends Controller
         ->make(true);
     }
 
+    public function transModal(Request $request){
+        $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, prepared_by, reason, needdate, locfrom, locto')
+        ->where('request_transfer.request_number', $request->request_number)
+        ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+        ->join('status', 'status.id', '=', 'request_transfer.status')
+        ->join('locations', 'locations.id', '=', 'request_transfer.locto')
+        ->orderBy('request_transfer.created_at', 'DESC')
+        ->get();
+
+        return DataTables::of($list)
+        ->addColumn('prep_by', function (RequestTransfer $list){
+            $users = User::query()
+                ->select('name')
+                ->where('id', $list->prepared_by)
+                ->get();
+            $users = str_replace("[{\"name\":\"","",$users);
+            $users = str_replace("\"}]","",$users);
+            
+            return $users;
+        })
+        ->toJson();
+    }
+
     public function transferDetails(Request $request){
         $stockreq = StockTransfer::query()->select('categories.category','items.item','items.id as item_id','quantity','served','pending')
             ->join('categories', 'categories.id', 'stock_transfer.category')

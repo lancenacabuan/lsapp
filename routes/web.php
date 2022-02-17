@@ -88,6 +88,7 @@ Route::any('/saveTransReqNum', [StockTransferController::class, 'saveTransReqNum
 Route::any('/saveTransRequest', [StockTransferController::class, 'saveTransRequest']);
 Route::any('/logTransSave', [StockTransferController::class, 'logTransSave']);
 Route::get('/transfer_data', [StockTransferController::class, 'transfer_data']);
+Route::get('/transModal', [StockTransferController::class, 'transModal']);
 Route::get('/transferDetails', [StockTransferController::class, 'transferDetails']);
 Route::any('/approveTransfer', [StockTransferController::class, 'approveTransfer']);
 Route::any('/disapproveTransfer', [StockTransferController::class, 'disapproveTransfer']);

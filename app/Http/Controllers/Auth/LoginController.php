@@ -45,7 +45,7 @@ class LoginController extends Controller
         $userlogs->activity = 'LOG-IN: User successfully logged in!';
         $userlogs->save();
 
-        return redirect('/');
+        // return redirect('/');
     }
 
     protected function logout(){

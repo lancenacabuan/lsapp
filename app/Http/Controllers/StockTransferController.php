@@ -123,19 +123,25 @@ class StockTransferController extends Controller
     }
 
     public function logTransSave(Request $request){
-        $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, needdate, locfrom, locto')
-            ->where('request_transfer.request_number', $request->request_number)
-            ->get();
+        do{
+            $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, needdate, locfrom, locto')
+                ->where('request_transfer.request_number', $request->request_number)
+                ->get();
 
-            $request_details = str_replace('[','',$request_details);
-            $request_details = str_replace(']','',$request_details);
-            $request_details = json_decode($request_details);
+                $request_details = str_replace('[','',$request_details);
+                $request_details = str_replace(']','',$request_details);
+                $request_details = json_decode($request_details);
+        }
+        while(!$request_details);
         
-        $items = StockTransfer::query()->select('categories.category AS category','items.item AS item','quantity')
-            ->join('categories', 'categories.id', 'stock_transfer.category')
-            ->join('items', 'items.id', 'stock_transfer.item')
-            ->where('request_number', $request->request_number)
-            ->get();
+        do{
+            $items = StockTransfer::query()->select('categories.category AS category','items.item AS item','quantity')
+                ->join('categories', 'categories.id', 'stock_transfer.category')
+                ->join('items', 'items.id', 'stock_transfer.item')
+                ->where('request_number', $request->request_number)
+                ->get();
+        }
+        while(!$items);
         
         if($request_details->locfrom == 5){
             $locfrom = 'BALINTAWAK';

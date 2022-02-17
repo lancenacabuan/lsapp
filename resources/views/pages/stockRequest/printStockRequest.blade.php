@@ -33,7 +33,7 @@
             <td colspan="2" height="20" style="font-weight: bold;">Requested By:</td>
             <td colspan="2">{{$list->req_by}}</td>
             <td>&nbsp;</td>
-            <td colspan="2" style="font-weight: bold;">Reference SO/PO No.:</td>
+            <td colspan="2" style="font-weight: bold;" class="tdHide">Reference SO/PO No.:</td>
             <td colspan="2">{{$list->reference}}</td>
         </tr>
         <tr height="20">
@@ -47,14 +47,14 @@
             <td colspan="2" height="20" style="font-weight: bold;">Prepared By:</td>
             <td colspan="2">{{$list2->prep_by}}</td>
             <td>&nbsp;</td>
-            <td colspan="2" style="font-weight: bold;">Client Name:</td>
+            <td colspan="2" style="font-weight: bold;" class="tdHide">Client Name:</td>
             <td colspan="2">{{$list->client_name}}</td>
         </tr>
         <tr height="20">
             <td colspan="2" height="20" style="font-weight: bold;">Request Type:</td>
-            <td colspan="2">{{$list->req_type}}</td>
+            <td colspan="2" id="req_type">{{$list->req_type}}</td>
             <td>&nbsp;</td>
-            <td colspan="2" style="font-weight: bold;">Address / Branch:</td>
+            <td colspan="2" style="font-weight: bold;" class="tdHide">Address / Branch:</td>
             <td colspan="2">{{$list->location}}</td>
         </tr>
         <tr height="20">
@@ -135,6 +135,9 @@ $(document).ready(function(){
     var sched = $('#sched').html();
     sched = moment(sched).format('dddd, MMMM D, YYYY');
     $('#sched').html(sched);
+    if($('#req_type').html() == 'SERVICE UNIT'){
+        $('.tdHide').html('');
+    }
 });
 </script>
 @endsection

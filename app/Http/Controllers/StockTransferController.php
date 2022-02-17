@@ -140,7 +140,7 @@ class StockTransferController extends Controller
         if($request_details->locfrom == 5){
             $locfrom = 'BALINTAWAK';
         }
-        if($request_details->locfrom == 5){
+        if($request_details->locfrom == 6){
             $locfrom = 'MALABON';
         }
         if($request_details->locto == 1){

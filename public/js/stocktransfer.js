@@ -102,7 +102,7 @@ $('#locfrom').on('change', function(){
         success:function(data) {
             $('#category').find('option').remove().end()
             $('#category').append($('<option value="" selected disabled>Select Category</option>'));
-            var list = $.map(data, function(value) { 
+            var list = $.map(data, function(value, index) { 
                 return [value];
             });
 
@@ -137,7 +137,7 @@ $('#category').on('change', function(){
         success:function(data) {
             $('#item').find('option').remove().end()
             $('#item').append($('<option value="" selected disabled>Select Item</option>'));
-            var list = $.map(data, function(value) { 
+            var list = $.map(data, function(value, index) { 
                 return [value];
             });
 
@@ -474,7 +474,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                 backdrop: 'static',
                 keyboard: false
             });
-            var transitem = $.map(data.data, function(value) { 
+            var transitem = $.map(data.data, function(value, index) { 
                 return [value];
             });
             transitem.forEach(value => {
@@ -1031,7 +1031,7 @@ $("#btnProceed").unbind('click').click(function(){
                 'item_id': items[i]
             }, 
             success:function(data) {
-                var transitem = $.map(data.data, function(value) { 
+                var transitem = $.map(data.data, function(value, index) { 
                     return [value];
                 });
 

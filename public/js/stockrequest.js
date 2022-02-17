@@ -104,7 +104,7 @@ $(document).ready(function(){
                     'item_id': items[i]
                 }, 
                 success:function(data) {
-                    var reqitem = $.map(data.data, function(value) { 
+                    var reqitem = $.map(data.data, function(value, index) { 
                         return [value];
                     });
 

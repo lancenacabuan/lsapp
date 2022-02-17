@@ -646,7 +646,12 @@ class StockRequestController extends Controller
             ->get()
             ->sortBy('item')
             ->sortBy('category');
-            
+        
+        if(!$list || !$list2 || !$list3){
+            header("Location: https://lance.idsi.com.ph/stockrequest");
+            exit();
+        }
+
         return view('/pages/stockRequest/printStockRequest', compact('list','list2','list3'));
     }
 }

@@ -57,6 +57,7 @@ Route::get('/stockreq', [StockRequestController::class, 'stockreq']);
 Route::get('/setserials', [StockRequestController::class, 'setserials']);
 Route::get('/setlocation', [StockRequestController::class, 'setlocation']);
 Route::get('/request_data', [StockRequestController::class, 'request_data']);
+Route::get('/reqModal', [StockRequestController::class, 'reqModal']);
 Route::get('/schedItems', [StockRequestController::class, 'schedItems']);
 Route::get('/itemsreq', [StockRequestController::class, 'itemsreq']);
 // Route::get('/itemsqty', [StockRequestController::class, 'itemsqty']);

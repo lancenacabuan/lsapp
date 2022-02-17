@@ -153,6 +153,29 @@ class StockRequestController extends Controller
         ->make(true);
     }
 
+    public function reqModal(Request $request){
+        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.request_type AS req_type, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason')
+            ->where('requests.request_number', $request->request_number)
+            ->join('users', 'users.id', '=', 'requests.requested_by')
+            ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+            ->join('status', 'status.id', '=', 'requests.status')
+            ->orderBy('requests.created_at', 'DESC')
+            ->get();
+
+        return DataTables::of($list)
+        ->addColumn('prep_by', function (Requests $list){
+            $users = User::query()
+                ->select('name')
+                ->where('id', $list->prepared_by)
+                ->get();
+            $users = str_replace("[{\"name\":\"","",$users);
+            $users = str_replace("\"}]","",$users);
+            
+            return $users;
+        })
+        ->toJson();
+    }
+
     public function schedItems(Request $request)
     {
         $list = Prepare::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, prepared_items.serial AS serial, prepared_items.qty AS qty, prepared_items.items_id AS item_id, prepared_items.id AS id, locations.location AS location')
@@ -401,20 +424,26 @@ class StockRequestController extends Controller
     }
 
     public function logSave(Request $request){
-        $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, reference')
-            ->where('requests.request_number', $request->request_number)
-            ->join('request_type', 'request_type.id', '=', 'requests.request_type')
-            ->get();
+        do{
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, reference')
+                ->where('requests.request_number', $request->request_number)
+                ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                ->get();
 
-            $request_details = str_replace('[','',$request_details);
-            $request_details = str_replace(']','',$request_details);
-            $request_details = json_decode($request_details);
-        
-        $items = StockRequest::query()->select('categories.category AS category','items.item AS item','quantity')
-            ->join('categories', 'categories.id', 'stock_request.category')
-            ->join('items', 'items.id', 'stock_request.item')
-            ->where('request_number', $request->request_number)
-            ->get();
+                $request_details = str_replace('[','',$request_details);
+                $request_details = str_replace(']','',$request_details);
+                $request_details = json_decode($request_details);
+        }
+        while(!$request_details);
+
+        do{
+            $items = StockRequest::query()->select('categories.category AS category','items.item AS item','quantity')
+                ->join('categories', 'categories.id', 'stock_request.category')
+                ->join('items', 'items.id', 'stock_request.item')
+                ->where('request_number', $request->request_number)
+                ->get();
+        }
+        while(!$items);
         
         $subject = 'STOCK REQUEST NO. '.$request->request_number;
         $user = User::role('approver - sales')->get();

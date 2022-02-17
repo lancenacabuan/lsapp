@@ -198,9 +198,14 @@ class PagesController extends Controller
     }
 
     public function users_update(Request $request){
-        $email = User::query()->select()
-            ->where('email',$request->email1)
-            ->count();
+        if($request->email1 != $request->email2){
+            $email = User::query()->select()
+                ->where('email',$request->email1)
+                ->count();
+        }
+        else{
+            $email = 0;
+        }
         if(!filter_var($request->email1, FILTER_VALIDATE_EMAIL)){
             return response('invalid');
         }

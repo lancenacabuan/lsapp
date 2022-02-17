@@ -26,6 +26,7 @@ $(document).ready(function () {
     var id1 = $('#id1').val();
     var name1 = $('#name1').val();
     var email1 = $('#email1').val();
+    var email2 = $('#email2').val();
     var password1 = $('#password1').val();
     var role1 = $('#role1').val();
     var role2 = $('#role2').val();
@@ -43,6 +44,7 @@ $(document).ready(function () {
                     id1: id1,
                     name1: name1,
                     email1: email1,
+                    email2: email2,
                     password1: password1,
                     role1: role1,
                     role2: role2
@@ -141,6 +143,7 @@ $('#userTable tbody').on('click', 'tr', function () {
         $('#id1').val(data.user_id);
         $('#name1').val(data.user_name);
         $('#email1').val(data.user_email);
+        $('#email2').val(data.user_email);
         $('#role1').val(data.role_name);
         $('#role2').val(data.role_name);
 

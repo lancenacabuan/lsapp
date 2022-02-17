@@ -19,6 +19,7 @@
                 @endif
                 <input type="hidden" name="_token1" id="csrf1" value="{{Session::token()}}">
                 <input type="hidden" name="id1" id="id1">
+                <input type="hidden" name="email2" id="email2">
                 <input type="hidden" name="role2" id="role2">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">

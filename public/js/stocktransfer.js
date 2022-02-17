@@ -459,7 +459,6 @@ $('table.stocktransferTable').DataTable({
 if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
     url = window.location.search;
     reqnum = url.replace('?request_number=', '');
-    var table = $('table.stocktransferTable').DataTable();
     $.ajax({
         url: '/transModal',
         headers: {

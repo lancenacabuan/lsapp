@@ -53,6 +53,12 @@ $(document).ready(function () {
                         sweetAlert("UPDATE SUCCESS", "USER ACCOUNT", "success");
                         setTimeout(function(){window.location.href="/users"} , 2000);
                     }
+                    else if(data == 'invalid'){
+                        sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
+                    }
+                    else if(data == 'duplicate'){
+                        sweetAlert("DUPLICATE EMAIL", "USER ACCOUNT", "error");
+                    }
                     else{
                         $('#updateUser').hide();
                         sweetAlert("UPDATE FAILED", "USER ACCOUNT", "error");

@@ -524,7 +524,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     $("#btnDelete").hide();
                     btnDel = 12;
                 }
-                if(value.status_id == '6' || value.status_id == '2'){
+                if(value.status_id != '1' || value.status_id != '5'){
                     $("#btnProceed").hide();
                 }
                 if(value.status_id == '2' || value.status_id == '5'){
@@ -532,11 +532,9 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                 }
                 if(value.status_id == '3' || value.status_id == '4'){
                     $("#transitItemsModal").show();
-                    $("#btnProceed").hide();
                 }
                 if(value.status_id == '8'){
                     $("#transitItemsModal").show();
-                    $("#btnProceed").hide();
                     $("#btnReceive").hide();
                     document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                 }
@@ -696,7 +694,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         $("#btnDelete").hide();
         btnDel = 12;
     }
-    if(data.status_id == '6' || data.status_id == '2'){
+    if(data.status_id != '1' || data.status_id != '5'){
         $("#btnProceed").hide();
     }
     if(data.status_id == '2' || data.status_id == '5'){
@@ -704,11 +702,9 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
     }
     if(data.status_id == '3' || data.status_id == '4'){
         $("#transitItemsModal").show();
-        $("#btnProceed").hide();
     }
     if(data.status_id == '8'){
         $("#transitItemsModal").show();
-        $("#btnProceed").hide();
         $("#btnReceive").hide();
         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
     }

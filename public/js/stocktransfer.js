@@ -924,48 +924,54 @@ $(document).on('click', '#btnDisapprove', function() {
 });
 
 $(document).on('click', '#btnReason', function(){
-    swal({
-        title: "DISAPPROVE STOCK TRANSFER REQUEST?",
-        text: "You are about to DISAPPROVE this STOCK TRANSFER REQUEST!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                type:'get',
-                url:'/disapproveTransfer',
-                headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
-                        },
-                data:{
-                    'request_number': $('#reqnum_details').val(),
-                    'reason': $('#reason').val()
-                },
-                success: function (data){
-                    if(data == 'true'){
-                        $('#reasonModal').modal('hide');
-                        $('#detailsStockTransfer').hide();
-                        sweetAlert("DISAPPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
+    if(!$('#reason').val()){
+        sweetAlert("REASON REQUIRED!", "Please provide a reason for disapproving the request.", "error");
+        return false;
+    }
+    else{
+        swal({
+            title: "DISAPPROVE STOCK TRANSFER REQUEST?",
+            text: "You are about to DISAPPROVE this STOCK TRANSFER REQUEST!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type:'get',
+                    url:'/disapproveTransfer',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                            },
+                    data:{
+                        'request_number': $('#reqnum_details').val(),
+                        'reason': $('#reason').val()
+                    },
+                    success: function (data){
+                        if(data == 'true'){
+                            $('#reasonModal').modal('hide');
+                            $('#detailsStockTransfer').hide();
+                            sweetAlert("DISAPPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                            setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                        }
+                        else{
+                            $('#reasonModal').modal('hide');
+                            $('#detailsStockTransfer').hide();
+                            sweetAlert("DISAPPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                            setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                        }
+                    },
+                    error: function (data) {
+                        if(data.status == 401) {
+                            window.location.href = '/stocktransfer';
+                        }
+                        alert(data.responseText);
                     }
-                    else{
-                        $('#reasonModal').modal('hide');
-                        $('#detailsStockTransfer').hide();
-                        sweetAlert("DISAPPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
-                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
-                    }
-                },
-                error: function (data) {
-                    if(data.status == 401) {
-                        window.location.href = '/stocktransfer';
-                    }
-                    alert(data.responseText);
-                }
-            });
-        }
-    }); 
+                });
+            }
+        });
+    }
 });
 
 $('table.transferDetails').DataTable().on('select', function(){});

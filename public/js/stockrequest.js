@@ -1768,48 +1768,54 @@ $(document).on("click", "#btnDisapprove", function() {
 });
 
 $(document).on('click','#btnReason', function(){
-    swal({
-        title: "DISAPPROVE STOCK REQUEST?",
-        text: "You are about to DISAPPROVE this STOCK REQUEST!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                type:'get',
-                url:'/disapproveRequest',
-                headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
-                        },
-                data:{
-                    'request_number': $('#request_num_details').val(),
-                    'reason': $('#reason').val()
-                },
-                success: function (data){
-                    if(data == 'true'){
-                        $('#reasonModal').modal('hide');
-                        $('#stockRequestDetails').hide();
-                        sweetAlert("DISAPPROVE SUCCESS", "STOCK REQUEST", "success");
-                        setTimeout(function(){location.href="/stockrequest"} , 2000);
+    if(!$('#reason').val()){
+        sweetAlert("REASON REQUIRED!", "Please provide a reason for disapproving the request.", "error");
+        return false;
+    }
+    else{
+        swal({
+            title: "DISAPPROVE STOCK REQUEST?",
+            text: "You are about to DISAPPROVE this STOCK REQUEST!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type:'get',
+                    url:'/disapproveRequest',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                            },
+                    data:{
+                        'request_number': $('#request_num_details').val(),
+                        'reason': $('#reason').val()
+                    },
+                    success: function (data){
+                        if(data == 'true'){
+                            $('#reasonModal').modal('hide');
+                            $('#stockRequestDetails').hide();
+                            sweetAlert("DISAPPROVE SUCCESS", "STOCK REQUEST", "success");
+                            setTimeout(function(){location.href="/stockrequest"} , 2000);
+                        }
+                        else{
+                            $('#reasonModal').modal('hide');
+                            $('#stockRequestDetails').hide();
+                            sweetAlert("DISAPPROVE FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"} , 2000);
+                        }
+                    },
+                    error: function (data) {
+                        if(data.status == 401) {
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
                     }
-                    else{
-                        $('#reasonModal').modal('hide');
-                        $('#stockRequestDetails').hide();
-                        sweetAlert("DISAPPROVE FAILED", "STOCK REQUEST", "error");
-                        setTimeout(function(){location.href="/stockrequest"} , 2000);
-                    }
-                },
-                error: function (data) {
-                    if(data.status == 401) {
-                        window.location.href = '/stockrequest';
-                    }
-                    alert(data.responseText);
-                }
-            });
-        }
-    }); 
+                });
+            }
+        });
+    }
 });
 
 $(document).on('click','#btnTransit', function(){

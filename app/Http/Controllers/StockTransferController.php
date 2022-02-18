@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Mail\emailForTransfer;
+use App\Mail\disapprovedTransfer;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Stock;
@@ -353,14 +354,71 @@ class StockTransferController extends Controller
             $result = 'true';
         }
         
-        if($result == 'true'){
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "DISAPPROVED STOCK TRANSFER REQUEST: User successfully disapproved Stock Transfer Request No. $request->request_number.";
-            $userlogs->save();
-        }
-        
         return response($result);
+    }
+
+    public function logTransDisapprove(Request $request){
+        do{
+            $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, users.name AS reqby, users.email AS email, needdate, locfrom, locto, reason')
+                ->where('request_transfer.request_number', $request->request_number)
+                ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+                ->get();
+
+                $request_details = str_replace('[','',$request_details);
+                $request_details = str_replace(']','',$request_details);
+                $request_details = json_decode($request_details);
+        }
+        while(!$request_details);
+        
+        do{
+            $items = StockTransfer::query()->select('categories.category AS category','items.item AS item','quantity')
+                ->join('categories', 'categories.id', 'stock_transfer.category')
+                ->join('items', 'items.id', 'stock_transfer.item')
+                ->where('request_number', $request->request_number)
+                ->get();
+        }
+        while(!$items);
+        
+        if($request_details->locfrom == 5){
+            $locfrom = 'BALINTAWAK';
+        }
+        if($request_details->locfrom == 6){
+            $locfrom = 'MALABON';
+        }
+        if($request_details->locto == 1){
+            $locto = 'A1';
+        }
+        if($request_details->locto == 2){
+            $locto = 'A2';
+        }
+        if($request_details->locto == 3){
+            $locto = 'A3';
+        }
+        if($request_details->locto == 4){
+            $locto = 'A4';
+        }
+        $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
+        $details = [
+            'name' => $request_details->reqby,
+            'action' => 'STOCK TRANSFER REQUEST',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'needdate' => $request_details->needdate,
+            'locfrom' => $locfrom,
+            'locto' => $locto,
+            'reason' => $request_details->reason,
+            'role' => 'Approver - Warehouse',
+            'items' => $items
+        ];
+        Mail::to($request_details->email)->send(new disapprovedTransfer($details, $subject));
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "DISAPPROVED STOCK TRANSFER REQUEST: User successfully disapproved Stock Transfer Request No. $request->request_number.";
+        $userlogs->save();
+        
+        return true;
     }
 
     public function receiveTransfer(Request $request){

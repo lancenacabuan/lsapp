@@ -94,6 +94,7 @@ Route::get('/transModal', [StockTransferController::class, 'transModal']);
 Route::get('/transferDetails', [StockTransferController::class, 'transferDetails']);
 Route::any('/approveTransfer', [StockTransferController::class, 'approveTransfer']);
 Route::any('/disapproveTransfer', [StockTransferController::class, 'disapproveTransfer']);
+Route::any('/logTransDisapprove', [StockTransferController::class, 'logTransDisapprove']);
 Route::any('/receiveTransfer', [StockTransferController::class, 'receiveTransfer']);
 Route::any('/deleteTransfer', [StockTransferController::class, 'deleteTransfer']);
 Route::any('/delTransItem', [StockTransferController::class, 'delTransItem']);

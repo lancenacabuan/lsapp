@@ -961,7 +961,7 @@ $(document).on('click', '#btnReason', function(){
                                     'X-CSRF-TOKEN': $("#csrf").val(),
                                         },
                                 data:{
-                                    'request_number': $('#request_num_details').val(),
+                                    'request_number': $('#reqnum_details').val(),
                                     'reason': $('#reason').val()
                                 },
                                 success: function (data){

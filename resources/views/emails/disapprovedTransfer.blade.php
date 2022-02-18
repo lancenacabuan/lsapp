@@ -3,7 +3,7 @@
 <body>
     <p>Hello, {{$details['name']}}!<br/>
     This is to inform you that your {{$details['action']}} has been 
-    <span style="color: red;"><strong>DISAPPROVED</strong></span>.<br />
+    <span style="color: red;"><strong>DISAPPROVED</strong></span> by {{$details['disapprovedby']}}.<br />
     Reason for Disapproval: {{$details['reason']}}<br />
     </p>
     <strong>Request Number: {{$details['request_number']}}</strong><br />

@@ -408,7 +408,8 @@ class StockTransferController extends Controller
             'locfrom' => $locfrom,
             'locto' => $locto,
             'reason' => $request_details->reason,
-            'role' => 'Approver - Warehouse',
+            'disapprovedby' => auth()->user()->name,
+            'role' => 'Admin / Encoder',
             'items' => $items
         ];
         Mail::to($request_details->email)->send(new disapprovedTransfer($details, $subject));

@@ -386,6 +386,7 @@ class StockRequestController extends Controller
             'location' => $request_details->location,
             'reference' => $request_details->reference,
             'reason' => $request_details->reason,
+            'disapprovedby' => auth()->user()->name,
             'role' => 'Sales',
             'items' => $items
         ];

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Mail\emailForRequest;
+use App\Mail\disapprovedRequest;
 use App\Models\Category;
 use App\Models\Location;
 use App\Models\Stock;
@@ -347,14 +348,55 @@ class StockRequestController extends Controller
             $result = 'true';
         }
         
-        if($result == 'true'){
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "DISAPPROVED STOCK REQUEST: User successfully disapproved Stock Request No. $request->request_number.";
-            $userlogs->save();
-        }
-        
         return response($result);
+    }
+
+    public function logDisapprove(Request $request){
+        do{
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, reason')
+                ->where('requests.request_number', $request->request_number)
+                ->join('users', 'users.id', '=', 'requests.requested_by')
+                ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                ->get();
+
+                $request_details = str_replace('[','',$request_details);
+                $request_details = str_replace(']','',$request_details);
+                $request_details = json_decode($request_details);
+        }
+        while(!$request_details);
+
+        do{
+            $items = StockRequest::query()->select('categories.category AS category','items.item AS item','quantity')
+                ->join('categories', 'categories.id', 'stock_request.category')
+                ->join('items', 'items.id', 'stock_request.item')
+                ->where('request_number', $request->request_number)
+                ->get();
+        }
+        while(!$items);
+        
+        $subject = 'STOCK REQUEST NO. '.$request->request_number;
+        $details = [
+            'name' => $request_details->reqby,
+            'action' => 'STOCK REQUEST',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'reqtype' => $request_details->reqtype,
+            'client_name' => $request_details->client_name,
+            'location' => $request_details->location,
+            'reference' => $request_details->reference,
+            'reason' => $request_details->reason,
+            'role' => 'Sales',
+            'items' => $items
+        ];
+        Mail::to($request_details->email)->send(new disapprovedRequest($details, $subject));
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "DISAPPROVED STOCK REQUEST: User successfully disapproved Stock Request No. $request->request_number.";
+        $userlogs->save();
+
+        return true;
     }
 
     public function receiveRequest(Request $request){

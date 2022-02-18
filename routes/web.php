@@ -67,6 +67,7 @@ Route::any('/prepareItems', [StockRequestController::class, 'prepareItems']);
 Route::any('/logSched', [StockRequestController::class, 'logSched']);
 Route::any('/approveRequest', [StockRequestController::class, 'approveRequest']);
 Route::any('/disapproveRequest', [StockRequestController::class, 'disapproveRequest']);
+Route::any('/logDisapprove', [StockRequestController::class, 'logDisapprove']);
 Route::any('/receiveRequest', [StockRequestController::class,'receiveRequest']);
 Route::any('/saveReqNum', [StockRequestController::class, 'saveReqNum']);
 Route::any('/saveRequest', [StockRequestController::class, 'saveRequest']);

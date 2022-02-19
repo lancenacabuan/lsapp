@@ -849,6 +849,9 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         $("#btnReceive").hide();
                         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                     }
+                    if(value.user_id != $('#current_user').val()){
+                        $("#btnReceive").hide();
+                    }
                     if(value.user_id == $('#current_user').val() && $("#current_role").val() == '["sales"]'){
                         $("#sd2").show();
                         $("#sd1").hide();
@@ -1245,6 +1248,9 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             $("#transitItemsModal").show();
             $("#btnReceive").hide();
             document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+        }
+        if(data.user_id != $('#current_user').val()){
+            $("#btnReceive").hide();
         }
         if(data.user_id == $('#current_user').val() && $("#current_role").val() == '["sales"]'){
             $("#sd2").show();

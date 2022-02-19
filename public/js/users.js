@@ -106,6 +106,27 @@ $(document).ready(function () {
                         $('#addUser').hide();
                         sweetAlert("SAVE SUCCESS", "USER ACCOUNT", "success");
                         setTimeout(function(){window.location.href="/users"} , 2000);
+                        $.ajax({
+                            url: "/logNewUser",
+                            type: "POST",
+                            headers: {
+                            'X-CSRF-TOKEN': $("#csrf").val(),
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    return true;
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401) {
+                                    window.location.href = '/users';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
                     }
                     else if(data == 'invalid'){
                         sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");

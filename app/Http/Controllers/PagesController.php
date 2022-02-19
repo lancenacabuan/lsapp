@@ -181,20 +181,21 @@ class PagesController extends Controller
             else {
                 $result = 'true';
             }
-
-            if($result == 'true'){
-                $userlogs = new UserLogs;
-                $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$id.";
-                $userlogs->save();
-            }
-
-            // $details = ['name' => ucwords($request->name), 'password' => $password];
-            // Mail::to($request->email)->send(new emailNewUser($details));
-            $response = Password::broker()->sendResetLink(['email'=>$request->email]);
             
             return response($result);   
         }
+    }
+
+    public function logNewUser(Request $request){
+        do{
+            $reset = Password::broker()->sendResetLink(['email'=>$request->email]);
+        }
+        while(!$reset);
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$id.";
+        $userlogs->save();
     }
 
     public function users_update(Request $request){

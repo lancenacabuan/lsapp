@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StocksController;
 use App\Http\Controllers\StockRequestController;
@@ -30,6 +29,7 @@ Route::any('/password_save',[PagesController::class,'password_save']);
 Route::get('/users', [PagesController::class, 'users']);
 Route::get('/users_data', [PagesController::class, 'users_data']);
 Route::any('/users/save',[PagesController::class,'users_store']);
+Route::any('/logNewUser',[PagesController::class,'logNewUser']);
 Route::any('/users/update',[PagesController::class,'users_update']);
 //
 

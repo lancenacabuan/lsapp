@@ -416,7 +416,8 @@ $('table.stocktransferTable').DataTable({
         },
         {
             "targets": [6,7,8,9,10,11,12],
-            "visible": false
+            "visible": false,
+            "searchable": false
         }
     ],
     language: {
@@ -544,7 +545,8 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     columnDefs: [
                         {
                             "targets": [4,5,6,7,8,9,hideCol,btnDel],
-                            "visible": false
+                            "visible": false,
+                            "searchable": false
                         },
                         {   
                             "render": function (data, type, row, meta) {
@@ -714,7 +716,8 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         columnDefs: [
             {
                 "targets": [4,5,6,7,8,9,hideCol,btnDel],
-                "visible": false
+                "visible": false,
+                "searchable": false
             },
             {   
                 "render": function (data, type, row, meta) {

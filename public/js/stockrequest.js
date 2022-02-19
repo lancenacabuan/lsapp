@@ -433,7 +433,8 @@ $(document).ready(function(){
             },
             {
                 "targets": [6,7,8,9,10,11,12,13],
-                "visible": false
+                "visible": false,
+                "searchable": false
             }
         ],
         language: {
@@ -879,7 +880,8 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     columnDefs: [
                         {
                             "targets": [5,6,7,8,9],
-                            "visible": false
+                            "visible": false,
+                            "searchable": false
                         },
                         {
                             render: function(data,type,full,meta){
@@ -954,7 +956,8 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     columnDefs: [
                         {
                             "targets": [4],
-                            "visible": false
+                            "visible": false,
+                            "searchable": false
                         }
                     ],
                     paging: false,
@@ -996,7 +999,8 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     columnDefs: [
                         {
                             "targets": [5],
-                            "visible": false
+                            "visible": false,
+                            "searchable": false
                         },
                         {   
                             "render": function (data, type, row, meta) {
@@ -1046,7 +1050,8 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     columnDefs: [
                         {
                             "targets": [6,7],
-                            "visible": false
+                            "visible": false,
+                            "searchable": false
                         },
                         {   
                             "render": function ( data, type, row, meta ) {
@@ -1112,7 +1117,8 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     columnDefs: [
                         {
                             "targets": [5],
-                            "visible": false
+                            "visible": false,
+                            "searchable": false
                         },
                         {   
                             "render": function ( data, type, row, meta ) {
@@ -1283,7 +1289,8 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         columnDefs: [
             {
                 "targets": [5,6,7,8,9],
-                "visible": false
+                "visible": false,
+                "searchable": false
             },
             {
                 render: function(data,type,full,meta){
@@ -1359,7 +1366,8 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         columnDefs: [
             {
                 "targets": [4],
-                "visible": false
+                "visible": false,
+                "searchable": false
             }
         ],
         paging: false,
@@ -1402,7 +1410,8 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         columnDefs: [
             {
                 "targets": [5],
-                "visible": false
+                "visible": false,
+                "searchable": false
             },
             {   
                 "render": function (data, type, row, meta) {
@@ -1453,7 +1462,8 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         columnDefs: [
             {
                 "targets": [6,7],
-                "visible": false
+                "visible": false,
+                "searchable": false
             },
             {   
                 "render": function ( data, type, row, meta ) {
@@ -1519,7 +1529,8 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         columnDefs: [
             {
                 "targets": [5],
-                "visible": false
+                "visible": false,
+                "searchable": false
             },
             {   
                 "render": function ( data, type, row, meta ) {

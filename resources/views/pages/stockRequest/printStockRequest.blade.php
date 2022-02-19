@@ -2,7 +2,7 @@
 @section('content')
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
 <div class="container">
-    <a href="/stockrequest" class="btn btn-primary mr-auto float-right bp">BACK</a>
+    <a href="/stockrequest?request_number={{$list->req_num}}" class="btn btn-primary mr-auto float-right bp">BACK</a>
     <button id="btnPrint" type="button" class="btn btn-primary mr-auto bp">PRINT</button>
     <button id="btnSavePDF" type="button" class="btn btn-primary mr-auto bp" style="margin-right: 10px;">SAVE AS PDF</button>
 </div>

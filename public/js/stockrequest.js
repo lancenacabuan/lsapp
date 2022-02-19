@@ -822,15 +822,6 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         $("#reference_label").hide();
                         $("#reference_details").hide();
                     }
-                    if(value.user_id != $('#current_user').val()){
-                        $("#btnDelete").hide();
-                        $("#sd1").show();
-                        $("#sd2").hide();
-                    }
-                    else{
-                        $("#sd2").show();
-                        $("#sd1").hide();
-                    }
                     if(value.status_id != '6'){
                         $("#btnApprove").hide();
                         $("#btnDisapprove").hide();
@@ -858,10 +849,6 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         $("#btnReceive").hide();
                         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                     }
-                    if($("#current_role").val() == '["sales"]'){
-                        $("#sd2").show();
-                        $("#sd1").hide();
-                    }
                     if(value.status_id == '1'|| value.status_id == '2'|| value.status_id == '3' || value.status_id == '4' || value.status_id == '5' || value.status_id == '8'){
                         $("#sd1").show();
                         $("#sd2").hide();
@@ -870,7 +857,12 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         $("#sd2").show();
                         $("#sd1").hide();
                     }
-                    if($("#current_role").val() != '["sales"]'){
+                    if(value.user_id == $('#current_user').val() && $("#current_role").val() == '["sales"]'){
+                        $("#sd2").show();
+                        $("#sd1").hide();
+                    }
+                    else{
+                        $("#btnDelete").hide();
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
@@ -1231,15 +1223,6 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             $("#reference_label").hide();
             $("#reference_details").hide();
         }
-        if(data.user_id != $('#current_user').val()){
-            $("#btnDelete").hide();
-            $("#sd1").show();
-            $("#sd2").hide();
-        }
-        else{
-            $("#sd2").show();
-            $("#sd1").hide();
-        }
         if(data.status_id != '6'){
             $("#btnApprove").hide();
             $("#btnDisapprove").hide();
@@ -1267,10 +1250,6 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             $("#btnReceive").hide();
             document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
         }
-        if($("#current_role").val() == '["sales"]'){
-            $("#sd2").show();
-            $("#sd1").hide();
-        }
         if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
             $("#sd1").show();
             $("#sd2").hide();
@@ -1279,7 +1258,12 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             $("#sd2").show();
             $("#sd1").hide();
         }
-        if($("#current_role").val() != '["sales"]'){
+        if(data.user_id == $('#current_user').val() && $("#current_role").val() == '["sales"]'){
+            $("#sd2").show();
+            $("#sd1").hide();
+        }
+        else{
+            $("#btnDelete").hide();
             $("#sd1").show();
             $("#sd2").hide();
         }

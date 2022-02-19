@@ -102,7 +102,7 @@ $(document).ready(function () {
                     role: role
                 },
                 success: function(data){
-                    if(data == 'true'){
+                    if(data.result == 'true'){
                         $('#addUser').hide();
                         sweetAlert("SAVE SUCCESS", "USER ACCOUNT", "success");
                         setTimeout(function(){window.location.href="/users"} , 2000);
@@ -111,6 +111,10 @@ $(document).ready(function () {
                             type: "POST",
                             headers: {
                             'X-CSRF-TOKEN': $("#csrf").val(),
+                            },
+                            data: {
+                                id: data.id,
+                                email: data.email
                             },
                             success: function(data){
                                 if(data == 'true'){
@@ -128,10 +132,10 @@ $(document).ready(function () {
                             }
                         });
                     }
-                    else if(data == 'invalid'){
+                    else if(data.result == 'invalid'){
                         sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
                     }
-                    else if(data == 'duplicate'){
+                    else if(data.result == 'duplicate'){
                         sweetAlert("DUPLICATE EMAIL", "USER ACCOUNT", "error");
                     }
                     else{

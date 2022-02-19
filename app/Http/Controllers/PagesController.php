@@ -182,19 +182,17 @@ class PagesController extends Controller
                 $result = 'true';
             }
             
-            return response($result);   
+            $data = array('result' => $result, 'id' => $id, 'email' => strtolower($request->email));
+            return response()->json($data);
         }
     }
 
     public function logNewUser(Request $request){
-        do{
-            $reset = Password::broker()->sendResetLink(['email'=>$request->email]);
-        }
-        while(!$reset);
+        Password::broker()->sendResetLink(['email'=>$request->email]);
 
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$id.";
+        $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$request->id.";
         $userlogs->save();
     }
 

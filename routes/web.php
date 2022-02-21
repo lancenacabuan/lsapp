@@ -9,7 +9,7 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\Auth\LoginController;
 use Spatie\Permission\Middleware\RoleMiddleware;
 
-Auth::routes();
+Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
 
 //Index
 Route::get('/', [PagesController::class, 'index']);

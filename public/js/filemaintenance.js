@@ -63,3 +63,71 @@ else{
 $(document).on('click', '#close', function(){
     window.location.href = '/filemaintenance?tbl=category';
 });
+
+$('#btnSaveCategory').on('click', function() {
+    var category = $('#category').val();
+    if(category!=""){
+        $.ajax({
+            url: "/saveCategory",
+            type: "POST",
+            headers: {
+            'X-CSRF-TOKEN': $("#csrf").val(),
+            },
+            data: {
+                _token: $("#csrf").val(),
+                category: category,
+            },
+            success: function(data){
+                if(data.result == 'true'){
+                    $('#newCategory').hide();
+                    sweetAlert("SAVE SUCCESS", "New Category has been saved.", "success");
+                    setTimeout(function(){window.location.href="/filemaintenance?tbl=category"} , 2000);
+                    $.ajax({
+                        url: "/logNewCategory",
+                        type: "POST",
+                        headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                        },
+                        data: {
+                            id: data.id,
+                            category: data.category
+                        },
+                        success: function(data){
+                            if(data == 'true'){
+                                return true;
+                            }
+                            else{
+                                return false;
+                            }
+                        },
+                        error: function(data){
+                            if(data.status == 401) {
+                                window.location.href = '/filemaintenance?tbl=category';
+                            }
+                            alert(data.responseText);
+                        }
+                    });
+                }
+                else if(data.result == 'duplicate'){
+                    sweetAlert("DUPLICATE CATEGORY", "Category Name already exists!", "error");
+                    return false;
+                }
+                else{
+                    $('#newCategory').hide();
+                    sweetAlert("SAVE FAILED", "FILE MAINTENANCE", "error");
+                    setTimeout(function(){window.location.href="/filemaintenance?tbl=category"} , 2000);
+                }
+            },
+            error: function(data){
+                if(data.status == 401) {
+                    window.location.href = '/filemaintenance?tbl=category';
+                }
+                alert(data.responseText);
+            }
+        });
+    }
+    else{
+        swal('REQUIRED','Category Name field is required!','error');
+        return false;
+    }
+});

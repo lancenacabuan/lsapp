@@ -45,4 +45,37 @@ class FileMaintenanceController extends Controller
         $list = Category::select('id','category')->orderBy('category','ASC')->get();
         return DataTables::of($list)->make(true);
     }
+
+    public function saveCategory(Request $request){
+        $category = Category::query()->select()
+            ->where('category',strtoupper($request->category))
+            ->count();
+        if($category != 0){
+            $data = array('result' => 'duplicate');
+            return response()->json($data);
+        }
+        else {
+            $categories = new Category;
+            $categories->category = strtoupper($request->category);
+            $sql = $categories->save();
+            $id = $categories->id;
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+            }
+            
+            $data = array('result' => $result, 'id' => $id, 'category' => strtoupper($request->category));
+            return response()->json($data);
+        }
+    }
+
+    public function logNewCategory(Request $request){
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "CATEGORY ADDED: User successfully saved new category '$request->category' with CategoryID#$request->id.";
+        $userlogs->save();
+    }
 }

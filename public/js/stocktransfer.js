@@ -80,6 +80,7 @@ $('#locfrom').on('change', function(){
     $("#item").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
     $('#qty').val('');
     $('#qtystock').val('');
+    $('#transrequestDetails').show();
     var location_id = $(this).val();
     $.ajax({
         type:'get', 

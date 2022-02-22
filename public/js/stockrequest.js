@@ -558,25 +558,15 @@ $(document).ready(function(){
                
 });  
 $(document).on('click','#close', function(){
-    if(confirm("IF YOU CANCEL THE FORM, YOU WILL NOT BE ABLE TO SAVE ALL THE ENTRIES.\n\nDO YOU WANT TO PROCEED?")) {
-        window.location.href = '/stockrequest';
-    }
-    else {
-        return false;
-    }               
+    window.location.href = '/stockrequest';
 });
 
 $(document).on('click','#requestClose', function(){
-    if (confirm("IF YOU CANCEL THE FORM, YOU WILL NOT BE ABLE TO SAVE ALL THE ENTRIES.\n\nDO YOU WANT TO PROCEED?")) {
-        window.location.href = '/stockrequest';
-    }
-    else {
-        return false;
-    }    
+    window.location.href = '/stockrequest';
 });
 
 $(document).on('click','#modalClose', function(){
-    window.location.href = '/stockrequest'; 
+    window.location.href = '/stockrequest';
 });
 
 $(document).on('click','#requestSave', function(){

@@ -13,12 +13,13 @@ if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance'){
         serverSide: false,
         ajax: {
             url: '/fm_items',
-        error: function(data) {
-                if(data.status == 401) {
-                    window.location.href = '/login';
-                }
-            }
         },
+        columnDefs: [
+        {
+            "targets": [0],
+            "visible": false,
+            "searchable": false
+        }],
         columns: [
             { data: 'item_id'},
             { data: 'category'},
@@ -47,6 +48,12 @@ else if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance?tbl=c
         ajax: {
             url: '/fm_categories',
         },
+        columnDefs: [
+        {
+            "targets": [0],
+            "visible": false,
+            "searchable": false
+        }],
         columns: [
             { data: 'id' },
             { data: 'category' }

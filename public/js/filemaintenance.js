@@ -60,17 +60,6 @@ else{
     window.location.href = '/filemaintenance';
 }
 
-$(document).on('click', '.close', function(){
-    swal({
-        title: "DO YOU WANT TO PROCEED?",
-        text: "If you cancel the form, you will not be able to save all the entries!",
-        icon: "warning",
-        buttons: true,
-    })
-    .then((willDelete) => {
-        if(willDelete) {
-            $('#category').val('');
-            $('#newCategory').hide();
-        }
-    });
+$(document).on('click', '#close', function(){
+    window.location.href = '/filemaintenance?tbl=category'; 
 });

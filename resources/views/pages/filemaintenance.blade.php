@@ -7,6 +7,14 @@
     <li class="nav-item-link">
         <a class="nav-link" id="nav2" href="{{ url('/filemaintenance?tbl=category') }}"><strong>CATEGORY</strong></a>
     </li>
+    @role('admin|encoder')
+    <span style="position: absolute; right: 120px;">
+    <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" style="display: none;">
+        NEW ITEM</button>
+    <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" style="display: none;">
+        NEW CATEGORY</button>
+    </span>
+    @endrole
 </ul>
 <br>
 <div class="table-responsive">
@@ -51,4 +59,6 @@
         border-radius: 0px !important;
     }
 </style>
+{{-- @include('pages.fileMaintenance.newItem') --}}
+@include('pages.fileMaintenance.newCategory')
 @endsection

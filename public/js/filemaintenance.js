@@ -1,5 +1,6 @@
 if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance'){
     $('#nav1').addClass("active-link");
+    $('.btnNewItem').show();
     $('#itemTable').show();
     var table;
     table = $('table.itemTable').DataTable({ 
@@ -34,6 +35,7 @@ if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance'){
 }
 else if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance?tbl=category'){
     $('#nav2').addClass("active-link");
+    $('.btnNewCategory').show();
     $('#categoryTable').show();
     $('table.categoryTable').DataTable({ 
         language: {

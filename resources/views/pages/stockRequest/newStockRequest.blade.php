@@ -40,9 +40,7 @@
         </div>
         <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
-        </div>        
-
-
+        </div>
         <form class="mt-2 mb-2">
             <div class="form-inline" style="margin-left:50px;">
                 <select class="form-select" id="categoryReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height:30px !important; width:300px;" required>
@@ -51,18 +49,14 @@
                             <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
                         @endforeach
                 </select>
-                
                 <select class="form-select" id="itemReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height:30px !important; width:450px; margin-left: 10px;">
                     <option selected disabled>Select Item</option>
                 </select>
-            
                 <input class="form-control" id="qtyReq" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="number" placeholder="Qty">
                 {{-- <input class="form-control" id="qtyStock" min="0" style="font-size: 12px; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="number" placeholder="Qty" readonly>&nbsp;   --}}
-            
                 <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="font-size:12px; width:100px; height:30px; margin-left: 10px;">
             </div>          
         </form>
-
         <div class="container-fluid"  id="#stockRequestDiv">
             <table id='stockRequestTable' class="table" style="cursor:pointer; border:0px; font-size:12px; display:none;">
                 <thead>                            
@@ -80,10 +74,9 @@
             </table>
         </div>
         <div class="col-md-12 mt-2 mb-4">
-            <button type="submit" id="requestClose"  
-            class="btn btn-primary submit bp"  style="display:none;">
+            <button type="submit" id="requestClose" class="btn btn-primary submit bp" style="display:none;">
             CLOSE</button>&nbsp;&nbsp;
-            <button type="submit" id="requestSave" class="btn btn-primary submit float-right bp"  style="display:none; margin-right: 10px;">
+            <button type="submit" id="requestSave" class="btn btn-primary submit float-right bp" style="display:none; margin-right: 10px;">
             SUBMIT</button>
         </div>
     </div>

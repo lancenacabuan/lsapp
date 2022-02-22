@@ -1,9 +1,6 @@
 @extends('layouts.app')
-
 @guest
-<div><center><img class="p-2 align-self-end" src="/storage/idsi.png" alt="idsi.png" style="width: auto; height: 150px;"></center></div>
-<div style="color: white; font-family: arial; font-weight: bold;background-color: #0d1a80"><h3 class="p-2 align-self-end"><center>MAIN WAREHOUSE STOCK MONITORING SYSTEM</center></h3></div>
-<br><br>
+@include('inc.guest')
 <div class="py-2">
 <div class="container">
     <div class="row justify-content-center">

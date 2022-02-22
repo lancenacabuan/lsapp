@@ -1,4 +1,4 @@
-  <nav class="navbar navbar-expand-md shadow-sm" style="height: 60px; margin-top: -10px;">
+<nav class="navbar navbar-expand-md shadow-sm" style="height: 60px; margin-top: -10px;">
     <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>

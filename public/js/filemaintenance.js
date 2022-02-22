@@ -61,5 +61,5 @@ else{
 }
 
 $(document).on('click', '#close', function(){
-    window.location.href = '/filemaintenance?tbl=category'; 
+    window.location.href = '/filemaintenance?tbl=category';
 });

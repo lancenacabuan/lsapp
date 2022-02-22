@@ -60,6 +60,6 @@ else{
     window.location.href = '/filemaintenance';
 }
 
- $(document).on('click', '#close', function(){
+$(document).on('click', '#close', function(){
     window.location.href = '/filemaintenance?tbl=category'; 
 });

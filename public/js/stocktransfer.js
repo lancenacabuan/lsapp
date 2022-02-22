@@ -381,7 +381,7 @@ $(document).on('click', '#btnSave', function(){
     }   
 });
 
- $(document).on('click', '#close', function(){
+$(document).on('click', '#close', function(){
     window.location.href = '/stocktransfer'; 
 });
 

@@ -61,7 +61,7 @@
         }
         .nav-item>a:hover {
             background-color: white;
-            color:black !important;
+            color:#0d6efd !important;
             border:0px;
         }
         .active {

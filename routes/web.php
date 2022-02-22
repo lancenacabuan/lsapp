@@ -4,6 +4,7 @@ use App\Http\Controllers\StocksController;
 use App\Http\Controllers\StockRequestController;
 use App\Http\Controllers\StockTransferController;
 use App\Http\Controllers\AssemblyController;
+use App\Http\Controllers\FileMaintenanceController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\Auth\LoginController;
@@ -18,7 +19,6 @@ Route::get('/index_data', [PagesController::class, 'index_data']);
 
 // Route::get('/joborder', [PagesController::class, 'joborder']);
 // Route::get('/pullout', [PagesController::class, 'pullout']);
-Route::get('/filemaintenance', [PagesController::class, 'filemaintenance']);
 
 //Change Password
 Route::get('/changepassword', [PagesController::class, 'changepassword']);
@@ -47,8 +47,8 @@ Route::get('/itemstrans',[StocksController::class,'itemstrans']);
 Route::get('/locations',[StocksController::class,'locations']);
 Route::get('/stocksAvailable',[StocksController::class,'stocksAvailable']);
 Route::get('/stockItem',[StocksController::class,'stockItem']);
-Route::get('item',[StocksController::class,'item']);
-Route::get('stock_data',[StocksController::class,'stock_data']);
+Route::get('/item',[StocksController::class,'item']);
+Route::get('/stock_data',[StocksController::class,'stock_data']);
 //
 
 //Stock Requests
@@ -112,3 +112,8 @@ Route::get('/assembly', [AssemblyController::class, 'assembly']);
 Route::get('/itemsItm', [AssemblyController::class, 'itemsItm']);
 //
 
+//File Maintenance
+Route::get('/filemaintenance', [FileMaintenanceController::class, 'filemaintenance']);
+Route::get('/fm_items', [FileMaintenanceController::class, 'fm_items']);
+Route::get('/fm_categories', [FileMaintenanceController::class, 'fm_categories']);
+//

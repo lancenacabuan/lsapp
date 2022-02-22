@@ -1,54 +1,59 @@
-var table;
-$(document).ready(function()
-{    
-    table =
-        $('table.itemTable').DataTable({ 
-            "dom": 'lrtip',
-            "language": {
-                "emptyTable": "No data found!"
-            },
-            processing: true,
-            serverSide: false,
-            ajax: {
-                url: 'item',
-            error: function(data) {
-                    if(data.status == 401) {
-                        window.location.href = '/login';
-                    }
+if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance'){
+    $('#nav1').addClass("active-link");
+    $('#itemTable').show();
+    var table;
+    table = $('table.itemTable').DataTable({ 
+        dom: 'lrtip',
+        language: {
+            processing: "Loading...",
+            emptyTable: "No data found!"
+        },
+        processing: true,
+        serverSide: false,
+        ajax: {
+            url: '/fm_items',
+        error: function(data) {
+                if(data.status == 401) {
+                    window.location.href = '/login';
                 }
-            },
-            /*"fnRowCallback": function(nRow, aData) {
-                if (aData.n_a == "yes") {
-                    $('#togBtn[return_id=\''+aData.id+'\']').click()
-                }else{
-                }
-            },*/
-            // "columnDefs": [
-            //     {   
-            //         "render": function ( data, type, row, meta ) {
-            //             if (data.n_a == "no") {
-            //                 return '<label class="switch"><input type="checkbox" class="togBtn" return_id="'+data.id+'" checked><div class="slider round"><span class="on">Yes</span><span class="off">No</span></div></label>'
-            //             //return '<button title="Click to change to no" id="yesBtn" class="btn-primary approveBtn"  style="border-radius: 5px">yes</button>'
-            //             }else if(data.n_a == "yes"){
-            //                 return '<label class="switch"><input type="checkbox" class="togBtn" return_id="'+data.id+'"><div class="slider round"><span class="on">Yes</span><span class="off">No</span></div></label>'
-            //             //return '<button title="Click to change to yes" id="noBtn" class="btn-danger approveBtn" return_id="'+data.id+'" style="border-radius: 5px">no</button>'
-            //             }
-            //         },
-            //         "defaultContent": '',
-            //         "data": null,
-            //         "targets": [2]
-            //     }
-            // ],
-            columns: [
-                { data: 'category', name:'category'},
-                { data: 'item', name:'item'}
-                // { data: null}
-            ]
-        });
+            }
+        },
+        columns: [
+            { data: 'item_id'},
+            { data: 'category'},
+            { data: 'item_name'}
+        ],
+        order:[[1, 'asc'],[2, 'asc']],
+    });
 
-        $('.filter-input').keyup(function() {
-            table.column( $(this).data('column'))
-                .search( $(this).val())
-                .draw();
-        });
-});
+    $('.filter-input').keyup(function() {
+        table.column( $(this).data('column'))
+            .search( $(this).val())
+            .draw();
+    });
+}
+else if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance?tbl=category'){
+    $('#nav2').addClass("active-link");
+    $('#categoryTable').show();
+    $('table.categoryTable').DataTable({ 
+        language: {
+            processing: "Loading...",
+            emptyTable: "No data found!"
+        },
+        processing: true,
+        serverSide: false,
+        ajax: {
+            url: '/fm_categories',
+        },
+        columns: [
+            { data: 'id' },
+            { data: 'category' }
+        ],
+        order:[[1, 'asc']],
+        orderCellsTop: true,
+        fixedHeader: true,            
+    });
+}
+else{
+    window.location.href = '/filemaintenance';
+}

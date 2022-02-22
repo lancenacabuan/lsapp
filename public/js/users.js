@@ -87,7 +87,7 @@ $(document).ready(function () {
     var email = $('#email').val();
     var password = $('#password').val();
     var role = $('#role').val();
-        if(name!="" && email!="" && password!="" && role!=""){
+        if(name!="" && email!="" && password!="" && $('#role').find('option:selected').text()!="Select Role"){
             $.ajax({
                 url: "users/save",
                 type: "POST",

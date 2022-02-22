@@ -382,21 +382,11 @@ $(document).on('click', '#btnSave', function(){
 });
 
 $(document).on('click', '#close', function(){
-    if (confirm("IF YOU CANCEL THE FORM, YOU WILL NOT BE ABLE TO SAVE ALL THE ENTRIES.\n\nDO YOU WANT TO PROCEED?")) {
-        window.location.href = '/stocktransfer';
-    }
-    else {
-        return false;
-    }    
+    window.location.href = '/stocktransfer'; 
 });
 
 $(document).on('click', '#btnClose', function(){
-    if (confirm("IF YOU CANCEL THE FORM, YOU WILL NOT BE ABLE TO SAVE ALL THE ENTRIES.\n\nDO YOU WANT TO PROCEED?")) {
-        window.location.href = '/stocktransfer';
-    }
-    else {
-        return false;
-    }    
+    window.location.href = '/stocktransfer'; 
 });
 
 $(document).on('click', '#modalClose', function(){

@@ -152,10 +152,12 @@ class PagesController extends Controller
             ->where('email',$request->email)
             ->count();
         if(!filter_var($request->email, FILTER_VALIDATE_EMAIL)){
-            return response('invalid');
+            $data = array('result' => 'invalid');
+            return response()->json($data);
         }
         else if($email != 0){
-            return response('duplicate');
+            $data = array('result' => 'duplicate');
+            return response()->json($data);
         }
         else {
             $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';

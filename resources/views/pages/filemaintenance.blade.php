@@ -1,11 +1,17 @@
 @extends('layouts.app')
 @section('content')
 <ul class="nav nav-pills">
-    <li class="nav-item-link">
+    <li class="nav-item-link" style="border: 2px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
         <a class="nav-link" id="nav1" href="{{ url('/filemaintenance') }}"><strong>ITEM</strong></a>
     </li>
-    <li class="nav-item-link">
+    <li class="nav-item-link" style="margin-left: 5px; border: 2px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
         <a class="nav-link" id="nav2" href="{{ url('/filemaintenance?tbl=category') }}"><strong>CATEGORY</strong></a>
+    </li>
+    <li class="nav-item-link" style="margin-left: 5px; border: 2px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
+        <a class="nav-link" id="nav3" href="#"><strong>LOCATION</strong></a>
+    </li>
+    <li class="nav-item-link" style="margin-left: 5px; border: 2px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
+        <a class="nav-link" id="nav4" href="#"><strong>UOM</strong></a>
     </li>
     @role('admin|encoder')
     <span style="position: absolute; right: 120px;">
@@ -16,6 +22,8 @@
     </span>
     @endrole
 </ul>
+<div style="margin-top: -1px; height: 20px; background-color: #0d1a80;">
+</div>
 <br>
 <div class="table-responsive">
     <table class="table-hover table itemTable" id="itemTable" style="width:100%; font-size:80%; display: none; cursor: pointer;">
@@ -51,14 +59,15 @@
     .active-link{
         background-color: #0d1a80 !important;
         color: white !important;
-        border-radius: 0px !important;
+        border-radius: 6px 6px 0px 0px !important;
     }
     .nav-item-link>a:hover {
         background-color: #0d6efd !important;
         color:white !important;
-        border-radius: 0px !important;
+        border-radius: 6px 6px 0px 0px !important;
     }
 </style>
 {{-- @include('pages.fileMaintenance.newItem') --}}
 @include('pages.fileMaintenance.newCategory')
+@include('pages.fileMaintenance.detailsCategory')
 @endsection

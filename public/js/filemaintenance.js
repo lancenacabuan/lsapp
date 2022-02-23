@@ -67,8 +67,8 @@ else{
     window.location.href = '/filemaintenance';
 }
 
-$(document).on('click', '#close', function(){
-    window.location.href = '/filemaintenance?tbl=category';
+$(document).on('click', '.close', function(){
+    location.reload();
 });
 
 $('#btnSaveCategory').on('click', function() {
@@ -82,7 +82,7 @@ $('#btnSaveCategory').on('click', function() {
             },
             data: {
                 _token: $("#csrf").val(),
-                category: category,
+                category: category
             },
             success: function(data){
                 if(data.result == 'true'){
@@ -122,6 +122,96 @@ $('#btnSaveCategory').on('click', function() {
                 else{
                     $('#newCategory').hide();
                     sweetAlert("SAVE FAILED", "FILE MAINTENANCE", "error");
+                    setTimeout(function(){window.location.href="/filemaintenance?tbl=category"} , 2000);
+                }
+            },
+            error: function(data){
+                if(data.status == 401) {
+                    window.location.href = '/filemaintenance?tbl=category';
+                }
+                alert(data.responseText);
+            }
+        });
+    }
+    else{
+        swal('REQUIRED','Category Name field is required!','error');
+        return false;
+    }
+});
+
+$('#categoryTable tbody').on('click', 'tr', function () {
+    $('#detailsCategory').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    var table =  $('table.categoryTable').DataTable(); 
+    var data = table.row(this).data();
+    var category_id = data.id;
+        $('#category_id').val(category_id);
+    var category = data.category;
+        $('#category_details').val(category);
+        $('#category_original').val(category);
+    
+    $('.modal-body').html();
+    $('#detailsCategory').modal('show');
+});
+
+$('#btnUpdateCategory').on('click', function() {
+    var category_id = $('#category_id').val();
+    var category_details = $('#category_details').val();
+    var category_original = $('#category_original').val();
+    if(category!=""){
+        $.ajax({
+            url: "/updateCategory",
+            type: "PUT",
+            headers: {
+            'X-CSRF-TOKEN': $("#csrf").val(),
+            },
+            data: {
+                _token: $("#csrf").val(),
+                category_id: category_id,
+                category_details: category_details,
+                category_original: category_original,
+            },
+            success: function(data){
+                if(data.result == 'true'){
+                    $('#detailsCategory').hide();
+                    sweetAlert("UPDATE SUCCESS", "Category Name has been updated.", "success");
+                    setTimeout(function(){window.location.href="/filemaintenance?tbl=category"} , 2000);
+                    $.ajax({
+                        url: "/logUpdateCategory",
+                        type: "POST",
+                        headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                        },
+                        data: {
+                            category_id: category_id,
+                            category_details: category_details,
+                            category_original: category_original,
+                        },
+                        success: function(data){
+                            if(data == 'true'){
+                                return true;
+                            }
+                            else{
+                                return false;
+                            }
+                        },
+                        error: function(data){
+                            if(data.status == 401) {
+                                window.location.href = '/filemaintenance?tbl=category';
+                            }
+                            alert(data.responseText);
+                        }
+                    });
+                }
+                else if(data.result == 'duplicate'){
+                    sweetAlert("DUPLICATE CATEGORY", "Category Name already exists!", "error");
+                    return false;
+                }
+                else{
+                    $('#detailsCategory').hide();
+                    sweetAlert("UPDATE FAILED", "FILE MAINTENANCE", "error");
                     setTimeout(function(){window.location.href="/filemaintenance?tbl=category"} , 2000);
                 }
             },

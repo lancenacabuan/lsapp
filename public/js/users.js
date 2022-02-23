@@ -31,7 +31,7 @@ $(document).ready(function () {
     var role1 = $('#role1').val();
     var role2 = $('#role2').val();
 
-        if(name1!="" && email1!="" && password1!="" && role1!=""){
+        if(name1!="" && email1!="" && password1!="" && $('#role1').find('option:selected').text()!="Select Role"){
             $.ajax({
                 url: "users/update",
                 type: "PUT",

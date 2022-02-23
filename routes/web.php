@@ -116,6 +116,7 @@ Route::get('/itemsItm', [AssemblyController::class, 'itemsItm']);
 Route::get('/filemaintenance', [FileMaintenanceController::class, 'filemaintenance']);
 Route::get('/fm_items', [FileMaintenanceController::class, 'fm_items']);
 Route::get('/fm_categories', [FileMaintenanceController::class, 'fm_categories']);
+Route::any('/saveItem', [FileMaintenanceController::class, 'saveItem']);
 Route::any('/saveCategory', [FileMaintenanceController::class, 'saveCategory']);
 Route::any('/logNewCategory', [FileMaintenanceController::class, 'logNewCategory']);
 Route::any('/updateCategory', [FileMaintenanceController::class, 'updateCategory']);

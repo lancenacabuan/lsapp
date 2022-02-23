@@ -30,8 +30,9 @@ class FileMaintenanceController extends Controller
         {
             return redirect('/stocktransfer');
         }
-        $title = 'FILE MAINTENANCE';
-        return view('pages/filemaintenance')->with('title', $title);   
+        $categories = Category::select('id','category')->get()->sortBy('category');
+
+        return view('pages/filemaintenance', compact('categories'));   
     }
 
     public function fm_items()
@@ -44,6 +45,41 @@ class FileMaintenanceController extends Controller
     public function fm_categories(){
         $list = Category::select('id','category')->orderBy('category','ASC')->get();
         return DataTables::of($list)->make(true);
+    }
+
+    public function saveItem(Request $request){
+        $item = Item::query()->select()
+            ->whereRaw('LOWER(item) = ?',strtolower($request->item_name))
+            ->count();
+        if($item != 0){
+            $data = array('result' => 'duplicate');
+            return response()->json($data);
+        }
+        else {
+            $item_name = ucwords($request->item_name);
+
+            $items = new Item;
+            $items->item = $item_name;
+            $items->category_id = $request->item_category;
+            $items->UOM = $request->item_uom;
+            $sql = $items->save();
+            $id = $items->id;
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = "ITEM ADDED: User successfully saved new item '$item_name' with ItemID#$id under category '$request->category_name'.";
+                $userlogs->save();
+            }
+
+            $data = array('result' => $result);
+            return response()->json($data);
+        }
     }
 
     public function saveCategory(Request $request){

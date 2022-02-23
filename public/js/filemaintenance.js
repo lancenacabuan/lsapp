@@ -71,6 +71,55 @@ $(document).on('click', '.close', function(){
     location.reload();
 });
 
+$('#btnSaveItem').on('click', function() {
+    var category_name = $('#item_category').find('option:selected').text();
+    var item_category = $('#item_category').val();
+    var item_name = $('#item_name').val();
+    var item_uom = $('#item_uom').val();
+    if(item_name != "" && $('#item_category').find('option:selected').text() != 'Select Category' && $('#item_uom').find('option:selected').text() != 'Select UOM'){
+        $.ajax({
+            url: "/saveItem",
+            type: "POST",
+            headers: {
+            'X-CSRF-TOKEN': $("#csrf").val(),
+            },
+            data: {
+                _token: $("#csrf").val(),
+                category_name: category_name,
+                item_category: item_category,
+                item_name: item_name,
+                item_uom: item_uom
+            },
+            success: function(data){
+                if(data.result == 'true'){
+                    $('#newItem').hide();
+                    sweetAlert("SAVE SUCCESS", "New Item has been saved.", "success");
+                    setTimeout(function(){window.location.href="/filemaintenance"} , 2000);
+                }
+                else if(data.result == 'duplicate'){
+                    sweetAlert("DUPLICATE ITEM", "Item Description already exists!", "error");
+                    return false;
+                }
+                else{
+                    $('#newItem').hide();
+                    sweetAlert("SAVE FAILED", "FILE MAINTENANCE", "error");
+                    setTimeout(function(){window.location.href="/filemaintenance"} , 2000);
+                }
+            },
+            error: function(data){
+                if(data.status == 401) {
+                    window.location.href = '/filemaintenance';
+                }
+                alert(data.responseText);
+            }
+        });
+    }
+    else{
+        swal('REQUIRED','Please fill all the fields!','error');
+        return false;
+    }
+});
+
 $('#btnSaveCategory').on('click', function() {
     var category = $('#category').val();
     if(category != ""){

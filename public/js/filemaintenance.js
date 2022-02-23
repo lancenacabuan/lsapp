@@ -169,7 +169,7 @@ function decodeHtml(str){
 }
 
 $('#btnUpdateItem').on('click', function() {
-    var item_id = $('#item_id').val(item_id);
+    var item_id = $('#item_id').val();
     var category_name_original = $('#category_name_details_original').val();
     var item_category_original = $('#item_category_details_original').val();
     var item_name_original = $('#item_name_details_original').val();
@@ -210,6 +210,10 @@ $('#btnUpdateItem').on('click', function() {
                             $('#detailsItem').hide();
                             sweetAlert("UPDATE SUCCESS", "Item has been updated.", "success");
                             setTimeout(function(){window.location.href="/filemaintenance"} , 2000);
+                        }
+                        else if(data.result == 'no changes'){
+                            sweetAlert("NO CHANGES FOUND", "Item Details are still all the same!", "error");
+                            return false;
                         }
                         else if(data.result == 'duplicate'){
                             sweetAlert("DUPLICATE ITEM", "Item Description already exists!", "error");
@@ -388,6 +392,10 @@ $('#btnUpdateCategory').on('click', function() {
                                     alert(data.responseText);
                                 }
                             });
+                        }
+                        else if(data.result == 'no changes'){
+                            sweetAlert("NO CHANGES FOUND", "Category Name is still the same!", "error");
+                            return false;
                         }
                         else if(data.result == 'duplicate'){
                             sweetAlert("DUPLICATE CATEGORY", "Category Name already exists!", "error");

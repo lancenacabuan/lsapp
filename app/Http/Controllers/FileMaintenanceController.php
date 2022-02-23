@@ -83,6 +83,10 @@ class FileMaintenanceController extends Controller
     }
 
     public function updateItem(Request $request){
+        if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original && $request->item_uom == $request->item_uom_original){
+            $data = array('result' => 'no changes');
+            return response()->json($data);
+        }        
         if(strtoupper($request->item_name) != strtoupper($request->item_name_original)){
             $item = Item::query()->select()
                 ->whereRaw('LOWER(item) = ?',strtolower($request->item_name))
@@ -112,18 +116,18 @@ class FileMaintenanceController extends Controller
                 $result = 'true';
 
                 if(strtoupper($request->item_name) != strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original && $request->item_uom == $request->item_uom_original){
-                    $activity = "ITEM UPDATED: User successfully updated item description from '$request->item_name_original' into '$item_name' with ItemID#$id under category '$request->category_name'.";
+                    $activity = "ITEM UPDATED: User successfully updated Item Description from '$request->item_name_original' into '$item_name' with ItemID#$id under category '$request->category_name'.";
                 }
                 else if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category != $request->item_category_original && $request->item_uom == $request->item_uom_original){
-                    $activity = "ITEM UPDATED: User successfully updated item category of '$item_name' with ItemID#$id changed from '$request->category_name_original' into '$request->category_name' with new CategoryID#'$request->item_category'.";
+                    $activity = "ITEM UPDATED: User successfully updated Item Category of '$item_name' with ItemID#$id changed from '$request->category_name_original' into '$request->category_name' with new CategoryID#'$request->item_category'.";
                 }
                 else if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original && $request->item_uom != $request->item_uom_original){
-                    $activity = "ITEM UPDATED: User successfully updated item UOM of '$item_name' with ItemID#$id changed from '$request->item_uom_original' into '$request->item_uom'.";
+                    $activity = "ITEM UPDATED: User successfully updated Item UOM of '$item_name' with ItemID#$id changed from '$request->item_uom_original' into '$request->item_uom'.";
                 }
                 else{
-                    $activity = "ITEM UPDATED: User successfully updated details of ItemID#$id with changes:\n
-                        Category Name: '$request->category_name_original' => '$request->category_name'\n
-                        Item Description: '$request->item_name_original' => '$item_name'\n
+                    $activity = "ITEM UPDATED: User successfully updated details of ItemID#$id with changes: 
+                        Category Name: '$request->category_name_original' => '$request->category_name', 
+                        Item Description: '$request->item_name_original' => '$item_name', 
                         UOM: '$request->item_uom_original' => '$request->item_uom'.
                         ";
                 }
@@ -168,11 +172,15 @@ class FileMaintenanceController extends Controller
     public function logNewCategory(Request $request){
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "CATEGORY ADDED: User successfully saved new category '$request->category' with CategoryID#$request->id.";
+        $userlogs->activity = "CATEGORY ADDED: User successfully saved new Category '$request->category' with CategoryID#$request->id.";
         $userlogs->save();
     }
 
     public function updateCategory(Request $request){
+        if(strtoupper($request->category_details) == strtoupper($request->category_original)){
+            $data = array('result' => 'no changes');
+            return response()->json($data);
+        }
         if(strtoupper($request->category_details) != strtoupper($request->category_original)){
             $category = Category::query()->select()
                 ->where('category',strtoupper($request->category_details))
@@ -205,7 +213,7 @@ class FileMaintenanceController extends Controller
     public function logUpdateCategory(Request $request){
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "CATEGORY UPDATED: User successfully updated category from '$request->category_original' into '$request->category_details' with CategoryID#$request->category_id.";
+        $userlogs->activity = "CATEGORY UPDATED: User successfully updated Category from '$request->category_original' into '$request->category_details' with CategoryID#$request->category_id.";
         $userlogs->save();
     }
 }

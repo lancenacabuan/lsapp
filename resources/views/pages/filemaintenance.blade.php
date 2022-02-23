@@ -65,6 +65,9 @@
         color:white !important;
         border-radius: 6px 6px 0px 0px !important;
     }
+    .nav-pills a{
+        color: #0d1a80;
+    }
 </style>
 {{-- @include('pages.fileMaintenance.newItem') --}}
 @include('pages.fileMaintenance.newCategory')

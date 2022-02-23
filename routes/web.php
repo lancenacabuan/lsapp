@@ -118,4 +118,6 @@ Route::get('/fm_items', [FileMaintenanceController::class, 'fm_items']);
 Route::get('/fm_categories', [FileMaintenanceController::class, 'fm_categories']);
 Route::any('/saveCategory', [FileMaintenanceController::class, 'saveCategory']);
 Route::any('/logNewCategory', [FileMaintenanceController::class, 'logNewCategory']);
+Route::any('/updateCategory', [FileMaintenanceController::class, 'updateCategory']);
+Route::any('/logUpdateCategory', [FileMaintenanceController::class, 'logUpdateCategory']);
 //

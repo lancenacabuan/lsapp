@@ -73,7 +73,7 @@ $(document).on('click', '.close', function(){
 
 $('#btnSaveCategory').on('click', function() {
     var category = $('#category').val();
-    if(category!=""){
+    if(category != ""){
         $.ajax({
             url: "/saveCategory",
             type: "POST",
@@ -160,7 +160,7 @@ $('#btnUpdateCategory').on('click', function() {
     var category_id = $('#category_id').val();
     var category_details = $('#category_details').val();
     var category_original = $('#category_original').val();
-    if(category!=""){
+    if(category_details != ""){
         $.ajax({
             url: "/updateCategory",
             type: "PUT",
@@ -185,9 +185,9 @@ $('#btnUpdateCategory').on('click', function() {
                         'X-CSRF-TOKEN': $("#csrf").val(),
                         },
                         data: {
-                            category_id: category_id,
-                            category_details: category_details,
-                            category_original: category_original,
+                            category_id: data.category_id,
+                            category_details: data.category_details,
+                            category_original: data.category_original,
                         },
                         success: function(data){
                             if(data == 'true'){

@@ -199,7 +199,7 @@ class PagesController extends Controller
     }
 
     public function users_update(Request $request){
-        if($request->email1 != $request->email2){
+        if(strtolower($request->email1) != strtolower($request->email2)){
             $email = User::query()->select()
                 ->where('email',$request->email1)
                 ->count();

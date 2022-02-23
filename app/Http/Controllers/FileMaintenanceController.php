@@ -78,4 +78,41 @@ class FileMaintenanceController extends Controller
         $userlogs->activity = "CATEGORY ADDED: User successfully saved new category '$request->category' with CategoryID#$request->id.";
         $userlogs->save();
     }
+
+    public function updateCategory(Request $request){
+        if(strtoupper($request->category_details) != strtoupper($request->category_original)){
+            $category = Category::query()->select()
+                ->where('category',strtoupper($request->category_details))
+                ->count();
+        }
+        else{
+            $category = 0; 
+        }
+        if($category != 0){
+            $data = array('result' => 'duplicate');
+            return response()->json($data);
+        }
+        else {
+            $categories = Category::find($request->input('category_id'));
+            $categories->category = strtoupper($request->category_details);
+            $sql = $categories->save();
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+            }
+            
+            $data = array('result' => $result, 'category_id' => $request->category_id, 'category_details' => strtoupper($request->category_details), 'category_original' => strtoupper($request->category_original));
+            return response()->json($data);
+        }
+    }
+
+    public function logUpdateCategory(Request $request){
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "CATEGORY UPDATED: User successfully updated category from '$request->category_original' into '$request->category_details' with CategoryID#$request->category_id.";
+        $userlogs->save();
+    }
 }

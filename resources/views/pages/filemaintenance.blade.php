@@ -14,14 +14,6 @@
     <li class="nav-item-link" style="margin-left: 5px; border: 2px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
         <a class="nav-link" id="nav4" href="#"><strong>UOM</strong></a>
     </li>
-    @role('admin|encoder')
-    <span style="position: absolute; right: 120px;">
-    <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" style="display: none;">
-        NEW ITEM</button>
-    <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" style="display: none;">
-        NEW CATEGORY</button>
-    </span>
-    @endrole
 </ul>
 <div style="margin-top: -1px; height: 20px; background-color: #0d1a80;">
 </div>
@@ -54,6 +46,13 @@
             </tr>
         </thead>
     </table>
+    @role('admin|encoder')
+    <hr>
+    <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" style="display: none;">
+        NEW ITEM</button>
+    <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" style="display: none;">
+        NEW CATEGORY</button>
+    @endrole
 </div>
 <style>
     .active-link{

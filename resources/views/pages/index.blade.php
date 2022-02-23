@@ -5,7 +5,7 @@
         <div class="container-fluid">
         <center>
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-4" style="margin-left: 100px; margin-right: -100px;">
                     <a href="stocks" style="text-decoration:none">
                         <div class="container" style="background-color: #0d1a80; color: white; border-radius: 100%; height: 150px; width: 150px; font-size: 30px; text-align: center; display: inline-flex; align-items: center; justify-content: center;">
                         <center>{{DB::table('stocks')->whereIn('stocks.location_id',['1','2','3','4','5','6'])->get()->count();}}</center>
@@ -23,7 +23,7 @@
                         <strong style="color: #0d1a80; font-size: 20px;">STOCK REQUEST</strong>
                     </a>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4" style="margin-left: -100px;">
                     <a href="stocktransfer" style="text-decoration:none">
                         <div class="container" style="background-color: #0d1a80; color: white; border-radius: 100%; height: 150px; width: 150px; font-size: 30px; text-align: center; display: inline-flex; align-items: center; justify-content: center;">
                         <center>{{DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();}}</center>

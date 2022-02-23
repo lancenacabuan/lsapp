@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<div class="table-responsive">
 <ul class="nav nav-pills">
     <li class="nav-item-link" style="border: 2px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
         <a class="nav-link" id="nav1" href="{{ url('/filemaintenance') }}"><strong>ITEM</strong></a>
@@ -25,10 +26,9 @@
 <div style="margin-top: -1px; height: 20px; background-color: #0d1a80;">
 </div>
 <br>
-<div class="table-responsive">
     <table class="table-hover table itemTable" id="itemTable" style="width:100%; font-size:80%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important;">
-            <tr class="tbsearch">
+            {{-- <tr class="tbsearch">
                 <td>
                     <input type="text" class="form-control filter-input fl-0" data-column="0" style="border:1px solid #808080"/>
                 </td>
@@ -38,7 +38,7 @@
                 <td>
                     <input type="text" class="form-control filter-input fl-2" data-column="2" style="border:1px solid #808080"/>
                 </td>
-            </tr>
+            </tr> --}}
             <tr>
                 <th>ITEM ID</th>
                 <th>CATEGORY NAME</th>

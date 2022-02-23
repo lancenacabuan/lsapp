@@ -32,6 +32,8 @@
                 <th>ITEM ID</th>
                 <th>CATEGORY NAME</th>
                 <th>ITEM DESCRIPTION</th>
+                <th>CATEGORY ID</th>
+                <th>UOM</th>
             </tr>
         </thead>
     </table>
@@ -67,7 +69,7 @@
     }
 </style>
 @include('pages.fileMaintenance.newItem')
-{{-- @include('pages.fileMaintenance.detailsItem') --}}
+@include('pages.fileMaintenance.detailsItem')
 @include('pages.fileMaintenance.newCategory')
 @include('pages.fileMaintenance.detailsCategory')
 @endsection

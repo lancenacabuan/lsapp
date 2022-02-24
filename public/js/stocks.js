@@ -1,4 +1,4 @@
-var CategoryTable;
+var CategoryTable, location;
 
 function isNumberKey(evt)
 {
@@ -14,6 +14,7 @@ function category() {
     $('#CategoryTableDiv').show();
     $('#backBtn').hide();
     $('#ItemTableDiv').hide();
+    
     CategoryTable = 
         $('table.CategoryTable').DataTable({ 
             ajax: 'category_data',

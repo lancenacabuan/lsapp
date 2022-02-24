@@ -367,8 +367,8 @@ $('#categoryTable tbody').on('click', 'tr', function () {
 
 $('#btnUpdateCategory').on('click', function() {
     var category_id = $('#category_id').val();
-    var category_details = $('#category_details').val();
     var category_original = $('#category_original').val();
+    var category_details = $('#category_details').val();
     if(category_details != ""){
         swal({
             title: "UPDATE CATEGORY?",
@@ -387,8 +387,8 @@ $('#btnUpdateCategory').on('click', function() {
                     data: {
                         _token: $("#csrf").val(),
                         category_id: category_id,
-                        category_details: category_details,
                         category_original: category_original,
+                        category_details: category_details
                     },
                     success: function(data){
                         if(data.result == 'true'){
@@ -403,8 +403,8 @@ $('#btnUpdateCategory').on('click', function() {
                                 },
                                 data: {
                                     category_id: data.category_id,
-                                    category_details: data.category_details,
                                     category_original: data.category_original,
+                                    category_details: data.category_details
                                 },
                                 success: function(data){
                                     if(data == 'true'){
@@ -471,7 +471,7 @@ $('#btnSaveLocation').on('click', function() {
                     },
                     data: {
                         _token: $("#csrf").val(),
-                        location: location,
+                        location: location
                     },
                     success: function(data){
                         if(data.result == 'true'){
@@ -486,6 +486,84 @@ $('#btnSaveLocation').on('click', function() {
                         else{
                             $('#newLocation').hide();
                             sweetAlert("SAVE FAILED", "MAINTENANCE - LOCATION", "error");
+                            setTimeout(function(){window.location.href="/maintenance?tbl=location"} , 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401) {
+                            window.location.href = '/maintenance?tbl=location';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
+    }
+    else{
+        swal('REQUIRED','Location Name field is required!','error');
+        return false;
+    }
+});
+
+$('#locationTable tbody').on('click', 'tr', function () {
+    $('#detailsLocation').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    var table =  $('table.locationTable').DataTable(); 
+    var data = table.row(this).data();
+    var location_id = data.location_id;
+        $('#location_id').val(location_id);
+    var location = data.location;
+        $('#location_details').val(location);
+        $('#location_original').val(location);
+    
+    $('.modal-body').html();
+    $('#detailsLocation').modal('show');
+});
+
+$('#btnUpdateLocation').on('click', function() {
+    var location_id = $('#location_id').val();
+    var location_original = $('#location_original').val();
+    var location_details = $('#location_details').val();
+    if(location_details != ""){
+        swal({
+            title: "UPDATE LOCATION?",
+            text: "You are about to UPDATE this location!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "/updateLocation",
+                    type: "PUT",
+                    headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                    },
+                    data: {
+                        _token: $("#csrf").val(),
+                        location_id: location_id,
+                        location_original: location_original,
+                        location_details: location_details
+                    },
+                    success: function(data){
+                        if(data.result == 'true'){
+                            $('#detailsLocation').hide();
+                            sweetAlert("UPDATE SUCCESS", "Location Name has been updated.", "success");
+                            setTimeout(function(){window.location.href="/maintenance?tbl=location"} , 2000);
+                        }
+                        else if(data.result == 'no changes'){
+                            sweetAlert("NO CHANGES FOUND", "Location Name is still the same!", "error");
+                            return false;
+                        }
+                        else if(data.result == 'duplicate'){
+                            sweetAlert("DUPLICATE LOCATION", "Location Name already exists!", "error");
+                            return false;
+                        }
+                        else{
+                            $('#detailsLocation').hide();
+                            sweetAlert("UPDATE FAILED", "MAINTENANCE - LOCATION", "error");
                             setTimeout(function(){window.location.href="/maintenance?tbl=location"} , 2000);
                         }
                     },

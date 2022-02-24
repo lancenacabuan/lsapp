@@ -35,6 +35,7 @@ Route::any('/users/update',[PagesController::class,'users_update']);
 
 //Stocks
 Route::get('/stocks', [StocksController::class, 'stocks']);
+Route::get('/GetLocation', [StocksController::class, 'GetLocation']);
 Route::any('/stocks/save',[StocksController::class,'store']);
 Route::any('/stocks/update',[StocksController::class,'update']);
 Route::get('/category_data', [StocksController::class, 'category_data']);

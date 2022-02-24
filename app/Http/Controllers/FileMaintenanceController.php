@@ -259,4 +259,46 @@ class FileMaintenanceController extends Controller
             return response()->json($data);
         }
     }
+
+    public function updateLocation(Request $request){
+        if(strtoupper($request->location_details) == strtoupper($request->location_original)){
+            $data = array('result' => 'no changes');
+            return response()->json($data);
+        }
+        if(strtoupper($request->location_details) != strtoupper($request->location_original)){
+            $location = Location::query()->select()
+                ->where('location',strtoupper($request->location_details))
+                ->count();
+        }
+        else{
+            $location = 0; 
+        }
+        if($location != 0){
+            $data = array('result' => 'duplicate');
+            return response()->json($data);
+        }
+        else {
+            $location_details = strtoupper($request->location_details);
+
+            $locations = Location::find($request->input('location_id'));
+            $locations->location = $location_details;
+            $sql = $locations->save();
+            $id = $locations->id;
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = "LOCATION UPDATED: User successfully updated Location from '$request->location_original' into '$location_details' with LocationID#$id.";
+                $userlogs->save();
+            }
+            
+            $data = array('result' => $result);
+            return response()->json($data);
+        }
+    }
 }

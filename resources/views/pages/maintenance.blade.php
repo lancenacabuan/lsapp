@@ -89,5 +89,5 @@
 @include('pages.fileMaintenance.newCategory')
 @include('pages.fileMaintenance.detailsCategory')
 @include('pages.fileMaintenance.newLocation')
-{{-- @include('pages.fileMaintenance.detailsLocation') --}}
+@include('pages.fileMaintenance.detailsLocation')
 @endsection

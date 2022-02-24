@@ -9,7 +9,7 @@
         <a class="nav-link" id="nav2" href="{{ url('/maintenance?tbl=category') }}"><strong>CATEGORY</strong></a>
     </li>
     <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-        <a class="nav-link" id="nav3" href="#"><strong>LOCATION</strong></a>
+        <a class="nav-link" id="nav3" href="{{ url('/maintenance?tbl=location') }}"><strong>LOCATION</strong></a>
     </li>
 </ul>
 <div style="margin-top: -3px; height: 20px; background-color: #0d1a80;">
@@ -45,12 +45,22 @@
             </tr>
         </thead>
     </table>
-    @role('admin|encoder')
+    <table class="table-hover table locationTable" id="locationTable" style="width:100%; font-size:80%; display: none; cursor: pointer;">
+        <thead style="background-color: #0d1a80 !important; color: white !important;">
+            <tr>
+                <th>LOCATION ID</th>
+                <th>LOCATION NAME</th>
+            </tr>
+        </thead>
+    </table>
+    @role('admin')
     <hr>
     <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" style="display: none;">
         NEW ITEM</button>
     <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" style="display: none;">
         NEW CATEGORY</button>
+    <button class="btn btn-primary bp btnNewLocation" type="button" data-toggle="modal" data-target="#newLocation" data-backdrop="static" style="display: none;">
+        NEW LOCATION</button>
     @endrole
 </div>
 <style>
@@ -72,4 +82,6 @@
 @include('pages.fileMaintenance.detailsItem')
 @include('pages.fileMaintenance.newCategory')
 @include('pages.fileMaintenance.detailsCategory')
+@include('pages.fileMaintenance.newLocation')
+{{-- @include('pages.fileMaintenance.detailsLocation') --}}
 @endsection

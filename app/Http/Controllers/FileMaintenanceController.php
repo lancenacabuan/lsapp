@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Activitylog\Models\Activity;
 use App\Models\Item;
 use App\Models\Category;
+use App\Models\Location;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -51,6 +52,11 @@ class FileMaintenanceController extends Controller
         return DataTables::of($list)->make(true);
     }
 
+    public function fm_locations(){
+        $list = Location::select('id AS location_id','location')->whereNotIn('id',['7','8'])->get();
+        return DataTables::of($list)->make(true);
+    }
+
     public function saveItem(Request $request){
         $item = Item::query()->select()
             ->whereRaw('LOWER(item) = ?',strtolower($request->item_name))
@@ -77,7 +83,7 @@ class FileMaintenanceController extends Controller
 
                 $userlogs = new UserLogs;
                 $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "ITEM ADDED: User successfully saved new item '$item_name' with ItemID#$id under category '$request->category_name'.";
+                $userlogs->activity = "ITEM ADDED: User successfully saved new Item '$item_name' with ItemID#$id under Category '$request->category_name'.";
                 $userlogs->save();
             }
 
@@ -120,7 +126,7 @@ class FileMaintenanceController extends Controller
                 $result = 'true';
 
                 if(strtoupper($request->item_name) != strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original && $request->item_uom == $request->item_uom_original){
-                    $activity = "ITEM UPDATED: User successfully updated Item Description from '$request->item_name_original' into '$item_name' with ItemID#$id under category '$request->category_name'.";
+                    $activity = "ITEM UPDATED: User successfully updated Item Description from '$request->item_name_original' into '$item_name' with ItemID#$id under Category '$request->category_name'.";
                 }
                 else if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category != $request->item_category_original && $request->item_uom == $request->item_uom_original){
                     $activity = "ITEM UPDATED: User successfully updated Item Category of '$item_name' with ItemID#$id changed from '$request->category_name_original' into '$request->category_name' with new CategoryID#'$request->item_category'.";
@@ -219,5 +225,38 @@ class FileMaintenanceController extends Controller
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "CATEGORY UPDATED: User successfully updated Category from '$request->category_original' into '$request->category_details' with CategoryID#$request->category_id.";
         $userlogs->save();
+    }
+
+    public function saveLocation(Request $request){
+        $location = Location::query()->select()
+            ->whereRaw('LOWER(location) = ?',strtolower($request->location))
+            ->count();
+        if($location != 0){
+            $data = array('result' => 'duplicate');
+            return response()->json($data);
+        }
+        else {
+            $location_name = strtoupper($request->location);
+
+            $locations = new Location;
+            $locations->location = $location_name;
+            $sql = $locations->save();
+            $id = $locations->id;
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = "LOCATION ADDED: User successfully saved new Location '$location_name' with LocationID#$id.";
+                $userlogs->save();
+            }
+
+            $data = array('result' => $result);
+            return response()->json($data);
+        }
     }
 }

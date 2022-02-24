@@ -9,7 +9,8 @@
         <a class="nav-link" id="nav2" href="{{ url('/maintenance?tbl=category') }}"><strong>CATEGORY</strong></a>
     </li>
     <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-        <a class="nav-link" id="nav3" href="{{ url('/maintenance?tbl=location') }}"><strong>LOCATION</strong></a>
+        {{-- <a class="nav-link" id="nav3" href="{{ url('/maintenance?tbl=location') }}"><strong>LOCATION</strong></a> --}}
+        <a class="nav-link" id="nav3" href="#"><strong>LOCATION</strong></a>
     </li>
 </ul>
 <div style="margin-top: -3px; height: 20px; background-color: #0d1a80;">
@@ -26,6 +27,12 @@
                 </td>
                 <td>
                     <input type="text" class="form-control filter-input fl-2" data-column="2" style="border:1px solid #808080"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control filter-input fl-3" data-column="3" style="border:1px solid #808080"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control filter-input fl-4" data-column="4" style="border:1px solid #808080"/>
                 </td>
             </tr> --}}
             <tr>

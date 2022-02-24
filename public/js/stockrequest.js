@@ -131,7 +131,7 @@ $(document).ready(function(){
                         else{
                             var l = value.pending;
                         }
-                        if(value.serial == '' || value.serial == ' ' || value.serial == null || value.serial == 'N\\\\A' || value.serial == 'N\\\/A' || value.serial == 'n\\\/a' || value.serial == 'NONE' || value.serial == 'None' || value.serial == 'none'){
+                        if(value.uom != 'Unit'){
                             $('#btnSubmit').prop('disabled', false);
                             var id = document.createElement("input");
                             id.setAttribute("id", "item_id"+j);
@@ -244,10 +244,6 @@ $(document).ready(function(){
                                         });
                     
                                         s.forEach(v => {             
-                                            // var option = document.createElement("option");
-                                            // option.value = v.location_id;
-                                            // option.text = v.serial;
-                                            // serial.appendChild(option);
                                             $(vid).append($('<option>', {
                                                 value: v.serial,
                                                 text: v.serial
@@ -267,22 +263,17 @@ $(document).ready(function(){
                         }
                     });
                     $('.serials').change(function(){
-                        // $('.serials option').attr('disabled', false);
-                        // $('.serials option').attr('style', 'background-color: white');
                         $('.serials option').show();
                         $('.serials').each(function(){
                             var $this = $(this);
                             $('.serials').not($this).find('option').each(function(){
                                 if($(this).attr('value') == $this.val()){
-                                    // $(this).attr({ disabled: 'true', style: 'background-color: darkgrey' });
                                     $(this).hide();
                                 }
                             });
                         });
                         $('select option:contains("Select Serial")').show();
                         $('.serials').trigger("chosen:updated");
-                        // $('select option:contains("Select Serial")').attr('disabled', false);
-                        // $('select option:contains("Select Serial")').attr('style', 'background-color: white');
                     });
                     for(var m=0; m < j; m++){
                         let id = '#location'+m;
@@ -316,16 +307,6 @@ $(document).ready(function(){
                             });
                         });
                     }
-                    // for(var m=0; m < j; m++){
-                    //     $(document).on('input', "#serial"+m, function(){
-                    //         if($('.serials').filter(function() { return !!this.value; }).length > 0){
-                    //             $('#btnSubmit').prop('disabled', false);
-                    //         }
-                    //         else{
-                    //             $('#btnSubmit').prop('disabled', true);
-                    //         }
-                    //     });
-                    // }
                     $("#btnSubmit").unbind('click').click(function(){
                         if(!$("#schedOn").val()){
                             swal('Scheduled On is required!','Select within date range starting from today onwards.','error');

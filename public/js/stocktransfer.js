@@ -200,8 +200,8 @@ $('.location').on('change', function(){
 $(".add-row").on('click', function(){
     var category = $("#category option:selected").text();
     var item = $("#item option:selected").text();
-    var qty = $("#qty").val();
-    var qtystock = $("#qtystock").val();
+    var qty = parseInt($("#qty").val());
+    var qtystock = parseInt($("#qtystock").val());
     var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
     var ctr='false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0"){

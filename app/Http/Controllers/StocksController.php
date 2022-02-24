@@ -287,7 +287,7 @@ class StocksController extends Controller
                 $stocks->user_id =auth()->user()->id;
                 $stocks->location_id =$request->location;
                 $stocks->status = 'in';
-                $stocks->serial = 'N\A';
+                $stocks->serial = 'N/A';
                 $save= $stocks->save(); 
             }
         }

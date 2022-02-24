@@ -13,7 +13,6 @@ use App\Models\Category;
 use App\Models\Location;
 use Yajra\Datatables\Datatables;
 
-
 class StocksController extends Controller
 {
     public function __construct()

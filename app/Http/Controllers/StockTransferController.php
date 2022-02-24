@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\emailForTransfer;
 use App\Mail\disapprovedTransfer;
 use App\Models\Category;
@@ -15,8 +16,6 @@ use App\Models\Transfer;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class StockTransferController extends Controller
 {

@@ -3,7 +3,6 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales') && !auth()->user()->hasanyRole('approver - warehouse'))
@@ -29,10 +28,10 @@
                 {{-- <li class="nav-item">
                     <a class="nav-link n {{ Request::is('pullout') ? 'active' : '' }}" href="{{ url('/pullout') }}">PULLOUT</a>
                 </li> --}}
+                @role('admin')
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('filemaintenance*') ? 'active' : '' }}" href="{{ url('/filemaintenance') }}">FILE MAINTENANCE</a>
                 </li>
-                @role('admin')
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('users') ? 'active' : '' }}" href="{{ url('/users') }}">USERS</a>
                 </li>
@@ -60,7 +59,6 @@
                                     document.getElementById('logout-form').submit();">
                     <b>LOGOUT</b>&nbsp;&nbsp;<i class="fa fa-sign-out pr-5" aria-hidden="true"></i>
                 </a>
-
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>

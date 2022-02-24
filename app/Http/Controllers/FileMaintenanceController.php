@@ -30,6 +30,10 @@ class FileMaintenanceController extends Controller
         {
             return redirect('/stocktransfer');
         }
+        if(!auth()->user()->hasanyRole('admin')) //---ROLES---//
+        {
+            return redirect('/');
+        }
         $categories = Category::select('id','category')->get()->sortBy('category');
 
         return view('pages/filemaintenance', compact('categories'));   

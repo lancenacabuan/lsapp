@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use App\Mail\emailForRequest;
 use App\Mail\disapprovedRequest;
 use App\Models\Category;
@@ -18,8 +19,6 @@ use App\Models\Item;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class StockRequestController extends Controller
 {

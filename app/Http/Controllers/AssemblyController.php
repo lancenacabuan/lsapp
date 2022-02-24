@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 use App\Models\Stock;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\DB;
 
 class AssemblyController extends Controller
 {

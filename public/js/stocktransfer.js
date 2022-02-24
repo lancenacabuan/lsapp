@@ -184,6 +184,19 @@ $('#item').on('change', function(){
     });
 });
 
+$('.location').on('change', function(){
+    $('.location option').show();
+    $('.location').each(function(){
+        var $this = $(this);
+        $('.location').not($this).find('option').each(function(){
+            if($(this).attr('value') == $this.val()){
+                $(this).hide();
+            }
+        });
+    });
+    $('select option:contains("Select Location")').show();
+});
+
 $(".add-row").on('click', function(){
     var category = $("#category option:selected").text();
     var item = $("#item option:selected").text();

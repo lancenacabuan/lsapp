@@ -10,6 +10,7 @@ use App\Mail\disapprovedTransfer;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Stock;
+use App\Models\Location;
 use App\Models\RequestTransfer;
 use App\Models\StockTransfer;
 use App\Models\Transfer;
@@ -29,7 +30,9 @@ class StockTransferController extends Controller
         {
             return redirect('/stockrequest');
         }
-        return view('/pages/stocktransfer');
+        $locations = Location::select('id','location')->whereNotIn('id',['7','8'])->get();
+
+        return view('/pages/stocktransfer', compact('locations'));
     }
     
     public function generateReqNum(Request $request){
@@ -143,24 +146,20 @@ class StockTransferController extends Controller
         }
         while(!$items);
         
-        if($request_details->locfrom == 5){
-            $locfrom = 'BALINTAWAK';
+        do{
+            $locfrom = Location::query()->select('location')->where('id',$request_details->locfrom)->get();
         }
-        if($request_details->locfrom == 6){
-            $locfrom = 'MALABON';
+        while(!$locfrom);
+        $locfrom = str_replace('[{"location":"','', $locfrom);
+        $locfrom = str_replace('"}]','', $locfrom);
+
+        do{
+            $locto = Location::query()->select('location')->where('id',$request_details->locto)->get();
         }
-        if($request_details->locto == 1){
-            $locto = 'A1';
-        }
-        if($request_details->locto == 2){
-            $locto = 'A2';
-        }
-        if($request_details->locto == 3){
-            $locto = 'A3';
-        }
-        if($request_details->locto == 4){
-            $locto = 'A4';
-        }
+        while(!$locto);
+        $locto = str_replace('[{"location":"','', $locto);
+        $locto = str_replace('"}]','', $locto);
+
         $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
         $user = User::role('approver - warehouse')->get();
         foreach($user as $key){
@@ -378,24 +377,20 @@ class StockTransferController extends Controller
         }
         while(!$items);
         
-        if($request_details->locfrom == 5){
-            $locfrom = 'BALINTAWAK';
+        do{
+            $locfrom = Location::query()->select('location')->where('id',$request_details->locfrom)->get();
         }
-        if($request_details->locfrom == 6){
-            $locfrom = 'MALABON';
+        while(!$locfrom);
+        $locfrom = str_replace('[{"location":"','', $locfrom);
+        $locfrom = str_replace('"}]','', $locfrom);
+
+        do{
+            $locto = Location::query()->select('location')->where('id',$request_details->locto)->get();
         }
-        if($request_details->locto == 1){
-            $locto = 'A1';
-        }
-        if($request_details->locto == 2){
-            $locto = 'A2';
-        }
-        if($request_details->locto == 3){
-            $locto = 'A3';
-        }
-        if($request_details->locto == 4){
-            $locto = 'A4';
-        }
+        while(!$locto);
+        $locto = str_replace('[{"location":"','', $locto);
+        $locto = str_replace('"}]','', $locto);
+        
         $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
         $details = [
             'name' => $request_details->reqby,

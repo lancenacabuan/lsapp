@@ -243,11 +243,19 @@ $(document).ready(function(){
                                             return [v];
                                         });
                     
-                                        s.forEach(v => {             
-                                            $(vid).append($('<option>', {
-                                                value: v.serial,
-                                                text: v.serial
-                                            }));
+                                        s.forEach(v => {
+                                            if(v.serial == 'N/A'){
+                                                $(vid).append($('<option>', {
+                                                    value: v.id,
+                                                    text: v.serial+' - '+v.location
+                                                }));
+                                            }
+                                            else{
+                                                $(vid).append($('<option>', {
+                                                    value: v.id,
+                                                    text: v.serial
+                                                }));
+                                            }
                                         });
                                         $(vid).chosen();
                                     },
@@ -284,7 +292,8 @@ $(document).ready(function(){
                             else{
                                 $('#btnSubmit').prop('disabled', false);
                             }
-                            var serial_id = $(this).find('option:selected').text();
+                            var serial_id = $(this).val();
+                            // var serial_id = $(this).find('option:selected').text();
                             $.ajax({
                                 type:'get', 
                                 url:'/setlocation', 

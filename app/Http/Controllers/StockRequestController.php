@@ -88,10 +88,11 @@ class StockRequestController extends Controller
     }
 
     public function setserials(Request $request){
-        $list = Stock::select('serial','location_id')
+        $list = Stock::select('stocks.id AS id','serial','location_id','location')
             ->where('stocks.item_id', $request->item_id)
             ->where('stocks.status','in')
             ->whereIn('stocks.location_id',['1','2','3','4'])
+            ->join('locations','locations.id','stocks.location_id')
             ->get();
         
         return response()->json($list);
@@ -100,7 +101,8 @@ class StockRequestController extends Controller
     public function setlocation(Request $request){       
         $list = Stock::query()->select('stocks.location_id AS location_id','locations.location AS location')
             ->join('locations','locations.id','stocks.location_id')
-            ->where('stocks.serial',$request->serial_id)
+            // ->where('stocks.serial',$request->serial_id)
+            ->where('stocks.id',$request->serial_id)
             ->get();
 
         $list = str_replace('[','',$list);

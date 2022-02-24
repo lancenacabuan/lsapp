@@ -220,8 +220,8 @@
     @if(Request::is('assembly'))
         <script src="{{ asset('js/assembly.js') }}"></script>   
     @endif
-    @if(Request::is('filemaintenance'))
-        <script src="{{ asset('js/filemaintenance.js') }}"></script>   
+    @if(Request::is('maintenance'))
+        <script src="{{ asset('js/maintenance.js') }}"></script>   
     @endif
 </body>
 </html>

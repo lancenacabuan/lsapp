@@ -21,7 +21,7 @@ class FileMaintenanceController extends Controller
         $this->middleware('auth');
     }
 
-    public function filemaintenance(Request $request){
+    public function maintenance(Request $request){
         if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
         {
             return redirect('/stockrequest');
@@ -36,7 +36,7 @@ class FileMaintenanceController extends Controller
         }
         $categories = Category::select('id','category')->get()->sortBy('category');
 
-        return view('pages/filemaintenance', compact('categories'));   
+        return view('pages/maintenance', compact('categories'));   
     }
 
     public function fm_items()

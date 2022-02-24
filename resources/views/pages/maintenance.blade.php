@@ -3,10 +3,10 @@
 <div class="table-responsive">
 <ul class="nav nav-pills">
     <li class="nav-item-link" style="border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-        <a class="nav-link" id="nav1" href="{{ url('/filemaintenance') }}"><strong>ITEM</strong></a>
+        <a class="nav-link" id="nav1" href="{{ url('/maintenance') }}"><strong>ITEM</strong></a>
     </li>
     <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-        <a class="nav-link" id="nav2" href="{{ url('/filemaintenance?tbl=category') }}"><strong>CATEGORY</strong></a>
+        <a class="nav-link" id="nav2" href="{{ url('/maintenance?tbl=category') }}"><strong>CATEGORY</strong></a>
     </li>
     <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
         <a class="nav-link" id="nav3" href="#"><strong>LOCATION</strong></a>

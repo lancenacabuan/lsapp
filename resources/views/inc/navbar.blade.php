@@ -30,7 +30,7 @@
                 </li> --}}
                 @role('admin')
                 <li class="nav-item">
-                    <a class="nav-link n {{ Request::is('filemaintenance*') ? 'active' : '' }}" href="{{ url('/filemaintenance') }}">FILE MAINTENANCE</a>
+                    <a class="nav-link n {{ Request::is('maintenance*') ? 'active' : '' }}" href="{{ url('/maintenance') }}">MAINTENANCE</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('users') ? 'active' : '' }}" href="{{ url('/users') }}">USERS</a>

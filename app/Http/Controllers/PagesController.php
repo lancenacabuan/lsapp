@@ -68,18 +68,18 @@ class PagesController extends Controller
     //     return view('pages/pullout')->with('title', $title);
     // }
 
-    public function filemaintenance(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
-        {
-            return redirect('/stockrequest');
-        }
-        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
-        {
-            return redirect('/stocktransfer');
-        }
-        $title = 'FILE MAINTENANCE';
-        return view('pages/filemaintenance')->with('title', $title);   
-    }
+    // public function maintenance(){
+    //     if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
+    //     {
+    //         return redirect('/stockrequest');
+    //     }
+    //     if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
+    //     {
+    //         return redirect('/stocktransfer');
+    //     }
+    //     $title = 'MAINTENANCE';
+    //     return view('pages/maintenance')->with('title', $title);   
+    // }
     
     public function changepassword(){
         return view('pages/changepassword');

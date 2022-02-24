@@ -1,4 +1,4 @@
-if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance'){
+if(window.location.href == 'https://lance.idsi.com.ph/maintenance'){
     $('#nav1').addClass("active-link");
     $('.btnNewItem').show();
     $('#itemTable').show();
@@ -36,7 +36,7 @@ if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance'){
             .draw();
     });
 }
-else if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance?tbl=category'){
+else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=category'){
     $('#nav2').addClass("active-link");
     $('.btnNewCategory').show();
     $('#categoryTable').show();
@@ -66,7 +66,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/filemaintenance?tbl=c
     });
 }
 else{
-    window.location.href = '/filemaintenance';
+    window.location.href = '/maintenance';
 }
 
 $(document).on('click', '.close', function(){
@@ -104,7 +104,7 @@ $('#btnSaveItem').on('click', function() {
                         if(data.result == 'true'){
                             $('#newItem').hide();
                             sweetAlert("SAVE SUCCESS", "New Item has been saved.", "success");
-                            setTimeout(function(){window.location.href="/filemaintenance"} , 2000);
+                            setTimeout(function(){window.location.href="/maintenance"} , 2000);
                         }
                         else if(data.result == 'duplicate'){
                             sweetAlert("DUPLICATE ITEM", "Item Description already exists!", "error");
@@ -112,13 +112,13 @@ $('#btnSaveItem').on('click', function() {
                         }
                         else{
                             $('#newItem').hide();
-                            sweetAlert("SAVE FAILED", "FILE MAINTENANCE", "error");
-                            setTimeout(function(){window.location.href="/filemaintenance"} , 2000);
+                            sweetAlert("SAVE FAILED", "MAINTENANCE", "error");
+                            setTimeout(function(){window.location.href="/maintenance"} , 2000);
                         }
                     },
                     error: function(data){
                         if(data.status == 401) {
-                            window.location.href = '/filemaintenance';
+                            window.location.href = '/maintenance';
                         }
                         alert(data.responseText);
                     }
@@ -209,7 +209,7 @@ $('#btnUpdateItem').on('click', function() {
                         if(data.result == 'true'){
                             $('#detailsItem').hide();
                             sweetAlert("UPDATE SUCCESS", "Item has been updated.", "success");
-                            setTimeout(function(){window.location.href="/filemaintenance"} , 2000);
+                            setTimeout(function(){window.location.href="/maintenance"} , 2000);
                         }
                         else if(data.result == 'no changes'){
                             sweetAlert("NO CHANGES FOUND", "Item Details are still all the same!", "error");
@@ -221,13 +221,13 @@ $('#btnUpdateItem').on('click', function() {
                         }
                         else{
                             $('#detailsItem').hide();
-                            sweetAlert("SAVE FAILED", "FILE MAINTENANCE", "error");
-                            setTimeout(function(){window.location.href="/filemaintenance"} , 2000);
+                            sweetAlert("UPDATE FAILED", "MAINTENANCE", "error");
+                            setTimeout(function(){window.location.href="/maintenance"} , 2000);
                         }
                     },
                     error: function(data){
                         if(data.status == 401) {
-                            window.location.href = '/filemaintenance';
+                            window.location.href = '/maintenance';
                         }
                         alert(data.responseText);
                     }
@@ -266,7 +266,7 @@ $('#btnSaveCategory').on('click', function() {
                         if(data.result == 'true'){
                             $('#newCategory').hide();
                             sweetAlert("SAVE SUCCESS", "New Category has been saved.", "success");
-                            setTimeout(function(){window.location.href="/filemaintenance?tbl=category"} , 2000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=category"} , 2000);
                             $.ajax({
                                 url: "/logNewCategory",
                                 type: "POST",
@@ -287,7 +287,7 @@ $('#btnSaveCategory').on('click', function() {
                                 },
                                 error: function(data){
                                     if(data.status == 401) {
-                                        window.location.href = '/filemaintenance?tbl=category';
+                                        window.location.href = '/maintenance?tbl=category';
                                     }
                                     alert(data.responseText);
                                 }
@@ -299,13 +299,13 @@ $('#btnSaveCategory').on('click', function() {
                         }
                         else{
                             $('#newCategory').hide();
-                            sweetAlert("SAVE FAILED", "FILE MAINTENANCE", "error");
-                            setTimeout(function(){window.location.href="/filemaintenance?tbl=category"} , 2000);
+                            sweetAlert("SAVE FAILED", "MAINTENANCE", "error");
+                            setTimeout(function(){window.location.href="/maintenance?tbl=category"} , 2000);
                         }
                     },
                     error: function(data){
                         if(data.status == 401) {
-                            window.location.href = '/filemaintenance?tbl=category';
+                            window.location.href = '/maintenance?tbl=category';
                         }
                         alert(data.responseText);
                     }
@@ -365,7 +365,7 @@ $('#btnUpdateCategory').on('click', function() {
                         if(data.result == 'true'){
                             $('#detailsCategory').hide();
                             sweetAlert("UPDATE SUCCESS", "Category Name has been updated.", "success");
-                            setTimeout(function(){window.location.href="/filemaintenance?tbl=category"} , 2000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=category"} , 2000);
                             $.ajax({
                                 url: "/logUpdateCategory",
                                 type: "POST",
@@ -387,7 +387,7 @@ $('#btnUpdateCategory').on('click', function() {
                                 },
                                 error: function(data){
                                     if(data.status == 401) {
-                                        window.location.href = '/filemaintenance?tbl=category';
+                                        window.location.href = '/maintenance?tbl=category';
                                     }
                                     alert(data.responseText);
                                 }
@@ -403,13 +403,13 @@ $('#btnUpdateCategory').on('click', function() {
                         }
                         else{
                             $('#detailsCategory').hide();
-                            sweetAlert("UPDATE FAILED", "FILE MAINTENANCE", "error");
-                            setTimeout(function(){window.location.href="/filemaintenance?tbl=category"} , 2000);
+                            sweetAlert("UPDATE FAILED", "MAINTENANCE", "error");
+                            setTimeout(function(){window.location.href="/maintenance?tbl=category"} , 2000);
                         }
                     },
                     error: function(data){
                         if(data.status == 401) {
-                            window.location.href = '/filemaintenance?tbl=category';
+                            window.location.href = '/maintenance?tbl=category';
                         }
                         alert(data.responseText);
                     }

@@ -96,11 +96,7 @@ class FileMaintenanceController extends Controller
         }
     }
 
-    public function updateItem(Request $request){
-        if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original && $request->item_uom == $request->item_uom_original){
-            $data = array('result' => 'no changes');
-            return response()->json($data);
-        }        
+    public function updateItem(Request $request){       
         if(strtoupper($request->item_name) != strtoupper($request->item_name_original)){
             $item = Item::query()->select()
                 ->whereRaw('LOWER(item) = ?',strtolower($request->item_name))
@@ -191,10 +187,6 @@ class FileMaintenanceController extends Controller
     }
 
     public function updateCategory(Request $request){
-        if(strtoupper($request->category_details) == strtoupper($request->category_original)){
-            $data = array('result' => 'no changes');
-            return response()->json($data);
-        }
         if(strtoupper($request->category_details) != strtoupper($request->category_original)){
             $category = Category::query()->select()
                 ->where('category',strtoupper($request->category_details))

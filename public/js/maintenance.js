@@ -208,7 +208,16 @@ $('#btnUpdateItem').on('click', function() {
     var item_category = $('#item_category_details').val();
     var item_name = $('#item_name_details').val();
     var item_uom = $('#item_uom_details').val();
-    if(item_name != "" && $('#item_category_details').find('option:selected').text() != 'Select Category' && $('#item_uom_details').find('option:selected').text() != 'Select UOM'){
+    
+    if(item_name == "" || $('#item_category_details').find('option:selected').text() == 'Select Category' || $('#item_uom_details').find('option:selected').text() == 'Select UOM'){
+        swal('REQUIRED','Please fill all the fields!','error');
+        return false;
+    }
+    else if(item_name_original.toUpperCase() == item_name.toUpperCase() && item_category_original == $('#item_category_details').val() && item_uom_original == $('#item_uom_details').val()){
+        swal("NO CHANGES FOUND", "Item Details are still all the same!", "error");
+        return false;
+    }
+    else{
         swal({
             title: "UPDATE ITEM?",
             text: "You are about to UPDATE this item!",
@@ -241,10 +250,6 @@ $('#btnUpdateItem').on('click', function() {
                             sweetAlert("UPDATE SUCCESS", "Item has been updated.", "success");
                             setTimeout(function(){window.location.href="/maintenance"}, 5000);
                         }
-                        else if(data.result == 'no changes'){
-                            sweetAlert("NO CHANGES FOUND", "Item Details are still all the same!", "error");
-                            return false;
-                        }
                         else if(data.result == 'duplicate'){
                             sweetAlert("DUPLICATE ITEM", "Item Description already exists!", "error");
                             return false;
@@ -264,10 +269,6 @@ $('#btnUpdateItem').on('click', function() {
                 });
             }
         });
-    }
-    else{
-        swal('REQUIRED','Please fill all the fields!','error');
-        return false;
     }
 });
 
@@ -369,8 +370,17 @@ $('#categoryTable tbody').on('click', 'tr', function () {
 $('#btnUpdateCategory').on('click', function() {
     var category_id = $('#category_id').val();
     var category_original = $('#category_original').val();
-    var category_details = $('#category_details').val();
-    if(category_details != ""){
+    var category_details = $('#category_details').val().toUpperCase();
+    
+    if(category_details == ""){
+        swal('REQUIRED','Category Name field is required!','error');
+        return false;
+    }
+    else if(category_original == category_details){
+        swal("NO CHANGES FOUND", "Category Name is still the same!", "error");
+        return false;
+    }
+    else{
         swal({
             title: "UPDATE CATEGORY?",
             text: "You are about to UPDATE this category!",
@@ -423,10 +433,6 @@ $('#btnUpdateCategory').on('click', function() {
                                 }
                             });
                         }
-                        else if(data.result == 'no changes'){
-                            sweetAlert("NO CHANGES FOUND", "Category Name is still the same!", "error");
-                            return false;
-                        }
                         else if(data.result == 'duplicate'){
                             sweetAlert("DUPLICATE CATEGORY", "Category Name already exists!", "error");
                             return false;
@@ -446,10 +452,6 @@ $('#btnUpdateCategory').on('click', function() {
                 });
             }
         });
-    }
-    else{
-        swal('REQUIRED','Category Name field is required!','error');
-        return false;
     }
 });
 

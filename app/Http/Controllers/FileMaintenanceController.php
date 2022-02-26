@@ -16,6 +16,7 @@ use App\Models\Location;
 use App\Models\User;
 use App\Models\UserLogs;
 use App\Mail\requestLocation;
+use App\Mail\requestStatusChange;
 use Yajra\Datatables\Datatables;
 
 class FileMaintenanceController extends Controller
@@ -283,8 +284,14 @@ class FileMaintenanceController extends Controller
     }
 
     public function updateLocation(Request $request){
-        if(strtoupper($request->location_details) == strtoupper($request->location_original)){
-            $data = array('result' => 'no changes');
+        if($request->status != $request->status_original){
+            $data = array(
+                'result' => 'request', 
+                'id' => $request->location_id, 
+                'location' => strtoupper($request->location_details), 
+                'status_original' => $request->status_original, 
+                'status' => $request->status
+            );
             return response()->json($data);
         }
         if(strtoupper($request->location_details) != strtoupper($request->location_original)){
@@ -322,5 +329,30 @@ class FileMaintenanceController extends Controller
             $data = array('result' => $result);
             return response()->json($data);
         }
+    }
+
+    public function requestStatusChange(Request $request){
+        $user = array(
+            // 'gerard.mallari@gmail.com',
+            // 'jolopez@ideaserv.com.ph',
+            'lancenacabuan@outlook.com',
+            'lorenzonacabuan@gmail.com'
+        );
+        $subject = 'LOCATION STATUS CHANGE REQUEST: '.$request->location;
+        foreach($user as $email){
+            $details = [
+                'location' => $request->location,
+                'reqdate' => Carbon::now()->isoformat('dddd, MMMM D, YYYY'),
+                'requested_by' => auth()->user()->name,
+                'status_original' => $request->status_original, 
+                'status' => $request->status
+            ];
+            Mail::to($email)->send(new requestStatusChange($details, $subject));
+        }
+        
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "LOCATION STATUS CHANGE REQUESTED: User successfully requested Location Status Change of '$request->location' FROM '$request->status_original' INTO '$request->status' with LocationID#$request->id.";
+        $userlogs->save();
     }
 }

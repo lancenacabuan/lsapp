@@ -127,4 +127,5 @@ Route::any('/logUpdateCategory', [FileMaintenanceController::class, 'logUpdateCa
 Route::any('/saveLocation', [FileMaintenanceController::class, 'saveLocation']);
 Route::any('/logNewLocation', [FileMaintenanceController::class, 'logNewLocation']);
 Route::any('/updateLocation', [FileMaintenanceController::class, 'updateLocation']);
+Route::any('/requestStatusChange', [FileMaintenanceController::class, 'requestStatusChange']);
 //

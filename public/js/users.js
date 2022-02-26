@@ -53,7 +53,7 @@ $(document).ready(function () {
                     if(data == 'true'){
                         $('#updateUser').hide();
                         sweetAlert("UPDATE SUCCESS", "USER ACCOUNT", "success");
-                        setTimeout(function(){window.location.href="/users"} , 2000);
+                        setTimeout(function(){window.location.href="/users"} , 5000);
                     }
                     else if(data == 'invalid'){
                         sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
@@ -64,7 +64,7 @@ $(document).ready(function () {
                     else{
                         $('#updateUser').hide();
                         sweetAlert("UPDATE FAILED", "USER ACCOUNT", "error");
-                        setTimeout(function(){window.location.href="/users"} , 2000);
+                        setTimeout(function(){window.location.href="/users"} , 5000);
                     }
                 },
                 error: function(data){
@@ -105,7 +105,7 @@ $(document).ready(function () {
                     if(data.result == 'true'){
                         $('#addUser').hide();
                         sweetAlert("SAVE SUCCESS", "USER ACCOUNT", "success");
-                        setTimeout(function(){window.location.href="/users"} , 2000);
+                        setTimeout(function(){window.location.href="/users"} , 5000);
                         $.ajax({
                             url: "/logNewUser",
                             type: "POST",
@@ -141,7 +141,7 @@ $(document).ready(function () {
                     else{
                         $('#addUser').hide();
                         sweetAlert("SAVE FAILED", "USER ACCOUNT", "error");
-                        setTimeout(function(){window.location.href="/users"} , 2000);
+                        setTimeout(function(){window.location.href="/users"} , 5000);
                     }
                 },
                 error: function(data){

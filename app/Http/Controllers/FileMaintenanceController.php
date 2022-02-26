@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -13,6 +15,7 @@ use App\Models\Category;
 use App\Models\Location;
 use App\Models\User;
 use App\Models\UserLogs;
+use App\Mail\requestLocation;
 use Yajra\Datatables\Datatables;
 
 class FileMaintenanceController extends Controller
@@ -257,6 +260,22 @@ class FileMaintenanceController extends Controller
     }
 
     public function logNewLocation(Request $request){
+        $user = array(
+            'gerard.mallari@gmail.com',
+            'jolopez@ideaserv.com.ph',
+            'lancenacabuan@outlook.com',
+            'lorenzonacabuan@gmail.com'
+        );
+        $subject = 'NEW LOCATION REQUEST: '.$request->location;
+        foreach($user as $email){
+            $details = [
+                'location' => $request->location,
+                'reqdate' => Carbon::now()->isoformat('dddd, MMMM D, YYYY'),
+                'requested_by' => auth()->user()->name
+            ];
+            Mail::to($email)->send(new requestLocation($details, $subject));
+        }
+        
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "LOCATION REQUESTED: User successfully requested new Location '$request->location' with LocationID#$request->id.";

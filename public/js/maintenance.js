@@ -538,22 +538,27 @@ $('#locationTable tbody').on('click', 'tr', function () {
     });
     var table =  $('table.locationTable').DataTable(); 
     var data = table.row(this).data();
-    var location_id = data.location_id;
-        $('#location_id').val(location_id);
-    var location = data.location;
-        $('#location_details').val(location);
-        $('#location_original').val(location);
-    var status = data.status;
-        $('#status_original').val(status);
-        if(status == 'ACTIVE'){
-            $('#status').prop('checked', true);
-        }
-        else{
-            $('#status').prop('checked', false);
-        }
+    if(data.status.includes('CHANGE REQUESTED')){
+        return false;
+    }
+    else{
+        var location_id = data.location_id;
+            $('#location_id').val(location_id);
+        var location = data.location;
+            $('#location_details').val(location);
+            $('#location_original').val(location);
+        var status = data.status;
+            $('#status_original').val(status);
+            if(status == 'ACTIVE'){
+                $('#status').prop('checked', true);
+            }
+            else{
+                $('#status').prop('checked', false);
+            }
 
-    $('.modal-body').html();
-    $('#detailsLocation').modal('show');
+        $('.modal-body').html();
+        $('#detailsLocation').modal('show');
+    }
 });
 
 $('#btnUpdateLocation').on('click', function() {

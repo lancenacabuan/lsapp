@@ -285,6 +285,13 @@ class FileMaintenanceController extends Controller
 
     public function updateLocation(Request $request){
         if($request->status != $request->status_original){
+            do{
+                $locations = Location::find($request->input('location_id'));
+                $locations->status = $request->status_original.' - CHANGE REQUESTED';
+                $sql = $locations->save();
+            }
+            while(!$sql);
+            
             $data = array(
                 'result' => 'request', 
                 'id' => $request->location_id, 
@@ -333,8 +340,8 @@ class FileMaintenanceController extends Controller
 
     public function requestStatusChange(Request $request){
         $user = array(
-            // 'gerard.mallari@gmail.com',
-            // 'jolopez@ideaserv.com.ph',
+            'gerard.mallari@gmail.com',
+            'jolopez@ideaserv.com.ph',
             'lancenacabuan@outlook.com',
             'lorenzonacabuan@gmail.com'
         );

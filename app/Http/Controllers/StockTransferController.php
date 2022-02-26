@@ -679,7 +679,7 @@ class StockTransferController extends Controller
                 ->where('status', 'trans')
                 ->limit(1)
                 ->update(['status' => 'in']);
-            }         
+            }
         }
         
         $userlogs = new UserLogs;

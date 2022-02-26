@@ -293,7 +293,6 @@ $(document).ready(function(){
                                 $('#btnSubmit').prop('disabled', false);
                             }
                             var serial_id = $(this).val();
-                            // var serial_id = $(this).find('option:selected').text();
                             $.ajax({
                                 type:'get', 
                                 url:'/setlocation', 

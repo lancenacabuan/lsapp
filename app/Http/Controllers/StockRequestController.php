@@ -656,6 +656,28 @@ class StockRequestController extends Controller
         Prepare::where('request_number', $request->request_number)
             ->update(['intransit' => 'yes']);
         
+        $list = Prepare::select('items_id','request_number','location','serial','qty')
+            ->where('request_number', $request->request_number)
+            ->get();
+        foreach($list as $key){
+            if($key->serial == ''){
+                for($x = 0; $x < $key->qty; $x++){
+                    Stock::where('item_id',$key->items_id)
+                    ->whereIn('location_id',['1','2','3','4'])
+                    ->where('status', 'prep')
+                    ->orderBy('id')->limit(1)
+                    ->update(['status' => 'out']);
+                }
+            }
+            else{
+                Stock::where('item_id',$key->items_id)
+                ->where('location_id',$key->location)
+                ->where('status', 'prep')
+                ->orderBy('id')->limit(1)
+                ->update(['status' => 'out']);
+            }
+        }
+
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "FOR RECEIVING STOCK REQUEST: User successfully processed for receiving Stock Request No. $request->request_number.";

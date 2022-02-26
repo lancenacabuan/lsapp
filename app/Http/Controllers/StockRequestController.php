@@ -267,20 +267,20 @@ class StockRequestController extends Controller
             $result = 'true';
         }
         if($result == 'true'){
-            if($request->serial != ''){
+            if($request->serial == ''){
                 Stock::where('item_id',$request->item_id)
                     ->whereIn('location_id',['1','2','3','4'])
                     ->where('status','in')
-                    ->where('serial',$request->serial)
-                    ->orderBy('id')->limit(1)
-                    ->update(['status' => 'out']);
+                    ->orderBy('id')->limit($request->qty)
+                    ->update(['status' => 'prep']);
             }
             else{
                 Stock::where('item_id',$request->item_id)
                     ->whereIn('location_id',['1','2','3','4'])
                     ->where('status','in')
-                    ->orderBy('id')->limit($request->qty)
-                    ->update(['status' => 'out']);
+                    ->where('id',$request->stock_id)
+                    ->orderBy('id')->limit(1)
+                    ->update(['status' => 'prep']);
             }
             
             StockRequest::where('request_number', $request->request_number)

@@ -348,6 +348,7 @@ $(document).ready(function(){
                                                     'category': $('#category'+n).val(),
                                                     'item': $('#item'+n).val(),
                                                     'qty': $('#qty'+n).val(),
+                                                    'stock_id': $('#serial'+n).val(),
                                                     'serial': $('#serial'+n).find('option:selected').text(),
                                                     'location': $('#location'+n).val(),
                                                     'schedOn': $('#schedOn').val()

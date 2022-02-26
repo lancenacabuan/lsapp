@@ -48,12 +48,12 @@ class FileMaintenanceController extends Controller
     }
 
     public function fm_categories(){
-        $list = Category::select('id','category')->orderBy('category','ASC')->get();
+        $list = Category::select('id', 'category')->orderBy('category', 'ASC')->get();
         return DataTables::of($list)->make(true);
     }
 
     public function fm_locations(){
-        $list = Location::select('id AS location_id','location')->whereNotIn('id',['7','8'])->get();
+        $list = Location::select('id AS location_id', 'location', 'status')->whereNotIn('id',['7','8'])->get();
         return DataTables::of($list)->make(true);
     }
 
@@ -240,6 +240,7 @@ class FileMaintenanceController extends Controller
 
             $locations = new Location;
             $locations->location = $location_name;
+            $locations->status = 'PENDING';
             $sql = $locations->save();
             $id = $locations->id;
 
@@ -248,16 +249,18 @@ class FileMaintenanceController extends Controller
             }
             else {
                 $result = 'true';
-
-                $userlogs = new UserLogs;
-                $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "LOCATION ADDED: User successfully saved new Location '$location_name' with LocationID#$id.";
-                $userlogs->save();
             }
 
-            $data = array('result' => $result);
+            $data = array('result' => $result, 'id' => $id, 'location' => $location_name);
             return response()->json($data);
         }
+    }
+
+    public function logNewLocation(Request $request){
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "LOCATION REQUESTED: User successfully requested new Location '$request->location' with LocationID#$request->id.";
+        $userlogs->save();
     }
 
     public function updateLocation(Request $request){

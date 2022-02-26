@@ -56,6 +56,7 @@
             <tr>
                 <th>LOCATION ID</th>
                 <th>LOCATION NAME</th>
+                <th>LOCATION STATUS</th>
             </tr>
         </thead>
     </table>
@@ -66,7 +67,7 @@
     <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" style="display: none;">
         NEW CATEGORY</button>
     <button class="btn btn-primary bp btnNewLocation" type="button" data-toggle="modal" data-target="#newLocation" data-backdrop="static" style="display: none;">
-        NEW LOCATION</button>
+        REQUEST NEW LOCATION</button>
     @endrole
 </div>
 <style>

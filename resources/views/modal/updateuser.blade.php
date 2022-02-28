@@ -9,6 +9,7 @@
         <div class="modal-body" style="background-color:white;color:black;">
             <input type="hidden" name="_token1" id="csrf1" value="{{Session::token()}}">
             <input type="hidden" name="id1" id="id1">
+            <input type="hidden" name="name2" id="name2">
             <input type="hidden" name="email2" id="email2">
             <input type="hidden" name="role2" id="role2">
             <div class="input-group mb-3">
@@ -23,12 +24,6 @@
                 </div>
                 <input type="email" id="email1" name="email1" style="width: 600px;">
             </div>
-            {{-- <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" style="width: 150px;">Password</label>
-                </div>
-                <input type="password" id="password1" name="password1" style="width: 600px;">
-            </div> --}}
             <div class="input-group mb-3" >
                 <div class="input-group-prepend">
                     <label class="input-group-text" style="width: 150px;">Role</label>

@@ -23,137 +23,164 @@ $(document).ready(function () {
 
 $(document).ready(function () { 
     $('#userupdate').on('click', function() {
-    var id1 = $('#id1').val();
-    var name1 = $('#name1').val();
-    var email1 = $('#email1').val();
-    var email2 = $('#email2').val();
-    var password1 = $('#password1').val();
-    var role1 = $('#role1').val();
-    var role2 = $('#role2').val();
+        var id1 = $('#id1').val();
+        var name1 = $('#name1').val();
+        var name2 = $('#name2').val();
+        var email1 = $('#email1').val();
+        var email2 = $('#email2').val();
+        var role1 = $('#role1').val();
+        var role2 = $('#role2').val();
 
-        if(name1!="" && email1!="" && password1!="" && $('#role1').find('option:selected').text()!="Select Role"){
-            $.ajax({
-                url: "users/update",
-                type: "PUT",
-                headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
-
-                    },
-                data: {
-                    _token: $("#csrf").val(),
-                    id1: id1,
-                    name1: name1,
-                    email1: email1,
-                    email2: email2,
-                    password1: password1,
-                    role1: role1,
-                    role2: role2
-                },
-                success: function(data){
-                    if(data == 'true'){
-                        $('#updateUser').hide();
-                        sweetAlert("UPDATE SUCCESS", "USER ACCOUNT", "success");
-                        setTimeout(function(){window.location.href="/users"} , 2000);
-                    }
-                    else if(data == 'invalid'){
-                        sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
-                    }
-                    else if(data == 'duplicate'){
-                        sweetAlert("DUPLICATE EMAIL", "USER ACCOUNT", "error");
-                    }
-                    else{
-                        $('#updateUser').hide();
-                        sweetAlert("UPDATE FAILED", "USER ACCOUNT", "error");
-                        setTimeout(function(){window.location.href="/users"} , 2000);
-                    }
-                },
-                error: function(data){
-                    if(data.status == 401) {
-                        window.location.href = '/users';
-                    }
-                    alert(data.responseText);
-                }
-            });
+        if(name1 == "" || email1 == "" || $('#role1').find('option:selected').text() == "Select Role"){
+            swal('REQUIRED','Please fill all the fields!','error');
+            return false;
+        }
+        else if(name1.toUpperCase() == name2.toUpperCase() && email1.toUpperCase() == email2.toUpperCase() && role1 == role2){
+            swal("NO CHANGES FOUND", "User Details are all still the same!", "error");
+            return false;
         }
         else{
-            swal('REQUIRED','Please fill all the fields!','error');
+            swal({
+                title: "UPDATE USER?",
+                text: "You are about to UPDATE this user!",
+                icon: "warning",
+                buttons: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "users/update",
+                        type: "PUT",
+                        headers: {
+                            'X-CSRF-TOKEN': $("#csrf").val(),
+                            },
+                        data: {
+                            _token: $("#csrf").val(),
+                            id1: id1,
+                            name1: name1,
+                            name2: name2,
+                            email1: email1,
+                            email2: email2,
+                            role1: role1,
+                            role2: role2
+                        },
+                        success: function(data){
+                            if(data == 'true'){
+                                $('#updateUser').hide();
+                                sweetAlert("UPDATE SUCCESS", "USER ACCOUNT", "success");
+                                setTimeout(function(){window.location.href="/users"}, 2000);
+                            }
+                            else if(data == 'invalid'){
+                                sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
+                            }
+                            else if(data == 'duplicate'){
+                                sweetAlert("DUPLICATE EMAIL", "USER ACCOUNT", "error");
+                            }
+                            else{
+                                $('#updateUser').hide();
+                                sweetAlert("UPDATE FAILED", "USER ACCOUNT", "error");
+                                setTimeout(function(){window.location.href="/users"}, 2000);
+                            }
+                        },
+                        error: function(data){
+                            if(data.status == 401) {
+                                window.location.href = '/users';
+                            }
+                            alert(data.responseText);
+                        }
+                    });
+                }
+            });
         }
     });
 });
 
 $(document).ready(function () {      
     $('#usersave').on('click', function() {
-    var name = $('#name').val();
-    var email = $('#email').val();
-    var password = $('#password').val();
-    var role = $('#role').val();
-        if(name!="" && email!="" && password!="" && $('#role').find('option:selected').text()!="Select Role"){
-            $.ajax({
-                url: "users/save",
-                type: "POST",
-                headers: {
-                'X-CSRF-TOKEN': $("#csrf").val(),
-                },
-                data: {
-                    _token: $("#csrf").val(),
-                    name: name,
-                    email: email,
-                    password: password,
-                    role: role
-                },
-                success: function(data){
-                    if(data.result == 'true'){
-                        $('#addUser').hide();
-                        sweetAlert("SAVE SUCCESS", "USER ACCOUNT", "success");
-                        setTimeout(function(){window.location.href="/users"} , 2000);
-                        $.ajax({
-                            url: "/logNewUser",
-                            type: "POST",
-                            headers: {
-                            'X-CSRF-TOKEN': $("#csrf").val(),
-                            },
-                            data: {
-                                id: data.id,
-                                email: data.email
-                            },
-                            success: function(data){
-                                if(data == 'true'){
-                                    return true;
-                                }
-                                else{
-                                    return false;
-                                }
-                            },
-                            error: function(data){
-                                if(data.status == 401) {
-                                    window.location.href = '/users';
-                                }
-                                alert(data.responseText);
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var role = $('#role').val();
+
+        if(name != "" && email != "" && $('#role').find('option:selected').text() != "Select Role"){
+            swal({
+                title: "ADD NEW USER?",
+                text: "You are about to ADD a new user!",
+                icon: "warning",
+                buttons: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "users/save",
+                        type: "POST",
+                        headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                        },
+                        data: {
+                            _token: $("#csrf").val(),
+                            name: name,
+                            email: email,
+                            password: password,
+                            role: role
+                        },
+                        success: function(data){
+                            if(data.result == 'true'){
+                                $('#addUser').hide();
+                                sweetAlert("SAVE SUCCESS", "USER ACCOUNT", "success");
+                                setTimeout(function(){window.location.href="/users"}, 2000);
+                                $.ajax({
+                                    url: "/logNewUser",
+                                    type: "POST",
+                                    headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val(),
+                                    },
+                                    data: {
+                                        id: data.id,
+                                        email: data.email
+                                    },
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            return true;
+                                        }
+                                        else{
+                                            return false;
+                                        }
+                                    },
+                                    error: function(data){
+                                        if(data.status == 401) {
+                                            window.location.href = '/users';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
                             }
-                        });
-                    }
-                    else if(data.result == 'invalid'){
-                        sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
-                    }
-                    else if(data.result == 'duplicate'){
-                        sweetAlert("DUPLICATE EMAIL", "USER ACCOUNT", "error");
-                    }
-                    else{
-                        $('#addUser').hide();
-                        sweetAlert("SAVE FAILED", "USER ACCOUNT", "error");
-                        setTimeout(function(){window.location.href="/users"} , 2000);
-                    }
-                },
-                error: function(data){
-                    if(data.status == 401) {
-                        window.location.href = '/users';
-                    }
-                    alert(data.responseText);
+                            else if(data.result == 'invalid'){
+                                sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
+                                return false;
+                            }
+                            else if(data.result == 'duplicate'){
+                                sweetAlert("DUPLICATE EMAIL", "USER ACCOUNT", "error");
+                                return false;
+                            }
+                            else{
+                                $('#addUser').hide();
+                                sweetAlert("SAVE FAILED", "USER ACCOUNT", "error");
+                                setTimeout(function(){window.location.href="/users"}, 2000);
+                            }
+                        },
+                        error: function(data){
+                            if(data.status == 401) {
+                                window.location.href = '/users';
+                            }
+                            alert(data.responseText);
+                        }
+                    });
                 }
             });
         }
         else{
             swal('REQUIRED','Please fill all the fields!','error');
+            return false;
         }
     });  
 });
@@ -167,6 +194,7 @@ $('#userTable tbody').on('click', 'tr', function () {
     var data = table.row(this).data();
         $('#id1').val(data.user_id);
         $('#name1').val(data.user_name);
+        $('#name2').val(data.user_name);
         $('#email1').val(data.user_email);
         $('#email2').val(data.user_email);
         $('#role1').val(data.role_name);

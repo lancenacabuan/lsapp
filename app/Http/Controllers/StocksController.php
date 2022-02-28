@@ -57,76 +57,76 @@ class StocksController extends Controller
                 'categories.category as Category'
             )
         )->get();
-        $dt = DataTables::of($list);
-        $locations = Location::all();
-        foreach ($locations as $location) {
-            $dt->addColumn($location->location, function (Category $Category)use($location){
-                Stock::query()
+        // $dt = DataTables::of($list);
+        // $locations = Location::all();
+        // foreach ($locations as $location) {
+        //     $dt->addColumn($location->location, function (Category $Category)use($location){
+        //         Stock::query()
+        //             ->where('category_id', $Category->id)
+        //             ->where('location_id', $location->id)
+        //             ->where('status', 'in')
+        //             ->count();
+        //     });
+        // }
+            
+        // return $dt->make(true);
+        return DataTables::of($list)
+            ->addColumn('A1', function (Category $Category){
+                $A1 = Stock::query()
                     ->where('category_id', $Category->id)
-                    ->where('location_id', $location->id)
+                    ->where('location_id', 1)
                     ->where('status', 'in')
                     ->count();
-            });
-        }
-            
-        return $dt->make(true);
-        // return DataTables::of($list)
-            // ->addColumn('A1', function (Category $Category){
-            //     $A1 = Stock::query()
-            //         ->where('category_id', $Category->id)
-            //         ->where('location_id', 1)
-            //         ->where('status', 'in')
-            //         ->count();
-            //     return $A1;
-            // })
-            // ->addColumn('A2', function (Category $Category){
-            //     $A2 = Stock::query()
-            //         ->where('category_id', $Category->id)
-            //         ->where('location_id', 2)
-            //         ->where('status', 'in')
-            //         ->count();
-            //     return $A2;
-            // })
-            // ->addColumn('A3', function (Category $Category){
-            //     $A3 = Stock::query()
-            //         ->where('category_id', $Category->id)
-            //         ->where('location_id', 3)
-            //         ->where('status', 'in')
-            //         ->count();
-            //     return $A3;
-            // })
-            // ->addColumn('A4', function (Category $Category){
-            //     $A4 = Stock::query()
-            //         ->where('category_id', $Category->id)
-            //         ->where('location_id', 4)
-            //         ->where('status', 'in')
-            //         ->count();
-            //     return $A4;
-            // })
-            // ->addColumn('Balintawak', function (Category $Category){
-            //     $Balintawak = Stock::query()
-            //         ->where('category_id', $Category->id)
-            //         ->where('location_id', 5)
-            //         ->where('status', 'in')
-            //         ->count();
-            //     return $Balintawak;
-            // })
-            // ->addColumn('Malabon', function (Category $Category){
-            //     $Malabon = Stock::query()
-            //         ->where('category_id', $Category->id)
-            //         ->where('location_id', 6)
-            //         ->where('status', 'in')
-            //         ->count();
-            //     return $Malabon;
-            // })
-            // ->addColumn('Total_stocks', function (Category $Category){
-            //     $Total_stocks = Stock::query()
-            //         ->where('category_id', $Category->id)
-            //         ->where('status', 'in')
-            //         ->where('location_id', '!=', '7')
-            //         ->count();
-            //     return $Total_stocks;
-            // })
+                return $A1;
+            })
+            ->addColumn('A2', function (Category $Category){
+                $A2 = Stock::query()
+                    ->where('category_id', $Category->id)
+                    ->where('location_id', 2)
+                    ->where('status', 'in')
+                    ->count();
+                return $A2;
+            })
+            ->addColumn('A3', function (Category $Category){
+                $A3 = Stock::query()
+                    ->where('category_id', $Category->id)
+                    ->where('location_id', 3)
+                    ->where('status', 'in')
+                    ->count();
+                return $A3;
+            })
+            ->addColumn('A4', function (Category $Category){
+                $A4 = Stock::query()
+                    ->where('category_id', $Category->id)
+                    ->where('location_id', 4)
+                    ->where('status', 'in')
+                    ->count();
+                return $A4;
+            })
+            ->addColumn('Balintawak', function (Category $Category){
+                $Balintawak = Stock::query()
+                    ->where('category_id', $Category->id)
+                    ->where('location_id', 5)
+                    ->where('status', 'in')
+                    ->count();
+                return $Balintawak;
+            })
+            ->addColumn('Malabon', function (Category $Category){
+                $Malabon = Stock::query()
+                    ->where('category_id', $Category->id)
+                    ->where('location_id', 6)
+                    ->where('status', 'in')
+                    ->count();
+                return $Malabon;
+            })
+            ->addColumn('Total_stocks', function (Category $Category){
+                $Total_stocks = Stock::query()
+                    ->where('category_id', $Category->id)
+                    ->where('status', 'in')
+                    ->where('location_id', '!=', '7')
+                    ->count();
+                return $Total_stocks;
+            })->make(true);
     }
 
     public function item_data(Request $request)

@@ -104,6 +104,7 @@
             display: inline-block;
             width: 110px;
             height: 34px;
+            user-select: none;
         }
         
         .switch input {display:none;}

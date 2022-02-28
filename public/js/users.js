@@ -47,6 +47,10 @@ $(document).ready(function () {
             swal("NO CHANGES FOUND", "User Details are all still the same!", "error");
             return false;
         }
+        else if((name1.toUpperCase() != name2.toUpperCase() || email1.toUpperCase() != email2.toUpperCase() || role1 != role2) && status1 != status2){
+            swal("UPDATE FAILED", "STATUS CHANGE is NOT allowed if the current User Details has been changed!", "error");
+            return false;
+        }
         else{
             swal({
                 title: "UPDATE USER?",

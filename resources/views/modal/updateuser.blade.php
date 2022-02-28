@@ -12,6 +12,7 @@
             <input type="hidden" name="name2" id="name2">
             <input type="hidden" name="email2" id="email2">
             <input type="hidden" name="role2" id="role2">
+            <input type="hidden" name="status2" id="status2">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text" style="width: 150px;">Fullname</label>
@@ -34,7 +35,17 @@
                         <option value="{{$roles->name}}">{{strtoupper($roles->name)}}</option>
                     @endforeach
                 </select>
-            </div> 
+            </div>
+            <div class="input-group-prepend">
+                <label class="input-group-text" style="width: 150px; height: 34px !important;">Status</label>
+                <label class="switch">
+                    <input type="checkbox" id="status1" class="togBtn" value="ACTIVE">
+                    <div class="slider round">
+                        <span class="on">ACTIVE</span>
+                        <span class="off">INACTIVE</span>
+                    </div>
+                </label>
+            </div>
             <div class="col-md-12 mb-4">
                 <button type="submit" id="userupdate" class="btn btn-primary float-right bp">
                 UPDATE</button>  

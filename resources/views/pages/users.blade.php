@@ -14,6 +14,7 @@
                         <th>FULLNAME</th>
                         <th>EMAIL</th>
                         <th>USER LEVEL</th>
+                        <th>STATUS</th>
                     </tr>
                 </thead>   
                 <tbody>

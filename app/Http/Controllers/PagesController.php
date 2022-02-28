@@ -139,7 +139,7 @@ class PagesController extends Controller
     }
 
     public function users_data(){
-        $list = User::selectRaw('users.id AS user_id, users.name AS user_name, users.email AS user_email, roles.name AS role_name')
+        $list = User::selectRaw('users.id AS user_id, users.name AS user_name, users.email AS user_email, roles.name AS role_name, users.status AS user_status')
             ->join('model_has_roles', 'model_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
             ->get();
@@ -174,6 +174,7 @@ class PagesController extends Controller
             $users->email = strtolower($request->email);
             $users->password = Hash::make($password);
             $users->assignRole($request->role);
+            $users->status = 'ACTIVE';
             $sql = $users->save();
             $id = $users->id;
 
@@ -219,6 +220,7 @@ class PagesController extends Controller
             $users->email = strtolower($request->email1);
             $users->removeRole($request->role2);
             $users->assignRole($request->role1);
+            $users->status = $request->status1;
             $sql = $users->save();
 
             if(!$sql){

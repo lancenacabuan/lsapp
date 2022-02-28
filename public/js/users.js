@@ -15,6 +15,7 @@ $(document).ready(function () {
             { data: 'user_name' },
             { data: 'user_email' },
             { data: 'role_name' },
+            { data: 'user_status' }
         ],
         orderCellsTop: true,
         fixedHeader: true,            
@@ -23,6 +24,12 @@ $(document).ready(function () {
 
 $(document).ready(function () { 
     $('#userupdate').on('click', function() {
+        if($('#status1').is(":checked")){
+            var status1 = 'ACTIVE';
+        }
+        else{
+            var status1 = 'INACTIVE';
+        }
         var id1 = $('#id1').val();
         var name1 = $('#name1').val();
         var name2 = $('#name2').val();
@@ -30,12 +37,13 @@ $(document).ready(function () {
         var email2 = $('#email2').val();
         var role1 = $('#role1').val();
         var role2 = $('#role2').val();
+        var status2 = $('#status2').val();
 
         if(name1 == "" || email1 == "" || $('#role1').find('option:selected').text() == "Select Role"){
             swal('REQUIRED','Please fill all the fields!','error');
             return false;
         }
-        else if(name1.toUpperCase() == name2.toUpperCase() && email1.toUpperCase() == email2.toUpperCase() && role1 == role2){
+        else if(name1.toUpperCase() == name2.toUpperCase() && email1.toUpperCase() == email2.toUpperCase() && role1 == role2 && status1 == status2){
             swal("NO CHANGES FOUND", "User Details are all still the same!", "error");
             return false;
         }
@@ -62,7 +70,9 @@ $(document).ready(function () {
                             email1: email1,
                             email2: email2,
                             role1: role1,
-                            role2: role2
+                            role2: role2,
+                            status1: status1,
+                            status2: status2
                         },
                         success: function(data){
                             if(data == 'true'){
@@ -198,6 +208,13 @@ $('#userTable tbody').on('click', 'tr', function () {
         $('#email2').val(data.user_email);
         $('#role1').val(data.role_name);
         $('#role2').val(data.role_name);
+        $('#status2').val(data.user_status);
+        if(data.user_status == 'ACTIVE'){
+            $('#status1').prop('checked', true);
+        }
+        else{
+            $('#status1').prop('checked', false);
+        }
 
         $('.modal-body').html();
         $('#updateUser').modal('show');

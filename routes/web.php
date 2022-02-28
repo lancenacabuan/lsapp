@@ -40,6 +40,7 @@ Route::any('/stocks/save',[StocksController::class,'store']);
 Route::any('/stocks/update',[StocksController::class,'update']);
 Route::get('/category_data', [StocksController::class, 'category_data']);
 Route::get('/item_data', [StocksController::class, 'item_data']);
+Route::get('/itemserial_data', [StocksController::class, 'itemserial_data']);
 
 Route::get('/items',[StocksController::class,'items']);
 Route::get('/getUOM',[StocksController::class,'getUOM']);

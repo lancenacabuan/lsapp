@@ -129,6 +129,19 @@ class StocksController extends Controller
             })->make(true);
     }
 
+    public function itemserial_data(Request $request)
+    {
+        $stock = Stock::query()
+            ->select('item', 'location', 'serial')
+            ->join('locations', 'locations.id', 'location_id')
+            ->join('items', 'items.id', 'item_id')
+            ->where('item_id', $request->ItemId)
+            ->where('stocks.status', 'in')
+            ->get();
+        return DataTables::of($stock)->make(true);
+
+    }
+
     public function item_data(Request $request)
     {
         $list = Item::query()->select(

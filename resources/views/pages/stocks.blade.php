@@ -45,6 +45,20 @@
             </tbody>      
         </table>
     </div>
+    <div id="ItemSerialTableDiv" style="display:none">
+        <center><h3 id="itemName"></h3></center>
+        <table id="ItemSerialTable" class="table ItemSerialTable display" style="width: 100%;font-size:70%">
+            <thead style="background-color: #0d1a80 !important; color: white !important;">                            
+                <tr>
+                    <th>ITEM DESCRIPTION</th>
+                    <th>SERIAL</th>
+                    <th>LOCATION</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>      
+        </table>
+    </div>
 </div>
 @include('modal.addstock')
 @include('modal.stock')

@@ -94,7 +94,7 @@ $(document).on('click', '#butsave', function() {
                     sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function() {
                         window.location.href = 'stocks';
                     });
-                    setTimeout(function(){window.location.href = 'stocks';} , 5000);                                   
+                    setTimeout(function(){window.location.href = 'stocks';} , 2000);                                   
                 },
                 error: function (data) {
                     if(data.status == 401) {
@@ -127,7 +127,7 @@ $(document).on('click', '#butsave', function() {
                         sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function() {
                             window.location.href = 'stocks';
                         });
-                        setTimeout(function(){window.location.href = 'stocks';} , 5000);                                   
+                        setTimeout(function(){window.location.href = 'stocks';} , 2000);                                   
                     },
                     error: function (data) {
                         if(data.status == 401) {

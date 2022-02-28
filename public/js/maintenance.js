@@ -134,7 +134,7 @@ $('#btnSaveItem').on('click', function() {
                         if(data.result == 'true'){
                             $('#newItem').hide();
                             sweetAlert("SAVE SUCCESS", "New Item has been saved.", "success");
-                            setTimeout(function(){window.location.href="/maintenance"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance"}, 2000);
                         }
                         else if(data.result == 'duplicate'){
                             sweetAlert("DUPLICATE ITEM", "Item Description already exists!", "error");
@@ -143,7 +143,7 @@ $('#btnSaveItem').on('click', function() {
                         else{
                             $('#newItem').hide();
                             sweetAlert("SAVE FAILED", "MAINTENANCE - ITEM", "error");
-                            setTimeout(function(){window.location.href="/maintenance"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance"}, 2000);
                         }
                     },
                     error: function(data){
@@ -213,7 +213,7 @@ $('#btnUpdateItem').on('click', function() {
         swal('REQUIRED','Please fill all the fields!','error');
         return false;
     }
-    else if(item_name_original.toUpperCase() == item_name.toUpperCase() && item_category_original == $('#item_category_details').val() && item_uom_original == $('#item_uom_details').val()){
+    else if(item_name_original.toUpperCase() == item_name.toUpperCase() && item_category_original == item_category && item_uom_original == item_uom){
         swal("NO CHANGES FOUND", "Item Details are still all the same!", "error");
         return false;
     }
@@ -248,7 +248,7 @@ $('#btnUpdateItem').on('click', function() {
                         if(data.result == 'true'){
                             $('#detailsItem').hide();
                             sweetAlert("UPDATE SUCCESS", "Item has been updated.", "success");
-                            setTimeout(function(){window.location.href="/maintenance"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance"}, 2000);
                         }
                         else if(data.result == 'duplicate'){
                             sweetAlert("DUPLICATE ITEM", "Item Description already exists!", "error");
@@ -257,7 +257,7 @@ $('#btnUpdateItem').on('click', function() {
                         else{
                             $('#detailsItem').hide();
                             sweetAlert("UPDATE FAILED", "MAINTENANCE - ITEM", "error");
-                            setTimeout(function(){window.location.href="/maintenance"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance"}, 2000);
                         }
                     },
                     error: function(data){
@@ -297,7 +297,7 @@ $('#btnSaveCategory').on('click', function() {
                         if(data.result == 'true'){
                             $('#newCategory').hide();
                             sweetAlert("SAVE SUCCESS", "New Category has been saved.", "success");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 2000);
                             $.ajax({
                                 url: "/logNewCategory",
                                 type: "POST",
@@ -331,7 +331,7 @@ $('#btnSaveCategory').on('click', function() {
                         else{
                             $('#newCategory').hide();
                             sweetAlert("SAVE FAILED", "MAINTENANCE - CATEGORY", "error");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 2000);
                         }
                     },
                     error: function(data){
@@ -405,7 +405,7 @@ $('#btnUpdateCategory').on('click', function() {
                         if(data.result == 'true'){
                             $('#detailsCategory').hide();
                             sweetAlert("UPDATE SUCCESS", "Category Name has been updated.", "success");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 2000);
                             $.ajax({
                                 url: "/logUpdateCategory",
                                 type: "POST",
@@ -440,7 +440,7 @@ $('#btnUpdateCategory').on('click', function() {
                         else{
                             $('#detailsCategory').hide();
                             sweetAlert("UPDATE FAILED", "MAINTENANCE - CATEGORY", "error");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 2000);
                         }
                     },
                     error: function(data){
@@ -480,7 +480,7 @@ $('#btnSaveLocation').on('click', function() {
                         if(data.result == 'true'){
                             $('#newLocation').hide();
                             sweetAlert("REQUEST SUCCESS", "New Location has been requested.", "success");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                             $.ajax({
                                 url: "/logNewLocation",
                                 type: "POST",
@@ -514,7 +514,7 @@ $('#btnSaveLocation').on('click', function() {
                         else{
                             $('#newLocation').hide();
                             sweetAlert("REQUEST FAILED", "MAINTENANCE - LOCATION", "error");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                         }
                     },
                     error: function(data){
@@ -613,7 +613,7 @@ $('#btnUpdateLocation').on('click', function() {
                         if(data.result == 'request'){
                             $('#detailsLocation').hide();
                             sweetAlert("REQUEST SUCCESS", "Location Status Change has been requested.", "success");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                             $.ajax({
                                 url: "/requestStatusChange",
                                 type: "POST",
@@ -645,7 +645,7 @@ $('#btnUpdateLocation').on('click', function() {
                         else{
                             $('#detailsLocation').hide();
                             sweetAlert("UPDATE FAILED", "MAINTENANCE - LOCATION", "error");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                         }
                     },
                     error: function(data){
@@ -684,7 +684,7 @@ $('#btnUpdateLocation').on('click', function() {
                         if(data.result == 'true'){
                             $('#detailsLocation').hide();
                             sweetAlert("UPDATE SUCCESS", "Location Name has been updated.", "success");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                         }
                         else if(data.result == 'duplicate'){
                             sweetAlert("DUPLICATE LOCATION", "Location Name already exists!", "error");
@@ -693,7 +693,7 @@ $('#btnUpdateLocation').on('click', function() {
                         else{
                             $('#detailsLocation').hide();
                             sweetAlert("UPDATE FAILED", "MAINTENANCE - LOCATION", "error");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 5000);
+                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                         }
                     },
                     error: function(data){

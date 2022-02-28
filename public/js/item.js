@@ -133,7 +133,7 @@ $('#buttrans').on('click', function() {
                     success: function(dataResult){                         
                         $('#stocktrans').hide();
                         sweetAlert("TRANSFERED", "ITEM SUCCESFULLY TRANSFER", "success");
-                        setTimeout(function(){window.location.href="/stocks"} , 5000);  
+                        setTimeout(function(){window.location.href="/stocks"} , 2000);  
                     },
                     error: function (data) {
                         if(data.status == 401) {

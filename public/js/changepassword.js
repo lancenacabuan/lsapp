@@ -23,11 +23,11 @@ $(document).ready(function () {
                     success: function(data){      
                         if(data == 'true'){
                             sweetAlert("UPDATE SUCCESS", "CHANGE PASSWORD", "success");
-                            setTimeout(function(){window.location.href="/"} , 5000);
+                            setTimeout(function(){window.location.href="/"} , 2000);
                         }
                         else if(data == 'false'){
                             sweetAlert("UPDATE FAILED", "CHANGE PASSWORD", "error");
-                            setTimeout(function(){window.location.href="/"} , 5000);
+                            setTimeout(function(){window.location.href="/"} , 2000);
                         }
                         else{
                             swal('ERROR','Incorrect Current Password!', 'error');

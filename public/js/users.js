@@ -120,7 +120,6 @@ $(document).ready(function () {
                             _token: $("#csrf").val(),
                             name: name,
                             email: email,
-                            password: password,
                             role: role
                         },
                         success: function(data){

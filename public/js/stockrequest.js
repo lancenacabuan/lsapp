@@ -1876,6 +1876,30 @@ $(document).on('click','#btnReceive', function(){
                         $('#stockRequestDetails').hide();
                         sweetAlert("RECEIVE SUCCESS", "STOCK REQUEST", "success");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        $.ajax({
+                            type:'get',
+                            url:'/logReceive',
+                            headers: {
+                                'X-CSRF-TOKEN': $("#csrf").val(),
+                                    },
+                            data:{
+                                'request_number': $('#request_num_details').val(),
+                            },
+                            success: function (data){
+                                if(data == 'true'){
+                                    return true;
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function (data) {
+                                if(data.status == 401) {
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
                     }
                     else{
                         $('#stockRequestDetails').hide();

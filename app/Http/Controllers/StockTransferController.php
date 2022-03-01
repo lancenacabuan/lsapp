@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\emailForTransfer;
 use App\Mail\disapprovedTransfer;
+use App\Mail\receivedTransfer;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Stock;
@@ -427,14 +428,102 @@ class StockTransferController extends Controller
             $result = 'true';
         }
         
-        if($result == 'true'){
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "RECEIVED STOCK TRANSFER REQUEST: User successfully received Stock Transfer Request No. $request->request_number.";
-            $userlogs->save();
+        return response($result);
+    }
+
+    public function logTransReceive(Request $request){
+        do{
+            $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, users.name AS reqby, users.email AS email, locfrom, locto, schedule')
+                ->where('request_transfer.request_number', $request->request_number)
+                ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+                ->get();
+
+                $request_details = str_replace('[','',$request_details);
+                $request_details = str_replace(']','',$request_details);
+                $request_details = json_decode($request_details);
+        }
+        while(!$request_details);
+
+        do{
+            $trans = Transfer::selectRaw('users.name AS prep_by, transferred_items.updated_at AS prep_date')
+                ->where('request_number', $request->request_number)
+                ->join('users', 'users.id', '=', 'transferred_items.user_id')
+                ->orderBy('transferred_items.id','DESC')
+                ->first();
+        }
+        while(!$trans);
+        
+        do{
+            $items = Transfer::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, transferred_items.serial AS serial, transferred_items.qty AS qty')
+                ->where('request_number', $request->request_number)
+                ->join('items','items.id','transferred_items.items_id')
+                ->join('categories','categories.id','items.category_id')
+                ->get()
+                ->sortBy('item')
+                ->sortBy('category');
+        }
+        while(!$items);
+        
+        do{
+            $locfrom = Location::query()->select('location')->where('id',$request_details->locfrom)->get();
+        }
+        while(!$locfrom);
+        $locfrom = str_replace('[{"location":"','', $locfrom);
+        $locfrom = str_replace('"}]','', $locfrom);
+
+        do{
+            $locto = Location::query()->select('location')->where('id',$request_details->locto)->get();
+        }
+        while(!$locto);
+        $locto = str_replace('[{"location":"','', $locto);
+        $locto = str_replace('"}]','', $locto);
+
+        $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
+        $user = User::role('admin')->get();
+        foreach($user as $key){
+            if($key->email != $request_details->email){
+                $details = [
+                    'name' => ucwords($key->name),
+                    'action' => 'STOCK TRANSFER REQUEST',
+                    'request_number' => $request->request_number,
+                    'reqdate' => $request_details->reqdate,
+                    'requested_by' => $request_details->reqby,
+                    'locfrom' => $locfrom,
+                    'locto' => $locto,
+                    'prepared_by' => $trans->prep_by,
+                    'prepdate' => $trans->prep_date,
+                    'scheddate' => $request_details->schedule,
+                    'receivedby' => auth()->user()->name,
+                    'role' => 'Admin',
+                    'items' => $items
+                ];
+                Mail::to($key->email)->send(new receivedTransfer($details, $subject));
+            }
         }
 
-        return response($result);
+        $details = [
+            'name' => $request_details->reqby,
+            'action' => 'STOCK TRANSFER REQUEST',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'locfrom' => $locfrom,
+            'locto' => $locto,
+            'prepared_by' => $trans->prep_by,
+            'prepdate' => $trans->prep_date,
+            'scheddate' => $request_details->schedule,
+            'receivedby' => auth()->user()->name,
+            'role' => 'Admin / Encoder',
+            'items' => $items
+        ];
+        Mail::to($request_details->email)->send(new receivedTransfer($details, $subject));
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "RECEIVED STOCK TRANSFER REQUEST: User successfully received Stock Transfer Request No. $request->request_number.";
+        $userlogs->save();
+
+        return true;
     }
 
     public function deleteTransfer(Request $request){

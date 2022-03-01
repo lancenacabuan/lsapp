@@ -99,6 +99,7 @@ Route::any('/approveTransfer', [StockTransferController::class, 'approveTransfer
 Route::any('/disapproveTransfer', [StockTransferController::class, 'disapproveTransfer']);
 Route::any('/logTransDisapprove', [StockTransferController::class, 'logTransDisapprove']);
 Route::any('/receiveTransfer', [StockTransferController::class, 'receiveTransfer']);
+Route::any('/logTransReceive', [StockTransferController::class, 'logTransReceive']);
 Route::any('/deleteTransfer', [StockTransferController::class, 'deleteTransfer']);
 Route::any('/delTransItem', [StockTransferController::class, 'delTransItem']);
 Route::get('/stocktrans', [StockTransferController::class, 'stocktrans']);

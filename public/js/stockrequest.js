@@ -1883,7 +1883,7 @@ $(document).on('click','#btnReceive', function(){
                                 'X-CSRF-TOKEN': $("#csrf").val(),
                                     },
                             data:{
-                                'request_number': $('#request_num_details').val(),
+                                'request_number': $('#request_num_details').val()
                             },
                             success: function (data){
                                 if(data == 'true'){

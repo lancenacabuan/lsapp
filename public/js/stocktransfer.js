@@ -1400,6 +1400,30 @@ $(document).on('click', '#btnReceive', function(){
                         $('#detailsStockTransfer').hide();
                         sweetAlert("RECEIVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                        $.ajax({
+                            type:'get',
+                            url:'/logTransReceive',
+                            headers: {
+                                'X-CSRF-TOKEN': $("#csrf").val(),
+                                    },
+                            data:{
+                                'request_number': $('#reqnum_details').val()
+                            },
+                            success: function (data){
+                                if(data == 'true'){
+                                    return true;
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function (data) {
+                                if(data.status == 401) {
+                                    window.location.href = '/stocktransfer';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
                     }
                     else{
                         $('#detailsStockTransfer').hide();

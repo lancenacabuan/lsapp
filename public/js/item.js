@@ -110,7 +110,6 @@ $('#buttrans').on('click', function() {
             return false;
         }  
         if(category!="Select Category" && item!="Select Item" && locationfrom!="Select location" && locationto!="Select Location"&& qty!=""){
-            /*  $("#butsave").attr("disabled", "disabled"); */
             if(locationto == "Select Location"){
                 alert('Please Select location.');
                 return false;

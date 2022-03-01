@@ -132,7 +132,8 @@ $(document).on('click', '#butsave', function() {
         }else{
             AddStockForm[0].reportValidity();
         }
-    }else{
+    }
+    else{
         if (qty && qty != 0) {
             if(category && item && location){
                 $.ajax({

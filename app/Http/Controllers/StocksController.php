@@ -20,13 +20,11 @@ class StocksController extends Controller
         $this->middleware('auth');
     }
     
-    public function item()
-    {
+    public function item(){
         $item = Item::select('items.*', 'category')
             ->join('categories', 'category_id', '=', 'categories.id');
         return DataTables::of($item)->make(true);
     }
-
 
     public function stocks(){
         if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
@@ -48,7 +46,6 @@ class StocksController extends Controller
         $location = Location::all();
         return response()->json($location);
     }
-
 
     public function category_data(){
         $list = Category::query()->select('categories.id',
@@ -129,8 +126,7 @@ class StocksController extends Controller
             })->make(true);
     }
 
-    public function itemserial_data(Request $request)
-    {
+    public function itemserial_data(Request $request){
         $stock = Stock::query()
             ->select('item', 'location', 'serial')
             ->join('locations', 'locations.id', 'location_id')
@@ -138,12 +134,11 @@ class StocksController extends Controller
             ->where('item_id', $request->ItemId)
             ->where('stocks.status', 'in')
             ->get();
+        
         return DataTables::of($stock)->make(true);
-
     }
 
-    public function item_data(Request $request)
-    {
+    public function item_data(Request $request){
         $list = Item::query()->select(
             'items.id',
             DB::raw
@@ -209,13 +204,10 @@ class StocksController extends Controller
                     ->count();
                 return $Total_stocks;
             })
-            
-
-         ->make(true);
+        ->make(true);
     }
 
-    public function stock_data(Request $request)
-    {
+    public function stock_data(Request $request){
         $stock = Stock::select('location_id','serial','item_id','stocks.id', 'item')
             ->where('item_id', $request->id)
             ->join('items', 'items.id', 'item_id')
@@ -226,7 +218,7 @@ class StocksController extends Controller
     public function addStockitem(Request $request){
         $list = Item::query()->select('id','item')
             ->where('category_id',$request->category_id)
-            ->get();
+            ->orderBy('item','ASC')->get();
         return response()->json($list);
     }
 
@@ -237,14 +229,14 @@ class StocksController extends Controller
         return response()->json($uom);
     }
 
-    public function items(Request $request){ //chef //$request = orders
+    public function items(Request $request){
         $list = Item::query()->select('item_id','item')
             ->join('stocks', 'stocks.item_id', 'items.id')
-            ->where('stocks.status', 'in') //order
-            ->where('stocks.category_id',$request->category_id) //order
+            ->where('stocks.status', 'in')
+            ->where('stocks.category_id',$request->category_id)
             ->groupBy('items.id')
             ->get();
-        return response()->json($list); //finish product send to waiter
+        return response()->json($list);
     }
 
     public function locations(Request $request){
@@ -281,8 +273,7 @@ class StocksController extends Controller
         return $list;
     }
      
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         if ($request->serial) {
             $stocks = new Stock;
             $stocks->item_id = $request->item;
@@ -291,8 +282,11 @@ class StocksController extends Controller
             $stocks->location_id =$request->location;
             $stocks->status = 'in';
             $stocks->serial = $request->serial;
+            $stocks->rack = $request->rack;
+            $stocks->row = $request->row;
             $save= $stocks->save();             
-        }else if($request->qty > 0){
+        }
+        else if($request->qty > 0){
             for ($i=0; $i < $request->qty; $i++) { 
                 $stocks = new Stock;
                 $stocks->item_id = $request->item;
@@ -301,14 +295,15 @@ class StocksController extends Controller
                 $stocks->location_id =$request->location;
                 $stocks->status = 'in';
                 $stocks->serial = 'N/A';
+                $stocks->rack = $request->rack;
+                $stocks->row = $request->row;
                 $save= $stocks->save(); 
             }
         }
         return response()->json($stocks);
     }
 
-    public function update(Request $request)
-    { 
+    public function update(Request $request){ 
         for ($i=0; $i < $request->qty ; $i++) { 
             $stocks = Stock::where('item_id','=',$request->item)
                 ->where('location_id',$request->locationfrom)
@@ -318,9 +313,6 @@ class StocksController extends Controller
             $stocks->save();
         }
         
-            return response()->json($stocks);
-
+        return response()->json($stocks);
     }
-
-
 }

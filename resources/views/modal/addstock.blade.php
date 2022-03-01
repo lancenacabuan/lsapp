@@ -7,65 +7,67 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body" style="background-color:white;color:black;">                
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
             <form id="AddStockForm">
                 <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                 <div class="input-group mb-3" >
                     <div class="input-group-prepend">
-                        <label class="input-group-text">Category</label>
+                        <label class="input-group-text" style="width: 140px;">Category</label>
                     </div>
-                    <select class="form-select" id="category" name="category" class="form-control" required>
+                    <select id="category" name="category" style="width: 615px;" required>
                             <option value="" selected disabled>Select Category</option>
-                        @foreach($categories as $category)
-                            <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
-                        @endforeach
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
+                            @endforeach
                     </select>
                 </div> 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text">Item</label>
+                        <label class="input-group-text" style="width: 140px;">Item</label>
                     </div>
-                    <select class="form-select form-control" id="item" name="item" required>
+                    <select id="item" name="item" style="width: 615px;" required>
                         <option value="">Select Item</option>                        
                     </select>
                 </div> 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text">Location</label>
+                        <label class="input-group-text" style="width: 140px;">Location</label>
                     </div>
-                    <select class="form-select form-control" id="location" name="location" required>
+                    <select id="location" name="location" style="width: 615px;" required>
                             <option value="" selected disabled>Select Location</option>
-                        @foreach($locations as $location)
-                            <option value="{{$location->id}}">{{$location->location}}</option>
-                        @endforeach
+                            @foreach($locations as $location)
+                                <option value="{{$location->id}}">{{$location->location}}</option>
+                            @endforeach
                     </select>
-                </div> 
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" style="width: 140px;">Rack No.</label>
+                    </div>
+                    <input type="text" id="rack" name="rack" placeholder="Enter Rack No. (Optional)" style="width: 615px;" autocomplete="off">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" style="width: 140px;">Row No.</label>
+                    </div>
+                    <input type="text" id="row" name="row" placeholder="Enter Row No. (Optional)" style="width: 615px;" autocomplete="off">
+                </div>
                 <div class="input-group mb-3" id="serialdiv">
                     <div class="input-group-prepend">
-                        <label class="input-group-text">Serial</label>
+                        <label class="input-group-text" style="width: 140px;">Serial</label>
                     </div>
-                    <input type="text" id="serial" style="width:700px" placeholder="Enter serial" name="serial" autocomplete="off">
+                    <input type="text" id="serial" name="serial" placeholder="Enter Serial (Note: Leave blank if N/A)" style="width: 615px;" autocomplete="off">
                 </div>
                 <div class="input-group mb-3" id="qtydiv">
                     <div class="input-group-prepend">
-                        <label class="input-group-text">Quantity</label>
+                        <label class="input-group-text" style="width: 140px;">Quantity</label>
                     </div>
-                    <input type="number" id="qty" min="1" style="width:680px" placeholder="0" name="qty" autocomplete="off">
+                    <input type="number" id="qty" name="qty" min="1" style="width: 615px;" placeholder="0"  autocomplete="off">
                 </div> 
             </form>
-                <div class="col-md-12 mb-4">
-                    <button type="submit" id="butsave" class="btn btn-xs btn-dark submit float-right bp" style="width:180px; font-size:12px;">
-                    ADD</button>  
-                </div>    
+            <div class="col-md-12 mb-4">
+                <button type="submit" id="butsave" class="btn btn-primary submit float-right bp">
+                SUBMIT</button>  
+            </div>
         </div>
     </div>
     </div>

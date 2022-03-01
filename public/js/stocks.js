@@ -43,7 +43,7 @@ $(document).on('click', '#CategoryTable tbody tr', function () {
     $('#CategoryTableDiv').hide();
     $('#ItemSerialTableDiv').hide();
     $('#ItemTableDiv').show();
-    $('#itemCat').text(trdata.Category);
+    $('#itemCat').text(decodeHtml(trdata.Category));
     $('#backBtn').show();
     $('table.ItemTable').dataTable().fnDestroy();
     ItemTable = 
@@ -72,7 +72,7 @@ $(document).on('click', '#ItemTable tbody tr', function () {
     $('#CategoryTableDiv').hide();
     $('#ItemSerialTableDiv').show();
     $('#ItemTableDiv').hide();
-    $('#itemName').text(trdata.Item);
+    $('#itemName').text(decodeHtml(trdata.Item));
     $('#backBtn').show();
     $('table.ItemSerialTable').dataTable().fnDestroy();
     ItemSerialTable = 
@@ -235,6 +235,17 @@ $(document).on('change', '#item', function(){
             }
         });
 });
+
+function decodeHtml(str){
+    var map = {
+        '&amp;': '&', 
+        '&lt;': '<', 
+        '&gt;': '>', 
+        '&quot;': '"', 
+        '&#039;': "'"
+    };
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) {return map[m];});
+}
 
 $(document).on('click', '#backBtn', function(){
     category();

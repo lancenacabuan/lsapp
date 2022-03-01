@@ -15,7 +15,7 @@
 <div style="margin-top: -3px; height: 20px; background-color: #0d1a80;">
 </div>
 <br>
-    <table class="table-hover table itemTable" id="itemTable" style="width:100%; font-size:80%; display: none; cursor: pointer;">
+    <table class="table-hover table itemTable" id="itemTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important;">
             {{-- <tr class="tbsearch">
                 <td>
@@ -43,7 +43,7 @@
             </tr>
         </thead>
     </table>
-    <table class="table-hover table categoryTable" id="categoryTable" style="width:100%; font-size:80%; display: none; cursor: pointer;">
+    <table class="table-hover table categoryTable" id="categoryTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important;">
             <tr>
                 <th>CATEGORY ID</th>
@@ -51,7 +51,7 @@
             </tr>
         </thead>
     </table>
-    <table class="table-hover table locationTable" id="locationTable" style="width:100%; font-size:80%; display: none; cursor: pointer;">
+    <table class="table-hover table locationTable" id="locationTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important;">
             <tr>
                 <th>LOCATION ID</th>

@@ -27,7 +27,7 @@
             @endforeach 
         </table>
         <br /><br />
-        Kindly login to your {{$details['role']}} account to process this request on the link below.<br />
+        Kindly login to your {{$details['role']}} account to process this request by clicking on the link below.<br />
         Thank you!
     </p>
     <a href="https://lance.idsi.com.ph/stocktransfer?request_number={{$details['request_number']}}">https://lance.idsi.com.ph/stocktransfer?request_number={{$details['request_number']}}</a>

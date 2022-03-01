@@ -31,7 +31,7 @@
             @endforeach 
         </table>
         <br /><br />
-        Kindly login to your {{$details['role']}} account if you wish to view this request for deletion on the link below.<br />
+        Kindly login to your {{$details['role']}} account if you wish to view this request for deletion by clicking on the link below.<br />
         Thank you!
     </p>
     <a href="https://lance.idsi.com.ph/stockrequest?request_number={{$details['request_number']}}">https://lance.idsi.com.ph/stockrequest?request_number={{$details['request_number']}}</a>

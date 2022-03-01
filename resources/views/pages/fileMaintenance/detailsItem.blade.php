@@ -15,7 +15,7 @@
             <input type="hidden" name="item_uom_details_original" id="item_uom_details_original">
             <div class="form-inline">
                 <label class="form-control form-control-sm" style="width:165px;">Category Name</label>
-                <select class="form-control-sm form-select" id="item_category_details" style="padding: 0.25rem 0.5rem; height:30px !important; width:590px;">
+                <select class="form-control-sm form-select-sm" id="item_category_details" style="padding: 0.25rem 0.5rem; height:30px !important; width:590px;">
                     <option selected disabled>Select Category</option>
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
@@ -28,7 +28,7 @@
             </div>
             <div class="form-inline" style="margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width:165px;">Unit of Measure (UOM)</label>
-                <select class="form-control-sm form-select" id="item_uom_details" style="padding: 0.25rem 0.5rem; height:30px !important; width:590px;">
+                <select class="form-control-sm form-select-sm" id="item_uom_details" style="padding: 0.25rem 0.5rem; height:30px !important; width:590px;">
                     <option selected disabled>Select UOM</option>
                     <option value="Unit">Unit</option>
                     <option value="Pc">Pc</option>

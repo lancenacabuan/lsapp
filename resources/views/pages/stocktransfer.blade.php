@@ -15,11 +15,12 @@
                 <th>DATE NEEDED</th>
                 <th>REQUEST NUMBER</th>
                 <th>REQUESTED BY</th>
-                <th>LOCATION</th>
+                <th>FROM LOCATION</th>
+                <th>TO NEW LOCATION</th>
                 <th>STATUS</th>
                 <th>STATUS ID</th>
                 <th>FROM LOCATION</th>
-                <th>TO LOCATION</th>
+                <th>TO NEW LOCATION</th>
                 <th>PREPARED BY</th>
                 <th>SCHEDULE</th>
                 <th>USER ID</th>

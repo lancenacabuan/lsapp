@@ -419,7 +419,7 @@ $('table.stocktransferTable').DataTable({
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. D, YYYY')
         },
         {
-            "targets": [6,7,8,9,10,11,12],
+            "targets": [7,8,9,10,11,12,13],
             "visible": false,
             "searchable": false
         }
@@ -437,7 +437,8 @@ $('table.stocktransferTable').DataTable({
         { data: 'needdate'},
         { data: 'req_num'},
         { data: 'req_by'},
-        { data: 'location'},
+        { data: 'location_from'},
+        { data: 'location_to'},
         { data: 'status'},
         { data: 'status_id'},
         { data: 'locfrom'},

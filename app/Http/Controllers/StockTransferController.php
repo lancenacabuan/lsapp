@@ -189,29 +189,26 @@ class StockTransferController extends Controller
 
     public function transfer_data(){
         if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
-            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, prepared_by, reason, needdate, locfrom, locto')
+            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
             ->whereIn('request_transfer.status', ['6','7'])
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
-            ->join('locations', 'locations.id', '=', 'request_transfer.locto')
             ->orderBy('request_transfer.created_at', 'DESC')
             ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
-            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, prepared_by, reason, needdate, locfrom, locto')
+            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
             ->whereNotIn('request_transfer.status', ['7','8'])
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
-            ->join('locations', 'locations.id', '=', 'request_transfer.locto')
             ->orderBy('request_transfer.created_at', 'DESC')
             ->get();
         }
         else{
-            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, prepared_by, reason, needdate, locfrom, locto')
+            $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
             ->where('request_transfer.requested_by', auth()->user()->id)
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
-            ->join('locations', 'locations.id', '=', 'request_transfer.locto')
             ->orderBy('request_transfer.created_at', 'DESC')
             ->get();
         }
@@ -226,6 +223,26 @@ class StockTransferController extends Controller
             $users = str_replace("\"}]","",$users);
             
             return $users;
+        })
+        ->addColumn('location_from', function (RequestTransfer $list){
+            $locfrom = Location::query()
+                ->select('location')
+                ->where('id', $list->locfrom)
+                ->get();
+            $locfrom = str_replace("[{\"location\":\"","",$locfrom);
+            $locfrom = str_replace("\"}]","",$locfrom);
+            
+            return $locfrom;
+        })
+        ->addColumn('location_to', function (RequestTransfer $list){
+            $locto = Location::query()
+                ->select('location')
+                ->where('id', $list->locto)
+                ->get();
+            $locto = str_replace("[{\"location\":\"","",$locto);
+            $locto = str_replace("\"}]","",$locto);
+            
+            return $locto;
         })
         ->make(true);
     }

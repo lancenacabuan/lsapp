@@ -8,6 +8,7 @@ function isNumberKey(evt)
 
     return true;
 }
+
 function category() {
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
@@ -85,7 +86,9 @@ $(document).on('click', '#ItemTable tbody tr', function () {
             columns: [
                 { data: 'item'},
                 { data: 'serial'},
-                { data: 'location'}
+                { data: 'location'},
+                { data: 'rack'},
+                { data: 'row'}
             ]          
         });
 });
@@ -95,6 +98,8 @@ $(document).on('click', '#butsave', function() {
     var category = $('#category').val();
     var item = $('#item').val();
     var location = $('#location').val();
+    var rack = $('#rack').val();
+    var row = $('#row').val();
     var serial = $('#serial').val();
     if (!$('#serial').val()) {
         serial = 'N/A';
@@ -113,7 +118,9 @@ $(document).on('click', '#butsave', function() {
                     category: category,
                     item: item,
                     location: location,
-                    serial: serial
+                    serial: serial,
+                    rack: rack,
+                    row: row
                 },
                 success: function(dataResult){                      
                     $('#addStock').hide();
@@ -147,7 +154,9 @@ $(document).on('click', '#butsave', function() {
                         category: category,
                         item: item,
                         location: location,
-                        qty:qty
+                        qty: qty,
+                        rack: rack,
+                        row: row
                     },
                     success: function(dataResult){                      
                         $('#addStock').hide();
@@ -231,3 +240,6 @@ $(document).on('click', '#backBtn', function(){
     category();
 });
 
+$(document).on('click', '.close', function(){
+    location.reload();
+});

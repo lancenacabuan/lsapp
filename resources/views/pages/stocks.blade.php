@@ -9,7 +9,7 @@
 <br><br>
 <div class="container">
     <div id="CategoryTableDiv">
-        <table id="CategoryTable" class="table CategoryTable display" style="width: 100%;font-size:70%">
+        <table id="CategoryTable" class="table CategoryTable display" style="width: 100%; font-size: 90%">
             <thead style="background-color: #0d1a80 !important; color: white !important;">                            
                 <tr>
                     <th>CATEGORY</th>
@@ -28,7 +28,7 @@
     </div>
     <div id="ItemTableDiv" style="display:none">
         <center><h3 id="itemCat"></h3></center>
-        <table id="ItemTable" class="table ItemTable display" style="width: 100%;font-size:70%">
+        <table id="ItemTable" class="table ItemTable display" style="width: 100%; font-size: 90%">
             <thead style="background-color: #0d1a80 !important; color: white !important;">                            
                 <tr>
                     <th>ITEM DESCRIPTION</th>
@@ -47,12 +47,14 @@
     </div>
     <div id="ItemSerialTableDiv" style="display:none">
         <center><h3 id="itemName"></h3></center>
-        <table id="ItemSerialTable" class="table ItemSerialTable display" style="width: 100%;font-size:70%">
+        <table id="ItemSerialTable" class="table ItemSerialTable display" style="width: 100%; font-size: 90%">
             <thead style="background-color: #0d1a80 !important; color: white !important;">                            
                 <tr>
                     <th>ITEM DESCRIPTION</th>
                     <th>SERIAL</th>
                     <th>LOCATION</th>
+                    <th>RACK NO.</th>
+                    <th>ROW NO.</th>
                 </tr>
             </thead>
             <tbody>

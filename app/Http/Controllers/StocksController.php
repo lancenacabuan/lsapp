@@ -128,7 +128,7 @@ class StocksController extends Controller
 
     public function itemserial_data(Request $request){
         $stock = Stock::query()
-            ->select('item', 'location', 'serial')
+            ->select('item', 'location', 'serial', 'rack', 'row')
             ->join('locations', 'locations.id', 'location_id')
             ->join('items', 'items.id', 'item_id')
             ->where('item_id', $request->ItemId)

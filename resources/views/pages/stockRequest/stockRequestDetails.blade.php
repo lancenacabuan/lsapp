@@ -287,7 +287,7 @@
         </div>
         <div class="modal-body" style="background-color:white;color:black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="50"></textarea><br>
+            <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100"></textarea><br>
             <span id='limit' style="font-size: 12px;"></span>
             <button type="button" id="btnReason" class="btn btn-primary mr-auto float-right bp">
                 OK</button>
@@ -297,7 +297,7 @@
 </div>
 <script>
 $(document).ready(function() {
-    var max = 50;
+    var max = 100;
     $('#limit').html(max + ' characters remaining');
 
     $('#reason').keyup(function() {

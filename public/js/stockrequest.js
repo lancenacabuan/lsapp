@@ -65,11 +65,11 @@ $(document).ready(function(){
 
     var items = [];
     $('.stockDetails tbody').on('click', 'tr', function () {
-        var pend = $('#stockDetailsrequest').DataTable().cell(this,3).data();
-        var stock = $('#stockDetailsrequest').DataTable().cell(this,4).data();
-        var item_id = $('#stockDetailsrequest').DataTable().cell(this,5).data();
-        var bal = $('#stockDetailsrequest').DataTable().cell(this,10).data();
-        var mal = $('#stockDetailsrequest').DataTable().cell(this,11).data();
+        var pend = $('#stockDetailsrequest').DataTable().cell(this,4).data();
+        var stock = $('#stockDetailsrequest').DataTable().cell(this,5).data();
+        var item_id = $('#stockDetailsrequest').DataTable().cell(this,6).data();
+        var bal = $('#stockDetailsrequest').DataTable().cell(this,11).data();
+        var mal = $('#stockDetailsrequest').DataTable().cell(this,12).data();
 
         if(pend == 0){
             swal('Item is fullfiled!','','success');
@@ -850,7 +850,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                 $('table.stockDetails').DataTable({ 
                     columnDefs: [
                         {
-                            "targets": [5,6,7,8,9],
+                            "targets": [6,7,8,9,10],
                             "visible": false,
                             "searchable": false
                         },
@@ -870,13 +870,13 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                             render: function(data,type,full,meta){
                                 return "<div style='text-align: center;'>"+data+"</div>";
                             },
-                            targets:[2,3,4,5,6,7,8,9]
+                            targets:[2,3,4,5,6,7,8,9,10]
                         },
                         {
                             render: function(data,type,full,meta){
                                 return "<div style='text-align: center; color: red;'>"+data+"</div>";
                             },
-                            targets:[10,11]
+                            targets:[11,12]
                         }
                     ],
                     scrollX: true,
@@ -906,6 +906,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     columns: [
                         { data: 'category'},
                         { data: 'item'},
+                        { data: 'uom'},
                         { data: 'quantity'},
                         { data: 'pending'},
                         { data: 'qtystock'},
@@ -926,7 +927,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                 $('table.stockDetails1').DataTable({ 
                     columnDefs: [
                         {
-                            "targets": [4],
+                            "targets": [5],
                             "visible": false,
                             "searchable": false
                         }
@@ -957,6 +958,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     columns: [
                         { data: 'category'},
                         { data: 'item'},
+                        { data: 'uom'},
                         { data: 'quantity'},
                         { data: 'pending'},
                         { data: 'item_id'}
@@ -969,7 +971,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                 $('table.stockDetails2').DataTable({ 
                     columnDefs: [
                         {
-                            "targets": [5],
+                            "targets": [6],
                             "visible": false,
                             "searchable": false
                         },
@@ -979,7 +981,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                             },
                             "defaultContent": '',
                             "data": null,
-                            "targets": [4]
+                            "targets": [5]
                         }
                     ],
                     paging: false,
@@ -1008,6 +1010,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     columns: [
                         { data: 'category'},
                         { data: 'item'},
+                        { data: 'uom'},
                         { data: 'quantity'},
                         { data: 'pending'},
                         { data: 'item_id'},
@@ -1250,7 +1253,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
     $('table.stockDetails').DataTable({ 
         columnDefs: [
             {
-                "targets": [5,6,7,8,9],
+                "targets": [6,7,8,9,10],
                 "visible": false,
                 "searchable": false
             },
@@ -1270,13 +1273,13 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
                 render: function(data,type,full,meta){
                     return "<div style='text-align: center;'>"+data+"</div>";
                 },
-                targets:[2,3,4,5,6,7,8,9]
+                targets:[2,3,4,5,6,7,8,9,10]
             },
             {
                 render: function(data,type,full,meta){
                     return "<div style='text-align: center; color: red;'>"+data+"</div>";
                 },
-                targets:[10,11]
+                targets:[11,12]
             }
         ],
         scrollX: true,
@@ -1306,6 +1309,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         columns: [
             { data: 'category'},
             { data: 'item'},
+            { data: 'uom'},
             { data: 'quantity'},
             // { data: 'served'},
             { data: 'pending'},
@@ -1327,7 +1331,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
     $('table.stockDetails1').DataTable({ 
         columnDefs: [
             {
-                "targets": [4],
+                "targets": [5],
                 "visible": false,
                 "searchable": false
             }
@@ -1358,6 +1362,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         columns: [
             { data: 'category'},
             { data: 'item'},
+            { data: 'uom'},
             { data: 'quantity'},
             // { data: 'served'},
             { data: 'pending'},
@@ -1371,7 +1376,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
     $('table.stockDetails2').DataTable({ 
         columnDefs: [
             {
-                "targets": [5],
+                "targets": [6],
                 "visible": false,
                 "searchable": false
             },
@@ -1381,7 +1386,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
                 },
                 "defaultContent": '',
                 "data": null,
-                "targets": [4]
+                "targets": [5]
             }
         ],
         paging: false,
@@ -1410,6 +1415,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         columns: [
             { data: 'category'},
             { data: 'item'},
+            { data: 'uom'},
             { data: 'quantity'},
             // { data: 'served'},
             { data: 'pending'},

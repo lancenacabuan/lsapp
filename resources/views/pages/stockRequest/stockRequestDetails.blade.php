@@ -56,6 +56,7 @@
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
+                        <th>UOM</th>
                         <th>QTY REQUESTED</th>
                         {{-- <th>QTY SERVED</th> --}}
                         <th>QTY PENDING</th>
@@ -70,6 +71,7 @@
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
+                        <th>UOM</th>
                         <th>QTY REQUESTED</th>
                         {{-- <th>QTY SERVED</th> --}}
                         <th>QTY PENDING</th>
@@ -90,6 +92,7 @@
                         <th style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             ITEM DESCRIPTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </th>
+                        <th style="text-align: center;">UOM</th>
                         <th style="text-align: center;">QTY REQUESTED</th>
                         {{-- <th style="text-align: center;">QTY SERVED</th> --}}
                         <th style="text-align: center;">QTY PENDING</th>

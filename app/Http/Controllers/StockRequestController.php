@@ -596,11 +596,11 @@ class StockRequestController extends Controller
     }
 
     public function requestDetails(Request $request){
-        $stockreq = StockRequest::query()->select('categories.category','items.item','items.id as item_id','quantity','served','pending')
+        $stockreq = StockRequest::query()->select('categories.category','items.item','items.UOM AS uom','items.id AS item_id','quantity','served','pending')
             ->join('categories', 'categories.id', 'stock_request.category')
             ->join('items', 'items.id', 'stock_request.item')
             ->where('request_number',$request->reqnum)
-            ->groupBy('category','items.item','quantity','served','pending','item_id')
+            ->groupBy('category','items.item','uom','quantity','served','pending','item_id')
             ->get();        
         
         return DataTables::of($stockreq)

@@ -71,6 +71,16 @@ class StockTransferController extends Controller
         return response()->json($list);
     }
 
+    public function settransuom(Request $request){       
+        $uom = Item::query()->select('UOM as uom')
+            ->where('id',$request->item_id)
+            ->get();
+        $uom = str_replace('[{"uom":"','',$uom);
+        $uom = str_replace('"}]','',$uom);
+        
+        return response($uom);
+    }
+
     public function qtystock(Request $request){       
         $list = Stock::query()->select('items.id')
             ->join('items','items.id','item_id')

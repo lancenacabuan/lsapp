@@ -80,6 +80,7 @@ $('#locfrom').on('change', function(){
     $("#item").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
     $('#qty').val('');
     $('#qtystock').val('');
+    $('#uom').val('');
     $('#transrequestDetails').show();
     var location_id = $(this).val();
     $.ajax({
@@ -115,6 +116,7 @@ $('#category').on('change', function(){
     $('#qty').prop('disabled', true);
     $("#qty").val('');
     $("#qtystock").val('');
+    $("#uom").val('');
     var category_id = $(this).val();
     $.ajax({
         type:'get', 
@@ -147,9 +149,34 @@ $('#category').on('change', function(){
 });
 
 $('#item').on('change', function(){
+    func_settransuom();
+    func_qtystock();
+});
+
+function func_settransuom(){
+    var item_id = $('#item').val();
+    $.ajax({
+        type:'get', 
+        url:'/settransuom', 
+        data:{
+            'item_id': item_id,
+        }, 
+        success:function(data) {
+            $('#uom').val(data);
+        },
+        error: function (data) {
+            if(data.status == 401) {
+                window.location.href = '/stocktransfer';
+            }
+            alert(data.responseText);
+        }
+    });
+}
+
+function func_qtystock(){
     $('#qty').prop('disabled', false);
     $("#qty").val('1');
-    var item_id = $(this).val();
+    var item_id = $('#item').val();
     $.ajax({
         type:'get', 
         url:'/qtystock', 
@@ -182,7 +209,7 @@ $('#item').on('change', function(){
             alert(data.responseText);
         }
     });
-});
+}
 
 $('.location').on('change', function(){
     $('.location option').show();
@@ -202,9 +229,10 @@ $(".add-row").on('click', function(){
     var item = $("#item option:selected").text();
     var qty = parseInt($("#qty").val());
     var qtystock = parseInt($("#qtystock").val());
-    var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
+    var uom = $("#uom").val();
+    var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
     var ctr='false';
-    if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0"){
+    if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
         swal('REQUIRED','Please select an item!','error');
         return false;
     }
@@ -228,6 +256,7 @@ $(".add-row").on('click', function(){
                     item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
                     qty = $("#qty").val('');
                     qtystock = $("#qtystock").val('');
+                    uom = $("#uom").val('');
                     $('#qty').prop('disabled', true);
                     return false;
                 }
@@ -241,6 +270,7 @@ $(".add-row").on('click', function(){
             item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
             qty = $("#qty").val('');
             qtystock = $("#qtystock").val('');
+            uom = $("#uom").val('');
             $('#qty').prop('disabled', true);
             $('#tblNewStockTransfer').show();
             $('#divNewStockTransfer').toggle();
@@ -251,10 +281,11 @@ $(".add-row").on('click', function(){
 });
 
 $("#tblNewStockTransfer").on('click', '.delete-row', function(){
-    category = $("#category").val('');
-    item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
-    qty = $("#qty").val('');
-    qtystock = $("#qtystock").val('');
+    $("#category").val('');
+    $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
+    $("#qty").val('');
+    $("#qtystock").val('');
+    $("#uom").val('');
     $('#qty').prop('disabled', true);
     $(this).closest("tr").remove();
     if ($('#tblNewStockTransfer tbody').children().length==0) {

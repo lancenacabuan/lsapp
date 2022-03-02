@@ -89,6 +89,7 @@ Route::get('/stocktransfer', [StockTransferController::class, 'stocktransfer']);
 Route::get('/generateReqNum', [StockTransferController::class, 'generateReqNum']);
 Route::get('/setcategory', [StockTransferController::class, 'setcategory']);
 Route::get('/setitems', [StockTransferController::class, 'setitems']);
+Route::get('/settransuom', [StockTransferController::class, 'settransuom']);
 Route::get('/qtystock', [StockTransferController::class, 'qtystock']);
 Route::any('/saveTransReqNum', [StockTransferController::class, 'saveTransReqNum']);
 Route::any('/saveTransRequest', [StockTransferController::class, 'saveTransRequest']);

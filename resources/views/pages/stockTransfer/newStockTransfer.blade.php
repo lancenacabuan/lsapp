@@ -58,7 +58,7 @@
                 <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="text" placeholder="UOM" readonly>
                 <input class="form-control" id="qty" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="number" placeholder="Qty" disabled>
                 <input class="form-control" id="qtystock" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="text" placeholder="Stock" readonly>
-                <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="font-size: 12px; width: 100px; height: 30px; margin-left: 5px;">
+                <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="font-size: 12px; height: 30px; margin-left: 5px;">
             </div>          
         </form>
         <div class="container-fluid"  id="#divNewStockTransfer">
@@ -68,6 +68,7 @@
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
+                        <th>UOM</th>
                         <th></th>
                     </tr>
                 </thead>

@@ -194,7 +194,7 @@ class StockTransferController extends Controller
         $userlogs->activity = "NEW STOCK TRANSFER REQUEST: User successfully saved Stock Transfer Request No. $request->request_number.";
         $userlogs->save();
         
-        return true;
+        return response('true');
     }
 
     public function transfer_data(){
@@ -441,7 +441,7 @@ class StockTransferController extends Controller
         $userlogs->activity = "DISAPPROVED STOCK TRANSFER REQUEST: User successfully disapproved Stock Transfer Request No. $request->request_number.";
         $userlogs->save();
         
-        return true;
+        return response('true');
     }
 
     public function receiveTransfer(Request $request){
@@ -550,7 +550,7 @@ class StockTransferController extends Controller
         $userlogs->activity = "RECEIVED STOCK TRANSFER REQUEST: User successfully received Stock Transfer Request No. $request->request_number.";
         $userlogs->save();
 
-        return true;
+        return response('true');
     }
 
     public function deleteTransfer(Request $request){
@@ -746,7 +746,7 @@ class StockTransferController extends Controller
         $userlogs->activity = "SCHEDULED STOCK TRANSFER REQUEST: User successfully scheduled on $request->schedOn Stock Transfer Request No. $request->request_number.";
         $userlogs->save();
         
-        return true;
+        return response('true');
     }
 
     public function transItems(Request $request)

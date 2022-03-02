@@ -51,9 +51,9 @@
                 <select class="form-select" id="itemReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 10px;">
                     <option selected disabled>Select Item</option>
                 </select>
+                <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>
                 <input class="form-control" id="qtyReq" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty">
                 {{-- <input class="form-control" id="qtyStock" min="0" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty" readonly>&nbsp;   --}}
-                <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 90px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>
                 <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="font-size: 12px; width: 100px; height: 30px; margin-left: 10px;">
             </div>          
         </form>

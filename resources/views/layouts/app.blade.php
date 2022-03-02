@@ -50,6 +50,19 @@
     <script src="js/inc/chosen.jquery.js"></script>
     <script src="js/inc/select2.js"></script>
     <style>
+        #loading {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(192, 192, 192, 0.5);
+            background-image: url("{{asset('loading.gif')}}");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
         nav {
             background: #0d1a80;
         }
@@ -190,6 +203,7 @@
     </style>
 </head>
 <body>
+    <div id="loading"></div>
     @if (Auth::guest())
     @else
         @include('inc.header')

@@ -605,14 +605,10 @@ $(document).on('click','#requestSave', function(){
                                     },
                                     success: function (data){
                                         if(data == 'true'){
-                                            $('#newStockRequest').hide();
-                                            sweetAlert("SUBMIT SUCCESS", "STOCK REQUEST", "success");
-                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                            return true;
                                         }
                                         else{
-                                            $('#newStockRequest').hide();
-                                            sweetAlert("SUBMIT FAILED", "STOCK REQUEST", "error");
-                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                            return false;
                                         }
                                     },
                                     error: function (data) {
@@ -623,6 +619,8 @@ $(document).on('click','#requestSave', function(){
                                     }
                                 });
                             });
+                            $('#newStockRequest').hide();
+                            $('#loading').show();
                             $.ajax({
                                 type:'post',
                                 url:'/logSave',
@@ -632,9 +630,15 @@ $(document).on('click','#requestSave', function(){
                                 data:{
                                     'request_number': $('#request_num').val(),
                                 },
-                                success: function (){
-                                    $('#newStockRequest').hide();
-                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                success: function (data){
+                                    if(data == 'true'){
+                                        $('#loading').hide();
+                                        sweetAlert("SUBMIT SUCCESS", "STOCK REQUEST", "success");
+                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                    }
+                                    else{
+                                        return false;
+                                    }
                                 },
                                 error: function (data) {
                                     if(data.status == 401) {
@@ -1794,8 +1798,7 @@ $(document).on('click','#btnReason', function(){
                         if(data == 'true'){
                             $('#reasonModal').modal('hide');
                             $('#stockRequestDetails').hide();
-                            sweetAlert("DISAPPROVE SUCCESS", "STOCK REQUEST", "success");
-                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                            $('#loading').show();
                             $.ajax({
                                 type:'get',
                                 url:'/logDisapprove',
@@ -1808,7 +1811,9 @@ $(document).on('click','#btnReason', function(){
                                 },
                                 success: function (data){
                                     if(data == 'true'){
-                                        return true;
+                                        $('#loading').hide();
+                                        sweetAlert("DISAPPROVE SUCCESS", "STOCK REQUEST", "success");
+                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
                                     }
                                     else{
                                         return false;
@@ -1903,8 +1908,7 @@ $(document).on('click','#btnReceive', function(){
                 success: function (data){
                     if(data == 'true'){
                         $('#stockRequestDetails').hide();
-                        sweetAlert("RECEIVE SUCCESS", "STOCK REQUEST", "success");
-                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        $('#loading').show();
                         $.ajax({
                             type:'get',
                             url:'/logReceive',
@@ -1916,7 +1920,9 @@ $(document).on('click','#btnReceive', function(){
                             },
                             success: function (data){
                                 if(data == 'true'){
-                                    return true;
+                                    $('#loading').hide();
+                                    sweetAlert("RECEIVE SUCCESS", "STOCK REQUEST", "success");
+                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
                                 else{
                                     return false;

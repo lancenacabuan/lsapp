@@ -325,7 +325,7 @@ class StockRequestController extends Controller
         $userlogs->activity = "SCHEDULED STOCK REQUEST: User successfully scheduled on $request->schedOn Stock Request No. $request->request_number.";
         $userlogs->save();
         
-        return true;
+        return response('true');
     }
 
     public function approveRequest(Request $request){
@@ -409,7 +409,7 @@ class StockRequestController extends Controller
         $userlogs->activity = "DISAPPROVED STOCK REQUEST: User successfully disapproved Stock Request No. $request->request_number.";
         $userlogs->save();
 
-        return true;
+        return response('true');
     }
 
     public function receiveRequest(Request $request){
@@ -508,7 +508,7 @@ class StockRequestController extends Controller
         $userlogs->activity = "RECEIVED STOCK REQUEST: User successfully received Stock Request No. $request->request_number.";
         $userlogs->save();
 
-        return true;
+        return response('true');
     }
 
     public function saveReqNum(Request $request){
@@ -602,7 +602,7 @@ class StockRequestController extends Controller
         $userlogs->activity = "NEW STOCK REQUEST: User successfully saved Stock Request No. $request->request_number.";
         $userlogs->save();
         
-        return true;
+        return response('true');
     }
 
     public function requestDetails(Request $request){

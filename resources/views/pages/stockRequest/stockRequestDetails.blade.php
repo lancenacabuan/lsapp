@@ -142,7 +142,7 @@
             <br><br><br>
             <hr>
             <input type="button" class="btn btn-primary mr-auto bp" id="btnBack" class="button" value="BACK">
-            <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnSubmit" class="button" value="SUBMIT" disabled>
+            <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnSubmit" class="button" value="SCHEDULE" disabled>
             <br><br>
         </div>
         </div>

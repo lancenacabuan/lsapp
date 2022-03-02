@@ -535,14 +535,14 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                 $('.modal-body').html();
                 $('#detailsStockTransfer').modal('show');
                 if(locfrom == 5){
-                    hideCol = 11;
+                    hideCol = 12;
                 }
                 if(locfrom == 6){
-                    hideCol = 10;
+                    hideCol = 11;
                 }
                 if(value.user_id != $('#current_user').val()){
                     $("#btnDelete").hide();
-                    btnDel = 12;
+                    btnDel = 13;
                 }
                 else{
                     $("#btnDelete").show();
@@ -559,7 +559,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                 }
                 if(value.status_id == '1'|| value.status_id == '2'|| value.status_id == '3' || value.status_id == '4' || value.status_id == '5' || value.status_id == '8'){
                     $("#btnDelete").hide();
-                    btnDel = 12;
+                    btnDel = 13;
                 }
                 if(value.status_id == '2' || value.status_id == '3' || value.status_id == '4' || value.status_id == '6' || value.status_id == '7' || value.status_id == '8'){
                     $("#btnProceed").hide();
@@ -580,7 +580,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                 $('table.transferDetails').DataTable({ 
                     columnDefs: [
                         {
-                            "targets": [4,5,6,7,8,9,hideCol,btnDel],
+                            "targets": [5,6,7,8,9,10,hideCol,btnDel],
                             "visible": false,
                             "searchable": false
                         },
@@ -590,7 +590,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                             },
                             "defaultContent": '',
                             "data": null,
-                            "targets": [12]
+                            "targets": [13]
                         }
                     ],
                     paging: false,
@@ -619,6 +619,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     columns: [
                         { data: 'category'},
                         { data: 'item'},
+                        { data: 'uom'},
                         { data: 'quantity'},
                         { data: 'pending'},
                         { data: 'qtystock'},
@@ -706,14 +707,14 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
     $('.modal-body').html();
     $('#detailsStockTransfer').modal('show');
     if(locfrom == 5){
-        hideCol = 11;
+        hideCol = 12;
     }
     if(locfrom == 6){
-        hideCol = 10;
+        hideCol = 11;
     }
     if(data.user_id != $('#current_user').val()){
         $("#btnDelete").hide();
-        btnDel = 12;
+        btnDel = 13;
     }
     else{
         $("#btnDelete").show();
@@ -730,7 +731,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
     }
     if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
         $("#btnDelete").hide();
-        btnDel = 12;
+        btnDel = 13;
     }
     if(data.status_id == '2' || data.status_id == '3' || data.status_id == '4' || data.status_id == '6' || data.status_id == '7' || data.status_id == '8'){
         $("#btnProceed").hide();
@@ -751,7 +752,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
     $('table.transferDetails').DataTable({ 
         columnDefs: [
             {
-                "targets": [4,5,6,7,8,9,hideCol,btnDel],
+                "targets": [5,6,7,8,9,10,hideCol,btnDel],
                 "visible": false,
                 "searchable": false
             },
@@ -761,7 +762,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
                 },
                 "defaultContent": '',
                 "data": null,
-                "targets": [12]
+                "targets": [13]
             }
         ],
         paging: false,
@@ -790,6 +791,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
         columns: [
             { data: 'category'},
             { data: 'item'},
+            { data: 'uom'},
             { data: 'quantity'},
             { data: 'pending'},
             { data: 'qtystock'},
@@ -1037,10 +1039,10 @@ $(document).on('click', '#btnReason', function(){
 $('table.transferDetails').DataTable().on('select', function(){});
 var items = [];
 $('.transferDetails tbody').on('click', 'tr', function(){
-    var pend = $('#transferDetails').DataTable().cell(this,3).data();
-    var item_id = $('#transferDetails').DataTable().cell(this,5).data();
-    var bal = $('#transferDetails').DataTable().cell(this,10).data();
-    var mal = $('#transferDetails').DataTable().cell(this,11).data();
+    var pend = $('#transferDetails').DataTable().cell(this,4).data();
+    var item_id = $('#transferDetails').DataTable().cell(this,6).data();
+    var bal = $('#transferDetails').DataTable().cell(this,11).data();
+    var mal = $('#transferDetails').DataTable().cell(this,12).data();
     if($('#locfrom_details').val() == 5){
         var stock = bal;
     }

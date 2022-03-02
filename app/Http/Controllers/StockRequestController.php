@@ -378,7 +378,7 @@ class StockRequestController extends Controller
         while(!$request_details);
 
         do{
-            $items = StockRequest::query()->select('categories.category AS category','items.item AS item','quantity')
+            $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
                 ->join('categories', 'categories.id', 'stock_request.category')
                 ->join('items', 'items.id', 'stock_request.item')
                 ->where('request_number', $request->request_number)
@@ -570,7 +570,7 @@ class StockRequestController extends Controller
         while(!$request_details);
 
         do{
-            $items = StockRequest::query()->select('categories.category AS category','items.item AS item','quantity')
+            $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
                 ->join('categories', 'categories.id', 'stock_request.category')
                 ->join('items', 'items.id', 'stock_request.item')
                 ->where('request_number', $request->request_number)

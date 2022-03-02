@@ -149,7 +149,7 @@ class StockTransferController extends Controller
         while(!$request_details);
         
         do{
-            $items = StockTransfer::query()->select('categories.category AS category','items.item AS item','quantity')
+            $items = StockTransfer::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
                 ->join('categories', 'categories.id', 'stock_transfer.category')
                 ->join('items', 'items.id', 'stock_transfer.item')
                 ->where('request_number', $request->request_number)
@@ -397,7 +397,7 @@ class StockTransferController extends Controller
         while(!$request_details);
         
         do{
-            $items = StockTransfer::query()->select('categories.category AS category','items.item AS item','quantity')
+            $items = StockTransfer::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
                 ->join('categories', 'categories.id', 'stock_transfer.category')
                 ->join('items', 'items.id', 'stock_transfer.item')
                 ->where('request_number', $request->request_number)

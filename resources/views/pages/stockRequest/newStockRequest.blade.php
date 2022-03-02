@@ -22,8 +22,7 @@
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width:160px;">Request Type</label>
-                {{-- <input class="form-control form-control-sm" id="request_type" style="width:280px; margin-right: 10px;" type="text" readonly value="SALES"> --}}
-                <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height:30px !important;width:280px;">
+                <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;">
                     <option selected disabled>Select Request Type</option>
                     @foreach($req_types as $req_type)
                         <option value="{{$req_type->id}}">{{strtoupper($req_type->name)}}</option>
@@ -38,23 +37,24 @@
                 <input class="form-control form-control-sm" id="reference" style="width:280px; margin-right: 10px;" type="text">
             </div>
         </div>
-        <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
         </div>
         <form class="mt-2 mb-2">
             <div class="form-inline" style="margin-left:50px;">
-                <select class="form-select" id="categoryReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height:30px !important; width:300px;" required>
+                <select class="form-select" id="categoryReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
                         <option selected disabled>Select Category</option>
                         @foreach($categories as $category)
                             <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
                         @endforeach
                 </select>
-                <select class="form-select" id="itemReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height:30px !important; width:450px; margin-left: 10px;">
+                <select class="form-select" id="itemReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 10px;">
                     <option selected disabled>Select Item</option>
                 </select>
-                <input class="form-control" id="qtyReq" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="number" placeholder="Qty">
-                {{-- <input class="form-control" id="qtyStock" min="0" style="font-size: 12px; padding: 0.25rem 0.5rem; width:70px; height:30px; margin-left: 10px;" type="number" placeholder="Qty" readonly>&nbsp;   --}}
-                <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="font-size:12px; width:100px; height:30px; margin-left: 10px;">
+                <input class="form-control" id="qtyReq" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty">
+                {{-- <input class="form-control" id="qtyStock" min="0" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty" readonly>&nbsp;   --}}
+                <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 90px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>
+                <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="font-size: 12px; width: 100px; height: 30px; margin-left: 10px;">
             </div>          
         </form>
         <div class="container-fluid"  id="#stockRequestDiv">
@@ -66,6 +66,7 @@
                         <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
                         {{-- <th>QTY IN STOCK</th> --}}
+                        <th>UOM</th>
                         <th></th>
                     </tr>
                 </thead>

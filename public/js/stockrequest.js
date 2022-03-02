@@ -457,9 +457,10 @@ $(document).ready(function(){
         var category = $("#categoryReq option:selected").text();
         var item = $("#itemReq option:selected").text();
         let qty = $("#qtyReq").val();
-        var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
+        var uom = $("#uom").val();
+        var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
         var ctr='false';
-        if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0"){
+        if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
             swal('REQUIRED','Please select an item!','error');
             return false;
         }
@@ -476,6 +477,7 @@ $(document).ready(function(){
                     category = $("#categoryReq").val('Select Category');
                     item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val()
                     qty = $("#qtyReq").val('');
+                    uom = $('#uom').val('');
                     return false;
                 }
                 else {
@@ -487,6 +489,7 @@ $(document).ready(function(){
             category = $("#categoryReq").val('Select Category');
             item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val()
             qty = $("#qtyReq").val('');
+            uom = $('#uom').val('');
             $('#stockRequestTable').show();
             $('#stockRequestDiv').toggle();
             $('#requestClose').show();
@@ -541,12 +544,11 @@ $(document).ready(function(){
         }
     });
 
-    
     $("#success-alert").fadeTo(3000, 500).slideUp(500, function(){
         $("#success-alert").slideUp(500);    
-    });    
-               
-});  
+    });               
+});
+
 $(document).on('click','#close', function(){
     window.location.href = '/stockrequest';
 });
@@ -690,9 +692,10 @@ $(document).on('click','#requestSave', function(){
     }   
 });
 
-$(document).on('change', '#categoryReq', function(){ 
-    var id=$('#categoryReq').val();
+$('#categoryReq').on('change', function(){
+    var id = $('#categoryReq').val();
     var descOp = " ";
+    $('#uom').val('');
     $.ajax({ 
         type:'get', 
         url:'/itemsreq', 
@@ -718,7 +721,7 @@ $(document).on('change', '#categoryReq', function(){
     });    
 });
 
-// $(document).on('change', '#itemReq', function(){ 
+// $('#itemReq').on('change', function(){ 
 //     $('#qtyReq').val('');
 //     var id=$('#itemReq').val();
 //     $.ajax({ 
@@ -742,6 +745,26 @@ $(document).on('change', '#categoryReq', function(){
 //         }
 //     })
 // });
+
+$('#itemReq').on('change', function(){
+    var item_id = $(this).val();
+    $.ajax({
+        type:'get', 
+        url:'/setuom', 
+        data:{
+            'item_id': item_id,
+        }, 
+        success:function(data) {
+            $('#uom').val(data);
+        },
+        error: function (data) {
+            if(data.status == 401) {
+                window.location.href = '/stockrequest';
+            }
+            alert(data.responseText);
+        }
+    });
+});
 
 if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
     url = window.location.search;

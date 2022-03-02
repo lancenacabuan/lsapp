@@ -224,6 +224,16 @@ class StockRequestController extends Controller
     //     return response($list);
     // }
 
+    public function setuom(Request $request){       
+        $uom = Item::query()->select('UOM as uom')
+            ->where('id',$request->item_id)
+            ->get();
+        $uom = str_replace('[{"uom":"','',$uom);
+        $uom = str_replace('"}]','',$uom);
+        
+        return response($uom);
+    }
+
     public function generatedr(Request $request){
         $dr = Requests::query()->select()
             ->where('request_number',$request->request_number)

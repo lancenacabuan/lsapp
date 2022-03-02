@@ -184,6 +184,8 @@ class FileMaintenanceController extends Controller
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "CATEGORY ADDED: User successfully saved new Category '$request->category' with CategoryID#$request->id.";
         $userlogs->save();
+
+        return response('true');
     }
 
     public function updateCategory(Request $request){
@@ -221,6 +223,8 @@ class FileMaintenanceController extends Controller
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "CATEGORY UPDATED: User successfully updated Category from '$request->category_original' into '$request->category_details' with CategoryID#$request->category_id.";
         $userlogs->save();
+
+        return response('true');
     }
 
     public function saveLocation(Request $request){
@@ -254,10 +258,13 @@ class FileMaintenanceController extends Controller
 
     public function logNewLocation(Request $request){
         $user = array(
-            'gerard.mallari@gmail.com',
-            'jolopez@ideaserv.com.ph',
-            'lancenacabuan@outlook.com',
+            'c4lance@outlook.com',
+            'lancenacabuan@yahoo.com',
             'lorenzonacabuan@gmail.com'
+            // 'gerard.mallari@gmail.com',
+            // 'jolopez@ideaserv.com.ph',
+            // 'lancenacabuan@outlook.com',
+            // 'lorenzonacabuan@gmail.com'
         );
         $subject = 'NEW LOCATION REQUEST: '.$request->location;
         foreach($user as $email){
@@ -273,6 +280,8 @@ class FileMaintenanceController extends Controller
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "LOCATION REQUESTED: User successfully requested new Location '$request->location' with LocationID#$request->id.";
         $userlogs->save();
+
+        return response('true');
     }
 
     public function updateLocation(Request $request){
@@ -332,10 +341,13 @@ class FileMaintenanceController extends Controller
 
     public function requestStatusChange(Request $request){
         $user = array(
-            'gerard.mallari@gmail.com',
-            'jolopez@ideaserv.com.ph',
-            'lancenacabuan@outlook.com',
+            'c4lance@outlook.com',
+            'lancenacabuan@yahoo.com',
             'lorenzonacabuan@gmail.com'
+            // 'gerard.mallari@gmail.com',
+            // 'jolopez@ideaserv.com.ph',
+            // 'lancenacabuan@outlook.com',
+            // 'lorenzonacabuan@gmail.com'
         );
         $subject = 'LOCATION STATUS CHANGE REQUEST: '.$request->location;
         foreach($user as $email){
@@ -353,5 +365,7 @@ class FileMaintenanceController extends Controller
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "LOCATION STATUS CHANGE REQUESTED: User successfully requested Location Status Change of '$request->location' FROM '$request->status_original' INTO '$request->status' with LocationID#$request->id.";
         $userlogs->save();
+
+        return response('true');
     }
 }

@@ -478,9 +478,9 @@ $('#btnSaveLocation').on('click', function() {
                     },
                     success: function(data){
                         if(data.result == 'true'){
+                            scrollReset();
                             $('#newLocation').hide();
-                            sweetAlert("REQUEST SUCCESS", "New Location has been requested.", "success");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
+                            $('#loading').show();
                             $.ajax({
                                 url: "/logNewLocation",
                                 type: "POST",
@@ -493,7 +493,9 @@ $('#btnSaveLocation').on('click', function() {
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        return true;
+                                        $('#loading').hide();
+                                        sweetAlert("REQUEST SUCCESS", "New Location has been requested.", "success");
+                                        setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                                     }
                                     else{
                                         return false;
@@ -611,9 +613,9 @@ $('#btnUpdateLocation').on('click', function() {
                     },
                     success: function(data){
                         if(data.result == 'request'){
+                            scrollReset();
                             $('#detailsLocation').hide();
-                            sweetAlert("REQUEST SUCCESS", "Location Status Change has been requested.", "success");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
+                            $('#loading').show();
                             $.ajax({
                                 url: "/requestStatusChange",
                                 type: "POST",
@@ -628,7 +630,9 @@ $('#btnUpdateLocation').on('click', function() {
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        return true;
+                                        $('#loading').hide();
+                                        sweetAlert("REQUEST SUCCESS", "Location Status Change has been requested.", "success");
+                                        setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                                     }
                                     else{
                                         return false;
@@ -707,3 +711,7 @@ $('#btnUpdateLocation').on('click', function() {
         });
     }
 });
+
+function scrollReset(){
+    $('html, body').animate({scrollTop:0}, 10);
+}

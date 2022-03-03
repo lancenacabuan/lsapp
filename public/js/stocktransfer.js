@@ -353,6 +353,7 @@ $(document).on('click', '#btnSave', function(){
                                     }
                                 });
                             });
+                            scrollReset();
                             $('#newStockTransfer').hide();
                             $('#loading').show();
                             $.ajax({
@@ -991,6 +992,7 @@ $(document).on('click', '#btnReason', function(){
                     },
                     success: function (data){
                         if(data == 'true'){
+                            scrollReset();
                             $('#reasonModal').modal('hide');
                             $('#detailsStockTransfer').hide();
                             $('#loading').show();
@@ -1436,6 +1438,7 @@ $(document).on('click', '#btnReceive', function(){
                 },
                 success: function (data){
                     if(data == 'true'){
+                        scrollReset();
                         $('#detailsStockTransfer').hide();
                         $('#loading').show();
                         $.ajax({
@@ -1515,3 +1518,7 @@ $(document).on('click', '#btnSavePDF', function(){
         }
     });  
 });
+
+function scrollReset(){
+    $('html, body').animate({scrollTop:0}, 10);
+}

@@ -619,6 +619,7 @@ $(document).on('click','#requestSave', function(){
                                     }
                                 });
                             });
+                            scrollReset();
                             $('#newStockRequest').hide();
                             $('#loading').show();
                             $.ajax({
@@ -1796,6 +1797,7 @@ $(document).on('click','#btnReason', function(){
                     },
                     success: function (data){
                         if(data == 'true'){
+                            scrollReset();
                             $('#reasonModal').modal('hide');
                             $('#stockRequestDetails').hide();
                             $('#loading').show();
@@ -1907,6 +1909,7 @@ $(document).on('click','#btnReceive', function(){
                 },
                 success: function (data){
                     if(data == 'true'){
+                        scrollReset();
                         $('#stockRequestDetails').hide();
                         $('#loading').show();
                         $.ajax({
@@ -2013,4 +2016,8 @@ function copyRefNum() {
             timer: 2000
         });
     }
+}
+
+function scrollReset(){
+    $('html, body').animate({scrollTop:0}, 10);
 }

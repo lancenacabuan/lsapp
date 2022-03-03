@@ -444,6 +444,7 @@ $(document).on('click', '#modalClose', function(){
 });
 
 $('table.stocktransferTable').dataTable().fnDestroy();
+$('#loading').show();
 $('table.stocktransferTable').DataTable({ 
     columnDefs: [
         {
@@ -483,7 +484,10 @@ $('table.stocktransferTable').DataTable({
         { data: 'sched'},
         { data: 'user_id'},
         { data: 'reason'}
-    ]
+    ],
+    initComplete: function (){
+        $('#loading').hide();
+    }
 });
 
 if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){

@@ -90,7 +90,7 @@ $(document).on('change', '#locationfrom', function(){
         });
 });
 $('#quantityst').on('change',function(e){    
-    var qty = $('#quantityst').val();//
+    var qty = $('#quantityst').val();
     var sqty = $('#strans').val();
      if(parseInt(qty) > parseInt(sqty)){         
             $("#quantityst").val(sqty);
@@ -103,7 +103,7 @@ $('#buttrans').on('click', function() {
     var item = $('#items').val();
     var locationfrom = $('#locationfrom').val();
     var locationto= $('#locationto').val();
-    var qty = $('#quantityst').val();//
+    var qty = $('#quantityst').val();
     var sqty = $('#strans').val();
         if(parseInt(qty) > parseInt(sqty)){
             alert('Quantity must be less than to available stocks!');

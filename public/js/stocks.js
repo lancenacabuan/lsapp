@@ -16,7 +16,7 @@ function category() {
     $('#backBtn').hide();
     $('#ItemSerialTableDiv').hide();
     $('#ItemTableDiv').hide();
-    
+    $('#loading').show();
     CategoryTable = 
         $('table.CategoryTable').DataTable({ 
             ajax: 'category_data',
@@ -29,7 +29,10 @@ function category() {
                 { data: 'Balintawak'},
                 { data: 'Malabon'},
                 { data: 'Total_stocks'}
-            ]          
+            ],
+            initComplete: function (){
+                $('#loading').hide();
+            }
         });
 }
 $(document).ready(function () {   
@@ -46,6 +49,7 @@ $(document).on('click', '#CategoryTable tbody tr', function () {
     $('#itemCat').text(decodeHtml(trdata.Category));
     $('#backBtn').show();
     $('table.ItemTable').dataTable().fnDestroy();
+    $('#loading').show();
     ItemTable = 
         $('table.ItemTable').DataTable({ 
             ajax: {
@@ -63,7 +67,10 @@ $(document).on('click', '#CategoryTable tbody tr', function () {
                 { data: 'Balintawak'},
                 { data: 'Malabon'},
                 { data: 'Total_stocks'}
-            ]          
+            ],
+            initComplete: function (){
+                $('#loading').hide();
+            }
         });
 });
 
@@ -75,6 +82,7 @@ $(document).on('click', '#ItemTable tbody tr', function () {
     $('#itemName').text(decodeHtml(trdata.Item));
     $('#backBtn').show();
     $('table.ItemSerialTable').dataTable().fnDestroy();
+    $('#loading').show();
     ItemSerialTable = 
         $('table.ItemSerialTable').DataTable({ 
             ajax: {
@@ -89,7 +97,10 @@ $(document).on('click', '#ItemTable tbody tr', function () {
                 { data: 'location'},
                 { data: 'rack'},
                 { data: 'row'}
-            ]          
+            ],
+            initComplete: function (){
+                $('#loading').hide();
+            }
         });
 });
     

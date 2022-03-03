@@ -415,6 +415,7 @@ $(document).ready(function(){
     });
     
     $('table.stock_request').dataTable().fnDestroy();
+    $('#loading').show();
     $('table.stock_request').DataTable({ 
         columnDefs: [
             {
@@ -450,7 +451,10 @@ $(document).ready(function(){
             { data: 'client_name'},
             { data: 'location'},
             { data: 'reason'}
-        ]
+        ],
+        initComplete: function (){
+            $('#loading').hide();
+        }
     });
             
     $(".add-row").click(function(){                   

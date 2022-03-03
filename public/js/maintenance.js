@@ -2,6 +2,7 @@ if(window.location.href == 'https://lance.idsi.com.ph/maintenance'){
     $('#nav1').addClass("active-link");
     $('.btnNewItem').show();
     $('#itemTable').show();
+    $('#loading').show();
     var table;
     table = $('table.itemTable').DataTable({ 
         language: {
@@ -28,6 +29,9 @@ if(window.location.href == 'https://lance.idsi.com.ph/maintenance'){
         ],
         // order:[[1, 'asc'],[2, 'asc']],
         order:[[2, 'asc']],
+        initComplete: function (){
+            $('#loading').hide();
+        }
     });
 
     $('.filter-input').keyup(function() {
@@ -40,6 +44,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=categ
     $('#nav2').addClass("active-link");
     $('.btnNewCategory').show();
     $('#categoryTable').show();
+    $('#loading').show();
     $('table.categoryTable').DataTable({ 
         language: {
             processing: "Loading...",
@@ -62,13 +67,17 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=categ
         ],
         order:[[1, 'asc']],
         orderCellsTop: true,
-        fixedHeader: true,            
+        fixedHeader: true,
+        initComplete: function (){
+            $('#loading').hide();
+        }
     });
 }
 else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=location'){
     $('#nav3').addClass("active-link");
     $('.btnNewLocation').show();
     $('#locationTable').show();
+    $('#loading').show();
     $('table.locationTable').DataTable({ 
         language: {
             processing: "Loading...",
@@ -92,7 +101,10 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=locat
         ],
         order:[[1, 'asc']],
         orderCellsTop: true,
-        fixedHeader: true,            
+        fixedHeader: true,
+        initComplete: function (){
+            $('#loading').hide();
+        }
     });
 }
 else{

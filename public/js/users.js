@@ -1,5 +1,6 @@
 $(document).ready(function () {    
     $('table.userTable').dataTable().fnDestroy();
+    $('#loading').show();
     $('table.userTable').DataTable({ 
         language: {
             processing: "Loading...",
@@ -18,7 +19,10 @@ $(document).ready(function () {
             { data: 'user_status' }
         ],
         orderCellsTop: true,
-        fixedHeader: true,            
+        fixedHeader: true,
+        initComplete: function (){
+            $('#loading').hide();
+        }
     });
 });
 

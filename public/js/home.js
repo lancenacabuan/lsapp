@@ -1,4 +1,5 @@
-$(document).ready(function () {    
+$(document).ready(function () {
+    $('#loading').show();
     $('table.user_logs').DataTable({ 
         dom:  '<lf<t>ip>',
         language: {
@@ -23,6 +24,9 @@ $(document).ready(function () {
             { data: 'username'},                
             { data: 'role'},
             { data: 'activity'}
-        ]
+        ],
+        initComplete: function (){
+            $('#loading').hide();
+        }
     });
 });

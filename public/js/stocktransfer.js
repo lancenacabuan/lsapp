@@ -76,6 +76,14 @@ $(function(){
     $('#schedOn').attr('min', minDate);
 });
 
+const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+function dateDiffInDays(a, b) {
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+    
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
 $('#locfrom').on('change', function(){
     $("#item").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
     $('#qty').val('');
@@ -471,12 +479,44 @@ $('table.stocktransferTable').DataTable({
     },
     columns: [
         { data: 'date'},
-        { data: 'needdate'},
+        {
+            data: 'needdate',
+            "render": function(data, type, row){
+                var a = new Date(minDate);
+                var b = new Date(row.needdate);
+                var difference = dateDiffInDays(a, b);
+                if(difference >= 0 && difference <= 3){
+                    return "<span style='color: orange; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: orange;' class='fa fa-exclamation-triangle'></i></span>";
+                }
+                else if(difference < 0){
+                    return "<span style='color: red; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                }
+                else{
+                    return moment(row.needdate).format('MMM. D, YYYY');
+                }
+            }
+        },
         { data: 'req_num'},
         { data: 'req_by'},
         { data: 'location_from'},
         { data: 'location_to'},
-        { data: 'status'},
+        {
+            data: 'status',
+            "render": function(data, type, row){
+                var a = new Date(minDate);
+                var b = new Date(row.needdate);
+                var difference = dateDiffInDays(a, b);
+                if(difference >= 0 && difference <= 3){
+                    return "<span style='color: orange; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: orange;' class='fa fa-exclamation-triangle'></i></span>";
+                }
+                else if(difference < 0){
+                    return "<span style='color: red; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                }
+                else{
+                    return row.status;
+                }
+            }
+        },
         { data: 'status_id'},
         { data: 'locfrom'},
         { data: 'locto'},

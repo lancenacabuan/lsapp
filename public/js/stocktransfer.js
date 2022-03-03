@@ -355,7 +355,7 @@ $(document).on('click', '#btnSave', function(){
                             });
                             scrollReset();
                             $('#newStockTransfer').hide();
-                            $('#loading').show();
+                            $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 type:'post',
                                 url:'/logTransSave',
@@ -367,7 +367,7 @@ $(document).on('click', '#btnSave', function(){
                                 },
                                 success: function (data){
                                     if(data == 'true'){
-                                        $('#loading').hide();
+                                        $('#loading').hide(); Spinner.hide();
                                         sweetAlert("SUBMIT SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                     }
@@ -444,7 +444,7 @@ $(document).on('click', '#modalClose', function(){
 });
 
 $('table.stocktransferTable').dataTable().fnDestroy();
-$('#loading').show();
+$('#loading').show(); Spinner(); Spinner.show();
 $('table.stocktransferTable').DataTable({ 
     columnDefs: [
         {
@@ -486,7 +486,7 @@ $('table.stocktransferTable').DataTable({
         { data: 'reason'}
     ],
     initComplete: function (){
-        $('#loading').hide();
+        $('#loading').hide(); Spinner.hide();
     }
 });
 
@@ -999,7 +999,7 @@ $(document).on('click', '#btnReason', function(){
                             scrollReset();
                             $('#reasonModal').modal('hide');
                             $('#detailsStockTransfer').hide();
-                            $('#loading').show();
+                            $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 type:'get',
                                 url:'/logTransDisapprove',
@@ -1012,7 +1012,7 @@ $(document).on('click', '#btnReason', function(){
                                 },
                                 success: function (data){
                                     if(data == 'true'){
-                                        $('#loading').hide();
+                                        $('#loading').hide(); Spinner.hide();
                                         sweetAlert("DISAPPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                     }
@@ -1444,7 +1444,7 @@ $(document).on('click', '#btnReceive', function(){
                     if(data == 'true'){
                         scrollReset();
                         $('#detailsStockTransfer').hide();
-                        $('#loading').show();
+                        $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
                             type:'get',
                             url:'/logTransReceive',
@@ -1456,7 +1456,7 @@ $(document).on('click', '#btnReceive', function(){
                             },
                             success: function (data){
                                 if(data == 'true'){
-                                    $('#loading').hide();
+                                    $('#loading').hide(); Spinner.hide();
                                     sweetAlert("RECEIVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                     setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                 }

@@ -16,7 +16,7 @@ function category() {
     $('#backBtn').hide();
     $('#ItemSerialTableDiv').hide();
     $('#ItemTableDiv').hide();
-    $('#loading').show();
+    $('#loading').show(); Spinner(); Spinner.show();
     CategoryTable = 
         $('table.CategoryTable').DataTable({ 
             ajax: 'category_data',
@@ -31,7 +31,7 @@ function category() {
                 { data: 'Total_stocks'}
             ],
             initComplete: function (){
-                $('#loading').hide();
+                $('#loading').hide(); Spinner.hide();
             }
         });
 }
@@ -49,7 +49,7 @@ $(document).on('click', '#CategoryTable tbody tr', function () {
     $('#itemCat').text(decodeHtml(trdata.Category));
     $('#backBtn').show();
     $('table.ItemTable').dataTable().fnDestroy();
-    $('#loading').show();
+    $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({ 
             ajax: {
@@ -69,7 +69,7 @@ $(document).on('click', '#CategoryTable tbody tr', function () {
                 { data: 'Total_stocks'}
             ],
             initComplete: function (){
-                $('#loading').hide();
+                $('#loading').hide(); Spinner.hide();
             }
         });
 });
@@ -82,7 +82,7 @@ $(document).on('click', '#ItemTable tbody tr', function () {
     $('#itemName').text(decodeHtml(trdata.Item));
     $('#backBtn').show();
     $('table.ItemSerialTable').dataTable().fnDestroy();
-    $('#loading').show();
+    $('#loading').show(); Spinner(); Spinner.show();
     ItemSerialTable = 
         $('table.ItemSerialTable').DataTable({ 
             ajax: {
@@ -99,7 +99,7 @@ $(document).on('click', '#ItemTable tbody tr', function () {
                 { data: 'row'}
             ],
             initComplete: function (){
-                $('#loading').hide();
+                $('#loading').hide(); Spinner.hide();
             }
         });
 });

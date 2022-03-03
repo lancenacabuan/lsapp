@@ -49,6 +49,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="js/inc/chosen.jquery.js"></script>
     <script src="js/inc/select2.js"></script>
+    <script src="js/inc/loading-spinner.js"></script>
     <style>
         #loading {
             display: none;
@@ -59,7 +60,7 @@
             width: 100vw;
             height: 100vh;
             background-color: rgba(192, 192, 192, 0.5);
-            background-image: url("{{asset('loading.gif')}}");
+            /* background-image: url("{{asset('loading.gif')}}"); */
             background-repeat: no-repeat;
             background-position: center;
         }

@@ -2,7 +2,7 @@ if(window.location.href == 'https://lance.idsi.com.ph/maintenance'){
     $('#nav1').addClass("active-link");
     $('.btnNewItem').show();
     $('#itemTable').show();
-    $('#loading').show();
+    $('#loading').show(); Spinner(); Spinner.show();
     var table;
     table = $('table.itemTable').DataTable({ 
         language: {
@@ -30,7 +30,7 @@ if(window.location.href == 'https://lance.idsi.com.ph/maintenance'){
         // order:[[1, 'asc'],[2, 'asc']],
         order:[[2, 'asc']],
         initComplete: function (){
-            $('#loading').hide();
+            $('#loading').hide(); Spinner.hide();
         }
     });
 
@@ -44,7 +44,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=categ
     $('#nav2').addClass("active-link");
     $('.btnNewCategory').show();
     $('#categoryTable').show();
-    $('#loading').show();
+    $('#loading').show(); Spinner(); Spinner.show();
     $('table.categoryTable').DataTable({ 
         language: {
             processing: "Loading...",
@@ -69,7 +69,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=categ
         orderCellsTop: true,
         fixedHeader: true,
         initComplete: function (){
-            $('#loading').hide();
+            $('#loading').hide(); Spinner.hide();
         }
     });
 }
@@ -77,7 +77,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=locat
     $('#nav3').addClass("active-link");
     $('.btnNewLocation').show();
     $('#locationTable').show();
-    $('#loading').show();
+    $('#loading').show(); Spinner(); Spinner.show();
     $('table.locationTable').DataTable({ 
         language: {
             processing: "Loading...",
@@ -103,7 +103,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=locat
         orderCellsTop: true,
         fixedHeader: true,
         initComplete: function (){
-            $('#loading').hide();
+            $('#loading').hide(); Spinner.hide();
         }
     });
 }
@@ -492,7 +492,7 @@ $('#btnSaveLocation').on('click', function() {
                         if(data.result == 'true'){
                             scrollReset();
                             $('#newLocation').hide();
-                            $('#loading').show();
+                            $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 url: "/logNewLocation",
                                 type: "POST",
@@ -505,7 +505,7 @@ $('#btnSaveLocation').on('click', function() {
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#loading').hide();
+                                        $('#loading').hide(); Spinner.hide();
                                         sweetAlert("REQUEST SUCCESS", "New Location has been requested.", "success");
                                         setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                                     }
@@ -627,7 +627,7 @@ $('#btnUpdateLocation').on('click', function() {
                         if(data.result == 'request'){
                             scrollReset();
                             $('#detailsLocation').hide();
-                            $('#loading').show();
+                            $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 url: "/requestStatusChange",
                                 type: "POST",
@@ -642,7 +642,7 @@ $('#btnUpdateLocation').on('click', function() {
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#loading').hide();
+                                        $('#loading').hide(); Spinner.hide();
                                         sweetAlert("REQUEST SUCCESS", "Location Status Change has been requested.", "success");
                                         setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                                     }

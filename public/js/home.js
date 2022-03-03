@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#loading').show();
+    $('#loading').show(); Spinner(); Spinner.show();
     $('table.user_logs').DataTable({ 
         dom:  '<lf<t>ip>',
         language: {
@@ -26,7 +26,7 @@ $(document).ready(function () {
             { data: 'activity'}
         ],
         initComplete: function (){
-            $('#loading').hide();
+            $('#loading').hide(); Spinner.hide();
         }
     });
 });

@@ -1,6 +1,6 @@
 $(document).ready(function () {    
     $('table.userTable').dataTable().fnDestroy();
-    $('#loading').show();
+    $('#loading').show(); Spinner(); Spinner.show();
     $('table.userTable').DataTable({ 
         language: {
             processing: "Loading...",
@@ -21,7 +21,7 @@ $(document).ready(function () {
         orderCellsTop: true,
         fixedHeader: true,
         initComplete: function (){
-            $('#loading').hide();
+            $('#loading').hide(); Spinner.hide();
         }
     });
 });

@@ -113,6 +113,7 @@ document.addEventListener("contextmenu", function(e){
 }, false);
 
 $(document).ready(function(){
+    setTimeout(function(){$('#loading').hide(); Spinner.hide();}, 0);
     var req_date = $('#req_date').html();
     req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
     $('#req_date').html(req_date);

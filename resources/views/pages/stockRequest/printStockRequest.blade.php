@@ -107,17 +107,6 @@
             <td colspan="2" style="font-weight: bold;">Date Received:</td>
             <td colspan="2">______________________________</td>
         </tr>
-        {{-- <tr height="20">
-            <td height="20"><img src='https://chart.googleapis.com/chart?cht=qr&chl={{$list->req_num}}&chs=150x150&choe=UTF-8&chld=L|2' alt=''></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr> --}}
     </table>
 </div>
 <script>
@@ -126,6 +115,7 @@ document.addEventListener("contextmenu", function(e){
 }, false);
 
 $(document).ready(function(){
+    setTimeout(function(){$('#loading').hide(); Spinner.hide();}, 0);
     var req_date = $('#req_date').html();
     req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
     $('#req_date').html(req_date);

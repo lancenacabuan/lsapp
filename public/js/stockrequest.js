@@ -615,49 +615,84 @@ $(document).on('click','#modalClose', function(){
 $(document).on('click','#requestSave', function(){
     if($('#needdate').val() && $('#request_type').val() && $('#client_name').val() && $('#location').val())
     {
-        swal({
-            title: "SUBMIT STOCK REQUEST?",
-            text: "You are about to SUBMIT this STOCK REQUEST!",
-            icon: "warning",
-            buttons: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    type:'post',
-                    url:'/saveReqNum',
-                    headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val(),
-                    },
-                    data:{
-                        'request_number': $('#request_num').val(),
-                        'requested_by': $('#requested_by').val(),
-                        'needdate': $('#needdate').val(),
-                        'request_type': $('#request_type').val(),
-                        'client_name': $('#client_name').val(),
-                        'location': $('#location').val(),
-                        'reference': $('#reference').val(),
-                    },
-                    success: function (data){
-                        if(data == 'true'){
-                            var myTable = $('#stockRequestTable').DataTable();
-                            var form_data  = myTable.rows().data();
-                            $.each( form_data, function( key, value ) {
+        if($("#needdate").val() < minDate){
+            swal('Minimum Date is today!','Select within date range from today onwards.','error');
+            return false;
+        }
+        else{
+            swal({
+                title: "SUBMIT STOCK REQUEST?",
+                text: "You are about to SUBMIT this STOCK REQUEST!",
+                icon: "warning",
+                buttons: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type:'post',
+                        url:'/saveReqNum',
+                        headers: {
+                            'X-CSRF-TOKEN': $("#csrf").val(),
+                        },
+                        data:{
+                            'request_number': $('#request_num').val(),
+                            'requested_by': $('#requested_by').val(),
+                            'needdate': $('#needdate').val(),
+                            'request_type': $('#request_type').val(),
+                            'client_name': $('#client_name').val(),
+                            'location': $('#location').val(),
+                            'reference': $('#reference').val(),
+                        },
+                        success: function (data){
+                            if(data == 'true'){
+                                var myTable = $('#stockRequestTable').DataTable();
+                                var form_data  = myTable.rows().data();
+                                $.each( form_data, function( key, value ) {
+                                    $.ajax({
+                                        type:'post',
+                                        url:'/saveRequest',
+                                        headers: {
+                                            'X-CSRF-TOKEN': $("#csrf").val(),
+                                        },
+                                        data:{
+                                            'request_number': $('#request_num').val(),
+                                            'category': value[0],
+                                            'item': value[1],
+                                            'quantity': value[2]
+                                        },
+                                        success: function (data){
+                                            if(data == 'true'){
+                                                return true;
+                                            }
+                                            else{
+                                                return false;
+                                            }
+                                        },
+                                        error: function (data) {
+                                            if(data.status == 401) {
+                                                window.location.href = '/stockrequest';
+                                            }
+                                            alert(data.responseText);
+                                        }
+                                    });
+                                });
+                                scrollReset();
+                                $('#newStockRequest').hide();
+                                $('#loading').show(); Spinner(); Spinner.show();
                                 $.ajax({
                                     type:'post',
-                                    url:'/saveRequest',
+                                    url:'/logSave',
                                     headers: {
-                                        'X-CSRF-TOKEN': $("#csrf").val(),
+                                        'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
                                         'request_number': $('#request_num').val(),
-                                        'category': value[0],
-                                        'item': value[1],
-                                        'quantity': value[2]
                                     },
                                     success: function (data){
                                         if(data == 'true'){
-                                            return true;
+                                            $('#loading').hide(); Spinner.hide();
+                                            sweetAlert("SUBMIT SUCCESS", "STOCK REQUEST", "success");
+                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
                                         }
                                         else{
                                             return false;
@@ -670,52 +705,23 @@ $(document).on('click','#requestSave', function(){
                                         alert(data.responseText);
                                     }
                                 });
-                            });
-                            scrollReset();
-                            $('#newStockRequest').hide();
-                            $('#loading').show(); Spinner(); Spinner.show();
-                            $.ajax({
-                                type:'post',
-                                url:'/logSave',
-                                headers: {
-                                    'X-CSRF-TOKEN': $("#csrf").val()
-                                },
-                                data:{
-                                    'request_number': $('#request_num').val(),
-                                },
-                                success: function (data){
-                                    if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
-                                        sweetAlert("SUBMIT SUCCESS", "STOCK REQUEST", "success");
-                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
-                                    }
-                                    else{
-                                        return false;
-                                    }
-                                },
-                                error: function (data) {
-                                    if(data.status == 401) {
-                                        window.location.href = '/stockrequest';
-                                    }
-                                    alert(data.responseText);
-                                }
-                            });
+                            }
+                            else{
+                                $('#newStockRequest').hide();
+                                sweetAlert("SUBMIT FAILED", "STOCK REQUEST", "error");
+                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                            }
+                        },
+                        error: function (data){
+                            if(data.status == 401) {
+                                window.location.href = '/stockrequest';
+                            }
+                            alert(data.responseText);
                         }
-                        else{
-                            $('#newStockRequest').hide();
-                            sweetAlert("SUBMIT FAILED", "STOCK REQUEST", "error");
-                            setTimeout(function(){location.href="/stockrequest"}, 2000);
-                        }
-                    },
-                    error: function (data){
-                        if(data.status == 401) {
-                            window.location.href = '/stockrequest';
-                        }
-                        alert(data.responseText);
-                    }
-                });
-            }
-        }); 
+                    });
+                }
+            });
+        }
     }
     else{
         var required_fields = [];

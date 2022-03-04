@@ -1,4 +1,5 @@
 var minDate;
+var maxDate;
 $(function(){
     var dtToday = new Date();
     
@@ -11,8 +12,17 @@ $(function(){
         day = '0' + day.toString();    
     minDate = year + '-' + month + '-' + day;
 
+    $('#needdate').attr('min', minDate);
     $('#schedOn').attr('min', minDate);
 });
+
+const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+function dateDiffInDays(a, b) {
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+    
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
 
 function generatedr() {
     var today = new Date();
@@ -317,11 +327,15 @@ $(document).ready(function(){
                     }
                     $("#btnSubmit").unbind('click').click(function(){
                         if(!$("#schedOn").val()){
-                            swal('Scheduled On is required!','Select within date range starting from today onwards.','error');
+                            swal('Scheduled On is required!','Select within date range from today up to Date Needed.','error');
                             return false;
                         }
                         else if($("#schedOn").val() < minDate){
-                            swal('Minimum Date is today!','Select within date range starting from today onwards.','error');
+                            swal('Minimum Date is today!','Select within date range from today up to Date Needed.','error');
+                            return false;
+                        }
+                        else if($("#schedOn").val() > maxDate){
+                            swal('Exceed Date Needed deadline!','Select within date range from today up to Date Needed.','error');
                             return false;
                         }
                         else{
@@ -423,7 +437,11 @@ $(document).ready(function(){
                 "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. D, YYYY, h:mm A')
             },
             {
-                "targets": [6,7,8,9,10,11,12,13],
+                "targets": [1],
+                "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. D, YYYY')
+            },
+            {
+                "targets": [7,8,9,10,11,12,13,14],
                 "visible": false,
                 "searchable": false
             }
@@ -438,11 +456,44 @@ $(document).ready(function(){
         },
         columns: [
             { data: 'date'},
+            {
+                data: 'needdate',
+                "render": function(data, type, row){
+                    var a = new Date(minDate);
+                    var b = new Date(row.needdate);
+                    var difference = dateDiffInDays(a, b);
+                    if(difference >= 0 && difference <= 3){
+                        return "<span style='color: orange; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: orange;' class='fa fa-exclamation-triangle'></i></span>";
+                    }
+                    else if(difference < 0){
+                        return "<span style='color: red; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                    }
+                    else{
+                        return moment(row.needdate).format('MMM. D, YYYY');
+                    }
+                }
+            },
             { data: 'req_num'},
             { data: 'reference'},
             { data: 'req_by'},
             { data: 'req_type'},
-            { data: 'status'},
+            {
+                data: 'status',
+                "render": function(data, type, row){
+                    var a = new Date(minDate);
+                    var b = new Date(row.needdate);
+                    var difference = dateDiffInDays(a, b);
+                    if(difference >= 0 && difference <= 3){
+                        return "<span style='color: orange; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: orange;' class='fa fa-exclamation-triangle'></i></span>";
+                    }
+                    else if(difference < 0){
+                        return "<span style='color: red; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                    }
+                    else{
+                        return row.status;
+                    }
+                }
+            },
             { data: 'req_type_id'},
             { data: 'status_id'},
             { data: 'prep_by'},
@@ -546,11 +597,7 @@ $(document).ready(function(){
             $('#requestClose').hide();  
             $('#requestSave').hide();    
         }
-    });
-
-    $("#success-alert").fadeTo(3000, 500).slideUp(500, function(){
-        $("#success-alert").slideUp(500);    
-    });               
+    });              
 });
 
 $(document).on('click','#close', function(){
@@ -566,7 +613,7 @@ $(document).on('click','#modalClose', function(){
 });
 
 $(document).on('click','#requestSave', function(){
-    if($('#request_type').val() && $('#client_name').val() && $('#location').val())
+    if($('#needdate').val() && $('#request_type').val() && $('#client_name').val() && $('#location').val())
     {
         swal({
             title: "SUBMIT STOCK REQUEST?",
@@ -585,6 +632,7 @@ $(document).on('click','#requestSave', function(){
                     data:{
                         'request_number': $('#request_num').val(),
                         'requested_by': $('#requested_by').val(),
+                        'needdate': $('#needdate').val(),
                         'request_type': $('#request_type').val(),
                         'client_name': $('#client_name').val(),
                         'location': $('#location').val(),
@@ -670,34 +718,23 @@ $(document).on('click','#requestSave', function(){
         }); 
     }
     else{
-        if(!$('#request_type').val() && !$('#client_name').val() && !$('#location').val()){
-            swal('Fill up all required fields!','*Request Type\n*Client Name\n*Address / Branch','error');
-            return false;
-        }
-        if(!$('#request_type').val() && !$('#client_name').val()){
-            swal('Fill up all required fields!','*Request Type\n*Client Name','error');
-            return false;
-        }
-        if(!$('#client_name').val() && !$('#location').val()){
-            swal('Fill up all required fields!','*Client Name\n*Address / Branch','error');
-            return false;
-        }
-        if(!$('#request_type').val() && !$('#location').val()){
-            swal('Fill up all required fields!','*Request Type\n*Address / Branch','error');
-            return false;
+        var required_fields = [];
+        var required_list;
+        if(!$('#needdate').val()){
+            required_fields.push('*Date Needed');
         }
         if(!$('#request_type').val()){
-            swal('Fill up all required fields!','*Request Type','error');
-            return false;
+            required_fields.push('*Request Type');
         }
         if(!$('#client_name').val()){
-            swal('Fill up all required fields!','*Client Name','error');
-            return false;
+            required_fields.push('*Client Name');
         }
         if(!$('#location').val()){
-            swal('Fill up all required fields!','*Address / Branch','error');
-            return false;
+            required_fields.push('*Address / Branch');
         }
+        required_list = required_fields.join("\r\n");
+        swal('Fill up all required fields!', required_list, 'error');
+        return false;
     }   
 });
 
@@ -800,6 +837,10 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                 var req_date = value.date;
                     req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
                     $('#daterequestdetails').val(req_date);
+                var need_date = value.needdate;
+                    maxDate = need_date;
+                    need_date = moment(need_date).format('dddd, MMMM D, YYYY');
+                    $('#needdate_details').val(need_date);
                 var req_num = value.req_num;
                     $('#request_num_details').val(req_num);
                 var req_by = value.req_by;
@@ -1203,6 +1244,10 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
     var req_date = data.date;
         req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
         $('#daterequestdetails').val(req_date);
+    var need_date = data.needdate;
+        maxDate = need_date;
+        need_date = moment(need_date).format('dddd, MMMM D, YYYY');
+        $('#needdate_details').val(need_date);
     var req_num = data.req_num;
         $('#request_num_details').val(req_num);
     var req_by = data.req_by;

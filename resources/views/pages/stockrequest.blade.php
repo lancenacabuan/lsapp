@@ -15,7 +15,8 @@
         <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">                            
             <tr>
                 <th>DATE REQUESTED</th>
-                <th>STOCK REQUEST NO.</th>
+                <th>DATE NEEDED</th>
+                <th>REQUEST NUMBER</th>
                 <th>REFERENCE SO/PO NO.</th>
                 <th>REQUESTED BY</th>
                 <th>REQUEST TYPE</th>

@@ -408,34 +408,20 @@ $(document).on('click', '#btnSave', function(){
         }); 
     }
     else{
-        if(!$('#needdate').val() && !$('#locfrom').val() && !$('#locto').val()){
-            swal('Fill up all required fields!','*Date Needed\n*FROM Location\n*TO New Location','error');
-            return false;
-        }
-        if(!$('#needdate').val() && !$('#locfrom').val()){
-            swal('Fill up all required fields!','*Date Needed\n*FROM Location','error');
-            return false;
-        }
-        if(!$('#locfrom').val() && !$('#locto').val()){
-            swal('Fill up all required fields!','*FROM Location\n*TO New Location','error');
-            return false;
-        }
-        if(!$('#needdate').val() && !$('#locto').val()){
-            swal('Fill up all required fields!','*Date Needed\n*TO New Location','error');
-            return false;
-        }
+        var required_fields = [];
+        var required_list;
         if(!$('#needdate').val()){
-            swal('Fill up all required fields!','*Date Needed','error');
-            return false;
+            required_fields.push('*Date Needed');
         }
         if(!$('#locfrom').val()){
-            swal('Fill up all required fields!','*FROM Location','error');
-            return false;
+            required_fields.push('*FROM Location');
         }
         if(!$('#locto').val()){
-            swal('Fill up all required fields!','*TO New Location','error');
-            return false;
+            required_fields.push('*TO New Location');
         }
+        required_list = required_fields.join("\r\n");
+        swal('Fill up all required fields!', required_list, 'error');
+        return false;
     }   
 });
 

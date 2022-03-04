@@ -21,6 +21,12 @@
                 <input class="form-control form-control-sm" id="client_name" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field...">
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
+                <input class="form-control form-control-sm"  id="needdate"style="width: 280px; margin-right: 10px;" type="date">
+                <label class="form-control form-control-sm" style="width: 160px;">Address / Branch</label>
+                <input class="form-control form-control-sm" id="location" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field...">
+            </div>
+            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
                 <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;">
                     <option selected disabled>Select Request Type</option>
@@ -28,11 +34,6 @@
                         <option value="{{$req_type->id}}">{{strtoupper($req_type->name)}}</option>
                     @endforeach
                 </select>
-                <label class="form-control form-control-sm" style="width: 160px;">Address / Branch</label>
-                <input class="form-control form-control-sm" id="location" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field...">
-            </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
-                <span style="width:450px;">&nbsp;</span>
                 <label class="form-control form-control-sm" style="width: 160px;">Reference SO/PO No.</label>
                 <input class="form-control form-control-sm" id="reference" style="width: 280px; margin-right: 10px;" type="text">
             </div>

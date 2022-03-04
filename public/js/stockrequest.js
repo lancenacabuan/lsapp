@@ -463,7 +463,7 @@ $(document).ready(function(){
                     var b = new Date(row.needdate);
                     var difference = dateDiffInDays(a, b);
                     if(difference >= 0 && difference <= 3){
-                        return "<span style='color: orange; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: orange;' class='fa fa-exclamation-triangle'></i></span>";
+                        return "<span style='color: blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
                     }
                     else if(difference < 0){
                         return "<span style='color: red; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
@@ -484,7 +484,7 @@ $(document).ready(function(){
                     var b = new Date(row.needdate);
                     var difference = dateDiffInDays(a, b);
                     if(difference >= 0 && difference <= 3){
-                        return "<span style='color: orange; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: orange;' class='fa fa-exclamation-triangle'></i></span>";
+                        return "<span style='color: blue; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
                     }
                     else if(difference < 0){
                         return "<span style='color: red; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";

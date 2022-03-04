@@ -114,15 +114,19 @@ document.addEventListener("contextmenu", function(e){
 
 $(document).ready(function(){
     setTimeout(function(){$('#loading').hide(); Spinner.hide();}, 0);
+
     var req_date = $('#req_date').html();
     req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
     $('#req_date').html(req_date);
+
     var need_date = $('#need_date').html();
     need_date = moment(need_date).format('dddd, MMMM D, YYYY');
     $('#need_date').html(need_date);
+
     var prep_date = $('#prep_date').html();
     prep_date = moment(prep_date).format('dddd, MMMM D, YYYY, h:mm A');
     $('#prep_date').html(prep_date);
+    
     var sched = $('#sched').html();
     sched = moment(sched).format('dddd, MMMM D, YYYY');
     $('#sched').html(sched);

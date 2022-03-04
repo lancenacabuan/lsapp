@@ -460,7 +460,7 @@ class StockTransferController extends Controller
 
     public function logTransReceive(Request $request){
         do{
-            $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, users.name AS reqby, users.email AS email, locfrom, locto, schedule')
+            $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, users.name AS reqby, users.email AS email, needdate, locfrom, locto, schedule')
                 ->where('request_transfer.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'request_transfer.requested_by')
                 ->get();
@@ -515,6 +515,7 @@ class StockTransferController extends Controller
                     'request_number' => $request->request_number,
                     'reqdate' => $request_details->reqdate,
                     'requested_by' => $request_details->reqby,
+                    'needdate' => $request_details->needdate,
                     'locfrom' => $locfrom,
                     'locto' => $locto,
                     'prepared_by' => $trans->prep_by,
@@ -534,6 +535,7 @@ class StockTransferController extends Controller
             'request_number' => $request->request_number,
             'reqdate' => $request_details->reqdate,
             'requested_by' => $request_details->reqby,
+            'needdate' => $request_details->needdate,
             'locfrom' => $locfrom,
             'locto' => $locto,
             'prepared_by' => $trans->prep_by,

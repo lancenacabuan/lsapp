@@ -216,6 +216,9 @@
         </main>
     </div>
     
+    @if(Request::is('/'))
+        <script src="{{ asset('js/home.js') }}"></script>
+    @endif
     @if(Request::is('stocks'))
         <script src="{{ asset('js/stocks.js') }}"></script>   
         <script src="{{ asset('js/item.js') }}"></script>

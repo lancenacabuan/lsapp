@@ -148,6 +148,7 @@ $("#btnProceed").unbind('click').click(function(){
     $("#stockDetailsrequest *").prop('disabled',true);
     $("#btnProceed").hide();
     $("#requestItems").slideDown();
+    $('#schedOn').attr('max', maxDate);
     for(var i=0; i < items.length; i++){
         $.ajax({ 
             type:'get', 

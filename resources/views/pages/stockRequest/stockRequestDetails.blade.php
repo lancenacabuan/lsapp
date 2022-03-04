@@ -36,12 +36,10 @@
                 <label class="form-control form-control-sm" style="width:160px;">Status</label>
                 <input class="form-control form-control-sm" id="status_details" style="width:280px; margin-right: 10px;" type="text" readonly>
             </div>
-            @role('sales|approver - sales') {{---ROLES---}}
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
                 <label name="reason_label" id="reason_label" class="form-control form-control-sm" style="margin-top: -56px; width:160px; display: none;">Disapproval Reason</label>
                 <textarea style="width:280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" class="form-control" rows="4" name="reason_details" id="reason_details" readonly></textarea>
             </div>
-            @endrole
         </div>
         <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>

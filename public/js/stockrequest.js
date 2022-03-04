@@ -24,6 +24,34 @@ function dateDiffInDays(a, b) {
     return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 }
 
+function copyReqNum() {
+    var copyText = document.getElementById("request_num_details");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value);
+    swal({
+        title: copyText.value,
+        text: "Copied to Clipboard!",
+        icon: "success",
+        timer: 2000
+    });
+}
+
+function copyRefNum() {
+    if($("#reference_details").val() != ''){
+        var copyText = document.getElementById("reference_details");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+        swal({
+            title: copyText.value,
+            text: "Copied to Clipboard!",
+            icon: "success",
+            timer: 2000
+        });
+    }
+}
+
 function generatedr() {
     var today = new Date();
     var month = today.getMonth()+1;
@@ -420,11 +448,11 @@ $("#btnProceed").unbind('click').click(function(){
 });
 
 $("#btnBack").on('click', function(){
-    $("#stockDetailsrequest *").prop('disabled',false);
+    $("#stockDetailsrequest *").prop('disabled', false);
     $('#btnSubmit').prop('disabled', true);
     $("#requestItems").hide();
     $("#btnProceed").show();
-    $("#reqContents").empty();      
+    $("#reqContents").empty();
 });
 
 $('table.stock_request').dataTable().fnDestroy();
@@ -2042,34 +2070,6 @@ $(document).on('click', '#btnSavePDF', function(){
         }
     });  
 });
-
-function copyReqNum() {
-    var copyText = document.getElementById("request_num_details");
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(copyText.value);
-    swal({
-        title: copyText.value,
-        text: "Copied to Clipboard!",
-        icon: "success",
-        timer: 2000
-    });
-}
-
-function copyRefNum() {
-    if($("#reference_details").val() != ''){
-        var copyText = document.getElementById("reference_details");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        navigator.clipboard.writeText(copyText.value);
-        swal({
-            title: copyText.value,
-            text: "Copied to Clipboard!",
-            icon: "success",
-            timer: 2000
-        });
-    }
-}
 
 function scrollReset(){
     $('html, body').animate({scrollTop:0}, 10);

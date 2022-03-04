@@ -1,3 +1,29 @@
+var minDate;
+var maxDate;
+$(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();    
+    minDate = year + '-' + month + '-' + day;
+
+    $('#needdate').attr('min', minDate);
+    $('#schedOn').attr('min', minDate);
+});
+
+const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+function dateDiffInDays(a, b) {
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+    
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
 function copyReqNum() {
     var copyText = document.getElementById("reqnum_details");
     copyText.select();
@@ -57,32 +83,6 @@ function generateReqNum() {
 $(".btnNewStockTransfer").on('click', function(){
     generateReqNum();
 });
-
-var minDate;
-var maxDate;
-$(function(){
-    var dtToday = new Date();
-    
-    var month = dtToday.getMonth() + 1;
-    var day = dtToday.getDate();
-    var year = dtToday.getFullYear();
-    if(month < 10)
-        month = '0' + month.toString();
-    if(day < 10)
-        day = '0' + day.toString();    
-    minDate = year + '-' + month + '-' + day;
-
-    $('#needdate').attr('min', minDate);
-    $('#schedOn').attr('min', minDate);
-});
-
-const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-function dateDiffInDays(a, b) {
-    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-    
-    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-}
 
 $('#locfrom').on('change', function(){
     $("#item").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
@@ -298,8 +298,8 @@ $("#tblNewStockTransfer").on('click', '.delete-row', function(){
     $(this).closest("tr").remove();
     if ($('#tblNewStockTransfer tbody').children().length==0) {
         $('#tblNewStockTransfer').hide();
-        $('#divNewStockTransfer').removeClass();   
-        $('#btnClose').hide();  
+        $('#divNewStockTransfer').removeClass();
+        $('#btnClose').hide();
         $('#btnSave').hide();
         $('#locfrom').prop('disabled', false);
     }
@@ -432,15 +432,15 @@ $(document).on('click', '#btnSave', function(){
 });
 
 $(document).on('click', '#close', function(){
-    window.location.href = '/stocktransfer'; 
+    window.location.href = '/stocktransfer';
 });
 
 $(document).on('click', '#btnClose', function(){
-    window.location.href = '/stocktransfer'; 
+    window.location.href = '/stocktransfer';
 });
 
 $(document).on('click', '#modalClose', function(){
-    window.location.href = '/stocktransfer'; 
+    window.location.href = '/stocktransfer';
 });
 
 $('table.stocktransferTable').dataTable().fnDestroy();
@@ -1406,11 +1406,11 @@ $("#btnProceed").unbind('click').click(function(){
 });
 
 $("#btnBack").on('click', function(){
-    $("#transferDetails *").prop('disabled',false);
+    $("#transferDetails *").prop('disabled', false);
     $('#btnSubmit').prop('disabled', true);
     $("#requestItems").hide();
     $("#btnProceed").show();
-    $("#reqContents").empty();      
+    $("#reqContents").empty();
 });
 
 $(document).on('click', '#btnTransit', function(){

@@ -474,17 +474,22 @@ $('table.stocktransferTable').DataTable({
         {
             data: 'needdate',
             "render": function(data, type, row){
-                var a = new Date(minDate);
-                var b = new Date(row.needdate);
-                var difference = dateDiffInDays(a, b);
-                if(difference >= 0 && difference <= 3){
-                    return "<span style='color: blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
-                }
-                else if(difference < 0){
-                    return "<span style='color: red; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                if(row.status_id == '7' || row.status_id == '8'){
+                    return moment(row.needdate).format('MMM. D, YYYY');
                 }
                 else{
-                    return moment(row.needdate).format('MMM. D, YYYY');
+                    var a = new Date(minDate);
+                    var b = new Date(row.needdate);
+                    var difference = dateDiffInDays(a, b);
+                    if(difference >= 0 && difference <= 3){
+                        return "<span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
+                    }
+                    else if(difference < 0){
+                        return "<span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                    }
+                    else{
+                        return moment(row.needdate).format('MMM. D, YYYY');
+                    }
                 }
             }
         },
@@ -495,17 +500,23 @@ $('table.stocktransferTable').DataTable({
         {
             data: 'status',
             "render": function(data, type, row){
-                var a = new Date(minDate);
-                var b = new Date(row.needdate);
-                var difference = dateDiffInDays(a, b);
-                if(difference >= 0 && difference <= 3){
-                    return "<span style='color: blue; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
+                if(row.status_id == '6'){
+                    return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(difference < 0){
-                    return "<span style='color: red; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                else if(row.status_id == '1'){
+                    return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '2' || row.status_id == '5'){
+                    return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '3' || row.status_id == '4'){
+                    return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '8'){
+                    return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else{
-                    return row.status;
+                    return "<span style='color: Gray; font-weight: bold;'>"+row.status+"</span>";
                 }
             }
         },

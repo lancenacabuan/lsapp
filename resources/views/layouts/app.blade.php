@@ -36,7 +36,7 @@
     <style>
         #loading {
             display: none;
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             z-index: 100;
@@ -45,6 +45,7 @@
             background-color: rgba(192, 192, 192, 0.5);
             background-repeat: no-repeat;
             background-position: center;
+            text-align: center;
             user-select: none;
             cursor: wait;
         }
@@ -174,14 +175,11 @@
 </head>
 <body>
     <div id="loading">
-        <strong style="color: #0d1a80; font-size: 40px;">
-            <center style="margin-left: 42vw; position: fixed; line-height: 125vh;">
-                Please Wait...
-            </center>
+        <strong style="color: #0d1a80; font-size: 40px; line-height: 125vh;">
+            Please Wait...
         </strong>
     </div>
-    @if (Auth::guest())
-    @else
+    @if (!Auth::guest())
         @include('inc.header')
         @include('inc.navbar')
     @endif

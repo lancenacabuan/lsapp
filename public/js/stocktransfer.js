@@ -368,6 +368,7 @@ $(document).on('click', '#btnSave', function(){
                                 });
                                 scrollReset();
                                 $('#newStockTransfer').hide();
+                                $('#newStockTransfer').modal('dispose');
                                 $('#loading').show(); Spinner(); Spinner.show();
                                 $.ajax({
                                     type:'post',
@@ -1041,7 +1042,9 @@ $(document).on('click', '#btnReason', function(){
                         if(data == 'true'){
                             scrollReset();
                             $('#reasonModal').modal('hide');
+                            $('#reasonModal').modal('dispose');
                             $('#detailsStockTransfer').hide();
+                            $('#detailsStockTransfer').modal('dispose');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 type:'get',
@@ -1487,6 +1490,7 @@ $(document).on('click', '#btnReceive', function(){
                     if(data == 'true'){
                         scrollReset();
                         $('#detailsStockTransfer').hide();
+                        $('#detailsStockTransfer').modal('dispose');
                         $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
                             type:'get',

@@ -492,6 +492,7 @@ $('#btnSaveLocation').on('click', function() {
                         if(data.result == 'true'){
                             scrollReset();
                             $('#newLocation').hide();
+                            $('#newLocation').modal('dispose');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 url: "/logNewLocation",
@@ -627,6 +628,7 @@ $('#btnUpdateLocation').on('click', function() {
                         if(data.result == 'request'){
                             scrollReset();
                             $('#detailsLocation').hide();
+                            $('#detailsLocation').modal('dispose');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 url: "/requestStatusChange",

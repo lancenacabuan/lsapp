@@ -12,7 +12,7 @@ function Spinner(){
 	c.setAttribute('stroke','#0d1a80');
 	c.setAttribute('fill','transparent');
 	Spinner.element.appendChild(c);
-	Spinner.element.style.cssText='cursor:wait;z-index:200;position:absolute;left:calc(50% - 50px);top:calc(50% - 50px)';
+	Spinner.element.style.cssText='cursor: wait; user-select: none; z-index: 200; position: absolute; left: calc(50% - 50px); top: calc(50% - 50px)';
 	document.body.appendChild(Spinner.element)
 }
 Spinner.id=null;

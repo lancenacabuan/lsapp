@@ -555,7 +555,7 @@ $('#locationTable tbody').on('click', 'tr', function () {
     });
     var table =  $('table.locationTable').DataTable(); 
     var data = table.row(this).data();
-    if(data.status.includes('CHANGE REQUESTED')){
+    if(data.status.includes('CHANGE REQUESTED') || data.status.includes('PENDING')){
         return false;
     }
     else{

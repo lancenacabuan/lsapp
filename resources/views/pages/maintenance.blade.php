@@ -66,7 +66,7 @@
         NEW ITEM</button>
     <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" style="display: none;">
         NEW CATEGORY</button>
-    <button class="btn btn-primary bp btnNewLocation" type="button" data-toggle="modal" data-target="#newLocation" data-backdrop="static" style="display: none;">
+    <button class="btn btn-primary bp btnNewLocation" type="button" style="display: none;">
         REQUEST NEW LOCATION</button>
     @endrole
 </div>

@@ -81,6 +81,13 @@ function generateReqNum() {
 }
 
 $(".btnNewStockTransfer").on('click', function(){
+    $('#newStockTransfer').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    $('.modal-body').html();
+    $('#newStockTransfer').modal('show');
     generateReqNum();
 });
 

@@ -1,13 +1,12 @@
 @extends('layouts.app')
 @section('content')
 <div class="panel-body table-responsive">
-    <div class="animate fadeInDown two">
-        @if(auth()->user()->hasanyRole('sales'))
-            <div class="col-md-12 mb-4">
-                <button id="newstockreq" class="btn btn-primary bp newstockreq" data-toggle="modal" data-target="#newStockRequest" data-backdrop="static">
-                NEW STOCK REQUEST</button>
-            </div>
-        @endif
+    @if(auth()->user()->hasanyRole('sales'))
+        <div class="col-md-12 mb-4">
+            <button id="newstockreq" class="btn btn-primary bp newstockreq" type="button">
+            NEW STOCK REQUEST</button>
+        </div>
+    @endif
     <div class="container-fluid"  id="stockTableMain">
     <input type="hidden" id="current_user" value="{{auth()->user()->id}}">
     <input type="hidden" id="current_role" value="{{auth()->user()->getRoleNames()}}">
@@ -34,7 +33,6 @@
         <tbody>
         </tbody>
     </table>
-    </div>
     </div>
 </div>
 @include('pages.stockRequest.newStockRequest')

@@ -467,6 +467,16 @@ $('#btnUpdateCategory').on('click', function() {
     }
 });
 
+$(".btnNewLocation").on('click', function(){
+    $('#newLocation').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    $('.modal-body').html();
+    $('#newLocation').modal('show');
+});
+
 $('#btnSaveLocation').on('click', function() {
     var location = $('#location').val();
     if(location != ""){

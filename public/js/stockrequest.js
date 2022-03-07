@@ -96,6 +96,13 @@ function generatedr() {
 }
 
 $(".newstockreq").on('click', function(){
+    $('#newStockRequest').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    $('.modal-body').html();
+    $('#newStockRequest').modal('show');
     generatedr();
 });
 

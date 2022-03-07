@@ -2,7 +2,7 @@
 @section('content')
 <div class="table-responsive">
     @role('admin|encoder')
-    <button class="btn btn-primary ml-auto bp btnNewStockTransfer" type="button" data-toggle="modal" data-target="#newStockTransfer" data-backdrop="static">
+    <button class="btn btn-primary ml-auto bp btnNewStockTransfer" type="button">
         NEW STOCK TRANSFER</button>
     <br><br>
     @endrole

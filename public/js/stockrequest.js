@@ -468,11 +468,11 @@ $('#loading').show(); Spinner(); Spinner.show();
 $('table.stock_request').DataTable({ 
     columnDefs: [
         {
-            "targets": [0],
-            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. D, YYYY, h:mm A')
+            "targets": [1],
+            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. D, YYYY')
         },
         {
-            "targets": [1],
+            "targets": [0],
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. D, YYYY')
         },
         {
@@ -490,7 +490,6 @@ $('table.stock_request').DataTable({
         url: '/request_data',
     },
     columns: [
-        { data: 'date'},
         {
             data: 'needdate',
             "render": function(data, type, row){
@@ -513,6 +512,7 @@ $('table.stock_request').DataTable({
                 }
             }
         },
+        { data: 'date'},
         { data: 'req_num'},
         { data: 'reference'},
         { data: 'req_by'},

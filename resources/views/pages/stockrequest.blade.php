@@ -13,8 +13,8 @@
     <table id="stockreqDetails" class="table stock_request table-hover display" style="zoom: 80%; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">                            
             <tr>
-                <th>DATE REQUESTED</th>
                 <th>DATE NEEDED</th>
+                <th>DATE REQUESTED</th>
                 <th>REQUEST NUMBER</th>
                 <th>REFERENCE SO/PO NO.</th>
                 <th>REQUESTED BY</th>

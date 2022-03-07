@@ -725,7 +725,3 @@ $('#btnUpdateLocation').on('click', function() {
         });
     }
 });
-
-function scrollReset(){
-    $('html, body').animate({scrollTop:0}, 10);
-}

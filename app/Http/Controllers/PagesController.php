@@ -197,6 +197,8 @@ class PagesController extends Controller
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$request->id.";
         $userlogs->save();
+
+        return response('true');
     }
 
     public function users_update(Request $request){

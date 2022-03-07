@@ -33,6 +33,11 @@
     <script src="js/inc/chosen.jquery.js"></script>
     <script src="js/inc/select2.js"></script>
     <script src="js/inc/loading-spinner.js"></script>
+    <script>
+        function scrollReset(){
+            $('html, body').animate({scrollTop:0}, 10);
+        }
+    </script>
     <style>
         #loading {
             display: none;

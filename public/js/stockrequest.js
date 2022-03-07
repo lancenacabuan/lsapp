@@ -2086,7 +2086,3 @@ $(document).on('click', '#btnSavePDF', function(){
         }
     });  
 });
-
-function scrollReset(){
-    $('html, body').animate({scrollTop:0}, 10);
-}

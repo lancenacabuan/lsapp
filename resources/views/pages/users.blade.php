@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">   
-    <button class="btn btn-primary bp" type="submit" data-target="#addUser" data-toggle="modal" style="font-weight:bold;" data-backdrop="static" data-keyboard="false">ADD USER</button>
+    <button class="btn btn-primary bp" type="button" id="btnAddUser">ADD USER</button>
 </div>
 <div class="panel-body table-responsive "><br>
     <div class="animate fadeInDown two">

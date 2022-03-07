@@ -2,7 +2,7 @@
     <div class="modal fade in" id="detailsCategory">
     <div class="modal-dialog modal-m">
     <div class="modal-content">
-        <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">CATEGORY DETAILS</h6>    
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>

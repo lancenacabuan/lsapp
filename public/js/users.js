@@ -44,7 +44,7 @@ $(document).ready(function(){
         var email = $('#email').val();
         var role = $('#role').val();
 
-        if(name != "" && email != "" && $('#role').find('option:selected').text() != "Select Role"){
+        if(name != "" && email != "" && $('#role').find('option:selected').text() != "Select User Level"){
             swal({
                 title: "ADD NEW USER?",
                 text: "You are about to ADD a new user!",
@@ -173,7 +173,7 @@ $(document).ready(function(){
         var role2 = $('#role2').val();
         var status2 = $('#status2').val();
 
-        if(name1 == "" || email1 == "" || $('#role1').find('option:selected').text() == "Select Role"){
+        if(name1 == "" || email1 == "" || $('#role1').find('option:selected').text() == "Select User Level"){
             swal('REQUIRED','Please fill all the fields!','error');
             return false;
         }

@@ -2,7 +2,7 @@
     <div class="modal fade in" id="stockRequestDetails">
     <div class="modal-dialog  modal-xl" >
     <div class="modal-content">
-        <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">STOCK REQUEST DETAILS</h6>            
             <button type="button" class="close" id='modalClose' data-bs-dismiss="modal">&times;</button>
         </div>
@@ -258,7 +258,7 @@
 <div class="modal fade in" id="editSerialModal">
     <div class="modal-dialog  modal-sm" >
     <div class="modal-content">
-        <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">EDIT ITEM SERIAL</h6>            
             <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         </div>
@@ -277,7 +277,7 @@
 <div class="modal fade in" id="reasonModal" style="margin-top: 100px;">
     <div class="modal-dialog  modal-sm" >
     <div class="modal-content">
-        <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REASON FOR DISAPPROVAL</h6>            
             <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         </div>

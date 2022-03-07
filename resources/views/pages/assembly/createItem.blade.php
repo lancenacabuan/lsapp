@@ -2,7 +2,7 @@
     <div class="modal fade in" id="createItem">
     <div class="modal-dialog  modal-xl">
     <div class="modal-content">
-        <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">CREATE ITEM</h6>    
             <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
         </div>
@@ -24,7 +24,7 @@
                 <input class="form-control form-control-sm" style="width:730px; margin-right: 10px;" name="item_description" id="item_description" required></textarea>
             </div>
         </div>
-        <div class="modal-header text-center" style="background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">PARTS DETAILS</h6>
         </div>        
         <form class="mt-2 mb-2">

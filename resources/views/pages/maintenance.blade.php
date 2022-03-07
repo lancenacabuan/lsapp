@@ -60,7 +60,7 @@
             </tr>
         </thead>
     </table>
-    @role('admin')
+    @role('admin') {{---ROLES---}}
     <hr>
     <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" style="display: none;">
         NEW ITEM</button>

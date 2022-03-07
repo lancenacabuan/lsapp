@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="table-responsive">
-    @role('admin|encoder')
+    @role('admin|encoder') {{---ROLES---}}
     <button class="btn btn-primary ml-auto bp btnNewStockTransfer" type="button">
         NEW STOCK TRANSFER</button>
     <br><br>

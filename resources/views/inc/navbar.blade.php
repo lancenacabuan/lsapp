@@ -28,7 +28,7 @@
                 {{-- <li class="nav-item">
                     <a class="nav-link n {{ Request::is('pullout') ? 'active' : '' }}" href="{{ url('/pullout') }}">PULLOUT</a>
                 </li> --}}
-                @role('admin')
+                @role('admin') {{---ROLES---}}
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('maintenance*') ? 'active' : '' }}" href="{{ url('/maintenance') }}">MAINTENANCE</a>
                 </li>

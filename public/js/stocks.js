@@ -1,7 +1,6 @@
-var CategoryTable, location, ItemSerialTable, ItemTable;
+var CategoryTable, ItemSerialTable, ItemTable, location, categoryID, categoryName;
 
-function isNumberKey(evt)
-{
+function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode != 45  && charCode > 31 && (charCode < 48 || charCode > 57))
         return false;
@@ -9,13 +8,15 @@ function isNumberKey(evt)
     return true;
 }
 
-function category() {
+function category(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
+    $('table.ItemSerialTable').dataTable().fnDestroy();
     $('#CategoryTableDiv').show();
-    $('#backBtn').hide();
-    $('#ItemSerialTableDiv').hide();
     $('#ItemTableDiv').hide();
+    $('#ItemSerialTableDiv').hide();
+    $('#btnBack').hide();
+    $('#backBtn').hide();
     $('#loading').show(); Spinner(); Spinner.show();
     CategoryTable = 
         $('table.CategoryTable').DataTable({ 
@@ -35,20 +36,25 @@ function category() {
             }
         });
 }
-$(document).ready(function () {   
+$(document).ready(function(){   
     category();
     $('#serialdiv').hide();
     $('#qtydiv').hide();
 });
 
-$(document).on('click', '#CategoryTable tbody tr', function () {
+$(document).on('click', '#CategoryTable tbody tr', function(){
     var trdata = CategoryTable.row(this).data();
-    $('#CategoryTableDiv').hide();
-    $('#ItemSerialTableDiv').hide();
-    $('#ItemTableDiv').show();
-    $('#itemCat').text(decodeHtml(trdata.Category));
-    $('#backBtn').show();
+    categoryID = trdata.id;
+    categoryName = decodeHtml(trdata.Category);
+    $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
+    $('table.ItemSerialTable').dataTable().fnDestroy();
+    $('#CategoryTableDiv').hide();
+    $('#ItemTableDiv').show();
+    $('#ItemSerialTableDiv').hide();
+    $('#itemCat').text(decodeHtml(trdata.Category));
+    $('#btnBack').hide();
+    $('#backBtn').show();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({ 
@@ -74,14 +80,52 @@ $(document).on('click', '#CategoryTable tbody tr', function () {
         });
 });
 
-$(document).on('click', '#ItemTable tbody tr', function () {
-    var trdata = ItemTable.row(this).data();
-    $('#CategoryTableDiv').hide();
-    $('#ItemSerialTableDiv').show();
-    $('#ItemTableDiv').hide();
-    $('#itemName').text(decodeHtml(trdata.Item));
-    $('#backBtn').show();
+$(document).on('click', '#btnBack', function(){
+    $('table.CategoryTable').dataTable().fnDestroy();
+    $('table.ItemTable').dataTable().fnDestroy();
     $('table.ItemSerialTable').dataTable().fnDestroy();
+    $('#CategoryTableDiv').hide();
+    $('#ItemTableDiv').show();
+    $('#ItemSerialTableDiv').hide();
+    $('#itemCat').text(categoryName);
+    $('#btnBack').hide();
+    $('#backBtn').show();
+    $('#loading').show(); Spinner(); Spinner.show();
+    ItemTable = 
+        $('table.ItemTable').DataTable({ 
+            ajax: {
+                url: 'item_data',
+                data:{
+                    CategoryId: categoryID
+                }
+            },
+            columns: [
+                { data: 'Item'},
+                { data: 'A1'},
+                { data: 'A2'},
+                { data: 'A3'},
+                { data: 'A4'},
+                { data: 'Balintawak'},
+                { data: 'Malabon'},
+                { data: 'Total_stocks'}
+            ],
+            initComplete: function (){
+                $('#loading').hide(); Spinner.hide();
+            }
+        });
+});
+
+$(document).on('click', '#ItemTable tbody tr', function(){
+    var trdata = ItemTable.row(this).data();
+    $('table.CategoryTable').dataTable().fnDestroy();
+    $('table.ItemTable').dataTable().fnDestroy();
+    $('table.ItemSerialTable').dataTable().fnDestroy();
+    $('#CategoryTableDiv').hide();
+    $('#ItemTableDiv').hide();
+    $('#ItemSerialTableDiv').show();
+    $('#itemName').text(decodeHtml(trdata.Item));
+    $('#btnBack').show();
+    $('#backBtn').hide();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemSerialTable = 
         $('table.ItemSerialTable').DataTable({ 
@@ -104,7 +148,7 @@ $(document).on('click', '#ItemTable tbody tr', function () {
         });
 });
     
-$(document).on('click', '#butsave', function() {
+$(document).on('click', '#butsave', function(){
     var AddStockForm = $('#AddStockForm');
     var category = $('#category').val();
     var item = $('#item').val();

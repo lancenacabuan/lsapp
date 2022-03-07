@@ -473,7 +473,7 @@ $('table.stock_request').DataTable({
         },
         {
             "targets": [0],
-            "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. D, YYYY')
+            "orderable": false
         },
         {
             "targets": [7,8,9,10,11,12,13,14],

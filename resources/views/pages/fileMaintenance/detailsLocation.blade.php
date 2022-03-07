@@ -22,8 +22,7 @@
                     </div>
                 </label>
             </div>
-            <button type="button" id="btnUpdateLocation" class="btn btn-primary float-right bp" style="margin-right: 10px; margin-top: 10px;">
-            UPDATE</button>
+            <button type="button" id="btnUpdateLocation" class="btn btn-primary float-right bp" style="margin-right: 10px; margin-top: 10px;">UPDATE</button>
         </div>
     </div>
     </div>

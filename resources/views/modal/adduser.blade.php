@@ -38,8 +38,7 @@
                 </select>
             </div> 
             <div class="col-md-12 mb-4">
-                <button type="submit" id="usersave" class="btn btn-primary float-right bp">
-                SAVE</button>  
+                <button type="submit" id="usersave" class="btn btn-primary float-right bp">SAVE</button>  
             </div>    
         </div>
     </div>

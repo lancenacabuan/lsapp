@@ -14,8 +14,7 @@
                 <label class="form-control form-control-sm" style="width:120px;">Category Name</label>
                 <input class="form-control form-control-sm" id="category_details" style="width: 335px; margin-right: 10px;" type="text" maxlength="255">
             </div>
-            <button type="button" id="btnUpdateCategory" class="btn btn-primary float-right bp" style="margin-right: 10px; margin-top: 10px;">
-            UPDATE</button>
+            <button type="button" id="btnUpdateCategory" class="btn btn-primary float-right bp" style="margin-right: 10px; margin-top: 10px;">UPDATE</button>
         </div>
     </div>
     </div>

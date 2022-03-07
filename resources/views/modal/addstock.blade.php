@@ -65,8 +65,7 @@
                 </div> 
             </form>
             <div class="col-md-12 mb-4">
-                <button type="submit" id="butsave" class="btn btn-primary submit float-right bp">
-                SUBMIT</button>  
+                <button type="submit" id="butsave" class="btn btn-primary float-right bp">SUBMIT</button>  
             </div>
         </div>
     </div>

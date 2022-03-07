@@ -31,8 +31,7 @@
                 </select>
             </div>
             <br>
-            <button type="button" id="btnSaveItem" class="btn btn-primary float-right bp" style="margin-right: 10px; margin-top: 10px;">
-            SUBMIT</button>
+            <button type="button" id="btnSaveItem" class="btn btn-primary float-right bp" style="margin-right: 10px; margin-top: 10px;">SUBMIT</button>
         </div>
     </div>
     </div>

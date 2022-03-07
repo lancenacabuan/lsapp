@@ -47,8 +47,7 @@
                 </label>
             </div>
             <div class="col-md-12 mb-4">
-                <button type="submit" id="userupdate" class="btn btn-primary float-right bp">
-                UPDATE</button>  
+                <button type="submit" id="userupdate" class="btn btn-primary float-right bp">UPDATE</button>  
             </div>    
         </div>
     </div>

@@ -85,8 +85,7 @@
             <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnProceed" value="PROCEED" disabled>
             @endrole
             @role('admin|encoder')  {{---ROLES---}}
-            <button type="button" id="btnDelete" class="btn btn-dark mr-auto bp">
-                DELETE</button>
+            <button type="button" id="btnDelete" class="btn btn-dark mr-auto bp">DELETE</button>
             @endrole
             <br>
             </div>
@@ -143,8 +142,7 @@
             @role('admin|encoder')           
             <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnTransit" class="button" value="FOR RECEIVING">
             @endrole
-            <button type="button" class="btnPrint btn btn-primary mr-auto bp">
-                PRINT PREVIEW</button>
+            <button type="button" class="btnPrint btn btn-primary mr-auto bp">PRINT PREVIEW</button>
             <br><br>
         </div>
         </div>
@@ -176,11 +174,9 @@
             <br>
             <hr>
             @role('admin|encoder')  {{---ROLES---}}
-            <button type="button" id="btnReceive" class="btn btn-primary mr-auto float-right bp">
-                RECEIVE</button>
+            <button type="button" id="btnReceive" class="btn btn-primary mr-auto float-right bp">RECEIVE</button>
             @endrole
-            <button type="button" class="btnPrint btn btn-primary mr-auto bp">
-                PRINT PREVIEW</button>
+            <button type="button" class="btnPrint btn btn-primary mr-auto bp">PRINT PREVIEW</button>
             <br><br>
         </div>
         </div>
@@ -199,8 +195,7 @@
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100"></textarea><br>
             <span id='limit' style="font-size: 12px;"></span>
-            <button type="button" id="btnReason" class="btn btn-primary mr-auto float-right bp">
-                OK</button>
+            <button type="button" id="btnReason" class="btn btn-primary mr-auto float-right bp">OK</button>
         </div>
     </div>
     </div>

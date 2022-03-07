@@ -36,8 +36,7 @@
                 </select>
             </div>
             <br>
-            <button type="button" id="btnUpdateItem" class="btn btn-primary float-right bp" style="margin-right: 10px; margin-top: 10px;">
-            UPDATE</button>
+            <button type="button" id="btnUpdateItem" class="btn btn-primary float-right bp" style="margin-right: 10px; margin-top: 10px;">UPDATE</button>
         </div>
     </div>
     </div>

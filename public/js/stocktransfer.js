@@ -1048,7 +1048,7 @@ $(document).on('click', '#btnReason', function(){
                     success: function (data){
                         if(data == 'true'){
                             scrollReset();
-                            $('#reasonModal').modal('hide');
+                            $('#reasonModal').hide();
                             $('#reasonModal').modal('dispose');
                             $('#detailsStockTransfer').hide();
                             $('#detailsStockTransfer').modal('dispose');
@@ -1082,7 +1082,7 @@ $(document).on('click', '#btnReason', function(){
                             });
                         }
                         else{
-                            $('#reasonModal').modal('hide');
+                            $('#reasonModal').hide();
                             $('#detailsStockTransfer').hide();
                             sweetAlert("DISAPPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
                             setTimeout(function(){location.href="/stocktransfer"}, 2000);

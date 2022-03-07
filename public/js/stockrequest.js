@@ -1757,7 +1757,7 @@ $(document).on("click", "#btnEdit", function() {
         },
         success: function(data) {
             if(data == 'false'){
-                $('#editSerialModal').modal('hide');
+                $('#editSerialModal').hide();
                 swal({
                     title: "EDIT FAILED",
                     text: "ITEM SERIAL",
@@ -1767,7 +1767,7 @@ $(document).on("click", "#btnEdit", function() {
                 $('table.schedItems').DataTable().ajax.reload();
             }
             else{
-                $('#editSerialModal').modal('hide');
+                $('#editSerialModal').hide();
                 swal({
                     title: "EDIT SUCCESS",
                     text: "ITEM SERIAL",
@@ -1899,7 +1899,7 @@ $(document).on('click', '#btnReason', function(){
                     success: function (data){
                         if(data == 'true'){
                             scrollReset();
-                            $('#reasonModal').modal('hide');
+                            $('#reasonModal').hide();
                             $('#reasonModal').modal('dispose');
                             $('#stockRequestDetails').hide();
                             $('#stockRequestDetails').modal('dispose');
@@ -1933,7 +1933,7 @@ $(document).on('click', '#btnReason', function(){
                             });
                         }
                         else{
-                            $('#reasonModal').modal('hide');
+                            $('#reasonModal').hide();
                             $('#stockRequestDetails').hide();
                             sweetAlert("DISAPPROVE FAILED", "STOCK REQUEST", "error");
                             setTimeout(function(){location.href="/stockrequest"}, 2000);

@@ -54,10 +54,10 @@
             @endif
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav mr-right">
-                <a id="impScale" class="nav-link" href="{{ route('logout') }}" style="color:white; font-size:16px; margin-right: -100px;"
+                <a id="impScale" class="nav-link" href="{{ route('logout') }}" style="color: white; font-size: 16px;"
                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
-                    <b>LOGOUT</b>&nbsp;&nbsp;<i class="fa fa-sign-out pr-5" aria-hidden="true"></i>
+                    <b>LOGOUT</b>&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i>
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf

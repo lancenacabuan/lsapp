@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container d-flex">
+<div class="container-fluid d-flex">
     @role('admin|encoder') {{---ROLES---}}
     <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
     <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
@@ -10,7 +10,7 @@
     @endrole
 </div>
 <br>
-<div class="container">
+<div class="container-fluid">
     <div id="CategoryTableDiv">
         <table id="CategoryTable" class="table-hover table CategoryTable display" style="width: 100%; font-size: 90%; cursor: pointer;">
             <thead style="background-color: #0d1a80 !important; color: white !important;">                            

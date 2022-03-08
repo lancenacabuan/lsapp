@@ -188,7 +188,7 @@
         @include('inc.header')
         @include('inc.navbar')
     @endif
-    <div id="app" class="container">
+    <div id="app" class="container-fluid">
         <main class="py-4">
             @yield('content')
         </main>

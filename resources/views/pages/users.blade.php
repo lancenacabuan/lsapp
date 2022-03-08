@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">   
+<div class="container-fluid">   
     <button class="btn btn-primary bp" type="button" id="btnAddUser">ADD USER</button>
 </div>
 <div class="panel-body table-responsive "><br>

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
-<div class="container">
-    <a href="/stocktransfer?request_number={{$list->req_num}}" class="btn btn-primary mr-auto float-right bp">BACK</a>
-    <button id="btnPrint" type="button" class="btn btn-primary mr-auto bp">PRINT</button>
-    <button id="btnSavePDF" type="button" class="btn btn-primary mr-auto bp" style="margin-right: 10px;">SAVE AS PDF</button>
+<div class="container-fluid">
+    <button id="btnPrint" type="button" class="btn btn-primary bp">PRINT</button>
+    <button id="btnSavePDF" type="button" class="btn btn-primary bp">SAVE AS PDF</button>
+    <a href="/stocktransfer?request_number={{$list->req_num}}" class="btn btn-primary float-right bp">BACK</a>
 </div>
 <br/>
 <div id="printPage" class="panel-body table-responsive" style="font-size: 12px; width: 100%;">

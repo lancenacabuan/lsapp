@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <center>
-<div class="container">
+<div class="container-fluid">
 <div class="card" style="width: 700px;">   
     <div class="card-body" style="background-color:white;color:black;">
     <h2>Change Password</h2>

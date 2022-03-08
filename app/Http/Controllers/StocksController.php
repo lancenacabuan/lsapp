@@ -6,11 +6,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Models\User;
 use App\Models\Stock;
-use App\Models\Item;
 use App\Models\Category;
+use App\Models\Item;
 use App\Models\Location;
+use App\Models\User;
+use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
 
 class StocksController extends Controller
@@ -274,31 +275,46 @@ class StocksController extends Controller
     }
      
     public function store(Request $request){
-        if ($request->serial) {
-            $stocks = new Stock;
-            $stocks->item_id = $request->item;
-            $stocks->category_id = $request->category;
-            $stocks->user_id =auth()->user()->id;
-            $stocks->location_id =$request->location;
-            $stocks->status = 'in';
-            $stocks->serial = $request->serial;
-            $stocks->rack = $request->rack;
-            $stocks->row = $request->row;
-            $save= $stocks->save();             
-        }
-        else if($request->qty > 0){
-            for ($i=0; $i < $request->qty; $i++) { 
+        if($request->serial){
+            do{
                 $stocks = new Stock;
                 $stocks->item_id = $request->item;
                 $stocks->category_id = $request->category;
                 $stocks->user_id =auth()->user()->id;
                 $stocks->location_id =$request->location;
                 $stocks->status = 'in';
-                $stocks->serial = 'N/A';
+                $stocks->serial = $request->serial;
                 $stocks->rack = $request->rack;
                 $stocks->row = $request->row;
-                $save= $stocks->save(); 
+                $save = $stocks->save();
             }
+            while(!$save);
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "ADDED STOCK: User successfully added 1-$request->uom/s Stock of '$request->item_name' to $request->location_name with Serial '$request->serial'.";
+            $userlogs->save();
+        }
+        else if($request->qty > 0){
+            for($i=0; $i < $request->qty; $i++){
+                do{
+                    $stocks = new Stock;
+                    $stocks->item_id = $request->item;
+                    $stocks->category_id = $request->category;
+                    $stocks->user_id =auth()->user()->id;
+                    $stocks->location_id =$request->location;
+                    $stocks->status = 'in';
+                    $stocks->serial = 'N/A';
+                    $stocks->rack = $request->rack;
+                    $stocks->row = $request->row;
+                    $save = $stocks->save();
+                }
+                while(!$save);
+            }
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "ADDED STOCK: User successfully added $request->qty-$request->uom/s Stock of '$request->item_name' to $request->location_name.";
+            $userlogs->save();
         }
         return response()->json($stocks);
     }
@@ -312,7 +328,6 @@ class StocksController extends Controller
             $stocks->location_id = $request->locationto;
             $stocks->save();
         }
-        
         return response()->json($stocks);
     }
 }

@@ -156,7 +156,11 @@ $(document).on('click', '#butsave', function(){
     var location = $('#location').val();
     var rack = $('#rack').val();
     var row = $('#row').val();
+    var uom = $('#uom').val();
+    var qty = $('#qty').val();
     var serial = $('#serial').val();
+    var item_name = $("#item option:selected").text();
+    var location_name = $("#location option:selected").text();
     if(!$('#rack').val()){
         rack = 'N/A';
     }
@@ -166,7 +170,6 @@ $(document).on('click', '#butsave', function(){
     if(!$('#serial').val()){
         serial = 'N/A';
     }
-    var qty = $('#qty').val();
     if($('#serial').is(':visible')){
         if(category && item && location){
             $.ajax({
@@ -180,9 +183,12 @@ $(document).on('click', '#butsave', function(){
                     category: category,
                     item: item,
                     location: location,
+                    uom: uom,
                     serial: serial,
                     rack: rack,
-                    row: row
+                    row: row,
+                    item_name: item_name,
+                    location_name: location_name
                 },
                 success: function(dataResult){                      
                     $('#addStock').hide();
@@ -217,9 +223,12 @@ $(document).on('click', '#butsave', function(){
                         category: category,
                         item: item,
                         location: location,
+                        uom: uom,
                         qty: qty,
                         rack: rack,
-                        row: row
+                        row: row,
+                        item_name: item_name,
+                        location_name: location_name
                     },
                     success: function(dataResult){                      
                         $('#addStock').hide();

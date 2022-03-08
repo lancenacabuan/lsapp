@@ -51,18 +51,24 @@
                     </div>
                     <input type="text" id="row" name="row" placeholder="Enter Row No. (Optional)" style="width: 615px;" autocomplete="off">
                 </div>
-                <div class="input-group mb-3" id="serialdiv">
+                <div class="input-group mb-3" id="uomdiv">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" style="width: 140px;">Serial</label>
+                        <label class="input-group-text" style="width: 140px;">UOM</label>
                     </div>
-                    <input type="text" id="serial" name="serial" placeholder="Enter Serial (Note: Leave blank if N/A)" style="width: 615px;" autocomplete="off">
+                    <input type="text" id="uom" name="uom" style="width: 615px;" disabled>
                 </div>
                 <div class="input-group mb-3" id="qtydiv">
                     <div class="input-group-prepend">
                         <label class="input-group-text" style="width: 140px;">Quantity</label>
                     </div>
                     <input type="number" id="qty" name="qty" min="1" style="width: 615px;" placeholder="0"  autocomplete="off">
-                </div> 
+                </div>
+                <div class="input-group mb-3" id="serialdiv">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" style="width: 140px;">Serial</label>
+                    </div>
+                    <input type="text" id="serial" name="serial" placeholder="Enter Serial (Note: Leave blank if N/A)" style="width: 615px;" autocomplete="off">
+                </div>
             </form>
             <div class="col-md-12 mb-4">
                 <button type="submit" id="butsave" class="btn btn-primary float-right bp">SUBMIT</button>  

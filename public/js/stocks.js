@@ -38,8 +38,9 @@ function category(){
 }
 $(document).ready(function(){   
     category();
-    $('#serialdiv').hide();
+    $('#uomdiv').hide();
     $('#qtydiv').hide();
+    $('#serialdiv').hide();
 });
 
 $(document).on('click', '#CategoryTable tbody tr', function(){
@@ -182,16 +183,17 @@ $(document).on('click', '#butsave', function(){
                     sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function() {
                         window.location.href = 'stocks';
                     });
-                    setTimeout(function(){window.location.href = 'stocks';} , 2000);                                   
+                    setTimeout(function(){window.location.href = 'stocks';}, 2000);                                   
                 },
                 error: function (data) {
                     if(data.status == 401) {
-                        window.location.href = '/login';
+                        window.location.href = '/stocks';
                     }
                     alert(data.responseText);
                 }
             });
-        }else{
+        }
+        else{
             AddStockForm[0].reportValidity();
         }
     }
@@ -218,77 +220,86 @@ $(document).on('click', '#butsave', function(){
                         sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function() {
                             window.location.href = 'stocks';
                         });
-                        setTimeout(function(){window.location.href = 'stocks';} , 2000);                                   
+                        setTimeout(function(){window.location.href = 'stocks';}, 2000);                                   
                     },
                     error: function (data) {
                         if(data.status == 401) {
-                            window.location.href = '/login';
+                            window.location.href = '/stocks';
                         }
                         alert(data.responseText);
                     }
                 });
-            }else{
+            }
+            else{
                 AddStockForm[0].reportValidity();
             }
-        }else{
+        }
+        else{
             AddStockForm[0].reportValidity();
         }
     }
 });
 
 $(document).on('change', '#category', function(){
-    var id=$('#category').val();
+    var id = $('#category').val();
     var descOp = " ";
-        $.ajax({
-            type:'get',
-            url:'/addStockitem',
-            data:{'category_id':id},            
-            success:function(data)
-                {
-                    var itemcode = $.map(data, function(value, index) {
-                        return [value];
-                    });
-                    descOp+='<option value="" selected disabled>Select Item</option>';
-                    itemcode.forEach(value => {
-                        descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>';
-                    });
-                    $("#item").find('option').remove().end().append(descOp);               
-                },
-            error: function (data) {
-                if(data.status == 401) {
-                    window.location.href = '/stocks';
-                }
-                alert(data.responseText);
+    $.ajax({
+        type: 'get',
+        url: '/addStockitem',
+        data: { 'category_id': id },            
+        success: function (data){
+            var itemcode = $.map(data, function(value, index) {
+                return [value];
+            });
+            descOp+='<option value="" selected disabled>Select Item</option>';
+            itemcode.forEach(value => {
+                descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>';
+            });
+            $("#item").find('option').remove().end().append(descOp);               
+        },
+        error: function (data) {
+            if(data.status == 401) {
+                window.location.href = '/stocks';
             }
-        });
-    $('#serialdiv').hide();
+            alert(data.responseText);
+        }
+    });
+    $('#uomdiv').hide();
     $('#qtydiv').hide();
+    $('#serialdiv').hide();
 });
 
 $(document).on('change', '#item', function(){
-    var id=$('#item').val();
-    var descOp = " ";
-        $.ajax({
-            type:'get',
-            url:'getUOM',
-            data:{'id':id},            
-            success:function(data)
-                {
-                    if (data.uom == "Unit") {
-                        $('#serialdiv').show();
-                        $('#qtydiv').hide();
-                    }else{
-                        $('#serialdiv').hide();
-                        $('#qtydiv').show();
-                    }
-                },
-            error: function (data) {
-                if(data.status == 401) {
-                    window.location.href = '/stocks';
-                }
-                alert(data.responseText);
+    var id = $('#item').val();
+    $.ajax({
+        type: 'get',
+        url: 'getUOM',
+        data: { 'id': id },            
+        success: function (data){
+            if(data.uom == "Unit"){
+                $('#uomdiv').show();
+                $('#qtydiv').show();
+                $('#serialdiv').show();
+                $('#uom').val(data.uom);
+                $('#qty').val('1');
+                $('#qty').prop('disabled', true);
             }
-        });
+            else{
+                $('#uomdiv').show();
+                $('#qtydiv').show();
+                $('#serialdiv').hide();
+                $('#uom').val(data.uom);
+                $('#qty').val('0');
+                $('#qty').prop('disabled', false);
+            }
+        },
+        error: function (data){
+            if(data.status == 401) {
+                window.location.href = '/stocks';
+            }
+            alert(data.responseText);
+        }
+    });
 });
 
 function decodeHtml(str){

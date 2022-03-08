@@ -157,11 +157,17 @@ $(document).on('click', '#butsave', function(){
     var rack = $('#rack').val();
     var row = $('#row').val();
     var serial = $('#serial').val();
-    if (!$('#serial').val()) {
+    if(!$('#rack').val()){
+        rack = 'N/A';
+    }
+    if(!$('#row').val()){
+        row = 'N/A';
+    }
+    if(!$('#serial').val()){
         serial = 'N/A';
     }
     var qty = $('#qty').val();
-    if ($('#serial').is(':visible')) {
+    if($('#serial').is(':visible')){
         if(category && item && location){
             $.ajax({
                 url: "stocks/save",
@@ -198,7 +204,7 @@ $(document).on('click', '#butsave', function(){
         }
     }
     else{
-        if (qty && qty != 0) {
+        if(qty && qty != 0){
             if(category && item && location){
                 $.ajax({
                     url: "stocks/save",

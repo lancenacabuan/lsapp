@@ -6,10 +6,10 @@
             <h6 class="modal-title w-100">ADD STOCK</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body" style="background-color:white;color:black;">                
+        <div class="modal-body" style="background-color: white; color: black;">                
             <form id="AddStockForm">
                 <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-                <div class="input-group mb-3" >
+                <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <label class="input-group-text" style="width: 140px;">Category</label>
                     </div>

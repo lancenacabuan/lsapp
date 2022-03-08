@@ -472,10 +472,6 @@ $('table.stock_request').DataTable({
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. D, YYYY')
         },
         {
-            "targets": [0],
-            "orderable": false
-        },
-        {
             "targets": [7,8,9,10,11,12,13,14],
             "visible": false,
             "searchable": false
@@ -494,20 +490,20 @@ $('table.stock_request').DataTable({
             data: 'needdate',
             "render": function(data, type, row){
                 if(row.status_id == '7' || row.status_id == '8'){
-                    return moment(row.needdate).format('MMM. D, YYYY');
+                    return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. D, YYYY');
                 }
                 else{
                     var a = new Date(minDate);
                     var b = new Date(row.needdate);
                     var difference = dateDiffInDays(a, b);
                     if(difference >= 0 && difference <= 3){
-                        return "<span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
+                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
                     }
                     else if(difference < 0){
-                        return "<span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
                     }
                     else{
-                        return moment(row.needdate).format('MMM. D, YYYY');
+                        return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. D, YYYY');
                     }
                 }
             }

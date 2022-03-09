@@ -1,5 +1,5 @@
 <a href="/" style="text-decoration: none;">
-<div><center><img class="p-2 align-self-end" src="/storage/idsi.png" alt="idsi.png" style="width: auto; height: 150px;"></center></div>
-<div style="color: white; font-family: arial; background-color: #0d1a80;"><h3 class="p-2 align-self-end"><center style="margin-top: 15px; margin-bottom: 15px; font-weight: bold !important;">MAIN WAREHOUSE STOCK MONITORING SYSTEM</center></h3></div>
+    <div style="text-align: center;"><img class="p-2" src="/storage/idsi.png" alt="idsi.png" style="width: auto; height: 150px;"></div>
+    <div style="text-align: center; height: 90px; line-height: 90px; color: white; font-family: Arial; background-color: #0d1a80; font-size: 30px; font-weight: bold;">MAIN WAREHOUSE STOCK MONITORING SYSTEM</div>
 </a>
 <br>

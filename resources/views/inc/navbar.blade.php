@@ -1,11 +1,8 @@
 <nav class="navbar navbar-expand-md shadow-sm" style="height: 60px; margin-top: -20px;">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales') && !auth()->user()->hasanyRole('approver - warehouse'))
+            @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales') && !auth()->user()->hasanyRole('approver - warehouse')) {{---ROLES---}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">HOME</a>
@@ -38,14 +35,14 @@
                 @endrole
             </ul>
             @endif
-            @if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales'))
+            @if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) {{---ROLES---}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}"  href="{{ url('/stockrequest') }}">HOME</a>
                 </li>     
             </ul>
             @endif
-            @if(auth()->user()->hasanyRole('approver - warehouse'))
+            @if(auth()->user()->hasanyRole('approver - warehouse')) {{---ROLES---}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}"  href="{{ url('/stocktransfer') }}">HOME</a>
@@ -54,9 +51,7 @@
             @endif
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav mr-right">
-                <a id="impScale" class="nav-link" href="{{ route('logout') }}" style="color: white; font-size: 16px;"
-                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
+                <a class="nav-link" style="color: white; font-size: 16px; cursor: pointer;" onclick="$('#logout-form').submit();">
                     <b>LOGOUT</b>&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i>
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

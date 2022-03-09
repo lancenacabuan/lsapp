@@ -33,17 +33,15 @@
         </div>
     </center>
     <br>
-    <div class="panel-body table-responsive" style="width: 100%">
-        <table id="user_logs" class="table user_logs display nowrap" style="width: 100%; font-size: 12px;">
-            <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">
-                <tr>
-                    <th>DATE</th>
-                    <th>NAME</th>
-                    <th>USER LEVEL</th>
-                    <th>ACTIVITY</th>
-                </tr>
-            </thead>                 
-        </table>
-    </div>
+    <table id="user_logs" class="table user_logs display nowrap" style="width: 100%; font-size: 12px;">
+        <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">
+            <tr>
+                <th>DATE</th>
+                <th>NAME</th>
+                <th>USER LEVEL</th>
+                <th>ACTIVITY</th>
+            </tr>
+        </thead>
+    </table>
 </div>
 @endsection

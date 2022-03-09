@@ -13,7 +13,7 @@
         </li>
     </ul>
     <div style="margin-top: -3px; color: white; background-color: #0d1a80;">
-        <h3 class="text-center py-2"><strong>MAINTENANCE</strong></h3>
+        <h3 id="maintenance" class="text-center py-2" style="font-weight: bold;"></h3>
     </div>
     <table class="table-hover table itemTable" id="itemTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important;">

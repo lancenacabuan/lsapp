@@ -1,5 +1,6 @@
 if(window.location.href == 'https://lance.idsi.com.ph/maintenance'){
     $('#nav1').addClass("active-link");
+    $('#maintenance').text('MAINTENANCE - ITEM');
     $('.btnNewItem').show();
     $('#itemTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
@@ -42,6 +43,7 @@ if(window.location.href == 'https://lance.idsi.com.ph/maintenance'){
 }
 else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=category'){
     $('#nav2').addClass("active-link");
+    $('#maintenance').text('MAINTENANCE - CATEGORY');
     $('.btnNewCategory').show();
     $('#categoryTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
@@ -75,6 +77,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=categ
 }
 else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=location'){
     $('#nav3').addClass("active-link");
+    $('#maintenance').text('MAINTENANCE - LOCATION');
     $('.btnNewLocation').show();
     $('#locationTable').show();
     $('#loading').show(); Spinner(); Spinner.show();

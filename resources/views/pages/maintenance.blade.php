@@ -12,9 +12,8 @@
             <a class="nav-link" id="nav3" href="{{ url('/maintenance?tbl=location') }}"><strong>LOCATION</strong></a>
         </li>
     </ul>
-    <div style="margin-top: -3px; color: white; background-color: #0d1a80;">
-        <h3 id="maintenance" class="text-center py-2" style="font-weight: bold;"></h3>
-    </div>
+    <div style="margin-top: -3px; color: white; height: 20px; background-color: #0d1a80;"></div>
+    <br>
     <table class="table-hover table itemTable" id="itemTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important;">
             {{-- <tr class="tbsearch">

@@ -1,17 +1,17 @@
 @extends('layouts.app')
 @section('content')
-<div class="container-fluid d-flex">
+<div class="container-fluid">
     @role('admin|encoder') {{---ROLES---}}
     <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
     <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
-    <button class="btn btn-primary bp ml-auto" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
+    <button class="btn btn-primary bp float-right mb-4" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
     {{-- <button class="btn btn-primary bp" type="button" data-target="#stocktrans" data-toggle="modal" data-backdrop="static" data-keyboard="false">STOCK TRANSFER</button> --}}
     {{-- <button class="btn btn-primary bp" type="button">IMPORT</button> --}}
+    <br><br>
     @endrole
 </div>
 <div class="container-fluid">
     <div id="CategoryTableDiv">
-        <h3 class="text-center"><strong>STOCKS</strong></h3>
         <table id="CategoryTable" class="table-hover table CategoryTable display" style="width: 100%; font-size: 90%; cursor: pointer;">
             <thead style="background-color: #0d1a80 !important; color: white !important;">                            
                 <tr>

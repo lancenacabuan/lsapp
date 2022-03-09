@@ -34,7 +34,7 @@
     </center>
     <br>
     <table id="user_logs" class="table user_logs display nowrap" style="width: 100%; font-size: 12px;">
-        <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">
+        <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 14px;">
             <tr>
                 <th>DATE</th>
                 <th>NAME</th>

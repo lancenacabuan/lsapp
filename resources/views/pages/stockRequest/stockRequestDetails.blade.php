@@ -6,39 +6,39 @@
             <h6 class="modal-title w-100">STOCK REQUEST DETAILS</h6>            
             <button type="button" class="close" id='modalClose' data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body" style="background-color:white;color:black;">                          
+        <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left:35px;">
-                <label class="form-control form-control-sm" style="width:160px;">Date Requested</label>
-                <input class="form-control form-control-sm"  id="daterequestdetails"style="width:280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" style="width:160px;">Stock Request No.</label>
-                <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width:280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
+                <input class="form-control form-control-sm"  id="daterequestdetails"style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px;">Stock Request No.</label>
+                <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width:160px;">Date Needed</label>
-                <input class="form-control form-control-sm"  id="needdate_details"style="width:280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" id="client_name_label" style="width:160px;">Client Name</label>
-                <input class="form-control form-control-sm" id="client_name_details" style="width:280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
+                <input class="form-control form-control-sm"  id="needdate_details"style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" id="client_name_label" style="width: 160px;">Client Name</label>
+                <input class="form-control form-control-sm" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width:160px;">Requested By</label>
-                <input class="form-control form-control-sm" id="requested_by_details" style="width:280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" id="location_label" style="width:160px;">Address / Branch</label>
-                <input class="form-control form-control-sm" id="location_details" style="width:280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
+                <input class="form-control form-control-sm" id="requested_by_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" id="location_label" style="width: 160px;">Address / Branch</label>
+                <input class="form-control form-control-sm" id="location_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width:160px;">Request Type</label>
-                <input class="form-control form-control-sm" id="request_type_details" style="width:280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" id="reference_label" style="width:160px;">Reference SO/PO No.</label>
-                <input class="form-control form-control-sm" id="reference_details" onclick="copyRefNum()" style="width:280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
+                <input class="form-control form-control-sm" id="request_type_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
+                <input class="form-control form-control-sm" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width:160px;">Status</label>
-                <input class="form-control form-control-sm" id="status_details" style="width:280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px;">Status</label>
+                <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
-                <label name="reason_label" id="reason_label" class="form-control form-control-sm" style="margin-top: -56px; width:160px; display: none;">Disapproval Reason</label>
-                <textarea style="width:280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" class="form-control" rows="4" name="reason_details" id="reason_details" readonly></textarea>
+                <label name="reason_label" id="reason_label" class="form-control form-control-sm" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>
+                <textarea style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" class="form-control" rows="4" name="reason_details" id="reason_details" readonly></textarea>
             </div>
         </div>
         <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">
@@ -107,14 +107,14 @@
             <div class="col-md-12 mt-2 mb-4">
             <br>
             @role('approver - sales')  {{---ROLES---}}
-            <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnApprove" value="APPROVE">
-            <input type="button" class="btn btn-primary mr-auto bp" id="btnDisapprove" value="DISAPPROVE">
+            <input type="button" class="btn btn-primary float-right bp" id="btnApprove" value="APPROVE">
+            <input type="button" class="btn btn-primary bp" id="btnDisapprove" value="DISAPPROVE">
             @endrole
             @role('admin|encoder')  {{---ROLES---}}
-            <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnProceed" value="PROCEED" disabled>
+            <input type="button" class="btn btn-primary float-right bp" id="btnProceed" value="PROCEED" disabled>
             @endrole
             @role('sales')  {{---ROLES---}}
-            <button type="button" id="btnDelete" class="btn btn-dark mr-auto bp">DELETE</button>
+            <button type="button" id="btnDelete" class="btn btn-dark bp">DELETE</button>
             @endrole
             <br>
             </div>
@@ -125,19 +125,19 @@
         </div><br>      
         <div class="modal-body">
             <div class="form-inline" style="margin-left:35px;">
-                <label class="form-control form-control-sm" style="width:160px; margin-bottom: 10px;">Scheduled By</label>
-                <input class="form-control form-control-sm" style="width:280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
+                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
+                <input class="form-control form-control-sm" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px;">
-                <label class="form-control form-control-sm" style="width:160px;">Scheduled On</label>
-                <input class="form-control form-control-sm" id="schedOn" style="width:280px;" type="date">
+                <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
+                <input class="form-control form-control-sm" id="schedOn" style="width: 280px;" type="date">
             </div>
             <br><br>
             <div class="form-inline"  style="margin-left:35px;" id="reqContents"></div>
             <br><br><br>
             <hr>
-            <input type="button" class="btn btn-primary mr-auto bp" id="btnBack" class="button" value="BACK">
-            <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnSubmit" class="button" value="SCHEDULE" disabled>
+            <input type="button" class="btn btn-primary bp" id="btnBack" class="button" value="BACK">
+            <input type="button" class="btn btn-primary float-right bp" id="btnSubmit" class="button" value="SCHEDULE" disabled>
             <br><br>
         </div>
         </div>
@@ -147,12 +147,12 @@
         </div><br>      
         <div class="modal-body">
             <div class="form-inline" style="margin-left:35px;">
-                <label class="form-control form-control-sm" style="width:160px; margin-bottom: 10px;">Scheduled By</label>
-                <input class="form-control form-control-sm" id="prep_by" style="width:280px; margin-bottom: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
+                <input class="form-control form-control-sm" id="prep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px;">
-                <label class="form-control form-control-sm" style="width:160px;">Scheduled On</label>
-                <input class="form-control form-control-sm" id="sched" style="width:280px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
+                <input class="form-control form-control-sm" id="sched" style="width: 280px;" type="text" readonly>
             </div>
             <br>
             @role('admin|encoder')  {{---ROLES---}}
@@ -188,9 +188,9 @@
             <br>
             <hr>
             @role('admin|encoder')           
-            <input type="button" class="btn btn-primary mr-auto float-right bp" id="btnTransit" class="button" value="FOR RECEIVING">
+            <input type="button" class="btn btn-primary float-right bp" id="btnTransit" class="button" value="FOR RECEIVING">
             @endrole
-            <button type="button" class="btnPrint btn btn-primary mr-auto bp">PRINT PREVIEW</button>
+            <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br><br>
         </div>
         </div>
@@ -200,12 +200,12 @@
         </div><br>      
         <div class="modal-body">
             <div class="form-inline" style="margin-left:35px;">
-                <label class="form-control form-control-sm" style="width:160px; margin-bottom: 10px;">Scheduled By</label>
-                <input class="form-control form-control-sm" id="prep_by1" style="width:280px; margin-bottom: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
+                <input class="form-control form-control-sm" id="prep_by1" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px;">
-                <label class="form-control form-control-sm" style="width:160px;">Scheduled On</label>
-                <input class="form-control form-control-sm" id="sched1" style="width:280px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
+                <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
             </div>
             <br>
             @role('client')  {{---ROLES---}}
@@ -241,9 +241,9 @@
             <br>
             <hr>
             @role('sales')  {{---ROLES---}}
-            <button type="button" id="btnReceive" class="btn btn-primary mr-auto float-right bp">RECEIVE</button>
+            <button type="button" id="btnReceive" class="btn btn-primary float-right bp">RECEIVE</button>
             @endrole
-            <button type="button" class="btnPrint btn btn-primary mr-auto bp">PRINT PREVIEW</button>
+            <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br><br>
         </div>
         </div>
@@ -264,7 +264,7 @@
             <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_category" id="x_category" readonly>
             <textarea style="margin-bottom: 8px; font-size: 12px; resize: none;" class="form-control" rows="5" name="x_item" id="x_item" readonly></textarea>
             <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_serial" id="x_serial" placeholder="Input Item Serial...">
-            <button type="button" id="btnEdit" class="btn btn-primary mr-auto float-right bp">EDIT</button>
+            <button type="button" id="btnEdit" class="btn btn-primary float-right bp">EDIT</button>
         </div>
     </div>
     </div>
@@ -280,7 +280,7 @@
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100"></textarea><br>
             <span id='limit' style="font-size: 12px;"></span>
-            <button type="button" id="btnReason" class="btn btn-primary mr-auto float-right bp">OK</button>
+            <button type="button" id="btnReason" class="btn btn-primary float-right bp">OK</button>
         </div>
     </div>
     </div>

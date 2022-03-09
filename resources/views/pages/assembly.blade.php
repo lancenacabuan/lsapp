@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
     @role('admin|encoder') {{---ROLES---}}
-    <button class="btn btn-primary bp" type="button" data-toggle="modal" style="margin-right: 10px;">NEW ASSEMBLY</button>
+    <button class="btn btn-primary bp" type="button" data-toggle="modal" style="margin-right: 5px;">NEW ASSEMBLY</button>
     <button class="btn btn-primary bp" type="button" data-toggle="modal" data-target="#createItem">CREATE ITEM</button>
     <br><br>
     @endrole

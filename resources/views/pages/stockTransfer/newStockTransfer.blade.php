@@ -1,12 +1,12 @@
 <div class="container table-responsive">
     <div class="modal fade in" id="newStockTransfer">
-    <div class="modal-dialog  modal-xl">
+    <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">NEW STOCK TRANSFER</h6>    
             <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body" style="background-color:white;color:black;">                
+        <div class="modal-body" style="background-color: white; color: black;">                
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left: 20px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
@@ -78,7 +78,7 @@
         </div>
         <div class="col-md-12 mt-2 mb-4">
             <button type="submit" id="btnClose" class="btn btn-primary bp" style="display: none;">CLOSE</button>
-            <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none; margin-right: 10px;">SUBMIT</button>
+            <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
         </div>
         </div>
     </div>

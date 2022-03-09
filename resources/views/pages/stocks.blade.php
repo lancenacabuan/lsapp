@@ -9,9 +9,9 @@
     {{-- <button class="btn btn-primary bp" type="button">IMPORT</button> --}}
     @endrole
 </div>
-<br>
 <div class="container-fluid">
     <div id="CategoryTableDiv">
+        <h3 class="text-center"><strong>STOCKS</strong></h3>
         <table id="CategoryTable" class="table-hover table CategoryTable display" style="width: 100%; font-size: 90%; cursor: pointer;">
             <thead style="background-color: #0d1a80 !important; color: white !important;">                            
                 <tr>

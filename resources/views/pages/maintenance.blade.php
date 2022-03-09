@@ -1,20 +1,20 @@
 @extends('layouts.app')
 @section('content')
-<div class="table-responsive">
-<ul class="nav nav-pills">
-    <li class="nav-item-link" style="border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-        <a class="nav-link" id="nav1" href="{{ url('/maintenance') }}"><strong>ITEM</strong></a>
-    </li>
-    <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-        <a class="nav-link" id="nav2" href="{{ url('/maintenance?tbl=category') }}"><strong>CATEGORY</strong></a>
-    </li>
-    <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-        <a class="nav-link" id="nav3" href="{{ url('/maintenance?tbl=location') }}"><strong>LOCATION</strong></a>
-    </li>
-</ul>
-<div style="margin-top: -3px; height: 20px; background-color: #0d1a80;">
-</div>
-<br>
+<div class="container-fluid">
+    <ul class="nav nav-pills">
+        <li class="nav-item-link" style="border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
+            <a class="nav-link" id="nav1" href="{{ url('/maintenance') }}"><strong>ITEM</strong></a>
+        </li>
+        <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
+            <a class="nav-link" id="nav2" href="{{ url('/maintenance?tbl=category') }}"><strong>CATEGORY</strong></a>
+        </li>
+        <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
+            <a class="nav-link" id="nav3" href="{{ url('/maintenance?tbl=location') }}"><strong>LOCATION</strong></a>
+        </li>
+    </ul>
+    <div style="margin-top: -3px; color: white; background-color: #0d1a80;">
+        <h3 class="text-center py-2"><strong>MAINTENANCE</strong></h3>
+    </div>
     <table class="table-hover table itemTable" id="itemTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important;">
             {{-- <tr class="tbsearch">
@@ -62,12 +62,9 @@
     </table>
     @role('admin') {{---ROLES---}}
     <hr>
-    <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" style="display: none;">
-        NEW ITEM</button>
-    <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" style="display: none;">
-        NEW CATEGORY</button>
-    <button class="btn btn-primary bp btnNewLocation" type="button" style="display: none;">
-        REQUEST NEW LOCATION</button>
+    <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" style="display: none;">NEW ITEM</button>
+    <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" style="display: none;">NEW CATEGORY</button>
+    <button class="btn btn-primary bp btnNewLocation" type="button" style="display: none;">REQUEST NEW LOCATION</button>
     @endrole
 </div>
 <style>

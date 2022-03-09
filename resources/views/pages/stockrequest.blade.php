@@ -1,15 +1,16 @@
 @extends('layouts.app')
 @section('content')
-<div class="panel-body table-responsive">
-    @if(auth()->user()->hasanyRole('sales'))
-        <div class="col-md-12 mb-4">
-            <button id="newstockreq" class="btn btn-primary bp newstockreq" type="button">
-            NEW STOCK REQUEST</button>
-        </div>
+<div class="container-fluid">
+    @if(auth()->user()->hasanyRole('sales')) {{---ROLES---}}
+    <button id="newstockreq" class="btn btn-primary bp newstockreq" type="button">NEW STOCK REQUEST</button>
+    @else
+    <br>
     @endif
-    <div class="container-fluid"  id="stockTableMain">
+</div>
+<div class="container-fluid"  id="stockTableMain">
     <input type="hidden" id="current_user" value="{{auth()->user()->id}}">
     <input type="hidden" id="current_role" value="{{auth()->user()->getRoleNames()}}">
+    <h3 class="text-center"><strong>STOCK REQUEST</strong></h3>
     <table id="stockreqDetails" class="table stock_request table-hover display" style="zoom: 80%; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">                            
             <tr>
@@ -33,7 +34,6 @@
         <tbody>
         </tbody>
     </table>
-    </div>
 </div>
 @include('pages.stockRequest.newStockRequest')
 @include('pages.stockRequest.stockRequestDetails')

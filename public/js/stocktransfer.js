@@ -655,7 +655,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     info: false,
                     language: {
                         "emptyTable": "No data available in table",
-                        "processing": "Loading",
+                        "processing": "Loading...",
                     },
                     processing: true,
                     serverSide: false,
@@ -828,7 +828,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         info: false,
         language: {
             "emptyTable": "No data available in table",
-            "processing": "Loading",
+            "processing": "Loading...",
         },
         processing: true,
         serverSide: false,

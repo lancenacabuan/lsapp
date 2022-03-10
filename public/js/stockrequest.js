@@ -650,7 +650,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     info: false,
                     language: {
                         "emptyTable": "No data available in table",
-                        "processing": "Loading",
+                        "processing": "Loading...",
                     },
                     processing: true,
                     serverSide: false,
@@ -702,7 +702,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     info: false,
                     language: {
                         "emptyTable": "No data available in table",
-                        "processing": "Loading",
+                        "processing": "Loading...",
                     },
                     processing: true,
                     serverSide: false,
@@ -754,7 +754,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     info: false,
                     language: {
                         "emptyTable": "No data available in table",
-                        "processing": "Loading",
+                        "processing": "Loading...",
                     },
                     processing: true,
                     serverSide: false,
@@ -1058,7 +1058,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         info: false,
         language: {
             "emptyTable": "No data available in table",
-            "processing": "Loading",
+            "processing": "Loading...",
         },
         processing: true,
         serverSide: false,
@@ -1111,7 +1111,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         info: false,
         language: {
             "emptyTable": "No data available in table",
-            "processing": "Loading",
+            "processing": "Loading...",
         },
         processing: true,
         serverSide: false,
@@ -1164,7 +1164,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         info: false,
         language: {
             "emptyTable": "No data available in table",
-            "processing": "Loading",
+            "processing": "Loading...",
         },
         processing: true,
         serverSide: false,

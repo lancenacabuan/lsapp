@@ -559,6 +559,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                 return [value];
             });
             transitem.forEach(value => {
+                var requestStatus = value.status_id;
                 var req_date = value.date;
                     req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
                     $('#reqdate_details').val(req_date);
@@ -603,30 +604,30 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                 else{
                     $("#btnDelete").show();
                 }
-                if(value.status_id != '6'){
+                if(requestStatus != '6'){
                     $("#btnApprove").hide();
                     $("#btnDisapprove").hide();
                 }
-                if(value.status_id == '7'){
+                if(requestStatus == '7'){
                     $("#btnApprove").show();
                     $("#btnDisapprove").hide();
                     $("#reason_label").show();
                     $("#reason_details").show();
                 }
-                if(value.status_id == '1'|| value.status_id == '2'|| value.status_id == '3' || value.status_id == '4' || value.status_id == '5' || value.status_id == '8'){
+                if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8'){
                     $("#btnDelete").hide();
                     btnDel = 13;
                 }
-                if(value.status_id == '2' || value.status_id == '3' || value.status_id == '4' || value.status_id == '6' || value.status_id == '7' || value.status_id == '8'){
+                if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8'){
                     $("#btnProceed").hide();
                 }
-                if(value.status_id == '2' || value.status_id == '5'){
+                if(requestStatus == '2' || requestStatus == '5'){
                     $("#schedItemsModal").show();
                 }
-                if(value.status_id == '3' || value.status_id == '4'){
+                if(requestStatus == '3' || requestStatus == '4'){
                     $("#transitItemsModal").show();
                 }
-                if(value.status_id == '8'){
+                if(requestStatus == '8'){
                     $("#transitItemsModal").show();
                     $("#btnReceive").hide();
                     document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
@@ -731,6 +732,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
     });
     var table =  $('table.stocktransferTable').DataTable(); 
     var data = table.row(this).data();
+    var requestStatus = data.status_id;
     var req_date = data.date;
         req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
         $('#reqdate_details').val(req_date);
@@ -775,30 +777,30 @@ $('#stocktransferTable tbody').on('click', 'tr', function () {
     else{
         $("#btnDelete").show();
     }
-    if(data.status_id != '6'){
+    if(requestStatus != '6'){
         $("#btnApprove").hide();
         $("#btnDisapprove").hide();
     }
-    if(data.status_id == '7'){
+    if(requestStatus == '7'){
         $("#btnApprove").show();
         $("#btnDisapprove").hide();
         $("#reason_label").show();
         $("#reason_details").show();
     }
-    if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
+    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8'){
         $("#btnDelete").hide();
         btnDel = 13;
     }
-    if(data.status_id == '2' || data.status_id == '3' || data.status_id == '4' || data.status_id == '6' || data.status_id == '7' || data.status_id == '8'){
+    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8'){
         $("#btnProceed").hide();
     }
-    if(data.status_id == '2' || data.status_id == '5'){
+    if(requestStatus == '2' || requestStatus == '5'){
         $("#schedItemsModal").show();
     }
-    if(data.status_id == '3' || data.status_id == '4'){
+    if(requestStatus == '3' || requestStatus == '4'){
         $("#transitItemsModal").show();
     }
-    if(data.status_id == '8'){
+    if(requestStatus == '8'){
         $("#transitItemsModal").show();
         $("#btnReceive").hide();
         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
@@ -1096,8 +1098,117 @@ $(document).on('click', '#btnReason', function(){
     }
 });
 
-$('table.transferDetails').DataTable().on('select', function(){});
+$(document).on('click', '#btnTransit', function(){
+    swal({
+        title: "FOR RECEIVING?",
+        text: "You are about to move these items FOR RECEIVING!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type:'get',
+                url:'/forReceiving',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                        },
+                data:{
+                    'request_number': $('#reqnum_details').val()
+                },
+                success: function (data){
+                    if(data == 'true'){
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("FOR RECEIVING SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                    }
+                    else{
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("FOR RECEIVING FAILED", "STOCK TRANSFER REQUEST", "error");
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                    }
+                },
+                error: function (data) {
+                    if(data.status == 401) {
+                        window.location.href = '/stocktransfer';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });    
+});
+
+$(document).on('click', '#btnReceive', function(){
+    swal({
+        title: "RECEIVE STOCK TRANSFER REQUEST?",
+        text: "You are about to RECEIVE this Stock Transfer Request!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type:'get',
+                url:'/receiveTransfer',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                        },
+                data:{
+                    'request_number': $('#reqnum_details').val()
+                },
+                success: function (data){
+                    if(data == 'true'){
+                        scrollReset();
+                        $('#detailsStockTransfer').hide();
+                        $('#detailsStockTransfer').modal('dispose');
+                        $('#loading').show(); Spinner(); Spinner.show();
+                        $.ajax({
+                            type:'get',
+                            url:'/logTransReceive',
+                            headers: {
+                                'X-CSRF-TOKEN': $("#csrf").val(),
+                                    },
+                            data:{
+                                'request_number': $('#reqnum_details').val()
+                            },
+                            success: function (data){
+                                if(data == 'true'){
+                                    $('#loading').hide(); Spinner.hide();
+                                    sweetAlert("RECEIVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                                    setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function (data) {
+                                if(data.status == 401) {
+                                    window.location.href = '/stocktransfer';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    }
+                    else{
+                        $('#detailsStockTransfer').hide();
+                        sweetAlert("RECEIVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                    }
+                },
+                error: function (data) {
+                    if(data.status == 401) {
+                        window.location.href = '/stocktransfer';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });    
+});
+
 var items = [];
+$('table.transferDetails').DataTable().on('select', function(){});
 $('.transferDetails tbody').on('click', 'tr', function(){
     var pend = $('#transferDetails').DataTable().cell(this,4).data();
     var item_id = $('#transferDetails').DataTable().cell(this,6).data();
@@ -1428,115 +1539,6 @@ $("#btnBack").on('click', function(){
     $("#requestItems").hide();
     $("#btnProceed").show();
     $("#reqContents").empty();
-});
-
-$(document).on('click', '#btnTransit', function(){
-    swal({
-        title: "FOR RECEIVING?",
-        text: "You are about to move these items FOR RECEIVING!",
-        icon: "warning",
-        buttons: true,
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                type:'get',
-                url:'/forReceiving',
-                headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
-                        },
-                data:{
-                    'request_number': $('#reqnum_details').val()
-                },
-                success: function (data){
-                    if(data == 'true'){
-                        $('#detailsStockTransfer').hide();
-                        sweetAlert("FOR RECEIVING SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
-                    }
-                    else{
-                        $('#detailsStockTransfer').hide();
-                        sweetAlert("FOR RECEIVING FAILED", "STOCK TRANSFER REQUEST", "error");
-                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
-                    }
-                },
-                error: function (data) {
-                    if(data.status == 401) {
-                        window.location.href = '/stocktransfer';
-                    }
-                    alert(data.responseText);
-                }
-            });
-        }
-    });    
-});
-
-$(document).on('click', '#btnReceive', function(){
-    swal({
-        title: "RECEIVE STOCK TRANSFER REQUEST?",
-        text: "You are about to RECEIVE this Stock Transfer Request!",
-        icon: "warning",
-        buttons: true,
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                type:'get',
-                url:'/receiveTransfer',
-                headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
-                        },
-                data:{
-                    'request_number': $('#reqnum_details').val()
-                },
-                success: function (data){
-                    if(data == 'true'){
-                        scrollReset();
-                        $('#detailsStockTransfer').hide();
-                        $('#detailsStockTransfer').modal('dispose');
-                        $('#loading').show(); Spinner(); Spinner.show();
-                        $.ajax({
-                            type:'get',
-                            url:'/logTransReceive',
-                            headers: {
-                                'X-CSRF-TOKEN': $("#csrf").val(),
-                                    },
-                            data:{
-                                'request_number': $('#reqnum_details').val()
-                            },
-                            success: function (data){
-                                if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
-                                    sweetAlert("RECEIVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                                    setTimeout(function(){location.href="/stocktransfer"}, 2000);
-                                }
-                                else{
-                                    return false;
-                                }
-                            },
-                            error: function (data) {
-                                if(data.status == 401) {
-                                    window.location.href = '/stocktransfer';
-                                }
-                                alert(data.responseText);
-                            }
-                        });
-                    }
-                    else{
-                        $('#detailsStockTransfer').hide();
-                        sweetAlert("RECEIVE FAILED", "STOCK TRANSFER REQUEST", "error");
-                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
-                    }
-                },
-                error: function (data) {
-                    if(data.status == 401) {
-                        window.location.href = '/stocktransfer';
-                    }
-                    alert(data.responseText);
-                }
-            });
-        }
-    });    
 });
 
 $(document).on('click', '.btnPrint', function(){

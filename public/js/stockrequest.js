@@ -106,363 +106,6 @@ $(".newstockreq").on('click', function(){
     generatedr();
 });
 
-$('table.stockDetails').DataTable().on('select', function(){});
-var items = [];
-$('.stockDetails tbody').on('click', 'tr', function () {
-    var pend = $('#stockDetailsrequest').DataTable().cell(this,4).data();
-    var stock = $('#stockDetailsrequest').DataTable().cell(this,5).data();
-    var item_id = $('#stockDetailsrequest').DataTable().cell(this,6).data();
-    var bal = $('#stockDetailsrequest').DataTable().cell(this,11).data();
-    var mal = $('#stockDetailsrequest').DataTable().cell(this,12).data();
-
-    if(pend == 0){
-        swal('Item is fullfiled!','','success');
-    }
-    else if(stock == 0){
-        if(bal != 0 && mal != 0){
-            swal('Item out of stock!','Request Stock Transfer from Balintawak and/or Malabon.','warning');
-        }
-        else if(bal != 0 && mal == 0){
-            swal('Item out of stock!','Request Stock Transfer from Balintawak.','warning');
-        }
-        else if(bal == 0 && mal != 0){
-            swal('Item out of stock!','Request Stock Transfer from Malabon.','warning');
-        }
-        else{
-            swal('Item out of stock!','','error');
-        }
-    }
-    else{
-        $(this).toggleClass('selected');
-        if(items.includes(item_id) == true){
-            items = items.filter(item => item !== item_id);
-        }
-        else {
-            items.push(item_id);
-        }
-    }
-    if(items.length == 0){
-        $('#btnProceed').prop('disabled', true);
-    }
-    else{
-        $('#btnProceed').prop('disabled', false);
-    }
-});
-
-$("#btnProceed").unbind('click').click(function(){
-    var reqnum = $('#request_num_details').val();
-    var j = 0;
-    $("#stockDetailsrequest *").prop('disabled',true);
-    $("#btnProceed").hide();
-    $("#requestItems").slideDown();
-    $('#schedOn').attr('max', maxDate);
-    for(var i=0; i < items.length; i++){
-        $.ajax({ 
-            type:'get', 
-            url:'/stockreq', 
-            data:{
-                'reqnum': reqnum,
-                'item_id': items[i]
-            }, 
-            success:function(data) {
-                var reqitem = $.map(data.data, function(value, index) { 
-                    return [value];
-                });
-
-                reqitem.forEach(value => {
-                    if(value.qtystock <= value.pending){
-                        var l = value.qtystock;
-                    }
-                    else{
-                        var l = value.pending;
-                    }
-                    if(value.uom != 'Unit'){
-                        $('#btnSubmit').prop('disabled', false);
-                        var id = document.createElement("input");
-                        id.setAttribute("id", "item_id"+j);
-                        id.setAttribute("type", "hidden");
-                        id.setAttribute("value", value.item_id);
-                        var x = document.createElement("input");
-                        x.setAttribute("id", "category"+j);
-                        x.setAttribute("type", "text");
-                        x.setAttribute("class", "form-control");
-                        x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
-                        x.setAttribute("value", value.category);
-                        var y = document.createElement("textarea");
-                        y.setAttribute("id", "item"+j);
-                        y.setAttribute("class", "form-control");
-                        y.setAttribute("rows", "4");
-                        y.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-top: 52px; margin-bottom: 10px; resize: none;");
-                        var z = document.createElement("select");
-                        z.setAttribute("id", "location"+j);
-                        z.setAttribute("class", "form-control");
-                        z.setAttribute("style", "width: 150px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                        var qty = document.createElement("input");
-                        qty.setAttribute("id", "qty"+j);
-                        qty.setAttribute("type", "number");
-                        qty.setAttribute("class", "form-control qty");
-                        qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                        qty.setAttribute("max", l);
-                        qty.setAttribute("min", '1');
-                        qty.setAttribute("value", l);
-                        var uom = document.createElement("input");
-                        uom.setAttribute("id", "uom"+j);
-                        uom.setAttribute("type", "text");
-                        uom.setAttribute("class", "form-control");
-                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                        uom.setAttribute("value", value.uom);
-                        document.getElementById("reqContents").appendChild(id);
-                        document.getElementById("reqContents").appendChild(x);
-                        document.getElementById("reqContents").appendChild(y);
-                        document.getElementById("reqContents").appendChild(qty);
-                        document.getElementById("reqContents").appendChild(uom);
-                        document.getElementById("reqContents").appendChild(z);
-                        $("#item"+j).html(value.item); 
-                        $("#category"+j).prop('readonly', true);
-                        $("#item"+j).prop('readonly', true);
-                        $("#uom"+j).prop('readonly', true);
-                        $("#location"+j).prop('disabled', true);
-                        $("#location"+j).append("<option value='8' selected>MAIN BRANCH</option>");
-                        j++;
-                    }
-                    else{
-                        for(var k=0; k < l; k++){
-                            var id = document.createElement("input");
-                            id.setAttribute("id", "item_id"+j);
-                            id.setAttribute("type", "hidden");
-                            id.setAttribute("value", value.item_id);
-                            var x = document.createElement("input");
-                            x.setAttribute("id", "category"+j);
-                            x.setAttribute("type", "text");
-                            x.setAttribute("class", "form-control");
-                            x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
-                            x.setAttribute("value", value.category);
-                            var y = document.createElement("textarea");
-                            y.setAttribute("id", "item"+j);
-                            y.setAttribute("class", "form-control");
-                            y.setAttribute("rows", "4");
-                            y.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-top: 52px; margin-bottom: 10px; resize: none;");
-                            var z = document.createElement("select");
-                            z.setAttribute("id", "location"+j);
-                            z.setAttribute("class", "form-control");
-                            z.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                            var qty = document.createElement("input");
-                            qty.setAttribute("id", "qty"+j);
-                            qty.setAttribute("type", "number");
-                            qty.setAttribute("class", "form-control");
-                            qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                            qty.setAttribute("value", '1');
-                            var uom = document.createElement("input");
-                            uom.setAttribute("id", "uom"+j);
-                            uom.setAttribute("type", "text");
-                            uom.setAttribute("class", "form-control");
-                            uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                            uom.setAttribute("value", value.uom);
-                            var serial = document.createElement("select");
-                            serial.setAttribute("id", "serial"+j);
-                            serial.setAttribute("class", "form-control serials");
-                            serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                            document.getElementById("reqContents").appendChild(id);
-                            document.getElementById("reqContents").appendChild(x);
-                            document.getElementById("reqContents").appendChild(y);
-                            document.getElementById("reqContents").appendChild(qty);
-                            document.getElementById("reqContents").appendChild(uom);
-                            document.getElementById("reqContents").appendChild(serial);
-                            document.getElementById("reqContents").appendChild(z);
-                            $("#item"+j).html(value.item); 
-                            $("#category"+j).prop('readonly', true);
-                            $("#item"+j).prop('readonly', true);
-                            $("#qty"+j).prop('readonly', true);
-                            $("#uom"+j).prop('readonly', true);
-                            $("#location"+j).prop('disabled', true);
-                            $("#serial"+j).append("<option value='' selected>Select Serial</option>");
-                            let vid = "#serial"+j;
-                            $.ajax({ 
-                                type:'get', 
-                                url:'/setserials', 
-                                data:{
-                                    'item_id': value.item_id
-                                }, 
-                                success:function(d) {   
-                                    var s = $.map(d, function(v) { 
-                                        return [v];
-                                    });
-                
-                                    s.forEach(v => {
-                                        if(v.serial == 'N/A'){
-                                            $(vid).append($('<option>', {
-                                                value: v.id,
-                                                text: v.serial+' - '+v.location
-                                            }));
-                                        }
-                                        else{
-                                            $(vid).append($('<option>', {
-                                                value: v.id,
-                                                text: v.serial
-                                            }));
-                                        }
-                                    });
-                                    $(vid).chosen();
-                                },
-                                error: function (data) {
-                                    if(data.status == 401) {
-                                        window.location.href = '/stockrequest';
-                                    }
-                                    alert(data.responseText);
-                                }
-                            });
-                            j++;
-                        }
-                    }
-                });
-                $('.serials').on('change', function(){
-                    $('.serials option').show();
-                    $('.serials').each(function(){
-                        var $this = $(this);
-                        $('.serials').not($this).find('option').each(function(){
-                            if($(this).attr('value') == $this.val()){
-                                $(this).hide();
-                            }
-                        });
-                    });
-                    $('select option:contains("Select Serial")').show();
-                    $('.serials').trigger("chosen:updated");
-                });
-                for(var m=0; m < j; m++){
-                    let id = '#location'+m;
-                    $('#serial'+m).on('change', function(){
-                        if($('.serials').filter(function() { return !!this.value; }).length == 0) {
-                            $('#btnSubmit').prop('disabled', true);
-                        }
-                        else{
-                            $('#btnSubmit').prop('disabled', false);
-                        }
-                        var serial_id = $(this).val();
-                        $.ajax({
-                            type:'get', 
-                            url:'/setlocation', 
-                            data:{
-                                'serial_id': serial_id
-                            }, 
-                            success:function(data) {
-                                $(id).find('option').remove().end()
-                                $(id).append($('<option>', {
-                                    value: data.location_id,
-                                    text: data.location
-                                }));
-                            },
-                            error: function (data) {
-                                if(data.status == 401) {
-                                    window.location.href = '/stockrequest';
-                                }
-                                alert(data.responseText);
-                            }
-                        });
-                    });
-                }
-                $("#btnSubmit").unbind('click').click(function(){
-                    if(!$("#schedOn").val()){
-                        swal('Scheduled On is required!','Select within date range from today up to Date Needed.','error');
-                        return false;
-                    }
-                    else if($("#schedOn").val() < minDate){
-                        swal('Minimum Date is today!','Select within date range from today up to Date Needed.','error');
-                        return false;
-                    }
-                    else if($("#schedOn").val() > maxDate){
-                        swal('Exceed Date Needed deadline!','Select within date range from today up to Date Needed.','error');
-                        return false;
-                    }
-                    else{
-                        swal({
-                            title: "SCHEDULE STOCK REQUEST?",
-                            text: "You are about to SCHEDULE this STOCK REQUEST!",
-                            icon: "warning",
-                            buttons: true,
-                        })
-                        .then((willDelete) => {
-                            if (willDelete) {
-                                for(var n=0; n < j; n++){
-                                    if($('#serial'+n).val() != ''){
-                                        $.ajax({
-                                            type:'post',
-                                            url:'/prepareItems',
-                                            headers: {
-                                                'X-CSRF-TOKEN': $("#csrf").val()
-                                            },
-                                            data:{
-                                                'request_number': reqnum,
-                                                'item_id': $('#item_id'+n).val(),
-                                                'category': $('#category'+n).val(),
-                                                'item': $('#item'+n).val(),
-                                                'qty': $('#qty'+n).val(),
-                                                'stock_id': $('#serial'+n).val(),
-                                                'serial': $('#serial'+n).find('option:selected').text(),
-                                                'location': $('#location'+n).val(),
-                                                'schedOn': $('#schedOn').val()
-                                            },
-                                            success: function (data){
-                                                if(data == 'true'){
-                                                    return true;
-                                                }
-                                                else{
-                                                    return false;
-                                                }
-                                            },
-                                            error: function (data) {
-                                                if(data.status == 401) {
-                                                    window.location.href = '/stockrequest';
-                                                }
-                                                alert(data.responseText);
-                                            }
-                                        });
-                                    }
-                                }
-                                $.ajax({
-                                    type:'post',
-                                    url:'/logSched',
-                                    headers: {
-                                        'X-CSRF-TOKEN': $("#csrf").val()
-                                    },
-                                    data:{
-                                        'request_number': reqnum,
-                                        'schedOn': $('#schedOn').val()
-                                    },
-                                    success: function (){
-                                        $('#stockRequestDetails').hide();
-                                        sweetAlert("SCHEDULED SUCCESS", "STOCK REQUEST", "success");
-                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
-                                    },
-                                    error: function (data) {
-                                        if(data.status == 401) {
-                                            window.location.href = '/stockrequest';
-                                        }
-                                        alert(data.responseText);
-                                    }
-                                });
-                            }
-                        }); 
-                    }
-                });
-            },
-            error: function (data) {
-                if(data.status == 401) {
-                    window.location.href = '/stockrequest';
-                }
-                alert(data.responseText);
-            }
-        }); 
-    }
-});
-
-$("#btnBack").on('click', function(){
-    $("#stockDetailsrequest *").prop('disabled', false);
-    $('#btnSubmit').prop('disabled', true);
-    $("#requestItems").hide();
-    $("#btnProceed").show();
-    $("#reqContents").empty();
-});
-
 $('table.stock_request').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
 $('table.stock_request').DataTable({ 
@@ -882,6 +525,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                 return [value];
             });
             reqitem.forEach(value => {
+                var requestStatus = value.status_id;
                 var req_date = value.date;
                     req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
                     $('#daterequestdetails').val(req_date);
@@ -923,29 +567,29 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         $("#reference_label").hide();
                         $("#reference_details").hide();
                     }
-                    if(value.status_id != '6'){
+                    if(requestStatus != '6'){
                         $("#btnApprove").hide();
                         $("#btnDisapprove").hide();
                     }
-                    if(value.status_id == '7'){
+                    if(requestStatus == '7'){
                         $("#btnApprove").show();
                         $("#btnDisapprove").hide();
                         $("#reason_label").show();
                         $("#reason_details").show();
                     }
-                    if(value.status_id == '1'|| value.status_id == '2'|| value.status_id == '3' || value.status_id == '4' || value.status_id == '5' || value.status_id == '8'){
+                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8'){
                         $("#btnDelete").hide();
                     }
-                    if(value.status_id == '2' || value.status_id == '3' || value.status_id == '4' || value.status_id == '6' || value.status_id == '7' || value.status_id == '8'){
+                    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8'){
                         $("#btnProceed").hide();
                     }
-                    if(value.status_id == '2' || value.status_id == '5'){
+                    if(requestStatus == '2' || requestStatus == '5'){
                         $("#schedItemsModal").show();
                     }
-                    if(value.status_id == '3' || value.status_id == '4'){
+                    if(requestStatus == '3' || requestStatus == '4'){
                         $("#transitItemsModal").show();
                     }
-                    if(value.status_id == '8'){
+                    if(requestStatus == '8'){
                         $("#transitItemsModal").show();
                         $("#btnReceive").hide();
                         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
@@ -962,7 +606,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
-                    if(value.status_id == '1'|| value.status_id == '2'|| value.status_id == '3' || value.status_id == '4' || value.status_id == '5' || value.status_id == '8'){
+                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8'){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
@@ -1289,6 +933,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
     });
     var table =  $('table.stock_request').DataTable(); 
     var data = table.row( this ).data();
+    var requestStatus = data.status_id;
     var req_date = data.date;
         req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
         $('#daterequestdetails').val(req_date);
@@ -1330,29 +975,29 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             $("#reference_label").hide();
             $("#reference_details").hide();
         }
-        if(data.status_id != '6'){
+        if(requestStatus != '6'){
             $("#btnApprove").hide();
             $("#btnDisapprove").hide();
         }
-        if(data.status_id == '7'){
+        if(requestStatus == '7'){
             $("#btnApprove").show();
             $("#btnDisapprove").hide();
             $("#reason_label").show();
             $("#reason_details").show();
         }
-        if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
+        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8'){
             $("#btnDelete").hide();
         }
-        if(data.status_id == '2' || data.status_id == '3' || data.status_id == '4' || data.status_id == '6' || data.status_id == '7' || data.status_id == '8'){
+        if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8'){
             $("#btnProceed").hide();
         }
-        if(data.status_id == '2' || data.status_id == '5'){
+        if(requestStatus == '2' || requestStatus == '5'){
             $("#schedItemsModal").show();
         }
-        if(data.status_id == '3' || data.status_id == '4'){
+        if(requestStatus == '3' || requestStatus == '4'){
             $("#transitItemsModal").show();
         }
-        if(data.status_id == '8'){
+        if(requestStatus == '8'){
             $("#transitItemsModal").show();
             $("#btnReceive").hide();
             document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
@@ -1369,7 +1014,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             $("#sd1").show();
             $("#sd2").hide();
         }
-        if(data.status_id == '1'|| data.status_id == '2'|| data.status_id == '3' || data.status_id == '4' || data.status_id == '5' || data.status_id == '8'){
+        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8'){
             $("#sd1").show();
             $("#sd2").hide();
         }
@@ -2054,6 +1699,363 @@ $(document).on('click', '#btnReceive', function(){
             });
         }
     });    
+});
+
+var items = [];
+$('table.stockDetails').DataTable().on('select', function(){});
+$('.stockDetails tbody').on('click', 'tr', function () {
+    var pend = $('#stockDetailsrequest').DataTable().cell(this,4).data();
+    var stock = $('#stockDetailsrequest').DataTable().cell(this,5).data();
+    var item_id = $('#stockDetailsrequest').DataTable().cell(this,6).data();
+    var bal = $('#stockDetailsrequest').DataTable().cell(this,11).data();
+    var mal = $('#stockDetailsrequest').DataTable().cell(this,12).data();
+
+    if(pend == 0){
+        swal('Item is fullfiled!','','success');
+    }
+    else if(stock == 0){
+        if(bal != 0 && mal != 0){
+            swal('Item out of stock!','Request Stock Transfer from Balintawak and/or Malabon.','warning');
+        }
+        else if(bal != 0 && mal == 0){
+            swal('Item out of stock!','Request Stock Transfer from Balintawak.','warning');
+        }
+        else if(bal == 0 && mal != 0){
+            swal('Item out of stock!','Request Stock Transfer from Malabon.','warning');
+        }
+        else{
+            swal('Item out of stock!','','error');
+        }
+    }
+    else{
+        $(this).toggleClass('selected');
+        if(items.includes(item_id) == true){
+            items = items.filter(item => item !== item_id);
+        }
+        else {
+            items.push(item_id);
+        }
+    }
+    if(items.length == 0){
+        $('#btnProceed').prop('disabled', true);
+    }
+    else{
+        $('#btnProceed').prop('disabled', false);
+    }
+});
+
+$("#btnProceed").unbind('click').click(function(){
+    var reqnum = $('#request_num_details').val();
+    var j = 0;
+    $("#stockDetailsrequest *").prop('disabled',true);
+    $("#btnProceed").hide();
+    $("#requestItems").slideDown();
+    $('#schedOn').attr('max', maxDate);
+    for(var i=0; i < items.length; i++){
+        $.ajax({ 
+            type:'get', 
+            url:'/stockreq', 
+            data:{
+                'reqnum': reqnum,
+                'item_id': items[i]
+            }, 
+            success:function(data) {
+                var reqitem = $.map(data.data, function(value, index) { 
+                    return [value];
+                });
+
+                reqitem.forEach(value => {
+                    if(value.qtystock <= value.pending){
+                        var l = value.qtystock;
+                    }
+                    else{
+                        var l = value.pending;
+                    }
+                    if(value.uom != 'Unit'){
+                        $('#btnSubmit').prop('disabled', false);
+                        var id = document.createElement("input");
+                        id.setAttribute("id", "item_id"+j);
+                        id.setAttribute("type", "hidden");
+                        id.setAttribute("value", value.item_id);
+                        var x = document.createElement("input");
+                        x.setAttribute("id", "category"+j);
+                        x.setAttribute("type", "text");
+                        x.setAttribute("class", "form-control");
+                        x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
+                        x.setAttribute("value", value.category);
+                        var y = document.createElement("textarea");
+                        y.setAttribute("id", "item"+j);
+                        y.setAttribute("class", "form-control");
+                        y.setAttribute("rows", "4");
+                        y.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-top: 52px; margin-bottom: 10px; resize: none;");
+                        var z = document.createElement("select");
+                        z.setAttribute("id", "location"+j);
+                        z.setAttribute("class", "form-control");
+                        z.setAttribute("style", "width: 150px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        var qty = document.createElement("input");
+                        qty.setAttribute("id", "qty"+j);
+                        qty.setAttribute("type", "number");
+                        qty.setAttribute("class", "form-control qty");
+                        qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        qty.setAttribute("max", l);
+                        qty.setAttribute("min", '1');
+                        qty.setAttribute("value", l);
+                        var uom = document.createElement("input");
+                        uom.setAttribute("id", "uom"+j);
+                        uom.setAttribute("type", "text");
+                        uom.setAttribute("class", "form-control");
+                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        uom.setAttribute("value", value.uom);
+                        document.getElementById("reqContents").appendChild(id);
+                        document.getElementById("reqContents").appendChild(x);
+                        document.getElementById("reqContents").appendChild(y);
+                        document.getElementById("reqContents").appendChild(qty);
+                        document.getElementById("reqContents").appendChild(uom);
+                        document.getElementById("reqContents").appendChild(z);
+                        $("#item"+j).html(value.item); 
+                        $("#category"+j).prop('readonly', true);
+                        $("#item"+j).prop('readonly', true);
+                        $("#uom"+j).prop('readonly', true);
+                        $("#location"+j).prop('disabled', true);
+                        $("#location"+j).append("<option value='8' selected>MAIN BRANCH</option>");
+                        j++;
+                    }
+                    else{
+                        for(var k=0; k < l; k++){
+                            var id = document.createElement("input");
+                            id.setAttribute("id", "item_id"+j);
+                            id.setAttribute("type", "hidden");
+                            id.setAttribute("value", value.item_id);
+                            var x = document.createElement("input");
+                            x.setAttribute("id", "category"+j);
+                            x.setAttribute("type", "text");
+                            x.setAttribute("class", "form-control");
+                            x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
+                            x.setAttribute("value", value.category);
+                            var y = document.createElement("textarea");
+                            y.setAttribute("id", "item"+j);
+                            y.setAttribute("class", "form-control");
+                            y.setAttribute("rows", "4");
+                            y.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-top: 52px; margin-bottom: 10px; resize: none;");
+                            var z = document.createElement("select");
+                            z.setAttribute("id", "location"+j);
+                            z.setAttribute("class", "form-control");
+                            z.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            var qty = document.createElement("input");
+                            qty.setAttribute("id", "qty"+j);
+                            qty.setAttribute("type", "number");
+                            qty.setAttribute("class", "form-control");
+                            qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            qty.setAttribute("value", '1');
+                            var uom = document.createElement("input");
+                            uom.setAttribute("id", "uom"+j);
+                            uom.setAttribute("type", "text");
+                            uom.setAttribute("class", "form-control");
+                            uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            uom.setAttribute("value", value.uom);
+                            var serial = document.createElement("select");
+                            serial.setAttribute("id", "serial"+j);
+                            serial.setAttribute("class", "form-control serials");
+                            serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            document.getElementById("reqContents").appendChild(id);
+                            document.getElementById("reqContents").appendChild(x);
+                            document.getElementById("reqContents").appendChild(y);
+                            document.getElementById("reqContents").appendChild(qty);
+                            document.getElementById("reqContents").appendChild(uom);
+                            document.getElementById("reqContents").appendChild(serial);
+                            document.getElementById("reqContents").appendChild(z);
+                            $("#item"+j).html(value.item); 
+                            $("#category"+j).prop('readonly', true);
+                            $("#item"+j).prop('readonly', true);
+                            $("#qty"+j).prop('readonly', true);
+                            $("#uom"+j).prop('readonly', true);
+                            $("#location"+j).prop('disabled', true);
+                            $("#serial"+j).append("<option value='' selected>Select Serial</option>");
+                            let vid = "#serial"+j;
+                            $.ajax({ 
+                                type:'get', 
+                                url:'/setserials', 
+                                data:{
+                                    'item_id': value.item_id
+                                }, 
+                                success:function(d) {   
+                                    var s = $.map(d, function(v) { 
+                                        return [v];
+                                    });
+                
+                                    s.forEach(v => {
+                                        if(v.serial == 'N/A'){
+                                            $(vid).append($('<option>', {
+                                                value: v.id,
+                                                text: v.serial+' - '+v.location
+                                            }));
+                                        }
+                                        else{
+                                            $(vid).append($('<option>', {
+                                                value: v.id,
+                                                text: v.serial
+                                            }));
+                                        }
+                                    });
+                                    $(vid).chosen();
+                                },
+                                error: function (data) {
+                                    if(data.status == 401) {
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                            j++;
+                        }
+                    }
+                });
+                $('.serials').on('change', function(){
+                    $('.serials option').show();
+                    $('.serials').each(function(){
+                        var $this = $(this);
+                        $('.serials').not($this).find('option').each(function(){
+                            if($(this).attr('value') == $this.val()){
+                                $(this).hide();
+                            }
+                        });
+                    });
+                    $('select option:contains("Select Serial")').show();
+                    $('.serials').trigger("chosen:updated");
+                });
+                for(var m=0; m < j; m++){
+                    let id = '#location'+m;
+                    $('#serial'+m).on('change', function(){
+                        if($('.serials').filter(function() { return !!this.value; }).length == 0) {
+                            $('#btnSubmit').prop('disabled', true);
+                        }
+                        else{
+                            $('#btnSubmit').prop('disabled', false);
+                        }
+                        var serial_id = $(this).val();
+                        $.ajax({
+                            type:'get', 
+                            url:'/setlocation', 
+                            data:{
+                                'serial_id': serial_id
+                            }, 
+                            success:function(data) {
+                                $(id).find('option').remove().end()
+                                $(id).append($('<option>', {
+                                    value: data.location_id,
+                                    text: data.location
+                                }));
+                            },
+                            error: function (data) {
+                                if(data.status == 401) {
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    });
+                }
+                $("#btnSubmit").unbind('click').click(function(){
+                    if(!$("#schedOn").val()){
+                        swal('Scheduled On is required!','Select within date range from today up to Date Needed.','error');
+                        return false;
+                    }
+                    else if($("#schedOn").val() < minDate){
+                        swal('Minimum Date is today!','Select within date range from today up to Date Needed.','error');
+                        return false;
+                    }
+                    else if($("#schedOn").val() > maxDate){
+                        swal('Exceed Date Needed deadline!','Select within date range from today up to Date Needed.','error');
+                        return false;
+                    }
+                    else{
+                        swal({
+                            title: "SCHEDULE STOCK REQUEST?",
+                            text: "You are about to SCHEDULE this STOCK REQUEST!",
+                            icon: "warning",
+                            buttons: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                for(var n=0; n < j; n++){
+                                    if($('#serial'+n).val() != ''){
+                                        $.ajax({
+                                            type:'post',
+                                            url:'/prepareItems',
+                                            headers: {
+                                                'X-CSRF-TOKEN': $("#csrf").val()
+                                            },
+                                            data:{
+                                                'request_number': reqnum,
+                                                'item_id': $('#item_id'+n).val(),
+                                                'category': $('#category'+n).val(),
+                                                'item': $('#item'+n).val(),
+                                                'qty': $('#qty'+n).val(),
+                                                'stock_id': $('#serial'+n).val(),
+                                                'serial': $('#serial'+n).find('option:selected').text(),
+                                                'location': $('#location'+n).val(),
+                                                'schedOn': $('#schedOn').val()
+                                            },
+                                            success: function (data){
+                                                if(data == 'true'){
+                                                    return true;
+                                                }
+                                                else{
+                                                    return false;
+                                                }
+                                            },
+                                            error: function (data) {
+                                                if(data.status == 401) {
+                                                    window.location.href = '/stockrequest';
+                                                }
+                                                alert(data.responseText);
+                                            }
+                                        });
+                                    }
+                                }
+                                $.ajax({
+                                    type:'post',
+                                    url:'/logSched',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                    },
+                                    data:{
+                                        'request_number': reqnum,
+                                        'schedOn': $('#schedOn').val()
+                                    },
+                                    success: function (){
+                                        $('#stockRequestDetails').hide();
+                                        sweetAlert("SCHEDULED SUCCESS", "STOCK REQUEST", "success");
+                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                    },
+                                    error: function (data) {
+                                        if(data.status == 401) {
+                                            window.location.href = '/stockrequest';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
+                            }
+                        }); 
+                    }
+                });
+            },
+            error: function (data) {
+                if(data.status == 401) {
+                    window.location.href = '/stockrequest';
+                }
+                alert(data.responseText);
+            }
+        }); 
+    }
+});
+
+$("#btnBack").on('click', function(){
+    $("#stockDetailsrequest *").prop('disabled', false);
+    $('#btnSubmit').prop('disabled', true);
+    $("#requestItems").hide();
+    $("#btnProceed").show();
+    $("#reqContents").empty();
 });
 
 $(document).on('click', '.btnPrint', function(){

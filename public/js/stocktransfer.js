@@ -725,7 +725,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
     });
 }
 
-$('#stocktransferTable tbody').on('click', 'tr', function () {
+$('#stocktransferTable tbody').on('click', 'tr', function(){
     $('#detailsStockTransfer').modal({
         backdrop: 'static',
         keyboard: false
@@ -1210,10 +1210,13 @@ $(document).on('click', '#btnReceive', function(){
 var items = [];
 $('table.transferDetails').DataTable().on('select', function(){});
 $('.transferDetails tbody').on('click', 'tr', function(){
-    var pend = $('#transferDetails').DataTable().cell(this,4).data();
-    var item_id = $('#transferDetails').DataTable().cell(this,6).data();
-    var bal = $('#transferDetails').DataTable().cell(this,11).data();
-    var mal = $('#transferDetails').DataTable().cell(this,12).data();
+    var table =  $('table.transferDetails').DataTable();
+    var data = table.row(this).data();
+    var pend = data.pending;
+    var item_id = data.item_id;
+    var bal = data.qtybal;
+    var mal = data.qtymal;
+
     if($('#locfrom_details').val() == 5){
         var stock = bal;
     }

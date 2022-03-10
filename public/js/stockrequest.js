@@ -932,7 +932,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         keyboard: false
     });
     var table =  $('table.stock_request').DataTable(); 
-    var data = table.row( this ).data();
+    var data = table.row(this).data();
     var requestStatus = data.status_id;
     var req_date = data.date;
         req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
@@ -1703,12 +1703,14 @@ $(document).on('click', '#btnReceive', function(){
 
 var items = [];
 $('table.stockDetails').DataTable().on('select', function(){});
-$('.stockDetails tbody').on('click', 'tr', function () {
-    var pend = $('#stockDetailsrequest').DataTable().cell(this,4).data();
-    var stock = $('#stockDetailsrequest').DataTable().cell(this,5).data();
-    var item_id = $('#stockDetailsrequest').DataTable().cell(this,6).data();
-    var bal = $('#stockDetailsrequest').DataTable().cell(this,11).data();
-    var mal = $('#stockDetailsrequest').DataTable().cell(this,12).data();
+$('.stockDetails tbody').on('click', 'tr', function(){
+    var table =  $('table.stockDetails').DataTable();
+    var data = table.row(this).data();
+    var pend = data.pending;
+    var stock = data.qtystock;
+    var item_id = data.item_id;
+    var bal = data.qtybal;
+    var mal = data.qtymal;
 
     if(pend == 0){
         swal('Item is fullfiled!','','success');

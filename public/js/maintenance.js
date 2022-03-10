@@ -9,8 +9,7 @@ if(window.location.href == 'https://lance.idsi.com.ph/maintenance'){
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
-        processing: true,
-        serverSide: false,
+        serverSide: true,
         ajax: {
             url: '/fm_items',
         },
@@ -35,8 +34,8 @@ if(window.location.href == 'https://lance.idsi.com.ph/maintenance'){
     });
 
     $('.filter-input').keyup(function() {
-        table.column( $(this).data('column'))
-            .search( $(this).val())
+        table.column($(this).data('column'))
+            .search($(this).val())
             .draw();
     });
 }
@@ -50,8 +49,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=categ
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
-        processing: true,
-        serverSide: false,
+        serverSide: true,
         ajax: {
             url: '/fm_categories',
         },
@@ -66,8 +64,6 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=categ
             { data: 'category' }
         ],
         order:[[1, 'asc']],
-        orderCellsTop: true,
-        fixedHeader: true,
         initComplete: function (){
             $('#loading').hide(); Spinner.hide();
         }
@@ -83,8 +79,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=locat
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
-        processing: true,
-        serverSide: false,
+        serverSide: true,
         ajax: {
             url: '/fm_locations',
         },
@@ -100,8 +95,6 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=locat
             { data: 'status' }
         ],
         order:[[1, 'asc']],
-        orderCellsTop: true,
-        fixedHeader: true,
         initComplete: function (){
             $('#loading').hide(); Spinner.hide();
         }

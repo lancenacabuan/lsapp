@@ -124,7 +124,7 @@ $('table.stock_request').DataTable({
         processing: "Loading...",
         emptyTable: "No data available in table"
     },
-    order: [],
+    serverSide: true,
     ajax: {
         url: '/request_data',
     },
@@ -649,12 +649,10 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     ordering: false,
                     info: false,
                     language: {
-                        "emptyTable": "No data available in table",
-                        "processing": "Loading...",
+                        emptyTable: "No data available in table",
+                        processing: "Loading...",
                     },
-                    processing: true,
-                    serverSide: false,
-                    
+                    serverSide: true,
                     ajax: {
                         url: '/requestDetails',
                         data: {
@@ -701,12 +699,10 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     ordering: false,
                     info: false,
                     language: {
-                        "emptyTable": "No data available in table",
-                        "processing": "Loading...",
+                        emptyTable: "No data available in table",
+                        processing: "Loading...",
                     },
-                    processing: true,
-                    serverSide: false,
-                    
+                    serverSide: true,
                     ajax: {
                         url: '/requestDetails',
                         data: {
@@ -753,12 +749,10 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     ordering: false,
                     info: false,
                     language: {
-                        "emptyTable": "No data available in table",
-                        "processing": "Loading...",
+                        emptyTable: "No data available in table",
+                        processing: "Loading...",
                     },
-                    processing: true,
-                    serverSide: false,
-                    
+                    serverSide: true,
                     ajax: {
                         url: '/requestDetails',
                         data: {
@@ -808,7 +802,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
-                    order: [],
+                    serverSide: true,
                     ajax: {
                         url: '/schedItems',
                         data: {
@@ -835,7 +829,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
-                    order: [],
+                    serverSide: true,
                     ajax: {
                         url: '/schedItems',
                         data: {
@@ -875,7 +869,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
-                    order: [],
+                    serverSide: true,
                     ajax: {
                         url: '/schedItems',
                         data: {
@@ -902,7 +896,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
-                    order: [],
+                    serverSide: true,
                     ajax: {
                         url: '/schedItems',
                         data: {
@@ -1057,12 +1051,10 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         ordering: false,
         info: false,
         language: {
-            "emptyTable": "No data available in table",
-            "processing": "Loading...",
+            emptyTable: "No data available in table",
+            processing: "Loading...",
         },
-        processing: true,
-        serverSide: false,
-        
+        serverSide: true,
         ajax: {
             url: '/requestDetails',
             data: {
@@ -1110,12 +1102,10 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         ordering: false,
         info: false,
         language: {
-            "emptyTable": "No data available in table",
-            "processing": "Loading...",
+            emptyTable: "No data available in table",
+            processing: "Loading...",
         },
-        processing: true,
-        serverSide: false,
-        
+        serverSide: true,
         ajax: {
             url: '/requestDetails',
             data: {
@@ -1163,12 +1153,10 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         ordering: false,
         info: false,
         language: {
-            "emptyTable": "No data available in table",
-            "processing": "Loading...",
+            emptyTable: "No data available in table",
+            processing: "Loading...",
         },
-        processing: true,
-        serverSide: false,
-        
+        serverSide: true,
         ajax: {
             url: '/requestDetails',
             data: {
@@ -1219,7 +1207,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
-        order: [],
+        serverSide: true,
         ajax: {
             url: '/schedItems',
             data: {
@@ -1246,7 +1234,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
-        order: [],
+        serverSide: true,
         ajax: {
             url: '/schedItems',
             data: {
@@ -1286,7 +1274,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
-        order: [],
+        serverSide: true,
         ajax: {
             url: '/schedItems',
             data: {
@@ -1313,7 +1301,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
-        order: [],
+        serverSide: true,
         ajax: {
             url: '/schedItems',
             data: {

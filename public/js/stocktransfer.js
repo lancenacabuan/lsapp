@@ -469,7 +469,7 @@ $('table.stocktransferTable').DataTable({
         processing: "Loading...",
         emptyTable: "No data available in table"
     },
-    order: [],
+    serverSide: true,
     ajax: {
         url: '/transfer_data',
     },
@@ -654,12 +654,10 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     ordering: false,
                     info: false,
                     language: {
-                        "emptyTable": "No data available in table",
-                        "processing": "Loading...",
+                        emptyTable: "No data available in table",
+                        processing: "Loading...",
                     },
-                    processing: true,
-                    serverSide: false,
-                    
+                    serverSide: true,
                     ajax: {
                         url: '/transferDetails',
                         data: {
@@ -702,7 +700,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
-                    order: [],
+                    serverSide: true,
                     ajax: {
                         url: '/transItems',
                         data: {
@@ -827,12 +825,10 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         ordering: false,
         info: false,
         language: {
-            "emptyTable": "No data available in table",
-            "processing": "Loading...",
+            emptyTable: "No data available in table",
+            processing: "Loading...",
         },
-        processing: true,
-        serverSide: false,
-        
+        serverSide: true,
         ajax: {
             url: '/transferDetails',
             data: {
@@ -875,7 +871,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
-        order: [],
+        serverSide: true,
         ajax: {
             url: '/transItems',
             data: {

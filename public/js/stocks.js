@@ -20,6 +20,7 @@ function category(){
     $('#loading').show(); Spinner(); Spinner.show();
     CategoryTable = 
         $('table.CategoryTable').DataTable({ 
+            serverSide: true,
             ajax: 'category_data',
             columns: [
                 { data: 'Category'},
@@ -59,6 +60,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({ 
+            serverSide: true,
             ajax: {
                 url: 'item_data',
                 data:{
@@ -94,6 +96,7 @@ $(document).on('click', '#btnBack', function(){
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({ 
+            serverSide: true,
             ajax: {
                 url: 'item_data',
                 data:{
@@ -130,6 +133,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#loading').show(); Spinner(); Spinner.show();
     ItemSerialTable = 
         $('table.ItemSerialTable').DataTable({ 
+            serverSide: true,
             ajax: {
                 url: 'itemserial_data',
                 data:{

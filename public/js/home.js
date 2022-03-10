@@ -1,15 +1,12 @@
 $(document).ready(function () {
     $('#loading').show(); Spinner(); Spinner.show();
     $('table.user_logs').DataTable({ 
-        dom:  '<lf<t>ip>',
         language: {
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         scrollX: true,
-        processing: true,
         serverSide: true,
-        order: [],
         ajax: {
             url: '/index_data',
         },

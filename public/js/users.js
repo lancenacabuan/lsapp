@@ -6,8 +6,7 @@ $(document).ready(function(){
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
-        processing: true,
-        serverSide: false,
+        serverSide: true,
         ajax: {
             url: '/users_data',
         },
@@ -18,8 +17,6 @@ $(document).ready(function(){
             { data: 'role_name' },
             { data: 'user_status' }
         ],
-        orderCellsTop: true,
-        fixedHeader: true,
         initComplete: function (){
             $('#loading').hide(); Spinner.hide();
         }

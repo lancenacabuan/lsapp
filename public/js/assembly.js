@@ -42,8 +42,8 @@ $(".add-row").on('click', function(){
     var category = $("#categoryItm option:selected").text();
     var item = $("#itemItm option:selected").text();
     let qty = $("#qtyItm").val();
-    var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
-    var ctr='false';
+    var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+    var ctr = 'false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0"){
         swal('REQUIRED','Please select item!','error');
         return false;
@@ -57,17 +57,17 @@ $(".add-row").on('click', function(){
 
             if(item==objCells.item(1).innerHTML){
                 objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
-                ctr='true';
+                ctr = 'true';
                 category = $("#categoryItm").val('Select Category');
                 item = $("#itemItm").find('option').remove().end().append('<option value="0">Select Item</option>').val()
                 qty = $("#qtyItm").val('');
                 return false;
             }
             else {
-                ctr='false';
+                ctr = 'false';
             }
         }
-        if(ctr=='false')
+        if(ctr == 'false')
         { $("#tblCreateItem tbody").append(markup); }
         category = $("#categoryItm").val('Select Category');
         item = $("#itemItm").find('option').remove().end().append('<option value="0">Select Item</option>').val()

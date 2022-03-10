@@ -198,8 +198,8 @@ $(".add-row").on('click', function(){
     var item = $("#itemReq option:selected").text();
     let qty = $("#qtyReq").val();
     var uom = $("#uom").val();
-    var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
-    var ctr='false';
+    var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+    var ctr = 'false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
         swal('REQUIRED','Please select an item!','error');
         return false;
@@ -213,7 +213,7 @@ $(".add-row").on('click', function(){
 
             if(item==objCells.item(1).innerHTML){
                 objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
-                ctr='true';
+                ctr = 'true';
                 category = $("#categoryReq").val('Select Category');
                 item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val()
                 qty = $("#qtyReq").val('');
@@ -221,10 +221,10 @@ $(".add-row").on('click', function(){
                 return false;
             }
             else {
-                ctr='false';
+                ctr = 'false';
             }
         }
-        if(ctr=='false')
+        if(ctr == 'false')
         { $("#stockRequestTable tbody").append(markup); }
         category = $("#categoryReq").val('Select Category');
         item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val()
@@ -236,43 +236,6 @@ $(".add-row").on('click', function(){
         $('#requestSave').show();
     } 
 });
-
-// $(".add-row").on('click', function(){                   
-//     var item_id = $("#itemReq option:selected").val();
-//     var category = $("#categoryReq option:selected").text();
-//     var item = $("#itemReq option:selected").text();
-//     var qty = $("#qtyReq").val();
-            
-//     if(category == "Select Category" || item == "Select Item" || qty == ""){
-//         alert('Please select item!');
-//         return false;
-//     }
-//     else{
-//         $.ajax({
-//             url:'/itemsstock',
-//             type:'get',
-//             data:{
-//                 'item_id': item_id,
-//                 'item': item,
-//                 'qty': qty,
-//             },
-//             success:function(getData){
-//                 alert(getData);
-//                 var stock = getData;
-//                 var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>"+ stock +"</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
-//                 $('#qtyStock').val('');
-//                 $("#stockRequestTable tbody").append(markup);
-//                 category = $("#categoryReq").val('Select Category');
-//                 item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val()
-//                 qty = $("#qtyReq").val('');
-//                 $('#stockRequestTable').show();
-//                 $('#stockRequestDiv').toggle();
-//                 $('#requestClose').show();
-//                 $('#requestSave').show();
-//             }
-//         });
-//     } 
-// });
 
 $("#stockRequestTable").on('click', '.delete-row', function(){
     $(this).closest("tr").remove();
@@ -738,7 +701,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         },
                         {   
                             "render": function (data, type, row, meta) {
-                                    return '<button class="btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                             },
                             "defaultContent": '',
                             "data": null,
@@ -788,7 +751,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         },
                         {   
                             "render": function ( data, type, row, meta ) {
-                                    return '<button class="btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                             },
                             "defaultContent": '',
                             "data": null,
@@ -855,7 +818,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         },
                         {   
                             "render": function ( data, type, row, meta ) {
-                                    return '<button class="btn-primary bp btnReceive" id="'+ meta.row +'">RECEIVE</button>';
+                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnReceive" id="'+ meta.row +'">RECEIVE</button>';
                             },
                             "defaultContent": '',
                             "data": null,
@@ -1142,7 +1105,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             },
             {   
                 "render": function (data, type, row, meta) {
-                        return '<button class="btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                        return '<button style="zoom: 75%;" class="btn btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                 },
                 "defaultContent": '',
                 "data": null,
@@ -1193,7 +1156,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             },
             {   
                 "render": function ( data, type, row, meta ) {
-                        return '<button class="btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                 },
                 "defaultContent": '',
                 "data": null,
@@ -1260,7 +1223,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
             },
             {   
                 "render": function ( data, type, row, meta ) {
-                        return '<button class="btn-primary bp btnReceive" id="'+ meta.row +'">RECEIVE</button>';
+                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnReceive" id="'+ meta.row +'">RECEIVE</button>';
                 },
                 "defaultContent": '',
                 "data": null,

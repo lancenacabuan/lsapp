@@ -245,8 +245,8 @@ $(".add-row").on('click', function(){
     var qty = parseInt($("#qty").val());
     var qtystock = parseInt($("#qtystock").val());
     var uom = $("#uom").val();
-    var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' class='delete-row btn-primary btn-xs bp'>REMOVE</button> </td></tr>";
-    var ctr='false';
+    var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+    var ctr = 'false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
         swal('REQUIRED','Please select an item!','error');
         return false;
@@ -266,7 +266,7 @@ $(".add-row").on('click', function(){
 
                 if(item==objCells.item(1).innerHTML){
                     objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
-                    ctr='true';
+                    ctr = 'true';
                     category = $("#category").val('');
                     item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
                     qty = $("#qty").val('');
@@ -276,10 +276,10 @@ $(".add-row").on('click', function(){
                     return false;
                 }
                 else {
-                    ctr='false';
+                    ctr = 'false';
                 }
             }
-            if(ctr=='false')
+            if(ctr == 'false')
             { $("#tblNewStockTransfer tbody").append(markup); }
             category = $("#category").val('');
             item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
@@ -643,7 +643,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                         },
                         {   
                             "render": function (data, type, row, meta) {
-                                    return '<button class="btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                             },
                             "defaultContent": '',
                             "data": null,
@@ -814,7 +814,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
             },
             {   
                 "render": function (data, type, row, meta) {
-                        return '<button class="btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                        return '<button style="zoom: 75%;" class="btn btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                 },
                 "defaultContent": '',
                 "data": null,

@@ -39,7 +39,7 @@
                     <option selected disabled>Select Item</option>
                 </select>
                 <input class="form-control" id="qtyItm" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty">
-                <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="font-size: 12px; height: 30px; margin-left: 10px;">
+                <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 75%; margin-left: 10px; margin-top: -1px;">
             </div>          
         </form>
         <div class="container-fluid"  id="#divCreateItem">

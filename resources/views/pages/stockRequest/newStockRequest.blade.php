@@ -54,8 +54,8 @@
                 </select>
                 <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>
                 <input class="form-control" id="qtyReq" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty">
-                {{-- <input class="form-control" id="qtyStock" min="0" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty" readonly>&nbsp;   --}}
-                <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="font-size: 12px; height: 30px; margin-left: 10px;">
+                {{-- <input class="form-control" id="qtyStock" min="0" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty" readonly>   --}}
+                <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 75%; margin-left: 10px; margin-top: -1px;">
             </div>          
         </form>
         <div class="container-fluid"  id="#stockRequestDiv">

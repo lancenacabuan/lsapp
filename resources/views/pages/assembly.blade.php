@@ -8,9 +8,10 @@
     @endrole
 </div>
 <div class="container-fluid">
-    <table class="table-hover table assemblyTable" id="assemblyTable" style="background-color: #0d1a80 !important; color: white !important; width:100%; font-size:80%">
-        <thead>
+    <table id="assemblyTable" class="table assemblyTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
+        <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;"> 
             <tr>
+                <th>DATE NEEDED</th>
                 <th>DATE REQUESTED</th>
                 <th>REQUESTED BY</th>
                 <th>ITEM DESCRIPTION</th>
@@ -19,6 +20,6 @@
         </thead>
     </table>
 </div>
-@include('pages.assembly.createItem')
 {{-- @include('pages.assembly.newAssembly') --}}
+@include('pages.assembly.createItem')
 @endsection

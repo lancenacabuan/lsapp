@@ -17,7 +17,6 @@ $(document).ready(function(){
             { data: 'role_name' },
             { data: 'user_status' }
         ],
-        order:[],
         initComplete: function (){
             $('#loading').hide(); Spinner.hide();
         }

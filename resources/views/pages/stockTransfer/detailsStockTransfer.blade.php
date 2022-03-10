@@ -64,11 +64,11 @@
                         <th>QTY REQUESTED</th>
                         <th>QTY PENDING</th>
                         <th>QTY IN STOCK<br>TOTAL MAIN BRANCH</th>
-                        <th></th>
-                        <th>QTY IN STOCK<br>A1</th>
-                        <th>QTY IN STOCK<br>A2</th>
-                        <th>QTY IN STOCK<br>A3</th>
-                        <th>QTY IN STOCK<br>A4</th>
+                        <th class="d-none"></th>
+                        <th class="d-none">QTY IN STOCK<br>A1</th>
+                        <th class="d-none">QTY IN STOCK<br>A2</th>
+                        <th class="d-none">QTY IN STOCK<br>A3</th>
+                        <th class="d-none">QTY IN STOCK<br>A4</th>
                         <th>QTY IN STOCK<br>BALINTAWAK</th>
                         <th>QTY IN STOCK<br>MALABON</th>
                         <th></th>

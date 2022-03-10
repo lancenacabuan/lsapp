@@ -19,14 +19,14 @@
                 <th>REQUESTED BY</th>
                 <th>REQUEST TYPE</th>
                 <th>STATUS</th>
-                <th>REQUEST TYPE ID</th>
-                <th>STATUS ID</th>
-                <th>PREPARED BY</th>
-                <th>SCHEDULE</th>
-                <th>USER ID</th>
-                <th>CLIENT NAME</th>
-                <th>ADDRESS / BRANCH</th>
-                <th>REASON</th>
+                <th class="d-none">REQUEST TYPE ID</th>
+                <th class="d-none">STATUS ID</th>
+                <th class="d-none">PREPARED BY</th>
+                <th class="d-none">SCHEDULE</th>
+                <th class="d-none">USER ID</th>
+                <th class="d-none">CLIENT NAME</th>
+                <th class="d-none">ADDRESS / BRANCH</th>
+                <th class="d-none">REASON</th>
             </tr>
         </thead> 
         <tbody>

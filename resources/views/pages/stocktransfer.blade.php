@@ -19,13 +19,13 @@
                 <th>FROM LOCATION</th>
                 <th>TO NEW LOCATION</th>
                 <th>STATUS</th>
-                <th>STATUS ID</th>
-                <th>FROM LOCATION</th>
-                <th>TO NEW LOCATION</th>
-                <th>PREPARED BY</th>
-                <th>SCHEDULE</th>
-                <th>USER ID</th>
-                <th>REASON</th>
+                <th class="d-none">STATUS ID</th>
+                <th class="d-none">FROM LOCATION</th>
+                <th class="d-none">TO NEW LOCATION</th>
+                <th class="d-none">PREPARED BY</th>
+                <th class="d-none">SCHEDULE</th>
+                <th class="d-none">USER ID</th>
+                <th class="d-none">REASON</th>
             </tr>
         </thead>
     </table>

@@ -93,11 +93,11 @@
                         {{-- <th style="text-align: center;">QTY SERVED</th> --}}
                         <th style="text-align: center;">QTY PENDING</th>
                         <th style="text-align: center;">QTY IN STOCK<br>TOTAL MAIN BRANCH</th>
-                        <th></th>
-                        <th style="text-align: center;">QTY IN STOCK<br>A1</th>
-                        <th style="text-align: center;">QTY IN STOCK<br>A2</th>
-                        <th style="text-align: center;">QTY IN STOCK<br>A3</th>
-                        <th style="text-align: center;">QTY IN STOCK<br>A4</th>
+                        <th class="d-none"></th>
+                        <th class="d-none" style="text-align: center;">QTY IN STOCK<br>A1</th>
+                        <th class="d-none" style="text-align: center;">QTY IN STOCK<br>A2</th>
+                        <th class="d-none" style="text-align: center;">QTY IN STOCK<br>A3</th>
+                        <th class="d-none" style="text-align: center;">QTY IN STOCK<br>A4</th>
                         <th style="text-align: center; color: red;">QTY IN STOCK<br>BALINTAWAK</th>
                         <th style="text-align: center; color: red;">QTY IN STOCK<br>MALABON</th>
                     </tr>

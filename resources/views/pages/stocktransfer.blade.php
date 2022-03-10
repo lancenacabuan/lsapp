@@ -13,7 +13,6 @@
         <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">
             <tr>
                 <th>DATE NEEDED</th>
-                <th>DATE SCHEDULED</th>
                 <th>DATE REQUESTED</th>
                 <th>REQUEST NUMBER</th>
                 <th>REQUESTED BY</th>

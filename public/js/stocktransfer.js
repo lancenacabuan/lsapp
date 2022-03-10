@@ -467,7 +467,7 @@ $('table.stocktransferTable').DataTable({
     ],
     language: {
         processing: "Loading...",
-        emptyTable: "No data found!"
+        emptyTable: "No data available in table"
     },
     order: [],
     ajax: {
@@ -654,7 +654,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     ordering: false,
                     info: false,
                     language: {
-                        "emptyTable": "No data found!",
+                        "emptyTable": "No data available in table",
                         "processing": "Loading",
                     },
                     processing: true,
@@ -700,7 +700,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     info: false,
                     language: {
                         processing: "Loading...",
-                        emptyTable: "No data found!"
+                        emptyTable: "No data available in table"
                     },
                     order: [],
                     ajax: {
@@ -827,7 +827,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         ordering: false,
         info: false,
         language: {
-            "emptyTable": "No data found!",
+            "emptyTable": "No data available in table",
             "processing": "Loading",
         },
         processing: true,
@@ -873,7 +873,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         info: false,
         language: {
             processing: "Loading...",
-            emptyTable: "No data found!"
+            emptyTable: "No data available in table"
         },
         order: [],
         ajax: {

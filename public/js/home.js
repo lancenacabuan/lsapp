@@ -4,7 +4,7 @@ $(document).ready(function () {
         dom:  '<lf<t>ip>',
         language: {
             processing: "Loading...",
-            emptyTable: "No data found!"
+            emptyTable: "No data available in table"
         },
         scrollX: true,
         processing: true,

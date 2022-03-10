@@ -4,7 +4,7 @@ $(document).ready(function(){
     $('table.userTable').DataTable({ 
         language: {
             processing: "Loading...",
-            emptyTable: "No data found!"
+            emptyTable: "No data available in table"
         },
         processing: true,
         serverSide: false,

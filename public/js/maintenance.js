@@ -7,7 +7,7 @@ if(window.location.href == 'https://lance.idsi.com.ph/maintenance'){
     table = $('table.itemTable').DataTable({ 
         language: {
             processing: "Loading...",
-            emptyTable: "No data found!"
+            emptyTable: "No data available in table"
         },
         processing: true,
         serverSide: false,
@@ -48,7 +48,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=categ
     $('table.categoryTable').DataTable({ 
         language: {
             processing: "Loading...",
-            emptyTable: "No data found!"
+            emptyTable: "No data available in table"
         },
         processing: true,
         serverSide: false,
@@ -81,7 +81,7 @@ else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=locat
     $('table.locationTable').DataTable({ 
         language: {
             processing: "Loading...",
-            emptyTable: "No data found!"
+            emptyTable: "No data available in table"
         },
         processing: true,
         serverSide: false,

@@ -75,7 +75,6 @@
                     </tr>
                 </thead>    
             </table>
-            <div class="col-md-12 mt-2 mb-4">
             <br>
             @role('approver - warehouse')  {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp" id="btnApprove" value="APPROVE">
@@ -88,7 +87,6 @@
             <button type="button" id="btnDelete" class="btn btn-dark bp">DELETE</button>
             @endrole
             <br>
-            </div>
         </div>
         <div id="requestItems" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">

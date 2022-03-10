@@ -22,6 +22,7 @@ $(document).ready(function () {
             { data: 'role'},
             { data: 'activity'}
         ],
+        order:[],
         initComplete: function (){
             $('#loading').hide(); Spinner.hide();
         }

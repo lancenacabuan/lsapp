@@ -32,6 +32,7 @@ function category(){
                 { data: 'Malabon'},
                 { data: 'Total_stocks'}
             ],
+            order:[],
             initComplete: function (){
                 $('#loading').hide(); Spinner.hide();
             }
@@ -77,6 +78,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
                 { data: 'Malabon'},
                 { data: 'Total_stocks'}
             ],
+            order:[],
             initComplete: function (){
                 $('#loading').hide(); Spinner.hide();
             }
@@ -113,6 +115,7 @@ $(document).on('click', '#btnBack', function(){
                 { data: 'Malabon'},
                 { data: 'Total_stocks'}
             ],
+            order:[],
             initComplete: function (){
                 $('#loading').hide(); Spinner.hide();
             }
@@ -147,6 +150,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 { data: 'rack'},
                 { data: 'row'}
             ],
+            order:[],
             initComplete: function (){
                 $('#loading').hide(); Spinner.hide();
             }

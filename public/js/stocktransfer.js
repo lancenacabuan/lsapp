@@ -532,6 +532,7 @@ $('table.stocktransferTable').DataTable({
         { data: 'user_id'},
         { data: 'reason'}
     ],
+    order:[],
     initComplete: function (){
         $('#loading').hide(); Spinner.hide();
     }
@@ -671,6 +672,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                             alert(data.responseText);
                         },
                     },
+                    order:[],
                     columns: [
                         { data: 'category'},
                         { data: 'item'},
@@ -686,7 +688,6 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                         { data: 'qtybal'},
                         { data: 'qtymal'},
                         { data: 'item_id'}
-            
                     ],
                     orderCellsTop: true,
                     fixedHeader: true,            
@@ -707,6 +708,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                             request_number: $('#reqnum_details').val(),
                         }
                     },
+                    order:[],
                     columns: [
                         { data: 'category'},
                         { data: 'item'},
@@ -842,6 +844,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
                 alert(data.responseText);
             },
         },
+        order:[],
         columns: [
             { data: 'category'},
             { data: 'item'},
@@ -857,7 +860,6 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
             { data: 'qtybal'},
             { data: 'qtymal'},
             { data: 'item_id'}
-
         ],
         orderCellsTop: true,
         fixedHeader: true,            
@@ -878,6 +880,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
                 request_number: $('#reqnum_details').val(),
             }
         },
+        order:[],
         columns: [
             { data: 'category'},
             { data: 'item'},

@@ -204,6 +204,7 @@ class StockTransferController extends Controller
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
             ->orderBy('request_transfer.needdate', 'ASC')
+            ->orderBy('request_transfer.schedule', 'ASC')
             ->orderBy('request_transfer.created_at', 'ASC')
             ->get();
         }
@@ -213,6 +214,7 @@ class StockTransferController extends Controller
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
             ->orderBy('request_transfer.needdate', 'ASC')
+            ->orderBy('request_transfer.schedule', 'ASC')
             ->orderBy('request_transfer.created_at', 'ASC')
             ->get();
         }
@@ -222,6 +224,7 @@ class StockTransferController extends Controller
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
             ->orderBy('request_transfer.needdate', 'ASC')
+            ->orderBy('request_transfer.schedule', 'ASC')
             ->orderBy('request_transfer.created_at', 'ASC')
             ->get();
         }

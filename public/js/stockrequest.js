@@ -261,8 +261,7 @@ $(document).on('click', '#modalClose', function(){
 });
 
 $(document).on('click', '#btnSave', function(){
-    if($('#needdate').val() && $('#request_type').val() && $('#client_name').val() && $('#location').val())
-    {
+    if($('#needdate').val() && $('#request_type').val() && $('#client_name').val() && $('#location').val()){
         if($("#needdate").val() < minDate){
             swal('Minimum Date is today!','Select within date range from today onwards.','error');
             return false;

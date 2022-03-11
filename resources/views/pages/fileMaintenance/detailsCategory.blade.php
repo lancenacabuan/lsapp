@@ -1,4 +1,4 @@
-<div class="container table-responsive">
+<div class="container">
     <div class="modal fade in" id="detailsCategory">
     <div class="modal-dialog modal-m">
     <div class="modal-content">

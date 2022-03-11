@@ -313,8 +313,7 @@ $("#tblNewStockTransfer").on('click', '.delete-row', function(){
 });
 
 $(document).on('click', '#btnSave', function(){
-    if($('#needdate').val() && $('#locfrom').val() && $('#locto').val())
-    {
+    if($('#needdate').val() && $('#locfrom').val() && $('#locto').val()){
         if($("#needdate").val() < minDate){
             swal('Minimum Date is today!','Select within date range from today onwards.','error');
             return false;

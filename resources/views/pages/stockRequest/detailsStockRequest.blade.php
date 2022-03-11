@@ -1,4 +1,4 @@
-<div class="container table-responsive">
+<div class="container">
     <div class="modal fade in" id="detailsStockRequest">
     <div class="modal-dialog modal-xl" >
     <div class="modal-content">
@@ -130,13 +130,11 @@
                 <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                 <input class="form-control form-control-sm" id="schedOn" style="width: 280px;" type="date">
             </div>
-            <br><br>
             <div class="form-inline"  style="margin-left:35px;" id="reqContents"></div>
-            <br><br><br>
             <hr>
             <input type="button" class="btn btn-primary bp" id="btnBack" class="button" value="BACK">
             <input type="button" class="btn btn-primary float-right bp" id="btnSubmit" class="button" value="SCHEDULE" disabled>
-            <br><br>
+            <br>
         </div>
         </div>
         <div id="schedItemsModal" style="display: none;">
@@ -189,7 +187,7 @@
             <input type="button" class="btn btn-primary float-right bp" id="btnTransit" class="button" value="FOR RECEIVING">
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-            <br><br>
+            <br>
         </div>
         </div>
         <div id="transitItemsModal" style="display: none;">
@@ -242,7 +240,7 @@
             <button type="button" id="btnReceive" class="btn btn-primary float-right bp">RECEIVE</button>
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-            <br><br>
+            <br>
         </div>
         </div>
     </div>

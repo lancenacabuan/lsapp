@@ -1,4 +1,4 @@
-<div class="container table-responsive">
+<div class="container">
     <div class="modal fade in" id="newStockRequest">
     <div class="modal-dialog modal-xl">
     <div class="modal-content">

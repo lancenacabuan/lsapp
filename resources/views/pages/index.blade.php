@@ -7,8 +7,9 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
 @endphp
 <div class="container-fluid">
     <div class="row" style="text-align: center;">
-        <div class="col-sm-4" style="margin-left: 100px; margin-right: -100px;">
-            <a href="stocks" style="text-decoration:none">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2">
+            <a href="stocks" style="text-decoration: none;">
                 <img style="height: 100px;" src="{{ asset('stocks.png') }}">
                 <div class="container" style="background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                     {{number_format($stocks)}}   
@@ -16,8 +17,9 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
                 <strong style="color: #0d1a80; font-size: 20px;">STOCKS</strong>
             </a>
         </div>
-        <div class="col-sm-4">
-            <a href="stockrequest" style="text-decoration:none">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2">
+            <a href="stockrequest" style="text-decoration: none;">
                 <img style="height: 100px;" src="{{ asset('stockrequest.png') }}">
                 <div class="container" style="background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                     {{number_format($stockrequest)}}
@@ -25,8 +27,9 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
                 <strong style="color: #0d1a80; font-size: 20px;">STOCK REQUEST</strong>
             </a>
         </div>
-        <div class="col-sm-4" style="margin-left: -100px;">
-            <a href="stocktransfer" style="text-decoration:none">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2">
+            <a href="stocktransfer" style="text-decoration: none;">
                 <img style="height: 100px;" src="{{ asset('stocktransfer.png') }}">
                 <div class="container" style="background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                     {{number_format($stocktransfer)}}
@@ -34,6 +37,7 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
                 <strong style="color: #0d1a80; font-size: 20px;">STOCK TRANSFER</strong>
             </a>
         </div>
+        <div class="col-sm-2"></div>
     </div>
     <br>
     <table id="user_logs" class="table user_logs display nowrap" style="width: 100%; font-size: 12px;">

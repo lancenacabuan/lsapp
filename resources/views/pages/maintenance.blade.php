@@ -15,7 +15,7 @@
     <div style="margin-top: -3px; color: white; height: 20px; background-color: #0d1a80;"></div>
     <br>
     <table class="table-hover table itemTable" id="itemTable" style="width: 100%; display: none; cursor: pointer;">
-        <thead style="background-color: #0d1a80 !important; color: white !important;">
+        <thead style="background-color: #0d1a80; color: white;">
             {{-- <tr class="tbsearch">
                 <td>
                     <input type="text" class="form-control filter-input fl-0" data-column="0" style="border:1px solid #808080"/>
@@ -43,7 +43,7 @@
         </thead>
     </table>
     <table class="table-hover table categoryTable" id="categoryTable" style="width: 100%; display: none; cursor: pointer;">
-        <thead style="background-color: #0d1a80 !important; color: white !important;">
+        <thead style="background-color: #0d1a80; color: white;">
             <tr>
                 <th>CATEGORY ID</th>
                 <th>CATEGORY NAME</th>
@@ -51,7 +51,7 @@
         </thead>
     </table>
     <table class="table-hover table locationTable" id="locationTable" style="width: 100%; display: none; cursor: pointer;">
-        <thead style="background-color: #0d1a80 !important; color: white !important;">
+        <thead style="background-color: #0d1a80; color: white;">
             <tr>
                 <th>LOCATION ID</th>
                 <th>LOCATION NAME</th>

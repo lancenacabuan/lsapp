@@ -9,11 +9,9 @@
     {{-- <button class="btn btn-primary bp" type="button">IMPORT</button> --}}
     <br><br>
     @endrole
-</div>
-<div class="container-fluid">
     <div id="CategoryTableDiv">
         <table id="CategoryTable" class="table-hover table CategoryTable display" style="width: 100%; font-size: 90%; cursor: pointer;">
-            <thead style="background-color: #0d1a80 !important; color: white !important;">                            
+            <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
                     <th>CATEGORY</th>
                     <th>A1</th>
@@ -25,14 +23,12 @@
                     <th>TOTAL STOCKS</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>      
         </table>
     </div>
-    <div id="ItemTableDiv" style="display:none">
-        <center><h3 id="itemCat"></h3></center>
+    <div id="ItemTableDiv" style="display: none;">
+        <h3 id="itemCat" class="text-center"></h3>
         <table id="ItemTable" class="table-hover table ItemTable display" style="width: 100%; font-size: 90%; cursor: pointer;">
-            <thead style="background-color: #0d1a80 !important; color: white !important;">                            
+            <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
                     <th>ITEM DESCRIPTION</th>
                     <th>A1</th>
@@ -44,14 +40,12 @@
                     <th>TOTAL STOCKS</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>      
         </table>
     </div>
-    <div id="ItemSerialTableDiv" style="display:none">
-        <center><h3 id="itemName"></h3></center>
+    <div id="ItemSerialTableDiv" style="display: none;">
+        <h3 id="itemName" class="text-center"></h3>
         <table id="ItemSerialTable" class="table-hover table ItemSerialTable display" style="width: 100%; font-size: 90%; cursor: pointer;">
-            <thead style="background-color: #0d1a80 !important; color: white !important;">                            
+            <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
                     <th>ITEM DESCRIPTION</th>
                     <th>SERIAL</th>
@@ -60,8 +54,6 @@
                     <th>ROW NO.</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>      
         </table>
     </div>
 </div>

@@ -1509,7 +1509,7 @@ $("#btnProceed").unbind('click').click(function(){
                                         'schedOn': $('#schedOn').val()
                                     },
                                     success: function (){
-                                        $('#stockRequestDetails').hide();
+                                        $('#detailsStockTransfer').hide();
                                         sweetAlert("SCHEDULED SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                     },

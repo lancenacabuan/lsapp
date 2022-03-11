@@ -95,7 +95,7 @@ function generatedr() {
     });
 }
 
-$(".newstockreq").on('click', function(){
+$(".btnNewStockRequest").on('click', function(){
     $('#newStockRequest').modal({
         backdrop: 'static',
         keyboard: false
@@ -106,9 +106,9 @@ $(".newstockreq").on('click', function(){
     generatedr();
 });
 
-$('table.stock_request').dataTable().fnDestroy();
+$('table.stockrequestTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
-$('table.stock_request').DataTable({ 
+$('table.stockrequestTable').DataTable({ 
     columnDefs: [
         {
             "targets": [1],
@@ -233,8 +233,8 @@ $(".add-row").on('click', function(){
         uom = $('#uom').val('');
         $('#stockRequestTable').show();
         $('#stockRequestDiv').toggle();
-        $('#requestClose').show();
-        $('#requestSave').show();
+        $('#btnClose').show();
+        $('#btnSave').show();
     } 
 });
 
@@ -243,8 +243,8 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
     if ($('#stockRequestTable tbody').children().length==0) {
         $('#stockRequestTable').hide();
         $('#stockRequestDiv').removeClass();
-        $('#requestClose').hide();
-        $('#requestSave').hide();
+        $('#btnClose').hide();
+        $('#btnSave').hide();
     }
 });
 
@@ -252,7 +252,7 @@ $(document).on('click', '#close', function(){
     window.location.href = '/stockrequest';
 });
 
-$(document).on('click', '#requestClose', function(){
+$(document).on('click', '#btnClose', function(){
     window.location.href = '/stockrequest';
 });
 
@@ -260,7 +260,7 @@ $(document).on('click', '#modalClose', function(){
     window.location.href = '/stockrequest';
 });
 
-$(document).on('click', '#requestSave', function(){
+$(document).on('click', '#btnSave', function(){
     if($('#needdate').val() && $('#request_type').val() && $('#client_name').val() && $('#location').val())
     {
         if($("#needdate").val() < minDate){
@@ -481,7 +481,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
             request_number: reqnum,
         },
         success: function(data) {
-            $('#stockRequestDetails').modal({
+            $('#detailsStockRequest').modal({
                 backdrop: 'static',
                 keyboard: false
             });
@@ -522,7 +522,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     $('#reason_details').val(reason);
             
                     $('.modal-body').html();
-                    $('#stockRequestDetails').modal('show');
+                    $('#detailsStockRequest').modal('show');
                     if(value.req_type_id == '1'){
                         $("#client_name_label").hide();
                         $("#client_name_details").hide();
@@ -890,12 +890,12 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
     });
 }
 
-$('#stockreqDetails tbody').on('click', 'tr', function(){
-    $('#stockRequestDetails').modal({
+$('#stockrequestTable tbody').on('click', 'tr', function(){
+    $('#detailsStockRequest').modal({
         backdrop: 'static',
         keyboard: false
     });
-    var table =  $('table.stock_request').DataTable(); 
+    var table =  $('table.stockrequestTable').DataTable(); 
     var data = table.row(this).data();
     var requestStatus = data.status_id;
     var req_date = data.date;
@@ -930,7 +930,7 @@ $('#stockreqDetails tbody').on('click', 'tr', function(){
         $('#reason_details').val(reason);
 
         $('.modal-body').html();
-        $('#stockRequestDetails').modal('show');
+        $('#detailsStockRequest').modal('show');
         if(data.req_type_id == '1'){
             $("#client_name_label").hide();
             $("#client_name_details").hide();
@@ -1311,13 +1311,13 @@ $(document).on("click", ".btndelItem", function() {
         },
         success: function(data) {
             if(data.result == 'false'){
-                $('#stockRequestDetails').hide();
+                $('#detailsStockRequest').hide();
                 sweetAlert("DELETE FAILED", "STOCK REQUEST", "error");
                 setTimeout(function(){window.location.reload()}, 2000);
             }
             else{
                 if(data.count == 0){
-                    $('#stockRequestDetails').hide();
+                    $('#detailsStockRequest').hide();
                     sweetAlert("DELETE SUCCESS", "STOCK REQUEST", "success");
                     setTimeout(function(){window.location.reload()}, 2000);
                 }
@@ -1406,12 +1406,12 @@ $(document).on('click', '#btnDelete', function(){
                 },
                 success: function (data){
                     if(data == 'true'){
-                        $('#stockRequestDetails').hide();
+                        $('#detailsStockRequest').hide();
                         sweetAlert("DELETE SUCCESS", "STOCK REQUEST", "success");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                     else{
-                        $('#stockRequestDetails').hide();
+                        $('#detailsStockRequest').hide();
                         sweetAlert("DELETE FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
@@ -1447,12 +1447,12 @@ $(document).on('click', '#btnApprove', function(){
                 },
                 success: function (data){
                     if(data == 'true'){
-                        $('#stockRequestDetails').hide();
+                        $('#detailsStockRequest').hide();
                         sweetAlert("APPROVE SUCCESS", "STOCK REQUEST", "success");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                     else{
-                        $('#stockRequestDetails').hide();
+                        $('#detailsStockRequest').hide();
                         sweetAlert("APPROVE FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
@@ -1506,8 +1506,8 @@ $(document).on('click', '#btnReason', function(){
                             scrollReset();
                             $('#reasonModal').hide();
                             $('#reasonModal').modal('dispose');
-                            $('#stockRequestDetails').hide();
-                            $('#stockRequestDetails').modal('dispose');
+                            $('#detailsStockRequest').hide();
+                            $('#detailsStockRequest').modal('dispose');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 type:'get',
@@ -1539,7 +1539,7 @@ $(document).on('click', '#btnReason', function(){
                         }
                         else{
                             $('#reasonModal').hide();
-                            $('#stockRequestDetails').hide();
+                            $('#detailsStockRequest').hide();
                             sweetAlert("DISAPPROVE FAILED", "STOCK REQUEST", "error");
                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                         }
@@ -1576,12 +1576,12 @@ $(document).on('click', '#btnTransit', function(){
                 },
                 success: function (data){
                     if(data == 'true'){
-                        $('#stockRequestDetails').hide();
+                        $('#detailsStockRequest').hide();
                         sweetAlert("FOR RECEIVING SUCCESS", "STOCK REQUEST", "success");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                     else{
-                        $('#stockRequestDetails').hide();
+                        $('#detailsStockRequest').hide();
                         sweetAlert("FOR RECEIVING FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
@@ -1618,8 +1618,8 @@ $(document).on('click', '#btnReceive', function(){
                 success: function (data){
                     if(data == 'true'){
                         scrollReset();
-                        $('#stockRequestDetails').hide();
-                        $('#stockRequestDetails').modal('dispose');
+                        $('#detailsStockRequest').hide();
+                        $('#detailsStockRequest').modal('dispose');
                         $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
                             type:'get',
@@ -1649,7 +1649,7 @@ $(document).on('click', '#btnReceive', function(){
                         });
                     }
                     else{
-                        $('#stockRequestDetails').hide();
+                        $('#detailsStockRequest').hide();
                         sweetAlert("RECEIVE FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
@@ -1990,7 +1990,7 @@ $("#btnProceed").unbind('click').click(function(){
                                         'schedOn': $('#schedOn').val()
                                     },
                                     success: function (){
-                                        $('#stockRequestDetails').hide();
+                                        $('#detailsStockRequest').hide();
                                         sweetAlert("SCHEDULED SUCCESS", "STOCK REQUEST", "success");
                                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                                     },

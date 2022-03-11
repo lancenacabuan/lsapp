@@ -1,5 +1,5 @@
 <div class="container table-responsive">
-    <div class="modal fade in" id="stockRequestDetails">
+    <div class="modal fade in" id="detailsStockRequest">
     <div class="modal-dialog modal-xl" >
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">

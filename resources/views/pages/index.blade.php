@@ -1,12 +1,17 @@
 @extends('layouts.app')
 @section('content')
+@php
+$stocks = DB::table('stocks')->whereIn('stocks.location_id',['1','2','3','4','5','6'])->get()->count();
+$stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8'])->get()->count();
+$stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
+@endphp
 <div class="container-fluid">
     <div class="row" style="text-align: center;">
         <div class="col-sm-4" style="margin-left: 100px; margin-right: -100px;">
             <a href="stocks" style="text-decoration:none">
                 <img style="height: 100px;" src="{{ asset('stocks.png') }}">
                 <div class="container" style="background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
-                    {{DB::table('stocks')->whereIn('stocks.location_id',['1','2','3','4','5','6'])->get()->count();}}   
+                    {{number_format($stocks)}}   
                 </div>
                 <strong style="color: #0d1a80; font-size: 20px;">STOCKS</strong>
             </a>
@@ -15,7 +20,7 @@
             <a href="stockrequest" style="text-decoration:none">
                 <img style="height: 100px;" src="{{ asset('stockrequest.png') }}">
                 <div class="container" style="background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
-                    {{DB::table('requests')->whereNotIn('requests.status',['7','8'])->get()->count();}}
+                    {{number_format($stockrequest)}}
                 </div>
                 <strong style="color: #0d1a80; font-size: 20px;">STOCK REQUEST</strong>
             </a>
@@ -24,7 +29,7 @@
             <a href="stocktransfer" style="text-decoration:none">
                 <img style="height: 100px;" src="{{ asset('stocktransfer.png') }}">
                 <div class="container" style="background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
-                    {{DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();}}
+                    {{number_format($stocktransfer)}}
                 </div>
                 <strong style="color: #0d1a80; font-size: 20px;">STOCK TRANSFER</strong>
             </a>

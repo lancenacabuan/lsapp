@@ -12,13 +12,13 @@
     <table id="stocktransferTable" class="table stocktransferTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
         <thead style="background-color: #0d1a80 !important; color: white !important; font-weight: bold !important; font-size: 15px;">
             <tr>
-                <th>DATE NEEDED</th>
-                <th>DATE REQUESTED</th>
-                <th>REQUEST NUMBER</th>
+                <th style="width: 150px;">DATE NEEDED</th>
+                <th style="width: 150px;">DATE REQUESTED</th>
+                <th style="width: 150px;">REQUEST NUMBER</th>
                 <th>REQUESTED BY</th>
-                <th>FROM LOCATION</th>
-                <th>TO NEW LOCATION</th>
-                <th>STATUS</th>
+                <th style="width: 180px;">FROM LOCATION</th>
+                <th style="width: 180px;">TO NEW LOCATION</th>
+                <th style="width: 250px;">STATUS</th>
                 <th class="d-none">STATUS ID</th>
                 <th class="d-none">FROM LOCATION</th>
                 <th class="d-none">TO NEW LOCATION</th>

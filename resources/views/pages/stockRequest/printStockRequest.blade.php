@@ -6,7 +6,7 @@
     <button id="btnSavePDF" type="button" class="btn btn-primary bp">SAVE AS PDF</button>
     <a href="/stockrequest?request_number={{$list->req_num}}" class="btn btn-primary float-right bp">BACK</a>
 </div>
-<br/>
+<br>
 <div class="container-fluid">
     <div id="printPage" class="panel-body table-responsive" style="font-size: 12px; width: 100%;">
         <div>
@@ -14,7 +14,7 @@
         <span style="vertical-align: center; font-weight: bold; color: #0d1a80; font-family: Arial; font-size:22px; text-decoration: none;">
         MAIN WAREHOUSE STOCK MONITORING SYSTEM</span>
         </div>
-        <br/>
+        <br>
         <table cellspacing="0" cellpadding="0" style="width: 100%;">
             <col span="9" />
             <tr height="20">

@@ -24,7 +24,7 @@
                 </div>
                 <input type="password" id="pass3" style="width: 316px;">
             </div>
-            <br/>
+            <br>
             <button type="submit" id="savepassword" class="btn btn-primary float-right bp">UPDATE</button>
         </div>
     </div>

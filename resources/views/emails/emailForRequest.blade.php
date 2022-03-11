@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <p>Hello, {{$details['name']}}!<br/>
-    A new {{$details['action']}} is waiting for your approval.<br /></p>
-    <strong>Request Number: {{$details['request_number']}}</strong><br />
+    <p>Hello, {{$details['name']}}!<br>
+    A new {{$details['action']}} is waiting for your approval.<br></p>
+    <strong>Request Number: {{$details['request_number']}}</strong><br>
     <p>
-        Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM D, YYYY')}}<br />
-        Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM D, YYYY')}}<br />
-        Requested By: {{$details['requested_by']}}<br />
-        Request Type: {{$details['reqtype']}}<br />
-        Client Name: {{$details['client_name']}}<br />
-        Address / Branch: {{$details['location']}}<br />
-        Reference SO/PO No.: {{$details['reference']}}<br /><br />
+        Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM D, YYYY')}}<br>
+        Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM D, YYYY')}}<br>
+        Requested By: {{$details['requested_by']}}<br>
+        Request Type: {{$details['reqtype']}}<br>
+        Client Name: {{$details['client_name']}}<br>
+        Address / Branch: {{$details['location']}}<br>
+        Reference SO/PO No.: {{$details['reference']}}<br><br>
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>                            
                 <tr>
@@ -30,12 +30,12 @@
             </tr>
             @endforeach 
         </table>
-        <br /><br />
-        Kindly login to your {{$details['role']}} account to process this request by clicking on the link below.<br />
+        <br><br>
+        Kindly login to your {{$details['role']}} account to process this request by clicking on the link below.<br>
         Thank you!
     </p>
     <a href="https://lance.idsi.com.ph/stockrequest?request_number={{$details['request_number']}}">https://lance.idsi.com.ph/stockrequest?request_number={{$details['request_number']}}</a>
-    <br/><br/>
+    <br><br>
     This is a system-generated email. Please do not reply.
 </body>
 </html>

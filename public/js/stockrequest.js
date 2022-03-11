@@ -112,7 +112,7 @@ $('table.stockrequestTable').DataTable({
     columnDefs: [
         {
             "targets": [1],
-            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. D, YYYY')
+            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
         },
         {
             "targets": [7,8,9,10,11,12,13,14],
@@ -133,20 +133,20 @@ $('table.stockrequestTable').DataTable({
             data: 'needdate',
             "render": function(data, type, row){
                 if(row.status_id == '7' || row.status_id == '8'){
-                    return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. D, YYYY');
+                    return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
                 }
                 else{
                     var a = new Date(minDate);
                     var b = new Date(row.needdate);
                     var difference = dateDiffInDays(a, b);
                     if(difference >= 0 && difference <= 3){
-                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
+                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
                     }
                     else if(difference < 0){
-                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. D, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
                     }
                     else{
-                        return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. D, YYYY');
+                        return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
                     }
                 }
             }
@@ -490,11 +490,11 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
             reqitem.forEach(value => {
                 var requestStatus = value.status_id;
                 var req_date = value.date;
-                    req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
+                    req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
                     $('#daterequestdetails').val(req_date);
                 var need_date = value.needdate;
                     maxDate = need_date;
-                    need_date = moment(need_date).format('dddd, MMMM D, YYYY');
+                    need_date = moment(need_date).format('dddd, MMMM DD, YYYY');
                     $('#needdate_details').val(need_date);
                 var req_num = value.req_num;
                     $('#request_num_details').val(req_num);
@@ -508,7 +508,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     $('#prep_by').val(prep_by);
                     $('#prep_by1').val(prep_by);
                 var sched = value.sched;
-                    sched = moment(sched).format('dddd, MMMM D, YYYY');
+                    sched = moment(sched).format('dddd, MMMM DD, YYYY');
                     $('#sched').val(sched);
                     $('#sched1').val(sched);
                 var client_name = value.client_name;
@@ -898,11 +898,11 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     var data = table.row(this).data();
     var requestStatus = data.status_id;
     var req_date = data.date;
-        req_date = moment(req_date).format('dddd, MMMM D, YYYY, h:mm A');
+        req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
         $('#daterequestdetails').val(req_date);
     var need_date = data.needdate;
         maxDate = need_date;
-        need_date = moment(need_date).format('dddd, MMMM D, YYYY');
+        need_date = moment(need_date).format('dddd, MMMM DD, YYYY');
         $('#needdate_details').val(need_date);
     var req_num = data.req_num;
         $('#request_num_details').val(req_num);
@@ -916,7 +916,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#prep_by').val(prep_by);
         $('#prep_by1').val(prep_by);
     var sched = data.sched;
-        sched = moment(sched).format('dddd, MMMM D, YYYY');
+        sched = moment(sched).format('dddd, MMMM DD, YYYY');
         $('#sched').val(sched);
         $('#sched1').val(sched);
     var client_name = data.client_name;

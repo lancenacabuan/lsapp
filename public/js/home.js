@@ -13,7 +13,7 @@ $(document).ready(function () {
         columnDefs: [
             {
                 "targets": [0],
-                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. D, YYYY, h:mm A')
+                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
             },
         ],
         columns: [

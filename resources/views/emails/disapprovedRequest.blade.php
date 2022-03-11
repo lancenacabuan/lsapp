@@ -8,8 +8,8 @@
     </p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     <p>
-        Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM D, YYYY')}}<br>
-        Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM D, YYYY')}}<br>
+        Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
+        Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Requested By: {{$details['requested_by']}}<br>
         Request Type: {{$details['reqtype']}}<br>
         Client Name: {{$details['client_name']}}<br>

@@ -7,15 +7,15 @@
     </p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     <p>
-        Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM D, YYYY')}}<br>
-        Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM D, YYYY')}}<br>
+        Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
+        Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Requested By: {{$details['requested_by']}}<br>
         FROM Location: {{$details['locfrom']}}<br>
         TO New Location: {{$details['locto']}}<br>
-        Date Prepared: {{Carbon\Carbon::parse($details['prepdate'])->isoformat('dddd, MMMM D, YYYY')}}<br>
+        Date Prepared: {{Carbon\Carbon::parse($details['prepdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Prepared By: {{$details['prepared_by']}}<br>
-        Date Scheduled: {{Carbon\Carbon::parse($details['scheddate'])->isoformat('dddd, MMMM D, YYYY')}}<br>
-        Date Received: {{Carbon\Carbon::now()->isoformat('dddd, MMMM D, YYYY')}}<br><br>
+        Date Scheduled: {{Carbon\Carbon::parse($details['scheddate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
+        Date Received: {{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}<br><br>
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>                            
                 <tr>

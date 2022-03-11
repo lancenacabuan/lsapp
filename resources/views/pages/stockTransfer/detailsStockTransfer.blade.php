@@ -10,7 +10,7 @@
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left:35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
-                <input class="form-control form-control-sm"  id="reqdate_details"style="width: 280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM D, YYYY')}}">
+                <input class="form-control form-control-sm"  id="reqdate_details"style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" style="width: 200px;">Stock Transfer Request No.</label>
                 <input class="form-control form-control-sm" id="reqnum_details" onclick="copyReqNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>

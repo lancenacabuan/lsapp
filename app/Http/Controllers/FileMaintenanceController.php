@@ -270,7 +270,7 @@ class FileMaintenanceController extends Controller
         foreach($user as $email){
             $details = [
                 'location' => $request->location,
-                'reqdate' => Carbon::now()->isoformat('dddd, MMMM D, YYYY'),
+                'reqdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
                 'requested_by' => auth()->user()->name
             ];
             Mail::to($email)->send(new requestLocation($details, $subject));
@@ -353,7 +353,7 @@ class FileMaintenanceController extends Controller
         foreach($user as $email){
             $details = [
                 'location' => $request->location,
-                'reqdate' => Carbon::now()->isoformat('dddd, MMMM D, YYYY'),
+                'reqdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
                 'requested_by' => auth()->user()->name,
                 'status_original' => $request->status_original, 
                 'status' => $request->status

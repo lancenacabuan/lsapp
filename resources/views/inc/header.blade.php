@@ -7,7 +7,7 @@
     </a>
     <div class="p-2 ml-auto align-self-end d-flex" style="margin-bottom: 10px;">
         <div style="text-align: right; font-size: 12px;">
-            {{ Carbon\Carbon::now()->isoformat('dddd, MMMM D, YYYY') }}
+            {{ Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY') }}
             <span id="datetime"></span><br>
             <strong>{{ auth()->user()->name }}</strong>&nbsp;
             {{ strtoupper(str_replace('"', '', auth()->user()->getRoleNames())) }}<br>

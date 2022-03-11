@@ -9,10 +9,9 @@
 <br>
 <div class="container-fluid">
     <div id="printPage" class="panel-body table-responsive" style="font-size: 12px; width: 100%;">
-        <div>
-        <img src="/storage/idsi.png" style="width: auto; height: 70px; border-right:1px solid #3333">
-        <span style="vertical-align: center; font-weight: bold; color: #0d1a80; font-family: Arial; font-size:22px; text-decoration: none;">
-        MAIN WAREHOUSE STOCK MONITORING SYSTEM</span>
+        <div style="height: 70px; line-height: 70px; font-weight: bold; color: #0d1a80; font-family: Arial; font-size: 22px;">
+            <img src="/storage/idsi.png" style="height: 70px; width: auto; border-right: 1px solid #3333">
+            MAIN WAREHOUSE STOCK MONITORING SYSTEM
         </div>
         <br>
         <table cellspacing="0" cellpadding="0" style="width: 100%;">

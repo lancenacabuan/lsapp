@@ -31,7 +31,7 @@ class AssemblyController extends Controller
         return view('/pages/assembly', compact('categories'));
     }
 
-    public function itemsItm(Request $request){       
+    public function itemsAssembly(Request $request){       
         $list = Item::query()->select('items.id','items.item')
             ->where('items.category_id',$request->category_id)
             ->groupBy('items.id')

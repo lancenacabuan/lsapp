@@ -18,7 +18,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="css/chosen.css" rel="Stylesheet" type="text/css" />
-    <link href="css/select2.css" rel="Stylesheet" type="text/css" />
 
     <script src="js/inc/jquery-3.5.1.js"></script>
     <script src="js/inc/moment.js"></script>
@@ -31,7 +30,6 @@
     <script src="js/inc/datetime.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="js/inc/chosen.jquery.js"></script>
-    <script src="js/inc/select2.js"></script>
     <script src="js/inc/loading-spinner.js"></script>
     <script>
         function scrollReset(){

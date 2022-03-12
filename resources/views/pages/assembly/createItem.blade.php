@@ -29,16 +29,16 @@
         </div>        
         <form class="mt-2 mb-2">
             <div class="form-inline" style="margin-left:50px;">
-                <select class="form-select" id="categoryItm" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
+                <select class="form-select" id="categoryAssembly" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
                         <option selected disabled>Select Category</option>
                         @foreach($categories as $category)
                             <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
                         @endforeach
                 </select>
-                <select class="form-select" id="itemItm" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 10px;">
+                <select class="form-select" id="itemAssembly" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 10px;">
                     <option selected disabled>Select Item</option>
                 </select>
-                <input class="form-control" id="qtyItm" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty">
+                <input class="form-control" id="qtyAssembly" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty">
                 <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 75%; margin-left: 10px; margin-top: -1px;">
             </div>          
         </form>

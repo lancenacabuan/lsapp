@@ -9,14 +9,14 @@ use App\Mail\emailForRequest;
 use App\Mail\disapprovedRequest;
 use App\Mail\receivedRequest;
 use App\Models\Category;
+use App\Models\Item;
 use App\Models\Location;
+use App\Models\RequestType;
+use App\Models\Status;
 use App\Models\Stock;
 use App\Models\StockRequest;
 use App\Models\Requests;
-use App\Models\RequestType;
-use App\Models\Status;
 use App\Models\Prepare;
-use App\Models\Item;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -33,23 +33,16 @@ class StockRequestController extends Controller
         {
             return redirect('/stocktransfer');
         }  
-        $categories = Category::select('id','category')->get()->sortBy('category');
-        if(auth()->user()->hasanyRole('sales')){
-            $req_types = RequestType::select('id','name')
-            ->whereIn('id',['2','3','4'])
-            ->get();            
-        }
-        else{
-            $req_types = RequestType::select('id','name')->get()->sortBy('name');
-        }
-        $items = Item::select('id','item')->get()->sortBy('item');
         // $categories = Category::select('categories.id','category')
         //     ->join('stocks','category_id','categories.id')
         //     ->where('status','in')
         //     ->groupBy('categories.id')
         //     ->get()->sortBy('category');
+        $categories = Category::select('id','category')->get()->sortBy('category');
+        $items = Item::select('id','item')->get()->sortBy('item');
+        $req_types = RequestType::select('id','name')->whereIn('id',['2','3','4'])->get();            
 
-        return view('/pages/stockrequest', compact('categories','req_types','items'));
+        return view('/pages/stockrequest', compact('categories','items','req_types'));
     }
 
     public function stockreq(Request $request){       
@@ -204,6 +197,7 @@ class StockRequestController extends Controller
             ->groupBy('items.id')
             ->orderBy('item','ASC')
             ->get();
+        
         return response()->json($list);
     }
 

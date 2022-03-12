@@ -34,7 +34,7 @@ $(document).ready(function(){
                         }
                     },
                     error: function(data){
-                        if(data.status == 401) {
+                        if(data.status == 401){
                             window.location.href = '/';
                         }
                         alert(data.responseText);

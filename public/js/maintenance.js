@@ -114,7 +114,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if(willDelete) {
+                if(willDelete){
                     $.ajax({
                         url: "/saveItem",
                         type: "POST",
@@ -145,7 +145,7 @@ $(document).ready(function(){
                             }
                         },
                         error: function(data){
-                            if(data.status == 401) {
+                            if(data.status == 401){
                                 window.location.href = '/maintenance';
                             }
                             alert(data.responseText);
@@ -193,7 +193,7 @@ $(document).ready(function(){
             '&quot;': '"', 
             '&#039;': "'"
         };
-        return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) {return map[m];});
+        return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
     }
 
     $('#btnUpdateItem').on('click', function(){
@@ -223,7 +223,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if(willDelete) {
+                if(willDelete){
                     $.ajax({
                         url: "/updateItem",
                         type: "PUT",
@@ -259,7 +259,7 @@ $(document).ready(function(){
                             }
                         },
                         error: function(data){
-                            if(data.status == 401) {
+                            if(data.status == 401){
                                 window.location.href = '/maintenance';
                             }
                             alert(data.responseText);
@@ -280,7 +280,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if(willDelete) {
+                if(willDelete){
                     $.ajax({
                         url: "/saveCategory",
                         type: "POST",
@@ -315,7 +315,7 @@ $(document).ready(function(){
                                         }
                                     },
                                     error: function(data){
-                                        if(data.status == 401) {
+                                        if(data.status == 401){
                                             window.location.href = '/maintenance?tbl=category';
                                         }
                                         alert(data.responseText);
@@ -333,7 +333,7 @@ $(document).ready(function(){
                             }
                         },
                         error: function(data){
-                            if(data.status == 401) {
+                            if(data.status == 401){
                                 window.location.href = '/maintenance?tbl=category';
                             }
                             alert(data.responseText);
@@ -386,7 +386,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if(willDelete) {
+                if(willDelete){
                     $.ajax({
                         url: "/updateCategory",
                         type: "PUT",
@@ -424,7 +424,7 @@ $(document).ready(function(){
                                         }
                                     },
                                     error: function(data){
-                                        if(data.status == 401) {
+                                        if(data.status == 401){
                                             window.location.href = '/maintenance?tbl=category';
                                         }
                                         alert(data.responseText);
@@ -442,7 +442,7 @@ $(document).ready(function(){
                             }
                         },
                         error: function(data){
-                            if(data.status == 401) {
+                            if(data.status == 401){
                                 window.location.href = '/maintenance?tbl=category';
                             }
                             alert(data.responseText);
@@ -473,7 +473,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if(willDelete) {
+                if(willDelete){
                     $.ajax({
                         url: "/saveLocation",
                         type: "POST",
@@ -511,7 +511,7 @@ $(document).ready(function(){
                                         }
                                     },
                                     error: function(data){
-                                        if(data.status == 401) {
+                                        if(data.status == 401){
                                             window.location.href = '/maintenance?tbl=location';
                                         }
                                         alert(data.responseText);
@@ -529,7 +529,7 @@ $(document).ready(function(){
                             }
                         },
                         error: function(data){
-                            if(data.status == 401) {
+                            if(data.status == 401){
                                 window.location.href = '/maintenance?tbl=location';
                             }
                             alert(data.responseText);
@@ -606,7 +606,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if(willDelete) {
+                if(willDelete){
                     $.ajax({
                         url: "/updateLocation",
                         type: "PUT",
@@ -649,7 +649,7 @@ $(document).ready(function(){
                                         }
                                     },
                                     error: function(data){
-                                        if(data.status == 401) {
+                                        if(data.status == 401){
                                             window.location.href = '/maintenance?tbl=location';
                                         }
                                         alert(data.responseText);
@@ -663,7 +663,7 @@ $(document).ready(function(){
                             }
                         },
                         error: function(data){
-                            if(data.status == 401) {
+                            if(data.status == 401){
                                 window.location.href = '/maintenance?tbl=location';
                             }
                             alert(data.responseText);
@@ -681,7 +681,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if(willDelete) {
+                if(willDelete){
                     $.ajax({
                         url: "/updateLocation",
                         type: "PUT",
@@ -711,7 +711,7 @@ $(document).ready(function(){
                             }
                         },
                         error: function(data){
-                            if(data.status == 401) {
+                            if(data.status == 401){
                                 window.location.href = '/maintenance?tbl=location';
                             }
                             alert(data.responseText);

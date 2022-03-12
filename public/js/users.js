@@ -45,7 +45,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if(willDelete) {
+                if(willDelete){
                     $.ajax({
                         url: "users/save",
                         type: "POST",
@@ -86,7 +86,7 @@ $(document).ready(function(){
                                         }
                                     },
                                     error: function(data){
-                                        if(data.status == 401) {
+                                        if(data.status == 401){
                                             window.location.href = '/users';
                                         }
                                         alert(data.responseText);
@@ -108,7 +108,7 @@ $(document).ready(function(){
                             }
                         },
                         error: function(data){
-                            if(data.status == 401) {
+                            if(data.status == 401){
                                 window.location.href = '/users';
                             }
                             alert(data.responseText);
@@ -185,7 +185,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if(willDelete) {
+                if(willDelete){
                     $.ajax({
                         url: "users/update",
                         type: "PUT",
@@ -223,7 +223,7 @@ $(document).ready(function(){
                             }
                         },
                         error: function(data){
-                            if(data.status == 401) {
+                            if(data.status == 401){
                                 window.location.href = '/users';
                             }
                             alert(data.responseText);

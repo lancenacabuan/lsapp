@@ -282,11 +282,11 @@
     </div>
 </div>
 <script>
-$(document).ready(function() {
+$(document).ready(function(){
     var max = 100;
     $('#limit').html(max + ' characters remaining');
 
-    $('#reason').keyup(function() {
+    $('#reason').keyup(function(){
         var text_length = $('#reason').val().length;
         var text_remaining = max - text_length;
 

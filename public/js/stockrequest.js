@@ -16,14 +16,14 @@ $(function(){
 });
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-function dateDiffInDays(a, b) {
+function dateDiffInDays(a, b){
     const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
     const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
     
     return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 }
 
-function copyReqNum() {
+function copyReqNum(){
     var copyText = document.getElementById("request_num_details");
     copyText.select();
     copyText.setSelectionRange(0, 99999);
@@ -36,7 +36,7 @@ function copyReqNum() {
     });
 }
 
-function copyRefNum() {
+function copyRefNum(){
     if($("#reference_details").val() != ''){
         var copyText = document.getElementById("reference_details");
         copyText.select();
@@ -51,7 +51,7 @@ function copyRefNum() {
     }
 }
 
-function generatedr() {
+function generatedr(){
     var today = new Date();
     var month = today.getMonth()+1;
     if(month <= 9){
@@ -65,7 +65,7 @@ function generatedr() {
     var result = '';
     var characters = '123456789';
 
-    for ( var i = 0; i < 3; i++ ) {
+    for(var i = 0; i < 3; i++){
         result += characters.charAt(Math.floor(Math.random() * 6));
     }
     var request_number = date+result;
@@ -78,7 +78,7 @@ function generatedr() {
             'request_number': request_number
         },
         success: function(data){
-            if(data == 'unique') {
+            if(data == 'unique'){
                 document.getElementById("request_num").value = request_number;
             }
             else{
@@ -86,7 +86,7 @@ function generatedr() {
             }
         },
         error: function(data){
-            if(data.status == 401) {
+            if(data.status == 401){
                 window.location.href = '/stockrequest';
             }
                 alert(data.responseText);
@@ -115,7 +115,7 @@ $('#categoryReq').on('change', function(){
         data:{'category_id':id}, 
         success: function(data) 
             {
-                var itemcode = $.map(data, function(value, index) { 
+                var itemcode = $.map(data, function(value, index){ 
                     return [value];
                 });
                 descOp+='<option selected disabled>Select Item</option>'; 
@@ -126,7 +126,7 @@ $('#categoryReq').on('change', function(){
                 $("#itemReq").find('option').remove().end().append(descOp);                 
             },
         error: function(data){
-            if(data.status == 401) {
+            if(data.status == 401){
                 window.location.href = '/stockrequest';
             }
             alert(data.responseText);
@@ -146,7 +146,7 @@ $('#itemReq').on('change', function(){
             $('#uom').val(data);
         },
         error: function(data){
-            if(data.status == 401) {
+            if(data.status == 401){
                 window.location.href = '/stockrequest';
             }
             alert(data.responseText);
@@ -171,7 +171,7 @@ $('#itemReq').on('change', function(){
 //             });
 //         },
 //         error: function(data){
-//             if(data.status == 401) {
+//             if(data.status == 401){
 //                 window.location.href = '/login';
 //             }
 //             alert(data.responseText);
@@ -193,7 +193,7 @@ $(".add-row").on('click', function(){
     else{
         var table = document.getElementById('stockRequestTable');
         var count = table.rows.length;
-        for (i = 1; i < count; i++) {
+        for(i = 1; i < count; i++){
 
             var objCells = table.rows.item(i).cells;
 
@@ -225,7 +225,7 @@ $(".add-row").on('click', function(){
 
 $("#stockRequestTable").on('click', '.delete-row', function(){
     $(this).closest("tr").remove();
-    if($('#stockRequestTable tbody').children().length==0) {
+    if($('#stockRequestTable tbody').children().length==0){
         $('#stockRequestTable').hide();
         $('#stockRequestDiv').removeClass();
         $('#btnClose').hide();
@@ -247,7 +247,7 @@ $(document).on('click', '#btnSave', function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if(willDelete) {
+                if(willDelete){
                     $.ajax({
                         type:'post',
                         url:'/saveReqNum',
@@ -289,7 +289,7 @@ $(document).on('click', '#btnSave', function(){
                                             }
                                         },
                                         error: function(data){
-                                            if(data.status == 401) {
+                                            if(data.status == 401){
                                                 window.location.href = '/stockrequest';
                                             }
                                             alert(data.responseText);
@@ -320,7 +320,7 @@ $(document).on('click', '#btnSave', function(){
                                         }
                                     },
                                     error: function(data){
-                                        if(data.status == 401) {
+                                        if(data.status == 401){
                                             window.location.href = '/stockrequest';
                                         }
                                         alert(data.responseText);
@@ -334,7 +334,7 @@ $(document).on('click', '#btnSave', function(){
                             }
                         },
                         error: function(data){
-                            if(data.status == 401) {
+                            if(data.status == 401){
                                 window.location.href = '/stockrequest';
                             }
                             alert(data.responseText);
@@ -483,7 +483,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                 backdrop: 'static',
                 keyboard: false
             });
-            var reqitem = $.map(data.data, function(value, index) { 
+            var reqitem = $.map(data.data, function(value, index){ 
                 return [value];
             });
             reqitem.forEach(value => {
@@ -621,8 +621,8 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                             reqnum: req_num,
                         },
                         dataType: 'json',
-                        error: function(data) {
-                            if(data.status == 401) {
+                        error: function(data){
+                            if(data.status == 401){
                                 window.location.href = '/stockrequest';
                             }
                             alert(data.responseText);
@@ -671,8 +671,8 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                             reqnum: req_num,
                         },
                         dataType: 'json',
-                        error: function(data) {
-                            if(data.status == 401) {
+                        error: function(data){
+                            if(data.status == 401){
                                 window.location.href = '/stockrequest';
                             }
                             alert(data.responseText);
@@ -722,8 +722,8 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                             reqnum: req_num,
                         },
                         dataType: 'json',
-                        error: function(data) {
-                            if(data.status == 401) {
+                        error: function(data){
+                            if(data.status == 401){
                                 window.location.href = '/stockrequest';
                             }
                             alert(data.responseText);
@@ -882,7 +882,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                 });
             });
         },
-        error: function(data) {
+        error: function(data){
             alert(data.responseText);
         }
     });
@@ -1029,8 +1029,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 reqnum: req_num,
             },
             dataType: 'json',
-            error: function(data) {
-                if(data.status == 401) {
+            error: function(data){
+                if(data.status == 401){
                     window.location.href = '/stockrequest';
                 }
                 alert(data.responseText);
@@ -1080,8 +1080,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 reqnum: req_num,
             },
             dataType: 'json',
-            error: function(data) {
-                if(data.status == 401) {
+            error: function(data){
+                if(data.status == 401){
                     window.location.href = '/stockrequest';
                 }
                 alert(data.responseText);
@@ -1132,8 +1132,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 reqnum: req_num,
             },
             dataType: 'json',
-            error: function(data) {
-                if(data.status == 401) {
+            error: function(data){
+                if(data.status == 401){
                     window.location.href = '/stockrequest';
                 }
                 alert(data.responseText);
@@ -1343,7 +1343,7 @@ $(document).on("click", "#btnEdit", function(){
                 $('table.schedItems').DataTable().ajax.reload();
             }
         },
-        error: function(data) {
+        error: function(data){
             alert(data.responseText);
         }
     });
@@ -1380,7 +1380,7 @@ $(document).on("click", ".btndelItem", function(){
                 }
             }
         },
-        error: function(data) {
+        error: function(data){
             alert(data.responseText);
         }
     });
@@ -1395,7 +1395,7 @@ $(document).on('click', '#btnDelete', function(){
         dangerMode: true,
     })
     .then((willDelete) => {
-        if(willDelete) {       
+        if(willDelete){       
             $.ajax({
                 type:'get', 
                 url:'/deleteRequest', 
@@ -1415,7 +1415,7 @@ $(document).on('click', '#btnDelete', function(){
                     }
                 },
                 error: function(data){
-                    if(data.status == 401) {
+                    if(data.status == 401){
                         window.location.href = '/stockrequest';
                     }
                     alert(data.responseText);
@@ -1433,7 +1433,7 @@ $(document).on('click', '#btnApprove', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if(willDelete) {      
+        if(willDelete){      
             $.ajax({
                 type:'get',
                 url:'/approveRequest',
@@ -1456,7 +1456,7 @@ $(document).on('click', '#btnApprove', function(){
                     }
                 },
                 error: function(data){
-                    if(data.status == 401) {
+                    if(data.status == 401){
                         window.location.href = '/stockrequest';
                     }
                     alert(data.responseText);
@@ -1488,7 +1488,7 @@ $(document).on('click', '#btnReason', function(){
             dangerMode: true,
         })
         .then((willDelete) => {
-            if(willDelete) {
+            if(willDelete){
                 $.ajax({
                     type:'get',
                     url:'/disapproveRequest',
@@ -1528,7 +1528,7 @@ $(document).on('click', '#btnReason', function(){
                                     }
                                 },
                                 error: function(data){
-                                    if(data.status == 401) {
+                                    if(data.status == 401){
                                         window.location.href = '/stockrequest';
                                     }
                                     alert(data.responseText);
@@ -1543,7 +1543,7 @@ $(document).on('click', '#btnReason', function(){
                         }
                     },
                     error: function(data){
-                        if(data.status == 401) {
+                        if(data.status == 401){
                             window.location.href = '/stockrequest';
                         }
                         alert(data.responseText);
@@ -1562,7 +1562,7 @@ $(document).on('click', '#btnTransit', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if(willDelete) {
+        if(willDelete){
             $.ajax({
                 type:'get',
                 url:'/inTransit',
@@ -1585,7 +1585,7 @@ $(document).on('click', '#btnTransit', function(){
                     }
                 },
                 error: function(data){
-                    if(data.status == 401) {
+                    if(data.status == 401){
                         window.location.href = '/stockrequest';
                     }
                     alert(data.responseText);
@@ -1603,7 +1603,7 @@ $(document).on('click', '#btnReceive', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if(willDelete) {
+        if(willDelete){
             $.ajax({
                 type:'get',
                 url:'/receiveRequest',
@@ -1639,7 +1639,7 @@ $(document).on('click', '#btnReceive', function(){
                                 }
                             },
                             error: function(data){
-                                if(data.status == 401) {
+                                if(data.status == 401){
                                     window.location.href = '/stockrequest';
                                 }
                                 alert(data.responseText);
@@ -1653,7 +1653,7 @@ $(document).on('click', '#btnReceive', function(){
                     }
                 },
                 error: function(data){
-                    if(data.status == 401) {
+                    if(data.status == 401){
                         window.location.href = '/stockrequest';
                     }
                     alert(data.responseText);
@@ -1724,7 +1724,7 @@ $("#btnProceed").unbind('click').click(function(){
                 'item_id': items[i]
             }, 
             success: function(data){
-                var reqitem = $.map(data.data, function(value, index) { 
+                var reqitem = $.map(data.data, function(value, index){ 
                     return [value];
                 });
 
@@ -1842,8 +1842,8 @@ $("#btnProceed").unbind('click').click(function(){
                                 data:{
                                     'item_id': value.item_id
                                 }, 
-                                success:function(d) {   
-                                    var s = $.map(d, function(v) { 
+                                success:function(d){   
+                                    var s = $.map(d, function(v){ 
                                         return [v];
                                     });
                 
@@ -1864,7 +1864,7 @@ $("#btnProceed").unbind('click').click(function(){
                                     $(vid).chosen();
                                 },
                                 error: function(data){
-                                    if(data.status == 401) {
+                                    if(data.status == 401){
                                         window.location.href = '/stockrequest';
                                     }
                                     alert(data.responseText);
@@ -1890,7 +1890,7 @@ $("#btnProceed").unbind('click').click(function(){
                 for(var m=0; m < j; m++){
                     let id = '#location'+m;
                     $('#serial'+m).on('change', function(){
-                        if($('.serials').filter(function(){ return !!this.value; }).length == 0) {
+                        if($('.serials').filter(function(){ return !!this.value; }).length == 0){
                             $('#btnSubmit').prop('disabled', true);
                         }
                         else{
@@ -1911,7 +1911,7 @@ $("#btnProceed").unbind('click').click(function(){
                                 }));
                             },
                             error: function(data){
-                                if(data.status == 401) {
+                                if(data.status == 401){
                                     window.location.href = '/stockrequest';
                                 }
                                 alert(data.responseText);
@@ -1940,7 +1940,7 @@ $("#btnProceed").unbind('click').click(function(){
                             buttons: true,
                         })
                         .then((willDelete) => {
-                            if(willDelete) {
+                            if(willDelete){
                                 for(var n=0; n < j; n++){
                                     if($('#serial'+n).val() != ''){
                                         $.ajax({
@@ -1969,7 +1969,7 @@ $("#btnProceed").unbind('click').click(function(){
                                                 }
                                             },
                                             error: function(data){
-                                                if(data.status == 401) {
+                                                if(data.status == 401){
                                                     window.location.href = '/stockrequest';
                                                 }
                                                 alert(data.responseText);
@@ -1993,7 +1993,7 @@ $("#btnProceed").unbind('click').click(function(){
                                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                                     },
                                     error: function(data){
-                                        if(data.status == 401) {
+                                        if(data.status == 401){
                                             window.location.href = '/stockrequest';
                                         }
                                         alert(data.responseText);
@@ -2005,7 +2005,7 @@ $("#btnProceed").unbind('click').click(function(){
                 });
             },
             error: function(data){
-                if(data.status == 401) {
+                if(data.status == 401){
                     window.location.href = '/stockrequest';
                 }
                 alert(data.responseText);
@@ -2042,7 +2042,7 @@ $(document).on('click', '#btnSavePDF', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if(willDelete) {
+        if(willDelete){
             var content = document.getElementById('printPage');
             var options = {
                 margin:       0.5,

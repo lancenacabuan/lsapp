@@ -14,7 +14,7 @@ $(document).on('change', '#categories', function(){
                 'category_id': id
             },
             success: function(data){
-                var itemcode = $.map(data, function(value, index) {
+                var itemcode = $.map(data, function(value, index){
                     return [value];
                 });
                 descOp+='<option value="" selected disabled>Select Item</option>'; 
@@ -25,7 +25,7 @@ $(document).on('change', '#categories', function(){
                 $("#items").find('option').remove().end().append(descOp);                
             },
             error: function(data){
-                if(data.status == 401) {
+                if(data.status == 401){
                     window.location.href = '/stocks';
                 }
             alert(data.responseText);
@@ -48,7 +48,7 @@ $(document).on('change', '#items', function(){
             },
             dataType: 'json',           
             success: function(data){                    
-                var locationcode = $.map(data, function(value, index) {
+                var locationcode = $.map(data, function(value, index){
                     return [value];
                 });
                 loc+='<option value="" selected disabled>Select location</option>';
@@ -60,7 +60,7 @@ $(document).on('change', '#items', function(){
                 $("#locationfrom").find('option').remove().end().append(loc);                 
             },
             error: function(data){
-                if(data.status == 401) {
+                if(data.status == 401){
                     window.location.href = '/stocks';
                 }
             alert(data.responseText);
@@ -86,7 +86,7 @@ $(document).on('change', '#locationfrom', function(){
                     $("#strans").val(data);                 
                 },
             error: function(data){
-                if(data.status == 401) {
+                if(data.status == 401){
                     window.location.href = '/stocks';
                 }
                 alert(data.responseText);
@@ -141,7 +141,7 @@ $('#buttrans').on('click', function(){
                     setTimeout(function(){window.location.href="/stocks"} , 2000);  
                 },
                 error: function(data){
-                    if(data.status == 401) {
+                    if(data.status == 401){
                         window.location.href = '/';
                     }
                     alert(data.responseText);

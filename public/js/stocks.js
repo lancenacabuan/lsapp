@@ -203,7 +203,7 @@ $(document).on('click', '#butsave', function(){
                     setTimeout(function(){window.location.href = 'stocks';}, 2000);                                   
                 },
                 error: function(data){
-                    if(data.status == 401) {
+                    if(data.status == 401){
                         window.location.href = '/stocks';
                     }
                     alert(data.responseText);
@@ -243,7 +243,7 @@ $(document).on('click', '#butsave', function(){
                         setTimeout(function(){window.location.href = 'stocks';}, 2000);                                   
                     },
                     error: function(data){
-                        if(data.status == 401) {
+                        if(data.status == 401){
                             window.location.href = '/stocks';
                         }
                         alert(data.responseText);
@@ -268,7 +268,7 @@ $(document).on('change', '#category', function(){
         url: '/addStockitem',
         data: { 'category_id': id },            
         success: function(data){
-            var itemcode = $.map(data, function(value, index) {
+            var itemcode = $.map(data, function(value, index){
                 return [value];
             });
             descOp+='<option value="" selected disabled>Select Item</option>';
@@ -278,7 +278,7 @@ $(document).on('change', '#category', function(){
             $("#item").find('option').remove().end().append(descOp);               
         },
         error: function(data){
-            if(data.status == 401) {
+            if(data.status == 401){
                 window.location.href = '/stocks';
             }
             alert(data.responseText);
@@ -314,7 +314,7 @@ $(document).on('change', '#item', function(){
             }
         },
         error: function(data){
-            if(data.status == 401) {
+            if(data.status == 401){
                 window.location.href = '/stocks';
             }
             alert(data.responseText);
@@ -330,7 +330,7 @@ function decodeHtml(str){
         '&quot;': '"', 
         '&#039;': "'"
     };
-    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) {return map[m];});
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
 }
 
 $(document).on('click', '#backBtn', function(){

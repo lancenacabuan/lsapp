@@ -57,7 +57,7 @@ class StocksController extends Controller
         )->get();
         // $dt = DataTables::of($list);
         // $locations = Location::all();
-        // foreach ($locations as $location) {
+        // foreach ($locations as $location){
         //     $dt->addColumn($location->location, function (Category $Category)use($location){
         //         Stock::query()
         //             ->where('category_id', $Category->id)
@@ -320,7 +320,7 @@ class StocksController extends Controller
     }
 
     public function update(Request $request){ 
-        for ($i=0; $i < $request->qty ; $i++) { 
+        for($i=0; $i < $request->qty ; $i++){ 
             $stocks = Stock::where('item_id','=',$request->item)
                 ->where('location_id',$request->locationfrom)
                 ->where('status','in')

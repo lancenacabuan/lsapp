@@ -18,7 +18,7 @@ $(document).ready(function(){
             data:{'category_id':id}, 
             success: function(data) 
                 {
-                    var itemcode = $.map(data, function(value, index) { 
+                    var itemcode = $.map(data, function(value, index){ 
                         return [value];
                     });
                     descOp+='<option selected disabled>Select Item</option>'; 
@@ -29,7 +29,7 @@ $(document).ready(function(){
                     $("#itemAssembly").find('option').remove().end().append(descOp);                 
                 },
             error: function(data){
-                if(data.status == 401) {
+                if(data.status == 401){
                     window.location.href = '/assembly';
                 }
                 alert(data.responseText);
@@ -50,7 +50,7 @@ $(document).ready(function(){
         else{
             var table = document.getElementById('tblCreateItem');
             var count = table.rows.length;
-            for (i = 1; i < count; i++) {
+            for(i = 1; i < count; i++){
 
                 var objCells = table.rows.item(i).cells;
 
@@ -80,7 +80,7 @@ $(document).ready(function(){
 
     $("#tblCreateItem").on('click', '.delete-row', function(){
         $(this).closest("tr").remove();
-        if($('#tblCreateItem tbody').children().length==0) {
+        if($('#tblCreateItem tbody').children().length==0){
             $('#tblCreateItem').hide();
             $('#divCreateItem').removeClass();
             $('#btnClose').hide();

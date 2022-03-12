@@ -17,12 +17,11 @@
         <i class="fa fa-user-circle fa-4x p-2" aria-hidden="true"></i>
     </div>
 </div>
-
 <script>
-window.onload = displayClock();
-function displayClock(){
-    var display = new Date().toLocaleTimeString();
-    datetime.textContent = display;
-    setTimeout(displayClock, 1000);
-}
+    window.onload = displayClock();
+    function displayClock(){
+        var display = new Date().toLocaleTimeString();
+        datetime.textContent = display;
+        setTimeout(displayClock, 1000);
+    }
 </script>

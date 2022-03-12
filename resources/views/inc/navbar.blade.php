@@ -6,7 +6,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">HOME</a>
-                </li>     
+                </li>
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('stocks') ? 'active' : '' }}" href="{{ url('/stocks') }}">STOCKS</a>
                 </li>
@@ -15,16 +15,10 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
-                </li>             
-                {{-- <li class="nav-item">
-                    <a class="nav-link n {{ Request::is('joborder') ? 'active' : '' }}" href="{{ url('/joborder') }}">JOB ORDER</a>
-                </li> --}}
+                </li>
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('assembly') ? 'active' : '' }}" href="{{ url('/assembly') }}">ASSEMBLY</a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link n {{ Request::is('pullout') ? 'active' : '' }}" href="{{ url('/pullout') }}">PULLOUT</a>
-                </li> --}}
                 @role('admin') {{---ROLES---}}
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('maintenance*') ? 'active' : '' }}" href="{{ url('/maintenance') }}">MAINTENANCE</a>
@@ -39,14 +33,14 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}"  href="{{ url('/stockrequest') }}">HOME</a>
-                </li>     
+                </li>
             </ul>
             @endif
             @if(auth()->user()->hasanyRole('approver - warehouse')) {{---ROLES---}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}"  href="{{ url('/stocktransfer') }}">HOME</a>
-                </li>     
+                </li>
             </ul>
             @endif
             <!-- Right Side Of Navbar -->

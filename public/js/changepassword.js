@@ -1,5 +1,5 @@
-$(document).ready(function(){      
-    $('#savepassword').on('click', function(){
+$(document).ready(function(){
+    $('#btnChangePassword').on('click', function(){
     var pass1 = $('#pass1').val();
     var pass2 = $('#pass2').val();
     var pass3 = $('#pass3').val();

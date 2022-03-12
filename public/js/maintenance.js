@@ -28,12 +28,12 @@ $(document).ready(function(){
                 { data: 'uom'}
             ],
             order:[[2, 'asc']],
-            initComplete: function (){
+            initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
             }
         });
 
-        $('.filter-input').keyup(function() {
+        $('.filter-input').keyup(function(){
             table.column($(this).data('column'))
                 .search($(this).val())
                 .draw();
@@ -64,7 +64,7 @@ $(document).ready(function(){
                 { data: 'category' }
             ],
             order:[[1, 'asc']],
-            initComplete: function (){
+            initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
             }
         });
@@ -95,7 +95,7 @@ $(document).ready(function(){
                 { data: 'status' }
             ],
             order:[[1, 'asc']],
-            initComplete: function (){
+            initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
             }
         });
@@ -108,7 +108,7 @@ $(document).ready(function(){
         location.reload();
     });
 
-    $('#btnSaveItem').on('click', function() {
+    $('#btnSaveItem').on('click', function(){
         var category_name = $('#item_category').find('option:selected').text();
         var item_category = $('#item_category').val();
         var item_name = $('#item_name').val();
@@ -167,7 +167,7 @@ $(document).ready(function(){
         }
     });
 
-    $('#itemTable tbody').on('click', 'tr', function () {
+    $('#itemTable tbody').on('click', 'tr', function(){
         $('#detailsItem').modal({
             backdrop: 'static',
             keyboard: false
@@ -203,7 +203,7 @@ $(document).ready(function(){
         return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) {return map[m];});
     }
 
-    $('#btnUpdateItem').on('click', function() {
+    $('#btnUpdateItem').on('click', function(){
         var item_id = $('#item_id').val();
         var category_name_original = $('#category_name_details_original').val();
         var item_category_original = $('#item_category_details_original').val();
@@ -277,7 +277,7 @@ $(document).ready(function(){
         }
     });
 
-    $('#btnSaveCategory').on('click', function() {
+    $('#btnSaveCategory').on('click', function(){
         var category = $('#category').val();
         if(category != ""){
             swal({
@@ -355,7 +355,7 @@ $(document).ready(function(){
         }
     });
 
-    $('#categoryTable tbody').on('click', 'tr', function () {
+    $('#categoryTable tbody').on('click', 'tr', function(){
         $('#detailsCategory').modal({
             backdrop: 'static',
             keyboard: false
@@ -372,7 +372,7 @@ $(document).ready(function(){
         $('#detailsCategory').modal('show');
     });
 
-    $('#btnUpdateCategory').on('click', function() {
+    $('#btnUpdateCategory').on('click', function(){
         var category_id = $('#category_id').val();
         var category_original = $('#category_original').val();
         var category_details = $('#category_details').val().toUpperCase();
@@ -470,7 +470,7 @@ $(document).ready(function(){
         $('#newLocation').modal('show');
     });
 
-    $('#btnSaveLocation').on('click', function() {
+    $('#btnSaveLocation').on('click', function(){
         var location = $('#location').val();
         if(location != ""){
             swal({
@@ -551,7 +551,7 @@ $(document).ready(function(){
         }
     });
 
-    $('#locationTable tbody').on('click', 'tr', function () {
+    $('#locationTable tbody').on('click', 'tr', function(){
         $('#detailsLocation').modal({
             backdrop: 'static',
             keyboard: false
@@ -581,7 +581,7 @@ $(document).ready(function(){
         }
     });
 
-    $('#btnUpdateLocation').on('click', function() {
+    $('#btnUpdateLocation').on('click', function(){
         if($('#status').is(":checked")){
             var status = 'ACTIVE';
         }

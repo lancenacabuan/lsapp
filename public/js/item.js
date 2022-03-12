@@ -85,7 +85,7 @@ $(document).on('change', '#locationfrom', function(){
                 {                         
                     $("#strans").val(data);                 
                 },
-            error: function (data) {
+            error: function(data){
                 if(data.status == 401) {
                     window.location.href = '/stocks';
                 }
@@ -140,7 +140,7 @@ $('#buttrans').on('click', function(){
                     sweetAlert("TRANSFERED", "ITEM SUCCESFULLY TRANSFER", "success");
                     setTimeout(function(){window.location.href="/stocks"} , 2000);  
                 },
-                error: function (data) {
+                error: function(data){
                     if(data.status == 401) {
                         window.location.href = '/';
                     }

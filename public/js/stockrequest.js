@@ -79,7 +79,7 @@ $(document).ready(function(){
             data:{
                 'request_number': request_number
             },
-            success: function (data) {
+            success: function(data){
                 if (data == 'unique') {
                     document.getElementById("request_num").value = request_number;
                 }
@@ -87,7 +87,7 @@ $(document).ready(function(){
                     generatedr();
                 }
             },
-            error: function (data) {
+            error: function(data){
                 if(data.status == 401) {
                     window.location.href = '/stockrequest';
                 }
@@ -190,7 +190,7 @@ $(document).ready(function(){
             { data: 'reason'}
         ],
         order:[],
-        initComplete: function (){
+        initComplete: function(){
             $('#loading').hide(); Spinner.hide();
         }
     });
@@ -291,7 +291,7 @@ $(document).ready(function(){
                                 'location': $('#location').val(),
                                 'reference': $('#reference').val(),
                             },
-                            success: function (data){
+                            success: function(data){
                                 if(data == 'true'){
                                     var myTable = $('#stockRequestTable').DataTable();
                                     var form_data  = myTable.rows().data();
@@ -308,7 +308,7 @@ $(document).ready(function(){
                                                 'item': value[1],
                                                 'quantity': value[2]
                                             },
-                                            success: function (data){
+                                            success: function(data){
                                                 if(data == 'true'){
                                                     return true;
                                                 }
@@ -316,7 +316,7 @@ $(document).ready(function(){
                                                     return false;
                                                 }
                                             },
-                                            error: function (data) {
+                                            error: function(data){
                                                 if(data.status == 401) {
                                                     window.location.href = '/stockrequest';
                                                 }
@@ -337,7 +337,7 @@ $(document).ready(function(){
                                         data:{
                                             'request_number': $('#request_num').val(),
                                         },
-                                        success: function (data){
+                                        success: function(data){
                                             if(data == 'true'){
                                                 $('#loading').hide(); Spinner.hide();
                                                 sweetAlert("SUBMIT SUCCESS", "STOCK REQUEST", "success");
@@ -347,7 +347,7 @@ $(document).ready(function(){
                                                 return false;
                                             }
                                         },
-                                        error: function (data) {
+                                        error: function(data){
                                             if(data.status == 401) {
                                                 window.location.href = '/stockrequest';
                                             }
@@ -361,7 +361,7 @@ $(document).ready(function(){
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
                             },
-                            error: function (data){
+                            error: function(data){
                                 if(data.status == 401) {
                                     window.location.href = '/stockrequest';
                                 }
@@ -413,7 +413,7 @@ $(document).ready(function(){
                     
                     $("#itemReq").find('option').remove().end().append(descOp);                 
                 },
-            error: function (data) {
+            error: function(data){
                 if(data.status == 401) {
                     window.location.href = '/stockrequest';
                 }
@@ -438,7 +438,7 @@ $(document).ready(function(){
     //                 "min" : 0
     //             });
     //         },
-    //         error: function (data) {
+    //         error: function(data){
     //             if(data.status == 401) {
     //                 window.location.href = '/login';
     //             }
@@ -458,7 +458,7 @@ $(document).ready(function(){
             success:function(data) {
                 $('#uom').val(data);
             },
-            error: function (data) {
+            error: function(data){
                 if(data.status == 401) {
                     window.location.href = '/stockrequest';
                 }
@@ -1295,7 +1295,7 @@ $(document).ready(function(){
         });
     });
 
-    $(document).on("click", ".btndelItem", function() {
+    $(document).on("click", ".btndelItem", function(){
         var id = $(this).attr("id");
         var data = $('table.stockDetails2').DataTable().row(id).data();
         $.ajax({
@@ -1332,7 +1332,7 @@ $(document).ready(function(){
         });
     });
 
-    $(document).on("click", ".btnEditSerial", function() {
+    $(document).on("click", ".btnEditSerial", function(){
         var id = $(this).attr("id");
         var data = $('table.schedItems').DataTable().row(id).data();
 
@@ -1348,7 +1348,7 @@ $(document).ready(function(){
         $('#x_serial').val(data.serial);
     });
 
-    $(document).on("click", "#btnEdit", function() {
+    $(document).on("click", "#btnEdit", function(){
         $.ajax({
             url: '/editSerial',
             headers: {
@@ -1404,7 +1404,7 @@ $(document).ready(function(){
                     data:{
                         'request_number': $('#request_num_details').val()
                     },
-                    success: function (data){
+                    success: function(data){
                         if(data == 'true'){
                             $('#detailsStockRequest').hide();
                             sweetAlert("DELETE SUCCESS", "STOCK REQUEST", "success");
@@ -1416,7 +1416,7 @@ $(document).ready(function(){
                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                         }
                     },
-                    error: function (data) {
+                    error: function(data){
                         if(data.status == 401) {
                             window.location.href = '/stockrequest';
                         }
@@ -1445,7 +1445,7 @@ $(document).ready(function(){
                     data:{
                         'request_number': $('#request_num_details').val()
                     },
-                    success: function (data){
+                    success: function(data){
                         if(data == 'true'){
                             $('#detailsStockRequest').hide();
                             sweetAlert("APPROVE SUCCESS", "STOCK REQUEST", "success");
@@ -1457,7 +1457,7 @@ $(document).ready(function(){
                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                         }
                     },
-                    error: function (data) {
+                    error: function(data){
                         if(data.status == 401) {
                             window.location.href = '/stockrequest';
                         }
@@ -1468,7 +1468,7 @@ $(document).ready(function(){
         }); 
     });
 
-    $(document).on("click", "#btnDisapprove", function() {
+    $(document).on("click", "#btnDisapprove", function(){
         $('#reasonModal').modal({
             backdrop: 'static',
             keyboard: false
@@ -1501,7 +1501,7 @@ $(document).ready(function(){
                             'request_number': $('#request_num_details').val(),
                             'reason': $('#reason').val()
                         },
-                        success: function (data){
+                        success: function(data){
                             if(data == 'true'){
                                 scrollReset();
                                 $('#reasonModal').hide();
@@ -1519,7 +1519,7 @@ $(document).ready(function(){
                                         'request_number': $('#request_num_details').val(),
                                         'reason': $('#reason').val()
                                     },
-                                    success: function (data){
+                                    success: function(data){
                                         if(data == 'true'){
                                             $('#loading').hide(); Spinner.hide();
                                             sweetAlert("DISAPPROVE SUCCESS", "STOCK REQUEST", "success");
@@ -1529,7 +1529,7 @@ $(document).ready(function(){
                                             return false;
                                         }
                                     },
-                                    error: function (data) {
+                                    error: function(data){
                                         if(data.status == 401) {
                                             window.location.href = '/stockrequest';
                                         }
@@ -1544,7 +1544,7 @@ $(document).ready(function(){
                                 setTimeout(function(){location.href="/stockrequest"}, 2000);
                             }
                         },
-                        error: function (data) {
+                        error: function(data){
                             if(data.status == 401) {
                                 window.location.href = '/stockrequest';
                             }
@@ -1574,7 +1574,7 @@ $(document).ready(function(){
                     data:{
                         'request_number': $('#request_num_details').val()
                     },
-                    success: function (data){
+                    success: function(data){
                         if(data == 'true'){
                             $('#detailsStockRequest').hide();
                             sweetAlert("FOR RECEIVING SUCCESS", "STOCK REQUEST", "success");
@@ -1586,7 +1586,7 @@ $(document).ready(function(){
                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                         }
                     },
-                    error: function (data) {
+                    error: function(data){
                         if(data.status == 401) {
                             window.location.href = '/stockrequest';
                         }
@@ -1615,7 +1615,7 @@ $(document).ready(function(){
                     data:{
                         'request_number': $('#request_num_details').val()
                     },
-                    success: function (data){
+                    success: function(data){
                         if(data == 'true'){
                             scrollReset();
                             $('#detailsStockRequest').hide();
@@ -1630,7 +1630,7 @@ $(document).ready(function(){
                                 data:{
                                     'request_number': $('#request_num_details').val()
                                 },
-                                success: function (data){
+                                success: function(data){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
                                         sweetAlert("RECEIVE SUCCESS", "STOCK REQUEST", "success");
@@ -1640,7 +1640,7 @@ $(document).ready(function(){
                                         return false;
                                     }
                                 },
-                                error: function (data) {
+                                error: function(data){
                                     if(data.status == 401) {
                                         window.location.href = '/stockrequest';
                                     }
@@ -1654,7 +1654,7 @@ $(document).ready(function(){
                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                         }
                     },
-                    error: function (data) {
+                    error: function(data){
                         if(data.status == 401) {
                             window.location.href = '/stockrequest';
                         }
@@ -1865,7 +1865,7 @@ $(document).ready(function(){
                                         });
                                         $(vid).chosen();
                                     },
-                                    error: function (data) {
+                                    error: function(data){
                                         if(data.status == 401) {
                                             window.location.href = '/stockrequest';
                                         }
@@ -1892,7 +1892,7 @@ $(document).ready(function(){
                     for(var m=0; m < j; m++){
                         let id = '#location'+m;
                         $('#serial'+m).on('change', function(){
-                            if($('.serials').filter(function() { return !!this.value; }).length == 0) {
+                            if($('.serials').filter(function(){ return !!this.value; }).length == 0) {
                                 $('#btnSubmit').prop('disabled', true);
                             }
                             else{
@@ -1912,7 +1912,7 @@ $(document).ready(function(){
                                         text: data.location
                                     }));
                                 },
-                                error: function (data) {
+                                error: function(data){
                                     if(data.status == 401) {
                                         window.location.href = '/stockrequest';
                                     }
@@ -1962,7 +1962,7 @@ $(document).ready(function(){
                                                     'location': $('#location'+n).val(),
                                                     'schedOn': $('#schedOn').val()
                                                 },
-                                                success: function (data){
+                                                success: function(data){
                                                     if(data == 'true'){
                                                         return true;
                                                     }
@@ -1970,7 +1970,7 @@ $(document).ready(function(){
                                                         return false;
                                                     }
                                                 },
-                                                error: function (data) {
+                                                error: function(data){
                                                     if(data.status == 401) {
                                                         window.location.href = '/stockrequest';
                                                     }
@@ -1989,12 +1989,12 @@ $(document).ready(function(){
                                             'request_number': reqnum,
                                             'schedOn': $('#schedOn').val()
                                         },
-                                        success: function (){
+                                        success: function(){
                                             $('#detailsStockRequest').hide();
                                             sweetAlert("SCHEDULED SUCCESS", "STOCK REQUEST", "success");
                                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                                         },
-                                        error: function (data) {
+                                        error: function(data){
                                             if(data.status == 401) {
                                                 window.location.href = '/stockrequest';
                                             }
@@ -2006,7 +2006,7 @@ $(document).ready(function(){
                         }
                     });
                 },
-                error: function (data) {
+                error: function(data){
                     if(data.status == 401) {
                         window.location.href = '/stockrequest';
                     }

@@ -64,7 +64,7 @@ $(document).ready(function(){
             data:{
                 'request_number': request_number
             },
-            success: function (data) {
+            success: function(data){
                 if (data == 'unique') {
                     document.getElementById("reqnum").value = request_number;
                 }
@@ -72,7 +72,7 @@ $(document).ready(function(){
                     generateReqNum();
                 }
             },
-            error: function (data) {
+            error: function(data){
                 if(data.status == 401) {
                     window.location.href = '/stocktransfer';
                 }
@@ -119,7 +119,7 @@ $(document).ready(function(){
                     }));
                 });
             },
-            error: function (data) {
+            error: function(data){
                 if(data.status == 401) {
                     window.location.href = '/stocktransfer';
                 }
@@ -155,7 +155,7 @@ $(document).ready(function(){
                     }));
                 });
             },
-            error: function (data) {
+            error: function(data){
                 if(data.status == 401) {
                     window.location.href = '/stocktransfer';
                 }
@@ -180,7 +180,7 @@ $(document).ready(function(){
             success:function(data) {
                 $('#uom').val(data);
             },
-            error: function (data) {
+            error: function(data){
                 if(data.status == 401) {
                     window.location.href = '/stocktransfer';
                 }
@@ -218,7 +218,7 @@ $(document).ready(function(){
                     "min" : 0
                 });
             },
-            error: function (data) {
+            error: function(data){
                 if(data.status == 401) {
                     window.location.href = '/stocktransfer';
                 }
@@ -340,7 +340,7 @@ $(document).ready(function(){
                                 'locfrom': $('#locfrom').val(),
                                 'locto': $('#locto').val(),
                             },
-                            success: function (data){
+                            success: function(data){
                                 if(data == 'true'){
                                     var myTable = $('#tblNewStockTransfer').DataTable();
                                     var form_data  = myTable.rows().data();
@@ -357,7 +357,7 @@ $(document).ready(function(){
                                                 'item': value[1],
                                                 'quantity': value[2]
                                             },
-                                            success: function (data){
+                                            success: function(data){
                                                 if(data == 'true'){
                                                     return true;
                                                 }
@@ -365,7 +365,7 @@ $(document).ready(function(){
                                                     return false;
                                                 }
                                             },
-                                            error: function (data) {
+                                            error: function(data){
                                                 if(data.status == 401) {
                                                     window.location.href = '/stocktransfer';
                                                 }
@@ -386,7 +386,7 @@ $(document).ready(function(){
                                         data:{
                                             'request_number': $('#reqnum').val(),
                                         },
-                                        success: function (data){
+                                        success: function(data){
                                             if(data == 'true'){
                                                 $('#loading').hide(); Spinner.hide();
                                                 sweetAlert("SUBMIT SUCCESS", "STOCK TRANSFER REQUEST", "success");
@@ -396,7 +396,7 @@ $(document).ready(function(){
                                                 return false;
                                             }
                                         },
-                                        error: function (data) {
+                                        error: function(data){
                                             if(data.status == 401) {
                                                 window.location.href = '/stocktransfer';
                                             }
@@ -410,7 +410,7 @@ $(document).ready(function(){
                                     setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                 }
                             },
-                            error: function (data){
+                            error: function(data){
                                 if(data.status == 401) {
                                     window.location.href = '/stocktransfer';
                                 }
@@ -533,7 +533,7 @@ $(document).ready(function(){
             { data: 'reason'}
         ],
         order:[],
-        initComplete: function (){
+        initComplete: function(){
             $('#loading').hide(); Spinner.hide();
         }
     });
@@ -891,7 +891,7 @@ $(document).ready(function(){
         });
     });
 
-    $(document).on('click', '.btndelItem', function() {
+    $(document).on('click', '.btndelItem', function(){
         var id = $(this).attr("id");
         var data = $('table.transferDetails').DataTable().row(id).data();
 
@@ -945,7 +945,7 @@ $(document).ready(function(){
                     data:{
                         'request_number': $('#reqnum_details').val()
                     },
-                    success: function (data){
+                    success: function(data){
                         if(data == 'true'){
                             $('#detailsStockTransfer').hide();
                             sweetAlert("DELETE SUCCESS", "STOCK TRANSFER REQUEST", "success");
@@ -957,7 +957,7 @@ $(document).ready(function(){
                             setTimeout(function(){location.href="/stocktransfer"}, 2000);
                         }
                     },
-                    error: function (data) {
+                    error: function(data){
                         if(data.status == 401) {
                             window.location.href = '/stocktransfer';
                         }
@@ -986,7 +986,7 @@ $(document).ready(function(){
                     data:{
                         'request_number': $('#reqnum_details').val()
                     },
-                    success: function (data){
+                    success: function(data){
                         if(data == 'true'){
                             $('#detailsStockTransfer').hide();
                             sweetAlert("APPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
@@ -998,7 +998,7 @@ $(document).ready(function(){
                             setTimeout(function(){location.href="/stocktransfer"}, 2000);
                         }
                     },
-                    error: function (data) {
+                    error: function(data){
                         if(data.status == 401) {
                             window.location.href = '/stocktransfer';
                         }
@@ -1009,7 +1009,7 @@ $(document).ready(function(){
         }); 
     });
 
-    $(document).on('click', '#btnDisapprove', function() {
+    $(document).on('click', '#btnDisapprove', function(){
         $('#reasonModal').modal({
             backdrop: 'static',
             keyboard: false
@@ -1042,7 +1042,7 @@ $(document).ready(function(){
                             'request_number': $('#reqnum_details').val(),
                             'reason': $('#reason').val()
                         },
-                        success: function (data){
+                        success: function(data){
                             if(data == 'true'){
                                 scrollReset();
                                 $('#reasonModal').hide();
@@ -1060,7 +1060,7 @@ $(document).ready(function(){
                                         'request_number': $('#reqnum_details').val(),
                                         'reason': $('#reason').val()
                                     },
-                                    success: function (data){
+                                    success: function(data){
                                         if(data == 'true'){
                                             $('#loading').hide(); Spinner.hide();
                                             sweetAlert("DISAPPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
@@ -1070,7 +1070,7 @@ $(document).ready(function(){
                                             return false;
                                         }
                                     },
-                                    error: function (data) {
+                                    error: function(data){
                                         if(data.status == 401) {
                                             window.location.href = '/stocktransfer';
                                         }
@@ -1085,7 +1085,7 @@ $(document).ready(function(){
                                 setTimeout(function(){location.href="/stocktransfer"}, 2000);
                             }
                         },
-                        error: function (data) {
+                        error: function(data){
                             if(data.status == 401) {
                                 window.location.href = '/stocktransfer';
                             }
@@ -1115,7 +1115,7 @@ $(document).ready(function(){
                     data:{
                         'request_number': $('#reqnum_details').val()
                     },
-                    success: function (data){
+                    success: function(data){
                         if(data == 'true'){
                             $('#detailsStockTransfer').hide();
                             sweetAlert("FOR RECEIVING SUCCESS", "STOCK TRANSFER REQUEST", "success");
@@ -1127,7 +1127,7 @@ $(document).ready(function(){
                             setTimeout(function(){location.href="/stocktransfer"}, 2000);
                         }
                     },
-                    error: function (data) {
+                    error: function(data){
                         if(data.status == 401) {
                             window.location.href = '/stocktransfer';
                         }
@@ -1156,7 +1156,7 @@ $(document).ready(function(){
                     data:{
                         'request_number': $('#reqnum_details').val()
                     },
-                    success: function (data){
+                    success: function(data){
                         if(data == 'true'){
                             scrollReset();
                             $('#detailsStockTransfer').hide();
@@ -1171,7 +1171,7 @@ $(document).ready(function(){
                                 data:{
                                     'request_number': $('#reqnum_details').val()
                                 },
-                                success: function (data){
+                                success: function(data){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
                                         sweetAlert("RECEIVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
@@ -1181,7 +1181,7 @@ $(document).ready(function(){
                                         return false;
                                     }
                                 },
-                                error: function (data) {
+                                error: function(data){
                                     if(data.status == 401) {
                                         window.location.href = '/stocktransfer';
                                     }
@@ -1195,7 +1195,7 @@ $(document).ready(function(){
                             setTimeout(function(){location.href="/stocktransfer"}, 2000);
                         }
                     },
-                    error: function (data) {
+                    error: function(data){
                         if(data.status == 401) {
                             window.location.href = '/stocktransfer';
                         }
@@ -1406,7 +1406,7 @@ $(document).ready(function(){
                                         });
                                         $(vid).chosen();
                                     },
-                                    error: function (data) {
+                                    error: function(data){
                                         if(data.status == 401) {
                                             window.location.href = '/stocktransfer';
                                         }
@@ -1432,7 +1432,7 @@ $(document).ready(function(){
                     });
                     for(var m=0; m < j; m++){
                         $('#serial'+m).on('change', function(){
-                            if($('.serials').filter(function() { return !!this.value; }).length == 0) {
+                            if($('.serials').filter(function(){ return !!this.value; }).length == 0) {
                                 $('#btnSubmit').prop('disabled', true);
                             }
                             else{
@@ -1481,7 +1481,7 @@ $(document).ready(function(){
                                                     'locto': $('#locto_details').val(),
                                                     'schedOn': $('#schedOn').val()
                                                 },
-                                                success: function (data){
+                                                success: function(data){
                                                     if(data == 'true'){
                                                         return true;
                                                     }
@@ -1489,7 +1489,7 @@ $(document).ready(function(){
                                                         return false;
                                                     }
                                                 },
-                                                error: function (data) {
+                                                error: function(data){
                                                     if(data.status == 401) {
                                                         window.location.href = '/stocktransfer';
                                                     }
@@ -1508,12 +1508,12 @@ $(document).ready(function(){
                                             'request_number': reqnum,
                                             'schedOn': $('#schedOn').val()
                                         },
-                                        success: function (){
+                                        success: function(){
                                             $('#detailsStockTransfer').hide();
                                             sweetAlert("SCHEDULED SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                             setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                         },
-                                        error: function (data) {
+                                        error: function(data){
                                             if(data.status == 401) {
                                                 window.location.href = '/stocktransfer';
                                             }
@@ -1525,7 +1525,7 @@ $(document).ready(function(){
                         }
                     });
                 },
-                error: function (data) {
+                error: function(data){
                     if(data.status == 401) {
                         window.location.href = '/stocktransfer';
                     }

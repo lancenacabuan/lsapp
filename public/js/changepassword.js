@@ -33,7 +33,7 @@ $(document).ready(function(){
                             swal('ERROR','Incorrect Current Password!', 'error');
                         }
                     },
-                    error: function (data) {
+                    error: function(data){
                         if(data.status == 401) {
                             window.location.href = '/';
                         }

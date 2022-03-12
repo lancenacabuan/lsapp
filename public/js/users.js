@@ -17,7 +17,7 @@ $(document).ready(function(){
             { data: 'role_name' },
             { data: 'user_status' }
         ],
-        initComplete: function (){
+        initComplete: function(){
             $('#loading').hide(); Spinner.hide();
         }
     });

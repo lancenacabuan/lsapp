@@ -32,7 +32,7 @@ function category(){
                 { data: 'Malabon'},
                 { data: 'Total_stocks'}
             ],
-            initComplete: function (){
+            initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
             }
         });
@@ -78,7 +78,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
                 { data: 'Malabon'},
                 { data: 'Total_stocks'}
             ],
-            initComplete: function (){
+            initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
             }
         });
@@ -114,7 +114,7 @@ $(document).on('click', '#btnBack', function(){
                 { data: 'Malabon'},
                 { data: 'Total_stocks'}
             ],
-            initComplete: function (){
+            initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
             }
         });
@@ -148,7 +148,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 { data: 'rack'},
                 { data: 'row'}
             ],
-            initComplete: function (){
+            initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
             }
         });
@@ -197,12 +197,12 @@ $(document).on('click', '#butsave', function(){
                 },
                 success: function(dataResult){                      
                     $('#addStock').hide();
-                    sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function() {
+                    sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
                         window.location.href = 'stocks';
                     });
                     setTimeout(function(){window.location.href = 'stocks';}, 2000);                                   
                 },
-                error: function (data) {
+                error: function(data){
                     if(data.status == 401) {
                         window.location.href = '/stocks';
                     }
@@ -237,12 +237,12 @@ $(document).on('click', '#butsave', function(){
                     },
                     success: function(dataResult){                      
                         $('#addStock').hide();
-                        sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function() {
+                        sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
                             window.location.href = 'stocks';
                         });
                         setTimeout(function(){window.location.href = 'stocks';}, 2000);                                   
                     },
-                    error: function (data) {
+                    error: function(data){
                         if(data.status == 401) {
                             window.location.href = '/stocks';
                         }
@@ -267,7 +267,7 @@ $(document).on('change', '#category', function(){
         type: 'get',
         url: '/addStockitem',
         data: { 'category_id': id },            
-        success: function (data){
+        success: function(data){
             var itemcode = $.map(data, function(value, index) {
                 return [value];
             });
@@ -277,7 +277,7 @@ $(document).on('change', '#category', function(){
             });
             $("#item").find('option').remove().end().append(descOp);               
         },
-        error: function (data) {
+        error: function(data){
             if(data.status == 401) {
                 window.location.href = '/stocks';
             }
@@ -295,7 +295,7 @@ $(document).on('change', '#item', function(){
         type: 'get',
         url: 'getUOM',
         data: { 'id': id },            
-        success: function (data){
+        success: function(data){
             if(data.uom == "Unit"){
                 $('#uomdiv').show();
                 $('#qtydiv').show();
@@ -313,7 +313,7 @@ $(document).on('change', '#item', function(){
                 $('#qty').prop('disabled', false);
             }
         },
-        error: function (data){
+        error: function(data){
             if(data.status == 401) {
                 window.location.href = '/stocks';
             }

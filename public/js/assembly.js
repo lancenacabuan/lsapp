@@ -28,7 +28,7 @@ $(document).ready(function(){
                     
                     $("#itemAssembly").find('option').remove().end().append(descOp);                 
                 },
-            error: function (data) {
+            error: function(data){
                 if(data.status == 401) {
                     window.location.href = '/assembly';
                 }

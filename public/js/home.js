@@ -23,7 +23,7 @@ $(document).ready(function(){
             { data: 'activity'}
         ],
         order:[],
-        initComplete: function (){
+        initComplete: function(){
             $('#loading').hide(); Spinner.hide();
         }
     });

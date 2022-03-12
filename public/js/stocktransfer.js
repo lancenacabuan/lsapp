@@ -104,7 +104,7 @@ $('#locfrom').on('change', function(){
         data:{
             'location_id': location_id
         }, 
-        success:function(data) {
+        success: function(data){
             $('#category').find('option').remove().end()
             $('#category').append($('<option value="" selected disabled>Select Category</option>'));
             var list = $.map(data, function(value, index) { 
@@ -140,7 +140,7 @@ $('#category').on('change', function(){
             'category_id': category_id,
             'location_id': $('#locfrom').val()
         }, 
-        success:function(data) {
+        success: function(data){
             $('#item').find('option').remove().end()
             $('#item').append($('<option value="" selected disabled>Select Item</option>'));
             var list = $.map(data, function(value, index) { 
@@ -176,7 +176,7 @@ function func_settransuom(){
         data:{
             'item_id': item_id,
         }, 
-        success:function(data) {
+        success: function(data){
             $('#uom').val(data);
         },
         error: function(data){
@@ -199,7 +199,7 @@ function func_qtystock(){
             'item_id': item_id,
             'location_id': $('#locfrom').val()
         }, 
-        success:function(data) {
+        success: function(data){
             var table = document.getElementById('tblNewStockTransfer');
             var qtyminus = 0;
             if(table.rows.length > 1){
@@ -550,7 +550,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
         data: {
             request_number: reqnum,
         },
-        success: function(data) {
+        success: function(data){
             $('#detailsStockTransfer').modal({
                 backdrop: 'static',
                 keyboard: false
@@ -905,7 +905,7 @@ $(document).on('click', '.btndelItem', function(){
             req_num: $('#request_num_details').val(),
             item_id: data.item_id
         },
-        success: function(data) {
+        success: function(data){
             if(data.result == 'false'){
                 $('#detailsStockTransfer').hide();
                 sweetAlert("DELETE FAILED", "STOCK TRANSFER REQUEST", "error");
@@ -1261,7 +1261,7 @@ $("#btnProceed").unbind('click').click(function(){
                 'location': $('#locfrom_details').val(),
                 'item_id': items[i]
             }, 
-            success:function(data) {
+            success: function(data){
                 var transitem = $.map(data.data, function(value, index) { 
                     return [value];
                 });

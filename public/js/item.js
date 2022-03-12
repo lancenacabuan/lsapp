@@ -81,7 +81,7 @@ $(document).on('change', '#locationfrom', function(){
             url:'stocksAvailable',
             data:{'location_id':id,'category_id':category,'item_id':item},
             dataType: 'json',           
-            success:function(data)
+            success: function(data)
                 {                         
                     $("#strans").val(data);                 
                 },

@@ -106,94 +106,80 @@ $(".btnNewStockRequest").on('click', function(){
     generatedr();
 });
 
-$('table.stockrequestTable').dataTable().fnDestroy();
-$('#loading').show(); Spinner(); Spinner.show();
-$('table.stockrequestTable').DataTable({ 
-    columnDefs: [
-        {
-            "targets": [1],
-            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
-        },
-        {
-            "targets": [7,8,9,10,11,12,13,14],
-            "visible": false,
-            "searchable": false
+$('#categoryReq').on('change', function(){
+    var id = $('#categoryReq').val();
+    var descOp = " ";
+    $('#uom').val('');
+    $.ajax({ 
+        type:'get', 
+        url:'/itemsreq', 
+        data:{'category_id':id}, 
+        success: function(data) 
+            {
+                var itemcode = $.map(data, function(value, index) { 
+                    return [value];
+                });
+                descOp+='<option selected disabled>Select Item</option>'; 
+                itemcode.forEach(value => {
+                    descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>'; 
+                });
+                
+                $("#itemReq").find('option').remove().end().append(descOp);                 
+            },
+        error: function(data){
+            if(data.status == 401) {
+                window.location.href = '/stockrequest';
+            }
+            alert(data.responseText);
         }
-    ],
-    language: {
-        processing: "Loading...",
-        emptyTable: "No data available in table"
-    },
-    serverSide: true,
-    ajax: {
-        url: '/request_data',
-    },
-    columns: [
-        {
-            data: 'needdate',
-            "render": function(data, type, row){
-                if(row.status_id == '7' || row.status_id == '8'){
-                    return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
-                }
-                else{
-                    var a = new Date(minDate);
-                    var b = new Date(row.needdate);
-                    var difference = dateDiffInDays(a, b);
-                    if(difference >= 0 && difference <= 3){
-                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
-                    }
-                    else if(difference < 0){
-                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
-                    }
-                    else{
-                        return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
-                    }
-                }
-            }
-        },
-        { data: 'date'},
-        { data: 'req_num'},
-        { data: 'reference'},
-        { data: 'req_by'},
-        { data: 'req_type'},
-        {
-            data: 'status',
-            "render": function(data, type, row){
-                if(row.status_id == '6'){
-                    return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
-                }
-                else if(row.status_id == '1'){
-                    return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
-                }
-                else if(row.status_id == '2' || row.status_id == '5'){
-                    return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
-                }
-                else if(row.status_id == '3' || row.status_id == '4'){
-                    return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
-                }
-                else if(row.status_id == '8'){
-                    return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
-                }
-                else{
-                    return "<span style='color: Gray; font-weight: bold;'>"+row.status+"</span>";
-                }
-            }
-        },
-        { data: 'req_type_id'},
-        { data: 'status_id'},
-        { data: 'prep_by'},
-        { data: 'sched'},
-        { data: 'user_id'},
-        { data: 'client_name'},
-        { data: 'location'},
-        { data: 'reason'}
-    ],
-    order:[],
-    initComplete: function(){
-        $('#loading').hide(); Spinner.hide();
-    }
+    });    
 });
-        
+
+$('#itemReq').on('change', function(){
+    var item_id = $(this).val();
+    $.ajax({
+        type:'get', 
+        url:'/setuom', 
+        data:{
+            'item_id': item_id,
+        }, 
+        success: function(data){
+            $('#uom').val(data);
+        },
+        error: function(data){
+            if(data.status == 401) {
+                window.location.href = '/stockrequest';
+            }
+            alert(data.responseText);
+        }
+    });
+});
+
+// $('#itemReq').on('change', function(){ 
+//     $('#qtyReq').val('');
+//     var id = $('#itemReq').val();
+//     $.ajax({ 
+//         type:'get', 
+//         url:'/itemsqty', 
+//         data:{
+//             item_id: id
+//         },
+//         success: function(dataResult){      
+//             $('#qtyStock').val(dataResult);
+//             $('#qtyReq').attr({
+//                 "max" : dataResult,
+//                 "min" : 0
+//             });
+//         },
+//         error: function(data){
+//             if(data.status == 401) {
+//                 window.location.href = '/login';
+//             }
+//             alert(data.responseText);
+//         }
+//     })
+// });
+
 $(".add-row").on('click', function(){                  
     var category = $("#categoryReq option:selected").text();
     var item = $("#itemReq option:selected").text();
@@ -246,18 +232,6 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
         $('#btnClose').hide();
         $('#btnSave').hide();
     }
-});
-
-$(document).on('click', '#close', function(){
-    window.location.href = '/stockrequest';
-});
-
-$(document).on('click', '#btnClose', function(){
-    window.location.href = '/stockrequest';
-});
-
-$(document).on('click', '#modalClose', function(){
-    window.location.href = '/stockrequest';
 });
 
 $(document).on('click', '#btnSave', function(){
@@ -392,78 +366,104 @@ $(document).on('click', '#btnSave', function(){
     }   
 });
 
-$('#categoryReq').on('change', function(){
-    var id = $('#categoryReq').val();
-    var descOp = " ";
-    $('#uom').val('');
-    $.ajax({ 
-        type:'get', 
-        url:'/itemsreq', 
-        data:{'category_id':id}, 
-        success:function(data) 
-            {
-                var itemcode = $.map(data, function(value, index) { 
-                    return [value];
-                });
-                descOp+='<option selected disabled>Select Item</option>'; 
-                itemcode.forEach(value => {
-                    descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>'; 
-                });
-                
-                $("#itemReq").find('option').remove().end().append(descOp);                 
-            },
-        error: function(data){
-            if(data.status == 401) {
-                window.location.href = '/stockrequest';
-            }
-            alert(data.responseText);
-        }
-    });    
+$(document).on('click', '#close', function(){
+    window.location.href = '/stockrequest';
 });
 
-// $('#itemReq').on('change', function(){ 
-//     $('#qtyReq').val('');
-//     var id=$('#itemReq').val();
-//     $.ajax({ 
-//         type:'get', 
-//         url:'/itemsqty', 
-//         data:{
-//             item_id: id
-//         },
-//         success: function(dataResult){      
-//             $('#qtyStock').val(dataResult);
-//             $('#qtyReq').attr({
-//                 "max" : dataResult,
-//                 "min" : 0
-//             });
-//         },
-//         error: function(data){
-//             if(data.status == 401) {
-//                 window.location.href = '/login';
-//             }
-//             alert(data.responseText);
-//         }
-//     })
-// });
+$(document).on('click', '#btnClose', function(){
+    window.location.href = '/stockrequest';
+});
 
-$('#itemReq').on('change', function(){
-    var item_id = $(this).val();
-    $.ajax({
-        type:'get', 
-        url:'/setuom', 
-        data:{
-            'item_id': item_id,
-        }, 
-        success:function(data) {
-            $('#uom').val(data);
+$(document).on('click', '#modalClose', function(){
+    window.location.href = '/stockrequest';
+});
+
+$('table.stockrequestTable').dataTable().fnDestroy();
+$('#loading').show(); Spinner(); Spinner.show();
+$('table.stockrequestTable').DataTable({ 
+    columnDefs: [
+        {
+            "targets": [1],
+            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
         },
-        error: function(data){
-            if(data.status == 401) {
-                window.location.href = '/stockrequest';
-            }
-            alert(data.responseText);
+        {
+            "targets": [7,8,9,10,11,12,13,14],
+            "visible": false,
+            "searchable": false
         }
-    });
+    ],
+    language: {
+        processing: "Loading...",
+        emptyTable: "No data available in table"
+    },
+    serverSide: true,
+    ajax: {
+        url: '/request_data',
+    },
+    columns: [
+        {
+            data: 'needdate',
+            "render": function(data, type, row){
+                if(row.status_id == '7' || row.status_id == '8'){
+                    return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
+                }
+                else{
+                    var a = new Date(minDate);
+                    var b = new Date(row.needdate);
+                    var difference = dateDiffInDays(a, b);
+                    if(difference >= 0 && difference <= 3){
+                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
+                    }
+                    else if(difference < 0){
+                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                    }
+                    else{
+                        return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
+                    }
+                }
+            }
+        },
+        { data: 'date'},
+        { data: 'req_num'},
+        { data: 'reference'},
+        { data: 'req_by'},
+        { data: 'req_type'},
+        {
+            data: 'status',
+            "render": function(data, type, row){
+                if(row.status_id == '6'){
+                    return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '1'){
+                    return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '2' || row.status_id == '5'){
+                    return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '3' || row.status_id == '4'){
+                    return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '8'){
+                    return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else{
+                    return "<span style='color: Gray; font-weight: bold;'>"+row.status+"</span>";
+                }
+            }
+        },
+        { data: 'req_type_id'},
+        { data: 'status_id'},
+        { data: 'prep_by'},
+        { data: 'sched'},
+        { data: 'user_id'},
+        { data: 'client_name'},
+        { data: 'location'},
+        { data: 'reason'}
+    ],
+    order:[],
+    initComplete: function(){
+        $('#loading').hide(); Spinner.hide();
+    }
 });
 
 if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
@@ -479,7 +479,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
         data: {
             request_number: reqnum,
         },
-        success: function(data) {
+        success: function(data){
             $('#detailsStockRequest').modal({
                 backdrop: 'static',
                 keyboard: false
@@ -1294,43 +1294,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     });
 });
 
-$(document).on("click", ".btndelItem", function(){
-    var id = $(this).attr("id");
-    var data = $('table.stockDetails2').DataTable().row(id).data();
-    $.ajax({
-        url: '/delReqItem',
-        headers: {
-            'X-CSRF-TOKEN': $("#csrf").val(),
-        },
-        dataType: 'json',
-        type: 'DELETE',
-        data: {
-            req_num: $('#request_num_details').val(),
-            item_id: data.item_id
-        },
-        success: function(data) {
-            if(data.result == 'false'){
-                $('#detailsStockRequest').hide();
-                sweetAlert("DELETE FAILED", "STOCK REQUEST", "error");
-                setTimeout(function(){window.location.reload()}, 2000);
-            }
-            else{
-                if(data.count == 0){
-                    $('#detailsStockRequest').hide();
-                    sweetAlert("DELETE SUCCESS", "STOCK REQUEST", "success");
-                    setTimeout(function(){window.location.reload()}, 2000);
-                }
-                else{
-                    $('table.stockDetails2').DataTable().ajax.reload();
-                }
-            }
-        },
-        error: function(data) {
-            alert(data.responseText);
-        }
-    });
-});
-
 $(document).on("click", ".btnEditSerial", function(){
     var id = $(this).attr("id");
     var data = $('table.schedItems').DataTable().row(id).data();
@@ -1359,7 +1322,7 @@ $(document).on("click", "#btnEdit", function(){
             id: $('#x_id').val(),
             serial: $('#x_serial').val()
         },
-        success: function(data) {
+        success: function(data){
             if(data == 'false'){
                 $('#editSerialModal').hide();
                 swal({
@@ -1379,6 +1342,43 @@ $(document).on("click", "#btnEdit", function(){
                     timer: 2000
                 });
                 $('table.schedItems').DataTable().ajax.reload();
+            }
+        },
+        error: function(data) {
+            alert(data.responseText);
+        }
+    });
+});
+
+$(document).on("click", ".btndelItem", function(){
+    var id = $(this).attr("id");
+    var data = $('table.stockDetails2').DataTable().row(id).data();
+    $.ajax({
+        url: '/delReqItem',
+        headers: {
+            'X-CSRF-TOKEN': $("#csrf").val(),
+        },
+        dataType: 'json',
+        type: 'DELETE',
+        data: {
+            req_num: $('#request_num_details').val(),
+            item_id: data.item_id
+        },
+        success: function(data){
+            if(data.result == 'false'){
+                $('#detailsStockRequest').hide();
+                sweetAlert("DELETE FAILED", "STOCK REQUEST", "error");
+                setTimeout(function(){window.location.reload()}, 2000);
+            }
+            else{
+                if(data.count == 0){
+                    $('#detailsStockRequest').hide();
+                    sweetAlert("DELETE SUCCESS", "STOCK REQUEST", "success");
+                    setTimeout(function(){window.location.reload()}, 2000);
+                }
+                else{
+                    $('table.stockDetails2').DataTable().ajax.reload();
+                }
             }
         },
         error: function(data) {
@@ -1724,7 +1724,7 @@ $("#btnProceed").unbind('click').click(function(){
                 'reqnum': reqnum,
                 'item_id': items[i]
             }, 
-            success:function(data) {
+            success: function(data){
                 var reqitem = $.map(data.data, function(value, index) { 
                     return [value];
                 });
@@ -1904,7 +1904,7 @@ $("#btnProceed").unbind('click').click(function(){
                             data:{
                                 'serial_id': serial_id
                             }, 
-                            success:function(data) {
+                            success: function(data){
                                 $(id).find('option').remove().end()
                                 $(id).append($('<option>', {
                                     value: data.location_id,

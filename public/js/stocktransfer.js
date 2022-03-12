@@ -1391,7 +1391,7 @@ $("#btnProceed").unbind('click').click(function(){
                                     'item_id': value.item_id,
                                     'location': $('#locfrom_details').val()
                                 }, 
-                                success:function(d){   
+                                success: function(d){   
                                     var s = $.map(d, function(v){ 
                                         return [v];
                                     });

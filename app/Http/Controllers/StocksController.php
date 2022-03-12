@@ -57,7 +57,7 @@ class StocksController extends Controller
         )->get();
         // $dt = DataTables::of($list);
         // $locations = Location::all();
-        // foreach ($locations as $location){
+        // foreach($locations as $location){
         //     $dt->addColumn($location->location, function (Category $Category)use($location){
         //         Stock::query()
         //             ->where('category_id', $Category->id)

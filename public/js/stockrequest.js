@@ -1842,7 +1842,7 @@ $("#btnProceed").unbind('click').click(function(){
                                 data:{
                                     'item_id': value.item_id
                                 }, 
-                                success:function(d){   
+                                success: function(d){   
                                     var s = $.map(d, function(v){ 
                                         return [v];
                                     });

@@ -35,15 +35,13 @@ class StockTransferController extends Controller
 
         return view('/pages/stocktransfer', compact('locations'));
     }
-    
+
     public function generateReqNum(Request $request){
-        $reqnum = RequestTransfer::query()->select()
-            ->where('request_number',$request->request_number)
-            ->count();
-            if($reqnum == 0){
-                return response('unique');
-            }
-            return response('duplicate');
+        $reqnum = RequestTransfer::query()->select()->where('request_number',$request->request_number)->count();
+        if($reqnum == 0){
+            return response('unique');
+        }
+        return response('duplicate');
     }
 
     public function setcategory(Request $request){
@@ -111,7 +109,7 @@ class StockTransferController extends Controller
 
         return response($result);
     }
-    
+
     public function saveTransRequest(Request $request){
         $items = Item::query()->select('id','category_id')
                 ->where('item',htmlspecialchars_decode($request->item))
@@ -351,6 +349,65 @@ class StockTransferController extends Controller
         ->make(true);
     }
 
+    public function transItems(Request $request){
+        $list = Transfer::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, transferred_items.serial AS serial, transferred_items.qty AS qty, transferred_items.items_id AS item_id, transferred_items.id AS id, locations.location AS location')
+            ->where('request_number', $request->request_number)
+            ->join('items','items.id','transferred_items.items_id')
+            ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','transferred_items.locfrom')
+            ->get()
+            ->sortBy('item')
+            ->sortBy('category');
+
+        return DataTables::of($list)->make(true);
+    }
+
+    public function delTransItem(Request $request){
+        $transitems = StockTransfer::where('request_number', $request->req_num)
+            ->where('item', $request->item_id)
+            ->delete();
+        
+        if(!$transitems){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        $count = StockTransfer::where('request_number', $request->req_num)->count();
+        if($count == 0){
+            RequestTransfer::where('request_number', $request->req_num)->delete();
+        }
+
+        $data = array('result' => $result, 'count' => $count);
+        return response()->json($data);
+    }
+
+    public function deleteTransfer(Request $request){
+        do{
+            $sqlquery = RequestTransfer::where('request_number', $request->request_number)->delete();
+        }
+        while(!$sqlquery);
+        
+        $sql = StockTransfer::where('request_number', $request->request_number)->delete();
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+        
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "DELETED STOCK TRANSFER REQUEST: User successfully deleted Stock Transfer Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
+    }
+
     public function approveTransfer(Request $request){
         $sql = RequestTransfer::where('request_number', $request->request_number)
             ->update(['status' => '1', 'reason' => '']);
@@ -444,6 +501,49 @@ class StockTransferController extends Controller
         $userlogs->activity = "DISAPPROVED STOCK TRANSFER REQUEST: User successfully disapproved Stock Transfer Request No. $request->request_number.";
         $userlogs->save();
         
+        return response('true');
+    }
+
+    public function forReceiving(Request $request){
+        RequestTransfer::where('request_number', $request->request_number)
+            ->where('status','2')
+            ->update(['status' => '3']);
+
+        RequestTransfer::where('request_number', $request->request_number)
+            ->where('status','5')
+            ->update(['status' => '4']);
+        
+        Transfer::where('request_number', $request->request_number)
+            ->update(['intransit' => 'yes']);
+
+        $list = Transfer::select('items_id','request_number','locfrom','locto','serial','qty')
+            ->where('request_number', $request->request_number)
+            ->get();
+        foreach($list as $key){
+            if($key->serial == ''){
+                for($x = 0; $x < $key->qty; $x++){
+                    Stock::where('item_id',$key->items_id)
+                    ->where('location_id',$key->locto)
+                    ->where('status', 'trans')
+                    ->limit(1)
+                    ->update(['status' => 'in']);
+                }
+            }
+            else{
+                Stock::where('serial',$key->serial)
+                ->where('item_id',$key->items_id)
+                ->where('location_id',$key->locto)
+                ->where('status', 'trans')
+                ->limit(1)
+                ->update(['status' => 'in']);
+            }
+        }
+        
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "FOR RECEIVING STOCK TRANSFER REQUEST: User successfully processed for receiving Stock Transfer Request No. $request->request_number.";
+        $userlogs->save();
+
         return response('true');
     }
 
@@ -556,52 +656,6 @@ class StockTransferController extends Controller
         $userlogs->save();
 
         return response('true');
-    }
-
-    public function deleteTransfer(Request $request){
-        do{
-            $sqlquery = RequestTransfer::where('request_number', $request->request_number)->delete();
-        }
-        while(!$sqlquery);
-        
-        $sql = StockTransfer::where('request_number', $request->request_number)->delete();
-        
-        if(!$sql){
-            $result = 'false';
-        }
-        else {
-            $result = 'true';
-        }
-        
-        if($result == 'true'){
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "DELETED STOCK TRANSFER REQUEST: User successfully deleted Stock Transfer Request No. $request->request_number.";
-            $userlogs->save();
-        }
-
-        return response($result);
-    }
-
-    public function delTransItem(Request $request){
-        $transitems = StockTransfer::where('request_number', $request->req_num)
-            ->where('item', $request->item_id)
-            ->delete();
-        
-        if(!$transitems){
-            $result = 'false';
-        }
-        else {
-            $result = 'true';
-        }
-
-        $count = StockTransfer::where('request_number', $request->req_num)->count();
-        if($count == 0){
-            RequestTransfer::where('request_number', $request->req_num)->delete();
-        }
-
-        $data = array('result' => $result, 'count' => $count);
-        return response()->json($data);
     }
 
     public function stocktrans(Request $request){       
@@ -751,63 +805,6 @@ class StockTransferController extends Controller
         $userlogs->activity = "SCHEDULED STOCK TRANSFER REQUEST: User successfully scheduled on $request->schedOn Stock Transfer Request No. $request->request_number.";
         $userlogs->save();
         
-        return response('true');
-    }
-
-    public function transItems(Request $request)
-    {
-        $list = Transfer::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, transferred_items.serial AS serial, transferred_items.qty AS qty, transferred_items.items_id AS item_id, transferred_items.id AS id, locations.location AS location')
-            ->where('request_number', $request->request_number)
-            ->join('items','items.id','transferred_items.items_id')
-            ->join('categories','categories.id','items.category_id')
-            ->join('locations','locations.id','transferred_items.locfrom')
-            ->get()
-            ->sortBy('item')
-            ->sortBy('category');
-
-        return DataTables::of($list)->make(true);
-    }
-
-    public function forReceiving(Request $request){
-        RequestTransfer::where('request_number', $request->request_number)
-            ->where('status','2')
-            ->update(['status' => '3']);
-
-        RequestTransfer::where('request_number', $request->request_number)
-            ->where('status','5')
-            ->update(['status' => '4']);
-        
-        Transfer::where('request_number', $request->request_number)
-            ->update(['intransit' => 'yes']);
-
-        $list = Transfer::select('items_id','request_number','locfrom','locto','serial','qty')
-            ->where('request_number', $request->request_number)
-            ->get();
-        foreach($list as $key){
-            if($key->serial == ''){
-                for($x = 0; $x < $key->qty; $x++){
-                    Stock::where('item_id',$key->items_id)
-                    ->where('location_id',$key->locto)
-                    ->where('status', 'trans')
-                    ->limit(1)
-                    ->update(['status' => 'in']);
-                }
-            }
-            else{
-                Stock::where('serial',$key->serial)
-                ->where('item_id',$key->items_id)
-                ->where('location_id',$key->locto)
-                ->where('status', 'trans')
-                ->limit(1)
-                ->update(['status' => 'in']);
-            }
-        }
-        
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "FOR RECEIVING STOCK TRANSFER REQUEST: User successfully processed for receiving Stock Transfer Request No. $request->request_number.";
-        $userlogs->save();
-
         return response('true');
     }
 

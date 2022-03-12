@@ -26,7 +26,7 @@ $(document).ready(function(){
     }
 
     function copyReqNum() {
-        var copyText = document.getElementById("reqnum_details");
+        var copyText = document.getElementById("request_num_details");
         copyText.select();
         copyText.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(copyText.value);
@@ -569,7 +569,7 @@ $(document).ready(function(){
                         need_date = moment(need_date).format('dddd, MMMM DD, YYYY');
                         $('#needdate_details').val(need_date);
                     var req_num = value.req_num;
-                        $('#reqnum_details').val(req_num);
+                        $('#request_num_details').val(req_num);
                     var req_by = value.req_by;
                         $('#reqby_details').val(req_by);
                     var status = value.status;
@@ -705,7 +705,7 @@ $(document).ready(function(){
                         ajax: {
                             url: '/transItems',
                             data: {
-                                request_number: $('#reqnum_details').val(),
+                                request_number: $('#request_num_details').val(),
                             }
                         },
                         order:[],
@@ -741,7 +741,7 @@ $(document).ready(function(){
             need_date = moment(need_date).format('dddd, MMMM DD, YYYY');
             $('#needdate_details').val(need_date);
         var req_num = data.req_num;
-            $('#reqnum_details').val(req_num);
+            $('#request_num_details').val(req_num);
         var req_by = data.req_by;
             $('#reqby_details').val(req_by);
         var status = data.status;
@@ -877,7 +877,7 @@ $(document).ready(function(){
             ajax: {
                 url: '/transItems',
                 data: {
-                    request_number: $('#reqnum_details').val(),
+                    request_number: $('#request_num_details').val(),
                 }
             },
             order:[],
@@ -903,7 +903,7 @@ $(document).ready(function(){
             dataType: 'json',
             type: 'DELETE',
             data: {
-                req_num: $('#reqnum_details').val(),
+                req_num: $('#request_num_details').val(),
                 item_id: data.item_id
             },
             success: function(data) {
@@ -943,7 +943,7 @@ $(document).ready(function(){
                     type:'get', 
                     url:'/deleteTransfer', 
                     data:{
-                        'request_number': $('#reqnum_details').val()
+                        'request_number': $('#request_num_details').val()
                     },
                     success: function(data){
                         if(data == 'true'){
@@ -984,7 +984,7 @@ $(document).ready(function(){
                         'X-CSRF-TOKEN': $("#csrf").val(),
                             },
                     data:{
-                        'request_number': $('#reqnum_details').val()
+                        'request_number': $('#request_num_details').val()
                     },
                     success: function(data){
                         if(data == 'true'){
@@ -1039,7 +1039,7 @@ $(document).ready(function(){
                             'X-CSRF-TOKEN': $("#csrf").val(),
                                 },
                         data:{
-                            'request_number': $('#reqnum_details').val(),
+                            'request_number': $('#request_num_details').val(),
                             'reason': $('#reason').val()
                         },
                         success: function(data){
@@ -1057,7 +1057,7 @@ $(document).ready(function(){
                                         'X-CSRF-TOKEN': $("#csrf").val(),
                                             },
                                     data:{
-                                        'request_number': $('#reqnum_details').val(),
+                                        'request_number': $('#request_num_details').val(),
                                         'reason': $('#reason').val()
                                     },
                                     success: function(data){
@@ -1113,7 +1113,7 @@ $(document).ready(function(){
                         'X-CSRF-TOKEN': $("#csrf").val(),
                             },
                     data:{
-                        'request_number': $('#reqnum_details').val()
+                        'request_number': $('#request_num_details').val()
                     },
                     success: function(data){
                         if(data == 'true'){
@@ -1154,7 +1154,7 @@ $(document).ready(function(){
                         'X-CSRF-TOKEN': $("#csrf").val(),
                             },
                     data:{
-                        'request_number': $('#reqnum_details').val()
+                        'request_number': $('#request_num_details').val()
                     },
                     success: function(data){
                         if(data == 'true'){
@@ -1169,7 +1169,7 @@ $(document).ready(function(){
                                     'X-CSRF-TOKEN': $("#csrf").val(),
                                         },
                                 data:{
-                                    'request_number': $('#reqnum_details').val()
+                                    'request_number': $('#request_num_details').val()
                                 },
                                 success: function(data){
                                     if(data == 'true'){
@@ -1247,7 +1247,7 @@ $(document).ready(function(){
     });
 
     $("#btnProceed").unbind('click').click(function(){
-        var reqnum = $('#reqnum_details').val();
+        var reqnum = $('#request_num_details').val();
         var j = 0;
         $("#transferDetails *").prop('disabled',true);
         $("#btnProceed").hide();
@@ -1544,7 +1544,7 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.btnPrint', function(){
-        window.location.href = '/printTransferRequest?request_number='+$('#reqnum_details').val();
+        window.location.href = '/printTransferRequest?request_number='+$('#request_num_details').val();
     });
 
     $(document).on('click', '#btnPrint', function(){

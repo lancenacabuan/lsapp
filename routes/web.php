@@ -1,14 +1,13 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Middleware\RoleMiddleware;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\StocksController;
 use App\Http\Controllers\StockRequestController;
 use App\Http\Controllers\StockTransferController;
 use App\Http\Controllers\AssemblyController;
 use App\Http\Controllers\FileMaintenanceController;
-use App\Http\Controllers\PagesController;
-use App\Http\Controllers\PostsController;
-use App\Http\Controllers\Auth\LoginController;
-use Spatie\Permission\Middleware\RoleMiddleware;
 
 Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
 
@@ -52,32 +51,32 @@ Route::get('/stock_data',[StocksController::class,'stock_data']);
 
 //Stock Requests
 Route::get('/stockrequest',[StockRequestController::class,'stockrequest']);
-Route::get('/stockreq',[StockRequestController::class,'stockreq']);
-Route::get('/setserials',[StockRequestController::class,'setserials']);
-Route::get('/setlocation',[StockRequestController::class,'setlocation']);
-Route::get('/request_data',[StockRequestController::class,'request_data']);
-Route::get('/reqModal',[StockRequestController::class,'reqModal']);
-Route::get('/schedItems',[StockRequestController::class,'schedItems']);
+Route::get('/generatedr',[StockRequestController::class,'generatedr']);
 Route::get('/itemsreq',[StockRequestController::class,'itemsreq']);
+Route::get('/setuom',[StockRequestController::class,'setuom']);
 // Route::get('/itemsqty',[StockRequestController::class,'itemsqty']);
 // Route::get('/itemsstock',[StockRequestController::class,'itemsstock']);
-Route::get('/setuom',[StockRequestController::class,'setuom']);
-Route::get('/generatedr',[StockRequestController::class,'generatedr']);
-Route::any('/prepareItems',[StockRequestController::class,'prepareItems']);
-Route::any('/logSched',[StockRequestController::class,'logSched']);
-Route::any('/approveRequest',[StockRequestController::class,'approveRequest']);
-Route::any('/disapproveRequest',[StockRequestController::class,'disapproveRequest']);
-Route::any('/logDisapprove',[StockRequestController::class,'logDisapprove']);
-Route::any('/receiveRequest',[StockRequestController::class,'receiveRequest']);
-Route::any('/logReceive',[StockRequestController::class,'logReceive']);
 Route::any('/saveReqNum',[StockRequestController::class,'saveReqNum']);
 Route::any('/saveRequest',[StockRequestController::class,'saveRequest']);
 Route::any('/logSave',[StockRequestController::class,'logSave']);
+Route::get('/request_data',[StockRequestController::class,'request_data']);
+Route::get('/reqModal',[StockRequestController::class,'reqModal']);
 Route::get('/requestDetails',[StockRequestController::class,'requestDetails']);
-Route::any('/deleteRequest',[StockRequestController::class,'deleteRequest']);
-Route::any('/delReqItem',[StockRequestController::class,'delReqItem']);
+Route::get('/schedItems',[StockRequestController::class,'schedItems']);
 Route::any('/editSerial',[StockRequestController::class,'editSerial']);
+Route::any('/delReqItem',[StockRequestController::class,'delReqItem']);
+Route::any('/deleteRequest',[StockRequestController::class,'deleteRequest']);
+Route::any('/approveRequest',[StockRequestController::class,'approveRequest']);
+Route::any('/disapproveRequest',[StockRequestController::class,'disapproveRequest']);
+Route::any('/logDisapprove',[StockRequestController::class,'logDisapprove']);
 Route::any('/inTransit',[StockRequestController::class,'inTransit']);
+Route::any('/receiveRequest',[StockRequestController::class,'receiveRequest']);
+Route::any('/logReceive',[StockRequestController::class,'logReceive']);
+Route::get('/stockreq',[StockRequestController::class,'stockreq']);
+Route::get('/setserials',[StockRequestController::class,'setserials']);
+Route::get('/setlocation',[StockRequestController::class,'setlocation']);
+Route::any('/prepareItems',[StockRequestController::class,'prepareItems']);
+Route::any('/logSched',[StockRequestController::class,'logSched']);
 Route::get('/printRequest',[StockRequestController::class,'printRequest']);
 //
 
@@ -94,19 +93,19 @@ Route::any('/logTransSave',[StockTransferController::class,'logTransSave']);
 Route::get('/transfer_data',[StockTransferController::class,'transfer_data']);
 Route::get('/transModal',[StockTransferController::class,'transModal']);
 Route::get('/transferDetails',[StockTransferController::class,'transferDetails']);
+Route::get('/transItems',[StockTransferController::class,'transItems']);
+Route::any('/delTransItem',[StockTransferController::class,'delTransItem']);
+Route::any('/deleteTransfer',[StockTransferController::class,'deleteTransfer']);
 Route::any('/approveTransfer',[StockTransferController::class,'approveTransfer']);
 Route::any('/disapproveTransfer',[StockTransferController::class,'disapproveTransfer']);
 Route::any('/logTransDisapprove',[StockTransferController::class,'logTransDisapprove']);
+Route::any('/forReceiving',[StockTransferController::class,'forReceiving']);
 Route::any('/receiveTransfer',[StockTransferController::class,'receiveTransfer']);
 Route::any('/logTransReceive',[StockTransferController::class,'logTransReceive']);
-Route::any('/deleteTransfer',[StockTransferController::class,'deleteTransfer']);
-Route::any('/delTransItem',[StockTransferController::class,'delTransItem']);
 Route::get('/stocktrans',[StockTransferController::class,'stocktrans']);
 Route::get('/settransserials',[StockTransferController::class,'settransserials']);
 Route::any('/transferItems',[StockTransferController::class,'transferItems']);
 Route::any('/logTransSched',[StockTransferController::class,'logTransSched']);
-Route::get('/transItems',[StockTransferController::class,'transItems']);
-Route::any('/forReceiving',[StockTransferController::class,'forReceiving']);
 Route::get('/printTransferRequest',[StockTransferController::class,'printTransferRequest']);
 //
 

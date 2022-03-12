@@ -4,8 +4,7 @@ $(document).ready(function(){
         $('.btnNewItem').show();
         $('#itemTable').show();
         $('#loading').show(); Spinner(); Spinner.show();
-        var table;
-        table = $('table.itemTable').DataTable({ 
+        $('table.itemTable').DataTable({ 
             language: {
                 processing: "Loading...",
                 emptyTable: "No data available in table"
@@ -21,22 +20,16 @@ $(document).ready(function(){
                 "searchable": false
             }],
             columns: [
-                { data: 'item_id'},
-                { data: 'category'},
-                { data: 'item_name'},
-                { data: 'category_id'},
-                { data: 'uom'}
+                { data: 'id' },
+                { data: 'category' },
+                { data: 'item' },
+                { data: 'category_id' },
+                { data: 'UOM' }
             ],
             order:[[2, 'asc']],
             initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
             }
-        });
-
-        $('.filter-input').keyup(function(){
-            table.column($(this).data('column'))
-                .search($(this).val())
-                .draw();
         });
     }
     else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=category'){

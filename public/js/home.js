@@ -17,10 +17,10 @@ $(document).ready(function(){
             },
         ],
         columns: [
-            { data: 'date'},
-            { data: 'username'},                
-            { data: 'role'},
-            { data: 'activity'}
+            { data: 'date' },
+            { data: 'username' },                
+            { data: 'role' },
+            { data: 'activity' }
         ],
         order:[],
         initComplete: function(){

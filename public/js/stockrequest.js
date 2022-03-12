@@ -422,11 +422,11 @@ $('table.stockrequestTable').DataTable({
                 }
             }
         },
-        { data: 'date'},
-        { data: 'req_num'},
-        { data: 'reference'},
-        { data: 'req_by'},
-        { data: 'req_type'},
+        { data: 'date' },
+        { data: 'req_num' },
+        { data: 'reference' },
+        { data: 'req_by' },
+        { data: 'req_type' },
         {
             data: 'status',
             "render": function(data, type, row){
@@ -450,14 +450,14 @@ $('table.stockrequestTable').DataTable({
                 }
             }
         },
-        { data: 'req_type_id'},
-        { data: 'status_id'},
-        { data: 'prep_by'},
-        { data: 'sched'},
-        { data: 'user_id'},
-        { data: 'client_name'},
-        { data: 'location'},
-        { data: 'reason'}
+        { data: 'req_type_id' },
+        { data: 'status_id' },
+        { data: 'prep_by' },
+        { data: 'sched' },
+        { data: 'user_id' },
+        { data: 'client_name' },
+        { data: 'location' },
+        { data: 'reason' }
     ],
     order:[],
     initComplete: function(){
@@ -630,19 +630,19 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category'},
-                        { data: 'item'},
-                        { data: 'uom'},
-                        { data: 'quantity'},
-                        { data: 'pending'},
-                        { data: 'qtystock'},
-                        { data: 'item_id'},
-                        { data: 'qtya1'},
-                        { data: 'qtya2'},
-                        { data: 'qtya3'},
-                        { data: 'qtya4'},
-                        { data: 'qtybal'},
-                        { data: 'qtymal'}
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'uom' },
+                        { data: 'quantity' },
+                        { data: 'pending' },
+                        { data: 'qtystock' },
+                        { data: 'item_id' },
+                        { data: 'qtya1' },
+                        { data: 'qtya2' },
+                        { data: 'qtya3' },
+                        { data: 'qtya4' },
+                        { data: 'qtybal' },
+                        { data: 'qtymal' }
                     ],
                     orderCellsTop: true,
                     fixedHeader: true,            
@@ -680,12 +680,12 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category'},
-                        { data: 'item'},
-                        { data: 'uom'},
-                        { data: 'quantity'},
-                        { data: 'pending'},
-                        { data: 'item_id'}
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'uom' },
+                        { data: 'quantity' },
+                        { data: 'pending' },
+                        { data: 'item_id' }
                     ],
                     orderCellsTop: true,
                     fixedHeader: true,            
@@ -731,13 +731,13 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category'},
-                        { data: 'item'},
-                        { data: 'uom'},
-                        { data: 'quantity'},
-                        { data: 'pending'},
-                        { data: 'item_id'},
-                        { data: 'item_id'}
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'uom' },
+                        { data: 'quantity' },
+                        { data: 'pending' },
+                        { data: 'item_id' },
+                        { data: 'item_id' }
                     ],
                     orderCellsTop: true,
                     fixedHeader: true,            
@@ -775,14 +775,14 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category'},
-                        { data: 'item'},
-                        { data: 'qty'},
-                        { data: 'uom'},
-                        { data: 'serial'},
-                        { data: 'location'},
-                        { data: 'id'},
-                        { data: 'id'}
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'qty' },
+                        { data: 'uom' },
+                        { data: 'serial' },
+                        { data: 'location' },
+                        { data: 'id' },
+                        { data: 'id' }
                     ]
                 });
             
@@ -803,12 +803,12 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category'},
-                        { data: 'item'},
-                        { data: 'qty'},
-                        { data: 'uom'},
-                        { data: 'serial'},
-                        { data: 'location'}
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'qty' },
+                        { data: 'uom' },
+                        { data: 'serial' },
+                        { data: 'location' }
                     ]
                 });
             
@@ -844,14 +844,14 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category'},
-                        { data: 'item'},
-                        { data: 'qty'},
-                        { data: 'uom'},
-                        { data: 'serial'},
-                        { data: 'location'},
-                        { data: 'serial'},
-                        { data: 'item_id'}
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'qty' },
+                        { data: 'uom' },
+                        { data: 'serial' },
+                        { data: 'location' },
+                        { data: 'serial' },
+                        { data: 'item_id' }
                     ]
                 });
             
@@ -872,12 +872,12 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category'},
-                        { data: 'item'},
-                        { data: 'qty'},
-                        { data: 'uom'},
-                        { data: 'serial'},
-                        { data: 'location'}
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'qty' },
+                        { data: 'uom' },
+                        { data: 'serial' },
+                        { data: 'location' }
                     ]
                 });
             });
@@ -1038,20 +1038,20 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category'},
-            { data: 'item'},
-            { data: 'uom'},
-            { data: 'quantity'},
-            // { data: 'served'},
-            { data: 'pending'},
-            { data: 'qtystock'},
-            { data: 'item_id'},
-            { data: 'qtya1'},
-            { data: 'qtya2'},
-            { data: 'qtya3'},
-            { data: 'qtya4'},
-            { data: 'qtybal'},
-            { data: 'qtymal'}
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'uom' },
+            { data: 'quantity' },
+            // { data: 'served' },
+            { data: 'pending' },
+            { data: 'qtystock' },
+            { data: 'item_id' },
+            { data: 'qtya1' },
+            { data: 'qtya2' },
+            { data: 'qtya3' },
+            { data: 'qtya4' },
+            { data: 'qtybal' },
+            { data: 'qtymal' }
         ],
         orderCellsTop: true,
         fixedHeader: true,            
@@ -1089,13 +1089,13 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category'},
-            { data: 'item'},
-            { data: 'uom'},
-            { data: 'quantity'},
-            // { data: 'served'},
-            { data: 'pending'},
-            { data: 'item_id'}
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'uom' },
+            { data: 'quantity' },
+            // { data: 'served' },
+            { data: 'pending' },
+            { data: 'item_id' }
         ],
         orderCellsTop: true,
         fixedHeader: true,            
@@ -1141,14 +1141,14 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category'},
-            { data: 'item'},
-            { data: 'uom'},
-            { data: 'quantity'},
-            // { data: 'served'},
-            { data: 'pending'},
-            { data: 'item_id'},
-            { data: 'item_id'}
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'uom' },
+            { data: 'quantity' },
+            // { data: 'served' },
+            { data: 'pending' },
+            { data: 'item_id' },
+            { data: 'item_id' }
         ],
         orderCellsTop: true,
         fixedHeader: true,            
@@ -1186,14 +1186,14 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category'},
-            { data: 'item'},
-            { data: 'qty'},
-            { data: 'uom'},
-            { data: 'serial'},
-            { data: 'location'},
-            { data: 'id'},
-            { data: 'id'}
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' },
+            { data: 'location' },
+            { data: 'id' },
+            { data: 'id' }
         ]
     });
 
@@ -1214,12 +1214,12 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category'},
-            { data: 'item'},
-            { data: 'qty'},
-            { data: 'uom'},
-            { data: 'serial'},
-            { data: 'location'}
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' },
+            { data: 'location' }
         ]
     });
 
@@ -1255,14 +1255,14 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category'},
-            { data: 'item'},
-            { data: 'qty'},
-            { data: 'uom'},
-            { data: 'serial'},
-            { data: 'location'},
-            { data: 'serial'},
-            { data: 'item_id'}
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' },
+            { data: 'location' },
+            { data: 'serial' },
+            { data: 'item_id' }
         ]
     });
 
@@ -1283,12 +1283,12 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category'},
-            { data: 'item'},
-            { data: 'qty'},
-            { data: 'uom'},
-            { data: 'serial'},
-            { data: 'location'}
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' },
+            { data: 'location' }
         ]
     });
 });

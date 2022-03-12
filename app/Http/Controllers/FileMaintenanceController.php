@@ -44,10 +44,9 @@ class FileMaintenanceController extends Controller
         return view('pages/maintenance', compact('categories'));   
     }
 
-    public function fm_items()
-    {
-        $list = Item::select('items.id AS item_id', 'items.item AS item_name', 'category', 'items.category_id AS category_id', 'items.UOM AS uom')
-            ->join('categories', 'categories.id', '=', 'category_id');
+    public function fm_items(){
+        $list = Item::select('items.id', 'items.item', 'categories.category', 'items.category_id', 'items.UOM')
+            ->join('categories', 'categories.id', 'category_id');
         return DataTables::of($list)->make(true);
     }
 

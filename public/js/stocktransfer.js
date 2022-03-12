@@ -494,11 +494,11 @@ $('table.stocktransferTable').DataTable({
                 }
             }
         },
-        { data: 'date'},
-        { data: 'req_num'},
-        { data: 'req_by'},
-        { data: 'location_from'},
-        { data: 'location_to'},
+        { data: 'date' },
+        { data: 'req_num' },
+        { data: 'req_by' },
+        { data: 'location_from' },
+        { data: 'location_to' },
         {
             data: 'status',
             "render": function(data, type, row){
@@ -522,13 +522,13 @@ $('table.stocktransferTable').DataTable({
                 }
             }
         },
-        { data: 'status_id'},
-        { data: 'locfrom'},
-        { data: 'locto'},
-        { data: 'prep_by'},
-        { data: 'sched'},
-        { data: 'user_id'},
-        { data: 'reason'}
+        { data: 'status_id' },
+        { data: 'locfrom' },
+        { data: 'locto' },
+        { data: 'prep_by' },
+        { data: 'sched' },
+        { data: 'user_id' },
+        { data: 'reason' }
     ],
     order:[],
     initComplete: function(){
@@ -672,20 +672,20 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category'},
-                        { data: 'item'},
-                        { data: 'uom'},
-                        { data: 'quantity'},
-                        { data: 'pending'},
-                        { data: 'qtystock'},
-                        { data: 'item_id'},
-                        { data: 'qtya1'},
-                        { data: 'qtya2'},
-                        { data: 'qtya3'},
-                        { data: 'qtya4'},
-                        { data: 'qtybal'},
-                        { data: 'qtymal'},
-                        { data: 'item_id'}
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'uom' },
+                        { data: 'quantity' },
+                        { data: 'pending' },
+                        { data: 'qtystock' },
+                        { data: 'item_id' },
+                        { data: 'qtya1' },
+                        { data: 'qtya2' },
+                        { data: 'qtya3' },
+                        { data: 'qtya4' },
+                        { data: 'qtybal' },
+                        { data: 'qtymal' },
+                        { data: 'item_id' }
                     ],
                     orderCellsTop: true,
                     fixedHeader: true,            
@@ -708,11 +708,11 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category'},
-                        { data: 'item'},
-                        { data: 'qty'},
-                        { data: 'uom'},
-                        { data: 'serial'}
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'qty' },
+                        { data: 'uom' },
+                        { data: 'serial' }
                     ]
                 });
             });
@@ -844,20 +844,20 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category'},
-            { data: 'item'},
-            { data: 'uom'},
-            { data: 'quantity'},
-            { data: 'pending'},
-            { data: 'qtystock'},
-            { data: 'item_id'},
-            { data: 'qtya1'},
-            { data: 'qtya2'},
-            { data: 'qtya3'},
-            { data: 'qtya4'},
-            { data: 'qtybal'},
-            { data: 'qtymal'},
-            { data: 'item_id'}
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'uom' },
+            { data: 'quantity' },
+            { data: 'pending' },
+            { data: 'qtystock' },
+            { data: 'item_id' },
+            { data: 'qtya1' },
+            { data: 'qtya2' },
+            { data: 'qtya3' },
+            { data: 'qtya4' },
+            { data: 'qtybal' },
+            { data: 'qtymal' },
+            { data: 'item_id' }
         ],
         orderCellsTop: true,
         fixedHeader: true,            
@@ -880,11 +880,11 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category'},
-            { data: 'item'},
-            { data: 'qty'},
-            { data: 'uom'},
-            { data: 'serial'}
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' }
         ]
     });
 });

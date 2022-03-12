@@ -23,14 +23,14 @@ function category(){
             serverSide: true,
             ajax: 'category_data',
             columns: [
-                { data: 'Category'},
-                { data: 'A1'},
-                { data: 'A2'},
-                { data: 'A3'},
-                { data: 'A4'},
-                { data: 'Balintawak'},
-                { data: 'Malabon'},
-                { data: 'Total_stocks'}
+                { data: 'Category' },
+                { data: 'A1' },
+                { data: 'A2' },
+                { data: 'A3' },
+                { data: 'A4' },
+                { data: 'Balintawak' },
+                { data: 'Malabon' },
+                { data: 'Total_stocks' }
             ],
             initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
@@ -69,14 +69,14 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
                 }
             },
             columns: [
-                { data: 'Item'},
-                { data: 'A1'},
-                { data: 'A2'},
-                { data: 'A3'},
-                { data: 'A4'},
-                { data: 'Balintawak'},
-                { data: 'Malabon'},
-                { data: 'Total_stocks'}
+                { data: 'Item' },
+                { data: 'A1' },
+                { data: 'A2' },
+                { data: 'A3' },
+                { data: 'A4' },
+                { data: 'Balintawak' },
+                { data: 'Malabon' },
+                { data: 'Total_stocks' }
             ],
             initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
@@ -105,14 +105,14 @@ $(document).on('click', '#btnBack', function(){
                 }
             },
             columns: [
-                { data: 'Item'},
-                { data: 'A1'},
-                { data: 'A2'},
-                { data: 'A3'},
-                { data: 'A4'},
-                { data: 'Balintawak'},
-                { data: 'Malabon'},
-                { data: 'Total_stocks'}
+                { data: 'Item' },
+                { data: 'A1' },
+                { data: 'A2' },
+                { data: 'A3' },
+                { data: 'A4' },
+                { data: 'Balintawak' },
+                { data: 'Malabon' },
+                { data: 'Total_stocks' }
             ],
             initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
@@ -142,11 +142,11 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 }
             },
             columns: [
-                { data: 'item'},
-                { data: 'serial'},
-                { data: 'location'},
-                { data: 'rack'},
-                { data: 'row'}
+                { data: 'item' },
+                { data: 'serial' },
+                { data: 'location' },
+                { data: 'rack' },
+                { data: 'row' }
             ],
             initComplete: function(){
                 $('#loading').hide(); Spinner.hide();

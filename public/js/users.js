@@ -45,7 +45,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         url: "users/save",
                         type: "POST",
@@ -185,7 +185,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         url: "users/update",
                         type: "PUT",

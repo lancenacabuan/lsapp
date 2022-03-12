@@ -80,7 +80,7 @@ $(document).ready(function(){
 
     $("#tblCreateItem").on('click', '.delete-row', function(){
         $(this).closest("tr").remove();
-        if ($('#tblCreateItem tbody').children().length==0) {
+        if($('#tblCreateItem tbody').children().length==0) {
             $('#tblCreateItem').hide();
             $('#divCreateItem').removeClass();
             $('#btnClose').hide();

@@ -63,7 +63,7 @@ function generateReqNum() {
             'request_number': request_number
         },
         success: function(data){
-            if (data == 'unique') {
+            if(data == 'unique') {
                 document.getElementById("reqnum").value = request_number;
             }
             else{
@@ -302,7 +302,7 @@ $("#tblNewStockTransfer").on('click', '.delete-row', function(){
     $("#uom").val('');
     $('#qty').prop('disabled', true);
     $(this).closest("tr").remove();
-    if ($('#tblNewStockTransfer tbody').children().length==0) {
+    if($('#tblNewStockTransfer tbody').children().length==0) {
         $('#tblNewStockTransfer').hide();
         $('#divNewStockTransfer').removeClass();
         $('#btnClose').hide();
@@ -325,7 +325,7 @@ $(document).on('click', '#btnSave', function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         type:'post',
                         url:'/saveTransReqNum',
@@ -936,7 +936,7 @@ $(document).on('click', '#btnDelete', function(){
         dangerMode: true,
     })
     .then((willDelete) => {
-        if (willDelete) {     
+        if(willDelete) {     
             $.ajax({
                 type:'get', 
                 url:'/deleteTransfer', 
@@ -974,7 +974,7 @@ $(document).on('click', '#btnApprove', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if (willDelete) {
+        if(willDelete) {
             $.ajax({
                 type:'get',
                 url:'/approveTransfer',
@@ -1029,7 +1029,7 @@ $(document).on('click', '#btnReason', function(){
             dangerMode: true,
         })
         .then((willDelete) => {
-            if (willDelete) {
+            if(willDelete) {
                 $.ajax({
                     type:'get',
                     url:'/disapproveTransfer',
@@ -1103,7 +1103,7 @@ $(document).on('click', '#btnTransit', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if (willDelete) {
+        if(willDelete) {
             $.ajax({
                 type:'get',
                 url:'/forReceiving',
@@ -1144,7 +1144,7 @@ $(document).on('click', '#btnReceive', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if (willDelete) {
+        if(willDelete) {
             $.ajax({
                 type:'get',
                 url:'/receiveTransfer',
@@ -1459,7 +1459,7 @@ $("#btnProceed").unbind('click').click(function(){
                             buttons: true,
                         })
                         .then((willDelete) => {
-                            if (willDelete) {
+                            if(willDelete) {
                                 for(var n=0; n < j; n++){
                                     if($('#serial'+n).val() != ''){
                                         $.ajax({
@@ -1561,7 +1561,7 @@ $(document).on('click', '#btnSavePDF', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if (willDelete) {
+        if(willDelete) {
             var content = document.getElementById('printPage');
             var options = {
                 margin:       0.5,

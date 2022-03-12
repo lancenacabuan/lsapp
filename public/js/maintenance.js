@@ -114,7 +114,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         url: "/saveItem",
                         type: "POST",
@@ -223,7 +223,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         url: "/updateItem",
                         type: "PUT",
@@ -280,7 +280,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         url: "/saveCategory",
                         type: "POST",
@@ -386,7 +386,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         url: "/updateCategory",
                         type: "PUT",
@@ -473,7 +473,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         url: "/saveLocation",
                         type: "POST",
@@ -606,7 +606,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         url: "/updateLocation",
                         type: "PUT",
@@ -681,7 +681,7 @@ $(document).ready(function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         url: "/updateLocation",
                         type: "PUT",

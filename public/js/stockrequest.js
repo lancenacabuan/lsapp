@@ -78,7 +78,7 @@ function generatedr() {
             'request_number': request_number
         },
         success: function(data){
-            if (data == 'unique') {
+            if(data == 'unique') {
                 document.getElementById("request_num").value = request_number;
             }
             else{
@@ -225,7 +225,7 @@ $(".add-row").on('click', function(){
 
 $("#stockRequestTable").on('click', '.delete-row', function(){
     $(this).closest("tr").remove();
-    if ($('#stockRequestTable tbody').children().length==0) {
+    if($('#stockRequestTable tbody').children().length==0) {
         $('#stockRequestTable').hide();
         $('#stockRequestDiv').removeClass();
         $('#btnClose').hide();
@@ -247,7 +247,7 @@ $(document).on('click', '#btnSave', function(){
                 buttons: true,
             })
             .then((willDelete) => {
-                if (willDelete) {
+                if(willDelete) {
                     $.ajax({
                         type:'post',
                         url:'/saveReqNum',
@@ -1395,7 +1395,7 @@ $(document).on('click', '#btnDelete', function(){
         dangerMode: true,
     })
     .then((willDelete) => {
-        if (willDelete) {       
+        if(willDelete) {       
             $.ajax({
                 type:'get', 
                 url:'/deleteRequest', 
@@ -1433,7 +1433,7 @@ $(document).on('click', '#btnApprove', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if (willDelete) {      
+        if(willDelete) {      
             $.ajax({
                 type:'get',
                 url:'/approveRequest',
@@ -1488,7 +1488,7 @@ $(document).on('click', '#btnReason', function(){
             dangerMode: true,
         })
         .then((willDelete) => {
-            if (willDelete) {
+            if(willDelete) {
                 $.ajax({
                     type:'get',
                     url:'/disapproveRequest',
@@ -1562,7 +1562,7 @@ $(document).on('click', '#btnTransit', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if (willDelete) {
+        if(willDelete) {
             $.ajax({
                 type:'get',
                 url:'/inTransit',
@@ -1603,7 +1603,7 @@ $(document).on('click', '#btnReceive', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if (willDelete) {
+        if(willDelete) {
             $.ajax({
                 type:'get',
                 url:'/receiveRequest',
@@ -1940,7 +1940,7 @@ $("#btnProceed").unbind('click').click(function(){
                             buttons: true,
                         })
                         .then((willDelete) => {
-                            if (willDelete) {
+                            if(willDelete) {
                                 for(var n=0; n < j; n++){
                                     if($('#serial'+n).val() != ''){
                                         $.ajax({
@@ -2042,7 +2042,7 @@ $(document).on('click', '#btnSavePDF', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if (willDelete) {
+        if(willDelete) {
             var content = document.getElementById('printPage');
             var options = {
                 margin:       0.5,

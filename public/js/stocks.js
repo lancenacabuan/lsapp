@@ -37,6 +37,7 @@ function category(){
             }
         });
 }
+
 $(document).ready(function(){   
     category();
     $('#uomdiv').hide();

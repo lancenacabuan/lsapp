@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function(){
     $('#loading').show(); Spinner(); Spinner.show();
     $('table.user_logs').DataTable({ 
         language: {

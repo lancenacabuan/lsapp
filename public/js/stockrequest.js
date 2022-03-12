@@ -312,7 +312,7 @@ $(document).on('click', '#btnSave', function(){
                                     success: function(data){
                                         if(data == 'true'){
                                             $('#loading').hide(); Spinner.hide();
-                                            sweetAlert("SUBMIT SUCCESS", "STOCK REQUEST", "success");
+                                            swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
                                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                                         }
                                         else{
@@ -329,7 +329,7 @@ $(document).on('click', '#btnSave', function(){
                             }
                             else{
                                 $('#newStockRequest').hide();
-                                sweetAlert("SUBMIT FAILED", "STOCK REQUEST", "error");
+                                swal("SUBMIT FAILED", "STOCK REQUEST", "error");
                                 setTimeout(function(){location.href="/stockrequest"}, 2000);
                             }
                         },
@@ -1366,13 +1366,13 @@ $(document).on("click", ".btndelItem", function(){
         success: function(data){
             if(data.result == 'false'){
                 $('#detailsStockRequest').hide();
-                sweetAlert("DELETE FAILED", "STOCK REQUEST", "error");
+                swal("DELETE FAILED", "STOCK REQUEST", "error");
                 setTimeout(function(){window.location.reload()}, 2000);
             }
             else{
                 if(data.count == 0){
                     $('#detailsStockRequest').hide();
-                    sweetAlert("DELETE SUCCESS", "STOCK REQUEST", "success");
+                    swal("DELETE SUCCESS", "STOCK REQUEST", "success");
                     setTimeout(function(){window.location.reload()}, 2000);
                 }
                 else{
@@ -1405,12 +1405,12 @@ $(document).on('click', '#btnDelete', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsStockRequest').hide();
-                        sweetAlert("DELETE SUCCESS", "STOCK REQUEST", "success");
+                        swal("DELETE SUCCESS", "STOCK REQUEST", "success");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                     else{
                         $('#detailsStockRequest').hide();
-                        sweetAlert("DELETE FAILED", "STOCK REQUEST", "error");
+                        swal("DELETE FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },
@@ -1446,12 +1446,12 @@ $(document).on('click', '#btnApprove', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsStockRequest').hide();
-                        sweetAlert("APPROVE SUCCESS", "STOCK REQUEST", "success");
+                        swal("APPROVE SUCCESS", "STOCK REQUEST", "success");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                     else{
                         $('#detailsStockRequest').hide();
-                        sweetAlert("APPROVE FAILED", "STOCK REQUEST", "error");
+                        swal("APPROVE FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },
@@ -1476,7 +1476,7 @@ $(document).on("click", "#btnDisapprove", function(){
 
 $(document).on('click', '#btnReason', function(){
     if(!$('#reason').val()){
-        sweetAlert("REASON REQUIRED!", "Please provide a reason for disapproving the request.", "error");
+        swal("REASON REQUIRED", "Please provide a reason for disapproving the request.", "error");
         return false;
     }
     else{
@@ -1520,7 +1520,7 @@ $(document).on('click', '#btnReason', function(){
                                 success: function(data){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
-                                        sweetAlert("DISAPPROVE SUCCESS", "STOCK REQUEST", "success");
+                                        swal("DISAPPROVE SUCCESS", "STOCK REQUEST", "success");
                                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                                     }
                                     else{
@@ -1538,7 +1538,7 @@ $(document).on('click', '#btnReason', function(){
                         else{
                             $('#reasonModal').hide();
                             $('#detailsStockRequest').hide();
-                            sweetAlert("DISAPPROVE FAILED", "STOCK REQUEST", "error");
+                            swal("DISAPPROVE FAILED", "STOCK REQUEST", "error");
                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                         }
                     },
@@ -1575,12 +1575,12 @@ $(document).on('click', '#btnTransit', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsStockRequest').hide();
-                        sweetAlert("FOR RECEIVING SUCCESS", "STOCK REQUEST", "success");
+                        swal("FOR RECEIVING SUCCESS", "STOCK REQUEST", "success");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                     else{
                         $('#detailsStockRequest').hide();
-                        sweetAlert("FOR RECEIVING FAILED", "STOCK REQUEST", "error");
+                        swal("FOR RECEIVING FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },
@@ -1631,7 +1631,7 @@ $(document).on('click', '#btnReceive', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide(); Spinner.hide();
-                                    sweetAlert("RECEIVE SUCCESS", "STOCK REQUEST", "success");
+                                    swal("RECEIVE SUCCESS", "STOCK REQUEST", "success");
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
                                 else{
@@ -1648,7 +1648,7 @@ $(document).on('click', '#btnReceive', function(){
                     }
                     else{
                         $('#detailsStockRequest').hide();
-                        sweetAlert("RECEIVE FAILED", "STOCK REQUEST", "error");
+                        swal("RECEIVE FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },
@@ -1989,7 +1989,7 @@ $("#btnProceed").unbind('click').click(function(){
                                     },
                                     success: function(){
                                         $('#detailsStockRequest').hide();
-                                        sweetAlert("SCHEDULED SUCCESS", "STOCK REQUEST", "success");
+                                        swal("SCHEDULED SUCCESS", "STOCK REQUEST", "success");
                                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                                     },
                                     error: function(data){

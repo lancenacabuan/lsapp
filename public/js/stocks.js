@@ -197,7 +197,7 @@ $(document).on('click', '#butsave', function(){
                 },
                 success: function(dataResult){                      
                     $('#addStock').hide();
-                    sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
+                    swal("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
                         window.location.href = 'stocks';
                     });
                     setTimeout(function(){window.location.href = 'stocks';}, 2000);                                   
@@ -237,7 +237,7 @@ $(document).on('click', '#butsave', function(){
                     },
                     success: function(dataResult){                      
                         $('#addStock').hide();
-                        sweetAlert("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
+                        swal("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
                             window.location.href = 'stocks';
                         });
                         setTimeout(function(){window.location.href = 'stocks';}, 2000);                                   

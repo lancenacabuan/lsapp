@@ -78,7 +78,7 @@ $(document).ready(function(){
                                     success: function(data){
                                         if(data == 'true'){
                                             $('#loading').hide(); Spinner.hide();
-                                            sweetAlert("SAVE SUCCESS", "USER ACCOUNT", "success");
+                                            swal("SAVE SUCCESS", "USER ACCOUNT", "success");
                                             setTimeout(function(){window.location.href="/users"}, 2000);
                                         }
                                         else{
@@ -94,16 +94,16 @@ $(document).ready(function(){
                                 });
                             }
                             else if(data.result == 'invalid'){
-                                sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
+                                swal("INVALID EMAIL", "USER ACCOUNT", "error");
                                 return false;
                             }
                             else if(data.result == 'duplicate'){
-                                sweetAlert("DUPLICATE EMAIL", "USER ACCOUNT", "error");
+                                swal("DUPLICATE EMAIL", "USER ACCOUNT", "error");
                                 return false;
                             }
                             else{
                                 $('#addUser').hide();
-                                sweetAlert("SAVE FAILED", "USER ACCOUNT", "error");
+                                swal("SAVE FAILED", "USER ACCOUNT", "error");
                                 setTimeout(function(){window.location.href="/users"}, 2000);
                             }
                         },
@@ -207,18 +207,18 @@ $(document).ready(function(){
                         success: function(data){
                             if(data == 'true'){
                                 $('#updateUser').hide();
-                                sweetAlert("UPDATE SUCCESS", "USER ACCOUNT", "success");
+                                swal("UPDATE SUCCESS", "USER ACCOUNT", "success");
                                 setTimeout(function(){window.location.href="/users"}, 2000);
                             }
                             else if(data == 'invalid'){
-                                sweetAlert("INVALID EMAIL", "USER ACCOUNT", "error");
+                                swal("INVALID EMAIL", "USER ACCOUNT", "error");
                             }
                             else if(data == 'duplicate'){
-                                sweetAlert("DUPLICATE EMAIL", "USER ACCOUNT", "error");
+                                swal("DUPLICATE EMAIL", "USER ACCOUNT", "error");
                             }
                             else{
                                 $('#updateUser').hide();
-                                sweetAlert("UPDATE FAILED", "USER ACCOUNT", "error");
+                                swal("UPDATE FAILED", "USER ACCOUNT", "error");
                                 setTimeout(function(){window.location.href="/users"}, 2000);
                             }
                         },

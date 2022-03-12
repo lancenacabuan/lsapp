@@ -387,7 +387,7 @@ $(document).on('click', '#btnSave', function(){
                                     success: function(data){
                                         if(data == 'true'){
                                             $('#loading').hide(); Spinner.hide();
-                                            sweetAlert("SUBMIT SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                                            swal("SUBMIT SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                             setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                         }
                                         else{
@@ -404,7 +404,7 @@ $(document).on('click', '#btnSave', function(){
                             }
                             else{
                                 $('#newStockTransfer').hide();
-                                sweetAlert("SUBMIT FAILED", "STOCK TRANSFER REQUEST", "error");
+                                swal("SUBMIT FAILED", "STOCK TRANSFER REQUEST", "error");
                                 setTimeout(function(){location.href="/stocktransfer"}, 2000);
                             }
                         },
@@ -907,13 +907,13 @@ $(document).on('click', '.btndelItem', function(){
         success: function(data){
             if(data.result == 'false'){
                 $('#detailsStockTransfer').hide();
-                sweetAlert("DELETE FAILED", "STOCK TRANSFER REQUEST", "error");
+                swal("DELETE FAILED", "STOCK TRANSFER REQUEST", "error");
                 setTimeout(function(){window.location.reload()}, 2000);
             }
             else{
                 if(data.count == 0){
                     $('#detailsStockTransfer').hide();
-                    sweetAlert("DELETE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                    swal("DELETE SUCCESS", "STOCK TRANSFER REQUEST", "success");
                     setTimeout(function(){window.location.reload()}, 2000);
                 }
                 else{
@@ -946,12 +946,12 @@ $(document).on('click', '#btnDelete', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsStockTransfer').hide();
-                        sweetAlert("DELETE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                        swal("DELETE SUCCESS", "STOCK TRANSFER REQUEST", "success");
                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                     else{
                         $('#detailsStockTransfer').hide();
-                        sweetAlert("DELETE FAILED", "STOCK TRANSFER REQUEST", "error");
+                        swal("DELETE FAILED", "STOCK TRANSFER REQUEST", "error");
                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                 },
@@ -987,12 +987,12 @@ $(document).on('click', '#btnApprove', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsStockTransfer').hide();
-                        sweetAlert("APPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                        swal("APPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                     else{
                         $('#detailsStockTransfer').hide();
-                        sweetAlert("APPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                        swal("APPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                 },
@@ -1017,7 +1017,7 @@ $(document).on('click', '#btnDisapprove', function(){
 
 $(document).on('click', '#btnReason', function(){
     if(!$('#reason').val()){
-        sweetAlert("REASON REQUIRED!", "Please provide a reason for disapproving the request.", "error");
+        swal("REASON REQUIRED", "Please provide a reason for disapproving the request.", "error");
         return false;
     }
     else{
@@ -1061,7 +1061,7 @@ $(document).on('click', '#btnReason', function(){
                                 success: function(data){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
-                                        sweetAlert("DISAPPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                                        swal("DISAPPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                     }
                                     else{
@@ -1079,7 +1079,7 @@ $(document).on('click', '#btnReason', function(){
                         else{
                             $('#reasonModal').hide();
                             $('#detailsStockTransfer').hide();
-                            sweetAlert("DISAPPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                            swal("DISAPPROVE FAILED", "STOCK TRANSFER REQUEST", "error");
                             setTimeout(function(){location.href="/stocktransfer"}, 2000);
                         }
                     },
@@ -1116,12 +1116,12 @@ $(document).on('click', '#btnTransit', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsStockTransfer').hide();
-                        sweetAlert("FOR RECEIVING SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                        swal("FOR RECEIVING SUCCESS", "STOCK TRANSFER REQUEST", "success");
                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                     else{
                         $('#detailsStockTransfer').hide();
-                        sweetAlert("FOR RECEIVING FAILED", "STOCK TRANSFER REQUEST", "error");
+                        swal("FOR RECEIVING FAILED", "STOCK TRANSFER REQUEST", "error");
                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                 },
@@ -1172,7 +1172,7 @@ $(document).on('click', '#btnReceive', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide(); Spinner.hide();
-                                    sweetAlert("RECEIVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                                    swal("RECEIVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                     setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                 }
                                 else{
@@ -1189,7 +1189,7 @@ $(document).on('click', '#btnReceive', function(){
                     }
                     else{
                         $('#detailsStockTransfer').hide();
-                        sweetAlert("RECEIVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                        swal("RECEIVE FAILED", "STOCK TRANSFER REQUEST", "error");
                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                     }
                 },
@@ -1508,7 +1508,7 @@ $("#btnProceed").unbind('click').click(function(){
                                     },
                                     success: function(){
                                         $('#detailsStockTransfer').hide();
-                                        sweetAlert("SCHEDULED SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                                        swal("SCHEDULED SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                     },
                                     error: function(data){

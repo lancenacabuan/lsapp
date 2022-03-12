@@ -138,16 +138,16 @@ $(document).ready(function(){
                         success: function(data){
                             if(data.result == 'true'){
                                 $('#newItem').hide();
-                                sweetAlert("SAVE SUCCESS", "New Item has been saved.", "success");
+                                swal("SAVE SUCCESS", "New Item has been saved.", "success");
                                 setTimeout(function(){window.location.href="/maintenance"}, 2000);
                             }
                             else if(data.result == 'duplicate'){
-                                sweetAlert("DUPLICATE ITEM", "Item Description already exists!", "error");
+                                swal("DUPLICATE ITEM", "Item Description already exists!", "error");
                                 return false;
                             }
                             else{
                                 $('#newItem').hide();
-                                sweetAlert("SAVE FAILED", "MAINTENANCE - ITEM", "error");
+                                swal("SAVE FAILED", "MAINTENANCE - ITEM", "error");
                                 setTimeout(function(){window.location.href="/maintenance"}, 2000);
                             }
                         },
@@ -252,16 +252,16 @@ $(document).ready(function(){
                         success: function(data){
                             if(data.result == 'true'){
                                 $('#detailsItem').hide();
-                                sweetAlert("UPDATE SUCCESS", "Item has been updated.", "success");
+                                swal("UPDATE SUCCESS", "Item has been updated.", "success");
                                 setTimeout(function(){window.location.href="/maintenance"}, 2000);
                             }
                             else if(data.result == 'duplicate'){
-                                sweetAlert("DUPLICATE ITEM", "Item Description already exists!", "error");
+                                swal("DUPLICATE ITEM", "Item Description already exists!", "error");
                                 return false;
                             }
                             else{
                                 $('#detailsItem').hide();
-                                sweetAlert("UPDATE FAILED", "MAINTENANCE - ITEM", "error");
+                                swal("UPDATE FAILED", "MAINTENANCE - ITEM", "error");
                                 setTimeout(function(){window.location.href="/maintenance"}, 2000);
                             }
                         },
@@ -301,7 +301,7 @@ $(document).ready(function(){
                         success: function(data){
                             if(data.result == 'true'){
                                 $('#newCategory').hide();
-                                sweetAlert("SAVE SUCCESS", "New Category has been saved.", "success");
+                                swal("SAVE SUCCESS", "New Category has been saved.", "success");
                                 setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 2000);
                                 $.ajax({
                                     url: "/logNewCategory",
@@ -330,12 +330,12 @@ $(document).ready(function(){
                                 });
                             }
                             else if(data.result == 'duplicate'){
-                                sweetAlert("DUPLICATE CATEGORY", "Category Name already exists!", "error");
+                                swal("DUPLICATE CATEGORY", "Category Name already exists!", "error");
                                 return false;
                             }
                             else{
                                 $('#newCategory').hide();
-                                sweetAlert("SAVE FAILED", "MAINTENANCE - CATEGORY", "error");
+                                swal("SAVE FAILED", "MAINTENANCE - CATEGORY", "error");
                                 setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 2000);
                             }
                         },
@@ -409,7 +409,7 @@ $(document).ready(function(){
                         success: function(data){
                             if(data.result == 'true'){
                                 $('#detailsCategory').hide();
-                                sweetAlert("UPDATE SUCCESS", "Category Name has been updated.", "success");
+                                swal("UPDATE SUCCESS", "Category Name has been updated.", "success");
                                 setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 2000);
                                 $.ajax({
                                     url: "/logUpdateCategory",
@@ -439,12 +439,12 @@ $(document).ready(function(){
                                 });
                             }
                             else if(data.result == 'duplicate'){
-                                sweetAlert("DUPLICATE CATEGORY", "Category Name already exists!", "error");
+                                swal("DUPLICATE CATEGORY", "Category Name already exists!", "error");
                                 return false;
                             }
                             else{
                                 $('#detailsCategory').hide();
-                                sweetAlert("UPDATE FAILED", "MAINTENANCE - CATEGORY", "error");
+                                swal("UPDATE FAILED", "MAINTENANCE - CATEGORY", "error");
                                 setTimeout(function(){window.location.href="/maintenance?tbl=category"}, 2000);
                             }
                         },
@@ -510,7 +510,7 @@ $(document).ready(function(){
                                     success: function(data){
                                         if(data == 'true'){
                                             $('#loading').hide(); Spinner.hide();
-                                            sweetAlert("REQUEST SUCCESS", "New Location has been requested.", "success");
+                                            swal("REQUEST SUCCESS", "New Location has been requested.", "success");
                                             setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                                         }
                                         else{
@@ -526,12 +526,12 @@ $(document).ready(function(){
                                 });
                             }
                             else if(data.result == 'duplicate'){
-                                sweetAlert("DUPLICATE LOCATION", "Location Name already exists!", "error");
+                                swal("DUPLICATE LOCATION", "Location Name already exists!", "error");
                                 return false;
                             }
                             else{
                                 $('#newLocation').hide();
-                                sweetAlert("REQUEST FAILED", "MAINTENANCE - LOCATION", "error");
+                                swal("REQUEST FAILED", "MAINTENANCE - LOCATION", "error");
                                 setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                             }
                         },
@@ -648,7 +648,7 @@ $(document).ready(function(){
                                     success: function(data){
                                         if(data == 'true'){
                                             $('#loading').hide(); Spinner.hide();
-                                            sweetAlert("REQUEST SUCCESS", "Location Status Change has been requested.", "success");
+                                            swal("REQUEST SUCCESS", "Location Status Change has been requested.", "success");
                                             setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                                         }
                                         else{
@@ -665,7 +665,7 @@ $(document).ready(function(){
                             }
                             else{
                                 $('#detailsLocation').hide();
-                                sweetAlert("UPDATE FAILED", "MAINTENANCE - LOCATION", "error");
+                                swal("UPDATE FAILED", "MAINTENANCE - LOCATION", "error");
                                 setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                             }
                         },
@@ -704,16 +704,16 @@ $(document).ready(function(){
                         success: function(data){
                             if(data.result == 'true'){
                                 $('#detailsLocation').hide();
-                                sweetAlert("UPDATE SUCCESS", "Location Name has been updated.", "success");
+                                swal("UPDATE SUCCESS", "Location Name has been updated.", "success");
                                 setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                             }
                             else if(data.result == 'duplicate'){
-                                sweetAlert("DUPLICATE LOCATION", "Location Name already exists!", "error");
+                                swal("DUPLICATE LOCATION", "Location Name already exists!", "error");
                                 return false;
                             }
                             else{
                                 $('#detailsLocation').hide();
-                                sweetAlert("UPDATE FAILED", "MAINTENANCE - LOCATION", "error");
+                                swal("UPDATE FAILED", "MAINTENANCE - LOCATION", "error");
                                 setTimeout(function(){window.location.href="/maintenance?tbl=location"}, 2000);
                             }
                         },

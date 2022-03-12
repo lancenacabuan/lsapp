@@ -4,7 +4,7 @@
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">USER DETAILS</h6>
-            <button id="modalClose1" type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body" style="background-color:white;color:black;">
             <input type="hidden" name="_token1" id="csrf1" value="{{Session::token()}}">
@@ -47,18 +47,10 @@
                 </label>
             </div>
             <div class="col-md-12 mb-4">
-                <button type="submit" id="userupdate" class="btn btn-primary float-right bp">UPDATE</button>  
+                <button type="submit" id="btnUpdate" class="btn btn-primary float-right bp">UPDATE</button>  
             </div>    
         </div>
     </div>
     </div>
     </div>
 </div>
-<script>
-    $(function () {
-        $('#modalClose1').on('click', function () {
-            $('#updateUser').hide();
-            location.reload();
-        })
-    });
-</script>

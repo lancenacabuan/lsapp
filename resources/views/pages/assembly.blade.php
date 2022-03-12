@@ -7,7 +7,7 @@
     <br><br>
     @endrole
     <table id="assemblyTable" class="table assemblyTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
-        <thead style="background-color: #0d1a80; color: white; font-weight: bold; font-size: 15px;"> 
+        <thead style="background-color: #0d1a80; color: white; font-size: 15px;"> 
             <tr>
                 <th>DATE NEEDED</th>
                 <th>DATE REQUESTED</th>

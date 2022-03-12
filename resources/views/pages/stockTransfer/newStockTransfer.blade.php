@@ -62,7 +62,7 @@
             </div>          
         </form>
         <div class="container-fluid"  id="#divNewStockTransfer">
-            <table id='tblNewStockTransfer' class="table tblNewStockTransfer" style="cursor: pointer; border: 0px; font-size: 12px; display: none;">
+            <table id='tblNewStockTransfer' class="table tblNewStockTransfer" style="cursor: pointer; font-size: 12px; display: none;">
                 <thead>                            
                     <tr>
                         <th>CATEGORY</th>

@@ -59,7 +59,7 @@
             </div>          
         </form>
         <div class="container-fluid"  id="#stockRequestDiv">
-            <table id='stockRequestTable' class="table" style="cursor: pointer; border: 0px; font-size: 12px; display: none;">
+            <table id='stockRequestTable' class="table" style="cursor: pointer; font-size: 12px; display: none;">
                 <thead>                            
                     <tr>
                         {{-- <th>ID</th> --}}

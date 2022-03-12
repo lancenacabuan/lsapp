@@ -8,7 +8,7 @@
     <input type="hidden" id="current_user" value="{{auth()->user()->id}}">
     <input type="hidden" id="current_role" value="{{auth()->user()->getRoleNames()}}">
     <table id="stocktransferTable" class="table stocktransferTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
-        <thead style="background-color: #0d1a80; color: white; font-weight: bold; font-size: 15px;">
+        <thead style="background-color: #0d1a80; color: white; font-size: 15px;">
             <tr>
                 <th style="width: 150px;">DATE NEEDED</th>
                 <th style="width: 150px;">DATE REQUESTED</th>

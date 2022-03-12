@@ -4,7 +4,7 @@
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">ADD NEW USER</h6>
-            <button id="modalClose" type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body" style="background-color:white;color:black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
@@ -20,12 +20,6 @@
                 </div>
                 <input type="email" id="email" name="email" style="width: 600px;">
             </div>
-            {{-- <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" style="width: 150px;">Password</label>
-                </div>
-                <input type="password" id="password" name="password" style="width: 600px;">
-            </div> --}}
             <div class="input-group mb-3" >
                 <div class="input-group-prepend">
                     <label class="input-group-text" style="width: 150px;">User Level</label>
@@ -38,18 +32,10 @@
                 </select>
             </div> 
             <div class="col-md-12 mb-4">
-                <button type="submit" id="usersave" class="btn btn-primary float-right bp">SAVE</button>  
+                <button type="submit" id="btnSave" class="btn btn-primary float-right bp">SAVE</button>  
             </div>    
         </div>
     </div>
     </div>
     </div>
 </div>
-<script>
-    $(function () {
-        $('#modalClose').on('click', function () {
-            $('#addUser').hide();
-            location.reload();
-        })
-    });
-</script>

@@ -41,7 +41,7 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
     </div>
     <br>
     <table id="user_logs" class="table user_logs display nowrap" style="width: 100%; font-size: 12px;">
-        <thead style="background-color: #0d1a80; color: white; font-weight: bold; font-size: 14px;">
+        <thead style="background-color: #0d1a80; color: white; font-size: 14px;">
             <tr>
                 <th>DATE</th>
                 <th>NAME</th>

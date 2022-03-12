@@ -48,47 +48,13 @@ class PagesController extends Controller
         return DataTables::of($list)->make(true);
     }
 
-    // public function stocktransfer(){
-    //     $title = 'STOCK TRANSFER';
-    //     return view('pages/stocktransfer')->with('title', $title);
-    // }
-
-    // public function joborder(){
-    //     $title = 'JOB ORDER';
-    //     return view('pages/joborder')->with('title', $title);
-    // }
-
-    // public function assembly(){
-    //     $title = 'ASSEMBLY';
-    //     return view('pages/assembly')->with('title', $title);
-    // }
-
-    // public function pullout(){
-    //     $title = 'PULLOUT';
-    //     return view('pages/pullout')->with('title', $title);
-    // }
-
-    // public function maintenance(){
-    //     if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
-    //     {
-    //         return redirect('/stockrequest');
-    //     }
-    //     if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
-    //     {
-    //         return redirect('/stocktransfer');
-    //     }
-    //     $title = 'MAINTENANCE';
-    //     return view('pages/maintenance')->with('title', $title);   
-    // }
-    
     public function changepassword(){
         return view('pages/changepassword');
     }
 
     public function password_save(Request $request)
     {
-        if(Hash::check($request->current, auth()->user()->password))
-        {
+        if(Hash::check($request->current, auth()->user()->password)){
             $users = User::find(auth()->user()->id);
             $users->password = Hash::make($request->new);
             $sql = $users->save();
@@ -104,12 +70,12 @@ class PagesController extends Controller
             $result = 'error';
         }
 
-        // if($result == 'true'){
-        //     $userlogs = new UserLogs;
-        //     $userlogs->user_id = auth()->user()->id;
-        //     $userlogs->activity = "CHANGE PASSWORD: User successfully changed own account password.";
-        //     $userlogs->save();
-        // }
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "CHANGE PASSWORD: User successfully changed own account password.";
+            $userlogs->save();
+        }
 
         return response($result);
     }
@@ -127,15 +93,9 @@ class PagesController extends Controller
         {
             return redirect('/');
         }
-        $role =  Role::query()->select()
-            ->get()
-            ->sortBy('name');
-        $list = User::selectRaw('users.id AS user_id, users.name AS user_name, users.email AS user_email, roles.name AS role_name')
-            ->join('model_has_roles', 'model_id', '=', 'users.id')
-            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
-            ->get();
+        $role =  Role::query()->select()->get()->sortBy('name');
         
-        return view('pages/users', compact('list','role'));
+        return view('pages/users', compact('role'));
     }
 
     public function users_data(){
@@ -147,7 +107,7 @@ class PagesController extends Controller
         return DataTables::of($list)->make(true);
     }
 
-    public function users_store(Request $request){
+    public function users_save(Request $request){
         $email = User::query()->select()
             ->where('email',$request->email)
             ->count();
@@ -169,8 +129,10 @@ class PagesController extends Controller
             }
             $password = implode($pass);
 
+            $name = ucwords($request->name);
+
             $users = new User;
-            $users->name = ucwords($request->name);
+            $users->name = $name;
             $users->email = strtolower($request->email);
             $users->password = Hash::make($password);
             $users->assignRole($request->role);
@@ -185,7 +147,7 @@ class PagesController extends Controller
                 $result = 'true';
             }
             
-            $data = array('result' => $result, 'id' => $id, 'email' => strtolower($request->email));
+            $data = array('result' => $result, 'id' => $id, 'name' => $name, 'email' => strtolower($request->email));
             return response()->json($data);
         }
     }
@@ -195,7 +157,7 @@ class PagesController extends Controller
 
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "USER ADDED: User successfully saved details of UserID#$request->id.";
+        $userlogs->activity = "USER ADDED: User successfully saved details of $request->name with UserID#$request->id.";
         $userlogs->save();
 
         return response('true');
@@ -217,8 +179,10 @@ class PagesController extends Controller
             return response('duplicate');
         }
         else {
+            $name = ucwords($request->name1);
+            
             $users = User::find($request->input('id1'));
-            $users->name = ucwords($request->name1);
+            $users->name = $name;
             $users->email = strtolower($request->email1);
             $users->removeRole($request->role2);
             $users->assignRole($request->role1);
@@ -235,7 +199,7 @@ class PagesController extends Controller
             if($result == 'true'){
                 $userlogs = new UserLogs;
                 $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "USER UPDATED: User successfully updated details of UserID#$request->id1.";
+                $userlogs->activity = "USER UPDATED: User successfully updated details of $name with UserID#$request->id1.";
                 $userlogs->save();
             }
 

@@ -1,4 +1,4 @@
-$(document).ready(function(){    
+$(document).ready(function(){
     $('table.userTable').dataTable().fnDestroy();
     $('#loading').show(); Spinner(); Spinner.show();
     $('table.userTable').DataTable({ 
@@ -21,9 +21,7 @@ $(document).ready(function(){
             $('#loading').hide(); Spinner.hide();
         }
     });
-});
 
-$(document).ready(function(){ 
     $('#btnAddUser').on('click', function(){
         $('#addUser').modal({
             backdrop: 'static',
@@ -33,10 +31,8 @@ $(document).ready(function(){
         $('.modal-body').html();
         $('#addUser').modal('show');
     });
-});
 
-$(document).ready(function(){      
-    $('#usersave').on('click', function(){
+    $('#btnSave').on('click', function(){
         var name = $('#name').val();
         var email = $('#email').val();
         var role = $('#role').val();
@@ -76,6 +72,7 @@ $(document).ready(function(){
                                     },
                                     data: {
                                         id: data.id,
+                                        name: data.name,
                                         email: data.email
                                     },
                                     success: function(data){
@@ -124,37 +121,35 @@ $(document).ready(function(){
             swal('REQUIRED','Please fill all the fields!','error');
             return false;
         }
-    });  
-});
-
-$('#userTable tbody').on('click', 'tr', function(){
-    $('#updateUser').modal({
-        backdrop: 'static',
-        keyboard: false
     });
-    var table = $('table.userTable').DataTable();
-    var data = table.row(this).data();
-        $('#id1').val(data.user_id);
-        $('#name1').val(data.user_name);
-        $('#name2').val(data.user_name);
-        $('#email1').val(data.user_email);
-        $('#email2').val(data.user_email);
-        $('#role1').val(data.role_name);
-        $('#role2').val(data.role_name);
-        $('#status2').val(data.user_status);
-        if(data.user_status == 'ACTIVE'){
-            $('#status1').prop('checked', true);
-        }
-        else{
-            $('#status1').prop('checked', false);
-        }
 
-        $('.modal-body').html();
-        $('#updateUser').modal('show');
-});
+    $('#userTable tbody').on('click', 'tr', function(){
+        $('#updateUser').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+        var table = $('table.userTable').DataTable();
+        var data = table.row(this).data();
+            $('#id1').val(data.user_id);
+            $('#name1').val(data.user_name);
+            $('#name2').val(data.user_name);
+            $('#email1').val(data.user_email);
+            $('#email2').val(data.user_email);
+            $('#role1').val(data.role_name);
+            $('#role2').val(data.role_name);
+            $('#status2').val(data.user_status);
+            if(data.user_status == 'ACTIVE'){
+                $('#status1').prop('checked', true);
+            }
+            else{
+                $('#status1').prop('checked', false);
+            }
 
-$(document).ready(function(){ 
-    $('#userupdate').on('click', function(){
+            $('.modal-body').html();
+            $('#updateUser').modal('show');
+    });
+
+    $('#btnUpdate').on('click', function(){
         if($('#status1').is(":checked")){
             var status1 = 'ACTIVE';
         }
@@ -237,5 +232,9 @@ $(document).ready(function(){
                 }
             });
         }
+    });
+
+    $('.close').on('click', function(){
+        location.reload();
     });
 });

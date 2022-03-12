@@ -1,5 +1,4 @@
-var minDate;
-var maxDate;
+var minDate, maxDate;
 $(function(){
     var dtToday = new Date();
     
@@ -268,7 +267,7 @@ $(document).on('click', '#btnSave', function(){
                             if(data == 'true'){
                                 var myTable = $('#stockRequestTable').DataTable();
                                 var form_data  = myTable.rows().data();
-                                $.each( form_data, function( key, value ) {
+                                $.each(form_data, function(key, value){
                                     $.ajax({
                                         type:'post',
                                         url:'/saveRequest',
@@ -701,7 +700,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                             "searchable": false
                         },
                         {   
-                            "render": function (data, type, row, meta) {
+                            "render": function(data, type, row, meta){
                                     return '<button style="zoom: 75%;" class="btn btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                             },
                             "defaultContent": '',
@@ -752,7 +751,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                             "searchable": false
                         },
                         {   
-                            "render": function ( data, type, row, meta ) {
+                            "render": function(data, type, row, meta){
                                     return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                             },
                             "defaultContent": '',
@@ -821,7 +820,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                             "searchable": false
                         },
                         {   
-                            "render": function ( data, type, row, meta ) {
+                            "render": function(data, type, row, meta){
                                     return '<button style="zoom: 75%;" class="btn btn-primary bp btnReceive" id="'+ meta.row +'">RECEIVE</button>';
                             },
                             "defaultContent": '',
@@ -1111,7 +1110,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 "searchable": false
             },
             {   
-                "render": function (data, type, row, meta) {
+                "render": function(data, type, row, meta){
                         return '<button style="zoom: 75%;" class="btn btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                 },
                 "defaultContent": '',
@@ -1163,7 +1162,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 "searchable": false
             },
             {   
-                "render": function ( data, type, row, meta ) {
+                "render": function(data, type, row, meta){
                         return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                 },
                 "defaultContent": '',
@@ -1232,7 +1231,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 "searchable": false
             },
             {   
-                "render": function ( data, type, row, meta ) {
+                "render": function(data, type, row, meta){
                         return '<button style="zoom: 75%;" class="btn btn-primary bp btnReceive" id="'+ meta.row +'">RECEIVE</button>';
                 },
                 "defaultContent": '',

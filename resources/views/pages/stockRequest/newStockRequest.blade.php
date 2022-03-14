@@ -76,7 +76,7 @@
             </table>
         </div>
         <div class="col-md-12 mt-2 mb-4">
-            <button type="submit" id="btnClose" class="btn btn-primary bp" style="display: none;">CLOSE</button>
+            <button type="submit" id="btnClose" class="btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CLOSE</button>
             <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
         </div>
     </div>

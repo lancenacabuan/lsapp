@@ -201,8 +201,7 @@ class StockTransferController extends Controller
             ->whereIn('request_transfer.status', ['6','7'])
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
-            ->orderBy('request_transfer.needdate', 'ASC')
-            ->orderBy('request_transfer.created_at', 'ASC')
+            ->orderBy('request_transfer.created_at', 'DESC')
             ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
@@ -219,8 +218,7 @@ class StockTransferController extends Controller
             ->where('request_transfer.requested_by', auth()->user()->id)
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
-            ->orderBy('request_transfer.needdate', 'ASC')
-            ->orderBy('request_transfer.created_at', 'ASC')
+            ->orderBy('request_transfer.created_at', 'DESC')
             ->get();
         }
 

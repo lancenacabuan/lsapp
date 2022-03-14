@@ -254,7 +254,7 @@
             <h6 class="modal-title w-100">EDIT ITEM SERIAL</h6>            
             <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body" style="background-color:white;color:black;">                          
+        <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input type="hidden" name="x_id" id="x_id">
             <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_category" id="x_category" readonly>
@@ -272,7 +272,7 @@
             <h6 class="modal-title w-100">REASON FOR DISAPPROVAL</h6>            
             <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body" style="background-color:white;color:black;">                          
+        <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100"></textarea><br>
             <span id='limit' style="font-size: 12px;"></span>

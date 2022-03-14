@@ -6,7 +6,7 @@
             <h6 class="modal-title w-100">USER DETAILS</h6>
             <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body" style="background-color:white;color:black;">
+        <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token1" id="csrf1" value="{{Session::token()}}">
             <input type="hidden" name="id1" id="id1">
             <input type="hidden" name="name2" id="name2">

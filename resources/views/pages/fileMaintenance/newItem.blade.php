@@ -6,7 +6,7 @@
             <h6 class="modal-title w-100">ADD NEW ITEM</h6>    
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body" style="background-color:white;color:black;">                
+        <div class="modal-body" style="background-color: white; color: black;">                
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline">
                 <label class="form-control form-control-sm" style="width:165px;">Category Name</label>

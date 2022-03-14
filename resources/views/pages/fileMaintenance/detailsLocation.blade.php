@@ -6,7 +6,7 @@
             <h6 class="modal-title w-100">LOCATION DETAILS</h6>    
             <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body" style="background-color:white;color:black;">                
+        <div class="modal-body" style="background-color: white; color: black;">                
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input type="hidden" name="location_id" id="location_id">
             <input type="hidden" name="location_original" id="location_original">

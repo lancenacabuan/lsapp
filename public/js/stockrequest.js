@@ -233,7 +233,7 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
     }
 });
 
-$(document).on('click', '#btnSave', function(){
+$('#btnSave').on('click', function(){
     if($('#needdate').val() && $('#request_type').val() && $('#client_name').val() && $('#location').val()){
         if($("#needdate").val() < minDate){
             swal('Minimum Date is today!','Select within date range from today onwards.','error');
@@ -365,15 +365,15 @@ $(document).on('click', '#btnSave', function(){
     }   
 });
 
-$(document).on('click', '#close', function(){
+$('#close').on('click', function(){
     window.location.href = '/stockrequest';
 });
 
-$(document).on('click', '#btnClose', function(){
+$('#btnClose').on('click', function(){
     window.location.href = '/stockrequest';
 });
 
-$(document).on('click', '#modalClose', function(){
+$('#modalClose').on('click', function(){
     window.location.href = '/stockrequest';
 });
 
@@ -1293,7 +1293,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     });
 });
 
-$(document).on("click", ".btnEditSerial", function(){
+$('.btnEditSerial').on('click', function(){
     var id = $(this).attr("id");
     var data = $('table.schedItems').DataTable().row(id).data();
 
@@ -1309,7 +1309,7 @@ $(document).on("click", ".btnEditSerial", function(){
     $('#x_serial').val(data.serial);
 });
 
-$(document).on("click", "#btnEdit", function(){
+$('#btnEdit').on('click', function(){
     $.ajax({
         url: '/editSerial',
         headers: {
@@ -1349,7 +1349,7 @@ $(document).on("click", "#btnEdit", function(){
     });
 });
 
-$(document).on("click", ".btndelItem", function(){
+$('.btndelItem').on('click', function(){
     var id = $(this).attr("id");
     var data = $('table.stockDetails2').DataTable().row(id).data();
     $.ajax({
@@ -1386,7 +1386,7 @@ $(document).on("click", ".btndelItem", function(){
     });
 });
 
-$(document).on('click', '#btnDelete', function(){
+$('#btnDelete').on('click', function(){
     swal({
         title: "DELETE STOCK REQUEST?",
         text: "You are about to DELETE your STOCK REQUEST!\n This will be permanently deleted from the system.",
@@ -1425,7 +1425,7 @@ $(document).on('click', '#btnDelete', function(){
     });   
 });
 
-$(document).on('click', '#btnApprove', function(){
+$('#btnApprove').on('click', function(){
     swal({
         title: "APPROVE STOCK REQUEST?",
         text: "You are about to APPROVE this STOCK REQUEST!",
@@ -1466,7 +1466,7 @@ $(document).on('click', '#btnApprove', function(){
     }); 
 });
 
-$(document).on("click", "#btnDisapprove", function(){
+$('#btnDisapprove').on('click', function(){
     $('#reasonModal').modal({
         backdrop: 'static',
         keyboard: false
@@ -1474,7 +1474,7 @@ $(document).on("click", "#btnDisapprove", function(){
     $('#reasonModal').modal('show');
 });
 
-$(document).on('click', '#btnReason', function(){
+$('#btnReason').on('click', function(){
     if(!$('#reason').val()){
         swal("REASON REQUIRED", "Please provide a reason for disapproving the request.", "error");
         return false;
@@ -1554,7 +1554,7 @@ $(document).on('click', '#btnReason', function(){
     }
 });
 
-$(document).on('click', '#btnTransit', function(){
+$('#btnTransit').on('click', function(){
     swal({
         title: "FOR RECEIVING?",
         text: "You are about to move these items FOR RECEIVING!",
@@ -1595,7 +1595,7 @@ $(document).on('click', '#btnTransit', function(){
     });    
 });
 
-$(document).on('click', '#btnReceive', function(){
+$('#btnReceive').on('click', function(){
     swal({
         title: "RECEIVE STOCK REQUEST?",
         text: "You are about to RECEIVE this Stock Request!",
@@ -2014,7 +2014,7 @@ $("#btnProceed").unbind('click').click(function(){
     }
 });
 
-$("#btnBack").on('click', function(){
+$('#btnBack').on('click', function(){
     $("#stockDetailsrequest *").prop('disabled', false);
     $('#btnSubmit').prop('disabled', true);
     $("#requestItems").hide();
@@ -2022,11 +2022,11 @@ $("#btnBack").on('click', function(){
     $("#reqContents").empty();
 });
 
-$(document).on('click', '.btnPrint', function(){
+$('.btnPrint').on('click', function(){
     window.location.href = '/printRequest?request_number='+$('#request_num_details').val();
 });
 
-$(document).on('click', '#btnPrint', function(){
+$('#btnPrint').on('click', function(){
     var printContents=document.getElementById('printPage').innerHTML;
     var originalContents=document.body.innerHTML;
     document.body.innerHTML=printContents;
@@ -2034,7 +2034,7 @@ $(document).on('click', '#btnPrint', function(){
     document.body.innerHTML=originalContents;
 });
 
-$(document).on('click', '#btnSavePDF', function(){
+$('#btnSavePDF').on('click', function(){
     swal({
         title: "SAVE AS PDF?",
         text: "You are about to SAVE this Stock Request as PDF!",

@@ -45,7 +45,7 @@ $(document).ready(function(){
     $('#serialdiv').hide();
 });
 
-$(document).on('click', '#CategoryTable tbody tr', function(){
+$('#CategoryTable tbody tr').on('click', function(){
     var trdata = CategoryTable.row(this).data();
     categoryID = trdata.id;
     categoryName = decodeHtml(trdata.Category);
@@ -84,7 +84,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
         });
 });
 
-$(document).on('click', '#btnBack', function(){
+$('#btnBack').on('click', function(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
     $('table.ItemSerialTable').dataTable().fnDestroy();
@@ -120,7 +120,7 @@ $(document).on('click', '#btnBack', function(){
         });
 });
 
-$(document).on('click', '#ItemTable tbody tr', function(){
+$('#ItemTable tbody tr').on('click', function(){
     var trdata = ItemTable.row(this).data();
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
@@ -154,7 +154,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
         });
 });
     
-$(document).on('click', '#butsave', function(){
+$('#butsave').on('click', function(){
     var AddStockForm = $('#AddStockForm');
     var category = $('#category').val();
     var item = $('#item').val();
@@ -260,7 +260,7 @@ $(document).on('click', '#butsave', function(){
     }
 });
 
-$(document).on('change', '#category', function(){
+$('#category').on('change', function(){
     var id = $('#category').val();
     var descOp = " ";
     $.ajax({
@@ -289,7 +289,7 @@ $(document).on('change', '#category', function(){
     $('#serialdiv').hide();
 });
 
-$(document).on('change', '#item', function(){
+$('#item').on('change', function(){
     var id = $('#item').val();
     $.ajax({
         type: 'get',
@@ -333,10 +333,10 @@ function decodeHtml(str){
     return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
 }
 
-$(document).on('click', '#backBtn', function(){
+$('#backBtn').on('click', function(){
     category();
 });
 
-$(document).on('click', '.close', function(){
+$('.close').on('click', function(){
     location.reload();
 });

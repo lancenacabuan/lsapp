@@ -167,17 +167,17 @@ $(document).ready(function(){
         });
         var table =  $('table.itemTable').DataTable(); 
         var data = table.row(this).data();
-        var item_id = data.item_id;
+        var item_id = data.id;
             $('#item_id').val(item_id);
         var category_name = data.category;
             $('#category_name_details_original').val(category_name);
         var item_category = data.category_id;
             $('#item_category_details').val(item_category);
             $('#item_category_details_original').val(item_category);
-        var item_name = decodeHtml(data.item_name);
+        var item_name = decodeHtml(data.item);
             $('#item_name_details').val(item_name);
             $('#item_name_details_original').val(item_name);
-        var item_uom = data.uom;
+        var item_uom = data.UOM;
             $('#item_uom_details').val(item_uom);
             $('#item_uom_details_original').val(item_uom);
         

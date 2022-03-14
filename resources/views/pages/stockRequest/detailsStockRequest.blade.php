@@ -41,13 +41,13 @@
                 <textarea style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" class="form-control" rows="4" name="reason_details" id="reason_details" readonly></textarea>
             </div>
         </div>
-        <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
         </div><br>      
         <div class="modal-body">
             @role('sales|approver - sales') {{---ROLES---}}
             <div id="sd1" style="display: none;">
-            <table id="stockDetailsrequest" class="table stockDetails1 display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+            <table id="stockDetailsrequest" class="table stockDetails1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
                         <th>CATEGORY</th>
@@ -62,7 +62,7 @@
             </table>
             </div>
             <div id="sd2" style="display: none;">
-            <table id="stockDetailsrequest" class="table stockDetails2 display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+            <table id="stockDetailsrequest" class="table stockDetails2 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
                         <th>CATEGORY</th>
@@ -79,7 +79,7 @@
             </div>
             @endrole
             @role('admin|encoder|viewer')  {{---ROLES---}}
-            <table id="stockDetailsrequest" class="table stockDetails table-hover display nowrap" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+            <table id="stockDetailsrequest" class="table stockDetails table-hover display nowrap" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
                         <th style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -118,7 +118,7 @@
             <br>
         </div>
         <div id="requestItems" style="display: none;">
-        <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REQUESTED ITEMS</h6>
         </div><br>      
         <div class="modal-body">
@@ -138,7 +138,7 @@
         </div>
         </div>
         <div id="schedItemsModal" style="display: none;">
-        <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div><br>      
         <div class="modal-body">
@@ -152,7 +152,7 @@
             </div>
             <br>
             @role('admin|encoder')  {{---ROLES---}}
-            <table id="schedItems" class="table schedItems display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+            <table id="schedItems" class="table schedItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
                         <th>CATEGORY</th>
@@ -168,7 +168,7 @@
             </table>
             @endrole
             @role('sales|viewer|approver - sales')  {{---ROLES---}}
-            <table id="schedItems1" class="table schedItems1 display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+            <table id="schedItems1" class="table schedItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
                         <th>CATEGORY</th>
@@ -191,7 +191,7 @@
         </div>
         </div>
         <div id="transitItemsModal" style="display: none;">
-        <div class="modal-header text-center" style="border-radius: 0px; background-color:#0d1a80; color:white;height:45px;">
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 id="modalheader" class="modal-title w-100">FOR RECEIVING ITEM DETAILS</h6>
         </div><br>      
         <div class="modal-body">
@@ -205,7 +205,7 @@
             </div>
             <br>
             @role('client')  {{---ROLES---}}
-            <table id="transItems" class="table transItems display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+            <table id="transItems" class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
                         <th>CATEGORY</th>
@@ -221,7 +221,7 @@
             </table>
             @endrole
             @role('admin|encoder|sales|viewer|approver - sales')  {{---ROLES---}}
-            <table id="transItems1" class="table transItems1 display" style="cursor:pointer; border:none; font-size:12px; width: 100%;">
+            <table id="transItems1" class="table transItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
                         <th>CATEGORY</th>

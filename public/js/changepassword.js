@@ -17,7 +17,7 @@ $(document).ready(function(){
                     },
                     data: {
                         _token: $("#csrf").val(),
-                        pass2: pass2,
+                        new: pass2,
                         current: pass1
                     },
                     success: function(data){      

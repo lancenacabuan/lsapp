@@ -52,8 +52,7 @@ class PagesController extends Controller
         return view('pages/changepassword');
     }
 
-    public function password_save(Request $request)
-    {
+    public function password_save(Request $request){
         if(Hash::check($request->current, auth()->user()->password)){
             $users = User::find(auth()->user()->id);
             $users->password = Hash::make($request->new);

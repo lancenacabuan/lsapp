@@ -55,21 +55,24 @@ class StocksController extends Controller
                 'categories.category as Category'
             )
         )->get();
-        // $dt = DataTables::of($list);
-        // $locations = Location::all();
-        // foreach($locations as $location){
-        //     $dt->addColumn($location->location, function (Category $Category)use($location){
-        //         Stock::query()
-        //             ->where('category_id', $Category->id)
-        //             ->where('location_id', $location->id)
-        //             ->where('status', 'in')
-        //             ->count();
-        //     });
-        // }
-            
-        // return $dt->make(true);
         return DataTables::of($list)
-            ->addColumn('A1', function (Category $Category){
+            ->addColumn('Demo', function(Category $Category){
+                $Demo = Stock::query()
+                    ->where('category_id', $Category->id)
+                    ->where('location_id', 9)
+                    ->where('status', 'in')
+                    ->count();
+                return $Demo;
+            })
+            ->addColumn('Assembly', function(Category $Category){
+                $Assembly = Stock::query()
+                    ->where('category_id', $Category->id)
+                    ->where('location_id', 7)
+                    ->where('status', 'in')
+                    ->count();
+                return $Assembly;
+            })
+            ->addColumn('A1', function(Category $Category){
                 $A1 = Stock::query()
                     ->where('category_id', $Category->id)
                     ->where('location_id', 1)
@@ -77,7 +80,7 @@ class StocksController extends Controller
                     ->count();
                 return $A1;
             })
-            ->addColumn('A2', function (Category $Category){
+            ->addColumn('A2', function(Category $Category){
                 $A2 = Stock::query()
                     ->where('category_id', $Category->id)
                     ->where('location_id', 2)
@@ -85,7 +88,7 @@ class StocksController extends Controller
                     ->count();
                 return $A2;
             })
-            ->addColumn('A3', function (Category $Category){
+            ->addColumn('A3', function(Category $Category){
                 $A3 = Stock::query()
                     ->where('category_id', $Category->id)
                     ->where('location_id', 3)
@@ -93,7 +96,7 @@ class StocksController extends Controller
                     ->count();
                 return $A3;
             })
-            ->addColumn('A4', function (Category $Category){
+            ->addColumn('A4', function(Category $Category){
                 $A4 = Stock::query()
                     ->where('category_id', $Category->id)
                     ->where('location_id', 4)
@@ -101,7 +104,7 @@ class StocksController extends Controller
                     ->count();
                 return $A4;
             })
-            ->addColumn('Balintawak', function (Category $Category){
+            ->addColumn('Balintawak', function(Category $Category){
                 $Balintawak = Stock::query()
                     ->where('category_id', $Category->id)
                     ->where('location_id', 5)
@@ -109,7 +112,7 @@ class StocksController extends Controller
                     ->count();
                 return $Balintawak;
             })
-            ->addColumn('Malabon', function (Category $Category){
+            ->addColumn('Malabon', function(Category $Category){
                 $Malabon = Stock::query()
                     ->where('category_id', $Category->id)
                     ->where('location_id', 6)
@@ -117,7 +120,7 @@ class StocksController extends Controller
                     ->count();
                 return $Malabon;
             })
-            ->addColumn('Total_stocks', function (Category $Category){
+            ->addColumn('Total_stocks', function(Category $Category){
                 $Total_stocks = Stock::query()
                     ->where('category_id', $Category->id)
                     ->where('status', 'in')
@@ -149,7 +152,23 @@ class StocksController extends Controller
         )
         ->where('items.category_id', $request->CategoryId)->get();
          return DataTables::of($list)
-            ->addColumn('A1', function (Item $Item){
+            ->addColumn('Demo', function(Item $Item){
+                $Demo = Stock::query()
+                    ->where('item_id', $Item->id)
+                    ->where('location_id', 9)
+                    ->where('status', 'in')
+                    ->count();
+                return $Demo;
+            })
+            ->addColumn('Assembly', function(Item $Item){
+                $Assembly = Stock::query()
+                    ->where('item_id', $Item->id)
+                    ->where('location_id', 7)
+                    ->where('status', 'in')
+                    ->count();
+                return $Assembly;
+            })
+            ->addColumn('A1', function(Item $Item){
                 $A1 = Stock::query()
                     ->where('item_id', $Item->id)
                     ->where('location_id', 1)
@@ -157,7 +176,7 @@ class StocksController extends Controller
                     ->count();
                 return $A1;
             })
-            ->addColumn('A2', function (Item $Item){
+            ->addColumn('A2', function(Item $Item){
                 $A2 = Stock::query()
                     ->where('item_id', $Item->id)
                     ->where('location_id', 2)
@@ -165,7 +184,7 @@ class StocksController extends Controller
                     ->count();
                 return $A2;
             })
-            ->addColumn('A3', function (Item $Item){
+            ->addColumn('A3', function(Item $Item){
                 $A3 = Stock::query()
                     ->where('item_id', $Item->id)
                     ->where('location_id', 3)
@@ -173,7 +192,7 @@ class StocksController extends Controller
                     ->count();
                 return $A3;
             })
-            ->addColumn('A4', function (Item $Item){
+            ->addColumn('A4', function(Item $Item){
                 $A4 = Stock::query()
                     ->where('item_id', $Item->id)
                     ->where('location_id', 4)
@@ -181,7 +200,7 @@ class StocksController extends Controller
                     ->count();
                 return $A4;
             })
-            ->addColumn('Balintawak', function (Item $Item){
+            ->addColumn('Balintawak', function(Item $Item){
                 $Balintawak = Stock::query()
                     ->where('item_id', $Item->id)
                     ->where('location_id', 5)
@@ -189,7 +208,7 @@ class StocksController extends Controller
                     ->count();
                 return $Balintawak;
             })
-            ->addColumn('Malabon', function (Item $Item){
+            ->addColumn('Malabon', function(Item $Item){
                 $Malabon = Stock::query()
                     ->where('item_id', $Item->id)
                     ->where('location_id', 6)
@@ -197,7 +216,7 @@ class StocksController extends Controller
                     ->count();
                 return $Malabon;
             })
-            ->addColumn('Total_stocks', function (Item $Item){
+            ->addColumn('Total_stocks', function(Item $Item){
                 $Total_stocks = Stock::query()
                     ->where('item_id', $Item->id)
                     ->where('status', 'in')

@@ -24,6 +24,8 @@ function category(){
             ajax: 'category_data',
             columns: [
                 { data: 'Category' },
+                { data: 'Demo' },
+                { data: 'Assembly' },
                 { data: 'A1' },
                 { data: 'A2' },
                 { data: 'A3' },
@@ -70,6 +72,8 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
             },
             columns: [
                 { data: 'Item' },
+                { data: 'Demo' },
+                { data: 'Assembly' },
                 { data: 'A1' },
                 { data: 'A2' },
                 { data: 'A3' },
@@ -106,6 +110,8 @@ $('#btnBack').on('click', function(){
             },
             columns: [
                 { data: 'Item' },
+                { data: 'Demo' },
+                { data: 'Assembly' },
                 { data: 'A1' },
                 { data: 'A2' },
                 { data: 'A3' },

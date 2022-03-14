@@ -45,7 +45,7 @@ $(document).ready(function(){
     $('#serialdiv').hide();
 });
 
-$('#CategoryTable tbody tr').on('click', function(){
+$(document).on('click', '#CategoryTable tbody tr', function(){
     var trdata = CategoryTable.row(this).data();
     categoryID = trdata.id;
     categoryName = decodeHtml(trdata.Category);
@@ -120,7 +120,7 @@ $('#btnBack').on('click', function(){
         });
 });
 
-$('#ItemTable tbody tr').on('click', function(){
+$(document).on('click', '#ItemTable tbody tr', function(){
     var trdata = ItemTable.row(this).data();
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();

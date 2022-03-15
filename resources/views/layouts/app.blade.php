@@ -77,6 +77,7 @@
         }
         .close {
             color: white;
+            zoom: 80%;
         }
         .chosen-container-single .chosen-single {
             margin-top: -12px !important;

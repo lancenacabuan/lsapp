@@ -69,22 +69,35 @@ class StockRequestController extends Controller
     }
 
     public function saveReqNum(Request $request){
-        $requests = new Requests;
-        $requests->request_number = $request->request_number;
-        $requests->requested_by = auth()->user()->id;
-        $requests->needdate = $request->needdate;
-        $requests->request_type = $request->request_type;
-        $requests->status = '6';
-        $requests->client_name = ucwords($request->client_name);
-        $requests->location = ucwords($request->location);
-        $requests->reference = strtoupper($request->reference);
-        $sql = $requests->save();
-
-        if(!$sql){
-            $result = 'false';
+        if(trim($request->reference) != ''){
+            $reference = Requests::query()->select()
+                ->whereRaw('LOWER(reference) = ?',strtolower($request->reference))
+                ->count();
+        }
+        else{
+            $reference = 0;
+        }
+        if($reference != 0){
+            $result = 'duplicate';
         }
         else {
-            $result = 'true';
+            $requests = new Requests;
+            $requests->request_number = $request->request_number;
+            $requests->requested_by = auth()->user()->id;
+            $requests->needdate = $request->needdate;
+            $requests->request_type = $request->request_type;
+            $requests->status = '6';
+            $requests->client_name = ucwords($request->client_name);
+            $requests->location = ucwords($request->location);
+            $requests->reference = strtoupper($request->reference);
+            $sql = $requests->save();
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+            }
         }
 
         return response($result);

@@ -889,17 +889,15 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     });
 });
 
-$('.btndelItem').on('click', function(){
+$(document).on('click', '.btndelItem', function(){
     var id = $(this).attr("id");
     var data = $('table.transferDetails').DataTable().row(id).data();
-
     $.ajax({
+        type:'post',
         url: '/delTransItem',
         headers: {
             'X-CSRF-TOKEN': $("#csrf").val(),
         },
-        dataType: 'json',
-        type: 'DELETE',
         data: {
             req_num: $('#request_num_details').val(),
             item_id: data.item_id
@@ -939,7 +937,10 @@ $('#btnDelete').on('click', function(){
         if(willDelete){     
             $.ajax({
                 type:'post', 
-                url:'/deleteTransfer', 
+                url:'/deleteTransfer',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val()
+                },
                 data:{
                     'request_number': $('#request_num_details').val()
                 },
@@ -980,7 +981,7 @@ $('#btnApprove').on('click', function(){
                 url:'/approveTransfer',
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val(),
-                        },
+                },
                 data:{
                     'request_number': $('#request_num_details').val()
                 },
@@ -1035,7 +1036,7 @@ $('#btnReason').on('click', function(){
                     url:'/disapproveTransfer',
                     headers: {
                         'X-CSRF-TOKEN': $("#csrf").val(),
-                            },
+                    },
                     data:{
                         'request_number': $('#request_num_details').val(),
                         'reason': $('#reason').val()
@@ -1053,7 +1054,7 @@ $('#btnReason').on('click', function(){
                                 url:'/logTransDisapprove',
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val(),
-                                        },
+                                },
                                 data:{
                                     'request_number': $('#request_num_details').val(),
                                     'reason': $('#reason').val()
@@ -1109,7 +1110,7 @@ $('#btnTransit').on('click', function(){
                 url:'/forReceiving',
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val(),
-                        },
+                },
                 data:{
                     'request_number': $('#request_num_details').val()
                 },
@@ -1150,7 +1151,7 @@ $('#btnReceive').on('click', function(){
                 url:'/receiveTransfer',
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val(),
-                        },
+                },
                 data:{
                     'request_number': $('#request_num_details').val()
                 },
@@ -1165,7 +1166,7 @@ $('#btnReceive').on('click', function(){
                             url:'/logTransReceive',
                             headers: {
                                 'X-CSRF-TOKEN': $("#csrf").val(),
-                                    },
+                            },
                             data:{
                                 'request_number': $('#request_num_details').val()
                             },

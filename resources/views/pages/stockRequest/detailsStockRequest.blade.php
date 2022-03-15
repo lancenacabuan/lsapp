@@ -9,7 +9,6 @@
         <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input type="hidden" id="req_type_id_details">
-            <input type="hidden" id="status_id_details">
             <div class="form-inline" style="margin-left:35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate_details"style="width: 280px; margin-right: 10px;" type="text" readonly>

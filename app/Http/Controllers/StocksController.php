@@ -124,7 +124,7 @@ class StocksController extends Controller
                 $Total_stocks = Stock::query()
                     ->where('category_id', $Category->id)
                     ->where('status', 'in')
-                    ->where('location_id', '!=', '7')
+                    ->where('location_id', '!=', '8')
                     ->count();
                 return $Total_stocks;
             })->make(true);
@@ -220,7 +220,7 @@ class StocksController extends Controller
                 $Total_stocks = Stock::query()
                     ->where('item_id', $Item->id)
                     ->where('status', 'in')
-                    ->where('location_id', '!=','7')
+                    ->where('location_id', '!=','8')
                     ->count();
                 return $Total_stocks;
             })

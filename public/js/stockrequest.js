@@ -466,7 +466,6 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
             });
             reqitem.forEach(value => {
                 var requestStatus = value.status_id;
-                    $('#status_id_details').val(requestStatus);
                 var req_type_id = value.req_type_id;
                     $('#req_type_id_details').val(req_type_id);
                 var req_date = value.date;
@@ -550,6 +549,13 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         $("#btnSale").hide();
                         $("#btnReturn").hide();
                         document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
+                    }
+                    if(requestStatus == '11'){
+                        $("#transitItemsModal").show();
+                        $("#btnReceive").hide();
+                        $("#btnSale").hide();
+                        $("#btnReturn").hide();
+                        document.getElementById('modalheader').innerHTML = 'RETURNED ITEM DETAILS';
                     }
                     if(value.user_id != $('#current_user').val()){
                         $("#btnReceive").hide();
@@ -893,7 +899,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     var table =  $('table.stockrequestTable').DataTable(); 
     var data = table.row(this).data();
     var requestStatus = data.status_id;
-        $('#status_id_details').val(requestStatus);
     var req_type_id = data.req_type_id;
         $('#req_type_id_details').val(req_type_id);
     var req_date = data.date;
@@ -977,6 +982,13 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#btnSale").hide();
             $("#btnReturn").hide();
             document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
+        }
+        if(requestStatus == '11'){
+            $("#transitItemsModal").show();
+            $("#btnReceive").hide();
+            $("#btnSale").hide();
+            $("#btnReturn").hide();
+            document.getElementById('modalheader').innerHTML = 'RETURNED ITEM DETAILS';
         }
         if(data.user_id != $('#current_user').val()){
             $("#btnReceive").hide();

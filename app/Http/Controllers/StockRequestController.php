@@ -496,12 +496,22 @@ class StockRequestController extends Controller
                     }
                 }
                 else{
-                    Stock::where('item_id',$key->items_id)
-                    ->where('serial',$key->serial)
-                    ->where('location_id',$key->location)
-                    ->where('status', 'prep')
-                    ->orderBy('id')->limit(1)
-                    ->update(['status' => 'in', 'location_id' => '9']);
+                    if(str_contains($key->serial, 'N/A')){
+                        Stock::where('item_id',$key->items_id)
+                        ->where('serial','N/A')
+                        ->where('location_id',$key->location)
+                        ->where('status', 'prep')
+                        ->orderBy('id')->limit(1)
+                        ->update(['status' => 'in', 'location_id' => '9']);
+                    }
+                    else{
+                        Stock::where('item_id',$key->items_id)
+                        ->where('serial',$key->serial)
+                        ->where('location_id',$key->location)
+                        ->where('status', 'prep')
+                        ->orderBy('id')->limit(1)
+                        ->update(['status' => 'in', 'location_id' => '9']);
+                    }
                 }
             }
         }
@@ -523,12 +533,22 @@ class StockRequestController extends Controller
                     }
                 }
                 else{
-                    Stock::where('item_id',$key->items_id)
-                    ->where('serial',$key->serial)
-                    ->where('location_id',$key->location)
-                    ->where('status', 'prep')
-                    ->orderBy('id')->limit(1)
-                    ->update(['status' => 'out']);
+                    if(str_contains($key->serial, 'N/A')){
+                        Stock::where('item_id',$key->items_id)
+                        ->where('serial','N/A')
+                        ->where('location_id',$key->location)
+                        ->where('status', 'prep')
+                        ->orderBy('id')->limit(1)
+                        ->update(['status' => 'out']);
+                    }
+                    else{
+                        Stock::where('item_id',$key->items_id)
+                        ->where('serial',$key->serial)
+                        ->where('location_id',$key->location)
+                        ->where('status', 'prep')
+                        ->orderBy('id')->limit(1)
+                        ->update(['status' => 'out']);
+                    }
                 }
             }
         }
@@ -648,12 +668,22 @@ class StockRequestController extends Controller
                 }
             }
             else{
-                Stock::where('item_id',$key->items_id)
-                ->where('serial',$key->serial)
-                ->where('location_id',['9'])
-                ->where('status', 'in')
-                ->orderBy('id')->limit(1)
-                ->update(['status' => 'out', 'location_id' => $key->location]);
+                if(str_contains($key->serial, 'N/A')){
+                    Stock::where('item_id',$key->items_id)
+                    ->where('serial','N/A')
+                    ->where('location_id',['9'])
+                    ->where('status', 'in')
+                    ->orderBy('id')->limit(1)
+                    ->update(['status' => 'out', 'location_id' => $key->location]);
+                }
+                else{
+                    Stock::where('item_id',$key->items_id)
+                    ->where('serial',$key->serial)
+                    ->where('location_id',['9'])
+                    ->where('status', 'in')
+                    ->orderBy('id')->limit(1)
+                    ->update(['status' => 'out', 'location_id' => $key->location]);
+                }
             }
         }
         
@@ -690,12 +720,22 @@ class StockRequestController extends Controller
                 }
             }
             else{
-                Stock::where('item_id',$key->items_id)
-                ->where('serial',$key->serial)
-                ->where('location_id',['9'])
-                ->where('status', 'in')
-                ->orderBy('id')->limit(1)
-                ->update(['location_id' => $key->location]);
+                if(str_contains($key->serial, 'N/A')){
+                    Stock::where('item_id',$key->items_id)
+                    ->where('serial','N/A')
+                    ->where('location_id',['9'])
+                    ->where('status', 'in')
+                    ->orderBy('id')->limit(1)
+                    ->update(['location_id' => $key->location]);
+                }
+                else{
+                    Stock::where('item_id',$key->items_id)
+                    ->where('serial',$key->serial)
+                    ->where('location_id',['9'])
+                    ->where('status', 'in')
+                    ->orderBy('id')->limit(1)
+                    ->update(['location_id' => $key->location]);
+                }
             }
         }
         

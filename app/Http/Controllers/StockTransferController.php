@@ -513,7 +513,19 @@ class StockTransferController extends Controller
         
         Transfer::where('request_number', $request->request_number)
             ->update(['intransit' => 'yes']);
+        
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "FOR RECEIVING STOCK TRANSFER REQUEST: User successfully processed for receiving Stock Transfer Request No. $request->request_number.";
+        $userlogs->save();
 
+        return response('true');
+    }
+
+    public function receiveTransfer(Request $request){
+        $sql = RequestTransfer::where('request_number', $request->request_number)
+            ->update(['status' => '8']);
+        
         $list = Transfer::select('items_id','request_number','locfrom','locto','serial','qty')
             ->where('request_number', $request->request_number)
             ->get();
@@ -536,18 +548,6 @@ class StockTransferController extends Controller
                 ->update(['status' => 'in']);
             }
         }
-        
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "FOR RECEIVING STOCK TRANSFER REQUEST: User successfully processed for receiving Stock Transfer Request No. $request->request_number.";
-        $userlogs->save();
-
-        return response('true');
-    }
-
-    public function receiveTransfer(Request $request){
-        $sql = RequestTransfer::where('request_number', $request->request_number)
-            ->update(['status' => '8']);
         
         if(!$sql){
             $result = 'false';

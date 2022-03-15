@@ -33,11 +33,6 @@ class StockRequestController extends Controller
         {
             return redirect('/stocktransfer');
         }  
-        // $categories = Category::select('categories.id','category')
-        //     ->join('stocks','category_id','categories.id')
-        //     ->where('status','in')
-        //     ->groupBy('categories.id')
-        //     ->get()->sortBy('category');
         $categories = Category::select('id','category')->get()->sortBy('category');
         $items = Item::select('id','item')->get()->sortBy('item');
         $req_types = RequestType::select('id','name')->whereIn('id',['2','3','4'])->get();            
@@ -55,9 +50,7 @@ class StockRequestController extends Controller
 
     public function itemsreq(Request $request){       
         $list = Item::query()->select('items.id','items.item')
-            // ->join('stocks','stocks.item_id','items.id')
             ->where('items.category_id',$request->category_id)
-            // ->where('stocks.status','in')
             ->groupBy('items.id')
             ->orderBy('item','ASC')
             ->get();
@@ -73,26 +66,6 @@ class StockRequestController extends Controller
         $uom = str_replace('"}]','',$uom);
         
         return response($uom);
-    }
-
-    public function itemsqty(Request $request){       
-        $list = Stock::query()->select('items.id')
-            ->join('items','items.id','item_id')
-            ->where('stocks.status','in')
-            ->where('stocks.item_id',$request->item_id)
-            ->count();
-
-            return response($list);
-    }
-
-    public function itemsstock(Request $request){       
-        $list = Stock::query()->select('items.id')
-            ->where('stocks.status','in')
-            ->where('stocks.item_id',$request->item_id)
-            ->count();
-        $list = $list - $request->qty;
-        
-        return response($list);
     }
 
     public function saveReqNum(Request $request){
@@ -496,28 +469,6 @@ class StockRequestController extends Controller
         Prepare::where('request_number', $request->request_number)
             ->update(['intransit' => 'yes']);
         
-        $list = Prepare::select('items_id','request_number','location','serial','qty')
-            ->where('request_number', $request->request_number)
-            ->get();
-        foreach($list as $key){
-            if($key->serial == ''){
-                for($x = 0; $x < $key->qty; $x++){
-                    Stock::where('item_id',$key->items_id)
-                    ->whereIn('location_id',['1','2','3','4'])
-                    ->where('status', 'prep')
-                    ->orderBy('id')->limit(1)
-                    ->update(['status' => 'out']);
-                }
-            }
-            else{
-                Stock::where('item_id',$key->items_id)
-                ->where('location_id',$key->location)
-                ->where('status', 'prep')
-                ->orderBy('id')->limit(1)
-                ->update(['status' => 'out']);
-            }
-        }
-
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "FOR RECEIVING STOCK REQUEST: User successfully processed for receiving Stock Request No. $request->request_number.";
@@ -527,9 +478,61 @@ class StockRequestController extends Controller
     }
 
     public function receiveRequest(Request $request){
-        $sql = Requests::where('request_number', $request->request_number)
-            ->update(['status' => '8']);
-        
+        if($request->request_type == '3'){
+            $sql = Requests::where('request_number', $request->request_number)
+                ->update(['status' => '9']);
+            
+            $list = Prepare::select('items_id','request_number','location','serial','qty')
+                ->where('request_number', $request->request_number)
+                ->get();
+            foreach($list as $key){
+                if($key->serial == ''){
+                    for($x = 0; $x < $key->qty; $x++){
+                        Stock::where('item_id',$key->items_id)
+                        ->whereIn('location_id',['1','2','3','4'])
+                        ->where('status', 'prep')
+                        ->orderBy('id')->limit(1)
+                        ->update(['status' => 'in', 'location_id' => '9']);
+                    }
+                }
+                else{
+                    Stock::where('item_id',$key->items_id)
+                    ->where('serial',$key->serial)
+                    ->where('location_id',$key->location)
+                    ->where('status', 'prep')
+                    ->orderBy('id')->limit(1)
+                    ->update(['status' => 'in', 'location_id' => '9']);
+                }
+            }
+        }
+        else{
+            $sql = Requests::where('request_number', $request->request_number)
+                ->update(['status' => '8']);
+            
+            $list = Prepare::select('items_id','request_number','location','serial','qty')
+                ->where('request_number', $request->request_number)
+                ->get();
+            foreach($list as $key){
+                if($key->serial == ''){
+                    for($x = 0; $x < $key->qty; $x++){
+                        Stock::where('item_id',$key->items_id)
+                        ->whereIn('location_id',['1','2','3','4'])
+                        ->where('status', 'prep')
+                        ->orderBy('id')->limit(1)
+                        ->update(['status' => 'out']);
+                    }
+                }
+                else{
+                    Stock::where('item_id',$key->items_id)
+                    ->where('serial',$key->serial)
+                    ->where('location_id',$key->location)
+                    ->where('status', 'prep')
+                    ->orderBy('id')->limit(1)
+                    ->update(['status' => 'out']);
+                }
+            }
+        }
+
         if(!$sql){
             $result = 'false';
         }
@@ -625,6 +628,90 @@ class StockRequestController extends Controller
         $userlogs->save();
 
         return response('true');
+    }
+
+    public function saleRequest(Request $request){
+        $sql = Requests::where('request_number', $request->request_number)
+            ->update(['status' => '10']);
+        
+        $list = Prepare::select('items_id','request_number','location','serial','qty')
+            ->where('request_number', $request->request_number)
+            ->get();
+        foreach($list as $key){
+            if($key->serial == ''){
+                for($x = 0; $x < $key->qty; $x++){
+                    Stock::where('item_id',$key->items_id)
+                    ->whereIn('location_id',['9'])
+                    ->where('status', 'in')
+                    ->orderBy('id')->limit(1)
+                    ->update(['status' => 'out', 'location_id' => '1']);
+                }
+            }
+            else{
+                Stock::where('item_id',$key->items_id)
+                ->where('serial',$key->serial)
+                ->where('location_id',['9'])
+                ->where('status', 'in')
+                ->orderBy('id')->limit(1)
+                ->update(['status' => 'out', 'location_id' => $key->location]);
+            }
+        }
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "SOLD STOCK REQUEST: User successfully sold Stock Request No. $request->request_number.";
+        $userlogs->save();
+
+        return response($result);
+    }
+
+    public function returnRequest(Request $request){
+        $sql = Requests::where('request_number', $request->request_number)
+            ->update(['status' => '11']);
+        
+        $list = Prepare::select('items_id','request_number','location','serial','qty')
+            ->where('request_number', $request->request_number)
+            ->get();
+        foreach($list as $key){
+            if($key->serial == ''){
+                for($x = 0; $x < $key->qty; $x++){
+                    Stock::where('item_id',$key->items_id)
+                    ->whereIn('location_id',['9'])
+                    ->where('status', 'in')
+                    ->orderBy('id')->limit(1)
+                    ->update(['location_id' => '1']);
+                }
+            }
+            else{
+                Stock::where('item_id',$key->items_id)
+                ->where('serial',$key->serial)
+                ->where('location_id',['9'])
+                ->where('status', 'in')
+                ->orderBy('id')->limit(1)
+                ->update(['location_id' => $key->location]);
+            }
+        }
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "RETURNED STOCK REQUEST: User successfully returned Stock Request No. $request->request_number.";
+        $userlogs->save();
+
+        return response($result);
     }
 
     public function stockreq(Request $request){       

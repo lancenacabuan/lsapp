@@ -938,7 +938,7 @@ $('#btnDelete').on('click', function(){
     .then((willDelete) => {
         if(willDelete){     
             $.ajax({
-                type:'get', 
+                type:'post', 
                 url:'/deleteTransfer', 
                 data:{
                     'request_number': $('#request_num_details').val()
@@ -976,7 +976,7 @@ $('#btnApprove').on('click', function(){
     .then((willDelete) => {
         if(willDelete){
             $.ajax({
-                type:'get',
+                type:'post',
                 url:'/approveTransfer',
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val(),
@@ -1031,7 +1031,7 @@ $('#btnReason').on('click', function(){
         .then((willDelete) => {
             if(willDelete){
                 $.ajax({
-                    type:'get',
+                    type:'post',
                     url:'/disapproveTransfer',
                     headers: {
                         'X-CSRF-TOKEN': $("#csrf").val(),
@@ -1049,7 +1049,7 @@ $('#btnReason').on('click', function(){
                             $('#detailsStockTransfer').modal('dispose');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
-                                type:'get',
+                                type:'post',
                                 url:'/logTransDisapprove',
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val(),
@@ -1105,7 +1105,7 @@ $('#btnTransit').on('click', function(){
     .then((willDelete) => {
         if(willDelete){
             $.ajax({
-                type:'get',
+                type:'post',
                 url:'/forReceiving',
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val(),
@@ -1146,7 +1146,7 @@ $('#btnReceive').on('click', function(){
     .then((willDelete) => {
         if(willDelete){
             $.ajax({
-                type:'get',
+                type:'post',
                 url:'/receiveTransfer',
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val(),
@@ -1161,7 +1161,7 @@ $('#btnReceive').on('click', function(){
                         $('#detailsStockTransfer').modal('dispose');
                         $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
-                            type:'get',
+                            type:'post',
                             url:'/logTransReceive',
                             headers: {
                                 'X-CSRF-TOKEN': $("#csrf").val(),

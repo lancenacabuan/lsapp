@@ -8,9 +8,11 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+            <input type="hidden" id="req_type_id_details">
+            <input type="hidden" id="status_id_details">
             <div class="form-inline" style="margin-left:35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
-                <input class="form-control form-control-sm"  id="daterequestdetails"style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <input class="form-control form-control-sm"  id="reqdate_details"style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" style="width: 160px;">Stock Request No.</label>
                 <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
@@ -54,7 +56,6 @@
                         <th>ITEM DESCRIPTION</th>
                         <th>UOM</th>
                         <th>QTY REQUESTED</th>
-                        {{-- <th>QTY SERVED</th> --}}
                         <th>QTY PENDING</th>
                         <th></th>
                     </tr>
@@ -69,7 +70,6 @@
                         <th>ITEM DESCRIPTION</th>
                         <th>UOM</th>
                         <th>QTY REQUESTED</th>
-                        {{-- <th>QTY SERVED</th> --}}
                         <th>QTY PENDING</th>
                         <th></th>
                         <th></th>
@@ -90,7 +90,6 @@
                         </th>
                         <th style="text-align: center;">UOM</th>
                         <th style="text-align: center;">QTY REQUESTED</th>
-                        {{-- <th style="text-align: center;">QTY SERVED</th> --}}
                         <th style="text-align: center;">QTY PENDING</th>
                         <th style="text-align: center;">QTY IN STOCK<br>TOTAL MAIN BRANCH</th>
                         <th class="d-none"></th>
@@ -238,6 +237,9 @@
             <hr>
             @role('sales')  {{---ROLES---}}
             <button type="button" id="btnReceive" class="btn btn-primary float-right bp">RECEIVE</button>
+            <button type="button" id="btnSale" class="btn btn-primary float-right bp" style="display: none;">SALE</button>
+            <span class="float-right" style="width: 10px;">&nbsp;</span>
+            <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;">RETURN</button>
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br>

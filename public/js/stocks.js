@@ -24,6 +24,7 @@ function category(){
             ajax: 'category_data',
             columns: [
                 { data: 'Category' },
+                { data: 'Defective' },
                 { data: 'Demo' },
                 { data: 'Assembly' },
                 { data: 'A1' },
@@ -72,6 +73,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
             },
             columns: [
                 { data: 'Item' },
+                { data: 'Defective' },
                 { data: 'Demo' },
                 { data: 'Assembly' },
                 { data: 'A1' },
@@ -110,6 +112,7 @@ $('#btnBack').on('click', function(){
             },
             columns: [
                 { data: 'Item' },
+                { data: 'Defective' },
                 { data: 'Demo' },
                 { data: 'Assembly' },
                 { data: 'A1' },

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 @php
-$stocks = DB::table('stocks')->whereIn('stocks.location_id',['1','2','3','4','5','6','7','9'])->get()->count();
+$stocks = DB::table('stocks')->whereNotIn('stocks.location_id',['8'])->get()->count();
 $stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10','11'])->get()->count();
 $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
 @endphp

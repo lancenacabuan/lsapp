@@ -56,6 +56,14 @@ class StocksController extends Controller
             )
         )->get();
         return DataTables::of($list)
+            ->addColumn('Defective', function(Category $Category){
+                $Defective = Stock::query()
+                    ->where('category_id', $Category->id)
+                    ->where('location_id', 10)
+                    ->where('status', 'in')
+                    ->count();
+                return $Defective;
+            })
             ->addColumn('Demo', function(Category $Category){
                 $Demo = Stock::query()
                     ->where('category_id', $Category->id)
@@ -152,6 +160,14 @@ class StocksController extends Controller
         )
         ->where('items.category_id', $request->CategoryId)->get();
          return DataTables::of($list)
+            ->addColumn('Defective', function(Item $Item){
+                $Defective = Stock::query()
+                    ->where('item_id', $Item->id)
+                    ->where('location_id', 10)
+                    ->where('status', 'in')
+                    ->count();
+                return $Defective;
+            })
             ->addColumn('Demo', function(Item $Item){
                 $Demo = Stock::query()
                     ->where('item_id', $Item->id)

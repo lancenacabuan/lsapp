@@ -37,29 +37,49 @@ $(document).ready(function(){
         });    
     });
 
-    $(".add-row").on('click', function(){                   
+    $('#itemAssembly').on('change', function(){
+        var item_id = $(this).val();
+        $.ajax({
+            type:'get', 
+            url:'/uomAssembly', 
+            data:{
+                'item_id': item_id,
+            }, 
+            success: function(data){
+                $('#uomAssembly').val(data);
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/assembly';
+                }
+                alert(data.responseText);
+            }
+        });
+    });
+
+    $(".add-row").on('click', function(){
         var category = $("#categoryAssembly option:selected").text();
         var item = $("#itemAssembly option:selected").text();
         let qty = $("#qtyAssembly").val();
-        var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+        var uom = $("#uomAssembly").val();
+        var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
         var ctr = 'false';
-        if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0"){
-            swal('REQUIRED','Please select item!','error');
+        if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
+            swal('REQUIRED','Please select an item!','error');
             return false;
         }
         else{
             var table = document.getElementById('tblCreateItem');
             var count = table.rows.length;
             for(i = 1; i < count; i++){
-
                 var objCells = table.rows.item(i).cells;
-
                 if(item==objCells.item(1).innerHTML){
                     objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
                     ctr = 'true';
                     category = $("#categoryAssembly").val('Select Category');
                     item = $("#itemAssembly").find('option').remove().end().append('<option value="0">Select Item</option>').val()
                     qty = $("#qtyAssembly").val('');
+                    uom = $('#uomAssembly').val('');
                     return false;
                 }
                 else {
@@ -71,6 +91,7 @@ $(document).ready(function(){
             category = $("#categoryAssembly").val('Select Category');
             item = $("#itemAssembly").find('option').remove().end().append('<option value="0">Select Item</option>').val()
             qty = $("#qtyAssembly").val('');
+            uom = $('#uomAssembly').val('');
             $('#tblCreateItem').show();
             $('#divCreateItem').toggle();
             $('#btnClose').show();

@@ -27,8 +27,9 @@ class AssemblyController extends Controller
         {
             return redirect('/stocktransfer');
         }
-        $categories= Category::select('id','category')->get()->sortBy('category');
-        return view('/pages/assembly', compact('categories'));
+        $categories = Category::select('id','category')->get()->sortBy('category');
+        $items = Item::select('id','item')->take(100)->get()->sortBy('item');
+        return view('/pages/assembly', compact('categories','items'));
     }
 
     public function itemsAssembly(Request $request){       
@@ -38,5 +39,15 @@ class AssemblyController extends Controller
             ->orderBy('item','ASC')
             ->get();
         return response()->json($list);
+    }
+
+    public function uomAssembly(Request $request){       
+        $uom = Item::query()->select('UOM as uom')
+            ->where('id',$request->item_id)
+            ->get();
+        $uom = str_replace('[{"uom":"','',$uom);
+        $uom = str_replace('"}]','',$uom);
+        
+        return response($uom);
     }
 }

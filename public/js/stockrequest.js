@@ -154,7 +154,7 @@ $('#itemReq').on('change', function(){
     });
 });
 
-$(".add-row").on('click', function(){                  
+$(".add-row").on('click', function(){
     var category = $("#categoryReq option:selected").text();
     var item = $("#itemReq option:selected").text();
     let qty = $("#qtyReq").val();
@@ -169,9 +169,7 @@ $(".add-row").on('click', function(){
         var table = document.getElementById('stockRequestTable');
         var count = table.rows.length;
         for(i = 1; i < count; i++){
-
             var objCells = table.rows.item(i).cells;
-
             if(item==objCells.item(1).innerHTML){
                 objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
                 ctr = 'true';

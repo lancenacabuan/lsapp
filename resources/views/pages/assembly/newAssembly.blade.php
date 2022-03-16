@@ -1,30 +1,37 @@
-<div class="modal fade in" id="createItem">
+<div class="modal fade in" id="newAssembly">
     <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">CREATE ITEM</h6>    
+            <h6 class="modal-title w-100">NEW ASSEMBLY REQUEST</h6>    
             <button type="button" class="btn-close btn-close-white close" data-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">                
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left:35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Created By</label>
-                <input class="form-control form-control-sm" id="created_by" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
-                <label class="form-control form-control-sm" style="width: 160px;">Item Category</label>
-                <select class="form-select" id="category" class="form-control-sm" style="width: 280px; margin-right: 10px; font-size: 12px;" required>
-                    <option selected disabled>Select Category</option>
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
-                    @endforeach
-                </select>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
+                <input class="form-control form-control-sm"  id="reqdate"style="width: 280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
+                <label class="form-control form-control-sm" style="width: 160px;">Assembly Request No.</label>
+                <input class="form-control form-control-sm" id="request_num" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Item Description</label>
-                <input class="form-control form-control-sm" style="width: 730px; margin-right: 10px;" name="item_description" id="item_description" required></textarea>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
+                <input class="form-control form-control-sm"  id="needdate"style="width: 280px; margin-right: 10px;" type="date">
+                <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
+                <input class="form-control form-control-sm" id="reqby" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
+            </div>
+            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 160px;">Assembly Item Name</label>
+                <select class="form-select" id="category" class="form-control-sm" style="width: 650px; margin-right: 10px; font-size: 12px;" required>
+                    <option selected disabled>Select Assembly Item</option>
+                    @foreach($items as $item)
+                        <option value="{{$item->id}}">{{strtoupper($item->item)}}</option>
+                    @endforeach
+                </select>
+                <input class="form-control" id="qty" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px;" type="number" placeholder="Qty">
             </div>
         </div>
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">PARTS DETAILS</h6>
+            <h6 class="modal-title w-100">PARTS NEEDED</h6>
         </div>        
         <form class="mt-2 mb-2">
             <div class="form-inline" style="margin-left:50px;">

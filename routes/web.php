@@ -112,6 +112,7 @@ Route::get('/printTransferRequest',[StockTransferController::class,'printTransfe
 //Assembly
 Route::get('/assembly',[AssemblyController::class,'assembly']);
 Route::get('/itemsAssembly',[AssemblyController::class,'itemsAssembly']);
+Route::get('/uomAssembly',[AssemblyController::class,'uomAssembly']);
 //
 
 //File Maintenance

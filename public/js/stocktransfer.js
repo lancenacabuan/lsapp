@@ -260,9 +260,7 @@ $(".add-row").on('click', function(){
             var table = document.getElementById('tblNewStockTransfer');
             var count = table.rows.length;
             for(i = 1; i < count; i++){
-
                 var objCells = table.rows.item(i).cells;
-
                 if(item==objCells.item(1).innerHTML){
                     objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
                     ctr = 'true';

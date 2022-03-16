@@ -1,6 +1,5 @@
-<div class="container">
-    <div class="modal fade in" id="detailsStockRequest">
-    <div class="modal-dialog modal-xl" >
+<div class="modal fade in" id="detailsStockRequest">
+    <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">STOCK REQUEST DETAILS</h6>            
@@ -246,10 +245,9 @@
         </div>
     </div>
     </div>
-    </div>
 </div>
 <div class="modal fade in" id="editSerialModal">
-    <div class="modal-dialog  modal-sm" >
+    <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">EDIT ITEM SERIAL</h6>            
@@ -260,14 +258,15 @@
             <input type="hidden" name="x_id" id="x_id">
             <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_category" id="x_category" readonly>
             <textarea style="margin-bottom: 8px; font-size: 12px; resize: none;" class="form-control" rows="5" name="x_item" id="x_item" readonly></textarea>
-            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_serial" id="x_serial" placeholder="Input Item Serial...">
+            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_serial" id="x_serial" placeholder="Input Item Serial..." autocomplete="off">
+            <span style="color: Red; font-size: 12px;">*Required Field</span>
             <button type="button" id="btnEdit" class="btn btn-primary float-right bp">EDIT</button>
         </div>
     </div>
     </div>
 </div>
-<div class="modal fade in" id="reasonModal" style="margin-top: 100px;">
-    <div class="modal-dialog  modal-sm" >
+<div class="modal fade in" id="reasonModal">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REASON FOR DISAPPROVAL</h6>            
@@ -275,9 +274,26 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100"></textarea><br>
+            <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100" autocomplete="off"></textarea>
+            <span style="color: Red; font-size: 12px;">*Required Field</span><br>
             <span id='limit' style="font-size: 12px;"></span>
             <button type="button" id="btnReason" class="btn btn-primary float-right bp">OK</button>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="modal fade in" id="referenceModal">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
+            <h6 class="modal-title w-100">REFERENCE SO/PO NUMBER</h6>            
+            <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="background-color: white; color: black;">                          
+            <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_reference" id="x_reference" placeholder="Input Reference SO/PO Number..." autocomplete="off">
+            <span style="color: Red; font-size: 12px;">*Required Field</span>
+            <button type="button" id="btnReference" class="btn btn-primary float-right bp" style="zoom: 75%;">OK</button>
         </div>
     </div>
     </div>

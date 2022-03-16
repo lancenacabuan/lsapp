@@ -43,7 +43,7 @@ $(document).ready(function(){
             }
         }
         else{
-            swal('REQUIRED','Please fill all the fields!','error');
+            swal('REQUIRED','Please fill up all required fields!','error');
         }
     });
 });

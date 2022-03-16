@@ -155,7 +155,7 @@ $(document).ready(function(){
             });
         }
         else{
-            swal('REQUIRED','Please fill all the fields!','error');
+            swal('REQUIRED','Please fill up all required fields!','error');
             return false;
         }
     });
@@ -208,7 +208,7 @@ $(document).ready(function(){
         var item_uom = $('#item_uom_details').val();
         
         if(item_name == "" || $('#item_category_details').find('option:selected').text() == 'Select Category' || $('#item_uom_details').find('option:selected').text() == 'Select UOM'){
-            swal('REQUIRED','Please fill all the fields!','error');
+            swal('REQUIRED','Please fill up all required fields!','error');
             return false;
         }
         else if(item_name_original.toUpperCase() == item_name.toUpperCase() && item_category_original == item_category && item_uom_original == item_uom){

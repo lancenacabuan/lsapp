@@ -339,7 +339,7 @@ $('#btnSave').on('click', function(){
             required_fields.push('*Address / Branch');
         }
         required_list = required_fields.join("\r\n");
-        swal('Fill up all required fields!', required_list, 'error');
+        swal('Please fill up all required fields!', required_list, 'error');
         return false;
     }   
 });
@@ -1695,44 +1695,106 @@ $('#btnReceive').on('click', function(){
 });
 
 $('#btnSale').on('click', function(){
-    swal({
-        title: "FOR SALE STOCK REQUEST?",
-        text: "You are about to SELL this STOCK REQUEST!",
-        icon: "warning",
-        buttons: true,
-    })
-    .then((willDelete) => {
-        if(willDelete){      
-            $.ajax({
-                type:'post',
-                url:'/saleRequest',
-                headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
-                },
-                data:{
-                    'request_number': $('#request_num_details').val()
-                },
-                success: function(data){
-                    if(data == 'true'){
-                        $('#detailsStockRequest').hide();
-                        swal("SALE SUCCESS", "STOCK REQUEST", "success");
-                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+    if($('#reference_details').val() == ''){
+        $('#referenceModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+        $('#referenceModal').modal('show');
+    }
+    else{
+        swal({
+            title: "FOR SALE STOCK REQUEST?",
+            text: "You are about to SELL this STOCK REQUEST!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){      
+                $.ajax({
+                    type:'post',
+                    url:'/saleRequest',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                    },
+                    data:{
+                        'request_number': $('#request_num_details').val(),
+                        'reference': ''
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            $('#detailsStockRequest').hide();
+                            swal("SALE SUCCESS", "STOCK REQUEST", "success");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                        else{
+                            $('#detailsStockRequest').hide();
+                            swal("SALE FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
                     }
-                    else{
-                        $('#detailsStockRequest').hide();
-                        swal("SALE FAILED", "STOCK REQUEST", "error");
-                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                });
+            }
+        }); 
+    }
+});
+
+$('#btnReference').on('click', function(){
+    if($.trim($('#x_reference').val()) == ''){
+        swal("SO/PO NUMBER REQUIRED", "Please fill up required field!", "error");
+        return false;
+    }
+    else{
+        swal({
+            title: "FOR SALE STOCK REQUEST?",
+            text: "You are about to SELL this STOCK REQUEST!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){      
+                $.ajax({
+                    type:'post',
+                    url:'/saleRequest',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                    },
+                    data:{
+                        'request_number': $('#request_num_details').val(),
+                        'reference': $('#x_reference').val()
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            $('#detailsStockRequest').hide();
+                            swal("SALE SUCCESS", "STOCK REQUEST", "success");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                        else if(data == 'duplicate'){
+                            swal("INVALID ENTRY", "Reference SO/PO Number already exists! Please double check the SO/PO Number and try again.", "error");
+                            return false;
+                        }
+                        else{
+                            $('#detailsStockRequest').hide();
+                            swal("SALE FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
                     }
-                },
-                error: function(data){
-                    if(data.status == 401){
-                        window.location.href = '/stockrequest';
-                    }
-                    alert(data.responseText);
-                }
-            });
-        }
-    }); 
+                });
+            }
+        }); 
+    }
 });
 
 $('#btnReturn').on('click', function(){

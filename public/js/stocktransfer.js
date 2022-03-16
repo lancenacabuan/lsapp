@@ -432,7 +432,7 @@ $('#btnSave').on('click', function(){
             required_fields.push('*TO New Location');
         }
         required_list = required_fields.join("\r\n");
-        swal('Fill up all required fields!', required_list, 'error');
+        swal('Please fill up all required fields!', required_list, 'error');
         return false;
     }   
 });

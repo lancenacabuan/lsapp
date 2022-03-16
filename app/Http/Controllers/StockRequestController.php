@@ -664,53 +664,66 @@ class StockRequestController extends Controller
     }
 
     public function saleRequest(Request $request){
-        $sql = Requests::where('request_number', $request->request_number)
-            ->update(['status' => '10']);
-        
-        $list = Prepare::select('items_id','request_number','location','serial','qty')
-            ->where('request_number', $request->request_number)
-            ->get();
-        foreach($list as $key){
-            if($key->serial == ''){
-                for($x = 0; $x < $key->qty; $x++){
-                    Stock::where('item_id',$key->items_id)
-                    ->whereIn('location_id',['9'])
-                    ->where('status', 'in')
-                    ->orderBy('id')->limit(1)
-                    ->update(['status' => 'out', 'location_id' => '1']);
-                }
-            }
-            else{
-                if(str_contains($key->serial, 'N/A')){
-                    Stock::where('item_id',$key->items_id)
-                    ->where('serial','N/A')
-                    ->where('location_id',['9'])
-                    ->where('status', 'in')
-                    ->orderBy('id')->limit(1)
-                    ->update(['status' => 'out', 'location_id' => $key->location]);
-                }
-                else{
-                    Stock::where('item_id',$key->items_id)
-                    ->where('serial',$key->serial)
-                    ->where('location_id',['9'])
-                    ->where('status', 'in')
-                    ->orderBy('id')->limit(1)
-                    ->update(['status' => 'out', 'location_id' => $key->location]);
-                }
-            }
+        if(trim($request->reference) != ''){
+            $reference = Requests::query()->select()
+                ->whereRaw('LOWER(reference) = ?',strtolower($request->reference))
+                ->count();
         }
-        
-        if(!$sql){
-            $result = 'false';
+        else{
+            $reference = 0;
+        }
+        if($reference != 0){
+            $result = 'duplicate';
         }
         else {
-            $result = 'true';
-        }
+            $sql = Requests::where('request_number', $request->request_number)
+                ->update(['status' => '10', 'reference' => strtoupper($request->reference)]);
+            
+            $list = Prepare::select('items_id','request_number','location','serial','qty')
+                ->where('request_number', $request->request_number)
+                ->get();
+            foreach($list as $key){
+                if($key->serial == ''){
+                    for($x = 0; $x < $key->qty; $x++){
+                        Stock::where('item_id',$key->items_id)
+                        ->whereIn('location_id',['9'])
+                        ->where('status', 'in')
+                        ->orderBy('id')->limit(1)
+                        ->update(['status' => 'out', 'location_id' => '1']);
+                    }
+                }
+                else{
+                    if(str_contains($key->serial, 'N/A')){
+                        Stock::where('item_id',$key->items_id)
+                        ->where('serial','N/A')
+                        ->where('location_id',['9'])
+                        ->where('status', 'in')
+                        ->orderBy('id')->limit(1)
+                        ->update(['status' => 'out', 'location_id' => $key->location]);
+                    }
+                    else{
+                        Stock::where('item_id',$key->items_id)
+                        ->where('serial',$key->serial)
+                        ->where('location_id',['9'])
+                        ->where('status', 'in')
+                        ->orderBy('id')->limit(1)
+                        ->update(['status' => 'out', 'location_id' => $key->location]);
+                    }
+                }
+            }
 
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "SOLD STOCK REQUEST: User successfully sold Stock Request No. $request->request_number.";
-        $userlogs->save();
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+                
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = "SOLD STOCK REQUEST: User successfully sold Stock Request No. $request->request_number.";
+                $userlogs->save();
+            }
+        }
 
         return response($result);
     }

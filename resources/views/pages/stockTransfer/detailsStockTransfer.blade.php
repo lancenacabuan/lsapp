@@ -1,6 +1,5 @@
-<div class="container">
-    <div class="modal fade in" id="detailsStockTransfer">
-    <div class="modal-dialog modal-xl" >
+<div class="modal fade in" id="detailsStockTransfer">
+    <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">STOCK TRANSFER REQUEST DETAILS</h6>            
@@ -178,10 +177,9 @@
         </div>
     </div>
     </div>
-    </div>
 </div>
-<div class="modal fade in" id="reasonModal" style="margin-top: 100px;">
-    <div class="modal-dialog  modal-sm" >
+<div class="modal fade in" id="reasonModal">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REASON FOR DISAPPROVAL</h6>            
@@ -189,7 +187,8 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100"></textarea><br>
+            <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100" autocomplete="off"></textarea>
+            <span style="color: Red; font-size: 12px;">*Required Field</span><br>
             <span id='limit' style="font-size: 12px;"></span>
             <button type="button" id="btnReason" class="btn btn-primary float-right bp">OK</button>
         </div>

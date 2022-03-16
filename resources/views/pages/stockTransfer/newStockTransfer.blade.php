@@ -1,5 +1,4 @@
-<div class="container">
-    <div class="modal fade in" id="newStockTransfer">
+<div class="modal fade in" id="newStockTransfer">
     <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
@@ -81,7 +80,6 @@
             <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
         </div>
         </div>
-    </div>
     </div>
     </div>
 </div>

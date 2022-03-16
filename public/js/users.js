@@ -118,7 +118,7 @@ $(document).ready(function(){
             });
         }
         else{
-            swal('REQUIRED','Please fill all the fields!','error');
+            swal('REQUIRED','Please fill up all required fields!','error');
             return false;
         }
     });
@@ -166,7 +166,7 @@ $(document).ready(function(){
         var status2 = $('#status2').val();
 
         if(name1 == "" || email1 == "" || $('#role1').find('option:selected').text() == "Select User Level"){
-            swal('REQUIRED','Please fill all the fields!','error');
+            swal('REQUIRED','Please fill up all required fields!','error');
             return false;
         }
         else if(name1.toUpperCase() == name2.toUpperCase() && email1.toUpperCase() == email2.toUpperCase() && role1 == role2 && status1 == status2){

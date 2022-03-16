@@ -1,6 +1,6 @@
 <div class="container">
     <div class="modal fade in" id="addStock">
-    <div class="modal-dialog  modal-lg">
+    <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">ADD STOCK</h6>

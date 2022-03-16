@@ -1,5 +1,4 @@
-<div class="container">
-    <div class="modal fade in" id="stocktrans">
+<div class="modal fade in" id="stocktrans">
     <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header" style="background-color:#0d1a80; color:white;height:50px;">
@@ -68,13 +67,11 @@
                     <input type="number" readonly id='strans' name='strans' required>
                 </div> 
             </form>
-                <div class="col-md-12 mb-4">
-                    <button type="submit" id="buttrans" class="btn btn-xs btn-dark submit float-right bp" style="width:150px; height:40px; font-size:14px;">
-                    TRANSFER</button>   
-                </div>    
-                 
+            <div class="col-md-12 mb-4">
+                <button type="submit" id="buttrans" class="btn btn-xs btn-dark submit float-right bp" style="width:150px; height:40px; font-size:14px;">
+                TRANSFER</button>   
+            </div>
         </div>
-    </div>
     </div>
     </div>
 </div>

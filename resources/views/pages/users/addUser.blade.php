@@ -1,5 +1,4 @@
-<div class="container">
-    <div class="modal fade in" id="addUser">
+<div class="modal fade in" id="addUser">
     <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
@@ -35,7 +34,6 @@
                 <button type="submit" id="btnSave" class="btn btn-primary float-right bp">SAVE</button>  
             </div>    
         </div>
-    </div>
     </div>
     </div>
 </div>

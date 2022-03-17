@@ -8,35 +8,35 @@
         <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input type="hidden" id="req_type_id_details">
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate_details"style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" style="width: 160px;">Stock Request No.</label>
                 <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
                 <input class="form-control form-control-sm"  id="needdate_details"style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" id="client_name_label" style="width: 160px;">Client Name</label>
                 <input class="form-control form-control-sm" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="requested_by_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" id="location_label" style="width: 160px;">Address / Branch</label>
                 <input class="form-control form-control-sm" id="location_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
                 <input class="form-control form-control-sm" id="request_type_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
                 <input class="form-control form-control-sm" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Status</label>
                 <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label name="reason_label" id="reason_label" class="form-control form-control-sm" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>
                 <textarea style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" class="form-control" rows="4" name="reason_details" id="reason_details" readonly></textarea>
             </div>
@@ -53,8 +53,8 @@
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>UOM</th>
-                        <th>QTY REQUESTED</th>
-                        <th>QTY PENDING</th>
+                        <th>REQUESTED</th>
+                        <th>PENDING</th>
                         <th></th>
                     </tr>
                 </thead>    
@@ -67,8 +67,8 @@
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>UOM</th>
-                        <th>QTY REQUESTED</th>
-                        <th>QTY PENDING</th>
+                        <th>REQUESTED</th>
+                        <th>PENDING</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -77,26 +77,22 @@
             </div>
             @endrole
             @role('admin|encoder|viewer')  {{---ROLES---}}
-            <table id="stockDetailsrequest" class="table stockDetails table-hover display nowrap" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
+            <table id="stockDetailsrequest" class="table stockDetails table-hover display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
-                        <th style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            CATEGORY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </th>
-                        <th style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            ITEM DESCRIPTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </th>
-                        <th style="text-align: center;">UOM</th>
-                        <th style="text-align: center;">QTY REQUESTED</th>
-                        <th style="text-align: center;">QTY PENDING</th>
-                        <th style="text-align: center;">QTY IN STOCK<br>TOTAL MAIN BRANCH</th>
+                        <th>CATEGORY</th>
+                        <th>ITEM DESCRIPTION</th>
+                        <th>UOM</th>
+                        <th>REQUESTED</th>
+                        <th>PENDING</th>
+                        <th>MAIN BRANCH</th>
                         <th class="d-none"></th>
-                        <th class="d-none" style="text-align: center;">QTY IN STOCK<br>A1</th>
-                        <th class="d-none" style="text-align: center;">QTY IN STOCK<br>A2</th>
-                        <th class="d-none" style="text-align: center;">QTY IN STOCK<br>A3</th>
-                        <th class="d-none" style="text-align: center;">QTY IN STOCK<br>A4</th>
-                        <th style="text-align: center; color: red;">QTY IN STOCK<br>BALINTAWAK</th>
-                        <th style="text-align: center; color: red;">QTY IN STOCK<br>MALABON</th>
+                        <th class="d-none">A1</th>
+                        <th class="d-none">A2</th>
+                        <th class="d-none">A3</th>
+                        <th class="d-none">A4</th>
+                        <th style="color: red;">BALINTAWAK</th>
+                        <th style="color: red;">MALABON</th>
                     </tr>
                 </thead>    
             </table>
@@ -119,15 +115,15 @@
             <h6 class="modal-title w-100">REQUESTED ITEMS</h6>
         </div><br>      
         <div class="modal-body">
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                 <input class="form-control form-control-sm" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                 <input class="form-control form-control-sm" id="schedOn" style="width: 280px;" type="date">
             </div>
-            <div class="form-inline"  style="margin-left:35px;" id="reqContents"></div>
+            <div class="form-inline"  style="margin-left: 35px;" id="reqContents"></div>
             <hr>
             <input type="button" class="btn btn-primary bp" id="btnBack" class="button" value="BACK">
             <input type="button" class="btn btn-primary float-right bp" id="btnSubmit" class="button" value="SCHEDULE" disabled>
@@ -139,11 +135,11 @@
             <h6 class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div><br>      
         <div class="modal-body">
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                 <input class="form-control form-control-sm" id="prep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                 <input class="form-control form-control-sm" id="sched" style="width: 280px;" type="text" readonly>
             </div>
@@ -192,11 +188,11 @@
             <h6 id="modalheader" class="modal-title w-100">FOR RECEIVING ITEM DETAILS</h6>
         </div><br>      
         <div class="modal-body">
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                 <input class="form-control form-control-sm" id="prep_by1" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                 <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
             </div>

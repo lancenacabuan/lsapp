@@ -7,13 +7,13 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate_details"style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" style="width: 200px;">Stock Transfer Request No.</label>
                 <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
                 <input class="form-control form-control-sm"  id="needdate_details"style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" style="width: 200px;">FROM Location</label>
@@ -26,7 +26,7 @@
                     @endforeach --}}
                 </select>
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="reqby_details" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
                 <label class="form-control form-control-sm" style="width: 200px;">TO New Location</label>
@@ -41,11 +41,11 @@
                     @endforeach --}}
                 </select>
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Status</label>
                 <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label name="reason_label" id="reason_label" class="form-control form-control-sm" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>
                 <textarea style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" class="form-control" rows="4" name="reason_details" id="reason_details" readonly></textarea>
             </div>
@@ -60,16 +60,16 @@
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>UOM</th>
-                        <th>QTY REQUESTED</th>
-                        <th>QTY PENDING</th>
-                        <th>QTY IN STOCK<br>TOTAL MAIN BRANCH</th>
+                        <th>REQUESTED</th>
+                        <th>PENDING</th>
+                        <th>MAIN BRANCH</th>
                         <th class="d-none"></th>
-                        <th class="d-none">QTY IN STOCK<br>A1</th>
-                        <th class="d-none">QTY IN STOCK<br>A2</th>
-                        <th class="d-none">QTY IN STOCK<br>A3</th>
-                        <th class="d-none">QTY IN STOCK<br>A4</th>
-                        <th>QTY IN STOCK<br>BALINTAWAK</th>
-                        <th>QTY IN STOCK<br>MALABON</th>
+                        <th class="d-none">A1</th>
+                        <th class="d-none">A2</th>
+                        <th class="d-none">A3</th>
+                        <th class="d-none">A4</th>
+                        <th>BALINTAWAK</th>
+                        <th>MALABON</th>
                         <th></th>
                     </tr>
                 </thead>    
@@ -92,15 +92,15 @@
             <h6 class="modal-title w-100">REQUESTED ITEMS</h6>
         </div><br>      
         <div class="modal-body">
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                 <input class="form-control form-control-sm" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                 <input class="form-control form-control-sm" id="schedOn" style="width: 280px;" type="date">
             </div>
-            <div class="form-inline"  style="margin-left:35px;" id="reqContents"></div>
+            <div class="form-inline"  style="margin-left: 35px;" id="reqContents"></div>
             <hr>
             <input type="button" class="btn btn-primary bp" id="btnBack" class="button" value="BACK">
             <input type="button" class="btn btn-primary float-right bp" id="btnSubmit" class="button" value="SCHEDULE" disabled>
@@ -112,11 +112,11 @@
             <h6 class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div><br>      
         <div class="modal-body">
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                 <input class="form-control form-control-sm" id="prep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                 <input class="form-control form-control-sm" id="sched" style="width: 280px;" type="text" readonly>
             </div>
@@ -146,11 +146,11 @@
             <h6 id="modalheader" class="modal-title w-100">FOR RECEIVING ITEM DETAILS</h6>
         </div><br>      
         <div class="modal-body">
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                 <input class="form-control form-control-sm" id="prep_by1" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                 <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
             </div>

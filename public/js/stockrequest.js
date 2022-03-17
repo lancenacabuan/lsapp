@@ -588,30 +588,11 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                         },
                         {
                             render: function(data,type,full,meta){
-                                return "<div class='text-wrap' style='width: 200px; text-align: center;'>"+data+"</div>";
-                            },
-                            targets:[0]
-                        },
-                        {
-                            render: function(data,type,full,meta){
-                                return "<div class='text-wrap' style='width: 300px; text-align: center;'>"+data+"</div>";
-                            },
-                            targets:[1]
-                        },
-                        {
-                            render: function(data,type,full,meta){
-                                return "<div style='text-align: center;'>"+data+"</div>";
-                            },
-                            targets:[2,3,4,5,6,7,8,9,10]
-                        },
-                        {
-                            render: function(data,type,full,meta){
-                                return "<div style='text-align: center; color: red;'>"+data+"</div>";
+                                return "<div style='color: red;'>"+data+"</div>";
                             },
                             targets:[11,12]
                         }
                     ],
-                    scrollX: true,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -1021,30 +1002,11 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             },
             {
                 render: function(data,type,full,meta){
-                    return "<div class='text-wrap' style='width: 200px; text-align: center;'>"+data+"</div>";
-                },
-                targets:[0]
-            },
-            {
-                render: function(data,type,full,meta){
-                    return "<div class='text-wrap' style='width: 300px; text-align: center;'>"+data+"</div>";
-                },
-                targets:[1]
-            },
-            {
-                render: function(data,type,full,meta){
-                    return "<div style='text-align: center;'>"+data+"</div>";
-                },
-                targets:[2,3,4,5,6,7,8,9,10]
-            },
-            {
-                render: function(data,type,full,meta){
-                    return "<div style='text-align: center; color: red;'>"+data+"</div>";
+                    return "<div style='color: red;'>"+data+"</div>";
                 },
                 targets:[11,12]
             }
         ],
-        scrollX: true,
         paging: false,
         ordering: false,
         info: false,

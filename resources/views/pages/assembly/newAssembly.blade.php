@@ -7,19 +7,19 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">                
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <div class="form-inline" style="margin-left:35px;">
+            <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate"style="width: 280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
                 <label class="form-control form-control-sm" style="width: 160px;">Assembly Request No.</label>
                 <input class="form-control form-control-sm" id="request_num" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
                 <input class="form-control form-control-sm"  id="needdate"style="width: 280px; margin-right: 10px;" type="date">
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="reqby" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
             </div>
-            <div class="form-inline" style="margin-left:35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Assembly Item Name</label>
                 <select class="form-select" id="category" class="form-control-sm" style="width: 650px; margin-right: 10px; font-size: 12px;" required>
                     <option selected disabled>Select Assembly Item</option>

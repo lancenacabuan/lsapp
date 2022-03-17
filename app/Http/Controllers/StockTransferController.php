@@ -834,8 +834,7 @@ class StockTransferController extends Controller
             ->sortBy('category');
         
         if(!$list || !$list2 || !$list3){
-            header("Location: https://lance.idsi.com.ph/stocktransfer");
-            exit();
+            return redirect()->to('/stocktransfer');
         }
 
         return view('/pages/stockTransfer/printStockTransfer', compact('list','list2','list3'));

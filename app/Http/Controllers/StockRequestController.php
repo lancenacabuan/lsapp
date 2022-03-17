@@ -953,8 +953,7 @@ class StockRequestController extends Controller
             ->sortBy('category');
         
         if(!$list || !$list2 || !$list3){
-            header("Location: https://lance.idsi.com.ph/stockrequest");
-            exit();
+            return redirect()->to('/stockrequest');
         }
 
         return view('/pages/stockRequest/printStockRequest', compact('list','list2','list3'));

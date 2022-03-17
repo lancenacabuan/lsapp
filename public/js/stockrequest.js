@@ -487,7 +487,7 @@ $('table.stockrequestTable').DataTable({
     }
 });
 
-if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
+if($(location).attr('pathname')+window.location.search != '/stockrequest'){
     url = window.location.search;
     reqnum = url.replace('?request_number=', '');
     $.ajax({

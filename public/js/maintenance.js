@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    if(window.location.href == '/maintenance'){
+    if($(location).attr('pathname')+window.location.search == '/maintenance'){
         $('#nav1').addClass("active-link");
         $('.btnNewItem').show();
         $('#itemTable').show();
@@ -32,7 +32,7 @@ $(document).ready(function(){
             }
         });
     }
-    else if(window.location.href == '/maintenance?tbl=assembleditems'){
+    else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=assembleditems'){
         $('#nav2').addClass("active-link");
         $('#maintenance').show();
         $('.btnCreateItem').show();
@@ -66,7 +66,7 @@ $(document).ready(function(){
             }
         });
     }
-    else if(window.location.href == '/maintenance?tbl=categories'){
+    else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=categories'){
         $('#nav3').addClass("active-link");
         $('.btnNewCategory').show();
         $('#categoryTable').show();
@@ -96,7 +96,7 @@ $(document).ready(function(){
             }
         });
     }
-    else if(window.location.href == '/maintenance?tbl=locations'){
+    else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=locations'){
         $('#nav4').addClass("active-link");
         $('.btnNewLocation').show();
         $('#locationTable').show();

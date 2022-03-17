@@ -18,7 +18,7 @@
                 <input class="form-control form-control-sm"  id="needdate_details"style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" style="width: 200px;">FROM Location</label>
                 <select class="form-select form-control-sm" id="locfrom_details" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height:30px !important; width: 280px;" disabled>
-                    <option selected disabled>Select Location</option>
+                    <option value="" selected disabled>Select Location</option>
                     <option value="5">BALINTAWAK</option>
                     <option value="6">MALABON</option>
                     {{-- @foreach($locations as $location)
@@ -31,7 +31,7 @@
                 <input class="form-control form-control-sm" id="reqby_details" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
                 <label class="form-control form-control-sm" style="width: 200px;">TO New Location</label>
                 <select class="form-select form-control-sm" id="locto_details" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height:30px !important; width: 280px;" disabled>
-                    <option selected disabled>Select Location</option>
+                    <option value="" selected disabled>Select Location</option>
                     <option value="1">A1</option>
                     <option value="2">A2</option>
                     <option value="3">A3</option>

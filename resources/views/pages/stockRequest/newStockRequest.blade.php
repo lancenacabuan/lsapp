@@ -28,7 +28,7 @@
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
                 <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;">
-                    <option selected disabled>Select Request Type</option>
+                    <option value="" selected disabled>Select Request Type</option>
                     @foreach($req_types as $req_type)
                         <option value="{{$req_type->id}}">{{strtoupper($req_type->name)}}</option>
                     @endforeach
@@ -44,13 +44,13 @@
         <form class="mt-2 mb-2">
             <div class="form-inline" style="margin-left:50px;">
                 <select class="form-select" id="categoryReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
-                        <option selected disabled>Select Category</option>
+                        <option value="" selected disabled>Select Category</option>
                         @foreach($categories as $category)
                             <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
                         @endforeach
                 </select>
                 <select class="form-select" id="itemReq" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 10px;">
-                    <option selected disabled>Select Item</option>
+                    <option value="" selected disabled>Select Item</option>
                 </select>
                 <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>
                 <input class="form-control" id="qtyReq" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty">

@@ -22,7 +22,7 @@
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Assembly Item Name</label>
                 <select class="form-select" id="category" class="form-control-sm" style="width: 650px; margin-right: 10px; font-size: 12px;" required>
-                    <option selected disabled>Select Assembly Item</option>
+                    <option value="" selected disabled>Select Assembly Item</option>
                     @foreach($items as $item)
                         <option value="{{$item->id}}">{{strtoupper($item->item)}}</option>
                     @endforeach
@@ -36,13 +36,13 @@
         <form class="mt-2 mb-2">
             <div class="form-inline" style="margin-left:50px;">
                 <select class="form-select" id="categoryAssembly" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
-                        <option selected disabled>Select Category</option>
+                        <option value="" selected disabled>Select Category</option>
                         @foreach($categories as $category)
                             <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
                         @endforeach
                 </select>
                 <select class="form-select" id="itemAssembly" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 10px;">
-                    <option selected disabled>Select Item</option>
+                    <option value="" selected disabled>Select Item</option>
                 </select>
                 <input class="form-control" id="uomAssembly" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>
                 <input class="form-control" id="qtyAssembly" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty">

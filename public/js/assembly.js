@@ -21,7 +21,7 @@ $(document).ready(function(){
                     var itemcode = $.map(data, function(value, index){ 
                         return [value];
                     });
-                    descOp+='<option selected disabled>Select Item</option>'; 
+                    descOp+='<option value="" selected disabled>Select Item</option>'; 
                     itemcode.forEach(value => {
                         descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>'; 
                     });

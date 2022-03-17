@@ -29,7 +29,7 @@
                     <label class="input-group-text" style="width: 150px;">User Level</label>
                 </div>
                 <select id="role1" name="role1" style="width: 600px !important;">
-                    <option selected disabled>Select User Level</option>
+                    <option value="" selected disabled>Select User Level</option>
                     @foreach($role as $roles)
                         <option value="{{$roles->name}}">{{strtoupper($roles->name)}}</option>
                     @endforeach

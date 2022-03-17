@@ -18,7 +18,7 @@
                 <input class="form-control form-control-sm"  id="needdate"style="width: 280px; margin-right: 10px;" type="date">
                 <label class="form-control form-control-sm" style="width: 200px;">FROM Location</label>
                 <select class="form-select form-control-sm location" id="locfrom" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height:30px !important;width:280px;">
-                    <option selected disabled>Select Location</option>
+                    <option value="" selected disabled>Select Location</option>
                     <option value="5">BALINTAWAK</option>
                     <option value="6">MALABON</option>
                     {{-- @foreach($locations as $location)
@@ -31,7 +31,7 @@
                 <input class="form-control form-control-sm" id="reqby" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
                 <label class="form-control form-control-sm" style="width: 200px;">TO New Location</label>
                 <select class="form-select form-control-sm location" id="locto" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;">
-                    <option selected disabled>Select Location</option>
+                    <option value="" selected disabled>Select Location</option>
                     <option value="1">A1</option>
                     <option value="2">A2</option>
                     <option value="3">A3</option>
@@ -49,10 +49,10 @@
         <form class="mt-2 mb-2">
             <div class="form-inline" style="margin-left: 20px;">
                 <select class="form-select" id="category" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
-                        <option selected disabled>Select Category</option>
+                        <option value="" selected disabled>Select Category</option>
                 </select>
                 <select class="form-select" id="item" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 5px;">
-                        <option selected disabled>Select Item</option>
+                        <option value="" selected disabled>Select Item</option>
                 </select>
                 <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="text" placeholder="UOM" readonly>
                 <input class="form-control" id="qty" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="number" placeholder="Qty" disabled>

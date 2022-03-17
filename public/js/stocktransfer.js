@@ -90,12 +90,23 @@ $(".btnNewStockTransfer").on('click', function(){
     generateReqNum();
 });
 
+setInterval(runFunction, 200);
+function runFunction(){
+    if($('#newStockTransfer').is(':visible')){
+        if($('#needdate').val() && $('#locfrom').val() && $('#locto').val()){
+            $('#transrequestDetails').show();
+        }
+        else{
+            $('#transrequestDetails').hide();
+        }
+    }
+}
+
 $('#locfrom').on('change', function(){
     $("#item").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
     $('#qty').val('');
     $('#qtystock').val('');
     $('#uom').val('');
-    $('#transrequestDetails').show();
     var location_id = $(this).val();
     $.ajax({
         type:'get', 
@@ -110,7 +121,7 @@ $('#locfrom').on('change', function(){
                 return [value];
             });
 
-            list.forEach(value => {             
+            list.forEach(value => {
                 $('#category').append($('<option>', {
                     value: value.category_id,
                     text: value.category
@@ -146,7 +157,7 @@ $('#category').on('change', function(){
                 return [value];
             });
 
-            list.forEach(value => {             
+            list.forEach(value => {
                 $('#item').append($('<option>', {
                     value: value.item_id,
                     text: value.item

@@ -105,6 +105,44 @@ $(".btnNewStockRequest").on('click', function(){
     generatedr();
 });
 
+setInterval(runFunction, 200);
+function runFunction(){
+    var needdate = $('#needdate').val();
+    var request_type = $('#request_type').val();
+    var client_name = $.trim($('#client_name').val());
+    var location_name = $.trim($('#location').val());
+    var reference = $.trim($('#reference').val());
+    if($('#newStockRequest').is(':visible')){
+        if($('.reference_field').is(':visible')){
+            if(needdate && request_type && client_name && location_name && reference){
+                $('#requestDetails').show();
+            }
+            else{
+                $('#requestDetails').hide();
+            }
+        }
+        else{
+            if(needdate && request_type && client_name && location_name){
+                $('#requestDetails').show();
+            }
+            else{
+                $('#requestDetails').hide();
+            }
+        }
+    }
+}
+
+$('#request_type').on('change', function(){
+    var reqtype = $(this).val();
+    $('#reference').val('');
+    if(reqtype == '2'){
+        $('.reference_field').show();
+    }
+    else{
+        $('.reference_field').hide();
+    }
+});
+
 $('#categoryReq').on('change', function(){
     var id = $('#categoryReq').val();
     var descOp = " ";
@@ -207,8 +245,13 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
 });
 
 $('#btnSave').on('click', function(){
-    if($('#needdate').val() && $('#request_type').val() && $('#client_name').val() && $('#location').val()){
-        if($("#needdate").val() < minDate){
+    var needdate = $('#needdate').val();
+    var request_type = $('#request_type').val();
+    var client_name = $.trim($('#client_name').val());
+    var location_name = $.trim($('#location').val());
+    var reference = $.trim($('#reference').val());
+    if(needdate && request_type && client_name && location_name){
+        if(needdate < minDate){
             swal('Minimum Date is today!','Select within date range from today onwards.','error');
             return false;
         }
@@ -229,12 +272,11 @@ $('#btnSave').on('click', function(){
                         },
                         data:{
                             'request_number': $('#request_num').val(),
-                            'requested_by': $('#requested_by').val(),
-                            'needdate': $('#needdate').val(),
-                            'request_type': $('#request_type').val(),
-                            'client_name': $('#client_name').val(),
-                            'location': $('#location').val(),
-                            'reference': $('#reference').val(),
+                            'needdate': needdate,
+                            'request_type': request_type,
+                            'client_name': client_name,
+                            'location': location_name,
+                            'reference': reference,
                         },
                         success: function(data){
                             if(data == 'true'){
@@ -324,16 +366,16 @@ $('#btnSave').on('click', function(){
     else{
         var required_fields = [];
         var required_list;
-        if(!$('#needdate').val()){
+        if(!needdate){
             required_fields.push('*Date Needed');
         }
-        if(!$('#request_type').val()){
+        if(!request_type){
             required_fields.push('*Request Type');
         }
-        if(!$('#client_name').val()){
+        if(!client_name){
             required_fields.push('*Client Name');
         }
-        if(!$('#location').val()){
+        if(!location_name){
             required_fields.push('*Address / Branch');
         }
         required_list = required_fields.join("\r\n");
@@ -494,8 +536,8 @@ if(window.location.href != 'https://lance.idsi.com.ph/stockrequest'){
                     $('#sched1').val(sched);
                 var client_name = value.client_name;
                     $('#client_name_details').val(client_name);
-                var location = value.location;
-                    $('#location_details').val(location);
+                var location_name = value.location;
+                    $('#location_details').val(location_name);
                 var reference = value.reference;
                     $('#reference_details').val(reference);
                 var reason = value.reason;
@@ -908,8 +950,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#sched1').val(sched);
     var client_name = data.client_name;
         $('#client_name_details').val(client_name);
-    var location = data.location;
-        $('#location_details').val(location);
+    var location_name = data.location;
+        $('#location_details').val(location_name);
     var reference = data.reference;
         $('#reference_details').val(reference);
     var reason = data.reason;

@@ -287,8 +287,8 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_reference" id="x_reference" placeholder="Input Reference SO/PO Number..." autocomplete="off">
-            <span style="color: Red; font-size: 12px;">*Required Field</span>
+            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_reference" id="x_reference" placeholder="SO/PO Number" autocomplete="off">
+            <span style="color: Red; font-size: 12px;">Please input SO/PO Number to proceed.</span>
             <button type="button" id="btnReference" class="btn btn-primary float-right bp" style="zoom: 75%;">OK</button>
         </div>
     </div>

@@ -1,4 +1,4 @@
-var CategoryTable, ItemSerialTable, ItemTable, location, categoryID, categoryName;
+var CategoryTable, ItemSerialTable, ItemTable, categoryID, categoryName;
 
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : event.keyCode
@@ -167,7 +167,7 @@ $('#butsave').on('click', function(){
     var AddStockForm = $('#AddStockForm');
     var category = $('#category').val();
     var item = $('#item').val();
-    var location = $('#location').val();
+    var location_id = $('#location').val();
     var rack = $('#rack').val();
     var row = $('#row').val();
     var uom = $('#uom').val();
@@ -185,7 +185,7 @@ $('#butsave').on('click', function(){
         serial = 'N/A';
     }
     if($('#serial').is(':visible')){
-        if(category && item && location){
+        if(category && item && location_id){
             $.ajax({
                 url: "stocks/save",
                 type: "POST",
@@ -196,7 +196,7 @@ $('#butsave').on('click', function(){
                     _token: $("#csrf").val(),
                     category: category,
                     item: item,
-                    location: location,
+                    location: location_id,
                     uom: uom,
                     serial: serial,
                     rack: rack,
@@ -225,7 +225,7 @@ $('#butsave').on('click', function(){
     }
     else{
         if(qty && qty != 0){
-            if(category && item && location){
+            if(category && item && location_id){
                 $.ajax({
                     url: "stocks/save",
                     type: "POST",
@@ -236,7 +236,7 @@ $('#butsave').on('click', function(){
                         _token: $("#csrf").val(),
                         category: category,
                         item: item,
-                        location: location,
+                        location: location_id,
                         uom: uom,
                         qty: qty,
                         rack: rack,

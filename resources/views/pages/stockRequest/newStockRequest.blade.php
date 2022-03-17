@@ -9,7 +9,7 @@
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
-                <input class="form-control form-control-sm"  id="daterequest"style="width: 280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
+                <input class="form-control form-control-sm"  id="reqdate" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
                 <label class="form-control form-control-sm" style="width: 160px;">Stock Request No.</label>
                 <input class="form-control form-control-sm" id="request_num" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
@@ -17,13 +17,13 @@
                 <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
                 <input class="form-control form-control-sm"  id="needdate"style="width: 280px; margin-right: 10px;" type="date">
                 <label class="form-control form-control-sm" style="width: 160px;">Client Name</label>
-                <input class="form-control form-control-sm" id="client_name" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field...">
+                <input class="form-control form-control-sm" id="client_name" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field">
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="requested_by" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
                 <label class="form-control form-control-sm" style="width: 160px;">Address / Branch</label>
-                <input class="form-control form-control-sm" id="location" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field...">
+                <input class="form-control form-control-sm" id="location" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field">
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
@@ -33,10 +33,11 @@
                         <option value="{{$req_type->id}}">{{strtoupper($req_type->name)}}</option>
                     @endforeach
                 </select>
-                <label class="form-control form-control-sm" style="width: 160px;">Reference SO/PO No.</label>
-                <input class="form-control form-control-sm" id="reference" style="width: 280px; margin-right: 10px;" type="text">
+                <label class="form-control form-control-sm reference_field" style="width: 160px; display: none;">Reference SO/PO No.</label>
+                <input class="form-control form-control-sm reference_field" id="reference" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field">
             </div>
         </div>
+        <div id="requestDetails" style="display: none;">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
         </div>
@@ -74,6 +75,7 @@
         <div class="col-md-12 mt-2 mb-4">
             <button type="submit" id="btnClose" class="btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CLOSE</button>
             <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
+        </div>
         </div>
     </div>
     </div>

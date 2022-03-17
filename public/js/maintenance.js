@@ -34,6 +34,7 @@ $(document).ready(function(){
     }
     else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=assembleditems'){
         $('#nav2').addClass("active-link");
+        $('#maintenance').show();
         $('.btnCreateItem').show();
         $('#itemTable').show();
         $('#loading').show(); Spinner(); Spinner.show();

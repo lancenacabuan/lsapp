@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="alert alert-warning alert-dismissible" role="alert">
         <i class='fa fa-exclamation-triangle'></i>
-        <strong>Note:</strong> This webpage module is still currently under maintenance. Thank you very much for understanding....
+        <strong>Note:</strong> This webpage module is still currently under maintenance. Thank you very much for understanding...
     </div>
     @role('admin|encoder') {{---ROLES---}}
     <button class="btn btn-primary bp" type="button" data-toggle="modal" data-target="#newAssembly" data-backdrop="static" data-keyboard="false">NEW ASSEMBLY</button>

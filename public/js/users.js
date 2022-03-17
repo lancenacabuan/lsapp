@@ -33,8 +33,8 @@ $(document).ready(function(){
     });
 
     $('#btnSave').on('click', function(){
-        var name = $('#name').val();
-        var email = $('#email').val();
+        var name = $.trim($('#name').val());
+        var email = $.trim($('#email').val());
         var role = $('#role').val();
 
         if(name != "" && email != "" && $('#role').find('option:selected').text() != "Select User Level"){
@@ -157,9 +157,9 @@ $(document).ready(function(){
             var status1 = 'INACTIVE';
         }
         var id1 = $('#id1').val();
-        var name1 = $('#name1').val();
+        var name1 = $.trim($('#name1').val());
         var name2 = $('#name2').val();
-        var email1 = $('#email1').val();
+        var email1 = $.trim($('#email1').val());
         var email2 = $('#email2').val();
         var role1 = $('#role1').val();
         var role2 = $('#role2').val();

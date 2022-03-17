@@ -32,8 +32,41 @@ $(document).ready(function(){
             }
         });
     }
-    else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=category'){
+    else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=assembleditems'){
         $('#nav2').addClass("active-link");
+        $('.btnCreateItem').show();
+        $('#itemTable').show();
+        $('#loading').show(); Spinner(); Spinner.show();
+        $('table.itemTable').DataTable({ 
+            language: {
+                processing: "Loading...",
+                emptyTable: "No data available in table"
+            },
+            serverSide: true,
+            ajax: {
+                url: '/fm_items',
+            },
+            columnDefs: [
+            {
+                "targets": [0,1,3,4],
+                "visible": false,
+                "searchable": false
+            }],
+            columns: [
+                { data: 'id' },
+                { data: 'category' },
+                { data: 'item' },
+                { data: 'category_id' },
+                { data: 'UOM' }
+            ],
+            order:[[2, 'asc']],
+            initComplete: function(){
+                $('#loading').hide(); Spinner.hide();
+            }
+        });
+    }
+    else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=categories'){
+        $('#nav3').addClass("active-link");
         $('.btnNewCategory').show();
         $('#categoryTable').show();
         $('#loading').show(); Spinner(); Spinner.show();
@@ -62,8 +95,8 @@ $(document).ready(function(){
             }
         });
     }
-    else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=location'){
-        $('#nav3').addClass("active-link");
+    else if(window.location.href == 'https://lance.idsi.com.ph/maintenance?tbl=locations'){
+        $('#nav4').addClass("active-link");
         $('.btnNewLocation').show();
         $('#locationTable').show();
         $('#loading').show(); Spinner(); Spinner.show();
@@ -97,6 +130,17 @@ $(document).ready(function(){
         window.location.href = '/maintenance';
     }
 
+    function decodeHtml(str){
+        var map = {
+            '&amp;': '&', 
+            '&lt;': '<', 
+            '&gt;': '>', 
+            '&quot;': '"', 
+            '&#039;': "'"
+        };
+        return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
+    }
+
     $('.close').on('click', function(){
         location.reload();
     });
@@ -104,7 +148,7 @@ $(document).ready(function(){
     $('#btnSaveItem').on('click', function(){
         var category_name = $('#item_category').find('option:selected').text();
         var item_category = $('#item_category').val();
-        var item_name = $('#item_name').val();
+        var item_name = $.trim($('#item_name').val());
         var item_uom = $('#item_uom').val();
         if(item_name != "" && $('#item_category').find('option:selected').text() != 'Select Category' && $('#item_uom').find('option:selected').text() != 'Select UOM'){
             swal({
@@ -185,17 +229,6 @@ $(document).ready(function(){
         $('#detailsItem').modal('show');
     });
 
-    function decodeHtml(str){
-        var map = {
-            '&amp;': '&', 
-            '&lt;': '<', 
-            '&gt;': '>', 
-            '&quot;': '"', 
-            '&#039;': "'"
-        };
-        return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
-    }
-
     $('#btnUpdateItem').on('click', function(){
         var item_id = $('#item_id').val();
         var category_name_original = $('#category_name_details_original').val();
@@ -204,7 +237,7 @@ $(document).ready(function(){
         var item_uom_original = $('#item_uom_details_original').val();
         var category_name = $('#item_category_details').find('option:selected').text();
         var item_category = $('#item_category_details').val();
-        var item_name = $('#item_name_details').val();
+        var item_name = $.trim($('#item_name_details').val());
         var item_uom = $('#item_uom_details').val();
         
         if(item_name == "" || $('#item_category_details').find('option:selected').text() == 'Select Category' || $('#item_uom_details').find('option:selected').text() == 'Select UOM'){
@@ -271,7 +304,7 @@ $(document).ready(function(){
     });
 
     $('#btnSaveCategory').on('click', function(){
-        var category = $('#category').val();
+        var category = $.trim($('#category').val());
         if(category != ""){
             swal({
                 title: "ADD NEW CATEGORY?",
@@ -368,7 +401,7 @@ $(document).ready(function(){
     $('#btnUpdateCategory').on('click', function(){
         var category_id = $('#category_id').val();
         var category_original = $('#category_original').val();
-        var category_details = $('#category_details').val().toUpperCase();
+        var category_details = $.trim($('#category_details').val().toUpperCase());
         
         if(category_details == ""){
             swal('REQUIRED','Category Name field is required!','error');
@@ -464,7 +497,7 @@ $(document).ready(function(){
     });
 
     $('#btnSaveLocation').on('click', function(){
-        var location = $('#location').val();
+        var location = $.trim($('#location').val());
         if(location != ""){
             swal({
                 title: "REQUEST NEW LOCATION?",
@@ -583,7 +616,7 @@ $(document).ready(function(){
         }
         var location_id = $('#location_id').val();
         var location_original = $('#location_original').val();
-        var location_details = $('#location_details').val().toUpperCase();
+        var location_details = $.trim($('#location_details').val().toUpperCase());
         var status_original = $('#status_original').val();
 
         if(location_details == ""){

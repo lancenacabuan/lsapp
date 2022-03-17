@@ -7,28 +7,28 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="css/jquery-ui.css" rel="Stylesheet" type="text/css" />
-    <link rel="icon" href="{{asset('idsi.ico')}}" type="image/x-icon" />
-    <link rel="shortcut icon" href="{{asset('idsi.ico')}}" type="image/x-icon" />
+    <link href="//fonts.gstatic.com" rel="dns-prefetch">
     <link href="css/font-lato.css" rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="css/sweetalert.min.css">
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="{{asset('idsi.ico')}}" rel="icon" type="image/x-icon" />
+    <link href="{{asset('idsi.ico')}}" rel="shortcut icon" type="image/x-icon" />
+    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="css/chosen.css" rel="Stylesheet" type="text/css" />
+    <link href="css/sweetalert.min.css" rel="stylesheet">
+    <link href="css/chosen.css" rel="stylesheet" type="text/css" />
 
-    <script src="js/inc/jquery-3.5.1.js"></script>
-    <script src="js/inc/moment.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="js/inc/jquery.min.js"></script>
-    <script src="js/inc/sweetalert.min.js"></script>
+    <script src="js/inc/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="js/inc/jquery.dataTables.min.js"></script>
-    <script src="js/inc/datetime.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/inc/sweetalert.min.js"></script>
+    <script src="js/inc/moment.js"></script>
+    <script src="js/inc/datetime.js"></script>
     <script src="js/inc/chosen.jquery.js"></script>
     <script src="js/inc/loading-spinner.js"></script>
     <script>
@@ -192,37 +192,37 @@
             @yield('content')
         </main>
     </div>
-    
     @if(Request::is('/'))
         <script src="{{ asset('js/home.js') }}"></script>
     @endif
     @if(Request::is('stocks'))
-        <script src="{{ asset('js/stocks.js') }}"></script>   
+        <script src="{{ asset('js/stocks.js') }}"></script>
         <script src="{{ asset('js/item.js') }}"></script>
     @endif
     @if(Request::is('stockrequest'))
-        <script src="{{ asset('js/stockrequest.js') }}"></script>  
+        <script src="{{ asset('js/stockrequest.js') }}"></script>
     @endif
     @if(Request::is('printRequest'))
-        <script src="{{ asset('js/stockrequest.js') }}"></script>  
+        <script src="{{ asset('js/stockrequest.js') }}"></script>
     @endif
     @if(Request::is('stocktransfer'))
-        <script src="{{ asset('js/stocktransfer.js') }}"></script>  
+        <script src="{{ asset('js/stocktransfer.js') }}"></script>
     @endif
     @if(Request::is('printTransferRequest'))
-        <script src="{{ asset('js/stocktransfer.js') }}"></script>  
+        <script src="{{ asset('js/stocktransfer.js') }}"></script>
     @endif
     @if(Request::is('users'))
-        <script src="{{ asset('js/users.js') }}"></script>   
+        <script src="{{ asset('js/users.js') }}"></script>
     @endif
     @if(Request::is('changepassword'))
-        <script src="{{ asset('js/changepassword.js') }}"></script>   
+        <script src="{{ asset('js/changepassword.js') }}"></script>
     @endif
     @if(Request::is('assembly'))
-        <script src="{{ asset('js/assembly.js') }}"></script>   
+        <script src="{{ asset('js/assembly.js') }}"></script>
     @endif
     @if(Request::is('maintenance'))
-        <script src="{{ asset('js/maintenance.js') }}"></script>   
+        <script src="{{ asset('js/maintenance.js') }}"></script>
+        <script src="{{ asset('js/assembly.js') }}"></script>
     @endif
 </body>
 </html>

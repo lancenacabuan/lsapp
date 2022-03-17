@@ -198,7 +198,7 @@ class StockTransferController extends Controller
     public function transfer_data(){
         if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
             $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
-            ->whereIn('request_transfer.status', ['6','7'])
+            ->whereIn('request_transfer.status', ['6'])
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
             ->orderBy('request_transfer.created_at', 'DESC')
@@ -216,6 +216,7 @@ class StockTransferController extends Controller
         else{
             $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
             ->where('request_transfer.requested_by', auth()->user()->id)
+            ->whereNotIn('request_transfer.status', ['7','8'])
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
             ->orderBy('request_transfer.created_at', 'DESC')

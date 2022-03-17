@@ -606,7 +606,7 @@ if(window.location.href != 'https://lance.idsi.com.ph/stocktransfer'){
                     $("#btnDisapprove").hide();
                 }
                 if(requestStatus == '7'){
-                    $("#btnApprove").show();
+                    $("#btnApprove").hide();
                     $("#btnDisapprove").hide();
                     $("#reason_label").show();
                     $("#reason_details").show();
@@ -778,7 +778,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $("#btnDisapprove").hide();
     }
     if(requestStatus == '7'){
-        $("#btnApprove").show();
+        $("#btnApprove").hide();
         $("#btnDisapprove").hide();
         $("#reason_label").show();
         $("#reason_details").show();

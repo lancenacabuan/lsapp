@@ -3,13 +3,16 @@
 <div class="container-fluid">
     <ul class="nav nav-pills">
         <li class="nav-item-link" style="border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-            <a class="nav-link" id="nav1" href="{{ url('/maintenance') }}"><strong>ITEM</strong></a>
+            <a class="nav-link" id="nav1" href="{{ url('/maintenance') }}"><strong>ITEMS</strong></a>
         </li>
         <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-            <a class="nav-link" id="nav2" href="{{ url('/maintenance?tbl=category') }}"><strong>CATEGORY</strong></a>
+            <a class="nav-link" id="nav2" href="{{ url('/maintenance?tbl=assembleditems') }}"><strong>ASSEMBLED ITEMS</strong></a>
         </li>
         <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-            <a class="nav-link" id="nav3" href="{{ url('/maintenance?tbl=location') }}"><strong>LOCATION</strong></a>
+            <a class="nav-link" id="nav3" href="{{ url('/maintenance?tbl=categories') }}"><strong>CATEGORIES</strong></a>
+        </li>
+        <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
+            <a class="nav-link" id="nav4" href="{{ url('/maintenance?tbl=locations') }}"><strong>LOCATIONS</strong></a>
         </li>
     </ul>
     <div style="margin-top: -3px; color: white; height: 20px; background-color: #0d1a80;"></div>
@@ -44,8 +47,9 @@
     </table>
     @role('admin') {{---ROLES---}}
     <hr>
-    <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" style="display: none;">NEW ITEM</button>
-    <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" style="display: none;">NEW CATEGORY</button>
+    <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" data-keyboard="false" style="display: none;">NEW ITEM</button>
+    <button class="btn btn-primary bp btnCreateItem" type="button" data-toggle="modal" data-target="#createItem" data-backdrop="static" data-keyboard="false" style="display: none;">CREATE ITEM</button>
+    <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" data-keyboard="false" style="display: none;">NEW CATEGORY</button>
     <button class="btn btn-primary bp btnNewLocation" type="button" style="display: none;">REQUEST NEW LOCATION</button>
     @endrole
 </div>
@@ -66,6 +70,7 @@
 </style>
 @include('pages.fileMaintenance.newItem')
 @include('pages.fileMaintenance.detailsItem')
+@include('pages.fileMaintenance.createItem')
 @include('pages.fileMaintenance.newCategory')
 @include('pages.fileMaintenance.detailsCategory')
 @include('pages.fileMaintenance.newLocation')

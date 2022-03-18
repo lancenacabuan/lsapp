@@ -211,7 +211,7 @@ $(".add-row").on('click', function(){
             if(item==objCells.item(1).innerHTML){
                 objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
                 ctr = 'true';
-                category = $("#categoryReq").val('Select Category');
+                category = $("#categoryReq").val('');
                 item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val()
                 qty = $("#qtyReq").val('');
                 uom = $('#uom').val('');
@@ -223,7 +223,7 @@ $(".add-row").on('click', function(){
         }
         if(ctr == 'false')
         { $("#stockRequestTable tbody").append(markup); }
-        category = $("#categoryReq").val('Select Category');
+        category = $("#categoryReq").val('');
         item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val()
         qty = $("#qtyReq").val('');
         uom = $('#uom').val('');

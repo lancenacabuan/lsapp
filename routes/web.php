@@ -113,11 +113,15 @@ Route::get('/printTransferRequest',[StockTransferController::class,'printTransfe
 Route::get('/assembly',[AssemblyController::class,'assembly']);
 Route::get('/itemsAssembly',[AssemblyController::class,'itemsAssembly']);
 Route::get('/uomAssembly',[AssemblyController::class,'uomAssembly']);
+Route::any('/createItem',[AssemblyController::class,'createItem']);
+Route::any('/saveParts',[AssemblyController::class,'saveParts']);
+Route::any('/logItem',[AssemblyController::class,'logItem']);
 //
 
-//File Maintenance
+//Maintenance
 Route::get('/maintenance',[FileMaintenanceController::class,'maintenance']);
 Route::get('/fm_items',[FileMaintenanceController::class,'fm_items']);
+Route::get('/asm_items',[FileMaintenanceController::class,'asm_items']);
 Route::get('/fm_categories',[FileMaintenanceController::class,'fm_categories']);
 Route::get('/fm_locations',[FileMaintenanceController::class,'fm_locations']);
 Route::any('/saveItem',[FileMaintenanceController::class,'saveItem']);

@@ -10,6 +10,4 @@ class Item extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'items';
-    
-    
 }

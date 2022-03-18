@@ -23,6 +23,7 @@
                 <input class="form-control form-control-sm" style="width: 730px; margin-right: 10px;" name="item_description" id="item_description" required></textarea>
             </div>
         </div>
+        <div id="partsDetails" style="display: none;">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">PARTS DETAILS</h6>
         </div>        
@@ -60,6 +61,7 @@
         <div class="col-md-12 mt-2 mb-4">
             <button type="submit" id="btnClose" class="btn btn-primary bp" style="display: none;" data-dismiss="modal">CLOSE</button>
             <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
+        </div>
         </div>
     </div>
     </div>

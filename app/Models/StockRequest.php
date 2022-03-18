@@ -10,5 +10,4 @@ class StockRequest extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'stock_request';
-
 }

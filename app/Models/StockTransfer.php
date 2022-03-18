@@ -10,5 +10,4 @@ class StockTransfer extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'stock_transfer';
-
 }

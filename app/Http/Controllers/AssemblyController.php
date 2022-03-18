@@ -67,6 +67,7 @@ class AssemblyController extends Controller
         }
         else {
             $items = new Item;
+            $items->created_by = auth()->user()->id;
             $items->item = ucwords($request->item);
             $items->category_id = $request->category_id;
             $items->UOM = 'Unit';
@@ -115,5 +116,65 @@ class AssemblyController extends Controller
         $userlogs->save();
 
         return response('true');
+    }
+
+    public function itemDetails(Request $request){
+        $itemDetails = Part::query()->select('categories.category','items.item','items.UOM AS uom','quantity')
+            ->join('items', 'items.id', 'parts.part_id')
+            ->join('categories', 'categories.id', 'items.category_id')
+            ->where('parts.item_id',$request->item_id)
+            ->orderBy('category','ASC')
+            ->orderBy('item','ASC')
+            ->get();
+        
+        return DataTables::of($itemDetails)->make(true);
+    }
+
+    public function changeItem(Request $request){
+        if(strtoupper($request->item_name) != strtoupper($request->item_name_original)){
+            $item = Item::query()->select()
+                ->whereRaw('LOWER(item) = ?',strtolower($request->item_name))
+                ->count();
+        }
+        else{
+            $item = 0;
+        }
+        if($item != 0){
+            $result = 'duplicate';
+        }
+        else {
+            $item_name = ucwords($request->item_name);
+                
+            $items = Item::find($request->item_id);
+            $items->created_by = auth()->user()->id;
+            $items->item = $item_name;
+            $items->category_id = $request->item_category;
+            $sql = $items->save();
+            $id = $items->id;
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+
+                if(strtoupper($request->item_name) != strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original){
+                    $activity = "ASSEMBLY ITEM UPDATED: User successfully updated Item Description from '$request->item_name_original' into '$item_name' with ItemID#$id under Category '$request->category_name'.";
+                }
+                else if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category != $request->item_category_original){
+                    $activity = "ASSEMBLY ITEM UPDATED: User successfully updated Item Category of '$item_name' with ItemID#$id changed from '$request->category_name_original' into '$request->category_name' with new CategoryID#'$request->item_category'.";
+                }
+                else if(strtoupper($request->item_name) != strtoupper($request->item_name_original) && $request->item_category != $request->item_category_original){
+                    $activity = "ASSEMBLY ITEM UPDATED: User successfully updated Item Description from '$request->item_name_original' into '$item_name' with new ItemID#$id and Item Category from '$request->category_name_original' into '$request->category_name' with new CategoryID#'$request->item_category'.";
+                }
+
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = $activity;
+                $userlogs->save();
+            }
+        }
+
+        return response($result);
     }
 }

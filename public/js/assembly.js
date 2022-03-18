@@ -10,8 +10,8 @@ $('#btnClose').on('click', function(){
 
 setInterval(runFunction, 200);
 function runFunction(){
-    var category = $('#category').val();
-    var item_description = $.trim($('#item_description').val());
+    var category = $('#aic_category').val();
+    var item_description = $.trim($('#aic_item_description').val());
     if($('#createItem').is(':visible')){
         if(category && item_description){
             $('#partsDetails').show();
@@ -123,8 +123,8 @@ $("#tblCreateItem").on('click', '.delete-row', function(){
 });
 
 $('#btnSave').on('click', function(){
-    var category = $('#category').val();
-    var item_description = $.trim($('#item_description').val());
+    var category = $('#aic_category').val();
+    var item_description = $.trim($('#aic_item_description').val());
     swal({
         title: "CREATE NEW ASSEMBLY ITEM?",
         text: "You are about to CREATE a new Assembly Item!",
@@ -212,6 +212,137 @@ $('#btnSave').on('click', function(){
                     else{
                         $('#newStockRequest').hide();
                         swal("SUBMIT FAILED", "CREATE ITEM", "error");
+                        setTimeout(function(){location.reload();}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        location.reload();
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
+});
+
+setInterval(runCompare, 200);
+function runCompare(){
+    if($('#detailsAssemblyItem').is(':visible')){
+        var item_current = $.trim($('#aim_item_name_details').val());
+        var item_original = $('#aim_item_name_details_original').val();
+        var category_current = $('#aim_item_category_details').val();
+        var category_original = $('#aim_item_category_details_original').val();
+        if(!item_current || (item_current.toUpperCase() == item_original.toUpperCase() && category_current == category_original)){
+            $('#btnUpdate').hide();
+        }
+        else{
+            $('#btnUpdate').show();
+        }
+    }
+}
+
+$('#assemblyitemTable tbody').on('click', 'tr', function(){
+    $('#detailsAssemblyItem').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    var table = $('table.assemblyitemTable').DataTable(); 
+    var data = table.row(this).data();
+    var item_id = data.id;
+        $('#aim_item_id').val(item_id);
+    var category_name = data.category;
+        $('#aim_category_name_details_original').val(category_name);
+    var item_category = data.category_id;
+        $('#aim_item_category_details').val(item_category);
+        $('#aim_item_category_details_original').val(item_category);
+    var item_name = decodeHtml(data.item);
+        $('#aim_item_name_details').val(item_name);
+        $('#aim_item_name_details_original').val(item_name);
+    
+    $('.modal-body').html();
+    $('#detailsAssemblyItem').modal('show');
+    
+    $('table.tblItemDetails').dataTable().fnDestroy();
+    $('table.tblItemDetails').DataTable({
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false,
+        language: {
+            emptyTable: "No data available in table",
+            processing: "Loading...",
+        },
+        serverSide: true,
+        ajax: {
+            url: '/itemDetails',
+            data: {
+                item_id: item_id
+            },
+            dataType: 'json',
+            error: function(data){
+                if(data.status == 401){
+                    location.reload();
+                }
+                alert(data.responseText);
+            },
+        },
+        order:[[0, 'asc'],[1, 'asc']],
+        columns: [
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'uom' },
+            { data: 'quantity' }
+        ],
+        orderCellsTop: true,
+        fixedHeader: true,            
+    });
+});
+
+$('#btnUpdate').on('click', function(){
+    var item_id = $('#aim_item_id').val();
+    var category_name_original = $('#aim_category_name_details_original').val();
+    var item_category_original = $('#aim_item_category_details_original').val();
+    var item_name_original = $('#aim_item_name_details_original').val();
+    var category_name = $('#aim_item_category_details').find('option:selected').text();
+    var item_category = $('#aim_item_category_details').val();
+    var item_name = $.trim($('#aim_item_name_details').val());
+    swal({
+        title: "UPDATE ASSEMBLY ITEM?",
+        text: "You are about to UPDATE this Assembly Item!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type:'post',
+                url:'/changeItem',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                },
+                data: {
+                    item_id: item_id,
+                    category_name_original: category_name_original,
+                    item_category_original: item_category_original,
+                    item_name_original: item_name_original,
+                    category_name: category_name,
+                    item_category: item_category,
+                    item_name: item_name
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        $('#detailsAssemblyItem').hide();
+                        swal("UPDATE SUCCESS", "ASSEMBLY ITEM", "success");
+                        setTimeout(function(){location.reload();}, 2000);
+                    }
+                    else if(data == 'duplicate'){
+                        swal("DUPLICATE ITEM", "Item Description already exists!", "error");
+                        return false;
+                    }
+                    else{
+                        $('#updateUser').hide();
+                        swal("UPDATE FAILED", "ASSEMBLY ITEM", "error");
                         setTimeout(function(){location.reload();}, 2000);
                     }
                 },

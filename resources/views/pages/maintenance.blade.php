@@ -86,6 +86,7 @@
 @include('pages.fileMaintenance.newItem')
 @include('pages.fileMaintenance.detailsItem')
 @include('pages.fileMaintenance.createItem')
+@include('pages.fileMaintenance.detailsAssemblyItem')
 @include('pages.fileMaintenance.newCategory')
 @include('pages.fileMaintenance.detailsCategory')
 @include('pages.fileMaintenance.newLocation')

@@ -737,7 +737,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         backdrop: 'static',
         keyboard: false
     });
-    var table =  $('table.stocktransferTable').DataTable(); 
+    var table = $('table.stocktransferTable').DataTable(); 
     var data = table.row(this).data();
     var requestStatus = data.status_id;
     var req_date = data.date;
@@ -1217,7 +1217,7 @@ $('#btnReceive').on('click', function(){
 var items = [];
 $('table.transferDetails').DataTable().on('select', function(){});
 $('.transferDetails tbody').on('click', 'tr', function(){
-    var table =  $('table.transferDetails').DataTable();
+    var table = $('table.transferDetails').DataTable();
     var data = table.row(this).data();
     var pend = data.pending;
     var item_id = data.item_id;

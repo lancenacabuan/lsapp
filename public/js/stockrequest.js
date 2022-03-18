@@ -620,8 +620,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#sd2").hide();
                     }
                     
-                $('table.stockDetails').dataTable().fnDestroy();    
-                $('table.stockDetails').DataTable({ 
+                $('table.stockDetails').dataTable().fnDestroy();
+                $('table.stockDetails').DataTable({
                     columnDefs: [
                         {
                             "targets": [6,7,8,9,10],
@@ -674,7 +674,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     ],
                     orderCellsTop: true,
                     fixedHeader: true,            
-                }); 
+                });
                 
                 $('table.stockDetails1').dataTable().fnDestroy();    
                 $('table.stockDetails1').DataTable({ 
@@ -921,7 +921,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         backdrop: 'static',
         keyboard: false
     });
-    var table =  $('table.stockrequestTable').DataTable(); 
+    var table = $('table.stockrequestTable').DataTable(); 
     var data = table.row(this).data();
     var requestStatus = data.status_id;
     var req_type_id = data.req_type_id;
@@ -1843,7 +1843,7 @@ $('#btnReturn').on('click', function(){
 var items = [];
 $('table.stockDetails').DataTable().on('select', function(){});
 $('.stockDetails tbody').on('click', 'tr', function(){
-    var table =  $('table.stockDetails').DataTable();
+    var table = $('table.stockDetails').DataTable();
     var data = table.row(this).data();
     var pend = data.pending;
     var stock = data.qtystock;

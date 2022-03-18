@@ -92,7 +92,7 @@ class PagesController extends Controller
         {
             return redirect('/');
         }
-        $role =  Role::query()->select()->get()->sortBy('name');
+        $role = Role::query()->select()->get()->sortBy('name');
         
         return view('pages/users', compact('role'));
     }

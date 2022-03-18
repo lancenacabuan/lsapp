@@ -80,6 +80,7 @@ class FileMaintenanceController extends Controller
             $item_name = ucwords($request->item_name);
 
             $items = new Item;
+            $items->created_by = auth()->user()->id;
             $items->item = $item_name;
             $items->category_id = $request->item_category;
             $items->UOM = $request->item_uom;
@@ -120,6 +121,7 @@ class FileMaintenanceController extends Controller
             $item_name = ucwords($request->item_name);
 
             $items = Item::find($request->input('item_id'));
+            $items->created_by = auth()->user()->id;
             $items->item = $item_name;
             $items->category_id = $request->item_category;
             $items->UOM = $request->item_uom;

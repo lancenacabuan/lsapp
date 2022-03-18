@@ -116,6 +116,8 @@ Route::get('/uomAssembly',[AssemblyController::class,'uomAssembly']);
 Route::any('/createItem',[AssemblyController::class,'createItem']);
 Route::any('/saveParts',[AssemblyController::class,'saveParts']);
 Route::any('/logItem',[AssemblyController::class,'logItem']);
+Route::get('/itemDetails',[AssemblyController::class,'itemDetails']);
+Route::any('/changeItem',[AssemblyController::class,'changeItem']);
 //
 
 //Maintenance

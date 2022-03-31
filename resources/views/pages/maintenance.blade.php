@@ -17,10 +17,6 @@
     </ul>
     <div style="margin-top: -3px; color: white; height: 20px; background-color: #0d1a80;"></div>
     <br>
-    <div id="maintenance" class="alert alert-warning alert-dismissible" style="display: none;" role="alert">
-        <i class='fa fa-exclamation-triangle'></i>
-        <strong>Note:</strong> This webpage module is still currently under maintenance. Thank you very much for understanding...
-    </div>
     <table class="table-hover table itemTable" id="itemTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white;">
             <tr>

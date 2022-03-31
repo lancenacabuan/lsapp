@@ -33,7 +33,6 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=assemblyitems'){
     $('#nav2').addClass("active-link");
-    $('#maintenance').show();
     $('.btnCreateItem').show();
     $('#assemblyitemTable').show();
     $('#loading').show(); Spinner(); Spinner.show();

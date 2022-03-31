@@ -64,7 +64,7 @@ class FileMaintenanceController extends Controller
     }
 
     public function fm_locations(){
-        $list = Location::select('id AS location_id', 'location', 'status')->whereNotIn('id',['7','8'])->get();
+        $list = Location::select('id AS location_id', 'location', 'status')->whereNotIn('id',['7','8','9','10'])->get();
         return DataTables::of($list)->make(true);
     }
 

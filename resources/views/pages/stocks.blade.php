@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid">
-    @role('admin|encoder') {{---ROLES---}}
     <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
     <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
+    @role('admin|encoder') {{---ROLES---}}
     <button class="btn btn-primary bp float-right mb-4" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
     {{-- <button class="btn btn-primary bp" type="button" data-target="#stocktrans" data-toggle="modal" data-backdrop="static" data-keyboard="false">STOCK TRANSFER</button> --}}
     {{-- <button class="btn btn-primary bp" type="button">IMPORT</button> --}}

@@ -75,14 +75,14 @@
                 </thead>    
             </table>
             <br>
-            @role('approver - warehouse')  {{---ROLES---}}
+            @role('approver - warehouse') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp" id="btnApprove" value="APPROVE">
             <input type="button" class="btn btn-primary bp" id="btnDisapprove" value="DISAPPROVE">
             @endrole
-            @role('admin|encoder')  {{---ROLES---}}
+            @role('admin|encoder') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp" id="btnProceed" value="PROCEED" disabled>
             @endrole
-            @role('admin|encoder')  {{---ROLES---}}
+            @role('admin|encoder') {{---ROLES---}}
             <button type="button" id="btnDelete" class="btn btn-dark bp">DELETE</button>
             @endrole
             <br>
@@ -134,7 +134,7 @@
             </table>
             <br>
             <hr>
-            @role('admin|encoder')           
+            @role('admin|encoder') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp" id="btnTransit" class="button" value="FOR RECEIVING">
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
@@ -168,7 +168,7 @@
             </table>
             <br>
             <hr>
-            @role('admin|encoder')  {{---ROLES---}}
+            @role('admin|encoder') {{---ROLES---}}
             <button type="button" id="btnReceive" class="btn btn-primary float-right bp">RECEIVE</button>
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>

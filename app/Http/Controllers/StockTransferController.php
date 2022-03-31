@@ -33,6 +33,10 @@ class StockTransferController extends Controller
         {
             return redirect('/stockrequest');
         }
+        if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
+        {
+            return redirect('/assembly');
+        }
         $locations = Location::select('id','location')->whereNotIn('id',['7','8'])->get();
 
         return view('/pages/stocktransfer', compact('locations'));

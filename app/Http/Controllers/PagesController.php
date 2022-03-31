@@ -34,6 +34,10 @@ class PagesController extends Controller
         {
             return redirect('/stocktransfer');
         }
+        if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
+        {
+            return redirect('/assembly');
+        }
         return view('pages/index');        
     }
 
@@ -87,6 +91,10 @@ class PagesController extends Controller
         if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
         {
             return redirect('/stocktransfer');
+        }
+        if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
+        {
+            return redirect('/assembly');
         }
         if(!auth()->user()->hasanyRole('admin')) //---ROLES---//
         {

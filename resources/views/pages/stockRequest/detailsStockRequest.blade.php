@@ -76,7 +76,7 @@
             </table>
             </div>
             @endrole
-            @role('admin|encoder|viewer')  {{---ROLES---}}
+            @role('admin|encoder|viewer') {{---ROLES---}}
             <table id="stockDetailsrequest" class="table stockDetails table-hover display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
@@ -98,14 +98,14 @@
             </table>
             @endrole
             <br>
-            @role('approver - sales')  {{---ROLES---}}
+            @role('approver - sales') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp" id="btnApprove" value="APPROVE">
             <input type="button" class="btn btn-primary bp" id="btnDisapprove" value="DISAPPROVE">
             @endrole
-            @role('admin|encoder')  {{---ROLES---}}
+            @role('admin|encoder') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp" id="btnProceed" value="PROCEED" disabled>
             @endrole
-            @role('sales')  {{---ROLES---}}
+            @role('sales') {{---ROLES---}}
             <button type="button" id="btnDelete" class="btn btn-dark bp">DELETE</button>
             @endrole
             <br>
@@ -144,7 +144,7 @@
                 <input class="form-control form-control-sm" id="sched" style="width: 280px;" type="text" readonly>
             </div>
             <br>
-            @role('admin|encoder')  {{---ROLES---}}
+            @role('admin|encoder') {{---ROLES---}}
             <table id="schedItems" class="table schedItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
@@ -160,7 +160,7 @@
                 </thead>    
             </table>
             @endrole
-            @role('sales|viewer|approver - sales')  {{---ROLES---}}
+            @role('sales|viewer|approver - sales') {{---ROLES---}}
             <table id="schedItems1" class="table schedItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
@@ -176,7 +176,7 @@
             @endrole
             <br>
             <hr>
-            @role('admin|encoder')           
+            @role('admin|encoder') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp" id="btnTransit" class="button" value="FOR RECEIVING">
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
@@ -197,7 +197,7 @@
                 <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
             </div>
             <br>
-            @role('client')  {{---ROLES---}}
+            @role('client') {{---ROLES---}}
             <table id="transItems" class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
@@ -213,7 +213,7 @@
                 </thead>    
             </table>
             @endrole
-            @role('admin|encoder|sales|viewer|approver - sales')  {{---ROLES---}}
+            @role('admin|encoder|sales|viewer|approver - sales') {{---ROLES---}}
             <table id="transItems1" class="table transItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
@@ -229,7 +229,7 @@
             @endrole
             <br>
             <hr>
-            @role('sales')  {{---ROLES---}}
+            @role('sales') {{---ROLES---}}
             <button type="button" id="btnReceive" class="btn btn-primary float-right bp">RECEIVE</button>
             <button type="button" id="btnSale" class="btn btn-primary float-right bp" style="display: none;">SALE</button>
             <span class="float-right" style="width: 10px;">&nbsp;</span>

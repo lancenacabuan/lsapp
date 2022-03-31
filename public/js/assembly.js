@@ -1,3 +1,19 @@
+var minDate;
+$(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();    
+    minDate = year + '-' + month + '-' + day;
+
+    $('#needdate').attr('min', minDate);
+});
+
 function generateReqNum(){
     var today = new Date();
     var month = today.getMonth()+1;
@@ -465,7 +481,7 @@ $('#btnAssemblyProceed').on('click', function(){
         orderCellsTop: true,
         fixedHeader: true,            
     });
-    setTimeout(setqty, 200);
+    setTimeout(setqty, 1000);
 });
 
 function setqty(){

@@ -36,6 +36,10 @@ class StocksController extends Controller
         {
             return redirect('/stocktransfer');
         }
+        if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
+        {
+            return redirect('/assembly');
+        }
         $categories= Category::select('id','category')->get()->sortBy('category');
         $locations= Location::select('id','location')->whereNotIn('id', ['7','8'])->get()->sortBy('location');
         $items= Item::select('id','item')->get()->sortBy('item');

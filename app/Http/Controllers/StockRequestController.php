@@ -34,7 +34,11 @@ class StockRequestController extends Controller
         if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
         {
             return redirect('/stocktransfer');
-        }  
+        }
+        if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
+        {
+            return redirect('/assembly');
+        }
         $categories = Category::select('id','category')->get()->sortBy('category');
         $items = Item::select('id','item')->get()->sortBy('item');
         $req_types = RequestType::select('id','name')->whereIn('id',['2','3'])->get();            

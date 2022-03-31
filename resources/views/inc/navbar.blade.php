@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales') && !auth()->user()->hasanyRole('approver - warehouse')) {{---ROLES---}}
+            @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales') && !auth()->user()->hasanyRole('approver - warehouse') && !auth()->user()->hasanyRole('assembler')) {{---ROLES---}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">HOME</a>
@@ -16,9 +16,11 @@
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
                 </li>
+                @role('viewer') {{---ROLES---}}
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('assembly') ? 'active' : '' }}" href="{{ url('/assembly') }}">ASSEMBLY</a>
                 </li>
+                @endrole
                 @role('admin') {{---ROLES---}}
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('maintenance*') ? 'active' : '' }}" href="{{ url('/maintenance') }}">MAINTENANCE</a>
@@ -32,14 +34,21 @@
             @if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) {{---ROLES---}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                  <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}"  href="{{ url('/stockrequest') }}">HOME</a>
+                  <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}"  href="{{ url('/stockrequest') }}">HOME - STOCK REQUEST</a>
                 </li>
             </ul>
             @endif
             @if(auth()->user()->hasanyRole('approver - warehouse')) {{---ROLES---}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                  <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}"  href="{{ url('/stocktransfer') }}">HOME</a>
+                  <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}"  href="{{ url('/stocktransfer') }}">HOME - STOCK TRANSFER</a>
+                </li>
+            </ul>
+            @endif
+            @if(auth()->user()->hasanyRole('assembler')) {{---ROLES---}}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link n {{ Request::is('assembly') ? 'active' : '' }}"  href="{{ url('/assembly') }}">HOME - ASSEMBLY</a>
                 </li>
             </ul>
             @endif

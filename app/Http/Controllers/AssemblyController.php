@@ -31,6 +31,10 @@ class AssemblyController extends Controller
         {
             return redirect('/stocktransfer');
         }
+        if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder')) //---ROLES---//
+        {
+            return redirect('/');
+        }
         $categories = Category::select('id','category')->get()->sortBy('category');
         $items = Item::select('id','item')->where('assemble','YES')->get()->sortBy('item');
         return view('/pages/assembly', compact('categories','items'));

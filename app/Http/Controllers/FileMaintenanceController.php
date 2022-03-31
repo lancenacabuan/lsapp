@@ -35,6 +35,10 @@ class FileMaintenanceController extends Controller
         {
             return redirect('/stocktransfer');
         }
+        if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
+        {
+            return redirect('/assembly');
+        }
         if(!auth()->user()->hasanyRole('admin')) //---ROLES---//
         {
             return redirect('/');

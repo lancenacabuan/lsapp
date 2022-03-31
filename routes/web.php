@@ -119,6 +119,7 @@ Route::any('/saveParts',[AssemblyController::class,'saveParts']);
 Route::any('/logItem',[AssemblyController::class,'logItem']);
 Route::get('/itemDetails',[AssemblyController::class,'itemDetails']);
 Route::any('/changeItem',[AssemblyController::class,'changeItem']);
+Route::get('/partsDetails',[AssemblyController::class,'partsDetails']);
 //
 
 //Maintenance

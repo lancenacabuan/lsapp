@@ -191,4 +191,41 @@ class AssemblyController extends Controller
 
         return response($result);
     }
+
+    public function partsDetails(Request $request){
+        $partsDetails = Part::query()->select('categories.category','items.item','items.UOM AS uom','quantity','items.id AS item_id')
+            ->join('items', 'items.id', 'parts.part_id')
+            ->join('categories', 'categories.id', 'items.category_id')
+            ->where('parts.item_id',$request->item_id)
+            ->orderBy('category','ASC')
+            ->orderBy('item','ASC')
+            ->get();
+        
+        return DataTables::of($partsDetails)
+        ->addColumn('main', function(Part $partsDetails){
+            $stocks = Stock::query()
+                ->where('item_id', $partsDetails->item_id)
+                ->whereIn('location_id', ['1','2','3','4'])
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('balintawak', function(Part $partsDetails){
+            $stocks = Stock::query()
+                ->where('item_id', $partsDetails->item_id)
+                ->whereIn('location_id', ['5'])
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->addColumn('malabon', function(Part $partsDetails){
+            $stocks = Stock::query()
+                ->where('item_id', $partsDetails->item_id)
+                ->whereIn('location_id', ['6'])
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->make(true);
+    }
 }

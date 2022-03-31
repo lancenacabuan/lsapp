@@ -28,6 +28,7 @@
                     @endforeach
                 </select>
                 <input class="form-control" id="qty" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px;" type="number" placeholder="Qty">
+                <button type="submit" id="btnAssemblyProceed" class="btn btn-primary bp" style="zoom: 80%; margin-left: 10px; display: none;">PROCEED</button>
             </div>
         </div>
         <div id="assemblypartsDetails" style="display: none;">
@@ -52,7 +53,7 @@
             </table>
         </div>
         <div class="col-md-12 mt-2 mb-4">
-            <button type="submit" id="btnAssemblyClose" class="btn btn-primary bp" data-bs-dismiss="modal">CLOSE</button>
+            <button type="submit" id="btnAssemblyBack" class="btn btn-primary bp">BACK</button>
             <button type="submit" id="btnAssemblySave" class="btn btn-primary float-right bp">SUBMIT</button>
         </div>
         </div>

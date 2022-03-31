@@ -262,7 +262,7 @@ class StockRequestController extends Controller
         ->addColumn('qtystock', function (StockRequest $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
-                ->whereNotIn('location_id', ['5','6'])
+                ->whereIn('location_id', ['1','2','3','4'])
                 ->where('status', 'in')
                 ->count();
             return $stocks;

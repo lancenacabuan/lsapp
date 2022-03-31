@@ -55,11 +55,11 @@ $(".btnNewAssembly").on('click', function(){
 setInterval(checkNewAssembly, 200);
 function checkNewAssembly(){
     if($('#newAssembly').is(':visible')){
-        if($('#needdate').val() && $('#assembly').val() && $('#qty').val() > 0){
-            $('#assemblypartsDetails').show();
+        if($('#needdate').val() && $('#assembly').val() && $('#qty').val() > 0 && $('#assemblypartsDetails').is(':hidden')){
+            $('#btnAssemblyProceed').show();
         }
         else{
-            $('#assemblypartsDetails').hide();
+            $('#btnAssemblyProceed').hide();
         }
     }
 }
@@ -417,12 +417,72 @@ $('.close').on('click', function(){
     location.reload();
 });
 
-$('#btnAssemblyClose').on('click', function(){
-    location.reload();
-});
-
 $('#btnClose').on('click', function(){
     location.reload();
 });
 
 $('#assemblyTable').DataTable();
+
+$('#btnAssemblyProceed').on('click', function(){
+    $('#btnAssemblyProceed').hide();
+    $('#assemblypartsDetails').show();
+    $("#assembly").prop('disabled', true);
+    $("#qty").prop('disabled', true);
+    $('table.tblPartsDetails').dataTable().fnDestroy();
+    $('table.tblPartsDetails').DataTable({
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false,
+        language: {
+            emptyTable: "No data available in table",
+            processing: "Loading...",
+        },
+        serverSide: true,
+        ajax: {
+            url: '/partsDetails',
+            data: {
+                item_id: $("#assembly").val()
+            },
+            dataType: 'json',
+            error: function(data){
+                if(data.status == 401){
+                    location.reload();
+                }
+                alert(data.responseText);
+            },
+        },
+        order:[[0, 'asc'],[1, 'asc']],
+        columns: [
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'uom' },
+            { data: 'quantity' },
+            { data: 'main' },
+            { data: 'balintawak' },
+            { data: 'malabon' }
+        ],
+        orderCellsTop: true,
+        fixedHeader: true,            
+    });
+    setTimeout(setqty, 200);
+});
+
+function setqty(){
+    var table = document.getElementById('tblPartsDetails');
+    var count = table.rows.length;
+    for(i = 1; i < count; i++){
+        var objCells = table.rows.item(i).cells;
+        objCells.item(3).innerHTML = parseInt(objCells.item(3).innerHTML) * parseInt($("#qty").val());    
+    }
+}
+
+$('#btnAssemblyBack').on('click', function(){
+    $('#btnAssemblyProceed').hide();
+    $('table.tblPartsDetails').dataTable().fnDestroy();
+    $("#assemblypartsDetails").hide();
+    $("#assembly").prop('disabled', false);
+    $("#qty").prop('disabled', false);
+    $("#assembly").val('');
+    $("#qty").val('');
+});

@@ -15,7 +15,7 @@
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
-                <input class="form-control form-control-sm"  id="needdate"style="width: 280px; margin-right: 10px;" type="date">
+                <input class="form-control form-control-sm"  id="needdate" style="width: 280px; margin-right: 10px;" type="date">
                 <label class="form-control form-control-sm" style="width: 160px;">Client Name</label>
                 <input class="form-control form-control-sm" id="client_name" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field">
             </div>

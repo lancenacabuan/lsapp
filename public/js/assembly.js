@@ -52,18 +52,20 @@ $(".btnNewAssembly").on('click', function(){
     generateReqNum();
 });
 
-$('#assemblyTable').DataTable();
+setInterval(checkNewAssembly, 200);
+function checkNewAssembly(){
+    if($('#newAssembly').is(':visible')){
+        if($('#needdate').val() && $('#assembly').val() && $('#qty').val() > 0){
+            $('#assemblypartsDetails').show();
+        }
+        else{
+            $('#assemblypartsDetails').hide();
+        }
+    }
+}
 
-$('.close').on('click', function(){
-    location.reload();
-});
-
-$('#btnClose').on('click', function(){
-    location.reload();
-});
-
-setInterval(runFunction, 200);
-function runFunction(){
+setInterval(checkCreateItem, 200);
+function checkCreateItem(){
     var category = $('#aic_category').val();
     var item_description = $.trim($('#aic_item_description').val());
     if($('#createItem').is(':visible')){
@@ -84,17 +86,17 @@ $('#categoryAssembly').on('change', function(){
         url:'/itemsAssembly',
         data:{'category_id':id},
         success: function(data)
-            {
-                var itemcode = $.map(data, function(value, index){ 
-                    return [value];
-                });
-                descOp+='<option value="" selected disabled>Select Item</option>'; 
-                itemcode.forEach(value => {
-                    descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>'; 
-                });
-                
-                $("#itemAssembly").find('option').remove().end().append(descOp);                 
-            },
+        {
+            var itemcode = $.map(data, function(value, index){ 
+                return [value];
+            });
+            descOp+='<option value="" selected disabled>Select Item</option>'; 
+            itemcode.forEach(value => {
+                descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>'; 
+            });
+            
+            $("#itemAssembly").find('option').remove().end().append(descOp);                 
+        },
         error: function(data){
             if(data.status == 401){
                 window.location.href = '/assembly';
@@ -304,15 +306,15 @@ $('#assemblyitemTable tbody').on('click', 'tr', function(){
     var table = $('table.assemblyitemTable').DataTable(); 
     var data = table.row(this).data();
     var item_id = data.id;
-        $('#aim_item_id').val(item_id);
+    $('#aim_item_id').val(item_id);
     var category_name = data.category;
-        $('#aim_category_name_details_original').val(category_name);
+    $('#aim_category_name_details_original').val(category_name);
     var item_category = data.category_id;
-        $('#aim_item_category_details').val(item_category);
-        $('#aim_item_category_details_original').val(item_category);
+    $('#aim_item_category_details').val(item_category);
+    $('#aim_item_category_details_original').val(item_category);
     var item_name = decodeHtml(data.item);
-        $('#aim_item_name_details').val(item_name);
-        $('#aim_item_name_details_original').val(item_name);
+    $('#aim_item_name_details').val(item_name);
+    $('#aim_item_name_details_original').val(item_name);
     
     $('.modal-body').html();
     $('#detailsAssemblyItem').modal('show');
@@ -410,3 +412,17 @@ $('#btnUpdate').on('click', function(){
         }
     });
 });
+
+$('.close').on('click', function(){
+    location.reload();
+});
+
+$('#btnAssemblyClose').on('click', function(){
+    location.reload();
+});
+
+$('#btnClose').on('click', function(){
+    location.reload();
+});
+
+$('#assemblyTable').DataTable();

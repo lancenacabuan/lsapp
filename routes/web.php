@@ -111,6 +111,7 @@ Route::get('/printTransferRequest',[StockTransferController::class,'printTransfe
 
 //Assembly
 Route::get('/assembly',[AssemblyController::class,'assembly']);
+Route::get('/assembly/generateReqNum',[AssemblyController::class,'generateReqNum']);
 Route::get('/itemsAssembly',[AssemblyController::class,'itemsAssembly']);
 Route::get('/uomAssembly',[AssemblyController::class,'uomAssembly']);
 Route::any('/createItem',[AssemblyController::class,'createItem']);

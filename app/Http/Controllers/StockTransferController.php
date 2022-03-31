@@ -13,8 +13,10 @@ use App\Models\Item;
 use App\Models\Location;
 use App\Models\Stock;
 use App\Models\StockTransfer;
-use App\Models\RequestTransfer;
 use App\Models\Transfer;
+use App\Models\Requests;
+use App\Models\RequestTransfer;
+use App\Models\RequestAssembly;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -37,7 +39,10 @@ class StockTransferController extends Controller
     }
 
     public function generateReqNum(Request $request){
-        $reqnum = RequestTransfer::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumR = Requests::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumT = RequestTransfer::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumA = RequestAssembly::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnum = $reqnumR + $reqnumT + $reqnumA;
         if($reqnum == 0){
             return response('unique');
         }

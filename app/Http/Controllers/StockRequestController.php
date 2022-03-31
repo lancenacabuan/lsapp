@@ -15,8 +15,10 @@ use App\Models\RequestType;
 use App\Models\Status;
 use App\Models\Stock;
 use App\Models\StockRequest;
-use App\Models\Requests;
 use App\Models\Prepare;
+use App\Models\Requests;
+use App\Models\RequestTransfer;
+use App\Models\RequestAssembly;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -41,8 +43,11 @@ class StockRequestController extends Controller
     }
 
     public function generatedr(Request $request){
-        $dr = Requests::query()->select()->where('request_number',$request->request_number)->count();
-        if($dr == 0){
+        $reqnumR = Requests::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumT = RequestTransfer::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumA = RequestAssembly::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnum = $reqnumR + $reqnumT + $reqnumA;
+        if($reqnum == 0){
             return response('unique');
         }
         return response('duplicate');

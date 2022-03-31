@@ -8,6 +8,9 @@ use App\Models\Stock;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Part;
+use App\Models\Requests;
+use App\Models\RequestTransfer;
+use App\Models\RequestAssembly;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -31,6 +34,17 @@ class AssemblyController extends Controller
         $categories = Category::select('id','category')->get()->sortBy('category');
         $items = Item::select('id','item')->take(100)->get()->sortBy('item');
         return view('/pages/assembly', compact('categories','items'));
+    }
+
+    public function generateReqNum(Request $request){
+        $reqnumR = Requests::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumT = RequestTransfer::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumA = RequestAssembly::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnum = $reqnumR + $reqnumT + $reqnumA;
+        if($reqnum == 0){
+            return response('unique');
+        }
+        return response('duplicate');
     }
 
     public function itemsAssembly(Request $request){       

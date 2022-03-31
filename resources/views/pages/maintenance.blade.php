@@ -6,7 +6,7 @@
             <a class="nav-link" id="nav1" href="{{ url('/maintenance') }}"><strong>ITEMS</strong></a>
         </li>
         <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
-            <a class="nav-link" id="nav2" href="{{ url('/maintenance?tbl=assemblyitems') }}"><strong>ASSEMBLY ITEMS</strong></a>
+            <a class="nav-link" id="nav2" href="{{ url('/maintenance?tbl=assembleditems') }}"><strong>ASSEMBLED ITEMS</strong></a>
         </li>
         <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
             <a class="nav-link" id="nav3" href="{{ url('/maintenance?tbl=categories') }}"><strong>CATEGORIES</strong></a>

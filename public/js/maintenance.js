@@ -31,7 +31,7 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
         }
     });
 }
-else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=assemblyitems'){
+else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=assembleditems'){
     $('#nav2').addClass("active-link");
     $('.btnCreateItem').show();
     $('#assemblyitemTable').show();

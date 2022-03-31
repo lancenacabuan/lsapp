@@ -198,7 +198,7 @@ $('#btnSave').on('click', function(){
     var category = $('#aic_category').val();
     var item_description = $.trim($('#aic_item_description').val());
     swal({
-        title: "CREATE NEW ASSEMBLY ITEM?",
+        title: "CREATE NEW ASSEMBLED ITEM?",
         text: "You are about to CREATE a new Assembly Item!",
         icon: "warning",
         buttons: true,
@@ -380,7 +380,7 @@ $('#btnUpdate').on('click', function(){
     var item_category = $('#aim_item_category_details').val();
     var item_name = $.trim($('#aim_item_name_details').val());
     swal({
-        title: "UPDATE ASSEMBLY ITEM?",
+        title: "UPDATE ASSEMBLED ITEM?",
         text: "You are about to UPDATE this Assembly Item!",
         icon: "warning",
         buttons: true,
@@ -405,7 +405,7 @@ $('#btnUpdate').on('click', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsAssemblyItem').hide();
-                        swal("UPDATE SUCCESS", "ASSEMBLY ITEM", "success");
+                        swal("UPDATE SUCCESS", "ASSEMBLED ITEM", "success");
                         setTimeout(function(){location.reload();}, 2000);
                     }
                     else if(data == 'duplicate'){
@@ -414,7 +414,7 @@ $('#btnUpdate').on('click', function(){
                     }
                     else{
                         $('#updateUser').hide();
-                        swal("UPDATE FAILED", "ASSEMBLY ITEM", "error");
+                        swal("UPDATE FAILED", "ASSEMBLED ITEM", "error");
                         setTimeout(function(){location.reload();}, 2000);
                     }
                 },

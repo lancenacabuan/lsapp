@@ -130,7 +130,7 @@ class AssemblyController extends Controller
 
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "ASSEMBLY ITEM ADDED: User successfully saved new Assembly Item '$item' with ItemID#$request->item_id under Category '$request->category'.";
+        $userlogs->activity = "ASSEMBLED ITEM ADDED: User successfully saved new Assembly Item '$item' with ItemID#$request->item_id under Category '$request->category'.";
         $userlogs->save();
 
         return response('true');
@@ -177,13 +177,13 @@ class AssemblyController extends Controller
                 $result = 'true';
 
                 if(strtoupper($request->item_name) != strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original){
-                    $activity = "ASSEMBLY ITEM UPDATED: User successfully updated Item Description from '$request->item_name_original' into '$item_name' with ItemID#$id under Category '$request->category_name'.";
+                    $activity = "ASSEMBLED ITEM UPDATED: User successfully updated Item Description from '$request->item_name_original' into '$item_name' with ItemID#$id under Category '$request->category_name'.";
                 }
                 else if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category != $request->item_category_original){
-                    $activity = "ASSEMBLY ITEM UPDATED: User successfully updated Item Category of '$item_name' with ItemID#$id changed from '$request->category_name_original' into '$request->category_name' with new CategoryID#'$request->item_category'.";
+                    $activity = "ASSEMBLED ITEM UPDATED: User successfully updated Item Category of '$item_name' with ItemID#$id changed from '$request->category_name_original' into '$request->category_name' with new CategoryID#'$request->item_category'.";
                 }
                 else if(strtoupper($request->item_name) != strtoupper($request->item_name_original) && $request->item_category != $request->item_category_original){
-                    $activity = "ASSEMBLY ITEM UPDATED: User successfully updated Item Description from '$request->item_name_original' into '$item_name' with new ItemID#$id and Item Category from '$request->category_name_original' into '$request->category_name' with new CategoryID#'$request->item_category'.";
+                    $activity = "ASSEMBLED ITEM UPDATED: User successfully updated Item Description from '$request->item_name_original' into '$item_name' with new ItemID#$id and Item Category from '$request->category_name_original' into '$request->category_name' with new CategoryID#'$request->item_category'.";
                 }
 
                 $userlogs = new UserLogs;

@@ -431,6 +431,13 @@ $('#btnAssemblyProceed').on('click', function(){
         paging: false,
         ordering: false,
         info: false,
+        columnDefs: [
+            {
+                "targets": [4,5],
+                "visible": false,
+                "searchable": false
+            }
+        ],
         language: {
             emptyTable: "No data available in table",
             processing: "Loading...",
@@ -454,7 +461,9 @@ $('#btnAssemblyProceed').on('click', function(){
             { data: 'category' },
             { data: 'item' },
             { data: 'quantity' },
-            { data: 'uom' }
+            { data: 'uom' },
+            { data: 'category_id' },
+            { data: 'item_id' }
         ],
         orderCellsTop: true,
         fixedHeader: true,            
@@ -487,6 +496,7 @@ $('#btnAssemblySave').on('click', function(){
     var needdate = $('#needdate').val();
     var request_type = '5';
     var item_id = $('#assembly').val();
+    var item_desc = $("#assembly option:selected").text();
     if(needdate < minDate){
         swal('Minimum Date is today!','Select within date range from today onwards.','error');
         return false;
@@ -525,8 +535,8 @@ $('#btnAssemblySave').on('click', function(){
                                     },
                                     data:{
                                         'request_number': $('#request_num').val(),
-                                        'category': value[0],
-                                        'item': value[1],
+                                        'category': value[4],
+                                        'item': value[5],
                                         'quantity': value[2]
                                     },
                                     success: function(data){
@@ -556,7 +566,8 @@ $('#btnAssemblySave').on('click', function(){
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
-                                    'request_number': $('#request_num').val()
+                                    'request_number': $('#request_num').val(),
+                                    'item_desc': item_desc
                                 },
                                 success: function(data){
                                     if(data == 'true'){

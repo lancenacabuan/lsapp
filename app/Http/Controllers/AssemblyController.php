@@ -94,14 +94,10 @@ class AssemblyController extends Controller
     }
 
     public function saveRequest(Request $request){
-        $items = Item::query()->select('id','category_id')
-                ->where('item',htmlspecialchars_decode($request->item))
-                ->first();
-
         $stockRequest = new StockRequest;
         $stockRequest->request_number = $request->request_number;
-        $stockRequest->category = $items->category_id;
-        $stockRequest->item = $items->id;
+        $stockRequest->category = $request->category;
+        $stockRequest->item = $request->item;
         $stockRequest->quantity = $request->quantity;
         $stockRequest->served = '0';
         $stockRequest->pending = $request->quantity;
@@ -282,7 +278,7 @@ class AssemblyController extends Controller
     }
 
     public function partsDetails(Request $request){
-        $partsDetails = Part::query()->select('categories.category','items.item','items.UOM AS uom','quantity','items.id AS item_id')
+        $partsDetails = Part::query()->select('categories.category','items.item','items.UOM AS uom','quantity','items.id AS item_id','items.category_id AS category_id')
             ->join('items', 'items.id', 'parts.part_id')
             ->join('categories', 'categories.id', 'items.category_id')
             ->where('parts.item_id',$request->item_id)

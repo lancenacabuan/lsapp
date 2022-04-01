@@ -43,6 +43,8 @@
                         <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
                         <th>UOM</th>
+                        <th>CATEGORY ID</th>
+                        <th>ITEM ID</th>
                     </tr>
                 </thead>
                 <tbody>

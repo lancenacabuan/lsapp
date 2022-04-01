@@ -43,9 +43,6 @@
                         <th>ITEM DESCRIPTION</th>
                         <th>UOM</th>
                         <th>NEEDED</th>
-                        <th>MAIN BRANCH</th>
-                        <th>BALINTAWAK</th>
-                        <th>MALABON</th>
                     </tr>
                 </thead>
                 <tbody>

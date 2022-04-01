@@ -454,10 +454,7 @@ $('#btnAssemblyProceed').on('click', function(){
             { data: 'category' },
             { data: 'item' },
             { data: 'uom' },
-            { data: 'quantity' },
-            { data: 'main' },
-            { data: 'balintawak' },
-            { data: 'malabon' }
+            { data: 'quantity' }
         ],
         orderCellsTop: true,
         fixedHeader: true,            

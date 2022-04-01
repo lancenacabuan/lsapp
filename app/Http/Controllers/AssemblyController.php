@@ -10,7 +10,6 @@ use App\Models\Item;
 use App\Models\Part;
 use App\Models\Requests;
 use App\Models\RequestTransfer;
-use App\Models\RequestAssembly;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -43,8 +42,7 @@ class AssemblyController extends Controller
     public function generateReqNum(Request $request){
         $reqnumR = Requests::query()->select()->where('request_number',$request->request_number)->count();
         $reqnumT = RequestTransfer::query()->select()->where('request_number',$request->request_number)->count();
-        $reqnumA = RequestAssembly::query()->select()->where('request_number',$request->request_number)->count();
-        $reqnum = $reqnumR + $reqnumT + $reqnumA;
+        $reqnum = $reqnumR + $reqnumT;
         if($reqnum == 0){
             return response('unique');
         }

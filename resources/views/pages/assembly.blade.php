@@ -14,6 +14,7 @@
             <tr>
                 <th>DATE NEEDED</th>
                 <th>DATE REQUESTED</th>
+                <th>REQUEST NUMBER</th>
                 <th>REQUESTED BY</th>
                 <th>ITEM DESCRIPTION</th>
                 <th>STATUS</th>

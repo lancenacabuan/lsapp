@@ -469,12 +469,14 @@ function setqty(){
         var objCells = table.rows.item(i).cells;
         objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) * parseInt($("#qty").val());    
     }
+    $("#btnAssemblySave").prop('disabled', false);
 }
 
 $('#btnAssemblyBack').on('click', function(){
     $('#btnAssemblyProceed').hide();
     $('table.tblPartsDetails').dataTable().fnDestroy();
     $("#assemblypartsDetails").hide();
+    $("#btnAssemblySave").prop('disabled', true);
     $("#assembly").prop('disabled', false);
     $("#qty").prop('disabled', false);
     $("#assembly").val('');
@@ -485,7 +487,6 @@ $('#btnAssemblySave').on('click', function(){
     var needdate = $('#needdate').val();
     var request_type = '5';
     var item_id = $('#assembly').val();
-    var item_desc = $("#assembly option:selected").text();
     if(needdate < minDate){
         swal('Minimum Date is today!','Select within date range from today onwards.','error');
         return false;
@@ -555,8 +556,7 @@ $('#btnAssemblySave').on('click', function(){
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
-                                    'request_number': $('#request_num').val(),
-                                    'item_desc': item_desc
+                                    'request_number': $('#request_num').val()
                                 },
                                 success: function(data){
                                     if(data == 'true'){

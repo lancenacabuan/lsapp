@@ -51,7 +51,7 @@
         </div>
         <div class="col-md-12 mt-2 mb-4">
             <button type="submit" id="btnAssemblyBack" class="btn btn-primary bp">BACK</button>
-            <button type="submit" id="btnAssemblySave" class="btn btn-primary float-right bp">SUBMIT</button>
+            <button type="submit" id="btnAssemblySave" class="btn btn-primary float-right bp" disabled>SUBMIT</button>
         </div>
         </div>
     </div>

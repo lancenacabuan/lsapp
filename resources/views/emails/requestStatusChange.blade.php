@@ -12,7 +12,7 @@
         <br><br>
         Thank you!
     </p>
-    <a href="https://lance.idsi.com.ph/maintenance?tbl=location">https://lance.idsi.com.ph/maintenance?tbl=location</a>
+    <a href="{{ env('APP_URL') }}maintenance?tbl=location">{{ env('APP_URL') }}maintenance?tbl=location</a>
     <br><br>
     This is a system-generated email. Please do not reply.
 </body>

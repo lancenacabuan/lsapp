@@ -9,9 +9,13 @@
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Requested By: {{$details['requested_by']}}<br>
         Request Type: {{$details['reqtype']}}<br>
+        @if($details['reqtype'] != 'ASSEMBLY')
         Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
         Reference SO/PO No.: {{$details['reference']}}<br><br>
+        @else
+        Assembled Item Name: {{$details['item_desc']}}<br><br>
+        @endif
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>                            
                 <tr>
@@ -34,7 +38,7 @@
         Kindly login to your {{$details['role']}} account to process this request by clicking on the link below.<br>
         Thank you!
     </p>
-    <a href="https://lance.idsi.com.ph/stockrequest?request_number={{$details['request_number']}}">https://lance.idsi.com.ph/stockrequest?request_number={{$details['request_number']}}</a>
+    <a href="{{ env('APP_URL') }}stockrequest?request_number={{$details['request_number']}}">{{ env('APP_URL') }}stockrequest?request_number={{$details['request_number']}}</a>
     <br><br>
     This is a system-generated email. Please do not reply.
 </body>

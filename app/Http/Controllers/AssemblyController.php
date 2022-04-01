@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Stock;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\emailForRequest;
+use App\Mail\disapprovedRequest;
+use App\Mail\receivedRequest;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Part;
+use App\Models\Stock;
+use App\Models\StockRequest;
 use App\Models\Requests;
 use App\Models\RequestTransfer;
 use App\Models\User;
@@ -66,6 +71,98 @@ class AssemblyController extends Controller
         $uom = str_replace('"}]','',$uom);
         
         return response($uom);
+    }
+
+    public function saveReqNum(Request $request){
+        $requests = new Requests;
+        $requests->request_number = $request->request_number;
+        $requests->requested_by = auth()->user()->id;
+        $requests->needdate = $request->needdate;
+        $requests->request_type = $request->request_type;
+        $requests->status = '6';
+        $requests->item_id = $request->item_id;
+        $sql = $requests->save();
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        return response($result);
+    }
+
+    public function saveRequest(Request $request){
+        $items = Item::query()->select('id','category_id')
+                ->where('item',htmlspecialchars_decode($request->item))
+                ->first();
+
+        $stockRequest = new StockRequest;
+        $stockRequest->request_number = $request->request_number;
+        $stockRequest->category = $items->category_id;
+        $stockRequest->item = $items->id;
+        $stockRequest->quantity = $request->quantity;
+        $stockRequest->served = '0';
+        $stockRequest->pending = $request->quantity;
+        $sql = $stockRequest->save();
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        return response($result);
+    }
+
+    public function logSave(Request $request){
+        do{
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, reference, needdate')
+                ->where('requests.request_number', $request->request_number)
+                ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                ->get();
+
+                $request_details = str_replace('[','',$request_details);
+                $request_details = str_replace(']','',$request_details);
+                $request_details = json_decode($request_details);
+        }
+        while(!$request_details);
+
+        do{
+            $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
+                ->join('categories', 'categories.id', 'stock_request.category')
+                ->join('items', 'items.id', 'stock_request.item')
+                ->where('request_number', $request->request_number)
+                ->get();
+        }
+        while(!$items);
+        
+        $subject = 'STOCK REQUEST NO. '.$request->request_number;
+        $user = User::role('approver - warehouse')->get();
+        foreach($user as $key){
+            $details = [
+                'name' => ucwords($key->name),
+                'action' => 'STOCK REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => auth()->user()->name,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'item_desc' => $request->item_desc,
+                'role' => 'Approver - Warehouse',
+                'items' => $items
+            ];
+            Mail::to($key->email)->send(new emailForRequest($details, $subject));
+        }
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "NEW STOCK REQUEST: User successfully saved Stock Request No. $request->request_number.";
+        $userlogs->save();
+        
+        return response('true');
     }
 
     public function createItem(Request $request){

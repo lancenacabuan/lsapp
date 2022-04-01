@@ -82,10 +82,9 @@ function checkNewAssembly(){
 
 setInterval(checkCreateItem, 200);
 function checkCreateItem(){
-    var category = $('#aic_category').val();
     var item_description = $.trim($('#aic_item_description').val());
     if($('#createItem').is(':visible')){
-        if(category && item_description){
+        if(item_description){
             $('#partsDetails').show();
         }
         else{
@@ -195,11 +194,10 @@ $("#tblCreateItem").on('click', '.delete-row', function(){
 });
 
 $('#btnSave').on('click', function(){
-    var category = $('#aic_category').val();
     var item_description = $.trim($('#aic_item_description').val());
     swal({
         title: "CREATE NEW ASSEMBLED ITEM?",
-        text: "You are about to CREATE a new Assembly Item!",
+        text: "You are about to CREATE a new Assembled Item!",
         icon: "warning",
         buttons: true,
     })
@@ -212,7 +210,6 @@ $('#btnSave').on('click', function(){
                     'X-CSRF-TOKEN': $("#csrf").val(),
                 },
                 data:{
-                    category_id: category,
                     item: item_description
                 },
                 success: function(data){
@@ -256,7 +253,6 @@ $('#btnSave').on('click', function(){
                             },
                             data:{
                                 item_id: data.id,
-                                category: $("#category option:selected").text(),
                                 item: item_description
                             },
                             success: function(data){
@@ -303,9 +299,7 @@ function runCompare(){
     if($('#detailsAssemblyItem').is(':visible')){
         var item_current = $.trim($('#aim_item_name_details').val());
         var item_original = $('#aim_item_name_details_original').val();
-        var category_current = $('#aim_item_category_details').val();
-        var category_original = $('#aim_item_category_details_original').val();
-        if(!item_current || (item_current.toUpperCase() == item_original.toUpperCase() && category_current == category_original)){
+        if(!item_current || (item_current.toUpperCase() == item_original.toUpperCase())){
             $('#btnUpdate').hide();
         }
         else{
@@ -323,11 +317,6 @@ $('#assemblyitemTable tbody').on('click', 'tr', function(){
     var data = table.row(this).data();
     var item_id = data.id;
     $('#aim_item_id').val(item_id);
-    var category_name = data.category;
-    $('#aim_category_name_details_original').val(category_name);
-    var item_category = data.category_id;
-    $('#aim_item_category_details').val(item_category);
-    $('#aim_item_category_details_original').val(item_category);
     var item_name = decodeHtml(data.item);
     $('#aim_item_name_details').val(item_name);
     $('#aim_item_name_details_original').val(item_name);
@@ -373,15 +362,11 @@ $('#assemblyitemTable tbody').on('click', 'tr', function(){
 
 $('#btnUpdate').on('click', function(){
     var item_id = $('#aim_item_id').val();
-    var category_name_original = $('#aim_category_name_details_original').val();
-    var item_category_original = $('#aim_item_category_details_original').val();
     var item_name_original = $('#aim_item_name_details_original').val();
-    var category_name = $('#aim_item_category_details').find('option:selected').text();
-    var item_category = $('#aim_item_category_details').val();
     var item_name = $.trim($('#aim_item_name_details').val());
     swal({
         title: "UPDATE ASSEMBLED ITEM?",
-        text: "You are about to UPDATE this Assembly Item!",
+        text: "You are about to UPDATE this Assembled Item!",
         icon: "warning",
         buttons: true,
     })
@@ -395,11 +380,7 @@ $('#btnUpdate').on('click', function(){
                 },
                 data: {
                     item_id: item_id,
-                    category_name_original: category_name_original,
-                    item_category_original: item_category_original,
                     item_name_original: item_name_original,
-                    category_name: category_name,
-                    item_category: item_category,
                     item_name: item_name
                 },
                 success: function(data){

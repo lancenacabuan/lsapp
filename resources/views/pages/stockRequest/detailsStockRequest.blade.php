@@ -19,7 +19,7 @@
                 <input class="form-control form-control-sm"  id="needdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" id="client_name_label" style="width: 160px;">Client Name</label>
                 <input class="form-control form-control-sm" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" id="item_desc_label" style="width: 160px;">Assembled Item Name</label>
+                <label class="form-control form-control-sm" id="item_desc_label" style="width: 160px; display: none;">Assembled Item Name</label>
                 <input class="form-control form-control-sm" id="item_desc_details" style="width: 450px; margin-right: 10px; display: none;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">

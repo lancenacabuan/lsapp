@@ -2217,7 +2217,7 @@ $('.btnPrint').on('click', function(){
     window.location.href = '/printRequest?request_number='+$('#request_num_details').val();
 });
 
-$('#btnPrint').on('click', function(){
+$(document).on('click', '#btnPrint', function(){
     var printContents=document.getElementById('printPage').innerHTML;
     var originalContents=document.body.innerHTML;
     document.body.innerHTML=printContents;
@@ -2225,7 +2225,7 @@ $('#btnPrint').on('click', function(){
     document.body.innerHTML=originalContents;
 });
 
-$('#btnSavePDF').on('click', function(){
+$(document).on('click', '#btnSavePDF', function(){
     swal({
         title: "SAVE AS PDF?",
         text: "You are about to SAVE this Stock Request as PDF!",

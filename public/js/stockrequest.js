@@ -405,7 +405,7 @@ $('table.stockrequestTable').DataTable({
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
         },
         {
-            "targets": [7,8,9,10,11,12,13,14],
+            "targets": [7,8,9,10,11,12,13,14,15,16],
             "visible": false,
             "searchable": false
         }
@@ -472,6 +472,8 @@ $('table.stockrequestTable').DataTable({
                 }
             }
         },
+        { data: 'item_id' },
+        { data: 'item_desc' },
         { data: 'req_type_id' },
         { data: 'status_id' },
         { data: 'prep_by' },

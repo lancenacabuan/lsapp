@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid">
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <i class='fa fa-exclamation-triangle'></i>
+        <strong>Note:</strong> This webpage module is still currently under maintenance. Thank you very much for understanding.
+    </div>
     @role('sales') {{---ROLES---}}
     <button class="btn btn-primary bp btnNewStockRequest" type="button">NEW STOCK REQUEST</button>
     <br><br>
@@ -17,6 +21,8 @@
                 <th>REQUESTED BY</th>
                 <th style="width: 150px;">REQUEST TYPE</th>
                 <th style="width: 250px;">STATUS</th>
+                <th class="d-none">ITEM ID</th>
+                <th class="d-none">ITEM DESCRIPTION</th>
                 <th class="d-none">REQUEST TYPE ID</th>
                 <th class="d-none">STATUS ID</th>
                 <th class="d-none">PREPARED BY</th>

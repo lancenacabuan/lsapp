@@ -352,8 +352,8 @@ $('#assemblyitemTable tbody').on('click', 'tr', function(){
         columns: [
             { data: 'category' },
             { data: 'item' },
-            { data: 'uom' },
-            { data: 'quantity' }
+            { data: 'quantity' },
+            { data: 'uom' }
         ],
         orderCellsTop: true,
         fixedHeader: true,            
@@ -453,8 +453,8 @@ $('#btnAssemblyProceed').on('click', function(){
         columns: [
             { data: 'category' },
             { data: 'item' },
-            { data: 'uom' },
-            { data: 'quantity' }
+            { data: 'quantity' },
+            { data: 'uom' }
         ],
         orderCellsTop: true,
         fixedHeader: true,            
@@ -467,7 +467,7 @@ function setqty(){
     var count = table.rows.length;
     for(i = 1; i < count; i++){
         var objCells = table.rows.item(i).cells;
-        objCells.item(3).innerHTML = parseInt(objCells.item(3).innerHTML) * parseInt($("#qty").val());    
+        objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) * parseInt($("#qty").val());    
     }
 }
 
@@ -479,4 +479,117 @@ $('#btnAssemblyBack').on('click', function(){
     $("#qty").prop('disabled', false);
     $("#assembly").val('');
     $("#qty").val('');
+});
+
+$('#btnAssemblySave').on('click', function(){
+    var needdate = $('#needdate').val();
+    var request_type = '5';
+    var item_id = $('#assembly').val();
+    var item_desc = $("#assembly option:selected").text();
+    if(needdate < minDate){
+        swal('Minimum Date is today!','Select within date range from today onwards.','error');
+        return false;
+    }
+    else{
+        swal({
+            title: "SUBMIT ASSEMBLY REQUEST?",
+            text: "You are about to SUBMIT this ASSEMBLY REQUEST!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url:'/assembly/saveReqNum',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                    },
+                    data:{
+                        'request_number': $('#request_num').val(),
+                        'needdate': needdate,
+                        'request_type': request_type,
+                        'item_id': item_id
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            var myTable = $('#tblPartsDetails').DataTable();
+                            var form_data  = myTable.rows().data();
+                            $.each(form_data, function(key, value){
+                                $.ajax({
+                                    type:'post',
+                                    url:'/assembly/saveRequest',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $("#csrf").val(),
+                                    },
+                                    data:{
+                                        'request_number': $('#request_num').val(),
+                                        'category': value[0],
+                                        'item': value[1],
+                                        'quantity': value[2]
+                                    },
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            return true;
+                                        }
+                                        else{
+                                            return false;
+                                        }
+                                    },
+                                    error: function(data){
+                                        if(data.status == 401){
+                                            location.reload();
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
+                            });
+                            scrollReset();
+                            $('#newAssembly').hide();
+                            $('#newAssembly').modal('dispose');
+                            $('#loading').show(); Spinner(); Spinner.show();
+                            $.ajax({
+                                type:'post',
+                                url:'/assembly/logSave',
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'request_number': $('#request_num').val(),
+                                    'item_desc': item_desc
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        $('#loading').hide(); Spinner.hide();
+                                        swal("SUBMIT SUCCESS", "ASSEMBLY REQUEST", "success");
+                                        setTimeout(function(){location.reload()}, 2000);
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        location.reload();
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        else{
+                            $('#newAssembly').hide();
+                            swal("SUBMIT FAILED", "ASSEMBLY REQUEST", "error");
+                            setTimeout(function(){location.reload()}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            location.reload();
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
+    }
 });

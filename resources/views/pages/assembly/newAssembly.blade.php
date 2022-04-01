@@ -41,8 +41,8 @@
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
+                        <th>QTY</th>
                         <th>UOM</th>
-                        <th>NEEDED</th>
                     </tr>
                 </thead>
                 <tbody>

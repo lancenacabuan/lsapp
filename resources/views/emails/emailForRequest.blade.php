@@ -9,13 +9,9 @@
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Requested By: {{$details['requested_by']}}<br>
         Request Type: {{$details['reqtype']}}<br>
-        @if($details['reqtype'] != 'ASSEMBLY')
         Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
         Reference SO/PO No.: {{$details['reference']}}<br><br>
-        @else
-        Assembled Item Name: {{$details['item_desc']}}<br><br>
-        @endif
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>                            
                 <tr>

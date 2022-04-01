@@ -524,9 +524,8 @@ $('#btnAssemblySave').on('click', function(){
                     },
                     success: function(data){
                         if(data == 'true'){
-                            var myTable = $('#tblPartsDetails').DataTable();
-                            var form_data  = myTable.rows().data();
-                            $.each(form_data, function(key, value){
+                            var form_data  = $('#tblPartsDetails').DataTable().rows().data();
+                            form_data.each(function(value, index){
                                 $.ajax({
                                     type:'post',
                                     url:'/assembly/saveRequest',
@@ -535,9 +534,9 @@ $('#btnAssemblySave').on('click', function(){
                                     },
                                     data:{
                                         'request_number': $('#request_num').val(),
-                                        'category': value[4],
-                                        'item': value[5],
-                                        'quantity': value[2]
+                                        'category': value.category_id,
+                                        'item': value.item_id,
+                                        'quantity': value.quantity
                                     },
                                     success: function(data){
                                         if(data == 'true'){

@@ -527,6 +527,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#requested_by_details').val(req_by);
                 var req_type = value.req_type;
                     $('#request_type_details').val(req_type);
+                var item_desc = value.item_desc;
+                    $('#item_desc_details').val(item_desc);
                 var status = value.status;
                     $('#status_details').val(status);
                 var prep_by = value.prep_by;
@@ -547,13 +549,17 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
             
                     $('.modal-body').html();
                     $('#detailsStockRequest').modal('show');
-                    if(value.req_type_id == '1'){
+                    if(value.req_type_id == '1' || value.req_type_id == '5'){
                         $("#client_name_label").hide();
                         $("#client_name_details").hide();
                         $("#location_label").hide();
                         $("#location_details").hide();
                         $("#reference_label").hide();
                         $("#reference_details").hide();
+                    }
+                    if(value.req_type_id == '5'){
+                        $("#item_desc_label").show();
+                        $("#item_desc_details").show();
                     }
                     if(requestStatus != '6'){
                         $("#btnApprove").hide();
@@ -941,6 +947,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#requested_by_details').val(req_by);
     var req_type = data.req_type;
         $('#request_type_details').val(req_type);
+    var item_desc = data.item_desc;
+        $('#item_desc_details').val(item_desc);
     var status = data.status;
         $('#status_details').val(status);
     var prep_by = data.prep_by;
@@ -961,13 +969,17 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
 
         $('.modal-body').html();
         $('#detailsStockRequest').modal('show');
-        if(data.req_type_id == '1'){
+        if(data.req_type_id == '1' || data.req_type_id == '5'){
             $("#client_name_label").hide();
             $("#client_name_details").hide();
             $("#location_label").hide();
             $("#location_details").hide();
             $("#reference_label").hide();
             $("#reference_details").hide();
+        }
+        if(data.req_type_id == '5'){
+            $("#item_desc_label").show();
+            $("#item_desc_details").show();
         }
         if(requestStatus != '6'){
             $("#btnApprove").hide();

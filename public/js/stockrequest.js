@@ -1863,6 +1863,29 @@ $('#btnReturn').on('click', function(){
     }); 
 });
 
+var check = 0;
+setInterval(checkReqType, 0);
+function checkReqType(){
+    if($('#detailsStockRequest').is(':visible')){
+        var req_type_id = $('#req_type_id_details').val();
+        if(req_type_id == '5'){
+            var table = $('#stockDetailsrequest').DataTable();
+            var table_length = table.data().count();
+
+            $("#btnProceed").prop('disabled', true);
+            $("#stockDetailsrequest *").prop('disabled', true);
+            table.column(4).visible(false);
+            var form_data  = $('#tblPartsDetails').DataTable().rows().data();
+            form_data.each(function(value, index){
+                if(value.qtystock >= value.quantity){
+                    alert('!!!');
+                    // check++;
+                }
+            });
+        }
+    }
+}
+
 var items = [];
 $('table.stockDetails').DataTable().on('select', function(){});
 $('.stockDetails tbody').on('click', 'tr', function(){
@@ -1911,7 +1934,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
 $("#btnProceed").unbind('click').click(function(){
     var reqnum = $('#request_num_details').val();
     var j = 0;
-    $("#stockDetailsrequest *").prop('disabled',true);
+    $("#stockDetailsrequest *").prop('disabled', true);
     $("#btnProceed").hide();
     $("#requestItems").slideDown();
     $('#schedOn').attr('max', maxDate);

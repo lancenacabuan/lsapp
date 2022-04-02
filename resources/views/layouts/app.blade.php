@@ -224,7 +224,6 @@
     @endif
     @if(Request::is('maintenance'))
         <script src="{{ asset('js/maintenance.js') }}"></script>
-        <script src="{{ asset('js/assembly.js') }}"></script>
     @endif
 </body>
 </html>

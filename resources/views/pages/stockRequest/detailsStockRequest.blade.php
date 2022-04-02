@@ -47,8 +47,16 @@
         </div>
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
-        </div><br>      
+        </div>
         <div class="modal-body">
+            <div id="header_label" class="alert alert-primary" role="alert">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Please click table rows to select from the requested items.
+            </div>
+            <div id="warning" class="alert alert-warning" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>CANNOT PROCEED:</strong> Available stocks of Main Branch should be equal or more than the quantity of all requested items.
+            </div>
             @role('sales|approver - sales') {{---ROLES---}}
             <div id="sd1" style="display: none;">
             <table id="stockDetailsrequest" class="table stockDetails1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">

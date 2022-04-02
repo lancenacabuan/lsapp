@@ -51,6 +51,23 @@ function copyRefNum(){
     }
 }
 
+function sweet(title, text, icon, btnName, url){
+    swal(title, text, icon, {
+        buttons: {
+            cancel: 'Cancel',
+            catch: {
+            text: btnName,
+            value: 'button',
+            }
+        },
+    })
+    .then((value) => {
+        if(value == 'button'){
+            window.location.href = url;
+        }
+    });
+}
+
 function generatedr(){
     var today = new Date();
     var month = today.getMonth()+1;
@@ -561,6 +578,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#reference_details").hide();
                     }
                     if(value.req_type_id == '5'){
+                        $("#header_label").hide();
                         $("#item_desc_label").show();
                         $("#item_desc_details").show();
                         $("#qty_label").show();
@@ -580,6 +598,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#btnDelete").hide();
                     }
                     if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'){
+                        $("#header_label").hide();
                         $("#btnProceed").hide();
                     }
                     if(requestStatus == '2' || requestStatus == '5'){
@@ -985,6 +1004,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#reference_details").hide();
         }
         if(data.req_type_id == '5'){
+            $("#header_label").hide();
             $("#item_desc_label").show();
             $("#item_desc_details").show();
             $("#qty_label").show();
@@ -1004,6 +1024,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#btnDelete").hide();
         }
         if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'){
+            $("#header_label").hide();
             $("#btnProceed").hide();
         }
         if(requestStatus == '2' || requestStatus == '5'){
@@ -1863,30 +1884,33 @@ $('#btnReturn').on('click', function(){
     }); 
 });
 
-var check = 0;
 setInterval(checkReqType, 0);
 function checkReqType(){
     if($('#detailsStockRequest').is(':visible')){
         var req_type_id = $('#req_type_id_details').val();
         if(req_type_id == '5'){
             var table = $('#stockDetailsrequest').DataTable();
-            var table_length = table.data().count();
+            var count = 0;
 
-            $("#btnProceed").prop('disabled', true);
+            $("#warning").show();
+            $("#btnProceed").prop('disabled', false);
             $("#stockDetailsrequest *").prop('disabled', true);
             table.column(4).visible(false);
-            var form_data  = $('#tblPartsDetails').DataTable().rows().data();
+            var form_data  = $('#stockDetailsrequest').DataTable().rows().data();
             form_data.each(function(value, index){
-                if(value.qtystock >= value.quantity){
-                    alert('!!!');
-                    // check++;
+                if(parseInt(value.qtystock) < parseInt(value.quantity)){
+                    $("#btnProceed").prop('disabled', true);
+                    count++;
+                    return false;
                 }
             });
+            if(count == 0){
+                $("#warning").hide();
+            }
         }
     }
 }
 
-var items = [];
 $('table.stockDetails').DataTable().on('select', function(){});
 $('.stockDetails tbody').on('click', 'tr', function(){
     var table = $('table.stockDetails').DataTable();
@@ -1902,13 +1926,31 @@ $('.stockDetails tbody').on('click', 'tr', function(){
     }
     else if(stock == 0){
         if(bal != 0 && mal != 0){
-            swal('Item out of stock!','Request Stock Transfer from Balintawak and/or Malabon.','warning');
+            sweet(
+                'Item out of stock!',
+                'Request Stock Transfer from Balintawak and/or Malabon.',
+                'warning',
+                'Go to Stock Transfer',
+                '/stocktransfer'
+            );
         }
         else if(bal != 0 && mal == 0){
-            swal('Item out of stock!','Request Stock Transfer from Balintawak.','warning');
+            sweet(
+                'Item out of stock!',
+                'Request Stock Transfer from Balintawak.',
+                'warning',
+                'Go to Stock Transfer',
+                '/stocktransfer'
+            );
         }
         else if(bal == 0 && mal != 0){
-            swal('Item out of stock!','Request Stock Transfer from Malabon.','warning');
+            sweet(
+                'Item out of stock!',
+                'Request Stock Transfer from Malabon.',
+                'warning',
+                'Go to Stock Transfer',
+                '/stocktransfer'
+            );
         }
         else{
             swal('Item out of stock!','','error');
@@ -1931,7 +1973,15 @@ $('.stockDetails tbody').on('click', 'tr', function(){
     }
 });
 
+var items = [];
 $("#btnProceed").unbind('click').click(function(){
+    var req_type_id = $('#req_type_id_details').val();
+    if(req_type_id == '5'){
+        var form_data  = $('#stockDetailsrequest').DataTable().rows().data();
+        form_data.each(function(value, index){
+            items.push(value.item_id);
+        });
+    }
     var reqnum = $('#request_num_details').val();
     var j = 0;
     $("#stockDetailsrequest *").prop('disabled', true);
@@ -2238,6 +2288,10 @@ $("#btnProceed").unbind('click').click(function(){
 });
 
 $('#btnBack').on('click', function(){
+    var req_type_id = $('#req_type_id_details').val();
+    if(req_type_id == '5'){
+        items = [];
+    }
     $("#stockDetailsrequest *").prop('disabled', false);
     $('#btnSubmit').prop('disabled', true);
     $("#requestItems").hide();

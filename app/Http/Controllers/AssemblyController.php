@@ -78,6 +78,7 @@ class AssemblyController extends Controller
         $requests->request_type = $request->request_type;
         $requests->status = '1';
         $requests->item_id = $request->item_id;
+        $requests->qty = $request->qty;
         $sql = $requests->save();
 
         if(!$sql){
@@ -95,9 +96,9 @@ class AssemblyController extends Controller
         $stockRequest->request_number = $request->request_number;
         $stockRequest->category = $request->category;
         $stockRequest->item = $request->item;
-        $stockRequest->quantity = $request->quantity;
+        $stockRequest->quantity = $request->quantity * $request->qty;
         $stockRequest->served = '0';
-        $stockRequest->pending = $request->quantity;
+        $stockRequest->pending = $request->quantity * $request->qty;
         $sql = $stockRequest->save();
 
         if(!$sql){

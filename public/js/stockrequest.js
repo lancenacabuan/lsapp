@@ -405,7 +405,7 @@ $('table.stockrequestTable').DataTable({
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
         },
         {
-            "targets": [7,8,9,10,11,12,13,14,15,16],
+            "targets": [7,8,9,10,11,12,13,14,15,16,17],
             "visible": false,
             "searchable": false
         }
@@ -474,6 +474,7 @@ $('table.stockrequestTable').DataTable({
         },
         { data: 'item_id' },
         { data: 'item_desc' },
+        { data: 'qty' },
         { data: 'req_type_id' },
         { data: 'status_id' },
         { data: 'prep_by' },
@@ -529,6 +530,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#request_type_details').val(req_type);
                 var item_desc = value.item_desc;
                     $('#item_desc_details').val(item_desc);
+                var qty = value.qty;
+                    $('#qty_details').val(qty);
                 var status = value.status;
                     $('#status_details').val(status);
                 var prep_by = value.prep_by;
@@ -560,6 +563,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(value.req_type_id == '5'){
                         $("#item_desc_label").show();
                         $("#item_desc_details").show();
+                        $("#qty_label").show();
+                        $("#qty_details").show();
                     }
                     if(requestStatus != '6'){
                         $("#btnApprove").hide();
@@ -949,6 +954,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#request_type_details').val(req_type);
     var item_desc = data.item_desc;
         $('#item_desc_details').val(item_desc);
+    var qty = data.qty;
+        $('#qty_details').val(qty);
     var status = data.status;
         $('#status_details').val(status);
     var prep_by = data.prep_by;
@@ -980,6 +987,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(data.req_type_id == '5'){
             $("#item_desc_label").show();
             $("#item_desc_details").show();
+            $("#qty_label").show();
+            $("#qty_details").show();
         }
         if(requestStatus != '6'){
             $("#btnApprove").hide();

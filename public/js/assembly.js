@@ -497,6 +497,7 @@ $('#btnAssemblySave').on('click', function(){
     var request_type = '5';
     var item_id = $('#assembly').val();
     var item_desc = $("#assembly option:selected").text();
+    var qty = $('#qty').val();
     if(needdate < minDate){
         swal('Minimum Date is today!','Select within date range from today onwards.','error');
         return false;
@@ -520,7 +521,8 @@ $('#btnAssemblySave').on('click', function(){
                         'request_number': $('#request_num').val(),
                         'needdate': needdate,
                         'request_type': request_type,
-                        'item_id': item_id
+                        'item_id': item_id,
+                        'qty': qty
                     },
                     success: function(data){
                         if(data == 'true'){
@@ -536,7 +538,8 @@ $('#btnAssemblySave').on('click', function(){
                                         'request_number': $('#request_num').val(),
                                         'category': value.category_id,
                                         'item': value.item_id,
-                                        'quantity': value.quantity
+                                        'quantity': value.quantity,
+                                        'qty': qty
                                     },
                                     success: function(data){
                                         if(data == 'true'){
@@ -554,10 +557,6 @@ $('#btnAssemblySave').on('click', function(){
                                     }
                                 });
                             });
-                            scrollReset();
-                            $('#newAssembly').hide();
-                            $('#newAssembly').modal('dispose');
-                            $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 type:'post',
                                 url:'/assembly/logSave',
@@ -570,7 +569,7 @@ $('#btnAssemblySave').on('click', function(){
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
+                                        $('#newAssembly').hide();
                                         swal("SUBMIT SUCCESS", "ASSEMBLY REQUEST", "success");
                                         setTimeout(function(){location.reload()}, 2000);
                                     }

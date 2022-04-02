@@ -23,6 +23,7 @@
                 <th style="width: 250px;">STATUS</th>
                 <th class="d-none">ITEM ID</th>
                 <th class="d-none">ITEM DESCRIPTION</th>
+                <th class="d-none">QUANTITY</th>
                 <th class="d-none">REQUEST TYPE ID</th>
                 <th class="d-none">STATUS ID</th>
                 <th class="d-none">PREPARED BY</th>

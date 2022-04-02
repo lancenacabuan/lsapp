@@ -117,6 +117,7 @@ Route::get('/uomAssembly',[AssemblyController::class,'uomAssembly']);
 Route::any('/assembly/saveReqNum',[AssemblyController::class,'saveReqNum']);
 Route::any('/assembly/saveRequest',[AssemblyController::class,'saveRequest']);
 Route::any('/assembly/logSave',[AssemblyController::class,'logSave']);
+Route::get('/assembly/request_data',[AssemblyController::class,'request_data']);
 Route::any('/createItem',[AssemblyController::class,'createItem']);
 Route::any('/saveParts',[AssemblyController::class,'saveParts']);
 Route::any('/logItem',[AssemblyController::class,'logItem']);

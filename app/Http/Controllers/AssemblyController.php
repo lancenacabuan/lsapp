@@ -120,6 +120,30 @@ class AssemblyController extends Controller
         return response('true');
     }
 
+    public function request_data(){
+        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, requests.schedule AS sched, prepared_by, needdate, requests.item_id AS item_id, items.item AS item_desc, qty')
+        ->where('requests.requested_by', auth()->user()->id)
+        ->whereNotIn('requests.status', ['7','8','10','11'])
+        ->join('users', 'users.id', '=', 'requests.requested_by')
+        ->join('status', 'status.id', '=', 'requests.status')
+        ->join('items', 'items.id', '=', 'requests.item_id')
+        ->orderBy('requests.created_at', 'DESC')
+        ->get();
+
+        return DataTables::of($list)
+        ->addColumn('prep_by', function (Requests $list){
+            $users = User::query()
+                ->select('name')
+                ->where('id', $list->prepared_by)
+                ->get();
+            $users = str_replace("[{\"name\":\"","",$users);
+            $users = str_replace("\"}]","",$users);
+            
+            return $users;
+        })
+        ->make(true);
+    }
+
     public function createItem(Request $request){
         if(trim($request->item) != ''){
             $item = Item::query()->select()

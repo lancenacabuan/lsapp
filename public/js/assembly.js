@@ -1,4 +1,4 @@
-var minDate;
+var minDate, maxDate;
 $(function(){
     var dtToday = new Date();
     
@@ -12,7 +12,29 @@ $(function(){
     minDate = year + '-' + month + '-' + day;
 
     $('#needdate').attr('min', minDate);
+    $('#schedOn').attr('min', minDate);
 });
+
+const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+function dateDiffInDays(a, b){
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+    
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
+function copyReqNum(){
+    var copyText = document.getElementById("request_num_details");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value);
+    swal({
+        title: copyText.value,
+        text: "Copied to Clipboard!",
+        icon: "success",
+        timer: 2000
+    });
+}
 
 function generateReqNum(){
     var today = new Date();
@@ -418,7 +440,93 @@ $('#btnClose').on('click', function(){
     location.reload();
 });
 
-$('#assemblyTable').DataTable();
+$('table.assemblyTable').dataTable().fnDestroy();
+$('#loading').show(); Spinner(); Spinner.show();
+$('table.assemblyTable').DataTable({ 
+    columnDefs: [
+        {
+            "targets": [1],
+            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
+        },
+        {
+            "targets": [7,8,9,10,11],
+            "visible": false,
+            "searchable": false
+        }
+    ],
+    language: {
+        processing: "Loading...",
+        emptyTable: "No data available in table"
+    },
+    serverSide: true,
+    ajax: {
+        url: '/assembly/request_data',
+    },
+    columns: [
+        {
+            data: 'needdate',
+            "render": function(data, type, row){
+                if(row.status_id == '7' || row.status_id == '8' || row.status_id == '9' || row.status_id == '10' || row.status_id == '11'){
+                    return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
+                }
+                else{
+                    var a = new Date(minDate);
+                    var b = new Date(row.needdate);
+                    var difference = dateDiffInDays(a, b);
+                    if(difference >= 0 && difference <= 3){
+                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
+                    }
+                    else if(difference < 0){
+                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                    }
+                    else{
+                        return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
+                    }
+                }
+            }
+        },
+        { data: 'date' },
+        { data: 'req_num' },
+        { data: 'req_by' },
+        { data: 'item_desc' },
+        { data: 'qty' },
+        {
+            data: 'status',
+            "render": function(data, type, row){
+                if(row.status_id == '6'){
+                    return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '1'){
+                    return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '2' || row.status_id == '5'){
+                    return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '3' || row.status_id == '4'){
+                    return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '8' || row.status_id == '9'){
+                    return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '10'){
+                    return "<span style='color: DarkBlue; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else{
+                    return "<span style='color: Gray; font-weight: bold;'>"+row.status+"</span>";
+                }
+            }
+        },
+        { data: 'item_id' },
+        { data: 'status_id' },
+        { data: 'prep_by' },
+        { data: 'sched' },
+        { data: 'user_id' },
+    ],
+    order:[],
+    initComplete: function(){
+        $('#loading').hide(); Spinner.hide();
+    }
+});
 
 $('#btnAssemblyProceed').on('click', function(){
     $('#btnAssemblyProceed').hide();

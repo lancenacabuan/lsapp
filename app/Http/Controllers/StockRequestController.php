@@ -886,20 +886,39 @@ class StockRequestController extends Controller
             $result = 'true';
         }
         if($result == 'true'){
-            if($request->serial == ''){
-                Stock::where('item_id',$request->item_id)
-                    ->whereIn('location_id',['1','2','3','4'])
-                    ->where('status','in')
-                    ->orderBy('id')->limit($request->qty)
-                    ->update(['status' => 'prep']);
+            if($request->req_type_id != '5'){
+                if($request->serial == ''){
+                    Stock::where('item_id',$request->item_id)
+                        ->whereIn('location_id',['1','2','3','4'])
+                        ->where('status','in')
+                        ->orderBy('id')->limit($request->qty)
+                        ->update(['status' => 'prep']);
+                }
+                else{
+                    Stock::where('item_id',$request->item_id)
+                        ->whereIn('location_id',['1','2','3','4'])
+                        ->where('status','in')
+                        ->where('id',$request->stock_id)
+                        ->orderBy('id')->limit(1)
+                        ->update(['status' => 'prep']);
+                }
             }
             else{
-                Stock::where('item_id',$request->item_id)
-                    ->whereIn('location_id',['1','2','3','4'])
-                    ->where('status','in')
-                    ->where('id',$request->stock_id)
-                    ->orderBy('id')->limit(1)
-                    ->update(['status' => 'prep']);
+                if($request->serial == ''){
+                    Stock::where('item_id',$request->item_id)
+                        ->whereIn('location_id',['1','2','3','4'])
+                        ->where('status','in')
+                        ->orderBy('id')->limit($request->qty)
+                        ->update(['location_id' => '7']);
+                }
+                else{
+                    Stock::where('item_id',$request->item_id)
+                        ->whereIn('location_id',['1','2','3','4'])
+                        ->where('status','in')
+                        ->where('id',$request->stock_id)
+                        ->orderBy('id')->limit(1)
+                        ->update(['location_id' => '7']);
+                }
             }
             
             StockRequest::where('request_number', $request->request_number)

@@ -569,7 +569,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
             
                     $('.modal-body').html();
                     $('#detailsStockRequest').modal('show');
-                    if(value.req_type_id == '1' || value.req_type_id == '5'){
+                    if(req_type_id == '1' || req_type_id == '5'){
                         $("#client_name_label").hide();
                         $("#client_name_details").hide();
                         $("#location_label").hide();
@@ -577,7 +577,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#reference_label").hide();
                         $("#reference_details").hide();
                     }
-                    if(value.req_type_id == '5'){
+                    if(req_type_id == '5'){
                         $("#header_label").hide();
                         $("#item_desc_label").show();
                         $("#item_desc_details").show();
@@ -995,7 +995,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
 
         $('.modal-body').html();
         $('#detailsStockRequest').modal('show');
-        if(data.req_type_id == '1' || data.req_type_id == '5'){
+        if(req_type_id == '1' || req_type_id == '5'){
             $("#client_name_label").hide();
             $("#client_name_details").hide();
             $("#location_label").hide();
@@ -1003,7 +1003,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#reference_label").hide();
             $("#reference_details").hide();
         }
-        if(data.req_type_id == '5'){
+        if(req_type_id == '5'){
             $("#header_label").hide();
             $("#item_desc_label").show();
             $("#item_desc_details").show();
@@ -1887,12 +1887,13 @@ $('#btnReturn').on('click', function(){
 setInterval(checkReqType, 0);
 function checkReqType(){
     if($('#detailsStockRequest').is(':visible')){
-        var req_type_id = $('#req_type_id_details').val();
-        if(req_type_id == '5'){
+        if($('#req_type_id_details').val() == '5'){
             var table = $('#stockDetailsrequest').DataTable();
             var count = 0;
 
-            $("#warning").show();
+            if($('#status_details').val() == 'PENDING'){
+                $("#warning").show();
+            }
             $("#btnProceed").prop('disabled', false);
             $("#stockDetailsrequest *").prop('disabled', true);
             table.column(4).visible(false);
@@ -2251,8 +2252,7 @@ $("#btnProceed").unbind('click').click(function(){
 });
 
 $('#btnBack').on('click', function(){
-    var req_type_id = $('#req_type_id_details').val();
-    if(req_type_id == '5'){
+    if($('#req_type_id_details').val() == '5'){
         items = [];
     }
     $("#stockDetailsrequest *").prop('disabled', false);

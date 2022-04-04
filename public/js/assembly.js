@@ -172,7 +172,7 @@ $('table.assemblyTable').DataTable({
                 else if(row.status_id == '2' || row.status_id == '5'){
                     return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '3' || row.status_id == '4'){
+                else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12'){
@@ -404,6 +404,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
             });
             reqitem.forEach(value => {
                 var requestStatus = value.status_id;
+                    $('#status_id_details').val(requestStatus);
                 var req_type_id = value.req_type_id;
                     $('#req_type_id_details').val(req_type_id);
                 var req_date = value.date;
@@ -449,8 +450,11 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         $('#prepItemsModal').show();
                         $('#defective_label').show();
                         $('#btnAssemble').show();
-                        $('#btnDefective').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                    }
+                    if(requestStatus == '13'){
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
                     }
                                 
                 $('table.stockDetails').dataTable().fnDestroy();    
@@ -477,7 +481,8 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         { data: 'uom' }
                     ],          
                 });
-                            
+
+                $('table.prepItems').dataTable().fnDestroy();
                 $('table.prepItems').DataTable({
                     columnDefs: [
                         {
@@ -527,6 +532,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
     var table = $('table.assemblyTable').DataTable(); 
     var value = table.row(this).data();
     var requestStatus = value.status_id;
+        $('#status_id_details').val(requestStatus);
     var req_type_id = value.req_type_id;
         $('#req_type_id_details').val(req_type_id);
     var req_date = value.date;
@@ -570,8 +576,11 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $('#prepItemsModal').show();
             $('#defective_label').show();
             $('#btnAssemble').show();
-            $('#btnDefective').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+        }
+        if(requestStatus == '13'){
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
         }
                     
     $('table.stockDetails').dataTable().fnDestroy();    
@@ -641,6 +650,13 @@ var items = [];
 var item_count = 0;
 $('.table.prepItems').DataTable().on('select', function(){});
 $('.prepItems tbody').on('click', 'tr', function(){
+    var requestStatus = $('#status_id_details').val();
+    if(requestStatus == '2'){
+        return false;
+    }
+    if(requestStatus == '13'){
+        return false;
+    }
     var table = $('table.prepItems').DataTable();
     var data = table.row(this).data();
     item_count = table.data().count();
@@ -652,15 +668,23 @@ $('.prepItems tbody').on('click', 'tr', function(){
     else {
         items.push(data.id);
     }
-    if(items.length == 0){
-        $('#btnReceive').prop('disabled', true);
-        $('#btnAssemble').prop('disabled', false);
-        $('#btnDefective').prop('disabled', true);
+    if(requestStatus == '3'){
+        if(items.length == 0){
+            $('#btnReceive').prop('disabled', true);
+        }
+        else{
+            $('#btnReceive').prop('disabled', false);
+        }
     }
-    else{
-        $('#btnReceive').prop('disabled', false);
-        $('#btnAssemble').prop('disabled', true);
-        $('#btnDefective').prop('disabled', false);
+    if(requestStatus == '12'){
+        if(items.length == 0){
+            $('#btnAssemble').show();
+            $('#btnDefective').hide();
+        }
+        else{
+            $('#btnAssemble').hide();
+            $('#btnDefective').show();
+        }
     }
 });
 
@@ -761,4 +785,46 @@ $('#btnReceive').on('click', function(){
             }
         });
     }
+});
+
+$('#btnAssemble').on('click', function(){
+    var item_desc_details = $('#item_desc_details').val();
+    swal({
+        title: "ASSEMBLE: "+item_desc_details+"?",
+        text: "You are about to ASSEMBLE this Assembly Request!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type:'post',
+                url:'/assembly/assembleRequest',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                },
+                data:{
+                    'request_number': $('#request_num_details').val()
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        $('#detailsAssembly').hide();
+                        swal("ASSEMBLE SUCCESS", "ASSEMBLY REQUEST", "success");
+                        setTimeout(function(){location.href="/assembly"}, 2000);
+                    }
+                    else{
+                        $('#detailsAssembly').hide();
+                        swal("ASSEMBLE FAILED", "ASSEMBLY REQUEST", "error");
+                        setTimeout(function(){location.href="/assembly"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/assembly';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });    
 });

@@ -115,7 +115,7 @@ class AssemblyController extends Controller
     public function logSave(Request $request){
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "NEW STOCK REQUEST: User successfully saved Stock Request No. $request->request_number.";
+        $userlogs->activity = "NEW ASSEMBLY STOCK REQUEST: User successfully saved Assembly Stock Request No. $request->request_number.";
         $userlogs->save();
         
         return response('true');
@@ -173,7 +173,23 @@ class AssemblyController extends Controller
     public function logReceive(Request $request){
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "RECEIVED ASSEMBLY REQUEST: User successfully received Assembly Request No. $request->request_number.";
+        $userlogs->activity = "RECEIVED ASSEMBLY STOCK REQUEST: User successfully received Assembly Stock Request No. $request->request_number.";
+        $userlogs->save();
+
+        return response('true');
+    }
+
+    public function assembleRequest(Request $request){
+        Requests::where('request_number', $request->request_number)
+            ->where('status','12')
+            ->update(['status' => '13']);
+                
+        Prepare::where('request_number', $request->request_number)
+            ->update(['status' => 'ASSEMBLED']);
+        
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "ASSEMBLED FOR RECEIVING: User successfully assembled for receiving Assembly Stock Request No. $request->request_number.";
         $userlogs->save();
 
         return response('true');

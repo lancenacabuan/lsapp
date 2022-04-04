@@ -121,6 +121,7 @@ Route::get('/assembly/request_data',[AssemblyController::class,'request_data']);
 Route::any('/assembly/receiveRequest',[AssemblyController::class,'receiveRequest']);
 Route::any('/assembly/receiveItems',[AssemblyController::class,'receiveItems']);
 Route::any('/assembly/logReceive',[AssemblyController::class,'logReceive']);
+Route::any('/assembly/assembleRequest',[AssemblyController::class,'assembleRequest']);
 Route::any('/createItem',[AssemblyController::class,'createItem']);
 Route::any('/saveParts',[AssemblyController::class,'saveParts']);
 Route::any('/logItem',[AssemblyController::class,'logItem']);

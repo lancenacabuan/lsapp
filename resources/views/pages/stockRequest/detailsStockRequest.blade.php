@@ -8,6 +8,7 @@
         <div class="modal-body" style="background-color: white; color: black;">                          
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input type="hidden" id="req_type_id_details">
+            <input type="hidden" id="status_id_details">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
@@ -246,6 +247,9 @@
             <button type="button" id="btnSale" class="btn btn-primary float-right bp" style="display: none;">SALE</button>
             <span class="float-right" style="width: 10px;">&nbsp;</span>
             <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;">RETURN</button>
+            @endrole
+            @role('admin|encoder') {{---ROLES---}}
+            <button type="button" id="btnReceiveAssembled" class="btn btn-primary float-right bp" style="display: none;">RECEIVE ASSEMBLED</button>
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br>

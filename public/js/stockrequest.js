@@ -475,7 +475,7 @@ $('table.stockrequestTable').DataTable({
                 else if(row.status_id == '2' || row.status_id == '5'){
                     return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '3' || row.status_id == '4'){
+                else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12'){
@@ -530,6 +530,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
             });
             reqitem.forEach(value => {
                 var requestStatus = value.status_id;
+                    $('#status_id_details').val(requestStatus);
                 var req_type_id = value.req_type_id;
                     $('#req_type_id_details').val(req_type_id);
                 var req_date = value.date;
@@ -594,10 +595,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#reason_label").show();
                         $("#reason_details").show();
                     }
-                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11' || requestStatus == '12'){
+                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
                         $("#btnDelete").hide();
                     }
-                    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11' || requestStatus == '12'){
+                    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
                         $("#proceed_label").hide();
                         $("#btnProceed").hide();
                     }
@@ -610,13 +611,20 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $("#btnReceive").html('RECEIVE DEMO');
                         }
                     }
-                    if(requestStatus == '8' || requestStatus == '9'){
+                    if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13'){
                         $("#transitItemsModal").show();
                         $("#btnReceive").hide();
                         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                         if(req_type_id == '3' && requestStatus == '9'){
                             $("#btnSale").show();
                             $("#btnReturn").show();
+                        }
+                        if(requestStatus == '12'){
+                            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        }
+                        if(requestStatus == '13'){
+                            document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
+                            $("#btnReceiveAssembled").show();
                         }
                     }
                     if(requestStatus == '10'){
@@ -647,7 +655,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
-                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11' || requestStatus == '12'){
+                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
@@ -956,6 +964,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     var table = $('table.stockrequestTable').DataTable(); 
     var data = table.row(this).data();
     var requestStatus = data.status_id;
+        $('#status_id_details').val(requestStatus);
     var req_type_id = data.req_type_id;
         $('#req_type_id_details').val(req_type_id);
     var req_date = data.date;
@@ -1020,10 +1029,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#reason_label").show();
             $("#reason_details").show();
         }
-        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11' || requestStatus == '12'){
+        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
             $("#btnDelete").hide();
         }
-        if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11' || requestStatus == '12'){
+        if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
             $("#proceed_label").hide();
             $("#btnProceed").hide();
         }
@@ -1036,13 +1045,20 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $("#btnReceive").html('RECEIVE DEMO');
             }
         }
-        if(requestStatus == '8' || requestStatus == '9'){
+        if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13'){
             $("#transitItemsModal").show();
             $("#btnReceive").hide();
             document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
             if(req_type_id == '3' && requestStatus == '9'){
                 $("#btnSale").show();
                 $("#btnReturn").show();
+            }
+            if(requestStatus == '12'){
+                document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            }
+            if(requestStatus == '13'){
+                document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
+                $("#btnReceiveAssembled").show();
             }
         }
         if(requestStatus == '10'){
@@ -1073,7 +1089,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#sd1").show();
             $("#sd2").hide();
         }
-        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11' || requestStatus == '12'){
+        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
             $("#sd1").show();
             $("#sd2").hide();
         }
@@ -1915,6 +1931,10 @@ function checkReqType(){
 var items = [];
 $('table.stockDetails').DataTable().on('select', function(){});
 $('.stockDetails tbody').on('click', 'tr', function(){
+    var requestStatus = $('#status_id_details').val();
+    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
+        return false;
+    }
     var table = $('table.stockDetails').DataTable();
     var data = table.row(this).data();
     var pend = data.pending;

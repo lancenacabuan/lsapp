@@ -55,8 +55,12 @@
         <div id="prepItemsModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 id="modalheader" class="modal-title w-100"></h6>
-        </div><br>      
+        </div>
         <div class="modal-body">
+            <div id="header_label" class="alert alert-primary" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Please select table rows to confirm received items then click the RECEIVE button below.
+            </div>
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                 <input class="form-control form-control-sm" id="prep_by1" style="width: 280px; margin-bottom: 10px;" type="text" readonly>

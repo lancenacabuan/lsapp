@@ -94,7 +94,7 @@
         <div id="requestItems" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REQUESTED ITEMS</h6>
-        </div><br>      
+        </div>
         <div class="modal-body">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
@@ -114,7 +114,7 @@
         <div id="schedItemsModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
-        </div><br>      
+        </div>
         <div class="modal-body">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
@@ -148,7 +148,7 @@
         <div id="transitItemsModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 id="modalheader" class="modal-title w-100">FOR RECEIVING ITEM DETAILS</h6>
-        </div><br>      
+        </div>
         <div class="modal-body">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>

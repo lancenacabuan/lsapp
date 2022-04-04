@@ -1912,6 +1912,7 @@ function checkReqType(){
     }
 }
 
+var items = [];
 $('table.stockDetails').DataTable().on('select', function(){});
 $('.stockDetails tbody').on('click', 'tr', function(){
     var table = $('table.stockDetails').DataTable();
@@ -1974,7 +1975,6 @@ $('.stockDetails tbody').on('click', 'tr', function(){
     }
 });
 
-var items = [];
 $("#btnProceed").unbind('click').click(function(){
     var j = 0;
     var reqnum = $('#request_num_details').val();

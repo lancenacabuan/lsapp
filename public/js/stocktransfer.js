@@ -1255,8 +1255,8 @@ $('.transferDetails tbody').on('click', 'tr', function(){
 });
 
 $("#btnProceed").unbind('click').click(function(){
-    var reqnum = $('#request_num_details').val();
     var j = 0;
+    var reqnum = $('#request_num_details').val();
     $("#transferDetails *").prop('disabled',true);
     $("#btnProceed").hide();
     $("#requestItems").slideDown();

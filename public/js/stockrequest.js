@@ -578,7 +578,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#reference_details").hide();
                     }
                     if(req_type_id == '5'){
-                        $("#header_label").hide();
+                        $("#proceed_label").hide();
                         $("#item_desc_label").show();
                         $("#item_desc_details").show();
                         $("#qty_label").show();
@@ -598,7 +598,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#btnDelete").hide();
                     }
                     if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11' || requestStatus == '12'){
-                        $("#header_label").hide();
+                        $("#proceed_label").hide();
                         $("#btnProceed").hide();
                     }
                     if(requestStatus == '2' || requestStatus == '5'){
@@ -1004,7 +1004,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#reference_details").hide();
         }
         if(req_type_id == '5'){
-            $("#header_label").hide();
+            $("#proceed_label").hide();
             $("#item_desc_label").show();
             $("#item_desc_details").show();
             $("#qty_label").show();
@@ -1024,7 +1024,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#btnDelete").hide();
         }
         if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11' || requestStatus == '12'){
-            $("#header_label").hide();
+            $("#proceed_label").hide();
             $("#btnProceed").hide();
         }
         if(requestStatus == '2' || requestStatus == '5'){

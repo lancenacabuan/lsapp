@@ -14,6 +14,9 @@
         <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
             <a class="nav-link" id="nav4" href="{{ url('/maintenance?tbl=locations') }}"><strong>LOCATIONS</strong></a>
         </li>
+        <li class="nav-item-link" style="margin-left: 5px; border: 3px solid #0d1a80; border-radius: 10px 10px 0px 0px !important;">
+            <a class="nav-link" id="nav5" href="{{ url('/maintenance?tbl=warranty') }}"><strong>WARRANTY</strong></a>
+        </li>
     </ul>
     <div style="margin-top: -3px; color: white; height: 20px; background-color: #0d1a80;"></div>
     <br>
@@ -56,12 +59,27 @@
             </tr>
         </thead>
     </table>
+    <table class="table-hover table warrantyTable" id="warrantyTable"  style="width: 100%; display: none; cursor: pointer; font-size: 80%;">
+        <thead style="background-color: #0d1a80; color: white;">
+            <tr>
+                <th>WARRANTY NAME</th>
+                <th>DURATION</th>
+                <th>PHONE SUPPORT</th>
+                <th>ONSITE SUPPORT</th>
+                <th>SOFTWARE</th>
+                <th>HARDWARE</th>
+                <th>PARTS REPLACEMENT</th>
+                <th>SERVICE UNIT</th>
+            </tr>
+        </thead>
+    </table>
     @role('admin') {{---ROLES---}}
     <hr>
     <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" data-keyboard="false" style="display: none;">NEW ITEM</button>
     <button class="btn btn-primary bp btnCreateItem" type="button" data-toggle="modal" data-target="#createItem" data-backdrop="static" data-keyboard="false" style="display: none;">CREATE ITEM</button>
     <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" data-keyboard="false" style="display: none;">NEW CATEGORY</button>
     <button class="btn btn-primary bp btnNewLocation" type="button" style="display: none;">REQUEST NEW LOCATION</button>
+    <button class="btn btn-primary bp btnNewWarranty" type="button" style="display: none;">NEW WARRANTY</button>
     @endrole
 </div>
 <style>
@@ -87,4 +105,5 @@
 @include('pages.fileMaintenance.detailsCategory')
 @include('pages.fileMaintenance.newLocation')
 @include('pages.fileMaintenance.detailsLocation')
+@include('pages.fileMaintenance.warranty')
 @endsection

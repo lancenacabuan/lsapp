@@ -627,6 +627,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     btnDel = 13;
                 }
                 if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8'){
+                    $("#proceed_label").hide();
                     $("#btnProceed").hide();
                 }
                 if(requestStatus == '2' || requestStatus == '5'){
@@ -799,6 +800,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         btnDel = 13;
     }
     if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8'){
+        $("#proceed_label").hide();
         $("#btnProceed").hide();
     }
     if(requestStatus == '2' || requestStatus == '5'){

@@ -1,3 +1,4 @@
+var warranty, wrdata;
 if($(location).attr('pathname')+window.location.search == '/maintenance'){
     $('#nav1').addClass("active-link");
     $('.btnNewItem').show();
@@ -125,9 +126,229 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         }
     });
 }
+else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=warranty'){
+    $('#nav5').addClass("active-link");
+    $('.btnNewWarranty').show();
+    $('#warrantyTable').show();
+    $('#loading').show(); Spinner(); Spinner.show();
+    warranty = $('table.warrantyTable').DataTable({ 
+        dom: 'rtp',
+        language: {
+            processing: "Loading...",
+            emptyTable: "No data available in table"
+        },
+        processing: false,
+        serverSide: false,
+        ajax: {
+            url: 'GetWarranty'
+        },
+        async: false,
+        initComplete: function(){
+            $('#loading').hide(); Spinner.hide();
+        },
+        columns: [
+            { data: 'Warranty_Name', name:'Warranty_Name'},
+            { data: 'Duration', 
+                render: function(data, type){
+                    return data+' Months';
+                }
+            },
+            { data: null,
+                render: function(data, type, row) {
+                    if (row.Inclusive) {
+                        if (row.Inclusive.indexOf('Phone Support') > -1) {
+                            return '<center><span class="checkbox_span" style="color:green">✓</span></center>';
+                        }
+                        else{
+                            return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                        }
+                    }else{
+                        return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                    }
+                },
+                orderable: false,
+                className: "dt-head-center"
+            },
+            { data: null,
+                render: function(data, type, row) {
+                    if (row.Inclusive) {
+                        if (row.Inclusive.indexOf('Onsite Visit') > -1) {
+                            return '<center><span class="checkbox_span" style="color:green">✓</span></center>';
+                        }
+                        else{
+                            return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                        }
+                    }else{
+                        return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                    }
+                },
+                orderable: false,
+                className: "dt-head-center"
+            },
+            { data: null,
+                render: function(data, type, row) {
+                    if (row.Inclusive) {
+                        if (row.Inclusive.indexOf('Software') > -1) {
+                            return '<center><span class="checkbox_span" style="color:green">✓</span></center>';
+                        }
+                        else{
+                            return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                        }
+                    }
+                    else{
+                        return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                    }
+                },
+                orderable: false,
+                className: "dt-head-center"
+            },
+            { data: null,
+                render: function(data, type, row) {
+                    if (row.Inclusive) {
+                        if (row.Inclusive.indexOf('Hardware') > -1) {
+                            return '<center><span class="checkbox_span" style="color:green">✓</span></center>';
+                        }
+                        else{
+                            return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                        }
+                    }
+                    else{
+                        return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                    }
+                },
+                orderable: false,
+                className: "dt-head-center"
+            },
+            { data: null,
+                render: function(data, type, row) {
+                    if (row.Inclusive) {
+                        if (row.Inclusive.indexOf('Parts Replacement') > -1) {
+                            return '<center><span class="checkbox_span" style="color:green">✓</span></center>';
+                        }
+                        else{
+                            return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                        }
+                    }
+                    else{
+                        return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                    }
+                },
+                orderable: false,
+                className: "dt-head-center"
+            },
+            { data: null,
+                render: function(data, type, row) {
+                    if (row.Inclusive) {
+                        if (row.Inclusive.indexOf('Service Unit') > -1) {
+                            return '<center><span class="checkbox_span" style="color:green">✓</span></center>';
+                        }
+                        else{
+                            return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                        }
+                    }
+                    else{
+                        return '<center><span class="checkbox_span" style="color:red">X</span></center>';
+                    }
+                },
+                orderable: false,
+                className: "dt-head-center"
+            }
+            
+        ]
+    });
+}
 else{
     window.location.href = '/maintenance';
 }
+
+$(document).on('click', '.btnNewWarranty', function(){
+    $('#WarrantyForm').trigger('reset');
+    $( ".cb" ).prop( "checked", false );
+    $('#AddWarranty').modal('show');
+    $('.modal-title').text('ADD NEW WARRANTY');
+    $('#subBtn').val('SUBMIT');
+});
+
+$(document).on('click', '#subBtn', function(){
+    if (!$('#warranty').val() || !$('#duration').val()) {
+        $('#WarrantyForm')[0].reportValidity();
+        return false;
+    }
+    var inclusive = new Array();
+    $('.cb').each(function () {
+        if(this.checked)
+            inclusive.push($(this).val());
+    });
+    if ($('#subBtn').val() == 'SUBMIT') {
+        $.ajax({
+            url: "AddWarranty",
+            type: "POST",
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{
+                warranty: $('#warranty').val(),
+                duration: $('#duration').val(),
+                inclusive: inclusive
+            },
+            success: function(data){
+                if(data){
+                    swal('SAVE SUCCESS', 'MAINTENANCE - WARRANTY', 'success');
+                    setTimeout(function(){location.reload()} , 2000);
+                }
+            }
+        });
+    }
+    else{
+        $.ajax({
+            url: "UpdateWarranty",
+            type: "PUT",
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{
+                id:wrdata.id,
+                warranty: $('#warranty').val(),
+                duration: $('#duration').val(),
+                inclusive: inclusive
+            },
+            success: function(data){
+                if(data){
+                    swal('UPDATE SUCCESS', 'MAINTENANCE - WARRANTY', 'success');
+                    setTimeout(function(){location.reload()} , 2000);
+                }
+            }
+        });
+    }
+});
+
+$(document).on("click", ".warrantyTable tbody tr", function(){
+    wrdata = warranty.row(this).data();
+    $('#WarrantyForm').trigger('reset');
+    $('#subBtn').val('UPDATE');
+    $('#AddWarranty').modal('show');
+    $('.modal-title').text('UPDATE WARRANTY DETAILS');
+    $('#warranty').val(wrdata.Warranty_Name);
+    $('#duration').val(wrdata.Duration);
+    if(wrdata.Inclusive != null){
+        $('#software').attr("checked", wrdata.Inclusive.indexOf('Software') > -1);
+        $('#onsite').attr("checked", wrdata.Inclusive.indexOf('Onsite Visit') > -1);
+        $('#phone').attr("checked", wrdata.Inclusive.indexOf('Phone Support') > -1);
+        $('#hardware').attr("checked", wrdata.Inclusive.indexOf('Hardware') > -1);
+        $('#replacement').attr("checked", wrdata.Inclusive.indexOf('Parts Replacement') > -1);
+        $('#su').attr("checked", wrdata.Inclusive.indexOf('Service Unit') > -1);
+    }
+    else{
+        $('#software').attr("checked", false);
+        $('#onsite').attr("checked", false);
+        $('#phone').attr("checked", false);
+        $('#hardware').attr("checked", false);
+        $('#replacement').attr("checked", false);
+        $('#su').attr("checked", false);
+    }
+});
 
 function decodeHtml(str){
     var map = {

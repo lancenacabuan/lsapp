@@ -12,6 +12,7 @@ use App\Models\Stock;
 use App\Models\StockRequest;
 use App\Models\Requests;
 use App\Models\RequestTransfer;
+use App\Models\Prepare;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -142,6 +143,40 @@ class AssemblyController extends Controller
             return $users;
         })
         ->make(true);
+    }
+
+    public function receiveRequest(Request $request){
+        $sql = Requests::where('request_number', $request->request_number)
+            ->update(['status' => '12']);
+                
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        return response($result);
+    }
+
+    public function receiveItems(Request $request){
+        do{
+            $sql = Prepare::select('items_id','request_number','location','serial','qty')
+                ->where('id', $request->id)
+                ->update(['status' => 'RECEIVED']);
+        }
+        while(!$sql);
+        
+        return response('true');
+    }
+
+    public function logReceive(Request $request){
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "RECEIVED ASSEMBLY REQUEST: User successfully received Assembly Request No. $request->request_number.";
+        $userlogs->save();
+
+        return response('true');
     }
 
     public function createItem(Request $request){

@@ -54,7 +54,7 @@
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
         </div>
         <div class="modal-body">
-            <div id="header_label" class="alert alert-primary" role="alert">
+            <div id="proceed_label" class="alert alert-primary" role="alert">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please click table rows to select from the requested items.
             </div>

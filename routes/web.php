@@ -118,6 +118,9 @@ Route::any('/assembly/saveReqNum',[AssemblyController::class,'saveReqNum']);
 Route::any('/assembly/saveRequest',[AssemblyController::class,'saveRequest']);
 Route::any('/assembly/logSave',[AssemblyController::class,'logSave']);
 Route::get('/assembly/request_data',[AssemblyController::class,'request_data']);
+Route::any('/assembly/receiveRequest',[AssemblyController::class,'receiveRequest']);
+Route::any('/assembly/receiveItems',[AssemblyController::class,'receiveItems']);
+Route::any('/assembly/logReceive',[AssemblyController::class,'logReceive']);
 Route::any('/createItem',[AssemblyController::class,'createItem']);
 Route::any('/saveParts',[AssemblyController::class,'saveParts']);
 Route::any('/logItem',[AssemblyController::class,'logItem']);
@@ -142,4 +145,7 @@ Route::any('/saveLocation',[FileMaintenanceController::class,'saveLocation']);
 Route::any('/logNewLocation',[FileMaintenanceController::class,'logNewLocation']);
 Route::any('/updateLocation',[FileMaintenanceController::class,'updateLocation']);
 Route::any('/requestStatusChange',[FileMaintenanceController::class,'requestStatusChange']);
+Route::get('/GetWarranty',[FileMaintenanceController::class,'GetWarranty'])->name('GetWarranty');
+Route::any('/AddWarranty',[FileMaintenanceController::class,'AddWarranty']);
+Route::any('/UpdateWarranty',[FileMaintenanceController::class,'UpdateWarranty']);
 //

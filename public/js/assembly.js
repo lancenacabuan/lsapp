@@ -441,11 +441,15 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     }
                     if(requestStatus == '3'){
                         $('#prepItemsModal').show();
-                        $('#header_label').show();
+                        $('#receive_label').show();
+                        $('#btnReceive').show();
                         document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
                     }
                     if(requestStatus == '12'){
                         $('#prepItemsModal').show();
+                        $('#defective_label').show();
+                        $('#btnAssemble').show();
+                        $('#btnDefective').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                     }
                                 
@@ -558,11 +562,15 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         }
         if(requestStatus == '3'){
             $('#prepItemsModal').show();
-            $('#header_label').show();
+            $('#receive_label').show();
+            $('#btnReceive').show();
             document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
         }
         if(requestStatus == '12'){
             $('#prepItemsModal').show();
+            $('#defective_label').show();
+            $('#btnAssemble').show();
+            $('#btnDefective').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
         }
                     
@@ -630,10 +638,12 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
 });
 
 var items = [];
+var item_count = 0;
 $('.table.prepItems').DataTable().on('select', function(){});
 $('.prepItems tbody').on('click', 'tr', function(){
     var table = $('table.prepItems').DataTable();
     var data = table.row(this).data();
+    item_count = table.data().count();
 
     $(this).toggleClass('selected');
     if(items.includes(data.id) == true){
@@ -644,8 +654,111 @@ $('.prepItems tbody').on('click', 'tr', function(){
     }
     if(items.length == 0){
         $('#btnReceive').prop('disabled', true);
+        $('#btnAssemble').prop('disabled', false);
+        $('#btnDefective').prop('disabled', true);
     }
     else{
         $('#btnReceive').prop('disabled', false);
+        $('#btnAssemble').prop('disabled', true);
+        $('#btnDefective').prop('disabled', false);
+    }
+});
+
+$('#btnReceive').on('click', function(){
+    if(items.length < item_count){
+        alert('INCOMPLETE!!!');
+    }
+    else{
+        swal({
+            title: "RECEIVE ASSEMBLY REQUEST?",
+            text: "You are about to RECEIVE this ASSEMBLY REQUEST!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url:'/assembly/receiveRequest',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                    },
+                    data:{
+                        'request_number': $('#request_num_details').val()
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            for(var i=0; i < items.length; i++){
+                                $.ajax({
+                                    type:'post',
+                                    url:'/assembly/receiveItems',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $("#csrf").val(),
+                                    },
+                                    data:{
+                                        'id': items[i]
+                                    },
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            return true;
+                                        }
+                                        else{
+                                            return false;
+                                        }
+                                    },
+                                    error: function(data){
+                                        if(data.status == 401){
+                                            window.location.href = '/assembly';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
+                            }
+                            scrollReset();
+                            $('#detailsAssembly').hide();
+                            $('#detailsAssembly').modal('dispose');
+                            $('#loading').show(); Spinner(); Spinner.show();
+                            $.ajax({
+                                type:'post',
+                                url:'/assembly/logReceive',
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'request_number': $('#request_num_details').val(),
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        $('#loading').hide(); Spinner.hide();
+                                        swal("RECEIVE SUCCESS", "ASSEMBLY REQUEST", "success");
+                                        setTimeout(function(){location.href="/assembly"}, 2000);
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/assembly';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        else{
+                            $('#detailsAssembly').hide();
+                            swal("RECEIVE FAILED", "ASSEMBLY REQUEST", "error");
+                            setTimeout(function(){location.href="/assembly"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/assembly';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
     }
 });

@@ -57,9 +57,13 @@
             <h6 id="modalheader" class="modal-title w-100"></h6>
         </div>
         <div class="modal-body">
-            <div id="header_label" class="alert alert-primary" role="alert" style="display: none;">
+            <div id="receive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>NOTE:</strong> Please select table rows to confirm received items then click the RECEIVE button below.
+                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+            </div>
+            <div id="defective_label" class="alert alert-warning" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Select table rows to confirm <b>defective items</b> then click the DEFECTIVE button below. Otherwise, click the ASSEMBLE button to proceed.
             </div>
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
@@ -85,7 +89,10 @@
             </table> 
             <br>
             <hr>
-            <button type="button" id="btnReceive" class="btn btn-primary float-right bp">RECEIVE</button>
+            <button type="button" id="btnReceive" class="btn btn-primary float-right bp" style="display: none;" disabled>RECEIVE</button>
+            <button type="button" id="btnAssemble" class="btn btn-primary float-right bp" style="display: none;">ASSEMBLE</button>
+            <span class="float-right" style="width: 10px;">&nbsp;</span>
+            <button type="button" id="btnDefective" class="btn btn-primary float-right bp" style="display: none;" disabled>DEFECTIVE</button>
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br>
         </div>

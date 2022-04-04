@@ -13,6 +13,7 @@ use Spatie\Activitylog\Models\Activity;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Location;
+use App\Models\Warranty;
 use App\Models\User;
 use App\Models\UserLogs;
 use App\Mail\requestLocation;
@@ -380,5 +381,30 @@ class FileMaintenanceController extends Controller
         $userlogs->save();
 
         return response('true');
+    }
+
+    public function GetWarranty(){
+        return DataTables::of(Warranty::all())
+        ->make(true);
+    }
+
+    public function AddWarranty(Request $request){
+        $warranty = Warranty::create([
+            'Warranty_Name' => $request->warranty,
+            'Duration' => $request->duration,
+            'Inclusive' => implode(",",$request->inclusive)
+        ]);
+
+        return response()->json($warranty);
+    }
+
+    public function UpdateWarranty(Request $request){
+        $warranty = Warranty::where('id', $request->id)->update([
+            'Warranty_Name' => $request->warranty,
+            'Duration' => $request->duration,
+            'Inclusive' => implode(",",$request->inclusive)
+        ]);
+
+        return response()->json($warranty);
     }
 }

@@ -29,4 +29,5 @@
     </table>
 </div>
 @include('pages.assembly.newAssembly')
+@include('pages.assembly.detailsAssembly')
 @endsection

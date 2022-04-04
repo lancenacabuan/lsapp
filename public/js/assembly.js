@@ -103,11 +103,11 @@ function checkNewAssembly(){
 }
 
 $('.close').on('click', function(){
-    location.reload();
+    window.location.href = '/assembly';
 });
 
 $('#btnClose').on('click', function(){
-    location.reload();
+    window.location.href = '/assembly';
 });
 
 $('table.assemblyTable').dataTable().fnDestroy();
@@ -175,7 +175,7 @@ $('table.assemblyTable').DataTable({
                 else if(row.status_id == '3' || row.status_id == '4'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '8' || row.status_id == '9'){
+                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12'){
                     return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '10'){
@@ -379,4 +379,249 @@ $('#btnAssemblySave').on('click', function(){
             }
         });
     }
+});
+
+if($(location).attr('pathname')+window.location.search != '/assembly'){
+    url = window.location.search;
+    reqnum = url.replace('?request_number=', '');
+    $.ajax({
+        url: '/reqModal',
+        headers: {
+            'X-CSRF-TOKEN': $("#csrf").val(),
+        },
+        dataType: 'json',
+        type: 'get',
+        data: {
+            request_number: reqnum,
+        },
+        success: function(data){
+            $('#detailsAssembly').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            var reqitem = $.map(data.data, function(value, index){ 
+                return [value];
+            });
+            reqitem.forEach(value => {
+                var requestStatus = value.status_id;
+                var req_type_id = value.req_type_id;
+                    $('#req_type_id_details').val(req_type_id);
+                var req_date = value.date;
+                    req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
+                    $('#reqdate_details').val(req_date);
+                var need_date = value.needdate;
+                    maxDate = need_date;
+                    need_date = moment(need_date).format('dddd, MMMM DD, YYYY');
+                    $('#needdate_details').val(need_date);
+                var req_num = value.req_num;
+                    $('#request_num_details').val(req_num);
+                var req_by = value.req_by;
+                    $('#requested_by_details').val(req_by);
+                var req_type = value.req_type;
+                    $('#request_type_details').val(req_type);
+                var item_desc = value.item_desc;
+                    $('#item_desc_details').val(item_desc);
+                var qty = value.qty;
+                    $('#qty_details').val(qty);
+                var status = value.status;
+                    $('#status_details').val(status);
+                var prep_by = value.prep_by;
+                    $('#prep_by').val(prep_by);
+                    $('#prep_by1').val(prep_by);
+                var sched = value.sched;
+                    sched = moment(sched).format('dddd, MMMM DD, YYYY');
+                    $('#sched').val(sched);
+                    $('#sched1').val(sched);
+            
+                    $('.modal-body').html();
+                    $('#detailsAssembly').modal('show');
+                    if(requestStatus == '2' || requestStatus == '5'){
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'SCHEDULED ITEM DETAILS';
+                    }
+                    if(requestStatus == '3' || requestStatus == '4'){
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
+                    }
+                    if(requestStatus == '12'){
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                    }
+                                
+                $('table.stockDetails').dataTable().fnDestroy();    
+                $('table.stockDetails').DataTable({
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    language: {
+                        emptyTable: "No data available in table",
+                        processing: "Loading...",
+                    },
+                    serverSide: true,
+                    ajax: {
+                        url: '/requestDetails',
+                        data: {
+                            reqnum: req_num,
+                        }
+                    },
+                    order:[],
+                    columns: [
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'quantity' },
+                        { data: 'uom' }
+                    ],          
+                });
+                            
+                $('table.prepItems').DataTable({
+                    columnDefs: [
+                        {
+                            "targets": [6],
+                            "visible": false,
+                            "searchable": false
+                        }
+                    ],
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    language: {
+                        processing: "Loading...",
+                        emptyTable: "No data available in table"
+                    },
+                    serverSide: true,
+                    ajax: {
+                        url: '/schedItems',
+                        data: {
+                            request_number: req_num,
+                        }
+                    },
+                    order:[],
+                    columns: [
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'qty' },
+                        { data: 'uom' },
+                        { data: 'serial' },
+                        { data: 'location' },
+                        { data: 'id' }
+                    ]
+                });
+            });
+        },
+        error: function(data){
+            alert(data.responseText);
+        }
+    });
+}
+
+$('#assemblyTable tbody').on('click', 'tr', function(){
+    $('#detailsAssembly').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    var table = $('table.assemblyTable').DataTable(); 
+    var value = table.row(this).data();
+    var requestStatus = value.status_id;
+    var req_type_id = value.req_type_id;
+        $('#req_type_id_details').val(req_type_id);
+    var req_date = value.date;
+        req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
+        $('#reqdate_details').val(req_date);
+    var need_date = value.needdate;
+        maxDate = need_date;
+        need_date = moment(need_date).format('dddd, MMMM DD, YYYY');
+        $('#needdate_details').val(need_date);
+    var req_num = value.req_num;
+        $('#request_num_details').val(req_num);
+    var req_by = value.req_by;
+        $('#requested_by_details').val(req_by);
+    var item_desc = value.item_desc;
+        $('#item_desc_details').val(item_desc);
+    var qty = value.qty;
+        $('#qty_details').val(qty);
+    var status = value.status;
+        $('#status_details').val(status);
+    var prep_by = value.prep_by;
+        $('#prep_by').val(prep_by);
+        $('#prep_by1').val(prep_by);
+    var sched = value.sched;
+        sched = moment(sched).format('dddd, MMMM DD, YYYY');
+        $('#sched').val(sched);
+        $('#sched1').val(sched);
+
+        $('.modal-body').html();
+        $('#detailsAssembly').modal('show');
+        if(requestStatus == '2' || requestStatus == '5'){
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'SCHEDULED ITEM DETAILS';
+        }
+        if(requestStatus == '3' || requestStatus == '4'){
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
+        }
+        if(requestStatus == '12'){
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+        }
+                    
+    $('table.stockDetails').dataTable().fnDestroy();    
+    $('table.stockDetails').DataTable({ 
+        paging: false,
+        ordering: false,
+        info: false,
+        language: {
+            emptyTable: "No data available in table",
+            processing: "Loading...",
+        },
+        serverSide: true,
+        ajax: {
+            url: '/requestDetails',
+            data: {
+                reqnum: req_num,
+            }
+        },
+        order:[],
+        columns: [
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'quantity' },
+            { data: 'uom' }
+        ],
+        orderCellsTop: true,
+        fixedHeader: true,            
+    });
+                
+    $('table.prepItems').DataTable({
+        columnDefs: [
+            {
+                "targets": [6],
+                "visible": false,
+                "searchable": false
+            }
+        ],
+        paging: false,
+        ordering: false,
+        info: false,
+        language: {
+            processing: "Loading...",
+            emptyTable: "No data available in table"
+        },
+        serverSide: true,
+        ajax: {
+            url: '/schedItems',
+            data: {
+                request_number: req_num,
+            }
+        },
+        order:[],
+        columns: [
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' },
+            { data: 'location' },
+            { data: 'id' }
+        ]
+    });
 });

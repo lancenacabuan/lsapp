@@ -1,9 +1,9 @@
-<div class="modal" id="AddWarranty">
+<div class="modal fade in" id="AddWarranty">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
                 <h6 class="modal-title w-100">ADD NEW WARRANTY</h6>    
-                <button type="button" class="btn-close btn-close-white close" data-dismiss="modal"></button>
+                <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="WarrantyForm">

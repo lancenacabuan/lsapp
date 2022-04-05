@@ -519,9 +519,6 @@ class StockTransferController extends Controller
             ->where('status','5')
             ->update(['status' => '4']);
         
-        Transfer::where('request_number', $request->request_number)
-            ->update(['intransit' => 'yes']);
-        
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "FOR RECEIVING STOCK TRANSFER REQUEST: User successfully processed for receiving Stock Transfer Request No. $request->request_number.";
@@ -748,7 +745,6 @@ class StockTransferController extends Controller
             $transfer->locto = $request->locto;
             $transfer->serial = $request->serial;
             $transfer->qty = $request->qty;
-            $transfer->intransit = 'no';
             $transfer->schedule = $request->schedOn;
             $sql = $transfer->save();
         }

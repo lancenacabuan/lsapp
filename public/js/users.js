@@ -9,6 +9,12 @@ $('table.userTable').DataTable({
     ajax: {
         url: '/users_data',
     },
+    columnDefs: [
+    {
+        "targets": [0],
+        "visible": false,
+        "searchable": false
+    }],
     columns: [
         { data: 'user_id' },
         { data: 'user_name' },
@@ -16,6 +22,7 @@ $('table.userTable').DataTable({
         { data: 'role_name' },
         { data: 'user_status' }
     ],
+    order:[[3, 'asc'], [1, 'asc']],
     initComplete: function(){
         $('#loading').hide(); Spinner.hide();
     }

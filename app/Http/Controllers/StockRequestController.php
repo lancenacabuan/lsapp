@@ -490,9 +490,9 @@ class StockRequestController extends Controller
         Requests::where('request_number', $request->request_number)
             ->where('status','5')
             ->update(['status' => '4']);
-        
+
         Prepare::where('request_number', $request->request_number)
-            ->update(['intransit' => 'yes']);
+            ->update(['status' => 'FOR RECEIVING']);
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
@@ -506,6 +506,9 @@ class StockRequestController extends Controller
         if($request->request_type == '3'){
             $sql = Requests::where('request_number', $request->request_number)
                 ->update(['status' => '9']);
+
+            Prepare::where('request_number', $request->request_number)
+                ->update(['status' => 'RECEIVED DEMO']);
             
             $list = Prepare::select('items_id','request_number','location','serial','qty')
                 ->where('request_number', $request->request_number)
@@ -543,6 +546,9 @@ class StockRequestController extends Controller
         else{
             $sql = Requests::where('request_number', $request->request_number)
                 ->update(['status' => '8']);
+
+            Prepare::where('request_number', $request->request_number)
+                ->update(['status' => 'RECEIVED']);
             
             $list = Prepare::select('items_id','request_number','location','serial','qty')
                 ->where('request_number', $request->request_number)
@@ -690,6 +696,9 @@ class StockRequestController extends Controller
         else {
             $sql = Requests::where('request_number', $request->request_number)
                 ->update(['status' => '10', 'reference' => strtoupper($request->reference)]);
+
+            Prepare::where('request_number', $request->request_number)
+                ->update(['status' => 'SOLD']);
             
             $list = Prepare::select('items_id','request_number','location','serial','qty')
                 ->where('request_number', $request->request_number)
@@ -743,6 +752,9 @@ class StockRequestController extends Controller
     public function returnRequest(Request $request){
         $sql = Requests::where('request_number', $request->request_number)
             ->update(['status' => '11']);
+
+        Prepare::where('request_number', $request->request_number)
+            ->update(['status' => 'RETURNED']);
         
         $list = Prepare::select('items_id','request_number','location','serial','qty')
             ->where('request_number', $request->request_number)
@@ -865,13 +877,14 @@ class StockRequestController extends Controller
         if($count == 0){
             $prepare = new Prepare;
             $prepare->request_number = $request->request_number;
+            $prepare->stock_id = $request->stock_id;
             $prepare->user_id = auth()->user()->id;
             $prepare->items_id = $request->item_id;
             $prepare->location = $request->location;
             $prepare->serial = $request->serial;
             $prepare->qty = $request->qty;
-            $prepare->intransit = 'no';
             $prepare->schedule = $request->schedOn;
+            $prepare->status = 'SCHEDULED';
             $sql = $prepare->save();
         }
         else{

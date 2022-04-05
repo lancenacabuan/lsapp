@@ -56,7 +56,7 @@
         <div class="modal-body">
             <div id="proceed_label" class="alert alert-primary" role="alert">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>NOTE:</strong> Please click table rows to select from the requested items.
+                <strong>NOTE:</strong> Please click table rows to select from the requested items for preparation.
             </div>
             <table id="transferDetails" class="table transferDetails table-hover display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            

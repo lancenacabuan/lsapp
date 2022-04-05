@@ -195,6 +195,32 @@ class AssemblyController extends Controller
         return response('true');
     }
 
+    public function receiveAssembled(Request $request){
+        $sql = Requests::where('request_number', $request->request_number)
+            ->update(['status' => '14']);
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+            $list = Prepare::select('stock_id','items_id','request_number','location','serial','qty')
+                ->where('request_number', $request->request_number)
+                ->get();
+            foreach($list as $key){
+                Stock::where('id',$key->stock_id)
+                ->update(['status' => 'out']);
+            }
+        }
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "RECEIVED ASSEMBLED ITEM: User successfully received Assembled Item/s with Assembly Stock Request No. $request->request_number.";
+        $userlogs->save();
+
+        return response($result);
+    }
+
     public function createItem(Request $request){
         if(trim($request->item) != ''){
             $item = Item::query()->select()

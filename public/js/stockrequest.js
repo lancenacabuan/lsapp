@@ -546,6 +546,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#requested_by_details').val(req_by);
                 var req_type = value.req_type;
                     $('#request_type_details').val(req_type);
+                var item_id = value.item_id;
+                    $('#item_id_details').val(item_id);
                 var item_desc = value.item_desc;
                     $('#item_desc_details').val(item_desc);
                 var qty = value.qty;
@@ -624,7 +626,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         }
                         if(requestStatus == '13'){
                             document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
-                            $("#btnReceiveAssembled").show();
+                            $(".btnReceiveAssembled").show();
+                            $("#btnHideDetails").show();
+                            $("#divAssembly").show();
+                            $("#request_info").hide();
                         }
                     }
                     if(requestStatus == '10'){
@@ -980,6 +985,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#requested_by_details').val(req_by);
     var req_type = data.req_type;
         $('#request_type_details').val(req_type);
+    var item_id = data.item_id;
+        $('#item_id_details').val(item_id);
     var item_desc = data.item_desc;
         $('#item_desc_details').val(item_desc);
     var qty = data.qty;
@@ -1058,7 +1065,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             }
             if(requestStatus == '13'){
                 document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
-                $("#btnReceiveAssembled").show();
+                $(".btnReceiveAssembled").show();
+                $("#btnHideDetails").show();
+                $("#divAssembly").show();
+                $("#request_info").hide();
             }
         }
         if(requestStatus == '10'){
@@ -2280,6 +2290,16 @@ $('#btnBack').on('click', function(){
     $("#requestItems").hide();
     $("#btnProceed").show();
     $("#reqContents").empty();
+});
+
+$("#btnShowDetails").on('click', function(){
+    $("#divAssembly").hide();
+    $("#request_info").slideDown();
+});
+
+$("#btnHideDetails").on('click', function(){
+    $("#divAssembly").show();
+    $("#request_info").slideUp();
 });
 
 $('.btnPrint').on('click', function(){

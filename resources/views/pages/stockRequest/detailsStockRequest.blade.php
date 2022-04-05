@@ -9,6 +9,7 @@
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input type="hidden" id="req_type_id_details">
             <input type="hidden" id="status_id_details">
+            <input type="hidden" id="item_id_details">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
@@ -45,14 +46,23 @@
                 <label class="form-control form-control-sm" name="reason_label" id="reason_label" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>
                 <textarea class="form-control" name="reason_details" id="reason_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="4" readonly></textarea>
             </div>
+            @role('admin|encoder') {{---ROLES---}}
+            <div id="divAssembly" style="display: none;">
+            <hr>
+            <button type="button" id="btnReceiveAssembled" class="btnReceiveAssembled btn btn-primary float-right bp">RECEIVE ASSEMBLED</button>
+            <span class="float-right" style="width: 10px;">&nbsp;</span>
+            <button type="button" id="btnShowDetails" class="btn btn-primary float-right bp">SHOW DETAILS</button>
+            </div>
+            @endrole
         </div>
+        <div id="request_info">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
         </div>
         <div class="modal-body">
             <div id="proceed_label" class="alert alert-primary" role="alert">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>NOTE:</strong> Please click table rows to select from the requested items.
+                <strong>NOTE:</strong> Please click table rows to select from the requested items for preparation.
             </div>
             <div id="warning" class="alert alert-warning" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
@@ -121,6 +131,7 @@
             @role('sales') {{---ROLES---}}
             <button type="button" id="btnDelete" class="btn btn-dark bp">DELETE</button>
             @endrole
+            <br>
             <br>
         </div>
         <div id="requestItems" style="display: none;">
@@ -249,10 +260,13 @@
             <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;">RETURN</button>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
-            <button type="button" id="btnReceiveAssembled" class="btn btn-primary float-right bp" style="display: none;">RECEIVE ASSEMBLED</button>
+            <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp" style="display: none;">RECEIVE ASSEMBLED</button>
+            <span class="float-right" style="width: 10px;">&nbsp;</span>
+            <button type="button" id="btnHideDetails" class="btn btn-primary float-right bp" style="display: none;">HIDE DETAILS</button>
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br>
+        </div>
         </div>
         </div>
     </div>

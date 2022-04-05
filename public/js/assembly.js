@@ -420,6 +420,8 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     $('#requested_by_details').val(req_by);
                 var req_type = value.req_type;
                     $('#request_type_details').val(req_type);
+                var item_id = value.item_id;
+                    $('#item_id_details').val(item_id);
                 var item_desc = value.item_desc;
                     $('#item_desc_details').val(item_desc);
                 var qty = value.qty;
@@ -546,6 +548,8 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         $('#request_num_details').val(req_num);
     var req_by = value.req_by;
         $('#requested_by_details').val(req_by);
+    var item_id = value.item_id;
+        $('#item_id_details').val(item_id);
     var item_desc = value.item_desc;
         $('#item_desc_details').val(item_desc);
     var qty = value.qty;

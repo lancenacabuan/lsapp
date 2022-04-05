@@ -526,7 +526,7 @@ class StockRequestController extends Controller
                 else{
                     if(str_contains($key->serial, 'N/A')){
                         Stock::where('item_id',$key->items_id)
-                        ->where('stock_id',$key->stock_id)
+                        ->where('id',$key->stock_id)
                         ->where('serial','N/A')
                         ->where('location_id',$key->location)
                         ->where('status', 'prep')
@@ -535,7 +535,7 @@ class StockRequestController extends Controller
                     }
                     else{
                         Stock::where('item_id',$key->items_id)
-                        ->where('stock_id',$key->stock_id)
+                        ->where('id',$key->stock_id)
                         ->where('serial',$key->serial)
                         ->where('location_id',$key->location)
                         ->where('status', 'prep')
@@ -568,7 +568,7 @@ class StockRequestController extends Controller
                 else{
                     if(str_contains($key->serial, 'N/A')){
                         Stock::where('item_id',$key->items_id)
-                        ->where('stock_id',$key->stock_id)
+                        ->where('id',$key->stock_id)
                         ->where('serial','N/A')
                         ->where('location_id',$key->location)
                         ->where('status', 'prep')
@@ -577,7 +577,7 @@ class StockRequestController extends Controller
                     }
                     else{
                         Stock::where('item_id',$key->items_id)
-                        ->where('stock_id',$key->stock_id)
+                        ->where('id',$key->stock_id)
                         ->where('serial',$key->serial)
                         ->where('location_id',$key->location)
                         ->where('status', 'prep')
@@ -720,7 +720,7 @@ class StockRequestController extends Controller
                 else{
                     if(str_contains($key->serial, 'N/A')){
                         Stock::where('item_id',$key->items_id)
-                        ->where('stock_id',$key->stock_id)
+                        ->where('id',$key->stock_id)
                         ->where('serial','N/A')
                         ->where('location_id',['9'])
                         ->where('status', 'in')
@@ -729,7 +729,7 @@ class StockRequestController extends Controller
                     }
                     else{
                         Stock::where('item_id',$key->items_id)
-                        ->where('stock_id',$key->stock_id)
+                        ->where('id',$key->stock_id)
                         ->where('serial',$key->serial)
                         ->where('location_id',['9'])
                         ->where('status', 'in')
@@ -778,7 +778,7 @@ class StockRequestController extends Controller
             else{
                 if(str_contains($key->serial, 'N/A')){
                     Stock::where('item_id',$key->items_id)
-                    ->where('stock_id',$key->stock_id)
+                    ->where('id',$key->stock_id)
                     ->where('serial','N/A')
                     ->where('location_id',['9'])
                     ->where('status', 'in')
@@ -787,7 +787,7 @@ class StockRequestController extends Controller
                 }
                 else{
                     Stock::where('item_id',$key->items_id)
-                    ->where('stock_id',$key->stock_id)
+                    ->where('id',$key->stock_id)
                     ->where('serial',$key->serial)
                     ->where('location_id',['9'])
                     ->where('status', 'in')

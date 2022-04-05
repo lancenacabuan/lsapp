@@ -59,7 +59,7 @@
             </tr>
         </thead>
     </table>
-    <table class="table-hover table warrantyTable" id="warrantyTable"  style="width: 100%; display: none; cursor: pointer; font-size: 80%;">
+    <table class="table-hover table warrantyTable" id="warrantyTable" style="width: 100%; display: none; cursor: pointer; font-size: 80%;">
         <thead style="background-color: #0d1a80; color: white;">
             <tr>
                 <th>WARRANTY NAME</th>

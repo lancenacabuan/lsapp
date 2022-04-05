@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">STOCK REQUEST DETAILS XXX</h6>            
+            <h6 class="modal-title w-100">STOCK REQUEST DETAILS</h6>            
             <button type="button" class="btn-close btn-close-white close" id='modalClose' data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">                          
@@ -58,7 +58,7 @@
             @role('admin|encoder') {{---ROLES---}}
             <div id="divAssembly" style="display: none;">
             <hr>
-            <button type="button" id="btnReceiveAssembled" class="btnReceiveAssembled btn btn-primary float-right bp">RECEIVE ASSEMBLED</button>
+            <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp" disabled>RECEIVE ASSEMBLED</button>
             <span class="float-right" style="width: 10px;">&nbsp;</span>
             <button type="button" id="btnShowDetails" class="btn btn-primary float-right bp">SHOW DETAILS</button>
             </div>
@@ -156,7 +156,7 @@
                 <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                 <input class="form-control form-control-sm" id="schedOn" style="width: 280px;" type="date">
             </div>
-            <div class="form-inline"  style="margin-left: 35px;" id="reqContents"></div>
+            <div class="form-inline" style="margin-left: 35px;" id="reqContents"></div>
             <hr>
             <input type="button" class="btn btn-primary bp" id="btnBack" class="button" value="BACK">
             <input type="button" class="btn btn-primary float-right bp" id="btnSubmit" class="button" value="SCHEDULE" disabled>
@@ -269,7 +269,7 @@
             <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;">RETURN</button>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
-            <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp" style="display: none;">RECEIVE ASSEMBLED</button>
+            <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp" style="display: none;" disabled>RECEIVE ASSEMBLED</button>
             <span class="float-right" style="width: 10px;">&nbsp;</span>
             <button type="button" id="btnHideDetails" class="btn btn-primary float-right bp" style="display: none;">HIDE DETAILS</button>
             @endrole
@@ -277,6 +277,23 @@
             <br>
         </div>
         </div>
+        </div>
+    </div>
+    </div>
+</div>
+<div class="modal fade in" id="inputSerialModal">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
+            <h6 class="modal-title w-100">ASSEMBLED ITEM SERIAL</h6>            
+            <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center" style="background-color: white; color: black;">                          
+            <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+            <div class="form-inline" id="serialList"></div>
+            <span id="serial_note" style="color: Red; font-size: 12px;">*Please fill up all required fields.</span>
+            <hr>
+            <button type="button" id="btnReceiveAssembled" class="btn btn-primary float-right bp" style="zoom: 80%;">CONFIRM</button>
         </div>
     </div>
     </div>
@@ -295,7 +312,7 @@
             <textarea style="margin-bottom: 8px; font-size: 12px; resize: none;" class="form-control" rows="5" name="x_item" id="x_item" readonly></textarea>
             <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_serial" id="x_serial" placeholder="Input Item Serial..." autocomplete="off">
             <span style="color: Red; font-size: 12px;">*Required Field</span>
-            <button type="button" id="btnEdit" class="btn btn-primary float-right bp">EDIT</button>
+            <button type="button" id="btnEdit" class="btn btn-primary float-right bp" style="zoom: 80%;">EDIT</button>
         </div>
     </div>
     </div>
@@ -312,7 +329,7 @@
             <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100" autocomplete="off"></textarea>
             <span style="color: Red; font-size: 12px;">*Required Field</span><br>
             <span id='limit' style="font-size: 12px;"></span>
-            <button type="button" id="btnReason" class="btn btn-primary float-right bp">OK</button>
+            <button type="button" id="btnReason" class="btn btn-primary float-right bp" style="zoom: 80%;">OK</button>
         </div>
     </div>
     </div>
@@ -328,7 +345,7 @@
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_reference" id="x_reference" placeholder="SO/PO Number" autocomplete="off">
             <span style="color: Red; font-size: 12px;">Please input SO/PO Number to proceed.</span>
-            <button type="button" id="btnReference" class="btn btn-primary float-right bp" style="zoom: 75%;">OK</button>
+            <button type="button" id="btnReference" class="btn btn-primary float-right bp" style="zoom: 80%;">OK</button>
         </div>
     </div>
     </div>

@@ -136,7 +136,7 @@ $('table.assemblyTable').DataTable({
         {
             data: 'needdate',
             "render": function(data, type, row){
-                if(row.status_id == '7' || row.status_id == '8' || row.status_id == '9' || row.status_id == '10' || row.status_id == '11'){
+                if(row.status_id >= 7){
                     return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
                 }
                 else{
@@ -175,7 +175,7 @@ $('table.assemblyTable').DataTable({
                 else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12'){
+                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14'){
                     return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '10'){
@@ -698,8 +698,8 @@ $('#btnReceive').on('click', function(){
     }
     else{
         swal({
-            title: "RECEIVE ASSEMBLY REQUEST?",
-            text: "You are about to RECEIVE this ASSEMBLY REQUEST!",
+            title: "RECEIVE ASSEMBLY PARTS?",
+            text: "You are about to RECEIVE these ASSEMBLY PARTS!",
             icon: "warning",
             buttons: true,
         })
@@ -795,7 +795,7 @@ $('#btnAssemble').on('click', function(){
     var item_desc_details = $('#item_desc_details').val();
     swal({
         title: "ASSEMBLE: "+item_desc_details+"?",
-        text: "You are about to ASSEMBLE this Assembly Request!",
+        text: "You are about to ASSEMBLE this Assembly Stock Request!",
         icon: "warning",
         buttons: true,
     })

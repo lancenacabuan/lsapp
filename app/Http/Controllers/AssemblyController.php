@@ -173,7 +173,7 @@ class AssemblyController extends Controller
     public function logReceive(Request $request){
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "RECEIVED ASSEMBLY STOCK REQUEST: User successfully received Assembly Stock Request No. $request->request_number.";
+        $userlogs->activity = "RECEIVED ASSEMBLY STOCK REQUEST: User successfully received needed parts of Assembly Stock Request No. $request->request_number.";
         $userlogs->save();
 
         return response('true');
@@ -189,7 +189,7 @@ class AssemblyController extends Controller
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "ASSEMBLED FOR RECEIVING: User successfully assembled for receiving Assembly Stock Request No. $request->request_number.";
+        $userlogs->activity = "ASSEMBLED FOR RECEIVING: User successfully Assembled Item/s for receiving Assembly Stock Request No. $request->request_number.";
         $userlogs->save();
 
         return response('true');
@@ -213,12 +213,35 @@ class AssemblyController extends Controller
             }
         }
 
+        return response($result);
+    }
+
+    public function addAssembled(Request $request){
+        do{
+            $stocks = new Stock;
+            $stocks->request_number = $request->request_number;
+            $stocks->item_id = $request->item_id;
+            $stocks->category_id = '58';
+            $stocks->user_id =auth()->user()->id;
+            $stocks->location_id =$request->location_id;
+            $stocks->status = 'in';
+            $stocks->serial = $request->serial;
+            $stocks->rack = 'N/A';
+            $stocks->row = 'N/A';
+            $save = $stocks->save();
+        }
+        while(!$save);
+
+        return response('true');
+    }
+
+    public function logAssembled(Request $request){
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "RECEIVED ASSEMBLED ITEM: User successfully received Assembled Item/s with Assembly Stock Request No. $request->request_number.";
+        $userlogs->activity = "RECEIVED ASSEMBLED ITEM: User successfully received Assembled Item/s with Assembly Stock Request No. $request->request_number into warehouse stocks.";
         $userlogs->save();
 
-        return response($result);
+        return response('true');
     }
 
     public function createItem(Request $request){

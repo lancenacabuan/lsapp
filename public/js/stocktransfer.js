@@ -945,7 +945,7 @@ $('#btnDelete').on('click', function(){
         dangerMode: true,
     })
     .then((willDelete) => {
-        if(willDelete){     
+        if(willDelete){
             $.ajax({
                 type:'post', 
                 url:'/deleteTransfer',

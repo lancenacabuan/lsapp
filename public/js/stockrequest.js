@@ -124,12 +124,12 @@ $(".btnNewStockRequest").on('click', function(){
 
 setInterval(runFunction, 200);
 function runFunction(){
-    var needdate = $('#needdate').val();
-    var request_type = $('#request_type').val();
-    var client_name = $.trim($('#client_name').val());
-    var location_name = $.trim($('#location').val());
-    var reference = $.trim($('#reference').val());
     if($('#newStockRequest').is(':visible')){
+        var needdate = $('#needdate').val();
+        var request_type = $('#request_type').val();
+        var client_name = $.trim($('#client_name').val());
+        var location_name = $.trim($('#location').val());
+        var reference = $.trim($('#reference').val());
         if($('.reference_field').is(':visible')){
             if(needdate && request_type && client_name && location_name && reference){
                 $('#requestDetails').show();
@@ -145,6 +145,21 @@ function runFunction(){
             else{
                 $('#requestDetails').hide();
             }
+        }
+    }
+}
+
+setInterval(checkLocation, 200);
+function checkLocation(){
+    if($('#detailsStockRequest').is(':visible') && $('#status_id_details').val() == '13'){
+        var warehouse = $('#warehouse_details').val();
+        if(!warehouse){
+            $('#warehouse_note').show();
+            $('.btnReceiveAssembled').prop('disabled', true);
+        }
+        else{
+            $('#warehouse_note').hide();
+            $('.btnReceiveAssembled').prop('disabled', false);
         }
     }
 }
@@ -439,7 +454,7 @@ $('table.stockrequestTable').DataTable({
         {
             data: 'needdate',
             "render": function(data, type, row){
-                if(row.status_id == '7' || row.status_id == '8' || row.status_id == '9' || row.status_id == '10' || row.status_id == '11'){
+                if(row.status_id >= 7){
                     return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
                 }
                 else{
@@ -478,7 +493,7 @@ $('table.stockrequestTable').DataTable({
                 else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12'){
+                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14'){
                     return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '10'){
@@ -597,10 +612,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#reason_label").show();
                         $("#reason_details").show();
                     }
-                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
+                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
                         $("#btnDelete").hide();
                     }
-                    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
+                    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
                         $("#proceed_label").hide();
                         $("#btnProceed").hide();
                     }
@@ -626,6 +641,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         }
                         if(requestStatus == '13'){
                             document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
+                            $("#warehouse_label").show();
+                            $("#warehouse_details").show();
+                            $("#warehouse_note").show();
                             $(".btnReceiveAssembled").show();
                             $("#btnHideDetails").show();
                             $("#divAssembly").show();
@@ -660,7 +678,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
-                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
+                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
@@ -1036,10 +1054,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#reason_label").show();
             $("#reason_details").show();
         }
-        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
+        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
             $("#btnDelete").hide();
         }
-        if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
+        if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
             $("#proceed_label").hide();
             $("#btnProceed").hide();
         }
@@ -1065,6 +1083,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             }
             if(requestStatus == '13'){
                 document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
+                $("#warehouse_label").show();
+                $("#warehouse_details").show();
+                $("#warehouse_note").show();
                 $(".btnReceiveAssembled").show();
                 $("#btnHideDetails").show();
                 $("#divAssembly").show();
@@ -1099,7 +1120,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#sd1").show();
             $("#sd2").hide();
         }
-        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
+        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
             $("#sd1").show();
             $("#sd2").hide();
         }
@@ -1494,7 +1515,7 @@ $('#btnDelete').on('click', function(){
         dangerMode: true,
     })
     .then((willDelete) => {
-        if(willDelete){       
+        if(willDelete){
             $.ajax({
                 type:'post', 
                 url:'/deleteRequest',
@@ -1535,7 +1556,7 @@ $('#btnApprove').on('click', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if(willDelete){      
+        if(willDelete){
             $.ajax({
                 type:'post',
                 url:'/approveRequest',
@@ -1782,7 +1803,7 @@ $('#btnSale').on('click', function(){
             buttons: true,
         })
         .then((willDelete) => {
-            if(willDelete){      
+            if(willDelete){
                 $.ajax({
                     type:'post',
                     url:'/saleRequest',
@@ -1830,7 +1851,7 @@ $('#btnReference').on('click', function(){
             buttons: true,
         })
         .then((willDelete) => {
-            if(willDelete){      
+            if(willDelete){
                 $.ajax({
                     type:'post',
                     url:'/saleRequest',
@@ -1877,7 +1898,7 @@ $('#btnReturn').on('click', function(){
         buttons: true,
     })
     .then((willDelete) => {
-        if(willDelete){      
+        if(willDelete){
             $.ajax({
                 type:'post',
                 url:'/returnRequest',
@@ -1896,6 +1917,135 @@ $('#btnReturn').on('click', function(){
                     else{
                         $('#detailsStockRequest').hide();
                         swal("RETURN FAILED", "STOCK REQUEST", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    }); 
+});
+
+var var_qty = 0;
+$('.btnReceiveAssembled').on('click', function(){
+    $('#inputSerialModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $('#inputSerialModal').modal('show');
+    $("#serialList").empty();
+
+    var_qty = $("#qty_details").val();
+    for(var i=0; i < var_qty; i++){
+        var serial = document.createElement("input");
+        serial.setAttribute("id", "serials"+i);
+        serial.setAttribute("class", "form-control serial");
+        serial.setAttribute("placeholder", "Input Serial Number "+(parseInt(i)+1));
+        serial.setAttribute("style", "width: 200px; font-size: 12px; margin: auto; margin-bottom: 10px;");
+        document.getElementById("serialList").appendChild(serial);
+    }
+});
+
+setInterval(checkSerial, 0);
+function checkSerial(){
+    if($('#inputSerialModal').is(':visible')){
+        if($('.serial').filter(function(){ return !!this.value; }).length != var_qty){
+            $('#btnReceiveAssembled').prop('disabled', true);
+            $('#serial_note').show();
+        }
+        else{
+            $('#btnReceiveAssembled').prop('disabled', false);
+            $('#serial_note').hide();
+        }
+    }
+}
+
+$('#btnReceiveAssembled').on('click', function(){
+    swal({
+        title: "RECEIVE ASSEMBLED ITEM?",
+        text: "You are about to RECEIVE this Assembled Item/s into warehouse stocks!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type:'post',
+                url:'/assembly/receiveAssembled',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                },
+                data:{
+                    'request_number': $('#request_num_details').val()
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        for(var q=0; q < var_qty; q++){
+                            $.ajax({
+                                type:'post',
+                                url:'/assembly/addAssembled',
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val(),
+                                },
+                                data:{
+                                    'request_number': $('#request_num_details').val(),
+                                    'item_id': $('#item_id_details').val(),
+                                    'location_id': $('#warehouse_details').val(),
+                                    'serial': $('#serials'+q).val()
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        return true;
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                    }
+                    else{
+                        $('#detailsStockRequest').hide();
+                        swal("RECEIVE FAILED", "ASSEMBLED ITEM", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+            $.ajax({
+                type:'post',
+                url:'/assembly/logAssembled',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                },
+                data:{
+                    'request_number': $('#request_num_details').val()
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        $('#detailsStockRequest').hide();
+                        swal("RECEIVE SUCCESS", "ASSEMBLED ITEM", "success");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                    else{
+                        $('#detailsStockRequest').hide();
+                        swal("RECEIVE FAILED", "ASSEMBLED ITEM", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },
@@ -1942,7 +2092,7 @@ var items = [];
 $('table.stockDetails').DataTable().on('select', function(){});
 $('.stockDetails tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
-    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13'){
+    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
         return false;
     }
     var table = $('table.stockDetails').DataTable();

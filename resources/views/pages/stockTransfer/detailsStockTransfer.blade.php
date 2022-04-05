@@ -104,7 +104,7 @@
                 <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                 <input class="form-control form-control-sm" id="schedOn" style="width: 280px;" type="date">
             </div>
-            <div class="form-inline"  style="margin-left: 35px;" id="reqContents"></div>
+            <div class="form-inline" style="margin-left: 35px;" id="reqContents"></div>
             <hr>
             <input type="button" class="btn btn-primary bp" id="btnBack" class="button" value="BACK">
             <input type="button" class="btn btn-primary float-right bp" id="btnSubmit" class="button" value="SCHEDULE" disabled>

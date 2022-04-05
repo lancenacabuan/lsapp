@@ -510,7 +510,7 @@ class StockRequestController extends Controller
             Prepare::where('request_number', $request->request_number)
                 ->update(['status' => 'RECEIVED DEMO']);
             
-            $list = Prepare::select('items_id','request_number','location','serial','qty')
+            $list = Prepare::select('stock_id','items_id','request_number','location','serial','qty')
                 ->where('request_number', $request->request_number)
                 ->get();
             foreach($list as $key){
@@ -526,6 +526,7 @@ class StockRequestController extends Controller
                 else{
                     if(str_contains($key->serial, 'N/A')){
                         Stock::where('item_id',$key->items_id)
+                        ->where('stock_id',$key->stock_id)
                         ->where('serial','N/A')
                         ->where('location_id',$key->location)
                         ->where('status', 'prep')
@@ -534,6 +535,7 @@ class StockRequestController extends Controller
                     }
                     else{
                         Stock::where('item_id',$key->items_id)
+                        ->where('stock_id',$key->stock_id)
                         ->where('serial',$key->serial)
                         ->where('location_id',$key->location)
                         ->where('status', 'prep')
@@ -550,7 +552,7 @@ class StockRequestController extends Controller
             Prepare::where('request_number', $request->request_number)
                 ->update(['status' => 'RECEIVED']);
             
-            $list = Prepare::select('items_id','request_number','location','serial','qty')
+            $list = Prepare::select('stock_id','items_id','request_number','location','serial','qty')
                 ->where('request_number', $request->request_number)
                 ->get();
             foreach($list as $key){
@@ -566,6 +568,7 @@ class StockRequestController extends Controller
                 else{
                     if(str_contains($key->serial, 'N/A')){
                         Stock::where('item_id',$key->items_id)
+                        ->where('stock_id',$key->stock_id)
                         ->where('serial','N/A')
                         ->where('location_id',$key->location)
                         ->where('status', 'prep')
@@ -574,6 +577,7 @@ class StockRequestController extends Controller
                     }
                     else{
                         Stock::where('item_id',$key->items_id)
+                        ->where('stock_id',$key->stock_id)
                         ->where('serial',$key->serial)
                         ->where('location_id',$key->location)
                         ->where('status', 'prep')
@@ -700,7 +704,7 @@ class StockRequestController extends Controller
             Prepare::where('request_number', $request->request_number)
                 ->update(['status' => 'SOLD']);
             
-            $list = Prepare::select('items_id','request_number','location','serial','qty')
+            $list = Prepare::select('stock_id','items_id','request_number','location','serial','qty')
                 ->where('request_number', $request->request_number)
                 ->get();
             foreach($list as $key){
@@ -716,6 +720,7 @@ class StockRequestController extends Controller
                 else{
                     if(str_contains($key->serial, 'N/A')){
                         Stock::where('item_id',$key->items_id)
+                        ->where('stock_id',$key->stock_id)
                         ->where('serial','N/A')
                         ->where('location_id',['9'])
                         ->where('status', 'in')
@@ -724,6 +729,7 @@ class StockRequestController extends Controller
                     }
                     else{
                         Stock::where('item_id',$key->items_id)
+                        ->where('stock_id',$key->stock_id)
                         ->where('serial',$key->serial)
                         ->where('location_id',['9'])
                         ->where('status', 'in')
@@ -756,7 +762,7 @@ class StockRequestController extends Controller
         Prepare::where('request_number', $request->request_number)
             ->update(['status' => 'RETURNED']);
         
-        $list = Prepare::select('items_id','request_number','location','serial','qty')
+        $list = Prepare::select('stock_id','items_id','request_number','location','serial','qty')
             ->where('request_number', $request->request_number)
             ->get();
         foreach($list as $key){
@@ -772,6 +778,7 @@ class StockRequestController extends Controller
             else{
                 if(str_contains($key->serial, 'N/A')){
                     Stock::where('item_id',$key->items_id)
+                    ->where('stock_id',$key->stock_id)
                     ->where('serial','N/A')
                     ->where('location_id',['9'])
                     ->where('status', 'in')
@@ -780,6 +787,7 @@ class StockRequestController extends Controller
                 }
                 else{
                     Stock::where('item_id',$key->items_id)
+                    ->where('stock_id',$key->stock_id)
                     ->where('serial',$key->serial)
                     ->where('location_id',['9'])
                     ->where('status', 'in')

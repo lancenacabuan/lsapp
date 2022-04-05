@@ -2167,6 +2167,7 @@ $("#btnProceed").unbind('click').click(function(){
     }
     $("#stockDetailsrequest *").prop('disabled', true);
     $("#btnProceed").hide();
+    $("#reqContents").empty();
     $("#requestItems").slideDown();
     $('#schedOn').attr('max', maxDate);
     for(var i=0; i < items.length; i++){
@@ -2437,9 +2438,9 @@ $('#btnBack').on('click', function(){
     }
     $("#stockDetailsrequest *").prop('disabled', false);
     $('#btnSubmit').prop('disabled', true);
-    $("#requestItems").hide();
+    $("#requestItems").slideUp();
+    $("#schedOn").val('');
     $("#btnProceed").show();
-    $("#reqContents").empty();
 });
 
 $("#btnShowDetails").on('click', function(){

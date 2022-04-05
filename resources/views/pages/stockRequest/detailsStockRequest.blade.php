@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">STOCK REQUEST DETAILS</h6>            
+            <h6 class="modal-title w-100">STOCK REQUEST DETAILS XXX</h6>            
             <button type="button" class="btn-close btn-close-white close" id='modalClose' data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">                          
@@ -31,12 +31,21 @@
                 <input class="form-control form-control-sm" id="requested_by_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" id="location_label" style="width: 160px;">Address / Branch</label>
                 <input class="form-control form-control-sm" id="location_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" id="warehouse_label" style="width: 160px; display: none;">TO New Location</label>
+                <select class="form-select form-control-sm" id="warehouse_details" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px; display: none;">
+                    <option value="" selected disabled>Select Location</option>
+                    <option value="1">A1</option>
+                    <option value="2">A2</option>
+                    <option value="3">A3</option>
+                    <option value="4">A4</option>
+                </select>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
                 <input class="form-control form-control-sm" id="request_type_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
                 <input class="form-control form-control-sm" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <span id="warehouse_note" style="color: Red; font-size: 12px; margin-top: -15px; display: none;">Please select location to store the Assembled Item/s.</span>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>

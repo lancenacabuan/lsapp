@@ -13,6 +13,7 @@ $(function(){
 
     $('#needdate').attr('min', minDate);
     $('#schedOn').attr('min', minDate);
+    $('#resched').attr('min', minDate);
 });
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -486,10 +487,10 @@ $('table.stockrequestTable').DataTable({
                 if(row.status_id == '6'){
                     return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '1'){
+                else if(row.status_id == '1' || row.status_id == '15'){
                     return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '2' || row.status_id == '5'){
+                else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
                     return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13'){
@@ -614,10 +615,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#reason_label").show();
                         $("#reason_details").show();
                     }
-                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
+                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > '7'){
                         $("#btnDelete").hide();
                     }
-                    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
+                    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > '7'){
                         $("#proceed_label").hide();
                         $("#btnProceed").hide();
                     }
@@ -659,6 +660,11 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#btnReturn").hide();
                         document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
                     }
+                    if(requestStatus == '15'){
+                        $("#request_info").hide();
+                        $("#incItemsModal").show();
+                        $('#resched').attr('max', maxDate);
+                    }
                     if(value.user_id != $('#current_user').val()){
                         $("#btnReceive").hide();
                         $("#btnSale").hide();
@@ -673,7 +679,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
-                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
+                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > '7'){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
@@ -966,6 +972,32 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'location' }
                     ]
                 });
+
+                $('table.incItems').DataTable({
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    language: {
+                        processing: "Loading...",
+                        emptyTable: "No data available in table"
+                    },
+                    serverSide: true,
+                    ajax: {
+                        url: '/incItems',
+                        data: {
+                            request_number: req_num,
+                        }
+                    },
+                    order:[],
+                    columns: [
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'qty' },
+                        { data: 'uom' },
+                        { data: 'serial' },
+                        { data: 'location' }
+                    ]
+                });
             });
         },
         error: function(data){
@@ -1049,10 +1081,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#reason_label").show();
             $("#reason_details").show();
         }
-        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
+        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > '7'){
             $("#btnDelete").hide();
         }
-        if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
+        if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > '7'){
             $("#proceed_label").hide();
             $("#btnProceed").hide();
         }
@@ -1094,6 +1126,11 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#btnReturn").hide();
             document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
         }
+        if(requestStatus == '15'){
+            $("#request_info").hide();
+            $("#incItemsModal").show();
+            $('#resched').attr('max', maxDate);
+        }
         if(data.user_id != $('#current_user').val()){
             $("#btnReceive").hide();
             $("#btnSale").hide();
@@ -1108,7 +1145,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#sd1").show();
             $("#sd2").hide();
         }
-        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
+        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > '7'){
             $("#sd1").show();
             $("#sd2").hide();
         }
@@ -1387,6 +1424,32 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         serverSide: true,
         ajax: {
             url: '/schedItems',
+            data: {
+                request_number: req_num,
+            }
+        },
+        order:[],
+        columns: [
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' },
+            { data: 'location' }
+        ]
+    });
+
+    $('table.incItems').DataTable({
+        paging: false,
+        ordering: false,
+        info: false,
+        language: {
+            processing: "Loading...",
+            emptyTable: "No data available in table"
+        },
+        serverSide: true,
+        ajax: {
+            url: '/incItems',
             data: {
                 request_number: req_num,
             }
@@ -1925,6 +1988,62 @@ $('#btnReturn').on('click', function(){
     }); 
 });
 
+$('#btnReschedule').on('click', function(){
+    if(!$("#resched").val()){
+        swal('Recheduled On is required!','Select within date range from today up to Date Needed.','error');
+        return false;
+    }
+    else if($("#resched").val() < minDate){
+        swal('Minimum Date is today!','Select within date range from today up to Date Needed.','error');
+        return false;
+    }
+    else if($("#resched").val() > maxDate){
+        swal('Exceed Date Needed deadline!','Select within date range from today up to Date Needed.','error');
+        return false;
+    }
+    else{
+        swal({
+            title: "RESCHEDULE STOCK REQUEST?",
+            text: "You are about to RESCHEDULE this STOCK REQUEST!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url:'/reschedRequest',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val(),
+                    },
+                    data:{
+                        'request_number': $('#request_num_details').val(),
+                        'resched': $("#resched").val()
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            $('#detailsStockRequest').hide();
+                            swal("RESCHEDULE SUCCESS", "STOCK REQUEST", "success");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                        else{
+                            $('#detailsStockRequest').hide();
+                            swal("RESCHEDULE FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
+    }
+});
+
 var var_qty = 0;
 $('.btnReceiveAssembled').on('click', function(){
     $('#inputSerialModal').modal({
@@ -2086,7 +2205,7 @@ var items = [];
 $('table.stockDetails').DataTable().on('select', function(){});
 $('.stockDetails tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
-    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8' || requestStatus == '9' || requestStatus == '10' || requestStatus == '11'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14'){
+    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > '7'){
         return false;
     }
     var table = $('table.stockDetails').DataTable();

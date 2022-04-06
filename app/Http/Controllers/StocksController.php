@@ -325,9 +325,9 @@ class StocksController extends Controller
                 $stocks->serial = $request->serial;
                 $stocks->rack = $request->rack;
                 $stocks->row = $request->row;
-                $save = $stocks->save();
+                $sql = $stocks->save();
             }
-            while(!$save);
+            while(!$sql);
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
@@ -346,9 +346,9 @@ class StocksController extends Controller
                     $stocks->serial = 'N/A';
                     $stocks->rack = $request->rack;
                     $stocks->row = $request->row;
-                    $save = $stocks->save();
+                    $sql = $stocks->save();
                 }
-                while(!$save);
+                while(!$sql);
             }
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;

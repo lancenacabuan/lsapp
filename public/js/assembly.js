@@ -166,10 +166,10 @@ $('table.assemblyTable').DataTable({
                 if(row.status_id == '6'){
                     return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '1'){
+                else if(row.status_id == '1' || row.status_id == '15'){
                     return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '2' || row.status_id == '5'){
+                else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
                     return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13'){
@@ -693,73 +693,45 @@ $('.prepItems tbody').on('click', 'tr', function(){
 });
 
 $('#btnReceive').on('click', function(){
+    var inc = 'false';
+    var inctype = 'COMPLETE';
     if(items.length < item_count){
-        alert('INCOMPLETE!!!');
+        inc = 'true';
+        inctype = 'INCOMPLETE';
     }
-    else{
-        swal({
-            title: "RECEIVE ASSEMBLY PARTS?",
-            text: "You are about to RECEIVE these ASSEMBLY PARTS!",
-            icon: "warning",
-            buttons: true,
-        })
-        .then((willDelete) => {
-            if(willDelete){
-                $.ajax({
-                    type:'post',
-                    url:'/assembly/receiveRequest',
-                    headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val(),
-                    },
-                    data:{
-                        'request_number': $('#request_num_details').val()
-                    },
-                    success: function(data){
-                        if(data == 'true'){
-                            for(var i=0; i < items.length; i++){
-                                $.ajax({
-                                    type:'post',
-                                    url:'/assembly/receiveItems',
-                                    headers: {
-                                        'X-CSRF-TOKEN': $("#csrf").val(),
-                                    },
-                                    data:{
-                                        'id': items[i]
-                                    },
-                                    success: function(data){
-                                        if(data == 'true'){
-                                            return true;
-                                        }
-                                        else{
-                                            return false;
-                                        }
-                                    },
-                                    error: function(data){
-                                        if(data.status == 401){
-                                            window.location.href = '/assembly';
-                                        }
-                                        alert(data.responseText);
-                                    }
-                                });
-                            }
-                            scrollReset();
-                            $('#detailsAssembly').hide();
-                            $('#detailsAssembly').modal('dispose');
-                            $('#loading').show(); Spinner(); Spinner.show();
+    swal({
+        title: "RECEIVE "+inctype+" ASSEMBLY PARTS?",
+        text: "You are about to RECEIVE these ASSEMBLY PARTS!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type:'post',
+                url:'/assembly/receiveRequest',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val(),
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'inc': inc
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        for(var i=0; i < items.length; i++){
                             $.ajax({
                                 type:'post',
-                                url:'/assembly/logReceive',
+                                url:'/assembly/receiveItems',
                                 headers: {
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $("#csrf").val(),
                                 },
                                 data:{
-                                    'request_number': $('#request_num_details').val(),
+                                    'id': items[i]
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
-                                        swal("RECEIVE SUCCESS", "ASSEMBLY REQUEST", "success");
-                                        setTimeout(function(){location.href="/assembly"}, 2000);
+                                        return true;
                                     }
                                     else{
                                         return false;
@@ -773,22 +745,53 @@ $('#btnReceive').on('click', function(){
                                 }
                             });
                         }
-                        else{
-                            $('#detailsAssembly').hide();
-                            swal("RECEIVE FAILED", "ASSEMBLY REQUEST", "error");
-                            setTimeout(function(){location.href="/assembly"}, 2000);
-                        }
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            window.location.href = '/assembly';
-                        }
-                        alert(data.responseText);
+                        scrollReset();
+                        $('#detailsAssembly').hide();
+                        $('#detailsAssembly').modal('dispose');
+                        $('#loading').show(); Spinner(); Spinner.show();
+                        $.ajax({
+                            type:'post',
+                            url:'/assembly/logReceive',
+                            headers: {
+                                'X-CSRF-TOKEN': $("#csrf").val()
+                            },
+                            data:{
+                                'request_number': $('#request_num_details').val(),
+                                'inc': inc
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide(); Spinner.hide();
+                                    swal("RECEIVED "+inctype, "ASSEMBLY REQUEST", "success");
+                                    setTimeout(function(){location.href="/assembly"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/assembly';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
                     }
-                });
-            }
-        });
-    }
+                    else{
+                        $('#detailsAssembly').hide();
+                        swal("RECEIVE FAILED", "ASSEMBLY REQUEST", "error");
+                        setTimeout(function(){location.href="/assembly"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/assembly';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
 });
 
 $('#btnAssemble').on('click', function(){

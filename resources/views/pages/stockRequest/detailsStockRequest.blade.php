@@ -278,6 +278,41 @@
         </div>
         </div>
         </div>
+        @role('admin|encoder') {{---ROLES---}}
+        <div id="incItemsModal" style="display: none;">
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
+            <h6 class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
+        </div>
+        <div class="modal-body">
+            <div class="form-inline" style="margin-left: 35px;">
+                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
+                <input class="form-control form-control-sm" id="reprep_by" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
+            </div>
+            <div class="form-inline" style="margin-left: 35px;">
+                <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
+                <input class="form-control form-control-sm" id="resched" style="width: 280px;" type="date">
+            </div>
+            <br>
+            <table id="incItems" class="table incItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
+                <thead>                            
+                    <tr>
+                        <th>CATEGORY</th>
+                        <th>ITEM DESCRIPTION</th>
+                        <th>QTY</th>
+                        <th>UOM</th>
+                        <th>SERIAL</th>
+                        <th>LOCATION</th>
+                    </tr>
+                </thead>    
+            </table>
+            <br>
+            <hr>
+            <input type="button" class="btn btn-primary float-right bp" id="btnReschedule" class="button" value="RESCHEDULE">
+            <br>
+            <br>
+        </div>
+        </div>
+        @endrole
     </div>
     </div>
 </div>

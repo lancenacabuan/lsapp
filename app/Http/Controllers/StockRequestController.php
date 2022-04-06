@@ -321,6 +321,21 @@ class StockRequestController extends Controller
     public function schedItems(Request $request){
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('request_number', $request->request_number)
+            ->where('stocks.status', '!=', 'incomplete')
+            ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','stocks.location_id')
+            ->get()
+            ->sortBy('item')
+            ->sortBy('category');
+
+        return DataTables::of($list)->make(true);
+    }
+
+    public function incItems(Request $request){
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+            ->where('request_number', $request->request_number)
+            ->where('stocks.status', 'incomplete')
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
@@ -476,6 +491,28 @@ class StockRequestController extends Controller
         $userlogs->save();
 
         return response('true');
+    }
+
+    public function reschedRequest(Request $request){
+        do{
+            $sql = Requests::where('request_number', $request->request_number)
+                ->update(['status' => '16', 'schedule' => $request->resched]);
+        }
+        while(!$sql);
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RESCHEDULED STOCK REQUEST: User successfully rescheduled on $request->resched Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        
+        return response($result);
     }
 
     public function inTransit(Request $request){

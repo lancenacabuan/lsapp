@@ -72,15 +72,18 @@ class AssemblyController extends Controller
     }
 
     public function saveReqNum(Request $request){
-        $requests = new Requests;
-        $requests->request_number = $request->request_number;
-        $requests->requested_by = auth()->user()->id;
-        $requests->needdate = $request->needdate;
-        $requests->request_type = $request->request_type;
-        $requests->status = '1';
-        $requests->item_id = $request->item_id;
-        $requests->qty = $request->qty;
-        $sql = $requests->save();
+        do{
+            $requests = new Requests;
+            $requests->request_number = $request->request_number;
+            $requests->requested_by = auth()->user()->id;
+            $requests->needdate = $request->needdate;
+            $requests->request_type = $request->request_type;
+            $requests->status = '1';
+            $requests->item_id = $request->item_id;
+            $requests->qty = $request->qty;
+            $sql = $requests->save();
+        }
+        while(!$sql);
 
         if(!$sql){
             $result = 'false';
@@ -142,8 +145,20 @@ class AssemblyController extends Controller
     }
 
     public function receiveRequest(Request $request){
-        $sql = Requests::where('request_number', $request->request_number)
-            ->update(['status' => '12']);
+        if($request->inc == 'true'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '15']);
+            }
+            while(!$sql);
+        }
+        else{
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '12']);
+            }
+            while(!$sql);
+        }
                 
         if(!$sql){
             $result = 'false';
@@ -157,9 +172,8 @@ class AssemblyController extends Controller
 
     public function receiveItems(Request $request){
         do{
-            $sql = Prepare::select('items_id','request_number','location','serial','qty')
-                ->where('id', $request->id)
-                ->update(['status' => 'RECEIVED']);
+            $sql = Stock::where('id', $request->id)
+                ->update(['status' => 'received']);
         }
         while(!$sql);
         
@@ -167,21 +181,43 @@ class AssemblyController extends Controller
     }
 
     public function logReceive(Request $request){
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "RECEIVED ASSEMBLY STOCK REQUEST: User successfully received needed parts of Assembly Stock Request No. $request->request_number.";
-        $userlogs->save();
+        do{
+            $sql = Stock::where('request_number', $request->request_number)
+                ->where('status', '!=', 'received')
+                ->update(['status' => 'incomplete']);
+        }
+        while(!$sql);
+
+        do{
+            $sql = Stock::where('request_number', $request->request_number)
+                ->where('status', '=', 'received')
+                ->update(['status' => 'assembly']);
+        }
+        while(!$sql);
+
+        if($request->inc == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED INCOMPLETE ASSEMBLY STOCK REQUEST: User successfully received incomplete needed parts of Assembly Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        else{
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED COMPLETE ASSEMBLY STOCK REQUEST: User successfully received complete needed parts of Assembly Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
 
         return response('true');
     }
 
     public function assembleRequest(Request $request){
-        Requests::where('request_number', $request->request_number)
-            ->where('status','12')
-            ->update(['status' => '13']);
-                
-        Prepare::where('request_number', $request->request_number)
-            ->update(['status' => 'ASSEMBLED']);
+        do{
+            $sql = Requests::where('request_number', $request->request_number)
+                ->where('status','12')
+                ->update(['status' => '13']);
+        }
+        while(!$sql);
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
@@ -192,21 +228,20 @@ class AssemblyController extends Controller
     }
 
     public function receiveAssembled(Request $request){
-        $sql = Requests::where('request_number', $request->request_number)
-            ->update(['status' => '14']);
+        do{
+            $sql = Requests::where('request_number', $request->request_number)
+                ->update(['status' => '14']);
+        }
+        while(!$sql);
         
         if(!$sql){
             $result = 'false';
         }
         else {
             $result = 'true';
-            $list = Prepare::select('stock_id','items_id','request_number','location','serial','qty')
-                ->where('request_number', $request->request_number)
-                ->get();
-            foreach($list as $key){
-                Stock::where('id',$key->stock_id)
+
+            Stock::where('request_number', $request->request_number)
                 ->update(['status' => 'out']);
-            }
         }
 
         return response($result);
@@ -224,9 +259,9 @@ class AssemblyController extends Controller
             $stocks->serial = $request->serial;
             $stocks->rack = 'N/A';
             $stocks->row = 'N/A';
-            $save = $stocks->save();
+            $sql = $stocks->save();
         }
-        while(!$save);
+        while(!$sql);
 
         return response('true');
     }

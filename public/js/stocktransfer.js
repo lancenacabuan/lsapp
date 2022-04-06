@@ -160,7 +160,7 @@ $('#category').on('change', function(){
             list.forEach(value => {
                 $('#item').append($('<option>', {
                     value: value.item_id,
-                    text: value.item
+                    text: value.item.toUpperCase()
                 }));
             });
         },

@@ -659,13 +659,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#btnReturn").hide();
                         document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
                     }
-                    if(requestStatus == '11'){
-                        $("#transitItemsModal").show();
-                        $("#btnReceive").hide();
-                        $("#btnSale").hide();
-                        $("#btnReturn").hide();
-                        document.getElementById('modalheader').innerHTML = 'RETURNED ITEM DETAILS';
-                    }
                     if(value.user_id != $('#current_user').val()){
                         $("#btnReceive").hide();
                         $("#btnSale").hide();
@@ -1100,13 +1093,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#btnSale").hide();
             $("#btnReturn").hide();
             document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
-        }
-        if(requestStatus == '11'){
-            $("#transitItemsModal").show();
-            $("#btnReceive").hide();
-            $("#btnSale").hide();
-            $("#btnReturn").hide();
-            document.getElementById('modalheader').innerHTML = 'RETURNED ITEM DETAILS';
         }
         if(data.user_id != $('#current_user').val()){
             $("#btnReceive").hide();
@@ -1791,7 +1777,8 @@ $('#btnReceive').on('click', function(){
 });
 
 $('#btnSale').on('click', function(){
-    if($('#reference_details').val() == ''){
+    var reference_details = $.trim($('#reference_details').val());
+    if(reference_details == ''){
         $('#referenceModal').modal({
             backdrop: 'static',
             keyboard: false
@@ -1815,7 +1802,8 @@ $('#btnSale').on('click', function(){
                     },
                     data:{
                         'request_number': $('#request_num_details').val(),
-                        'reference': ''
+                        'reference': reference_details,
+                        'check': 'true'
                     },
                     success: function(data){
                         if(data == 'true'){
@@ -1863,10 +1851,12 @@ $('#btnReference').on('click', function(){
                     },
                     data:{
                         'request_number': $('#request_num_details').val(),
-                        'reference': $('#x_reference').val()
+                        'reference': $('#x_reference').val(),
+                        'check': 'false'
                     },
                     success: function(data){
                         if(data == 'true'){
+                            $('#referenceModal').hide();
                             $('#detailsStockRequest').hide();
                             swal("SALE SUCCESS", "STOCK REQUEST", "success");
                             setTimeout(function(){location.href="/stockrequest"}, 2000);
@@ -1876,6 +1866,7 @@ $('#btnReference').on('click', function(){
                             return false;
                         }
                         else{
+                            $('#referenceModal').hide();
                             $('#detailsStockRequest').hide();
                             swal("SALE FAILED", "STOCK REQUEST", "error");
                             setTimeout(function(){location.href="/stockrequest"}, 2000);

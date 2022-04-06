@@ -87,16 +87,19 @@ class StockRequestController extends Controller
             $result = 'duplicate';
         }
         else {
-            $requests = new Requests;
-            $requests->request_number = $request->request_number;
-            $requests->requested_by = auth()->user()->id;
-            $requests->needdate = $request->needdate;
-            $requests->request_type = $request->request_type;
-            $requests->status = '6';
-            $requests->client_name = ucwords($request->client_name);
-            $requests->location = ucwords($request->location);
-            $requests->reference = strtoupper($request->reference);
-            $sql = $requests->save();
+            do{
+                $requests = new Requests;
+                $requests->request_number = $request->request_number;
+                $requests->requested_by = auth()->user()->id;
+                $requests->needdate = $request->needdate;
+                $requests->request_type = $request->request_type;
+                $requests->status = '6';
+                $requests->client_name = ucwords($request->client_name);
+                $requests->location = ucwords($request->location);
+                $requests->reference = strtoupper($request->reference);
+                $sql = $requests->save();
+            }
+            while(!$sql);
 
             if(!$sql){
                 $result = 'false';
@@ -631,58 +634,28 @@ class StockRequestController extends Controller
     }
 
     public function saleRequest(Request $request){
-        if(trim($request->reference) != ''){
-            $reference = Requests::query()->select()
-                ->whereRaw('LOWER(reference) = ?',strtolower($request->reference))
-                ->count();
+        if($request->check == 'true'){
+            $reference = 0;
         }
         else{
-            $reference = 0;
+            if(trim($request->reference) != ''){
+                $reference = Requests::query()->select()
+                    ->whereRaw('LOWER(reference) = ?',strtolower($request->reference))
+                    ->count();
+            }
+            else{
+                $reference = 0;
+            }
         }
         if($reference != 0){
             $result = 'duplicate';
         }
         else {
-            $sql = Requests::where('request_number', $request->request_number)
-                ->update(['status' => '10', 'reference' => strtoupper($request->reference)]);
-
-            Prepare::where('request_number', $request->request_number)
-                ->update(['status' => 'SOLD']);
-            
-            $list = Prepare::select('stock_id','items_id','request_number','location','serial','qty')
-                ->where('request_number', $request->request_number)
-                ->get();
-            foreach($list as $key){
-                if($key->serial == ''){
-                    for($x = 0; $x < $key->qty; $x++){
-                        Stock::where('item_id',$key->items_id)
-                        ->whereIn('location_id',['9'])
-                        ->where('status', 'in')
-                        ->orderBy('id')->limit(1)
-                        ->update(['status' => 'out', 'location_id' => '1']);
-                    }
-                }
-                else{
-                    if(str_contains($key->serial, 'N/A')){
-                        Stock::where('item_id',$key->items_id)
-                        ->where('id',$key->stock_id)
-                        ->where('serial','N/A')
-                        ->where('location_id',['9'])
-                        ->where('status', 'in')
-                        ->orderBy('id')->limit(1)
-                        ->update(['status' => 'out', 'location_id' => $key->location]);
-                    }
-                    else{
-                        Stock::where('item_id',$key->items_id)
-                        ->where('id',$key->stock_id)
-                        ->where('serial',$key->serial)
-                        ->where('location_id',['9'])
-                        ->where('status', 'in')
-                        ->orderBy('id')->limit(1)
-                        ->update(['status' => 'out', 'location_id' => $key->location]);
-                    }
-                }
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '10', 'reference' => strtoupper($request->reference)]);
             }
+            while(!$sql);
 
             if(!$sql){
                 $result = 'false';
@@ -701,58 +674,26 @@ class StockRequestController extends Controller
     }
 
     public function returnRequest(Request $request){
-        $sql = Requests::where('request_number', $request->request_number)
-            ->update(['status' => '11']);
-
-        Prepare::where('request_number', $request->request_number)
-            ->update(['status' => 'RETURNED']);
-        
-        $list = Prepare::select('stock_id','items_id','request_number','location','serial','qty')
-            ->where('request_number', $request->request_number)
-            ->get();
-        foreach($list as $key){
-            if($key->serial == ''){
-                for($x = 0; $x < $key->qty; $x++){
-                    Stock::where('item_id',$key->items_id)
-                    ->whereIn('location_id',['9'])
-                    ->where('status', 'in')
-                    ->orderBy('id')->limit(1)
-                    ->update(['location_id' => '1']);
-                }
-            }
-            else{
-                if(str_contains($key->serial, 'N/A')){
-                    Stock::where('item_id',$key->items_id)
-                    ->where('id',$key->stock_id)
-                    ->where('serial','N/A')
-                    ->where('location_id',['9'])
-                    ->where('status', 'in')
-                    ->orderBy('id')->limit(1)
-                    ->update(['location_id' => $key->location]);
-                }
-                else{
-                    Stock::where('item_id',$key->items_id)
-                    ->where('id',$key->stock_id)
-                    ->where('serial',$key->serial)
-                    ->where('location_id',['9'])
-                    ->where('status', 'in')
-                    ->orderBy('id')->limit(1)
-                    ->update(['location_id' => $key->location]);
-                }
-            }
+        do{
+            $sql = Requests::where('request_number', $request->request_number)
+                ->update(['status' => '11']);
         }
+        while(!$sql);
+        
+        Stock::where('request_number', $request->request_number)
+            ->update(['status' => 'in', 'request_number' => '']);
         
         if(!$sql){
             $result = 'false';
         }
         else {
             $result = 'true';
-        }
 
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "RETURNED STOCK REQUEST: User successfully returned Stock Request No. $request->request_number.";
-        $userlogs->save();
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RETURNED STOCK REQUEST: User successfully returned Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
 
         return response($result);
     }
@@ -770,27 +711,7 @@ class StockRequestController extends Controller
             ->limit(1)
             ->get();
 
-        return DataTables::of($list)
-        ->addColumn('qtystock', function (StockRequest $list){
-            $stocks = Stock::query()
-                ->where('item_id', $list->item_id)
-                ->whereIn('location_id', ['1','2','3','4'])
-                ->where('status', 'in')
-                ->count();
-            return $stocks;
-        })
-        ->addColumn('serial', function (StockRequest $list){
-            $stocks = Stock::query()->select('serial')
-                ->where('item_id', $list->item_id)
-                ->whereIn('location_id', ['1','2','3','4'])
-                ->where('status', 'in')
-                ->first();
-            $stocks = str_replace('{"serial":"','',$stocks);
-            $stocks = str_replace('"}','',$stocks);
-            $stocks = str_replace('{"serial":null}','',$stocks);
-            return $stocks;
-        })
-        ->toJson();
+        return DataTables::of($list)->toJson();
     }
 
     public function setserials(Request $request){

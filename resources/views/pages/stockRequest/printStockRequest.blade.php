@@ -45,14 +45,14 @@
             </tr>
             <tr height="20">
                 <td colspan="2" height="20" style="font-weight: bold;">Date Prepared:</td>
-                <td colspan="2" id="prep_date">{{$list2->prep_date}}</td>
+                <td colspan="2" id="prep_date">{{$list->prepdate}}</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Client Name:</td>
                 <td colspan="2">{{$list->client_name}}</td>
             </tr>
             <tr height="20">
                 <td colspan="2" height="20" style="font-weight: bold;">Prepared By:</td>
-                <td colspan="2">{{$list2->prep_by}}</td>
+                <td colspan="2">{{$list2->prepby}}</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Address / Branch:</td>
                 <td colspan="2">{{$list->location}}</td>
@@ -132,7 +132,7 @@ $(document).ready(function(){
     $('#need_date').html(need_date);
 
     var prep_date = $('#prep_date').html();
-    prep_date = moment(prep_date).format('dddd, MMMM DD, YYYY, h:mm A');
+    prep_date = moment(prep_date).format('dddd, MMMM DD, YYYY');
     $('#prep_date').html(prep_date);
 
     var sched = $('#sched').html();

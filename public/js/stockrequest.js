@@ -227,9 +227,11 @@ $('#itemReq').on('change', function(){
 $(".add-row").on('click', function(){
     var category = $("#categoryReq option:selected").text();
     var item = $("#itemReq option:selected").text();
+    var category_id = $("#categoryReq").val();
+    var item_id = $("#itemReq").val();
     let qty = $("#qtyReq").val();
     var uom = $("#uom").val();
-    var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+    var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
     var ctr = 'false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
         swal('REQUIRED','Please select an item!','error');
@@ -240,8 +242,8 @@ $(".add-row").on('click', function(){
         var count = table.rows.length;
         for(i = 1; i < count; i++){
             var objCells = table.rows.item(i).cells;
-            if(item==objCells.item(1).innerHTML){
-                objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
+            if(item_id==objCells.item(1).innerHTML){
+                objCells.item(4).innerHTML = parseInt(objCells.item(4).innerHTML) + parseInt(qty);
                 ctr = 'true';
                 category = $("#categoryReq").val('');
                 item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val()
@@ -325,7 +327,7 @@ $('#btnSave').on('click', function(){
                                             'request_number': $('#request_num').val(),
                                             'category': value[0],
                                             'item': value[1],
-                                            'quantity': value[2]
+                                            'quantity': value[4]
                                         },
                                         success: function(data){
                                             if(data == 'true'){
@@ -1693,7 +1695,8 @@ $('#btnTransit').on('click', function(){
                     'X-CSRF-TOKEN': $("#csrf").val(),
                 },
                 data:{
-                    'request_number': $('#request_num_details').val()
+                    'request_number': $('#request_num_details').val(),
+                    'status': $('#status_id_details').val()
                 },
                 success: function(data){
                     if(data == 'true'){
@@ -2367,15 +2370,11 @@ $("#btnProceed").unbind('click').click(function(){
                                                 'X-CSRF-TOKEN': $("#csrf").val()
                                             },
                                             data:{
-                                                'req_type_id': req_type_id,
                                                 'request_number': reqnum,
-                                                'item_id': $('#item_id'+n).val(),
-                                                'category': $('#category'+n).val(),
-                                                'item': $('#item'+n).val(),
-                                                'qty': $('#qty'+n).val(),
+                                                'req_type_id': req_type_id,
                                                 'stock_id': $('#serial'+n).val(),
-                                                'serial': $('#serial'+n).find('option:selected').text(),
-                                                'location': $('#location'+n).val(),
+                                                'item_id': $('#item_id'+n).val(),
+                                                'qty': $('#qty'+n).val(),
                                                 'schedOn': $('#schedOn').val()
                                             },
                                             success: function(data){

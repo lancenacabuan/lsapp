@@ -93,23 +93,19 @@ class AssemblyController extends Controller
     }
 
     public function saveRequest(Request $request){
-        $stockRequest = new StockRequest;
-        $stockRequest->request_number = $request->request_number;
-        $stockRequest->category = $request->category;
-        $stockRequest->item = $request->item;
-        $stockRequest->quantity = $request->quantity * $request->qty;
-        $stockRequest->served = '0';
-        $stockRequest->pending = $request->quantity * $request->qty;
-        $sql = $stockRequest->save();
-
-        if(!$sql){
-            $result = 'false';
+        do{
+            $stockRequest = new StockRequest;
+            $stockRequest->request_number = $request->request_number;
+            $stockRequest->category = $request->category;
+            $stockRequest->item = $request->item;
+            $stockRequest->quantity = $request->quantity * $request->qty;
+            $stockRequest->served = '0';
+            $stockRequest->pending = $request->quantity * $request->qty;
+            $sql = $stockRequest->save();
         }
-        else {
-            $result = 'true';
-        }
+        while(!$sql);
 
-        return response($result);
+        return response('true');
     }
 
     public function logSave(Request $request){

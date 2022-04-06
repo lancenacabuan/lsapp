@@ -17,7 +17,6 @@ use App\Models\Stock;
 use App\Models\StockRequest;
 use App\Models\Requests;
 use App\Models\RequestTransfer;
-use App\Models\Prepare;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -111,27 +110,19 @@ class StockRequestController extends Controller
     }
 
     public function saveRequest(Request $request){
-        $items = Item::query()->select('id','category_id')
-                ->where('item',htmlspecialchars_decode($request->item))
-                ->first();
-
-        $stockRequest = new StockRequest;
-        $stockRequest->request_number = $request->request_number;
-        $stockRequest->category = $items->category_id;
-        $stockRequest->item = $items->id;
-        $stockRequest->quantity = $request->quantity;
-        $stockRequest->served = '0';
-        $stockRequest->pending = $request->quantity;
-        $sql = $stockRequest->save();
-
-        if(!$sql){
-            $result = 'false';
+        do{
+            $stockRequest = new StockRequest;
+            $stockRequest->request_number = $request->request_number;
+            $stockRequest->category = $request->category;
+            $stockRequest->item = $request->item;
+            $stockRequest->quantity = $request->quantity;
+            $stockRequest->served = '0';
+            $stockRequest->pending = $request->quantity;
+            $sql = $stockRequest->save();
         }
-        else {
-            $result = 'true';
-        }
+        while(!$sql);
 
-        return response($result);
+        return response('true');
     }
 
     public function logSave(Request $request){
@@ -325,11 +316,11 @@ class StockRequestController extends Controller
     }
 
     public function schedItems(Request $request){
-        $list = Prepare::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, prepared_items.serial AS serial, prepared_items.qty AS qty, prepared_items.items_id AS item_id, prepared_items.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('request_number', $request->request_number)
-            ->join('items','items.id','prepared_items.items_id')
+            ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
-            ->join('locations','locations.id','prepared_items.location')
+            ->join('locations','locations.id','stocks.location_id')
             ->get()
             ->sortBy('item')
             ->sortBy('category');
@@ -338,10 +329,10 @@ class StockRequestController extends Controller
     }
 
     public function editSerial(Request $request){
-        $prepitems = Prepare::where('id', $request->id)
+        $sql = Stock::where('id', $request->id)
             ->update(['serial' => $request->serial]);
         
-        if(!$prepitems){
+        if(!$sql){
             $result = 'false';
         }
         else {
@@ -385,9 +376,7 @@ class StockRequestController extends Controller
         }
         else {
             $result = 'true';
-        }
-        
-        if($result == 'true'){
+
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
             $userlogs->activity = "DELETED STOCK REQUEST: User successfully deleted Stock Request No. $request->request_number.";
@@ -398,17 +387,18 @@ class StockRequestController extends Controller
     }
 
     public function approveRequest(Request $request){
-        $sql = Requests::where('request_number', $request->request_number)
-            ->update(['status' => '1', 'reason' => '']);
+        do{
+            $sql = Requests::where('request_number', $request->request_number)
+                ->update(['status' => '1', 'reason' => '']);
+        }
+        while(!$sql);
         
         if(!$sql){
             $result = 'false';
         }
         else {
             $result = 'true';
-        }
-        
-        if($result == 'true'){
+
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
             $userlogs->activity = "APPROVED STOCK REQUEST: User successfully approved Stock Request No. $request->request_number.";
@@ -419,8 +409,11 @@ class StockRequestController extends Controller
     }
 
     public function disapproveRequest(Request $request){
-        $sql = Requests::where('request_number', $request->request_number)
-            ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
+        do{
+            $sql = Requests::where('request_number', $request->request_number)
+                ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
+        }
+        while(!$sql);
         
         if(!$sql){
             $result = 'false';
@@ -483,109 +476,58 @@ class StockRequestController extends Controller
     }
 
     public function inTransit(Request $request){
-        Requests::where('request_number', $request->request_number)
-            ->where('status','2')
-            ->update(['status' => '3']);
+        if($request->status == '2'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->where('status','2')
+                    ->update(['status' => '3']);
+            }
+            while(!$sql);
+        }
+        else if($request->status == '5'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->where('status','5')
+                    ->update(['status' => '4']);
+            }
+            while(!$sql);
+        }
+        else{
+            return response('false');
+        }
 
-        Requests::where('request_number', $request->request_number)
-            ->where('status','5')
-            ->update(['status' => '4']);
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
 
-        Prepare::where('request_number', $request->request_number)
-            ->update(['status' => 'FOR RECEIVING']);
-        
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "FOR RECEIVING STOCK REQUEST: User successfully processed for receiving Stock Request No. $request->request_number.";
-        $userlogs->save();
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "FOR RECEIVING STOCK REQUEST: User successfully processed for receiving Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
 
-        return response('true');
+        return response($result);
     }
 
     public function receiveRequest(Request $request){
         if($request->request_type == '3'){
-            $sql = Requests::where('request_number', $request->request_number)
-                ->update(['status' => '9']);
-
-            Prepare::where('request_number', $request->request_number)
-                ->update(['status' => 'RECEIVED DEMO']);
-            
-            $list = Prepare::select('stock_id','items_id','request_number','location','serial','qty')
-                ->where('request_number', $request->request_number)
-                ->get();
-            foreach($list as $key){
-                if($key->serial == ''){
-                    for($x = 0; $x < $key->qty; $x++){
-                        Stock::where('item_id',$key->items_id)
-                        ->whereIn('location_id',['1','2','3','4'])
-                        ->where('status', 'prep')
-                        ->orderBy('id')->limit(1)
-                        ->update(['status' => 'in', 'location_id' => '9']);
-                    }
-                }
-                else{
-                    if(str_contains($key->serial, 'N/A')){
-                        Stock::where('item_id',$key->items_id)
-                        ->where('id',$key->stock_id)
-                        ->where('serial','N/A')
-                        ->where('location_id',$key->location)
-                        ->where('status', 'prep')
-                        ->orderBy('id')->limit(1)
-                        ->update(['status' => 'in', 'location_id' => '9']);
-                    }
-                    else{
-                        Stock::where('item_id',$key->items_id)
-                        ->where('id',$key->stock_id)
-                        ->where('serial',$key->serial)
-                        ->where('location_id',$key->location)
-                        ->where('status', 'prep')
-                        ->orderBy('id')->limit(1)
-                        ->update(['status' => 'in', 'location_id' => '9']);
-                    }
-                }
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '9']);
             }
+            while(!$sql);
+            
+            Stock::where('request_number', $request->request_number)
+                ->update(['status' => 'demo']);
         }
         else{
-            $sql = Requests::where('request_number', $request->request_number)
-                ->update(['status' => '8']);
-
-            Prepare::where('request_number', $request->request_number)
-                ->update(['status' => 'RECEIVED']);
-            
-            $list = Prepare::select('stock_id','items_id','request_number','location','serial','qty')
-                ->where('request_number', $request->request_number)
-                ->get();
-            foreach($list as $key){
-                if($key->serial == ''){
-                    for($x = 0; $x < $key->qty; $x++){
-                        Stock::where('item_id',$key->items_id)
-                        ->whereIn('location_id',['1','2','3','4'])
-                        ->where('status', 'prep')
-                        ->orderBy('id')->limit(1)
-                        ->update(['status' => 'out']);
-                    }
-                }
-                else{
-                    if(str_contains($key->serial, 'N/A')){
-                        Stock::where('item_id',$key->items_id)
-                        ->where('id',$key->stock_id)
-                        ->where('serial','N/A')
-                        ->where('location_id',$key->location)
-                        ->where('status', 'prep')
-                        ->orderBy('id')->limit(1)
-                        ->update(['status' => 'out']);
-                    }
-                    else{
-                        Stock::where('item_id',$key->items_id)
-                        ->where('id',$key->stock_id)
-                        ->where('serial',$key->serial)
-                        ->where('location_id',$key->location)
-                        ->where('status', 'prep')
-                        ->orderBy('id')->limit(1)
-                        ->update(['status' => 'out']);
-                    }
-                }
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '8']);
             }
+            while(!$sql);
         }
 
         if(!$sql){
@@ -600,7 +542,7 @@ class StockRequestController extends Controller
 
     public function logReceive(Request $request){
         do{
-            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate')
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate, prepdate')
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -613,20 +555,23 @@ class StockRequestController extends Controller
         while(!$request_details);
 
         do{
-            $prep = Prepare::selectRaw('users.name AS prep_by, prepared_items.updated_at AS prep_date')
-                ->where('request_number', $request->request_number)
-                ->join('users', 'users.id', '=', 'prepared_items.user_id')
-                ->orderBy('prepared_items.id','DESC')
-                ->first();
+            $prep = Requests::selectRaw('users.name AS prepby')
+                ->where('requests.request_number', $request->request_number)
+                ->join('users', 'users.id', '=', 'requests.prepared_by')
+                ->get();
+            
+                $prep = str_replace('[','',$prep);
+                $prep = str_replace(']','',$prep);
+                $prep = json_decode($prep);
         }
         while(!$prep);
         
         do{
-            $items = Prepare::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, prepared_items.serial AS serial, prepared_items.qty AS qty, locations.location AS location')
+            $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                 ->where('request_number', $request->request_number)
-                ->join('items','items.id','prepared_items.items_id')
+                ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
-                ->join('locations','locations.id','prepared_items.location')
+                ->join('locations','locations.id','stocks.location_id')
                 ->get()
                 ->sortBy('item')
                 ->sortBy('category');
@@ -647,8 +592,8 @@ class StockRequestController extends Controller
                 'client_name' => $request_details->client_name,
                 'location' => $request_details->location,
                 'reference' => $request_details->reference,
-                'prepared_by' => $prep->prep_by,
-                'prepdate' => $prep->prep_date,
+                'prepared_by' => $prep->prepby,
+                'prepdate' => $request_details->prepdate,
                 'scheddate' => $request_details->schedule,
                 'receivedby' => auth()->user()->name,
                 'role' => 'Admin',
@@ -668,8 +613,8 @@ class StockRequestController extends Controller
             'client_name' => $request_details->client_name,
             'location' => $request_details->location,
             'reference' => $request_details->reference,
-            'prepared_by' => $prep->prep_by,
-            'prepdate' => $prep->prep_date,
+            'prepared_by' => $prep->prepby,
+            'prepdate' => $request_details->prepdate,
             'scheddate' => $request_details->schedule,
             'receivedby' => auth()->user()->name,
             'role' => 'Sales',
@@ -822,7 +767,7 @@ class StockRequestController extends Controller
             ->join('items','items.id','=','stock_request.item')
             ->join('stocks','stocks.item_id','stock_request.item')
             ->join('locations','locations.id','stocks.location_id')
-            ->groupBy('category','item','item_id','qty','served','pending', 'uom')
+            ->limit(1)
             ->get();
 
         return DataTables::of($list)
@@ -873,75 +818,27 @@ class StockRequestController extends Controller
     }
 
     public function prepareItems(Request $request){
-        if($request->serial == ''){
-            $count = Prepare::query()
-                ->where('request_number', $request->request_number)
-                ->where('items_id',$request->item_id)
-                ->count();
+        if($request->req_type_id != '5'){
+            do{
+                $sql = Stock::where('id',$request->stock_id)
+                    ->update(['status' => 'out', 'request_number' => $request->request_number]);
+            }
+            while(!$sql);
         }
         else{
-            $count = 0;
+            do{
+                $sql = Stock::where('id',$request->stock_id)
+                    ->update(['status' => 'assembly', 'request_number' => $request->request_number]);
+            }
+            while(!$sql);
         }
-        if($count == 0){
-            $prepare = new Prepare;
-            $prepare->request_number = $request->request_number;
-            $prepare->stock_id = $request->stock_id;
-            $prepare->user_id = auth()->user()->id;
-            $prepare->items_id = $request->item_id;
-            $prepare->location = $request->location;
-            $prepare->serial = $request->serial;
-            $prepare->qty = $request->qty;
-            $prepare->schedule = $request->schedOn;
-            $prepare->status = 'SCHEDULED';
-            $sql = $prepare->save();
-        }
-        else{
-            $sql = Prepare::where('request_number', $request->request_number)
-                ->where('items_id',$request->item_id)
-                ->increment('qty', $request->qty);
-        }
+
         if(!$sql){
             $result = 'false';
         }
         else {
             $result = 'true';
-        }
-        if($result == 'true'){
-            if($request->req_type_id != '5'){
-                if($request->serial == ''){
-                    Stock::where('item_id',$request->item_id)
-                        ->whereIn('location_id',['1','2','3','4'])
-                        ->where('status','in')
-                        ->orderBy('id')->limit($request->qty)
-                        ->update(['status' => 'prep']);
-                }
-                else{
-                    Stock::where('item_id',$request->item_id)
-                        ->whereIn('location_id',['1','2','3','4'])
-                        ->where('status','in')
-                        ->where('id',$request->stock_id)
-                        ->orderBy('id')->limit(1)
-                        ->update(['status' => 'prep']);
-                }
-            }
-            else{
-                if($request->serial == ''){
-                    Stock::where('item_id',$request->item_id)
-                        ->whereIn('location_id',['1','2','3','4'])
-                        ->where('status','in')
-                        ->orderBy('id')->limit($request->qty)
-                        ->update(['location_id' => '7']);
-                }
-                else{
-                    Stock::where('item_id',$request->item_id)
-                        ->whereIn('location_id',['1','2','3','4'])
-                        ->where('status','in')
-                        ->where('id',$request->stock_id)
-                        ->orderBy('id')->limit(1)
-                        ->update(['location_id' => '7']);
-                }
-            }
-            
+
             StockRequest::where('request_number', $request->request_number)
                 ->where('item',$request->item_id)
                 ->increment('served', $request->qty);
@@ -951,7 +848,7 @@ class StockRequestController extends Controller
                 ->decrement('pending', $request->qty);
 
             Requests::where('request_number', $request->request_number)
-                ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn]);
+                ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn, 'prepdate' => date('Y-m-d')]);
 
             $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
             if($total == 0){
@@ -963,7 +860,6 @@ class StockRequestController extends Controller
                     ->update(['status' => '5']);
             }
         }
-        
         return response($result);
     }
 
@@ -977,7 +873,7 @@ class StockRequestController extends Controller
     }
 
     public function printRequest(Request $request){
-        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS req_date, requests.request_number AS req_num, requests.requested_by AS user_id, users.name AS req_by, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, needdate, requests.item_id AS item_id, items.item AS item_desc, qty')
+        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS req_date, requests.request_number AS req_num, requests.requested_by AS user_id, users.name AS req_by, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, needdate, prepdate, requests.item_id AS item_id, items.item AS item_desc, qty')
             ->where('request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -985,25 +881,29 @@ class StockRequestController extends Controller
             ->join('items', 'items.id', '=', 'requests.item_id')
             ->orderBy('requests.created_at', 'DESC')
             ->get();
-        $list = str_replace('[','',$list);
-        $list = str_replace(']','',$list);
-        $list = json_decode($list);
 
-        $list2 = Prepare::selectRaw('users.name AS prep_by, prepared_items.updated_at AS prep_date')
-            ->where('request_number', $request->request_number)
-            ->join('users', 'users.id', '=', 'prepared_items.user_id')
-            ->orderBy('prepared_items.id','DESC')
-            ->first();
+            $list = str_replace('[','',$list);
+            $list = str_replace(']','',$list);
+            $list = json_decode($list);
+
+        $list2 = Requests::selectRaw('users.name AS prepby')
+            ->where('requests.request_number', $request->request_number)
+            ->join('users', 'users.id', '=', 'requests.prepared_by')
+            ->get();
         
-        $list3 = Prepare::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, prepared_items.serial AS serial, prepared_items.qty AS qty, prepared_items.items_id AS item_id, prepared_items.id AS id, locations.location AS location')
+            $list2 = str_replace('[','',$list2);
+            $list2 = str_replace(']','',$list2);
+            $list2 = json_decode($list2);
+
+        $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('request_number', $request->request_number)
-            ->join('items','items.id','prepared_items.items_id')
+            ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
-            ->join('locations','locations.id','prepared_items.location')
+            ->join('locations','locations.id','stocks.location_id')
             ->get()
             ->sortBy('item')
             ->sortBy('category');
-        
+
         if(!$list || !$list2 || !$list3){
             return redirect()->to('/stockrequest');
         }

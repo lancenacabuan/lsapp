@@ -61,6 +61,8 @@
             <table id='stockRequestTable' class="table" style="cursor: pointer; font-size: 12px; display: none;">
                 <thead>                            
                     <tr>
+                        <th style="display: none;">CATEGORY ID</th>
+                        <th style="display: none;">ITEM ID</th>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>

@@ -32,6 +32,7 @@
                 <th class="d-none">CLIENT NAME</th>
                 <th class="d-none">ADDRESS / BRANCH</th>
                 <th class="d-none">REASON</th>
+                <th class="d-none">ASSEMBLY NUMBER</th>
             </tr>
         </thead> 
     </table>

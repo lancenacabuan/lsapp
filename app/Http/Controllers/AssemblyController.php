@@ -123,6 +123,7 @@ class AssemblyController extends Controller
     public function request_data(){
         $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, requests.schedule AS sched, prepared_by, needdate, requests.item_id AS item_id, items.item AS item_desc, qty')
         ->where('requests.requested_by', auth()->user()->id)
+        ->where('requests.request_type', '5')
         ->whereNotIn('requests.status', ['7','8','10','11','14'])
         ->join('users', 'users.id', '=', 'requests.requested_by')
         ->join('status', 'status.id', '=', 'requests.status')
@@ -218,6 +219,108 @@ class AssemblyController extends Controller
             $userlogs->activity = "RECEIVED COMPLETE ASSEMBLY STOCK REQUEST: User successfully received complete needed parts of Assembly Stock Request No. $request->request_number.";
             $userlogs->save();
         }
+
+        return response('true');
+    }
+
+    public function defectiveRequest(Request $request){
+        do{
+            $status = Requests::where('request_number', $request->request_number)
+                ->update(['status' => '18']);
+        }
+        while(!$status);
+        
+        do{
+            $list = Requests::selectRaw('needdate')
+                ->where('request_number', $request->request_number)
+                ->get();
+        }
+        while(!$list);
+        $list = str_replace('[','',$list);
+        $list = str_replace(']','',$list);
+        $list = json_decode($list);
+        
+        do{
+            $requests = new Requests;
+            $requests->request_number = $request->generatedReqNum;
+            $requests->assembly_reqnum = $request->request_number;
+            $requests->requested_by = auth()->user()->id;
+            $requests->needdate = $list->needdate;
+            $requests->request_type = '4';
+            $requests->status = '1';
+            $sql = $requests->save();
+        }
+        while(!$sql);
+                
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        return response($result);
+    }
+
+    public function defectiveItems(Request $request){
+        do{
+            $list = Stock::selectRaw('category_id, item_id')
+                ->where('id', $request->id)
+                ->get();
+        }
+        while(!$list);
+        $list = str_replace('[','',$list);
+        $list = str_replace(']','',$list);
+        $list = json_decode($list);
+
+        $count = StockRequest::query()->select()
+            ->where('request_number',$request->generatedReqNum)
+            ->where('item',$list->item_id)
+            ->count();
+
+        if($count == '0'){
+            do{
+                $stockRequest = new StockRequest;
+                $stockRequest->request_number = $request->generatedReqNum;
+                $stockRequest->category = $list->category_id;
+                $stockRequest->item = $list->item_id;
+                $stockRequest->quantity = '1';
+                $stockRequest->served = '0';
+                $stockRequest->pending = '1';
+                $dump = $stockRequest->save();
+            }
+            while(!$dump);
+        }
+        else{
+            do{
+                $qty = StockRequest::where('request_number', $request->generatedReqNum)
+                    ->where('item',$list->item_id)
+                    ->increment('quantity');
+            }
+            while(!$qty);
+            do{
+                $pend = StockRequest::where('request_number', $request->generatedReqNum)
+                    ->where('item',$list->item_id)
+                    ->increment('pending');
+            }
+            while(!$pend);
+        }
+
+        do{
+            $sql = Stock::where('id', $request->id)
+                ->update(['status' => 'defective']);
+        }
+        while(!$sql);
+        
+        return response('true');
+    }
+
+    public function logDefective(Request $request){
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "REQUESTED DEFECTIVE REPLACEMENTS: User successfully requested replacements for defective parts of Assembly Stock Request No. $request->request_number.";
+        $userlogs->save();
 
         return response('true');
     }

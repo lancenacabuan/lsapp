@@ -36,6 +36,18 @@ function copyReqNum(){
     });
 }
 
+function decodeHtml(str){
+    var map = {
+        '&amp;': '&', 
+        '&lt;': '<', 
+        '&gt;': '>', 
+        '&quot;': '"', 
+        '&#039;': "'"
+    };
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
+}
+
+var generatedReqNum;
 function generateReqNum(){
     var today = new Date();
     var month = today.getMonth()+1;
@@ -64,6 +76,7 @@ function generateReqNum(){
         },
         success: function(data){
             if(data == 'unique'){
+                generatedReqNum = request_number;
                 document.getElementById("request_num").value = request_number;
             }
             else{
@@ -166,7 +179,7 @@ $('table.assemblyTable').DataTable({
                 if(row.status_id == '6'){
                     return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '1' || row.status_id == '15'){
+                else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18'){
                     return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
@@ -422,7 +435,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     $('#request_type_details').val(req_type);
                 var item_id = value.item_id;
                     $('#item_id_details').val(item_id);
-                var item_desc = value.item_desc;
+                var item_desc = decodeHtml(value.item_desc);
                     $('#item_desc_details').val(item_desc);
                 var qty = value.qty;
                     $('#qty_details').val(qty);
@@ -440,43 +453,66 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
             
                     $('.modal-body').html();
                     $('#detailsAssembly').modal('show');
+
                     if(requestStatus == '2'){
+                        var ajax_url = '/schedItems';
                         $('#prepItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'SCHEDULED ITEM DETAILS';
                     }
                     if(requestStatus == '3'){
+                        var ajax_url = '/schedItems';
                         $('#prepItemsModal').show();
                         $('#receive_label').show();
                         $('.btnReceive').show();
                         document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
                     }
                     if(requestStatus == '12'){
+                        var ajax_url = '/schedItems';
                         $('#prepItemsModal').show();
                         $('#defective_label').show();
                         $('#btnAssemble').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                     }
-                    if(requestStatus == '13'){
+                    if(requestStatus == '13' || requestStatus == '14'){
+                        var ajax_url = '/schedItems';
                         $('#prepItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
                     }
                     //if(requestStatus == '14'){ ====================PENDING====================
                     if(requestStatus == '15'){
-                        $("#request_info").hide();
+                        var ajax_url = '/incItems';
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        $(".prephide").hide();
                         $("#incItemsModal").show();
                         $("#incFooter").hide();
                     }
                     if(requestStatus == '16'){
-                        $("#request_info").hide();
+                        var ajax_url = '/incItems';
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        $(".prephide").hide();
                         $("#incItemsModal").show();
                         $(".divResched").show();
                         $("#incFooter").hide();
                     }
                     if(requestStatus == '17'){
-                        $("#request_info").hide();
+                        var ajax_url = '/incItems';
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        $(".prephide").hide();
                         $("#incItemsModal").show();
                         $(".divResched").show();
                         $(".btnReceive").show();
+                    }
+                    if(requestStatus == '18'){
+                        var ajax_url = '/dfcItems';
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        $(".prephide").hide();
+                        $("#incItemsModal").show();
+                        document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
+                        $("#incFooter").hide();
                     }
                                 
                 $('table.stockDetails').dataTable().fnDestroy();    
@@ -539,32 +575,34 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     ]
                 });
 
-                $('table.incItems').dataTable().fnDestroy();
-                $('table.incItems').DataTable({
-                    paging: false,
-                    ordering: false,
-                    info: false,
-                    language: {
-                        processing: "Loading...",
-                        emptyTable: "No data available in table"
-                    },
-                    serverSide: true,
-                    ajax: {
-                        url: '/incItems',
-                        data: {
-                            request_number: req_num,
-                        }
-                    },
-                    order:[],
-                    columns: [
-                        { data: 'category' },
-                        { data: 'item' },
-                        { data: 'qty' },
-                        { data: 'uom' },
-                        { data: 'serial' },
-                        { data: 'location' }
-                    ]
-                });
+                if(ajax_url != '/schedItems'){
+                    $('table.incItems').dataTable().fnDestroy();
+                    $('table.incItems').DataTable({
+                        paging: false,
+                        ordering: false,
+                        info: false,
+                        language: {
+                            processing: "Loading...",
+                            emptyTable: "No data available in table"
+                        },
+                        serverSide: true,
+                        ajax: {
+                            url: ajax_url,
+                            data: {
+                                request_number: req_num,
+                            }
+                        },
+                        order:[],
+                        columns: [
+                            { data: 'category' },
+                            { data: 'item' },
+                            { data: 'qty' },
+                            { data: 'uom' },
+                            { data: 'serial' },
+                            { data: 'location' }
+                        ]
+                    });
+                }
             });
         },
         error: function(data){
@@ -597,7 +635,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         $('#requested_by_details').val(req_by);
     var item_id = value.item_id;
         $('#item_id_details').val(item_id);
-    var item_desc = value.item_desc;
+    var item_desc = decodeHtml(value.item_desc);
         $('#item_desc_details').val(item_desc);
     var qty = value.qty;
         $('#qty_details').val(qty);
@@ -615,43 +653,66 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
 
         $('.modal-body').html();
         $('#detailsAssembly').modal('show');
+
         if(requestStatus == '2'){
+            var ajax_url = '/schedItems';
             $('#prepItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'SCHEDULED ITEM DETAILS';
         }
         if(requestStatus == '3'){
+            var ajax_url = '/schedItems';
             $('#prepItemsModal').show();
             $('#receive_label').show();
             $('.btnReceive').show();
             document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
         }
         if(requestStatus == '12'){
+            var ajax_url = '/schedItems';
             $('#prepItemsModal').show();
             $('#defective_label').show();
             $('#btnAssemble').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
         }
-        if(requestStatus == '13'){
+        if(requestStatus == '13' || requestStatus == '14'){
+            var ajax_url = '/schedItems';
             $('#prepItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
         }
         //if(requestStatus == '14'){ ====================PENDING====================
         if(requestStatus == '15'){
-            $("#request_info").hide();
+            var ajax_url = '/incItems';
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            $(".prephide").hide();
             $("#incItemsModal").show();
             $("#incFooter").hide();
         }
         if(requestStatus == '16'){
-            $("#request_info").hide();
+            var ajax_url = '/incItems';
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            $(".prephide").hide();
             $("#incItemsModal").show();
             $(".divResched").show();
             $("#incFooter").hide();
         }
         if(requestStatus == '17'){
-            $("#request_info").hide();
+            var ajax_url = '/incItems';
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            $(".prephide").hide();
             $("#incItemsModal").show();
             $(".divResched").show();
             $(".btnReceive").show();
+        }
+        if(requestStatus == '18'){
+            var ajax_url = '/dfcItems';
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            $(".prephide").hide();
+            $("#incItemsModal").show();
+            document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
+            $("#incFooter").hide();
         }
                     
     $('table.stockDetails').dataTable().fnDestroy();    
@@ -716,32 +777,34 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         ]
     });
 
-    $('table.incItems').dataTable().fnDestroy();
-    $('table.incItems').DataTable({
-        paging: false,
-        ordering: false,
-        info: false,
-        language: {
-            processing: "Loading...",
-            emptyTable: "No data available in table"
-        },
-        serverSide: true,
-        ajax: {
-            url: '/incItems',
-            data: {
-                request_number: req_num,
-            }
-        },
-        order:[],
-        columns: [
-            { data: 'category' },
-            { data: 'item' },
-            { data: 'qty' },
-            { data: 'uom' },
-            { data: 'serial' },
-            { data: 'location' }
-        ]
-    });
+    if(ajax_url != '/schedItems'){
+        $('table.incItems').dataTable().fnDestroy();
+        $('table.incItems').DataTable({
+            paging: false,
+            ordering: false,
+            info: false,
+            language: {
+                processing: "Loading...",
+                emptyTable: "No data available in table"
+            },
+            serverSide: true,
+            ajax: {
+                url: ajax_url,
+                data: {
+                    request_number: req_num,
+                }
+            },
+            order:[],
+            columns: [
+                { data: 'category' },
+                { data: 'item' },
+                { data: 'qty' },
+                { data: 'uom' },
+                { data: 'serial' },
+                { data: 'location' }
+            ]
+        });
+    }
 });
 
 var items = [];
@@ -753,6 +816,9 @@ $('.prepItems tbody').on('click', 'tr', function(){
         return false;
     }
     if(requestStatus == '13'){
+        return false;
+    }
+    if(requestStatus > '13'){
         return false;
     }
     var table = $('table.prepItems').DataTable();
@@ -789,10 +855,7 @@ $('.prepItems tbody').on('click', 'tr', function(){
 $('.table.incItems').DataTable().on('select', function(){});
 $('.incItems tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
-    if(requestStatus == '15'){
-        return false;
-    }
-    if(requestStatus == '16'){
+    if(requestStatus != '17'){
         return false;
     }
     var table = $('table.incItems').DataTable();
@@ -918,8 +981,105 @@ $('.btnReceive').on('click', function(){
     });
 });
 
+$('#btnDefective').on('click', function(){
+    generateReqNum();
+    swal({
+        title: "REQUEST REPLACEMENTS?",
+        text: "You are about to REQUEST REPLACEMENTS for these DEFECTIVE ASSEMBLY PARTS!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type:'post',
+                url:'/assembly/defectiveRequest',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'generatedReqNum': generatedReqNum
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        for(var i=0; i < items.length; i++){
+                            $.ajax({
+                                type:'post',
+                                url:'/assembly/defectiveItems',
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'generatedReqNum': generatedReqNum,
+                                    'id': items[i]
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        return true;
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/assembly';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        scrollReset();
+                        $('#detailsAssembly').hide();
+                        $('#detailsAssembly').modal('dispose');
+                        $('#loading').show(); Spinner(); Spinner.show();
+                        $.ajax({
+                            type:'post',
+                            url:'/assembly/logDefective',
+                            headers: {
+                                'X-CSRF-TOKEN': $("#csrf").val()
+                            },
+                            data:{
+                                'request_number': $('#request_num_details').val()
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide(); Spinner.hide();
+                                    swal("REQUEST SUCCESS", "ASSEMBLY REQUEST", "success");
+                                    setTimeout(function(){location.href="/assembly"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/assembly';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    }
+                    else{
+                        $('#detailsAssembly').hide();
+                        swal("REQUEST FAILED", "ASSEMBLY REQUEST", "error");
+                        setTimeout(function(){location.href="/assembly"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/assembly';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
+});
+
 $('#btnAssemble').on('click', function(){
-    var item_desc_details = $('#item_desc_details').val();
+    var item_desc_details = decodeHtml($('#item_desc_details').val());
     swal({
         title: "ASSEMBLE: "+item_desc_details+"?",
         text: "You are about to ASSEMBLE this Assembly Stock Request!",

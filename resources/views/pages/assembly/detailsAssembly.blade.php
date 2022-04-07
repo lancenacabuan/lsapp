@@ -37,7 +37,6 @@
                 <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
         </div>
-        <div id="request_info">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
         </div>
@@ -68,15 +67,17 @@
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Select table rows to confirm <b>defective items</b> then click the DEFECTIVE button below. Otherwise, click the ASSEMBLE button to proceed.
             </div>
-            <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
-                <input class="form-control form-control-sm" id="prep_by1" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
+            <div class="prephide">
+                <div class="form-inline" style="margin-left: 35px;">
+                    <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
+                    <input class="form-control form-control-sm" id="prep_by1" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
+                </div>
+                <div class="form-inline" style="margin-left: 35px;">
+                    <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
+                    <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
+                </div>
+                <br>
             </div>
-            <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
-                <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
-            </div>
-            <br>
             <table id="prepItems" class="table prepItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
@@ -91,18 +92,19 @@
                 </thead>    
             </table> 
             <br>
+            <div class="prephide">
             <hr>
             <button type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" disabled>RECEIVE</button>
             <button type="button" id="btnAssemble" class="btn btn-primary float-right bp" style="display: none;">ASSEMBLE</button>
             <button type="button" id="btnDefective" class="btn btn-primary float-right bp" style="display: none;">DEFECTIVE</button>
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br>
-        </div>
+            </div>
         </div>
         </div>
         <div id="incItemsModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
+            <h6 id="incmodalheader" class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
             <div class="form-inline divResched" style="margin-left: 35px; display: none;">

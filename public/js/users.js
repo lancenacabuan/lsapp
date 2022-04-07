@@ -56,7 +56,7 @@ $('#btnSave').on('click', function(){
                     url: "users/save",
                     type: "POST",
                     headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
+                    'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data: {
                         _token: $("#csrf").val(),
@@ -74,7 +74,7 @@ $('#btnSave').on('click', function(){
                                 url: "/logNewUser",
                                 type: "POST",
                                 headers: {
-                                'X-CSRF-TOKEN': $("#csrf").val(),
+                                'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data: {
                                     id: data.id,
@@ -196,7 +196,7 @@ $('#btnUpdate').on('click', function(){
                     url: "users/update",
                     type: "PUT",
                     headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val(),
+                        'X-CSRF-TOKEN': $("#csrf").val()
                         },
                     data: {
                         _token: $("#csrf").val(),

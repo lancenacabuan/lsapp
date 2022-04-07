@@ -124,7 +124,7 @@ $('#buttrans').on('click', function(){
                 url: "stocks/update",
                 type: "POST",
                 headers: {
-                'X-CSRF-TOKEN': $("#csrf").val(),
+                'X-CSRF-TOKEN': $("#csrf").val()
                     },
                 data: {
                     _token: $("#csrf").val(),

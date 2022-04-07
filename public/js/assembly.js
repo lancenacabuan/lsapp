@@ -293,7 +293,7 @@ $('#btnAssemblySave').on('click', function(){
                     type:'post',
                     url:'/assembly/saveReqNum',
                     headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val(),
+                        'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
                         'request_number': $('#request_num').val(),
@@ -310,7 +310,7 @@ $('#btnAssemblySave').on('click', function(){
                                     type:'post',
                                     url:'/assembly/saveRequest',
                                     headers: {
-                                        'X-CSRF-TOKEN': $("#csrf").val(),
+                                        'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
                                         'request_number': $('#request_num').val(),
@@ -387,7 +387,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
     $.ajax({
         url: '/reqModal',
         headers: {
-            'X-CSRF-TOKEN': $("#csrf").val(),
+            'X-CSRF-TOKEN': $("#csrf").val()
         },
         dataType: 'json',
         type: 'get',
@@ -711,7 +711,7 @@ $('#btnReceive').on('click', function(){
                 type:'post',
                 url:'/assembly/receiveRequest',
                 headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
+                    'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
@@ -724,7 +724,7 @@ $('#btnReceive').on('click', function(){
                                 type:'post',
                                 url:'/assembly/receiveItems',
                                 headers: {
-                                    'X-CSRF-TOKEN': $("#csrf").val(),
+                                    'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
                                     'id': items[i]
@@ -808,7 +808,7 @@ $('#btnAssemble').on('click', function(){
                 type:'post',
                 url:'/assembly/assembleRequest',
                 headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
+                    'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
                     'request_number': $('#request_num_details').val()

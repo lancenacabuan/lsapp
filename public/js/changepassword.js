@@ -12,7 +12,7 @@ var pass3 = $('#pass3').val();
                 url: "password_save",
                 type: "PUT",
                 headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
+                    'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data: {
                     _token: $("#csrf").val(),

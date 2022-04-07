@@ -339,7 +339,7 @@ $('#btnSave').on('click', function(){
                         type:'post',
                         url:'/saveTransReqNum',
                         headers: {
-                            'X-CSRF-TOKEN': $("#csrf").val(),
+                            'X-CSRF-TOKEN': $("#csrf").val()
                         },
                         data:{
                             'request_number': $('#reqnum').val(),
@@ -356,7 +356,7 @@ $('#btnSave').on('click', function(){
                                         type:'post',
                                         url:'/saveTransRequest',
                                         headers: {
-                                            'X-CSRF-TOKEN': $("#csrf").val(),
+                                            'X-CSRF-TOKEN': $("#csrf").val()
                                         },
                                         data:{
                                             'request_number': $('#reqnum').val(),
@@ -551,7 +551,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
     $.ajax({
         url: '/transModal',
         headers: {
-            'X-CSRF-TOKEN': $("#csrf").val(),
+            'X-CSRF-TOKEN': $("#csrf").val()
         },
         dataType: 'json',
         type: 'get',
@@ -907,7 +907,7 @@ $(document).on('click', '.btndelItem', function(){
         type:'post',
         url: '/delTransItem',
         headers: {
-            'X-CSRF-TOKEN': $("#csrf").val(),
+            'X-CSRF-TOKEN': $("#csrf").val()
         },
         data: {
             req_num: $('#request_num_details').val(),
@@ -991,7 +991,7 @@ $('#btnApprove').on('click', function(){
                 type:'post',
                 url:'/approveTransfer',
                 headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
+                    'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
                     'request_number': $('#request_num_details').val()
@@ -1046,7 +1046,7 @@ $('#btnReason').on('click', function(){
                     type:'post',
                     url:'/disapproveTransfer',
                     headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val(),
+                        'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
                         'request_number': $('#request_num_details').val(),
@@ -1064,7 +1064,7 @@ $('#btnReason').on('click', function(){
                                 type:'post',
                                 url:'/logTransDisapprove',
                                 headers: {
-                                    'X-CSRF-TOKEN': $("#csrf").val(),
+                                    'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
                                     'request_number': $('#request_num_details').val(),
@@ -1120,7 +1120,7 @@ $('#btnTransit').on('click', function(){
                 type:'post',
                 url:'/forReceiving',
                 headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
+                    'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
                     'request_number': $('#request_num_details').val()
@@ -1161,7 +1161,7 @@ $('#btnReceive').on('click', function(){
                 type:'post',
                 url:'/receiveTransfer',
                 headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
+                    'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
                     'request_number': $('#request_num_details').val()
@@ -1176,7 +1176,7 @@ $('#btnReceive').on('click', function(){
                             type:'post',
                             url:'/logTransReceive',
                             headers: {
-                                'X-CSRF-TOKEN': $("#csrf").val(),
+                                'X-CSRF-TOKEN': $("#csrf").val()
                             },
                             data:{
                                 'request_number': $('#request_num_details').val()

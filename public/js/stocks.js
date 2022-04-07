@@ -190,7 +190,7 @@ $('#butsave').on('click', function(){
                 url: "stocks/save",
                 type: "POST",
                 headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val(),
+                    'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data: {
                     _token: $("#csrf").val(),
@@ -230,7 +230,7 @@ $('#butsave').on('click', function(){
                     url: "stocks/save",
                     type: "POST",
                     headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val(),
+                        'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data: {
                         _token: $("#csrf").val(),

@@ -37,6 +37,7 @@
                 <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
         </div>
+        <div id="request_info">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
         </div>
@@ -91,11 +92,47 @@
             </table> 
             <br>
             <hr>
-            <button type="button" id="btnReceive" class="btn btn-primary float-right bp" style="display: none;" disabled>RECEIVE</button>
+            <button type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" disabled>RECEIVE</button>
             <button type="button" id="btnAssemble" class="btn btn-primary float-right bp" style="display: none;">ASSEMBLE</button>
             <button type="button" id="btnDefective" class="btn btn-primary float-right bp" style="display: none;">DEFECTIVE</button>
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br>
+        </div>
+        </div>
+        </div>
+        <div id="incItemsModal" style="display: none;">
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
+            <h6 class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
+        </div>
+        <div class="modal-body">
+            <div class="form-inline divResched" style="margin-left: 35px; display: none;">
+                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
+                <input class="form-control form-control-sm" id="reprep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
+            </div>
+            <div class="form-inline divResched" style="margin-left: 35px; display: none;">
+                <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
+                <input class="form-control form-control-sm" id="resched" style="width: 280px;" type="text" readonly>
+                <br>
+            </div>
+            <table id="incItems" class="table incItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
+                <thead>                            
+                    <tr>
+                        <th>CATEGORY</th>
+                        <th>ITEM DESCRIPTION</th>
+                        <th>QTY</th>
+                        <th>UOM</th>
+                        <th>SERIAL</th>
+                        <th>LOCATION</th>
+                    </tr>
+                </thead>    
+            </table>
+            <br>
+            <div id="incFooter">
+            <hr>
+            <input type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" value="RECEIVE">
+            <br>
+            <br>
+            </div>
         </div>
         </div>
     </div>

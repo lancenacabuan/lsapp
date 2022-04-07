@@ -171,29 +171,40 @@ class AssemblyController extends Controller
     }
 
     public function receiveItems(Request $request){
-        do{
-            $sql = Stock::where('id', $request->id)
-                ->update(['status' => 'received']);
+        if($request->status == '3'){
+            do{
+                $sql = Stock::where('id', $request->id)
+                    ->update(['status' => 'received']);
+            }
+            while(!$sql);
         }
-        while(!$sql);
+        if($request->status == '17'){
+            do{
+                $sql = Stock::where('id', $request->id)
+                    ->update(['status' => 'assembly']);
+            }
+            while(!$sql);
+        }
         
         return response('true');
     }
 
     public function logReceive(Request $request){
-        do{
-            $sql = Stock::where('request_number', $request->request_number)
-                ->where('status', '!=', 'received')
-                ->update(['status' => 'incomplete']);
+        if($request->status == '3'){
+            do{
+                $sql = Stock::where('request_number', $request->request_number)
+                    ->where('status', '!=', 'received')
+                    ->update(['status' => 'incomplete']);
+            }
+            while(!$sql);
+    
+            do{
+                $sql = Stock::where('request_number', $request->request_number)
+                    ->where('status', '=', 'received')
+                    ->update(['status' => 'assembly']);
+            }
+            while(!$sql);
         }
-        while(!$sql);
-
-        do{
-            $sql = Stock::where('request_number', $request->request_number)
-                ->where('status', '=', 'received')
-                ->update(['status' => 'assembly']);
-        }
-        while(!$sql);
 
         if($request->inc == 'true'){
             $userlogs = new UserLogs;

@@ -496,7 +496,7 @@ class StockRequestController extends Controller
     public function reschedRequest(Request $request){
         do{
             $sql = Requests::where('request_number', $request->request_number)
-                ->update(['status' => '16', 'schedule' => $request->resched]);
+                ->update(['status' => '16', 'prepared_by' => auth()->user()->id, 'schedule' => $request->resched]);
         }
         while(!$sql);
         
@@ -529,6 +529,14 @@ class StockRequestController extends Controller
                 $sql = Requests::where('request_number', $request->request_number)
                     ->where('status','5')
                     ->update(['status' => '4']);
+            }
+            while(!$sql);
+        }
+        else if($request->status == '16'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->where('status','16')
+                    ->update(['status' => '17']);
             }
             while(!$sql);
         }
@@ -855,6 +863,7 @@ class StockRequestController extends Controller
 
         $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('request_number', $request->request_number)
+            ->where('stocks.status', '!=', 'incomplete')
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')

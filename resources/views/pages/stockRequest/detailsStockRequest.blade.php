@@ -158,8 +158,8 @@
             </div>
             <div class="form-inline" style="margin-left: 35px;" id="reqContents"></div>
             <hr>
-            <input type="button" class="btn btn-primary bp" id="btnBack" class="button" value="BACK">
-            <input type="button" class="btn btn-primary float-right bp" id="btnSubmit" class="button" value="SCHEDULE" disabled>
+            <input type="button" class="btn btn-primary bp" id="btnBack" value="BACK">
+            <input type="button" class="btn btn-primary float-right bp" id="btnSubmit" value="SCHEDULE" disabled>
             <br>
         </div>
         </div>
@@ -210,7 +210,7 @@
             <br>
             <hr>
             @role('admin|encoder') {{---ROLES---}}
-            <input type="button" class="btn btn-primary float-right bp" id="btnTransit" class="button" value="FOR RECEIVING">
+            <input type="button" class="btn btn-primary float-right bp btnTransit" value="FOR RECEIVING">
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br>
@@ -288,11 +288,16 @@
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
                 <input class="form-control form-control-sm" id="reprep_by" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
             </div>
-            <div class="form-inline" style="margin-left: 35px;">
+            <div id="divResched" class="form-inline" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
                 <input class="form-control form-control-sm" id="resched" style="width: 280px;" type="date">
+                <br>
             </div>
-            <br>
+            <div id="divResched1" class="form-inline" style="margin-left: 35px; display: none;">
+                <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
+                <input class="form-control form-control-sm" id="resched1" style="width: 280px;" type="text" readonly>
+                <br>
+            </div>
             <table id="incItems" class="table incItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
@@ -306,10 +311,13 @@
                 </thead>    
             </table>
             <br>
+            <div id="incFooter">
             <hr>
-            <input type="button" class="btn btn-primary float-right bp" id="btnReschedule" class="button" value="RESCHEDULE">
+            <input type="button" class="btn btn-primary float-right bp" id="btnReschedule" style="display: none;" value="RESCHEDULE">
+            <input type="button" class="btn btn-primary float-right bp btnTransit" style="display: none;" value="FOR RECEIVING">
             <br>
             <br>
+            </div>
         </div>
         </div>
         @endrole

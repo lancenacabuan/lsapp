@@ -493,7 +493,7 @@ $('table.stockrequestTable').DataTable({
                 else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
                     return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13'){
+                else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13' || row.status_id == '17'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14'){
@@ -579,6 +579,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     sched = moment(sched).format('dddd, MMMM DD, YYYY');
                     $('#sched').val(sched);
                     $('#sched1').val(sched);
+                    $('#resched1').val(sched);
                 var client_name = value.client_name;
                     $('#client_name_details').val(client_name);
                 var location_name = value.location;
@@ -663,7 +664,21 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(requestStatus == '15'){
                         $("#request_info").hide();
                         $("#incItemsModal").show();
+                        $("#divResched").show();
                         $('#resched').attr('max', maxDate);
+                        $("#btnReschedule").show();
+                    }
+                    if(requestStatus == '16'){
+                        $("#request_info").hide();
+                        $("#incItemsModal").show();
+                        $("#divResched1").show();
+                        $(".btnTransit").show();
+                    }
+                    if(requestStatus == '17'){
+                        $("#request_info").hide();
+                        $("#incItemsModal").show();
+                        $("#divResched1").show();
+                        $("#incFooter").hide();
                     }
                     if(value.user_id != $('#current_user').val()){
                         $("#btnReceive").hide();
@@ -1045,6 +1060,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         sched = moment(sched).format('dddd, MMMM DD, YYYY');
         $('#sched').val(sched);
         $('#sched1').val(sched);
+        $('#resched1').val(sched);
     var client_name = data.client_name;
         $('#client_name_details').val(client_name);
     var location_name = data.location;
@@ -1129,7 +1145,21 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(requestStatus == '15'){
             $("#request_info").hide();
             $("#incItemsModal").show();
+            $("#divResched").show();
             $('#resched').attr('max', maxDate);
+            $("#btnReschedule").show();
+        }
+        if(requestStatus == '16'){
+            $("#request_info").hide();
+            $("#incItemsModal").show();
+            $("#divResched1").show();
+            $(".btnTransit").show();
+        }
+        if(requestStatus == '17'){
+            $("#request_info").hide();
+            $("#incItemsModal").show();
+            $("#divResched1").show();
+            $("#incFooter").hide();
         }
         if(data.user_id != $('#current_user').val()){
             $("#btnReceive").hide();
@@ -1728,7 +1758,7 @@ $('#btnReason').on('click', function(){
     }
 });
 
-$('#btnTransit').on('click', function(){
+$('.btnTransit').on('click', function(){
     swal({
         title: "FOR RECEIVING?",
         text: "You are about to move these items FOR RECEIVING!",

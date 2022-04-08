@@ -319,8 +319,17 @@ class StockRequestController extends Controller
     }
 
     public function schedItems(Request $request){
+        $include = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $include = str_replace("{\"request_number\":","",$include);
+        $include = str_replace("}","",$include);
+        $include = json_decode($include);
+        $include[] = $request->request_number;
+
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-            ->where('request_number', $request->request_number)
+            ->whereIn('request_number', $include)
             ->whereNotIn('stocks.status', ['incomplete','defective'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
@@ -333,8 +342,17 @@ class StockRequestController extends Controller
     }
 
     public function incItems(Request $request){
+        $include = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $include = str_replace("{\"request_number\":","",$include);
+        $include = str_replace("}","",$include);
+        $include = json_decode($include);
+        $include[] = $request->request_number;
+
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-            ->where('request_number', $request->request_number)
+            ->whereIn('request_number', $include)
             ->where('stocks.status', 'incomplete')
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
@@ -347,8 +365,17 @@ class StockRequestController extends Controller
     }
 
     public function dfcItems(Request $request){
+        $include = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $include = str_replace("{\"request_number\":","",$include);
+        $include = str_replace("}","",$include);
+        $include = json_decode($include);
+        $include[] = $request->request_number;
+
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-            ->where('request_number', $request->request_number)
+            ->whereIn('request_number', $include)
             ->where('stocks.status', 'defective')
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
@@ -862,21 +889,30 @@ class StockRequestController extends Controller
             ->orderBy('requests.created_at', 'DESC')
             ->get();
 
-            $list = str_replace('[','',$list);
-            $list = str_replace(']','',$list);
-            $list = json_decode($list);
+        $list = str_replace('[','',$list);
+        $list = str_replace(']','',$list);
+        $list = json_decode($list);
 
         $list2 = Requests::selectRaw('users.name AS prepby')
             ->where('requests.request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'requests.prepared_by')
             ->get();
         
-            $list2 = str_replace('[','',$list2);
-            $list2 = str_replace(']','',$list2);
-            $list2 = json_decode($list2);
+        $list2 = str_replace('[','',$list2);
+        $list2 = str_replace(']','',$list2);
+        $list2 = json_decode($list2);
+        
+        $include = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $include = str_replace("{\"request_number\":","",$include);
+        $include = str_replace("}","",$include);
+        $include = json_decode($include);
+        $include[] = $request->request_number;
 
         $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-            ->where('request_number', $request->request_number)
+            ->whereIn('request_number', $include)
             ->whereNotIn('stocks.status', ['incomplete','defective'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')

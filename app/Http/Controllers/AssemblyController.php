@@ -176,6 +176,14 @@ class AssemblyController extends Controller
         }
         else {
             $result = 'true';
+            
+            if($request->request_type == '4'){
+                do{
+                    $sql = Requests::where('request_number', $request->assembly_reqnum)
+                        ->update(['status' => '20']);
+                }
+                while(!$sql);
+            }
         }
 
         return response($result);
@@ -332,7 +340,6 @@ class AssemblyController extends Controller
     public function assembleRequest(Request $request){
         do{
             $sql = Requests::where('request_number', $request->request_number)
-                ->where('status','12')
                 ->update(['status' => '13']);
         }
         while(!$sql);

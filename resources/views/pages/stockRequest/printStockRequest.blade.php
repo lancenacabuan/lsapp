@@ -34,7 +34,9 @@
                 <td colspan="2" id="need_date">{{$list->needdate}}</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Reference SO/PO No.:</td>
-                <td colspan="2">{{$list->reference}}</td>
+                <td colspan="2" class="tdHide">{{$list->reference}}</td>
+                <td colspan="2" style="font-weight: bold; display: none;" class="tdShow">Assembly Request No.:</td>
+                <td colspan="2" style="display: none;" class="tdShow">{{$list->assembly_reqnum}}</td>
             </tr>
             <tr height="20">
                 <td colspan="2" height="20" style="font-weight: bold;">Requested By:</td>
@@ -121,8 +123,6 @@ document.addEventListener("contextmenu", function(e){
 }, false);
 
 $(document).ready(function(){
-    setTimeout(function(){$('#loading').hide(); Spinner.hide();}, 0);
-    
     var req_date = $('#req_date').html();
     req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
     $('#req_date').html(req_date);
@@ -142,6 +142,40 @@ $(document).ready(function(){
     if($('#req_type').html() == 'SERVICE UNIT' || $('#req_type').html() == 'ASSEMBLY' || $('#req_type').html() == 'REPLACEMENT'){
         $('.tdHide').html('');
     }
+    if($('#req_type').html() == 'REPLACEMENT'){
+        $('.tdHide').hide();
+        $('.tdShow').show();
+    }
+});
+
+$(document).on('click', '#btnPrint', function(){
+    var printContents=document.getElementById('printPage').innerHTML;
+    var originalContents=document.body.innerHTML;
+    document.body.innerHTML=printContents;
+    window.print();
+    document.body.innerHTML=originalContents;
+});
+
+$(document).on('click', '#btnSavePDF', function(){
+    swal({
+        title: "SAVE AS PDF?",
+        text: "You are about to SAVE this Stock Request as PDF!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            var content = document.getElementById('printPage');
+            var options = {
+                margin:       0.5,
+                filename:     $('#req_num').val()+'.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf(content, options);
+        }
+    });  
 });
 </script>
 @endsection

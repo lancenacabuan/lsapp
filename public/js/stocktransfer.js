@@ -1557,33 +1557,3 @@ $('#btnBack').on('click', function(){
 $('.btnPrint').on('click', function(){
     window.location.href = '/printTransferRequest?request_number='+$('#request_num_details').val();
 });
-
-$(document).on('click', '#btnPrint', function(){
-    var printContents=document.getElementById('printPage').innerHTML;
-    var originalContents=document.body.innerHTML;
-    document.body.innerHTML=printContents;
-    window.print();
-    document.body.innerHTML=originalContents;
-});
-
-$(document).on('click', '#btnSavePDF', function(){
-    swal({
-        title: "SAVE AS PDF?",
-        text: "You are about to SAVE this Stock Request as PDF!",
-        icon: "warning",
-        buttons: true,
-    })
-    .then((willDelete) => {
-        if(willDelete){
-            var content = document.getElementById('printPage');
-            var options = {
-                margin:       0.5,
-                filename:     $('#req_num').val()+'.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-            html2pdf(content, options);
-        }
-    });  
-});

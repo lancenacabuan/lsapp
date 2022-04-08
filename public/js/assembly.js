@@ -212,7 +212,7 @@ $('table.assemblyTable').DataTable({
                 else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13' || row.status_id == '17'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19'){
+                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20'){
                     return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '10'){
@@ -482,32 +482,30 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     $('.modal-body').html();
                     $('#detailsAssembly').modal('show');
 
+                    var ajax_url = '/schedItems';
+
                     if(req_type_id == '4'){
                         $(".rephide").hide();
                         $(".repshow").show();
                     }
 
                     if(requestStatus == '2'){
-                        var ajax_url = '/schedItems';
                         $('#prepItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'SCHEDULED ITEM DETAILS';
                     }
                     if(requestStatus == '3'){
-                        var ajax_url = '/schedItems';
                         $('#prepItemsModal').show();
                         $('#receive_label').show();
                         $('.btnReceive').show();
                         document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
                     }
                     if(requestStatus == '12'){
-                        var ajax_url = '/schedItems';
                         $('#prepItemsModal').show();
                         $('#defective_label').show();
                         $('#btnAssemble').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                     }
                     if(requestStatus == '13' || requestStatus == '14'){
-                        var ajax_url = '/schedItems';
                         $('#prepItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
                     }
@@ -550,7 +548,12 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     if(requestStatus == '19'){
                         var ajax_url = '/schedItems';
                         $('#prepItemsModal').show();
-                        document.getElementById('modalheader').innerHTML = 'REPLACED ITEM DETAILS';
+                        document.getElementById('modalheader').innerHTML = 'REPLACEMENT ITEM DETAILS';
+                    }
+                    if(requestStatus == '20'){
+                        $('#prepItemsModal').show();
+                        $('#btnAssemble').show();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                     }
                                 
                 $('table.stockDetails').dataTable().fnDestroy();    
@@ -696,32 +699,30 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         $('.modal-body').html();
         $('#detailsAssembly').modal('show');
 
+        var ajax_url = '/schedItems';
+
         if(req_type_id == '4'){
             $(".rephide").hide();
             $(".repshow").show();
         }
 
         if(requestStatus == '2'){
-            var ajax_url = '/schedItems';
             $('#prepItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'SCHEDULED ITEM DETAILS';
         }
         if(requestStatus == '3'){
-            var ajax_url = '/schedItems';
             $('#prepItemsModal').show();
             $('#receive_label').show();
             $('.btnReceive').show();
             document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
         }
         if(requestStatus == '12'){
-            var ajax_url = '/schedItems';
             $('#prepItemsModal').show();
             $('#defective_label').show();
             $('#btnAssemble').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
         }
         if(requestStatus == '13' || requestStatus == '14'){
-            var ajax_url = '/schedItems';
             $('#prepItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
         }
@@ -764,7 +765,12 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         if(requestStatus == '19'){
             var ajax_url = '/schedItems';
             $('#prepItemsModal').show();
-            document.getElementById('modalheader').innerHTML = 'REPLACED ITEM DETAILS';
+            document.getElementById('modalheader').innerHTML = 'REPLACEMENT ITEM DETAILS';
+        }
+        if(requestStatus == '20'){
+            $('#prepItemsModal').show();
+            $('#btnAssemble').show();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
         }
                     
     $('table.stockDetails').dataTable().fnDestroy();    
@@ -952,6 +958,7 @@ $('.btnReceive').on('click', function(){
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
+                    'assembly_reqnum': $('#asm_request_num_details').val(),
                     'request_type': $('#req_type_id_details').val(),
                     'inc': inc
                 },
@@ -1171,4 +1178,8 @@ $('#btnAssemble').on('click', function(){
             });
         }
     });    
+});
+
+$('.btnPrint').on('click', function(){
+    window.location.href = '/printRequest?request_number='+$('#request_num_details').val();
 });

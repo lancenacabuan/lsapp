@@ -139,7 +139,7 @@ $(document).ready(function(){
     sched = moment(sched).format('dddd, MMMM DD, YYYY');
     $('#sched').html(sched);
 
-    if($('#req_type').html() == 'SERVICE UNIT' || $('#req_type').html() == 'ASSEMBLY'){
+    if($('#req_type').html() == 'SERVICE UNIT' || $('#req_type').html() == 'ASSEMBLY' || $('#req_type').html() == 'REPLACEMENT'){
         $('.tdHide').html('');
     }
 });

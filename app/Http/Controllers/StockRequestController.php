@@ -798,17 +798,17 @@ class StockRequestController extends Controller
     }
 
     public function prepareItems(Request $request){
-        if($request->req_type_id != '5'){
+        if($request->req_type_id == '4' || $request->req_type_id == '5'){
             do{
                 $sql = Stock::where('id',$request->stock_id)
-                    ->update(['status' => 'out', 'request_number' => $request->request_number]);
+                ->update(['status' => 'assembly', 'request_number' => $request->request_number]);
             }
             while(!$sql);
         }
         else{
             do{
                 $sql = Stock::where('id',$request->stock_id)
-                    ->update(['status' => 'assembly', 'request_number' => $request->request_number]);
+                    ->update(['status' => 'out', 'request_number' => $request->request_number]);
             }
             while(!$sql);
         }

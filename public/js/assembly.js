@@ -36,6 +36,19 @@ function copyReqNum(){
     });
 }
 
+function copyAsmReqNum(){
+    var copyText = document.getElementById("asm_request_num_details");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(copyText.value);
+    swal({
+        title: copyText.value,
+        text: "Copied to Clipboard!",
+        icon: "success",
+        timer: 2000
+    });
+}
+
 function decodeHtml(str){
     var map = {
         '&amp;': '&', 
@@ -132,7 +145,7 @@ $('table.assemblyTable').DataTable({
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
         },
         {
-            "targets": [7,8,9,10,11],
+            "targets": [8,9,10,11,12,13,14],
             "visible": false,
             "searchable": false
         }
@@ -171,7 +184,18 @@ $('table.assemblyTable').DataTable({
         { data: 'date' },
         { data: 'req_num' },
         { data: 'req_by' },
-        { data: 'item_desc' },
+        { data: 'req_type' },
+        {
+            data: 'item_desc',
+            "render": function(data, type, row){
+                if(row.item_id != '235'){
+                    return row.item_desc;
+                }
+                else{
+                    return '';
+                }
+            }
+        },
         { data: 'qty' },
         {
             data: 'status',
@@ -188,7 +212,7 @@ $('table.assemblyTable').DataTable({
                 else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13' || row.status_id == '17'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14'){
+                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19'){
                     return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '10'){
@@ -199,11 +223,13 @@ $('table.assemblyTable').DataTable({
                 }
             }
         },
+        { data: 'req_type_id' },
         { data: 'item_id' },
         { data: 'status_id' },
         { data: 'prep_by' },
         { data: 'sched' },
         { data: 'user_id' },
+        { data: 'assembly_reqnum' }
     ],
     order:[],
     initComplete: function(){
@@ -429,6 +455,8 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     $('#needdate_details').val(need_date);
                 var req_num = value.req_num;
                     $('#request_num_details').val(req_num);
+                var asm_req_num = value.assembly_reqnum;
+                    $('#asm_request_num_details').val(asm_req_num);
                 var req_by = value.req_by;
                     $('#requested_by_details').val(req_by);
                 var req_type = value.req_type;
@@ -453,6 +481,11 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
             
                     $('.modal-body').html();
                     $('#detailsAssembly').modal('show');
+
+                    if(req_type_id == '4'){
+                        $(".rephide").hide();
+                        $(".repshow").show();
+                    }
 
                     if(requestStatus == '2'){
                         var ajax_url = '/schedItems';
@@ -513,6 +546,11 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
                         $("#incFooter").hide();
+                    }
+                    if(requestStatus == '19'){
+                        var ajax_url = '/schedItems';
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'REPLACED ITEM DETAILS';
                     }
                                 
                 $('table.stockDetails').dataTable().fnDestroy();    
@@ -631,8 +669,12 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         $('#needdate_details').val(need_date);
     var req_num = value.req_num;
         $('#request_num_details').val(req_num);
+    var asm_req_num = value.assembly_reqnum;
+        $('#asm_request_num_details').val(asm_req_num);
     var req_by = value.req_by;
         $('#requested_by_details').val(req_by);
+    var req_type = value.req_type;
+        $('#request_type_details').val(req_type);
     var item_id = value.item_id;
         $('#item_id_details').val(item_id);
     var item_desc = decodeHtml(value.item_desc);
@@ -653,6 +695,11 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
 
         $('.modal-body').html();
         $('#detailsAssembly').modal('show');
+
+        if(req_type_id == '4'){
+            $(".rephide").hide();
+            $(".repshow").show();
+        }
 
         if(requestStatus == '2'){
             var ajax_url = '/schedItems';
@@ -713,6 +760,11 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
             $("#incFooter").hide();
+        }
+        if(requestStatus == '19'){
+            var ajax_url = '/schedItems';
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'REPLACED ITEM DETAILS';
         }
                     
     $('table.stockDetails').dataTable().fnDestroy();    
@@ -818,7 +870,7 @@ $('.prepItems tbody').on('click', 'tr', function(){
     if(requestStatus == '13'){
         return false;
     }
-    if(requestStatus > '13'){
+    if(requestStatus > 13){
         return false;
     }
     var table = $('table.prepItems').DataTable();
@@ -900,6 +952,7 @@ $('.btnReceive').on('click', function(){
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
+                    'request_type': $('#req_type_id_details').val(),
                     'inc': inc
                 },
                 success: function(data){

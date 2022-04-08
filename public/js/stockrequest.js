@@ -509,7 +509,7 @@ $('table.stockrequestTable').DataTable({
                 else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13' || row.status_id == '17'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14'){
+                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19'){
                     return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '10'){
@@ -639,10 +639,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#reason_label").show();
                         $("#reason_details").show();
                     }
-                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > '7'){
+                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > 7){
                         $("#btnDelete").hide();
                     }
-                    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > '7'){
+                    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7){
                         $("#proceed_label").hide();
                         $("#btnProceed").hide();
                     }
@@ -655,7 +655,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $("#btnReceive").html('RECEIVE DEMO');
                         }
                     }
-                    if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13'){
+                    if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '19'){
                         $("#transitItemsModal").show();
                         $("#btnReceive").hide();
                         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
@@ -675,6 +675,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $("#btnHideDetails").show();
                             $("#divAssembly").show();
                             $("#request_info").hide();
+                        }
+                        if(requestStatus == '19'){
+                            document.getElementById('modalheader').innerHTML = 'REPLACED ITEM DETAILS';
                         }
                     }
                     if(requestStatus == '10'){
@@ -736,7 +739,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
-                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > '7'){
+                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > 7){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
@@ -1150,10 +1153,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#reason_label").show();
             $("#reason_details").show();
         }
-        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > '7'){
+        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > 7){
             $("#btnDelete").hide();
         }
-        if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > '7'){
+        if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7){
             $("#proceed_label").hide();
             $("#btnProceed").hide();
         }
@@ -1166,7 +1169,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $("#btnReceive").html('RECEIVE DEMO');
             }
         }
-        if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13'){
+        if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '19'){
             $("#transitItemsModal").show();
             $("#btnReceive").hide();
             document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
@@ -1186,6 +1189,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $("#btnHideDetails").show();
                 $("#divAssembly").show();
                 $("#request_info").hide();
+            }
+            if(requestStatus == '19'){
+                document.getElementById('modalheader').innerHTML = 'REPLACED ITEM DETAILS';
             }
         }
         if(requestStatus == '10'){
@@ -1247,7 +1253,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#sd1").show();
             $("#sd2").hide();
         }
-        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > '7'){
+        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > 7){
             $("#sd1").show();
             $("#sd2").hide();
         }
@@ -1849,6 +1855,8 @@ $('.btnTransit').on('click', function(){
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
+                    'assembly_reqnum': $('#asm_request_num_details').val(),
+                    'request_type': $('#req_type_id_details').val(),
                     'status': $('#status_id_details').val()
                 },
                 success: function(data){
@@ -2280,13 +2288,15 @@ $('#btnReceiveAssembled').on('click', function(){
 setInterval(checkReqType, 0);
 function checkReqType(){
     if($('#detailsStockRequest').is(':visible')){
-        if($('#req_type_id_details').val() == '5'){
+        var req_type_id = $('#req_type_id_details').val();
+        if(req_type_id == '4' || req_type_id == '5'){
             var table = $('#stockDetailsrequest').DataTable();
             var count = 0;
 
-            if($('#status_details').val() == 'PENDING'){
+            if($('#status_id_details').val() == '1'){
                 $("#warning").show();
             }
+            $("#proceed_label").hide();
             $("#btnProceed").prop('disabled', false);
             $("#stockDetailsrequest *").prop('disabled', true);
             table.column(4).visible(false);
@@ -2309,7 +2319,7 @@ var items = [];
 $('table.stockDetails').DataTable().on('select', function(){});
 $('.stockDetails tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
-    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > '7'){
+    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7){
         return false;
     }
     var table = $('table.stockDetails').DataTable();
@@ -2376,7 +2386,7 @@ $("#btnProceed").unbind('click').click(function(){
     var j = 0;
     var reqnum = $('#request_num_details').val();
     var req_type_id = $('#req_type_id_details').val();
-    if(req_type_id == '5'){
+    if(req_type_id == '4' || req_type_id == '5'){
         var form_data  = $('#stockDetailsrequest').DataTable().rows().data();
         form_data.each(function(value, index){
             items.push(value.item_id);

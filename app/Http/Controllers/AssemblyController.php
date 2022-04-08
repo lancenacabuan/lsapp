@@ -121,11 +121,12 @@ class AssemblyController extends Controller
     }
 
     public function request_data(){
-        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, requests.schedule AS sched, prepared_by, needdate, requests.item_id AS item_id, items.item AS item_desc, qty')
+        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, needdate, requests.item_id AS item_id, items.item AS item_desc, qty, assembly_reqnum')
         ->where('requests.requested_by', auth()->user()->id)
-        ->where('requests.request_type', '5')
+        ->whereIn('requests.request_type', ['4','5'])
         ->whereNotIn('requests.status', ['7','8','10','11','14'])
         ->join('users', 'users.id', '=', 'requests.requested_by')
+        ->join('request_type', 'request_type.id', '=', 'requests.request_type')
         ->join('status', 'status.id', '=', 'requests.status')
         ->join('items', 'items.id', '=', 'requests.item_id')
         ->orderBy('requests.created_at', 'DESC')
@@ -154,11 +155,20 @@ class AssemblyController extends Controller
             while(!$sql);
         }
         else{
-            do{
-                $sql = Requests::where('request_number', $request->request_number)
-                    ->update(['status' => '12']);
+            if($request->request_type == '4'){
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '19']);
+                }
+                while(!$sql);
             }
-            while(!$sql);
+            else{
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '12']);
+                }
+                while(!$sql);
+            }
         }
                 
         if(!$sql){
@@ -192,19 +202,13 @@ class AssemblyController extends Controller
 
     public function logReceive(Request $request){
         if($request->status == '3'){
-            do{
-                $sql = Stock::where('request_number', $request->request_number)
-                    ->where('status', '!=', 'received')
-                    ->update(['status' => 'incomplete']);
-            }
-            while(!$sql);
-    
-            do{
-                $sql = Stock::where('request_number', $request->request_number)
-                    ->where('status', '=', 'received')
-                    ->update(['status' => 'assembly']);
-            }
-            while(!$sql);
+            Stock::where('request_number', $request->request_number)
+                ->where('status', '!=', 'received')
+                ->update(['status' => 'incomplete']);
+            
+            Stock::where('request_number', $request->request_number)
+                ->where('status', '=', 'received')
+                ->update(['status' => 'assembly']);
         }
 
         if($request->inc == 'true'){

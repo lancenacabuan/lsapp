@@ -15,14 +15,16 @@
                 <input class="form-control form-control-sm"  id="reqdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" style="width: 160px;">Stock Request No.</label>
                 <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" id="qty_label" style="width: 60px;">Qty</label>
-                <input class="form-control form-control-sm" id="qty_details" style="width: 100px;" type="number" readonly>
+                <label class="form-control form-control-sm rephide" id="qty_label" style="width: 60px;">Qty</label>
+                <input class="form-control form-control-sm rephide" id="qty_details" style="width: 100px;" type="number" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
                 <input class="form-control form-control-sm"  id="needdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" id="item_desc_label" style="width: 160px;">Assembled Item Name</label>
-                <input class="form-control form-control-sm" id="item_desc_details" style="width: 450px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm rephide" id="item_desc_label" style="width: 160px;">Assembled Item Name</label>
+                <input class="form-control form-control-sm rephide" id="item_desc_details" style="width: 450px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm repshow" style="width: 160px; display: none;">Assembly Request No.</label>
+                <input class="form-control form-control-sm repshow" id="asm_request_num_details" onclick="copyAsmReqNum()" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>

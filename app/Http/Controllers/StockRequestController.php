@@ -191,7 +191,7 @@ class StockRequestController extends Controller
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
             $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason, needdate, requests.item_id AS item_id, items.item AS item_desc, qty, assembly_reqnum')
-            ->whereNotIn('requests.status', ['7','8','10','11','14'])
+            ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
             ->join('status', 'status.id', '=', 'requests.status')
@@ -203,7 +203,7 @@ class StockRequestController extends Controller
         else{
             $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason, needdate, requests.item_id AS item_id, items.item AS item_desc, qty, assembly_reqnum')
             ->where('requests.requested_by', auth()->user()->id)
-            ->whereNotIn('requests.status', ['7','8','10','11','14'])
+            ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
             ->join('status', 'status.id', '=', 'requests.status')
@@ -828,7 +828,7 @@ class StockRequestController extends Controller
         if($request->req_type_id == '4' || $request->req_type_id == '5'){
             do{
                 $sql = Stock::where('id',$request->stock_id)
-                ->update(['status' => 'assembly', 'request_number' => $request->request_number]);
+                    ->update(['status' => 'assembly', 'request_number' => $request->request_number]);
             }
             while(!$sql);
         }

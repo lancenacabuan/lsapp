@@ -2,7 +2,7 @@
 @section('content')
 @php
 $stocks = DB::table('stocks')->whereNotIn('stocks.location_id',['8'])->get()->count();
-$stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10','11','14'])->get()->count();
+$stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10','11','14','19'])->get()->count();
 $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
 @endphp
 <div class="container-fluid">

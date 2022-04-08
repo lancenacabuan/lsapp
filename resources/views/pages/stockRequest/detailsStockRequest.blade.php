@@ -79,6 +79,10 @@
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>CANNOT PROCEED:</strong> Available stocks of Main Branch should be equal or more than the quantity of all requested items.
             </div>
+            <div id="warning" class="alert alert-warning rcvDef" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>CANNOT PROCEED:</strong> Please receive first <b>defective items</b> by clicking the DEFECTIVE DETAILS button below before processing replacements.
+            </div>
             @role('sales|approver - sales') {{---ROLES---}}
             <div id="sd1" style="display: none;">
             <table id="stockDetailsrequest" class="table stockDetails1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
@@ -138,6 +142,7 @@
             @endrole
             @role('admin|encoder') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp" id="btnProceed" value="PROCEED" disabled>
+            <button type="button" id="btnDefDetails" class="btn btn-primary float-right bp rcvDef" style="display: none;">DEFECTIVE DETAILS</button>
             @endrole
             @role('sales') {{---ROLES---}}
             <button type="button" id="btnDelete" class="btn btn-dark bp">DELETE</button>
@@ -321,6 +326,10 @@
             <hr>
             <input type="button" class="btn btn-primary float-right bp" id="btnReschedule" style="display: none;" value="RESCHEDULE">
             <input type="button" class="btn btn-primary float-right bp btnTransit" style="display: none;" value="FOR RECEIVING">
+            <input type="button" class="btn btn-primary float-right bp rcvShow" id="btnReceiveDfc" style="display: none;" value="RECEIVE DEFECTIVE">
+            <span class="float-right rcvShow" style="width: 10px; display: none;">&nbsp;</span>
+            <input type="button" class="btn btn-primary float-right bp rcvShow" id="showMore" style="display: none;" value="SHOW DETAILS">
+            <input type="button" class="btn btn-primary float-right bp rcvShow" id="showLess" style="display: none;" value="HIDE DETAILS">
             <br>
             <br>
             </div>

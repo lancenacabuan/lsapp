@@ -723,7 +723,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $(".dfc").hide();
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
-                        $("#incFooter").hide();
+                        $("#request_info").hide();
+                        $(".rcvShow").show();
+                        $("#showMore").show();
+                        $("#showLess").hide();
                     }
                     if(value.user_id != $('#current_user').val()){
                         $("#btnReceive").hide();
@@ -1237,7 +1240,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $(".dfc").hide();
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
-            $("#incFooter").hide();
+            $("#request_info").hide();
+            $(".rcvShow").show();
+            $("#showMore").show();
+            $("#showLess").hide();
         }
         if(data.user_id != $('#current_user').val()){
             $("#btnReceive").hide();
@@ -2285,15 +2291,31 @@ $('#btnReceiveAssembled').on('click', function(){
     }); 
 });
 
+var current_status;
 setInterval(checkReqType, 0);
 function checkReqType(){
     if($('#detailsStockRequest').is(':visible')){
         var req_type_id = $('#req_type_id_details').val();
+        var status_id = $('#status_id_details').val();
+
         if(req_type_id == '4' || req_type_id == '5'){
+            if(req_type_id == '4' && status_id == '1'){
+                $.ajax({ 
+                    type:'get', 
+                    url:'/checkStatus', 
+                    data:{
+                        'assembly_reqnum': $('#asm_request_num_details').val()
+                    }, 
+                    success: function(data){
+                        current_status = data;
+                    }
+                }); 
+            }
+
             var table = $('#stockDetailsrequest').DataTable();
             var count = 0;
 
-            if($('#status_id_details').val() == '1'){
+            if(status_id == '1'){
                 $("#warning").show();
             }
             $("#proceed_label").hide();
@@ -2310,6 +2332,12 @@ function checkReqType(){
             });
             if(count == 0){
                 $("#warning").hide();
+            }
+
+            if(current_status == '18'){
+                $("#warning").hide();
+                $("#btnProceed").hide();
+                $(".rcvDef").show();
             }
         }
     }
@@ -2674,6 +2702,22 @@ $("#btnShowDetails").on('click', function(){
 $("#btnHideDetails").on('click', function(){
     $("#divAssembly").show();
     $("#request_info").slideUp();
+});
+
+$("#showMore").on('click', function(){
+    $("#request_info").slideDown();
+    $("#showMore").hide();
+    $("#showLess").show();
+});
+
+$("#showLess").on('click', function(){
+    $("#request_info").hide();
+    $("#showMore").show();
+    $("#showLess").hide();
+});
+
+$('#btnDefDetails').on('click', function(){
+    window.location.href = '/stockrequest?request_number='+$('#asm_request_num_details').val();
 });
 
 $('.btnPrint').on('click', function(){

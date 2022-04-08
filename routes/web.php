@@ -75,6 +75,7 @@ Route::any('/receiveRequest',[StockRequestController::class,'receiveRequest']);
 Route::any('/logReceive',[StockRequestController::class,'logReceive']);
 Route::any('/saleRequest',[StockRequestController::class,'saleRequest']);
 Route::any('/returnRequest',[StockRequestController::class,'returnRequest']);
+Route::get('/checkStatus',[StockRequestController::class,'checkStatus']);
 Route::get('/stockreq',[StockRequestController::class,'stockreq']);
 Route::get('/setserials',[StockRequestController::class,'setserials']);
 Route::get('/setlocation',[StockRequestController::class,'setlocation']);

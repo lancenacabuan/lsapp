@@ -784,6 +784,20 @@ class StockRequestController extends Controller
         return response($result);
     }
 
+    public function checkStatus(Request $request){       
+        do{
+            $sql = Requests::select('status')
+                ->where('request_number', $request->assembly_reqnum)
+                ->get();
+        }
+        while(!$sql);
+
+        $sql = str_replace('[{"status":','',$sql);
+        $sql = str_replace('}]','',$sql);
+        
+        return response($sql);
+    }
+
     public function stockreq(Request $request){       
         $list = StockRequest::select('categories.category AS category', 'items.item AS item', 'items.id AS item_id', 'stock_request.quantity AS qty', 'stock_request.served AS served', 'stock_request.pending AS pending', 'items.UOM AS uom')
             ->where('stock_request.item', $request->item_id)

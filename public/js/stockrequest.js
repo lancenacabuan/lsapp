@@ -1037,6 +1037,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 });
 
                 if(ajax_url != '/schedItems'){
+                    $('table.incItems').dataTable().fnDestroy();
                     $('table.incItems').DataTable({
                         paging: false,
                         ordering: false,
@@ -1554,6 +1555,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     });
 
     if(ajax_url != '/schedItems'){
+        $('table.incItems').dataTable().fnDestroy();
         $('table.incItems').DataTable({
             paging: false,
             ordering: false,
@@ -2344,6 +2346,7 @@ function checkReqType(){
 }
 
 var items = [];
+var item_count = 0;
 $('table.stockDetails').DataTable().on('select', function(){});
 $('.stockDetails tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
@@ -2407,6 +2410,31 @@ $('.stockDetails tbody').on('click', 'tr', function(){
     }
     else{
         $('#btnProceed').prop('disabled', false);
+    }
+});
+
+$('.table.incItems').DataTable().on('select', function(){});
+$('.incItems tbody').on('click', 'tr', function(){
+    var requestStatus = $('#status_id_details').val();
+    if(requestStatus != '18'){
+        return false;
+    }
+    var table = $('table.incItems').DataTable();
+    var data = table.row(this).data();
+    item_count = table.data().count();
+
+    $(this).toggleClass('selected');
+    if(items.includes(data.id) == true){
+        items = items.filter(item => item !== data.id);
+    }
+    else {
+        items.push(data.id);
+    }
+    if(items.length == 0){
+        $('#btnReceiveDfc').prop('disabled', true);
+    }
+    else{
+        $('#btnReceiveDfc').prop('disabled', false);
     }
 });
 
@@ -2692,6 +2720,108 @@ $('#btnBack').on('click', function(){
     $("#requestItems").slideUp();
     $("#schedOn").val('');
     $("#btnProceed").show();
+});
+
+$('#btnReceiveDfc').on('click', function(){
+    var inc = 'false';
+    var inctype = 'COMPLETE';
+    if(items.length < item_count){
+        inc = 'true';
+        inctype = 'INCOMPLETE';
+    }
+    swal({
+        title: "RECEIVE "+inctype+" DEFECTIVE PARTS?",
+        text: "You are about to RECEIVE these DEFECTIVE PARTS!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type: 'post',
+                url: '/receiveDefective',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'inc': inc
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        for(var i=0; i < items.length; i++){
+                            $.ajax({
+                                type: 'post',
+                                url: '/receiveDfcItems',
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'id': items[i]
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        return true;
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        scrollReset();
+                        $('#detailsStockRequest').hide();
+                        $('#detailsStockRequest').modal('dispose');
+                        $('#loading').show(); Spinner(); Spinner.show();
+                        $.ajax({
+                            type: 'post',
+                            url: '/logReceiveDfc',
+                            headers: {
+                                'X-CSRF-TOKEN': $("#csrf").val()
+                            },
+                            data:{
+                                'request_number': $('#request_num_details').val(),
+                                'inc': inc
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide(); Spinner.hide();
+                                    swal("RECEIVED "+inctype, "DEFECTIVE PARTS", "success");
+                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    }
+                    else{
+                        $('#detailsStockRequest').hide();
+                        swal("RECEIVE FAILED", "DEFECTIVE PARTS", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
 });
 
 $("#btnShowDetails").on('click', function(){

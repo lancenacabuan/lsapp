@@ -326,7 +326,7 @@
             <hr>
             <input type="button" class="btn btn-primary float-right bp" id="btnReschedule" style="display: none;" value="RESCHEDULE">
             <input type="button" class="btn btn-primary float-right bp btnTransit" style="display: none;" value="FOR RECEIVING">
-            <input type="button" class="btn btn-primary float-right bp rcvShow" id="btnReceiveDfc" style="display: none;" value="RECEIVE DEFECTIVE">
+            <input type="button" class="btn btn-primary float-right bp rcvShow" id="btnReceiveDfc" style="display: none;" value="RECEIVE DEFECTIVE" disabled>
             <span class="float-right rcvShow" style="width: 10px; display: none;">&nbsp;</span>
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="showMore" style="display: none;" value="SHOW DETAILS">
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="showLess" style="display: none;" value="HIDE DETAILS">

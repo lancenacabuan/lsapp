@@ -330,7 +330,7 @@ class StockRequestController extends Controller
 
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
-            ->whereNotIn('stocks.status', ['incomplete','defective'])
+            ->whereNotIn('stocks.status', ['incomplete','defective','incdefective'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
@@ -377,6 +377,29 @@ class StockRequestController extends Controller
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->where('stocks.status', 'defective')
+            ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','stocks.location_id')
+            ->get()
+            ->sortBy('item')
+            ->sortBy('category');
+
+        return DataTables::of($list)->make(true);
+    }
+
+    public function incdfcItems(Request $request){
+        $include = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $include = str_replace("{\"request_number\":","",$include);
+        $include = str_replace("}","",$include);
+        $include = json_decode($include);
+        $include[] = $request->request_number;
+
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+            ->whereIn('request_number', $include)
+            ->where('stocks.status', 'incdefective')
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
@@ -893,6 +916,67 @@ class StockRequestController extends Controller
         return response('true');
     }
 
+    public function receiveDefective(Request $request){
+        if($request->inc == 'true'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '21']);
+            }
+            while(!$sql);
+        }
+        else{
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '22']);
+            }
+            while(!$sql);
+        }
+                
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        return response($result);
+    }
+
+    public function receiveDfcItems(Request $request){
+        do{
+            $sql = Stock::where('id', $request->id)
+                ->update(['status' => 'dfcreceived']);
+        }
+        while(!$sql);
+        
+        return response('true');
+    }
+
+    public function logReceiveDfc(Request $request){
+        Stock::where('request_number', $request->request_number)
+            ->where('status', '=', 'defective')
+            ->update(['status' => 'incdefective']);
+        
+        Stock::where('request_number', $request->request_number)
+            ->where('status', '=', 'dfcreceived')
+            ->update(['status' => 'defectives']);
+
+        if($request->inc == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED INCOMPLETE DEFECTIVE ITEMS: User successfully received incomplete defective parts of Assembly Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        else{
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED COMPLETE DEFECTIVE ITEMS: User successfully received complete defective parts of Assembly Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response('true');
+    }
+
     public function printRequest(Request $request){
         $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS req_date, requests.request_number AS req_num, requests.requested_by AS user_id, users.name AS req_by, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, needdate, prepdate, requests.item_id AS item_id, items.item AS item_desc, qty, assembly_reqnum')
             ->where('request_number', $request->request_number)
@@ -927,7 +1011,7 @@ class StockRequestController extends Controller
 
         $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
-            ->whereNotIn('stocks.status', ['incomplete','defective'])
+            ->whereNotIn('stocks.status', ['incomplete','defective','incdefective'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')

@@ -211,7 +211,7 @@ class AssemblyController extends Controller
     public function logReceive(Request $request){
         if($request->status == '3'){
             Stock::where('request_number', $request->request_number)
-                ->where('status', '!=', 'received')
+                ->where('status', '=', 'assembly')
                 ->update(['status' => 'incomplete']);
             
             Stock::where('request_number', $request->request_number)
@@ -289,8 +289,16 @@ class AssemblyController extends Controller
             ->where('request_number',$request->generatedReqNum)
             ->where('item',$list->item_id)
             ->count();
-
-        if($count == '0'){
+        
+        if($count > 0){
+            StockRequest::where('request_number', $request->generatedReqNum)
+                ->where('item',$list->item_id)
+                ->increment('quantity', 1);
+            StockRequest::where('request_number', $request->generatedReqNum)
+                ->where('item',$list->item_id)
+                ->increment('pending', 1);
+        }
+        else{
             do{
                 $stockRequest = new StockRequest;
                 $stockRequest->request_number = $request->generatedReqNum;
@@ -302,20 +310,6 @@ class AssemblyController extends Controller
                 $dump = $stockRequest->save();
             }
             while(!$dump);
-        }
-        else{
-            do{
-                $qty = StockRequest::where('request_number', $request->generatedReqNum)
-                    ->where('item',$list->item_id)
-                    ->increment('quantity');
-            }
-            while(!$qty);
-            do{
-                $pend = StockRequest::where('request_number', $request->generatedReqNum)
-                    ->where('item',$list->item_id)
-                    ->increment('pending');
-            }
-            while(!$pend);
         }
 
         do{

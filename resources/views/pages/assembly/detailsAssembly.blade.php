@@ -133,7 +133,7 @@
             <br>
             <div id="incFooter">
             <hr>
-            <input type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" value="RECEIVE">
+            <input type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" value="RECEIVE" disabled>
             <br>
             <br>
             </div>

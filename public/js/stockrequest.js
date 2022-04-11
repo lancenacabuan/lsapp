@@ -500,7 +500,7 @@ $('table.stockrequestTable').DataTable({
                 if(row.status_id == '6'){
                     return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18'){
+                else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22'){
                     return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
@@ -687,6 +687,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#btnReturn").hide();
                         document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
                     }
+                    //if(requestStatus == '14'){ ====================PENDING====================
                     if(requestStatus == '15'){
                         var ajax_url = '/incItems';
                         $("#transitItemsModal").show();
@@ -727,6 +728,25 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $(".rcvShow").show();
                         $("#showMore").show();
                         $("#showLess").hide();
+                    }
+                    if(requestStatus == '21'){
+                        var ajax_url = '/incdfcItems';
+                        $('#transitItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        $(".prephide").hide();
+                        $(".dfc").hide();
+                        $("#incItemsModal").show();
+                        document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE DEFECTIVE ITEM DETAILS';
+                        $("#request_info").hide();
+                        $(".rcvShow").show();
+                        $("#showMore").show();
+                        $("#showLess").hide();
+                    }
+                    if(requestStatus == '22'){
+                        var ajax_url = '/schedItems';
+                        $('#transitItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        $(".prephide").hide();
                     }
                     if(value.user_id != $('#current_user').val()){
                         $("#btnReceive").hide();
@@ -1205,6 +1225,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#btnReturn").hide();
             document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
         }
+        //if(requestStatus == '14'){ ====================PENDING====================
         if(requestStatus == '15'){
             var ajax_url = '/incItems';
             $("#transitItemsModal").show();
@@ -1245,6 +1266,25 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $(".rcvShow").show();
             $("#showMore").show();
             $("#showLess").hide();
+        }
+        if(requestStatus == '21'){
+            var ajax_url = '/incdfcItems';
+            $('#transitItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            $(".prephide").hide();
+            $(".dfc").hide();
+            $("#incItemsModal").show();
+            document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE DEFECTIVE ITEM DETAILS';
+            $("#request_info").hide();
+            $(".rcvShow").show();
+            $("#showMore").show();
+            $("#showLess").hide();
+        }
+        if(requestStatus == '22'){
+            var ajax_url = '/schedItems';
+            $('#transitItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            $(".prephide").hide();
         }
         if(data.user_id != $('#current_user').val()){
             $("#btnReceive").hide();
@@ -2336,7 +2376,7 @@ function checkReqType(){
                 $("#warning").hide();
             }
 
-            if(current_status == '18'){
+            if(current_status == '18' || current_status == '21'){
                 $("#warning").hide();
                 $("#btnProceed").hide();
                 $(".rcvDef").show();
@@ -2416,25 +2456,24 @@ $('.stockDetails tbody').on('click', 'tr', function(){
 $('.table.incItems').DataTable().on('select', function(){});
 $('.incItems tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
-    if(requestStatus != '18'){
-        return false;
-    }
-    var table = $('table.incItems').DataTable();
-    var data = table.row(this).data();
-    item_count = table.data().count();
-
-    $(this).toggleClass('selected');
-    if(items.includes(data.id) == true){
-        items = items.filter(item => item !== data.id);
-    }
-    else {
-        items.push(data.id);
-    }
-    if(items.length == 0){
-        $('#btnReceiveDfc').prop('disabled', true);
-    }
-    else{
-        $('#btnReceiveDfc').prop('disabled', false);
+    if(requestStatus == '18' || requestStatus == '21'){
+        var table = $('table.incItems').DataTable();
+        var data = table.row(this).data();
+        item_count = table.data().count();
+    
+        $(this).toggleClass('selected');
+        if(items.includes(data.id) == true){
+            items = items.filter(item => item !== data.id);
+        }
+        else {
+            items.push(data.id);
+        }
+        if(items.length == 0){
+            $('#btnReceiveDfc').prop('disabled', true);
+        }
+        else{
+            $('#btnReceiveDfc').prop('disabled', false);
+        }
     }
 });
 

@@ -330,7 +330,7 @@ class StockRequestController extends Controller
 
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
-            ->whereNotIn('stocks.status', ['incomplete','defective','incdefective'])
+            ->whereIn('stocks.status', ['out','assembly'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
@@ -1011,7 +1011,7 @@ class StockRequestController extends Controller
 
         $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
-            ->whereNotIn('stocks.status', ['incomplete','defective','incdefective'])
+            ->whereIn('stocks.status', ['out','assembly'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')

@@ -1101,7 +1101,8 @@ $('#btnDefective').on('click', function(){
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },
                             data:{
-                                'request_number': $('#request_num_details').val()
+                                'request_number': $('#request_num_details').val(),
+                                'generatedReqNum': generatedReqNum
                             },
                             success: function(data){
                                 if(data == 'true'){

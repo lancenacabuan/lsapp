@@ -276,43 +276,6 @@ class AssemblyController extends Controller
 
     public function defectiveItems(Request $request){
         do{
-            $list = Stock::selectRaw('category_id, item_id')
-                ->where('id', $request->id)
-                ->get();
-        }
-        while(!$list);
-        $list = str_replace('[','',$list);
-        $list = str_replace(']','',$list);
-        $list = json_decode($list);
-
-        $count = StockRequest::query()->select()
-            ->where('request_number',$request->generatedReqNum)
-            ->where('item',$list->item_id)
-            ->count();
-        
-        if($count > 0){
-            StockRequest::where('request_number', $request->generatedReqNum)
-                ->where('item',$list->item_id)
-                ->increment('quantity', 1);
-            StockRequest::where('request_number', $request->generatedReqNum)
-                ->where('item',$list->item_id)
-                ->increment('pending', 1);
-        }
-        else{
-            do{
-                $stockRequest = new StockRequest;
-                $stockRequest->request_number = $request->generatedReqNum;
-                $stockRequest->category = $list->category_id;
-                $stockRequest->item = $list->item_id;
-                $stockRequest->quantity = '1';
-                $stockRequest->served = '0';
-                $stockRequest->pending = '1';
-                $dump = $stockRequest->save();
-            }
-            while(!$dump);
-        }
-
-        do{
             $sql = Stock::where('id', $request->id)
                 ->update(['status' => 'defective']);
         }
@@ -322,6 +285,33 @@ class AssemblyController extends Controller
     }
 
     public function logDefective(Request $request){
+        do{
+            $list = Stock::select('request_number', 'category_id', 'item_id',
+                DB::raw
+                    (
+                        "SUM(CASE WHEN stocks.status = 'defective' THEN 1 ELSE 0 END) as quantity"
+                    )
+                )
+                ->where('request_number', $request->request_number)
+                ->where('status', 'defective')
+                ->groupby('request_number', 'category_id', 'item_id')
+                ->get();
+        }
+        while(!$list);
+        
+        foreach($list as $key){
+            do{
+                $stockRequest = new StockRequest;
+                $stockRequest->request_number = $request->generatedReqNum;
+                $stockRequest->category = $key->category_id;
+                $stockRequest->item = $key->item_id;
+                $stockRequest->quantity = $key->quantity;
+                $stockRequest->served = '0';
+                $stockRequest->pending = $key->quantity;
+                $dump = $stockRequest->save();
+            }
+            while(!$dump);
+        }
 
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;

@@ -196,7 +196,7 @@ class StockTransferController extends Controller
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "NEW STOCK TRANSFER REQUEST: User successfully saved Stock Transfer Request No. $request->request_number.";
+        $userlogs->activity = "NEW STOCK TRANSFER REQUEST: User successfully submitted Stock Transfer Request No. $request->request_number.";
         $userlogs->save();
         
         return response('true');

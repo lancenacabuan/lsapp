@@ -114,7 +114,7 @@ class AssemblyController extends Controller
     public function logSave(Request $request){
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "NEW ASSEMBLY STOCK REQUEST: User successfully saved Assembly Stock Request No. $request->request_number.";
+        $userlogs->activity = "NEW ASSEMBLY STOCK REQUEST: User successfully submitted Assembly Stock Request No. $request->request_number.";
         $userlogs->save();
         
         return response('true');

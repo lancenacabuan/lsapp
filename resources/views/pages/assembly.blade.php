@@ -1,10 +1,6 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid">
-    <div class="alert alert-warning" role="alert">
-        <i class='fa fa-exclamation-triangle'></i>
-        <strong>Note:</strong> This webpage module is still currently under maintenance. Thank you very much for understanding.
-    </div>
     @role('assembler') {{---ROLES---}}
     <button class="btn btn-primary bp btnNewAssembly" type="button">NEW ASSEMBLY</button>
     <br><br>

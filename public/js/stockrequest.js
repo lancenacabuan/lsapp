@@ -500,7 +500,7 @@ $('table.stockrequestTable').DataTable({
                 if(row.status_id == '6'){
                     return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22'){
+                else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23'){
                     return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
@@ -763,6 +763,16 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#transitItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         $(".prephide").hide();
+                    }
+                    if(requestStatus == '23'){
+                        var ajax_url = '/incItems';
+                        $("#transitItemsModal").show();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        $(".prephide").hide();
+                        $("#incItemsModal").show();
+                        document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
+                        $(".dfc").hide();
+                        $("#incFooter").hide();
                     }
                     if(value.user_id != $('#current_user').val()){
                         $("#btnReceive").hide();
@@ -1317,6 +1327,16 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('#transitItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             $(".prephide").hide();
+        }
+        if(requestStatus == '23'){
+            var ajax_url = '/incItems';
+            $("#transitItemsModal").show();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            $(".prephide").hide();
+            $("#incItemsModal").show();
+            document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
+            $(".dfc").hide();
+            $("#incFooter").hide();
         }
         if(data.user_id != $('#current_user').val()){
             $("#btnReceive").hide();

@@ -148,19 +148,26 @@ class AssemblyController extends Controller
 
     public function receiveRequest(Request $request){
         if($request->inc == 'true'){
-            do{
-                $sql = Requests::where('request_number', $request->request_number)
+            if($request->request_type == '4'){
+                Requests::where('request_number', $request->request_number)
                     ->update(['status' => '15']);
+                Requests::where('request_number', $request->assembly_reqnum)
+                    ->update(['status' => '23']);
             }
-            while(!$sql);
+            else{
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '15']);
+                }
+                while(!$sql);
+            }
         }
         else{
             if($request->request_type == '4'){
-                do{
-                    $sql = Requests::where('request_number', $request->request_number)
+                Requests::where('request_number', $request->request_number)
                     ->update(['status' => '19']);
-                }
-                while(!$sql);
+                Requests::where('request_number', $request->assembly_reqnum)
+                    ->update(['status' => '20']);
             }
             else{
                 do{
@@ -170,23 +177,8 @@ class AssemblyController extends Controller
                 while(!$sql);
             }
         }
-                
-        if(!$sql){
-            $result = 'false';
-        }
-        else {
-            $result = 'true';
-            
-            if($request->request_type == '4'){
-                do{
-                    $sql = Requests::where('request_number', $request->assembly_reqnum)
-                        ->update(['status' => '20']);
-                }
-                while(!$sql);
-            }
-        }
 
-        return response($result);
+        return response('true');
     }
 
     public function receiveItems(Request $request){

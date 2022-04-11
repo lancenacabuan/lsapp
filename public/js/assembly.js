@@ -203,7 +203,7 @@ $('table.assemblyTable').DataTable({
                 if(row.status_id == '6'){
                     return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22'){
+                else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23'){
                     return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
@@ -569,6 +569,15 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         $(".prephide").hide();
                     }
+                    if(requestStatus == '23'){
+                        var ajax_url = '/incItems';
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        $(".prephide").hide();
+                        $("#incItemsModal").show();
+                        document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
+                        $("#incFooter").hide();
+                    }
 
                 $('table.stockDetails').dataTable().fnDestroy();    
                 $('table.stockDetails').DataTable({
@@ -799,6 +808,15 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $('#prepItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             $(".prephide").hide();
+        }
+        if(requestStatus == '23'){
+            var ajax_url = '/incItems';
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            $(".prephide").hide();
+            $("#incItemsModal").show();
+            document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
+            $("#incFooter").hide();
         }
 
     $('table.stockDetails').dataTable().fnDestroy();    

@@ -671,7 +671,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $("#btnReceive").html('RECEIVE DEMO');
                         }
                     }
-                    if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '19' || requestStatus == '20'){
+                    if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14' || requestStatus == '19' || requestStatus == '20'){
                         $("#transitItemsModal").show();
                         $("#btnReceive").hide();
                         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
@@ -683,7 +683,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         }
                         if(requestStatus == '13'){
-                            document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
+                            document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
                             $("#warehouse_label").show();
                             $("#warehouse_details").show();
                             $("#warehouse_note").show();
@@ -691,6 +691,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $("#btnHideDetails").show();
                             $("#divAssembly").show();
                             $("#request_info").hide();
+                        }
+                        if(requestStatus == '14'){
+                            document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
+                            //if(requestStatus == '14'){ ====================PENDING====================
                         }
                         if(requestStatus == '19'){
                             document.getElementById('modalheader').innerHTML = 'REPLACEMENT ITEM DETAILS';
@@ -703,7 +707,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#btnReturn").hide();
                         document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
                     }
-                    //if(requestStatus == '14'){ ====================PENDING====================
                     if(requestStatus == '15'){
                         var ajax_url = '/incItems';
                         $("#transitItemsModal").show();
@@ -1244,7 +1247,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $("#btnReceive").html('RECEIVE DEMO');
             }
         }
-        if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '19' || requestStatus == '20'){
+        if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14' || requestStatus == '19' || requestStatus == '20'){
             $("#transitItemsModal").show();
             $("#btnReceive").hide();
             document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
@@ -1256,7 +1259,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             }
             if(requestStatus == '13'){
-                document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM DETAILS';
+                document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
                 $("#warehouse_label").show();
                 $("#warehouse_details").show();
                 $("#warehouse_note").show();
@@ -1264,6 +1267,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $("#btnHideDetails").show();
                 $("#divAssembly").show();
                 $("#request_info").hide();
+            }
+            if(requestStatus == '14'){
+                document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
+                //if(requestStatus == '14'){ ====================PENDING====================
             }
             if(requestStatus == '19'){
                 document.getElementById('modalheader').innerHTML = 'REPLACEMENT ITEM DETAILS';
@@ -1276,7 +1283,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#btnReturn").hide();
             document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
         }
-        //if(requestStatus == '14'){ ====================PENDING====================
         if(requestStatus == '15'){
             var ajax_url = '/incItems';
             $("#transitItemsModal").show();
@@ -2378,7 +2384,10 @@ $('#btnReceiveAssembled').on('click', function(){
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
-                    'request_number': $('#request_num_details').val()
+                    'request_number': $('#request_num_details').val(),
+                    'qty': $("#qty_details").val(),
+                    'item_name': $("#item_desc_details").val(),
+                    'location_name': $("#warehouse_details option:selected").text()
                 },
                 success: function(data){
                     if(data == 'true'){

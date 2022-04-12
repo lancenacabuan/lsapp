@@ -383,6 +383,11 @@ class AssemblyController extends Controller
         $userlogs->activity = "RECEIVED ASSEMBLED ITEM: User successfully received Assembled Item/s with Assembly Stock Request No. $request->request_number into warehouse stocks.";
         $userlogs->save();
 
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "ADDED STOCK: User successfully added $request->qty-Unit/s Stock of '$request->item_name' to $request->location_name under Assembly Stock Request No. $request->request_number.";
+        $userlogs->save();
+
         return response('true');
     }
 

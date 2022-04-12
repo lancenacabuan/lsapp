@@ -81,7 +81,7 @@
             </div>
             <br>
             <table id="asmItems" class="table asmItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
@@ -116,7 +116,7 @@
             @role('sales|approver - sales') {{---ROLES---}}
             <div id="sd1" style="display: none;">
             <table id="stockDetailsrequest" class="table stockDetails1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
@@ -130,7 +130,7 @@
             </div>
             <div id="sd2" style="display: none;">
             <table id="stockDetailsrequest" class="table stockDetails2 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
@@ -146,7 +146,7 @@
             @endrole
             @role('admin|encoder|viewer') {{---ROLES---}}
             <table id="stockDetailsrequest" class="table stockDetails table-hover display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
@@ -216,7 +216,7 @@
             <br>
             @role('admin|encoder') {{---ROLES---}}
             <table id="schedItems" class="table schedItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
@@ -232,7 +232,7 @@
             @endrole
             @role('sales|viewer|approver - sales') {{---ROLES---}}
             <table id="schedItems1" class="table schedItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
@@ -271,7 +271,7 @@
             <br>
             @role('client') {{---ROLES---}}
             <table id="transItems" class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
@@ -287,7 +287,7 @@
             @endrole
             @role('admin|encoder|sales|viewer|approver - sales') {{---ROLES---}}
             <table id="transItems1" class="table transItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
@@ -345,7 +345,7 @@
             </div>
             <br>
             <table id="incItems" class="table incItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>

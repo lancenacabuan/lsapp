@@ -17,7 +17,7 @@
         Date Scheduled: {{Carbon\Carbon::parse($details['scheddate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Date Received: {{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}<br><br>
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
-            <thead>                            
+            <thead>
                 <tr>
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">CATEGORY</th>
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">ITEM DESCRIPTION</th>

@@ -70,7 +70,7 @@
             <tr height="20">
                 <td colspan="9" height="20">
                     <table id="stockReqTable" class="table stockReqTable display" style="margin-top: 10px;">
-                        <thead>                            
+                        <thead>
                             <tr>
                                 <th>CATEGORY</th>
                                 <th>ITEM DESCRIPTION</th>

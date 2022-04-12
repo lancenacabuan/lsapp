@@ -19,7 +19,7 @@
         </div>
         <div class="container-fluid mt-2"  id="#divItemDetails">
             <table id='tblItemDetails' class="table tblItemDetails" style="cursor: pointer; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>

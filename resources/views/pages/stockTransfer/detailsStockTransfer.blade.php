@@ -59,7 +59,7 @@
                 <strong>NOTE:</strong> Please click table rows to select from the requested items for preparation.
             </div>
             <table id="transferDetails" class="table transferDetails table-hover display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
@@ -126,7 +126,7 @@
             </div>
             <br>
             <table class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>
@@ -160,7 +160,7 @@
             </div>
             <br>
             <table class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>

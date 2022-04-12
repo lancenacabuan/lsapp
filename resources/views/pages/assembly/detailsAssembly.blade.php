@@ -54,7 +54,7 @@
                     </div>
                     <br>
                     <table id="asmItems" class="table asmItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                        <thead>                            
+                        <thead>
                             <tr>
                                 <th>CATEGORY</th>
                                 <th>ITEM DESCRIPTION</th>
@@ -74,7 +74,7 @@
             <div class="modal-body">
                 <br>
                 <table id="stockDetails" class="table stockDetails display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                    <thead>                            
+                    <thead>
                         <tr>
                             <th>CATEGORY</th>
                             <th>ITEM DESCRIPTION</th>
@@ -111,7 +111,7 @@
                     </div>
                     <br>
                     <table id="prepItems" class="table prepItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                        <thead>                            
+                        <thead>
                             <tr>
                                 <th>CATEGORY</th>
                                 <th>ITEM DESCRIPTION</th>
@@ -155,7 +155,7 @@
                     </div>
                     <br>
                     <table id="incItems" class="table incItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                        <thead>                            
+                        <thead>
                             <tr>
                                 <th>CATEGORY</th>
                                 <th>ITEM DESCRIPTION</th>

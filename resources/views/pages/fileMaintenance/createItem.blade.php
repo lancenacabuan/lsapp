@@ -34,7 +34,7 @@
         </form>
         <div class="container-fluid"  id="#divCreateItem">
             <table id='tblCreateItem' class="table tblCreateItem" style="cursor: pointer; font-size: 12px; display: none;">
-                <thead>                            
+                <thead>
                     <tr>
                         <th>CATEGORY</th>
                         <th>ITEM DESCRIPTION</th>

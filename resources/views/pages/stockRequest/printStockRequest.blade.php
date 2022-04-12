@@ -50,14 +50,18 @@
                 <td colspan="2" id="prep_date">{{$list->prepdate}}</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Client Name:</td>
-                <td colspan="2">{{$list->client_name}}</td>
+                <td colspan="2" class="tdHide">{{$list->client_name}}</td>
+                <td colspan="2" style="font-weight: bold; display: none;" class="tdAssembly">Assembled Item Name:</td>
+                <td colspan="2" style="display: none;" class="tdAssembly ellipsis">{{$list->item_desc}}</td>
             </tr>
             <tr height="20">
                 <td colspan="2" height="20" style="font-weight: bold;">Prepared By:</td>
                 <td colspan="2">{{$list2->prepby}}</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Address / Branch:</td>
-                <td colspan="2">{{$list->location}}</td>
+                <td colspan="2" class="tdHide">{{$list->location}}</td>
+                <td colspan="2" style="font-weight: bold; display: none;" class="tdAssembly">Quantity:</td>
+                <td colspan="2" style="display: none;" class="tdAssembly">{{$list->qty}}-Unit/s</td>
             </tr>
             <tr height="20">
                 <td colspan="2" height="20" style="font-weight: bold;">Request Type:</td>
@@ -145,6 +149,16 @@ $(document).ready(function(){
     if($('#req_type').html() == 'REPLACEMENT'){
         $('.tdHide').hide();
         $('.tdShow').show();
+    }
+    if($('#req_type').html() == 'ASSEMBLY'){
+        $('.tdHide').hide();
+        $('.tdAssembly').show();
+    }
+    
+    var ellipsis = $('.ellipsis').html();
+    if(ellipsis.length > 50){
+        ellipsis = ellipsis.substring(0, 50) + '...';
+        $('.ellipsis').html(ellipsis);
     }
 });
 

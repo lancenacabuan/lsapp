@@ -763,6 +763,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#transitItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         $(".prephide").hide();
+                        $(".pendshow").show();
                     }
                     if(requestStatus == '23'){
                         var ajax_url = '/incItems';
@@ -1335,6 +1336,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('#transitItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             $(".prephide").hide();
+            $(".pendshow").show();
         }
         if(requestStatus == '23'){
             var ajax_url = '/incItems';
@@ -2946,6 +2948,25 @@ $("#showLess").on('click', function(){
 
 $('#btnDefDetails').on('click', function(){
     window.location.href = '/stockrequest?request_number='+$('#asm_request_num_details').val();
+});
+
+$('#btnPending').on('click', function(){
+    $.ajax({
+        type:'get', 
+        url:'/getLink', 
+        data:{
+            'request_number': $('#request_num_details').val()
+        }, 
+        success: function(data){
+            window.location.href = '/stockrequest?request_number='+data;
+        },
+        error: function(data){
+            if(data.status == 401){
+                window.location.href = '/stockrequest';
+            }
+            alert(data.responseText);
+        }
+    });
 });
 
 $('.btnPrint').on('click', function(){

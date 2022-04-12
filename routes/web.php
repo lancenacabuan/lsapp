@@ -85,6 +85,7 @@ Route::any('/logSched',[StockRequestController::class,'logSched']);
 Route::any('/receiveDefective',[StockRequestController::class,'receiveDefective']);
 Route::any('/receiveDfcItems',[StockRequestController::class,'receiveDfcItems']);
 Route::any('/logReceiveDfc',[StockRequestController::class,'logReceiveDfc']);
+Route::get('/getLink',[StockRequestController::class,'getLink']);
 Route::get('/printRequest',[StockRequestController::class,'printRequest']);
 //
 

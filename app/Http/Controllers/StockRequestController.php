@@ -1000,6 +1000,18 @@ class StockRequestController extends Controller
         return response('true');
     }
 
+    public function getLink(Request $request){       
+        $link = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $link = str_replace("[{\"request_number\":","",$link);
+        $link = str_replace("}]","",$link);
+        $link = json_decode($link);
+        
+        return $link;
+    }
+
     public function printRequest(Request $request){
         $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS req_date, requests.request_number AS req_num, requests.requested_by AS user_id, users.name AS req_by, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, needdate, prepdate, requests.item_id AS item_id, items.item AS item_desc, qty, assembly_reqnum')
             ->where('request_number', $request->request_number)

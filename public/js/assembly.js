@@ -568,6 +568,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         $('#prepItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         $(".prephide").hide();
+                        $(".pendshow").show();
                     }
                     if(requestStatus == '23'){
                         var ajax_url = '/incItems';
@@ -811,6 +812,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $('#prepItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             $(".prephide").hide();
+            $(".pendshow").show();
         }
         if(requestStatus == '23'){
             var ajax_url = '/incItems';
@@ -1231,6 +1233,25 @@ $('#btnAssemble').on('click', function(){
             });
         }
     });    
+});
+
+$('#btnPending').on('click', function(){
+    $.ajax({
+        type:'get', 
+        url:'/getLink', 
+        data:{
+            'request_number': $('#request_num_details').val()
+        }, 
+        success: function(data){
+            window.location.href = '/assembly?request_number='+data;
+        },
+        error: function(data){
+            if(data.status == 401){
+                window.location.href = '/assembly';
+            }
+            alert(data.responseText);
+        }
+    });
 });
 
 $('.btnPrint').on('click', function(){

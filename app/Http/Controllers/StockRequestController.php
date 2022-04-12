@@ -880,7 +880,7 @@ class StockRequestController extends Controller
         if(!$sql){
             $result = 'false';
         }
-        else {
+        else{
             $result = 'true';
 
             StockRequest::where('request_number', $request->request_number)
@@ -890,24 +890,15 @@ class StockRequestController extends Controller
             StockRequest::where('request_number', $request->request_number)
                 ->where('item',$request->item_id)
                 ->decrement('pending', $request->qty);
-
-            Requests::where('request_number', $request->request_number)
-                ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn, 'prepdate' => date('Y-m-d')]);
-
-            $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
-            if($total == 0){
-                Requests::where('request_number', $request->request_number)
-                    ->update(['status' => '2']);
-            }
-            else{
-                Requests::where('request_number', $request->request_number)
-                    ->update(['status' => '5']);
-            }
         }
+
         return response($result);
     }
 
     public function logSched(Request $request){
+        Requests::where('request_number', $request->request_number)
+            ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn, 'prepdate' => date('Y-m-d')]);
+        
         if($request->req_type_id == '4' || $request->req_type_id == '5'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
@@ -915,13 +906,37 @@ class StockRequestController extends Controller
             }
             while(!$sql);
         }
+        else{
+            $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
+            if($total == 0){
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '2']);
+                }
+                while(!$sql);
+            }
+            else{
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '5']);
+                }
+                while(!$sql);
+            }
+        }
 
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "SCHEDULED STOCK REQUEST: User successfully scheduled on $request->schedOn Stock Request No. $request->request_number.";
-        $userlogs->save();
-        
-        return response('true');
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "SCHEDULED STOCK REQUEST: User successfully scheduled on $request->schedOn Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 
     public function receiveDefective(Request $request){

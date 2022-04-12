@@ -2744,8 +2744,7 @@ $("#btnProceed").unbind('click').click(function(){
                                                 'req_type_id': req_type_id,
                                                 'stock_id': $('#serial'+n).val(),
                                                 'item_id': $('#item_id'+n).val(),
-                                                'qty': $('#qty'+n).val(),
-                                                'schedOn': $('#schedOn').val()
+                                                'qty': $('#qty'+n).val()
                                             },
                                             success: function(data){
                                                 if(data == 'true'){
@@ -2775,10 +2774,17 @@ $("#btnProceed").unbind('click').click(function(){
                                         'req_type_id': req_type_id,
                                         'schedOn': $('#schedOn').val()
                                     },
-                                    success: function(){
-                                        $('#detailsStockRequest').hide();
-                                        swal("SCHEDULED SUCCESS", "STOCK REQUEST", "success");
-                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            $('#detailsStockRequest').hide();
+                                            swal("SCHEDULED SUCCESS", "STOCK REQUEST", "success");
+                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                        }
+                                        else{
+                                            $('#detailsStockRequest').hide();
+                                            swal("SCHEDULED FAILED", "STOCK REQUEST", "error");
+                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                        }
                                     },
                                     error: function(data){
                                         if(data.status == 401){

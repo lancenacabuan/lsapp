@@ -505,11 +505,15 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         $('#btnAssemble').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                     }
-                    if(requestStatus == '13' || requestStatus == '14'){
+                    if(requestStatus == '13'){
                         $('#prepItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
                     }
-                    //if(requestStatus == '14'){ ====================PENDING====================
+                    if(requestStatus == '14'){
+                        $('#prepItemsModal').show();
+                        document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
+                        $('#asmItemsModal').show();
+                    }
                     if(requestStatus == '15'){
                         var ajax_url = '/incItems';
                         $('#prepItemsModal').show();
@@ -671,6 +675,54 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         ]
                     });
                 }
+
+                if(requestStatus == '14'){
+                    $.ajax({
+                        type:'get', 
+                        url:'/getReceive', 
+                        data:{
+                            'request_number': $('#request_num_details').val()
+                        }, 
+                        success: function(data){
+                            document.getElementById("recby").value = data.recby;
+                            document.getElementById("recsched").value = moment(data.recsched).format('dddd, MMMM DD, YYYY, h:mm A');
+                        },
+                        error: function(data){
+                            if(data.status == 401){
+                                window.location.href = '/assembly';
+                            }
+                            alert(data.responseText);
+                        }
+                    });
+
+                    $('table.asmItems').dataTable().fnDestroy();
+                    $('table.asmItems').DataTable({
+                        searching: false,
+                        paging: false,
+                        ordering: false,
+                        info: false,
+                        language: {
+                            processing: "Loading...",
+                            emptyTable: "No data available in table"
+                        },
+                        serverSide: true,
+                        ajax: {
+                            url: '/asmItems',
+                            data: {
+                                request_number: req_num,
+                            }
+                        },
+                        order:[],
+                        columns: [
+                            { data: 'category' },
+                            { data: 'item' },
+                            { data: 'qty' },
+                            { data: 'uom' },
+                            { data: 'serial' },
+                            { data: 'location' }
+                        ]
+                    });
+                }
             });
         },
         error: function(data){
@@ -749,11 +801,15 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $('#btnAssemble').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
         }
-        if(requestStatus == '13' || requestStatus == '14'){
+        if(requestStatus == '13'){
             $('#prepItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
         }
-        //if(requestStatus == '14'){ ====================PENDING====================
+        if(requestStatus == '14'){
+            $('#prepItemsModal').show();
+            document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
+            $('#asmItemsModal').show();
+        }
         if(requestStatus == '15'){
             var ajax_url = '/incItems';
             $('#prepItemsModal').show();
@@ -902,6 +958,54 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             serverSide: true,
             ajax: {
                 url: ajax_url,
+                data: {
+                    request_number: req_num,
+                }
+            },
+            order:[],
+            columns: [
+                { data: 'category' },
+                { data: 'item' },
+                { data: 'qty' },
+                { data: 'uom' },
+                { data: 'serial' },
+                { data: 'location' }
+            ]
+        });
+    }
+
+    if(requestStatus == '14'){
+        $.ajax({
+            type:'get', 
+            url:'/getReceive', 
+            data:{
+                'request_number': $('#request_num_details').val()
+            }, 
+            success: function(data){
+                document.getElementById("recby").value = data.recby;
+                document.getElementById("recsched").value = moment(data.recsched).format('dddd, MMMM DD, YYYY, h:mm A');
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/assembly';
+                }
+                alert(data.responseText);
+            }
+        });
+
+        $('table.asmItems').dataTable().fnDestroy();
+        $('table.asmItems').DataTable({
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false,
+            language: {
+                processing: "Loading...",
+                emptyTable: "No data available in table"
+            },
+            serverSide: true,
+            ajax: {
+                url: '/asmItems',
                 data: {
                     request_number: req_num,
                 }

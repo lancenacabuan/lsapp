@@ -76,7 +76,7 @@
                         <th>MALABON</th>
                         <th></th>
                     </tr>
-                </thead>    
+                </thead>
             </table>
             <br>
             @role('approver - warehouse') {{---ROLES---}}
@@ -134,7 +134,7 @@
                         <th>UOM</th>
                         <th>SERIAL</th>
                     </tr>
-                </thead>    
+                </thead>
             </table>
             <br>
             <hr>
@@ -168,7 +168,7 @@
                         <th>UOM</th>
                         <th>SERIAL</th>
                     </tr>
-                </thead>    
+                </thead>
             </table>
             <br>
             <hr>

@@ -410,6 +410,29 @@ class StockRequestController extends Controller
         return DataTables::of($list)->make(true);
     }
 
+    public function asmItems(Request $request){
+        $include = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $include = str_replace("{\"request_number\":","",$include);
+        $include = str_replace("}","",$include);
+        $include = json_decode($include);
+        $include[] = $request->request_number;
+
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+            ->whereIn('request_number', $include)
+            ->whereIn('stocks.status', ['in'])
+            ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','stocks.location_id')
+            ->get()
+            ->sortBy('item')
+            ->sortBy('category');
+
+        return DataTables::of($list)->make(true);
+    }
+
     public function editSerial(Request $request){
         $sql = Stock::where('id', $request->id)
             ->update(['serial' => $request->serial]);
@@ -1000,6 +1023,30 @@ class StockRequestController extends Controller
         return response('true');
     }
 
+    public function getReceive(Request $request){       
+        $include = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $include = str_replace("{\"request_number\":","",$include);
+        $include = str_replace("}","",$include);
+        $include = json_decode($include);
+        $include[] = $request->request_number;
+
+        $list = Stock::query()->selectRaw('users.name AS recby, stocks.created_at AS recsched')
+            ->whereIn('request_number', $include)
+            ->whereIn('stocks.status', ['in'])
+            ->join('users','users.id','stocks.user_id')
+            ->limit(1)
+            ->get();
+        
+        $list = str_replace("[","",$list);
+        $list = str_replace("]","",$list);
+        $list = json_decode($list);
+        
+        return $list;
+    }
+    
     public function getLink(Request $request){       
         $link = Requests::query()->select('request_number')
             ->where('assembly_reqnum', $request->request_number)

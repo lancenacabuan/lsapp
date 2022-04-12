@@ -694,7 +694,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         }
                         if(requestStatus == '14'){
                             document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
-                            //if(requestStatus == '14'){ ====================PENDING====================
+                            $('#asmItemsModal').show();
                         }
                         if(requestStatus == '19'){
                             document.getElementById('modalheader').innerHTML = 'REPLACEMENT ITEM DETAILS';
@@ -1122,6 +1122,54 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         ]
                     });
                 }
+
+                if(requestStatus == '14'){
+                    $.ajax({
+                        type:'get', 
+                        url:'/getReceive', 
+                        data:{
+                            'request_number': $('#request_num_details').val()
+                        }, 
+                        success: function(data){
+                            document.getElementById("recby").value = data.recby;
+                            document.getElementById("recsched").value = moment(data.recsched).format('dddd, MMMM DD, YYYY, h:mm A');
+                        },
+                        error: function(data){
+                            if(data.status == 401){
+                                window.location.href = '/assembly';
+                            }
+                            alert(data.responseText);
+                        }
+                    });
+
+                    $('table.asmItems').dataTable().fnDestroy();
+                    $('table.asmItems').DataTable({
+                        searching: false,
+                        paging: false,
+                        ordering: false,
+                        info: false,
+                        language: {
+                            processing: "Loading...",
+                            emptyTable: "No data available in table"
+                        },
+                        serverSide: true,
+                        ajax: {
+                            url: '/asmItems',
+                            data: {
+                                request_number: req_num,
+                            }
+                        },
+                        order:[],
+                        columns: [
+                            { data: 'category' },
+                            { data: 'item' },
+                            { data: 'qty' },
+                            { data: 'uom' },
+                            { data: 'serial' },
+                            { data: 'location' }
+                        ]
+                    });
+                }
             });
         },
         error: function(data){
@@ -1270,7 +1318,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             }
             if(requestStatus == '14'){
                 document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
-                //if(requestStatus == '14'){ ====================PENDING====================
+                $('#asmItemsModal').show();
             }
             if(requestStatus == '19'){
                 document.getElementById('modalheader').innerHTML = 'REPLACEMENT ITEM DETAILS';
@@ -1683,6 +1731,54 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             serverSide: true,
             ajax: {
                 url: ajax_url,
+                data: {
+                    request_number: req_num,
+                }
+            },
+            order:[],
+            columns: [
+                { data: 'category' },
+                { data: 'item' },
+                { data: 'qty' },
+                { data: 'uom' },
+                { data: 'serial' },
+                { data: 'location' }
+            ]
+        });
+    }
+
+    if(requestStatus == '14'){
+        $.ajax({
+            type:'get', 
+            url:'/getReceive', 
+            data:{
+                'request_number': $('#request_num_details').val()
+            }, 
+            success: function(data){
+                document.getElementById("recby").value = data.recby;
+                document.getElementById("recsched").value = moment(data.recsched).format('dddd, MMMM DD, YYYY, h:mm A');
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/assembly';
+                }
+                alert(data.responseText);
+            }
+        });
+
+        $('table.asmItems').dataTable().fnDestroy();
+        $('table.asmItems').DataTable({
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false,
+            language: {
+                processing: "Loading...",
+                emptyTable: "No data available in table"
+            },
+            serverSide: true,
+            ajax: {
+                url: '/asmItems',
                 data: {
                     request_number: req_num,
                 }

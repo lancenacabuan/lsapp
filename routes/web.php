@@ -64,6 +64,7 @@ Route::get('/schedItems',[StockRequestController::class,'schedItems']);
 Route::get('/incItems',[StockRequestController::class,'incItems']);
 Route::get('/dfcItems',[StockRequestController::class,'dfcItems']);
 Route::get('/incdfcItems',[StockRequestController::class,'incdfcItems']);
+Route::get('/asmItems',[StockRequestController::class,'asmItems']);
 Route::any('/editSerial',[StockRequestController::class,'editSerial']);
 Route::any('/delReqItem',[StockRequestController::class,'delReqItem']);
 Route::any('/deleteRequest',[StockRequestController::class,'deleteRequest']);
@@ -85,6 +86,7 @@ Route::any('/logSched',[StockRequestController::class,'logSched']);
 Route::any('/receiveDefective',[StockRequestController::class,'receiveDefective']);
 Route::any('/receiveDfcItems',[StockRequestController::class,'receiveDfcItems']);
 Route::any('/logReceiveDfc',[StockRequestController::class,'logReceiveDfc']);
+Route::get('/getReceive',[StockRequestController::class,'getReceive']);
 Route::get('/getLink',[StockRequestController::class,'getLink']);
 Route::get('/printRequest',[StockRequestController::class,'printRequest']);
 //

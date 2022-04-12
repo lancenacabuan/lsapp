@@ -66,6 +66,35 @@
             </div>
             @endrole
         </div>
+        <div id="asmItemsModal" style="display: none;">
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
+            <h6 class="modal-title w-100">RECEIVED ASSEMBLED ITEM DETAILS</h6>
+        </div>
+        <div class="modal-body">
+            <div class="form-inline" style="margin-left: 35px;">
+                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Received By</label>
+                <input class="form-control form-control-sm" id="recby" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
+            </div>
+            <div class="form-inline" style="margin-left: 35px;">
+                <label class="form-control form-control-sm" style="width: 160px;">Received On</label>
+                <input class="form-control form-control-sm" id="recsched" style="width: 280px;" type="text" readonly>
+            </div>
+            <br>
+            <table id="asmItems" class="table asmItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
+                <thead>                            
+                    <tr>
+                        <th>CATEGORY</th>
+                        <th>ITEM DESCRIPTION</th>
+                        <th>QTY</th>
+                        <th>UOM</th>
+                        <th>SERIAL</th>
+                        <th>LOCATION</th>
+                    </tr>
+                </thead>
+            </table>
+            <br>
+        </div>
+        </div>
         <div id="request_info">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
@@ -96,7 +125,7 @@
                         <th>PENDING</th>
                         <th></th>
                     </tr>
-                </thead>    
+                </thead>
             </table>
             </div>
             <div id="sd2" style="display: none;">
@@ -111,7 +140,7 @@
                         <th></th>
                         <th></th>
                     </tr>
-                </thead>    
+                </thead>
             </table>
             </div>
             @endrole
@@ -133,7 +162,7 @@
                         <th style="color: red;">BALINTAWAK</th>
                         <th style="color: red;">MALABON</th>
                     </tr>
-                </thead>    
+                </thead>
             </table>
             @endrole
             <br>
@@ -198,7 +227,7 @@
                         <th></th>
                         <th></th>
                     </tr>
-                </thead>    
+                </thead>
             </table>
             @endrole
             @role('sales|viewer|approver - sales') {{---ROLES---}}
@@ -212,7 +241,7 @@
                         <th>SERIAL</th>
                         <th>LOCATION</th>
                     </tr>
-                </thead>    
+                </thead>
             </table> 
             @endrole
             <br>
@@ -253,7 +282,7 @@
                         <th></th>
                         <th></th>
                     </tr>
-                </thead>    
+                </thead>
             </table>
             @endrole
             @role('admin|encoder|sales|viewer|approver - sales') {{---ROLES---}}
@@ -267,7 +296,7 @@
                         <th>SERIAL</th>
                         <th>LOCATION</th>
                     </tr>
-                </thead>    
+                </thead>
             </table> 
             @endrole
             <br>
@@ -325,7 +354,7 @@
                         <th>SERIAL</th>
                         <th>LOCATION</th>
                     </tr>
-                </thead>    
+                </thead>
             </table>
             <br>
             <div id="incFooter">

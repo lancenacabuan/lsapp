@@ -30,7 +30,7 @@
                 <th class="d-none">REASON</th>
                 <th class="d-none">ASSEMBLY NUMBER</th>
             </tr>
-        </thead> 
+        </thead>
     </table>
 </div>
 @include('pages.stockRequest.newStockRequest')

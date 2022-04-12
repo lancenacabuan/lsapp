@@ -80,7 +80,7 @@
                                 <td>{{$x->serial}}</td>
                             </tr>
                             @endforeach
-                        </thead>    
+                        </thead>
                     </table> 
                 </td>
             </tr>

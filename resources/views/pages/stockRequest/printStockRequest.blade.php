@@ -89,7 +89,7 @@
                                 <td>{{$x->location}}</td>
                             </tr>
                             @endforeach
-                        </thead>    
+                        </thead>
                     </table> 
                 </td>
             </tr>

@@ -560,7 +560,7 @@ class StockRequestController extends Controller
     public function reschedRequest(Request $request){
         do{
             $sql = Requests::where('request_number', $request->request_number)
-                ->update(['status' => '16', 'prepared_by' => auth()->user()->id, 'schedule' => $request->resched]);
+                ->update(['status' => '17', 'prepared_by' => auth()->user()->id, 'schedule' => $request->resched]);
         }
         while(!$sql);
         
@@ -908,6 +908,14 @@ class StockRequestController extends Controller
     }
 
     public function logSched(Request $request){
+        if($request->req_type_id == '4' || $request->req_type_id == '5'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '3']);
+            }
+            while(!$sql);
+        }
+
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "SCHEDULED STOCK REQUEST: User successfully scheduled on $request->schedOn Stock Request No. $request->request_number.";

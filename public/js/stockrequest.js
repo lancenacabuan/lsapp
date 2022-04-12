@@ -2772,6 +2772,7 @@ $("#btnProceed").unbind('click').click(function(){
                                     },
                                     data:{
                                         'request_number': reqnum,
+                                        'req_type_id': req_type_id,
                                         'schedOn': $('#schedOn').val()
                                     },
                                     success: function(){

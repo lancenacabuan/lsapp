@@ -83,6 +83,7 @@
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>CANNOT PROCEED:</strong> Please receive first <b>defective items</b> by clicking the DEFECTIVE DETAILS button below before processing replacements.
             </div>
+            <br>
             @role('sales|approver - sales') {{---ROLES---}}
             <div id="sd1" style="display: none;">
             <table id="stockDetailsrequest" class="table stockDetails1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
@@ -237,8 +238,8 @@
                     <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                     <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
                 </div>
-                <br>
             </div>
+            <br>
             @role('client') {{---ROLES---}}
             <table id="transItems" class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
@@ -302,13 +303,12 @@
             <div id="divResched" class="form-inline" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
                 <input class="form-control form-control-sm" id="resched" style="width: 280px;" type="date">
-                <br>
             </div>
             <div id="divResched1" class="form-inline" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
                 <input class="form-control form-control-sm" id="resched1" style="width: 280px;" type="text" readonly>
-                <br>
             </div>
+            <br>
             <table id="incItems" class="table incItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>

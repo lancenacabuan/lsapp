@@ -43,6 +43,7 @@
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
         </div>
         <div class="modal-body">
+            <br>
             <table id="stockDetails" class="table stockDetails display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
@@ -78,8 +79,8 @@
                     <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
                     <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
                 </div>
-                <br>
             </div>
+            <br>
             <table id="prepItems" class="table prepItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>
@@ -116,8 +117,8 @@
             <div class="form-inline divResched" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
                 <input class="form-control form-control-sm" id="resched" style="width: 280px;" type="text" readonly>
-                <br>
             </div>
+            <br>
             <table id="incItems" class="table incItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>                            
                     <tr>

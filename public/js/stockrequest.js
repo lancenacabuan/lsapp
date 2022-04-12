@@ -808,6 +808,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             targets:[11,12]
                         }
                     ],
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -858,6 +859,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             "searchable": false
                         }
                     ],
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -909,6 +911,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             "targets": [5]
                         }
                     ],
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -960,6 +963,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             "targets": [6]
                         }
                     ],
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -988,6 +992,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 });
             
                 $('table.schedItems1').DataTable({
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -1029,6 +1034,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             "targets": [4]
                         }
                     ],
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -1057,6 +1063,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 });
             
                 $('table.transItems1').DataTable({
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -1085,6 +1092,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 if(ajax_url != '/schedItems'){
                     $('table.incItems').dataTable().fnDestroy();
                     $('table.incItems').DataTable({
+                        searching: false,
                         paging: false,
                         ordering: false,
                         info: false,
@@ -1372,6 +1380,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 targets:[11,12]
             }
         ],
+        searching: false,
         paging: false,
         ordering: false,
         info: false,
@@ -1422,6 +1431,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 "searchable": false
             }
         ],
+        searching: false,
         paging: false,
         ordering: false,
         info: false,
@@ -1473,6 +1483,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 "targets": [5]
             }
         ],
+        searching: false,
         paging: false,
         ordering: false,
         info: false,
@@ -1524,6 +1535,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 "targets": [6]
             }
         ],
+        searching: false,
         paging: false,
         ordering: false,
         info: false,
@@ -1552,6 +1564,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     });
 
     $('table.schedItems1').DataTable({
+        searching: false,
         paging: false,
         ordering: false,
         info: false,
@@ -1593,6 +1606,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 "targets": [4]
             }
         ],
+        searching: false,
         paging: false,
         ordering: false,
         info: false,
@@ -1621,6 +1635,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     });
 
     $('table.transItems1').DataTable({
+        searching: false,
         paging: false,
         ordering: false,
         info: false,
@@ -1649,6 +1664,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     if(ajax_url != '/schedItems'){
         $('table.incItems').dataTable().fnDestroy();
         $('table.incItems').DataTable({
+            searching: false,
             paging: false,
             ordering: false,
             info: false,

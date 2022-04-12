@@ -581,6 +581,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
 
                 $('table.stockDetails').dataTable().fnDestroy();    
                 $('table.stockDetails').DataTable({
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -613,6 +614,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                             "searchable": false
                         }
                     ],
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -642,6 +644,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                 if(ajax_url != '/schedItems'){
                     $('table.incItems').dataTable().fnDestroy();
                     $('table.incItems').DataTable({
+                        searching: false,
                         paging: false,
                         ordering: false,
                         info: false,
@@ -821,6 +824,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
 
     $('table.stockDetails').dataTable().fnDestroy();    
     $('table.stockDetails').DataTable({ 
+        searching: false,
         paging: false,
         ordering: false,
         info: false,
@@ -855,6 +859,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
                 "searchable": false
             }
         ],
+        searching: false,
         paging: false,
         ordering: false,
         info: false,
@@ -884,6 +889,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
     if(ajax_url != '/schedItems'){
         $('table.incItems').dataTable().fnDestroy();
         $('table.incItems').DataTable({
+            searching: false,
             paging: false,
             ordering: false,
             info: false,

@@ -85,9 +85,6 @@
                 </td>
             </tr>
             <tr height="20">
-                <td colspan="9" height="20">&nbsp;</td>
-            </tr>
-            <tr height="20">
                 <td height="20">&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>

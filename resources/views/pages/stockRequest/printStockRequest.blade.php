@@ -52,7 +52,7 @@
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Client Name:</td>
                 <td colspan="2" class="tdHide">{{$list->client_name}}</td>
                 <td colspan="2" style="font-weight: bold; display: none;" class="tdAssembly">Assembled Item Name:</td>
-                <td colspan="2" style="display: none;" class="tdAssembly ellipsis">{{$list->item_desc}}</td>
+                <td colspan="2" style="display: none;" class="tdAssembly" id="ellipsis">{{$list->item_desc}}</td>
             </tr>
             <tr height="20">
                 <td colspan="2" height="20" style="font-weight: bold;">Prepared By:</td>
@@ -96,9 +96,6 @@
                         </thead>
                     </table> 
                 </td>
-            </tr>
-            <tr height="20">
-                <td colspan="9" height="20">&nbsp;</td>
             </tr>
             <tr height="20">
                 <td height="20">&nbsp;</td>
@@ -153,13 +150,14 @@ $(document).ready(function(){
     if($('#req_type').html() == 'ASSEMBLY'){
         $('.tdHide').hide();
         $('.tdAssembly').show();
+        
+        var ellipsis = $('#ellipsis').html();
+        if(ellipsis.length > 40){
+            ellipsis = ellipsis.substring(0, 40) + '...';
+            $('#ellipsis').html(ellipsis);
+        }
     }
     
-    var ellipsis = $('.ellipsis').html();
-    if(ellipsis.length > 50){
-        ellipsis = ellipsis.substring(0, 50) + '...';
-        $('.ellipsis').html(ellipsis);
-    }
 });
 
 $(document).on('click', '#btnPrint', function(){

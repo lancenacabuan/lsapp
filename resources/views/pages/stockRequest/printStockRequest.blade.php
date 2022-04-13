@@ -14,7 +14,7 @@
             MAIN WAREHOUSE STOCK MONITORING SYSTEM
         </div>
         <br>
-        <table cellspacing="0" cellpadding="0" style="width: 100%;">
+        <table id="tblPrint" cellspacing="0" cellpadding="0" style="width: 100%;">
             <col span="9" />
             <tr height="20">
                 <td style="text-align: center; font-size: 18px;" colspan="9" height="20"><strong>STOCK REQUEST DELIVERY RECEIPT</strong></td>
@@ -97,6 +97,18 @@
                     </table> 
                 </td>
             </tr>
+            <tr height="20" class="extend" style="display: none;">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr height="20" class="extend" style="display: none;">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr height="20" class="extend" style="display: none;">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr height="20" class="extend" style="display: none;">
+                <td colspan="9">&nbsp;</td>
+            </tr>
             <tr height="20">
                 <td height="20">&nbsp;</td>
                 <td>&nbsp;</td>
@@ -157,7 +169,10 @@ $(document).ready(function(){
             $('#ellipsis').html(ellipsis);
         }
     }
-    
+    var x = $('#tblPrint tr').length;
+    if(x > 30){
+        $('.extend').show();
+    }
 });
 
 $(document).on('click', '#btnPrint', function(){

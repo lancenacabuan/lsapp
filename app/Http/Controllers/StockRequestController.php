@@ -448,7 +448,7 @@ class StockRequestController extends Controller
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "EDITED ITEM SERIAL: User successfully edited Serial from '$request->origserial' to '$request->newserial' of Item '$request->item' w/ Category '$request->category'.";
+            $userlogs->activity = "EDITED ITEM SERIAL: User successfully edited Serial from '$request->origserial' to '$request->newserial' of Item '$request->item' with Category '$request->category'.";
             $userlogs->save();
         }
 
@@ -618,6 +618,7 @@ class StockRequestController extends Controller
                     ->update(['status' => '3']);
             }
             while(!$sql);
+            $sched = 'FOR RECEIVING';
         }
         else if($request->status == '5'){
             do{
@@ -626,6 +627,7 @@ class StockRequestController extends Controller
                     ->update(['status' => '4']);
             }
             while(!$sql);
+            $sched = 'PARTIAL FOR RECEIVING';
         }
         else if($request->status == '16'){
             do{
@@ -634,6 +636,7 @@ class StockRequestController extends Controller
                     ->update(['status' => '17']);
             }
             while(!$sql);
+            $sched = 'FOR RECEIVING';
         }
         else{
             return response('false');
@@ -647,7 +650,7 @@ class StockRequestController extends Controller
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "FOR RECEIVING STOCK REQUEST: User successfully processed for receiving Stock Request No. $request->request_number.";
+            $userlogs->activity = $sched." STOCK REQUEST: User successfully processed for receiving Stock Request No. $request->request_number.";
             $userlogs->save();
         }
 
@@ -936,15 +939,20 @@ class StockRequestController extends Controller
                     ->update(['status' => '3']);
             }
             while(!$sql);
+            $sched = 'SCHEDULED FOR RECEIVING';
         }
         else{
-            $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
-            if($total == 0){
+            do{
+                $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
+            }
+            while(!$total);
+            if($total-1 == 0){
                 do{
                     $sql = Requests::where('request_number', $request->request_number)
                         ->update(['status' => '2']);
                 }
                 while(!$sql);
+                $sched = 'SCHEDULED';
             }
             else{
                 do{
@@ -952,6 +960,7 @@ class StockRequestController extends Controller
                         ->update(['status' => '5']);
                 }
                 while(!$sql);
+                $sched = 'PARTIAL SCHEDULED';
             }
         }
 
@@ -963,7 +972,7 @@ class StockRequestController extends Controller
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "SCHEDULED STOCK REQUEST: User successfully scheduled on $request->schedOn Stock Request No. $request->request_number.";
+            $userlogs->activity = $sched." STOCK REQUEST: User successfully scheduled on $request->schedOn Stock Request No. $request->request_number.";
             $userlogs->save();
         }
 

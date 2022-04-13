@@ -1,12 +1,4 @@
-var CategoryTable, ItemSerialTable, ItemTable, categoryID, categoryName;
-
-function isNumberKey(evt){
-    var charCode = (evt.which) ? evt.which : event.keyCode
-    if(charCode != 45  && charCode > 31 && (charCode < 48 || charCode > 57))
-        return false;
-
-    return true;
-}
+var CategoryTable, ItemTable, ItemSerialTable, categoryID, categoryName;
 
 function category(){
     $('table.CategoryTable').dataTable().fnDestroy();
@@ -19,7 +11,7 @@ function category(){
     $('#backBtn').hide();
     $('#loading').show(); Spinner(); Spinner.show();
     CategoryTable = 
-        $('table.CategoryTable').DataTable({ 
+        $('table.CategoryTable').DataTable({
             serverSide: true,
             ajax: 'category_data',
             columns: [
@@ -63,7 +55,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('#backBtn').show();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
-        $('table.ItemTable').DataTable({ 
+        $('table.ItemTable').DataTable({
             serverSide: true,
             ajax: {
                 url: 'item_data',
@@ -102,7 +94,7 @@ $('#btnBack').on('click', function(){
     $('#backBtn').show();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
-        $('table.ItemTable').DataTable({ 
+        $('table.ItemTable').DataTable({
             serverSide: true,
             ajax: {
                 url: 'item_data',
@@ -142,7 +134,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#backBtn').hide();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemSerialTable = 
-        $('table.ItemSerialTable').DataTable({ 
+        $('table.ItemSerialTable').DataTable({
             serverSide: true,
             ajax: {
                 url: 'itemserial_data',
@@ -150,13 +142,22 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                     ItemId: trdata.id
                 }
             },
+            columnDefs: [
+                {
+                    "targets": [0,1],
+                    "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
+                },
+            ],
             columns: [
-                { data: 'item' },
+                { data: 'addDate' },
+                { data: 'modDate' },
+                { data: 'name' },
                 { data: 'serial' },
                 { data: 'location' },
                 { data: 'rack' },
                 { data: 'row' }
             ],
+            order:[[1, 'desc']],
             initComplete: function(){
                 $('#loading').hide(); Spinner.hide();
             }
@@ -186,36 +187,47 @@ $('#butsave').on('click', function(){
     }
     if($('#serial').is(':visible')){
         if(category && item && location_id){
-            $.ajax({
-                url: "stocks/save",
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val()
-                },
-                data: {
-                    _token: $("#csrf").val(),
-                    category: category,
-                    item: item,
-                    location: location_id,
-                    uom: uom,
-                    serial: serial,
-                    rack: rack,
-                    row: row,
-                    item_name: item_name,
-                    location_name: location_name
-                },
-                success: function(dataResult){                      
-                    $('#addStock').hide();
-                    swal("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
-                        window.location.href = 'stocks';
+            swal({
+                title: "Are you really sure all details are entered correctly?",
+                text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to recheck details.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            })
+            .then((willDelete) => {
+                if(willDelete){
+                    $.ajax({
+                        url: "stocks/save",
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $("#csrf").val()
+                        },
+                        data: {
+                            _token: $("#csrf").val(),
+                            category: category,
+                            item: item,
+                            location: location_id,
+                            uom: uom,
+                            serial: serial,
+                            rack: rack,
+                            row: row,
+                            item_name: item_name,
+                            location_name: location_name
+                        },
+                        success: function(dataResult){
+                            $('#addStock').hide();
+                            swal("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
+                                window.location.href = 'stocks';
+                            });
+                            setTimeout(function(){window.location.href = 'stocks';}, 2000);
+                        },
+                        error: function(data){
+                            if(data.status == 401){
+                                window.location.href = '/stocks';
+                            }
+                            alert(data.responseText);
+                        }
                     });
-                    setTimeout(function(){window.location.href = 'stocks';}, 2000);                                   
-                },
-                error: function(data){
-                    if(data.status == 401){
-                        window.location.href = '/stocks';
-                    }
-                    alert(data.responseText);
                 }
             });
         }
@@ -224,44 +236,50 @@ $('#butsave').on('click', function(){
         }
     }
     else{
-        if(qty && qty != 0){
-            if(category && item && location_id){
-                $.ajax({
-                    url: "stocks/save",
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val()
-                    },
-                    data: {
-                        _token: $("#csrf").val(),
-                        category: category,
-                        item: item,
-                        location: location_id,
-                        uom: uom,
-                        qty: qty,
-                        rack: rack,
-                        row: row,
-                        item_name: item_name,
-                        location_name: location_name
-                    },
-                    success: function(dataResult){                      
-                        $('#addStock').hide();
-                        swal("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
-                            window.location.href = 'stocks';
-                        });
-                        setTimeout(function(){window.location.href = 'stocks';}, 2000);                                   
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            window.location.href = '/stocks';
+        if(qty > 0 && category && item && location_id){
+            swal({
+                title: "Are you really sure all details are entered correctly?",
+                text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to recheck details.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            })
+            .then((willDelete) => {
+                if(willDelete){
+                    $.ajax({
+                        url: "stocks/save",
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $("#csrf").val()
+                        },
+                        data: {
+                            _token: $("#csrf").val(),
+                            category: category,
+                            item: item,
+                            location: location_id,
+                            uom: uom,
+                            qty: qty,
+                            rack: rack,
+                            row: row,
+                            item_name: item_name,
+                            location_name: location_name
+                        },
+                        success: function(dataResult){
+                            $('#addStock').hide();
+                            swal("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
+                                window.location.href = 'stocks';
+                            });
+                            setTimeout(function(){window.location.href = 'stocks';}, 2000);
+                        },
+                        error: function(data){
+                            if(data.status == 401){
+                                window.location.href = '/stocks';
+                            }
+                            alert(data.responseText);
                         }
-                        alert(data.responseText);
-                    }
-                });
-            }
-            else{
-                AddStockForm[0].reportValidity();
-            }
+                    });
+                }
+            });
         }
         else{
             AddStockForm[0].reportValidity();

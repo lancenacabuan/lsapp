@@ -53,7 +53,9 @@
         <table id="ItemSerialTable" class="table-hover table ItemSerialTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
-                    <th>ITEM DESCRIPTION</th>
+                    <th>DATE ADDED</th>
+                    <th>DATE MODIFIED</th>
+                    <th>RESPONSIBLE USER</th>
                     <th>SERIAL</th>
                     <th>LOCATION</th>
                     <th>RACK NO.</th>

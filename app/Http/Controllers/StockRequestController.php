@@ -434,14 +434,22 @@ class StockRequestController extends Controller
     }
 
     public function editSerial(Request $request){
-        $sql = Stock::where('id', $request->id)
-            ->update(['serial' => $request->serial]);
+        do{
+            $sql = Stock::where('id', $request->id)
+                ->update(['serial' => $request->newserial, 'user_id' => auth()->user()->id]);
+        }
+        while(!$sql);
         
         if(!$sql){
             $result = 'false';
         }
-        else {
+        else{
             $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "EDITED ITEM SERIAL: User successfully edited Serial from '$request->origserial' to '$request->newserial' of Item '$request->item' w/ Category '$request->category'.";
+            $userlogs->save();
         }
 
         return response($result);

@@ -65,6 +65,28 @@
         </table>
     </div>
 </div>
+<div class="modal fade in" id="editSerialModal">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
+            <h6 class="modal-title w-100">EDIT ITEM SERIAL</h6>            
+            <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="background-color: white; color: black;">
+            <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+            <input type="hidden" name="x_id" id="x_id">
+            <input type="hidden" name="y_serial" id="y_serial">
+            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_category" id="x_category" readonly>
+            <textarea style="margin-bottom: 8px; font-size: 12px; resize: none;" class="form-control" rows="5" name="x_item" id="x_item" readonly></textarea>
+            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_serial" id="x_serial" placeholder="Input Item Serial..." autocomplete="off">
+            <span style="color: Red; font-size: 12px;">*Required Field</span>
+            <button type="button" id="btnEdit" class="btn btn-primary float-right bp" style="zoom: 80%;">EDIT</button>
+            <span class="float-right" style="width: 5px;">&nbsp;</span>
+            <button type="button" id="btnClear" class="btn btn-primary float-right bp" style="zoom: 80%;">CLEAR</button>
+        </div>
+    </div>
+    </div>
+</div>
 @include('modal.addstock')
 {{-- @include('modal.stock') --}}
 {{-- @include('modal.stocktransfer') --}}

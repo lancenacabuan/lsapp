@@ -163,7 +163,97 @@ $(document).on('click', '#ItemTable tbody tr', function(){
             }
         });
 });
-    
+
+$(document).on('click', '#ItemSerialTable tbody tr', function(){
+    var trdata = ItemSerialTable.row(this).data();
+    $('#x_id').val(trdata.stock_id);
+    $('#x_category').val(decodeHtml(trdata.category));
+    $('#x_item').val(decodeHtml(trdata.item));
+    $('#y_serial').val(trdata.serial);
+    $('#x_serial').val(trdata.serial);
+
+    $('#editSerialModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    $('.modal-body').html();
+    $('#editSerialModal').modal('show');
+});
+
+$('#btnClear').on('click', function(){
+    $('#x_serial').val('');
+});
+
+$('#btnEdit').on('click', function(){
+    var id = $('#x_id').val();
+    var category = $('#x_category').val();
+    var item = $('#x_item').val();
+    var origserial = $('#y_serial').val().toUpperCase();
+    var newserial = $.trim($('#x_serial').val()).toUpperCase();
+    if(newserial == ''){
+        newserial = 'N/A';
+    }
+    if(origserial == newserial){
+        swal("NO CHANGES FOUND", "Item Serial is still the same!", "error");
+        return false;
+    }
+    else{
+        swal({
+            title: "Confirm Serial: "+newserial+'?',
+            text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to recheck details.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url: '/editSerial',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val()
+                    },
+                    data: {
+                        id: id,
+                        category: category,
+                        item: item,
+                        origserial: origserial,
+                        newserial: newserial
+                    },
+                    success: function(data){
+                        if(data == 'false'){
+                            $('#editSerialModal').hide();
+                            $('#editSerialModal').modal('dispose');
+                            swal({
+                                title: "EDIT FAILED",
+                                text: "ITEM SERIAL",
+                                icon: "error",
+                                timer: 2000
+                            });
+                            $('table.ItemSerialTable').DataTable().ajax.reload();
+                        }
+                        else{
+                            $('#editSerialModal').hide();
+                            $('#editSerialModal').modal('dispose');
+                            swal({
+                                title: "EDIT SUCCESS",
+                                text: "ITEM SERIAL",
+                                icon: "success",
+                                timer: 2000
+                            });
+                            $('table.ItemSerialTable').DataTable().ajax.reload();
+                        }
+                    },
+                    error: function(data){
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
+    }
+});
+
 $('#butsave').on('click', function(){
     var AddStockForm = $('#AddStockForm');
     var category = $('#category').val();
@@ -364,6 +454,9 @@ $('#backBtn').on('click', function(){
     category();
 });
 
-$('.close').on('click', function(){
-    location.reload();
+$('#btnReset').on('click', function(){
+    $('#AddStockForm').trigger('reset');
+    $('#uomdiv').hide();
+    $('#qtydiv').hide();
+    $('#serialdiv').hide();
 });

@@ -69,9 +69,9 @@
                         <input type="text" id="serial" name="serial" placeholder="Enter Serial (Note: Leave blank if N/A)" style="width: 615px;" autocomplete="off">
                     </div>
                 </form>
-                <div class="col-md-12 mb-4">
-                    <button type="submit" id="butsave" class="btn btn-primary float-right bp">SUBMIT</button>
-                </div>
+                <br>
+                <button type="submit" id="btnReset" class="btn btn-primary bp">RESET</button>
+                <button type="submit" id="butsave" class="btn btn-primary bp float-right mr-3">SUBMIT</button>
             </div>
         </div>
     </div>

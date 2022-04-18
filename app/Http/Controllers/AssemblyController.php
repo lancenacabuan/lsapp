@@ -362,6 +362,7 @@ class AssemblyController extends Controller
         do{
             $stocks = new Stock;
             $stocks->request_number = $request->request_number;
+            $stocks->assembly_reqnum = $request->request_number;
             $stocks->item_id = $request->item_id;
             $stocks->category_id = '58';
             $stocks->user_id =auth()->user()->id;

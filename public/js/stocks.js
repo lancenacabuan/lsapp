@@ -260,11 +260,11 @@ $('#butsave').on('click', function(){
     var category = $('#category').val();
     var item = $('#item').val();
     var location_id = $('#location').val();
-    var rack = $('#rack').val();
-    var row = $('#row').val();
+    var rack = $.trim($('#rack').val()).toUpperCase();
+    var row = $.trim($('#row').val()).toUpperCase();
     var uom = $('#uom').val();
     var qty = $('#qty').val();
-    var serial = $('#serial').val();
+    var serial = $.trim($('#serial').val()).toUpperCase();
     var item_name = $("#item option:selected").text();
     var location_name = $("#location option:selected").text();
     if(!$('#rack').val()){

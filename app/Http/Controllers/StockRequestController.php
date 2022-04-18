@@ -421,8 +421,7 @@ class StockRequestController extends Controller
         $include[] = $request->request_number;
 
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-            ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['in'])
+            ->whereIn('assembly_reqnum', $include)
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
@@ -1051,8 +1050,7 @@ class StockRequestController extends Controller
         $include[] = $request->request_number;
 
         $list = Stock::query()->selectRaw('users.name AS recby, stocks.created_at AS recsched')
-            ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['in'])
+            ->whereIn('assembly_reqnum', $include)
             ->join('users','users.id','stocks.user_id')
             ->limit(1)
             ->get();

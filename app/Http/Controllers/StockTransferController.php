@@ -356,11 +356,12 @@ class StockTransferController extends Controller
     }
 
     public function transItems(Request $request){
-        $list = Transfer::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, transferred_items.serial AS serial, transferred_items.qty AS qty, transferred_items.items_id AS item_id, transferred_items.id AS id, locations.location AS location')
-            ->where('request_number', $request->request_number)
-            ->join('items','items.id','transferred_items.items_id')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, locations.location AS location')
+            ->where('stocks.request_number', $request->request_number)
+            ->join('request_transfer','request_transfer.request_number','stocks.request_number')
+            ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
-            ->join('locations','locations.id','transferred_items.locfrom')
+            ->join('locations','locations.id','request_transfer.locfrom')
             ->get()
             ->sortBy('item')
             ->sortBy('category');
@@ -566,7 +567,7 @@ class StockTransferController extends Controller
 
     public function logTransReceive(Request $request){
         do{
-            $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, users.name AS reqby, users.email AS email, needdate, locfrom, locto, schedule')
+            $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, users.name AS reqby, users.email AS email, needdate, prepdate, locfrom, locto, schedule')
                 ->where('request_transfer.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'request_transfer.requested_by')
                 ->get();
@@ -578,11 +579,14 @@ class StockTransferController extends Controller
         while(!$request_details);
 
         do{
-            $trans = Transfer::selectRaw('users.name AS prep_by, transferred_items.updated_at AS prep_date')
-                ->where('request_number', $request->request_number)
-                ->join('users', 'users.id', '=', 'transferred_items.user_id')
-                ->orderBy('transferred_items.id','DESC')
-                ->first();
+            $trans = RequestTransfer::selectRaw('users.name AS prepby')
+                ->where('request_transfer.request_number', $request->request_number)
+                ->join('users', 'users.id', '=', 'request_transfer.prepared_by')
+                ->get();
+            
+                $trans = str_replace('[','',$trans);
+                $trans = str_replace(']','',$trans);
+                $trans = json_decode($trans);
         }
         while(!$trans);
         
@@ -624,8 +628,8 @@ class StockTransferController extends Controller
                     'needdate' => $request_details->needdate,
                     'locfrom' => $locfrom,
                     'locto' => $locto,
-                    'prepared_by' => $trans->prep_by,
-                    'prepdate' => $trans->prep_date,
+                    'prepared_by' => $trans->prepby,
+                    'prepdate' => $request_details->prepdate,
                     'scheddate' => $request_details->schedule,
                     'receivedby' => auth()->user()->name,
                     'role' => 'Admin',
@@ -644,8 +648,8 @@ class StockTransferController extends Controller
             'needdate' => $request_details->needdate,
             'locfrom' => $locfrom,
             'locto' => $locto,
-            'prepared_by' => $trans->prep_by,
-            'prepdate' => $trans->prep_date,
+            'prepared_by' => $trans->prepby,
+            'prepdate' => $request_details->prepdate,
             'scheddate' => $request_details->schedule,
             'receivedby' => auth()->user()->name,
             'role' => 'Admin / Encoder',
@@ -671,7 +675,7 @@ class StockTransferController extends Controller
             ->join('items','items.id','=','stock_transfer.item')
             ->join('stocks','stocks.item_id','stock_transfer.item')
             ->join('locations','locations.id','stocks.location_id')
-            ->groupBy('category','item','item_id','qty','served','pending', 'uom')
+            ->limit(1)
             ->get();
 
         return DataTables::of($list)
@@ -691,68 +695,26 @@ class StockTransferController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('serialbal', function (StockTransfer $list){
-            $stocks = Stock::query()->select('serial')
-                ->where('item_id', $list->item_id)
-                ->whereIn('location_id', ['5'])
-                ->where('status', 'in')
-                ->first();
-            $stocks = str_replace('{"serial":"','',$stocks);
-            $stocks = str_replace('"}','',$stocks);
-            $stocks = str_replace('{"serial":null}','',$stocks);
-            return $stocks;
-        })
-        ->addColumn('serialmal', function (StockTransfer $list){
-            $stocks = Stock::query()->select('serial')
-                ->where('item_id', $list->item_id)
-                ->whereIn('location_id', ['6'])
-                ->where('status', 'in')
-                ->first();
-            $stocks = str_replace('{"serial":"','',$stocks);
-            $stocks = str_replace('"}','',$stocks);
-            $stocks = str_replace('{"serial":null}','',$stocks);
-            return $stocks;
-        })
         ->toJson();
     }
 
     public function settransserials(Request $request){
-        $list = Stock::select('serial','location_id')
+        $list = Stock::select('stocks.id AS id','serial','location_id','location')
             ->where('stocks.item_id', $request->item_id)
             ->where('stocks.status','in')
             ->whereIn('stocks.location_id',[$request->location])
+            ->join('locations','locations.id','stocks.location_id')
             ->get();
         
         return response()->json($list);
     }
 
     public function transferItems(Request $request){
-        if($request->serial == ''){
-            $count = Transfer::query()
-                ->where('request_number', $request->request_number)
-                ->where('items_id',$request->item_id)
-                ->count();
-        }
-        else{
-            $count = 0;
-        }
-        if($count == 0){
-            $transfer = new Transfer;
-            $transfer->request_number = $request->request_number;
-            $transfer->user_id = auth()->user()->id;
-            $transfer->items_id = $request->item_id;
-            $transfer->locfrom = $request->locfrom;
-            $transfer->locto = $request->locto;
-            $transfer->serial = $request->serial;
-            $transfer->qty = $request->qty;
-            $transfer->schedule = $request->schedOn;
-            $sql = $transfer->save();
-        }
-        else{
-            $sql = Transfer::where('request_number', $request->request_number)
-                ->where('items_id',$request->item_id)
-                ->increment('qty', $request->qty);
-        }
+        $transfer = new Transfer;
+        $transfer->request_number = $request->request_number;
+        $transfer->stock_id = $request->stock_id;
+        $sql = $transfer->save();
+
         if(!$sql){
             $result = 'false';
         }
@@ -760,21 +722,11 @@ class StockTransferController extends Controller
             $result = 'true';
         }
         if($result == 'true'){
-            if($request->serial != ''){
-                Stock::where('item_id',$request->item_id)
-                    ->whereIn('location_id',[$request->locfrom])
-                    ->where('status','in')
-                    ->where('serial',$request->serial)
-                    ->orderBy('id')->limit(1)
-                    ->update(['status' => 'trans', 'location_id' => $request->locto]);
+            do{
+                $sql = Stock::where('id',$request->stock_id)
+                    ->update(['request_number' => $request->request_number, 'status' => 'trans', 'location_id' => $request->locto]);
             }
-            else{
-                Stock::where('item_id',$request->item_id)
-                    ->whereIn('location_id',[$request->locfrom])
-                    ->where('status','in')
-                    ->orderBy('id')->limit($request->qty)
-                    ->update(['status' => 'trans', 'location_id' => $request->locto]);
-            }
+            while(!$sql);
             
             StockTransfer::where('request_number', $request->request_number)
                 ->where('item',$request->item_id)
@@ -783,35 +735,53 @@ class StockTransferController extends Controller
             StockTransfer::where('request_number', $request->request_number)
                 ->where('item',$request->item_id)
                 ->decrement('pending', $request->qty);
-
-            RequestTransfer::where('request_number', $request->request_number)
-                ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn]);
-
-            $total = StockTransfer::where('request_number', $request->request_number)->sum('pending');
-            if($total == 0){
-                RequestTransfer::where('request_number', $request->request_number)
-                    ->update(['status' => '2']);
-            }
-            else{
-                RequestTransfer::where('request_number', $request->request_number)
-                    ->update(['status' => '5']);
-            }
         }
         
         return response($result);
     }
 
     public function logTransSched(Request $request){
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "SCHEDULED STOCK TRANSFER REQUEST: User successfully scheduled on $request->schedOn Stock Transfer Request No. $request->request_number.";
-        $userlogs->save();
+        RequestTransfer::where('request_number', $request->request_number)
+            ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn, 'prepdate' => date('Y-m-d')]);
         
-        return response('true');
+        do{
+            $total = StockTransfer::where('request_number', $request->request_number)->sum('pending');
+        }
+        while(!$total);
+        if($total-1 == 0){
+            do{
+                $sql = RequestTransfer::where('request_number', $request->request_number)
+                    ->update(['status' => '2']);
+            }
+            while(!$sql);
+            $sched = 'SCHEDULED';
+        }
+        else{
+            do{
+                $sql = RequestTransfer::where('request_number', $request->request_number)
+                    ->update(['status' => '5']);
+            }
+            while(!$sql);
+            $sched = 'PARTIAL SCHEDULED';
+        }
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = $sched." STOCK TRANSFER REQUEST: User successfully scheduled on $request->schedOn Stock Transfer Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 
     public function printTransferRequest(Request $request){
-        $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS req_date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, users.name AS req_by, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, needdate, locfrom, locto')
+        $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS req_date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, users.name AS req_by, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, needdate, prepdate, locfrom, locto')
             ->where('request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
@@ -821,17 +791,21 @@ class StockTransferController extends Controller
         $list = str_replace(']','',$list);
         $list = json_decode($list);
 
-        $list2 = Transfer::selectRaw('users.name AS prep_by, transferred_items.updated_at AS prep_date')
-            ->where('request_number', $request->request_number)
-            ->join('users', 'users.id', '=', 'transferred_items.user_id')
-            ->orderBy('transferred_items.id','DESC')
-            ->first();
+        $list2 = RequestTransfer::selectRaw('users.name AS prepby')
+            ->where('request_transfer.request_number', $request->request_number)
+            ->join('users', 'users.id', '=', 'request_transfer.prepared_by')
+            ->get();
         
-        $list3 = Transfer::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, transferred_items.serial AS serial, transferred_items.qty AS qty, transferred_items.items_id AS item_id, transferred_items.id AS id, locations.location AS location')
-            ->where('request_number', $request->request_number)
-            ->join('items','items.id','transferred_items.items_id')
+        $list2 = str_replace('[','',$list2);
+        $list2 = str_replace(']','',$list2);
+        $list2 = json_decode($list2);
+        
+        $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, locations.location AS location')
+            ->where('stocks.request_number', $request->request_number)
+            ->join('request_transfer','request_transfer.request_number','stocks.request_number')
+            ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
-            ->join('locations','locations.id','transferred_items.locfrom')
+            ->join('locations','locations.id','request_transfer.locfrom')
             ->get()
             ->sortBy('item')
             ->sortBy('category');

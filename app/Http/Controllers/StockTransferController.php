@@ -741,17 +741,11 @@ class StockTransferController extends Controller
     }
 
     public function logTransSched(Request $request){
-        RequestTransfer::where('request_number', $request->request_number)
-            ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn, 'prepdate' => date('Y-m-d')]);
-        
-        do{
-            $total = StockTransfer::where('request_number', $request->request_number)->sum('pending');
-        }
-        while(!$total);
-        if($total-1 == 0){
+        $total = StockTransfer::where('request_number', $request->request_number)->sum('pending');
+        if($total == 0){
             do{
                 $sql = RequestTransfer::where('request_number', $request->request_number)
-                    ->update(['status' => '2']);
+                ->update(['status' => '2']);
             }
             while(!$sql);
             $sched = 'SCHEDULED';
@@ -759,17 +753,20 @@ class StockTransferController extends Controller
         else{
             do{
                 $sql = RequestTransfer::where('request_number', $request->request_number)
-                    ->update(['status' => '5']);
+                ->update(['status' => '5']);
             }
             while(!$sql);
             $sched = 'PARTIAL SCHEDULED';
         }
-
+        
         if(!$sql){
             $result = 'false';
         }
         else {
             $result = 'true';
+
+            RequestTransfer::where('request_number', $request->request_number)
+                ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn, 'prepdate' => date('Y-m-d')]);
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;

@@ -2904,6 +2904,7 @@ $("#btnProceed").unbind('click').click(function(){
                                         $.ajax({
                                             type:'post',
                                             url:'/prepareItems',
+                                            async: false,
                                             headers: {
                                                 'X-CSRF-TOKEN': $("#csrf").val()
                                             },

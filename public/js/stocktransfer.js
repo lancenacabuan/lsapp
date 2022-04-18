@@ -1435,6 +1435,7 @@ $("#btnProceed").unbind('click').click(function(){
                                         $.ajax({
                                             type:'post',
                                             url:'/transferItems',
+                                            async: false,
                                             headers: {
                                                 'X-CSRF-TOKEN': $("#csrf").val()
                                             },
@@ -1442,7 +1443,8 @@ $("#btnProceed").unbind('click').click(function(){
                                                 'request_number': reqnum,
                                                 'stock_id': $('#serial'+n).val(),
                                                 'item_id': $('#item_id'+n).val(),
-                                                'qty': $('#qty'+n).val()
+                                                'qty': $('#qty'+n).val(),
+                                                'locto': $('#locto_details').val(),
                                             },
                                             success: function(data){
                                                 if(data == 'true'){

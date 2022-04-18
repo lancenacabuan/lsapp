@@ -941,11 +941,8 @@ class StockRequestController extends Controller
             $sched = 'SCHEDULED FOR RECEIVING';
         }
         else{
-            do{
-                $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
-            }
-            while(!$total);
-            if($total-1 == 0){
+            $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
+            if($total == 0){
                 do{
                     $sql = Requests::where('request_number', $request->request_number)
                         ->update(['status' => '2']);

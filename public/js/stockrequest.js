@@ -82,6 +82,17 @@ function sweet(title, text, icon, btnName, url){
     });
 }
 
+function decodeHtml(str){
+    var map = {
+        '&amp;': '&', 
+        '&lt;': '<', 
+        '&gt;': '>', 
+        '&quot;': '"', 
+        '&#039;': "'"
+    };
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
+}
+
 function generatedr(){
     var today = new Date();
     var month = today.getMonth()+1;
@@ -1578,7 +1589,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     $('table.schedItems').DataTable({
         columnDefs: [
             {
-                "targets": [6,7],
+                "targets": [7],
                 "visible": false,
                 "searchable": false
             },
@@ -1647,19 +1658,46 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     });
 
     $('table.transItems').DataTable({
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false,
+        language: {
+            processing: "Loading...",
+            emptyTable: "No data available in table"
+        },
+        serverSide: true,
+        ajax: {
+            url: '/schedItems',
+            data: {
+                request_number: req_num,
+            }
+        },
+        order:[],
+        columns: [
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' },
+            { data: 'location' }
+        ]
+    });
+
+    $('table.transItems1').DataTable({
         columnDefs: [
             {
-                "targets": [5],
+                "targets": [7],
                 "visible": false,
                 "searchable": false
             },
             {   
                 "render": function(data, type, row, meta){
-                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnReceive" id="'+ meta.row +'">RECEIVE</button>';
+                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                 },
                 "defaultContent": '',
                 "data": null,
-                "targets": [4]
+                "targets": [6]
             }
         ],
         searching: false,
@@ -1685,35 +1723,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'uom' },
             { data: 'serial' },
             { data: 'location' },
-            { data: 'serial' },
-            { data: 'item_id' }
-        ]
-    });
-
-    $('table.transItems1').DataTable({
-        searching: false,
-        paging: false,
-        ordering: false,
-        info: false,
-        language: {
-            processing: "Loading...",
-            emptyTable: "No data available in table"
-        },
-        serverSide: true,
-        ajax: {
-            url: '/schedItems',
-            data: {
-                request_number: req_num,
-            }
-        },
-        order:[],
-        columns: [
-            { data: 'category' },
-            { data: 'item' },
-            { data: 'qty' },
-            { data: 'uom' },
-            { data: 'serial' },
-            { data: 'location' }
+            { data: 'id' },
+            { data: 'id' }
         ]
     });
 
@@ -1796,59 +1807,109 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     }
 });
 
+var tblEdit;
 $(document).on('click', '.btnEditSerial', function(){
-    var id = $(this).attr("id");
-    var data = $('table.schedItems').DataTable().row(id).data();
+    if($('#status_id_details').val() == '2' || $('#status_id_details').val() == '5'){
+        tblEdit = 'table.schedItems';
+        var id = $(this).attr("id");
+        var data = $(tblEdit).DataTable().row(id).data();
+    }
+    else if($('#status_id_details').val() == '3' || $('#status_id_details').val() == '4'){
+        tblEdit = 'table.transItems1';
+        var id = $(this).attr("id");
+        var data = $(tblEdit).DataTable().row(id).data();
+    }
+    else{
+        window.location.reload();
+    }
+
+    $('#x_id').val(data.id);
+    $('#x_category').val(decodeHtml(data.category));
+    $('#x_item').val(decodeHtml(data.item));
+    $('#y_serial').val(data.serial);
+    $('#x_serial').val(data.serial);
 
     $('#editSerialModal').modal({
         backdrop: 'static',
         keyboard: false
     });
 
+    $('.modal-body').html();
     $('#editSerialModal').modal('show');
-    $('#x_id').val(data.id);
-    $('#x_category').val(data.category);
-    $('#x_item').val(data.item);
-    $('#x_serial').val(data.serial);
+});
+
+$('#btnClear').on('click', function(){
+    $('#x_serial').val('');
+    $('#x_serial').focus();
 });
 
 $('#btnEdit').on('click', function(){
-    $.ajax({
-        type:'post',
-        url: '/editSerial',
-        headers: {
-            'X-CSRF-TOKEN': $("#csrf").val()
-        },
-        data: {
-            id: $('#x_id').val(),
-            serial: $('#x_serial').val()
-        },
-        success: function(data){
-            if(data == 'false'){
-                $('#editSerialModal').hide();
-                swal({
-                    title: "EDIT FAILED",
-                    text: "ITEM SERIAL",
-                    icon: "error",
-                    timer: 2000
+    var id = $('#x_id').val();
+    var category = $('#x_category').val();
+    var item = $('#x_item').val();
+    var origserial = $('#y_serial').val().toUpperCase();
+    var newserial = $.trim($('#x_serial').val()).toUpperCase();
+    if(newserial == ''){
+        newserial = 'N/A';
+    }
+    if(origserial == newserial){
+        swal("NO CHANGES FOUND", "Item Serial is still the same!", "error");
+        return false;
+    }
+    else{
+        swal({
+            title: "Confirm Serial: "+newserial+'?',
+            text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to recheck details.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url: '/editSerial',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val()
+                    },
+                    data: {
+                        id: id,
+                        category: category,
+                        item: item,
+                        origserial: origserial,
+                        newserial: newserial
+                    },
+                    success: function(data){
+                        if(data == 'false'){
+                            $('#editSerialModal').hide();
+                            $('#editSerialModal').modal('dispose');
+                            swal({
+                                title: "EDIT FAILED",
+                                text: "ITEM SERIAL",
+                                icon: "error",
+                                timer: 2000
+                            });
+                            $(tblEdit).DataTable().ajax.reload();
+                        }
+                        else{
+                            $('#editSerialModal').hide();
+                            $('#editSerialModal').modal('dispose');
+                            swal({
+                                title: "EDIT SUCCESS",
+                                text: "ITEM SERIAL",
+                                icon: "success",
+                                timer: 2000
+                            });
+                            $(tblEdit).DataTable().ajax.reload();
+                        }
+                    },
+                    error: function(data){
+                        alert(data.responseText);
+                    }
                 });
-                $('table.schedItems').DataTable().ajax.reload();
             }
-            else{
-                $('#editSerialModal').hide();
-                swal({
-                    title: "EDIT SUCCESS",
-                    text: "ITEM SERIAL",
-                    icon: "success",
-                    timer: 2000
-                });
-                $('table.schedItems').DataTable().ajax.reload();
-            }
-        },
-        error: function(data){
-            alert(data.responseText);
-        }
-    });
+        });
+    }
 });
 
 $(document).on('click', '.btndelItem', function(){

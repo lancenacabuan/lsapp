@@ -183,6 +183,7 @@ $(document).on('click', '#ItemSerialTable tbody tr', function(){
 
 $('#btnClear').on('click', function(){
     $('#x_serial').val('');
+    $('#x_serial').focus();
 });
 
 $('#btnEdit').on('click', function(){

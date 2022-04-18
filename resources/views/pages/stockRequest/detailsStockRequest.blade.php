@@ -269,7 +269,7 @@
                 </div>
             </div>
             <br>
-            @role('client') {{---ROLES---}}
+            @role('sales|viewer|approver - sales') {{---ROLES---}}
             <table id="transItems" class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
@@ -279,13 +279,11 @@
                         <th>UOM</th>
                         <th>SERIAL</th>
                         <th>LOCATION</th>
-                        <th></th>
-                        <th></th>
                     </tr>
                 </thead>
             </table>
             @endrole
-            @role('admin|encoder|sales|viewer|approver - sales') {{---ROLES---}}
+            @role('admin|encoder') {{---ROLES---}}
             <table id="transItems1" class="table transItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
@@ -295,6 +293,8 @@
                         <th>UOM</th>
                         <th>SERIAL</th>
                         <th>LOCATION</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
             </table> 

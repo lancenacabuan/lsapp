@@ -604,6 +604,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 var prep_by = value.prep_by;
                     $('#prep_by').val(prep_by);
                     $('#prep_by1').val(prep_by);
+                    $('#reprep_by').val(prep_by);
                 var sched = value.sched;
                     sched = moment(sched).format('dddd, MMMM DD, YYYY');
                     $('#sched').val(sched);
@@ -729,12 +730,11 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         }
                         $(".prephide").hide();
                         $("#incItemsModal").show();
-                        $("#divResched").show();
+                        $(".divResched").show();
                         $('#resched').attr('max', maxDate);
                         $("#btnReschedule").show();
                         if($("#current_role").val() == '["sales"]'){
-                            $(".dfc").hide();
-                            $("#divResched").hide();
+                            $(".divResched").hide();
                         }
                     }
                     if(requestStatus == '16'){
@@ -746,7 +746,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         }
                         $(".prephide").hide();
                         $("#incItemsModal").show();
-                        $("#divResched1").show();
+                        $(".divResched1").show();
                         $(".btnTransit").show();
                     }
                     if(requestStatus == '17'){
@@ -758,7 +758,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         }
                         $(".prephide").hide();
                         $("#incItemsModal").show();
-                        $("#divResched1").show();
+                        $(".divResched1").show();
                         $("#incFooter").hide();
                     }
                     if(requestStatus == '18'){
@@ -766,7 +766,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#transitItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         $(".prephide").hide();
-                        $(".dfc").hide();
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
                         $("#request_info").hide();
@@ -779,7 +778,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#transitItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         $(".prephide").hide();
-                        $(".dfc").hide();
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE DEFECTIVE ITEM DETAILS';
                         $("#request_info").hide();
@@ -801,7 +799,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $(".prephide").hide();
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
-                        $(".dfc").hide();
                         $("#incFooter").hide();
                     }
                     if(value.user_id != $('#current_user').val()){
@@ -1289,6 +1286,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     var prep_by = data.prep_by;
         $('#prep_by').val(prep_by);
         $('#prep_by1').val(prep_by);
+        $('#reprep_by').val(prep_by);
     var sched = data.sched;
         sched = moment(sched).format('dddd, MMMM DD, YYYY');
         $('#sched').val(sched);
@@ -1414,12 +1412,11 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             }
             $(".prephide").hide();
             $("#incItemsModal").show();
-            $("#divResched").show();
+            $(".divResched").show();
             $('#resched').attr('max', maxDate);
             $("#btnReschedule").show();
             if($("#current_role").val() == '["sales"]'){
-                $(".dfc").hide();
-                $("#divResched").hide();
+                $(".divResched").hide();
             }
         }
         if(requestStatus == '16'){
@@ -1431,7 +1428,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             }
             $(".prephide").hide();
             $("#incItemsModal").show();
-            $("#divResched1").show();
+            $(".divResched1").show();
             $(".btnTransit").show();
         }
         if(requestStatus == '17'){
@@ -1443,7 +1440,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             }
             $(".prephide").hide();
             $("#incItemsModal").show();
-            $("#divResched1").show();
+            $(".divResched1").show();
             $("#incFooter").hide();
         }
         if(requestStatus == '18'){
@@ -1451,7 +1448,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('#transitItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             $(".prephide").hide();
-            $(".dfc").hide();
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
             $("#request_info").hide();
@@ -1464,7 +1460,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('#transitItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             $(".prephide").hide();
-            $(".dfc").hide();
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE DEFECTIVE ITEM DETAILS';
             $("#request_info").hide();
@@ -1486,7 +1481,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $(".prephide").hide();
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
-            $(".dfc").hide();
             $("#incFooter").hide();
         }
         if(data.user_id != $('#current_user').val()){

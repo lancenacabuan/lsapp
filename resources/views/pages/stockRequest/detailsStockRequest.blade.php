@@ -330,15 +330,19 @@
             <h6 id="incmodalheader" class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
-            <div class="form-inline dfc" style="margin-left: 35px;">
+            <div class="form-inline divResched" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
-                <input class="form-control form-control-sm" id="reprep_by" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
+                <input class="form-control form-control-sm" id="reprep_by1" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
             </div>
-            <div id="divResched" class="form-inline" style="margin-left: 35px; display: none;">
+            <div class="form-inline divResched" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
                 <input class="form-control form-control-sm" id="resched" style="width: 280px;" type="date">
             </div>
-            <div id="divResched1" class="form-inline" style="margin-left: 35px; display: none;">
+            <div class="form-inline divResched1" style="margin-left: 35px; display: none;">
+                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
+                <input class="form-control form-control-sm" id="reprep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
+            </div>
+            <div class="form-inline divResched1" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
                 <input class="form-control form-control-sm" id="resched1" style="width: 280px;" type="text" readonly>
             </div>

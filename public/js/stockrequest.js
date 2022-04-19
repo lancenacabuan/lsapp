@@ -1165,33 +1165,98 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 }
 
                 if(ajax_url != '/schedItems'){
-                    $('table.incItems').dataTable().fnDestroy();
-                    $('table.incItems').DataTable({
-                        searching: false,
-                        paging: false,
-                        ordering: false,
-                        info: false,
-                        language: {
-                            processing: "Loading...",
-                            emptyTable: "No data available in table"
-                        },
-                        serverSide: true,
-                        ajax: {
-                            url: ajax_url,
-                            data: {
-                                request_number: req_num,
-                            }
-                        },
-                        order:[],
-                        columns: [
-                            { data: 'category' },
-                            { data: 'item' },
-                            { data: 'qty' },
-                            { data: 'uom' },
-                            { data: 'serial' },
-                            { data: 'location' }
-                        ]
-                    });
+                    if($("#current_role").val() == '["admin"]' || $("#current_role").val() == '["encoder"]'){
+                        $('table.incItems').dataTable().fnDestroy();
+                        $('table.incItems').DataTable({
+                            columnDefs: [
+                                {
+                                    "targets": [7],
+                                    "visible": false,
+                                    "searchable": false
+                                },
+                                {
+                                    "render": function(data, type, row, meta){
+                                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                    },
+                                    "defaultContent": '',
+                                    "data": null,
+                                    "targets": [6]
+                                }
+                            ],
+                            searching: false,
+                            paging: false,
+                            ordering: false,
+                            info: false,
+                            language: {
+                                processing: "Loading...",
+                                emptyTable: "No data available in table"
+                            },
+                            serverSide: true,
+                            ajax: {
+                                url: ajax_url,
+                                data: {
+                                    request_number: req_num,
+                                }
+                            },
+                            order:[],
+                            columns: [
+                                { data: 'category' },
+                                { data: 'item' },
+                                { data: 'qty' },
+                                { data: 'uom' },
+                                { data: 'serial' },
+                                { data: 'location' },
+                                { data: 'id' },
+                                { data: 'id' }
+                            ]
+                        });
+                    }
+                    else{
+                        $('table.incItems').dataTable().fnDestroy();
+                        $('table.incItems').DataTable({
+                            columnDefs: [
+                                {
+                                    "targets": [6,7],
+                                    "visible": false,
+                                    "searchable": false
+                                },
+                                {
+                                    "render": function(data, type, row, meta){
+                                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                    },
+                                    "defaultContent": '',
+                                    "data": null,
+                                    "targets": [6]
+                                }
+                            ],
+                            searching: false,
+                            paging: false,
+                            ordering: false,
+                            info: false,
+                            language: {
+                                processing: "Loading...",
+                                emptyTable: "No data available in table"
+                            },
+                            serverSide: true,
+                            ajax: {
+                                url: ajax_url,
+                                data: {
+                                    request_number: req_num,
+                                }
+                            },
+                            order:[],
+                            columns: [
+                                { data: 'category' },
+                                { data: 'item' },
+                                { data: 'qty' },
+                                { data: 'uom' },
+                                { data: 'serial' },
+                                { data: 'location' },
+                                { data: 'id' },
+                                { data: 'id' }
+                            ]
+                        });
+                    }
                 }
 
                 if(requestStatus == '14'){
@@ -1847,33 +1912,98 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     }
 
     if(ajax_url != '/schedItems'){
-        $('table.incItems').dataTable().fnDestroy();
-        $('table.incItems').DataTable({
-            searching: false,
-            paging: false,
-            ordering: false,
-            info: false,
-            language: {
-                processing: "Loading...",
-                emptyTable: "No data available in table"
-            },
-            serverSide: true,
-            ajax: {
-                url: ajax_url,
-                data: {
-                    request_number: req_num,
-                }
-            },
-            order:[],
-            columns: [
-                { data: 'category' },
-                { data: 'item' },
-                { data: 'qty' },
-                { data: 'uom' },
-                { data: 'serial' },
-                { data: 'location' }
-            ]
-        });
+        if($("#current_role").val() == '["admin"]' || $("#current_role").val() == '["encoder"]'){
+            $('table.incItems').dataTable().fnDestroy();
+            $('table.incItems').DataTable({
+                columnDefs: [
+                    {
+                        "targets": [7],
+                        "visible": false,
+                        "searchable": false
+                    },
+                    {
+                        "render": function(data, type, row, meta){
+                                return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                        },
+                        "defaultContent": '',
+                        "data": null,
+                        "targets": [6]
+                    }
+                ],
+                searching: false,
+                paging: false,
+                ordering: false,
+                info: false,
+                language: {
+                    processing: "Loading...",
+                    emptyTable: "No data available in table"
+                },
+                serverSide: true,
+                ajax: {
+                    url: ajax_url,
+                    data: {
+                        request_number: req_num,
+                    }
+                },
+                order:[],
+                columns: [
+                    { data: 'category' },
+                    { data: 'item' },
+                    { data: 'qty' },
+                    { data: 'uom' },
+                    { data: 'serial' },
+                    { data: 'location' },
+                    { data: 'id' },
+                    { data: 'id' }
+                ]
+            });
+        }
+        else{
+            $('table.incItems').dataTable().fnDestroy();
+            $('table.incItems').DataTable({
+                columnDefs: [
+                    {
+                        "targets": [6,7],
+                        "visible": false,
+                        "searchable": false
+                    },
+                    {
+                        "render": function(data, type, row, meta){
+                                return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                        },
+                        "defaultContent": '',
+                        "data": null,
+                        "targets": [6]
+                    }
+                ],
+                searching: false,
+                paging: false,
+                ordering: false,
+                info: false,
+                language: {
+                    processing: "Loading...",
+                    emptyTable: "No data available in table"
+                },
+                serverSide: true,
+                ajax: {
+                    url: ajax_url,
+                    data: {
+                        request_number: req_num,
+                    }
+                },
+                order:[],
+                columns: [
+                    { data: 'category' },
+                    { data: 'item' },
+                    { data: 'qty' },
+                    { data: 'uom' },
+                    { data: 'serial' },
+                    { data: 'location' },
+                    { data: 'id' },
+                    { data: 'id' }
+                ]
+            });
+        }
     }
 
     if(requestStatus == '14'){
@@ -1934,6 +2064,11 @@ $(document).on('click', '.btnEditSerial', function(){
     }
     else if($('#status_id_details').val() == '3' || $('#status_id_details').val() == '4'){
         tblEdit = 'table.transItems1';
+        var id = $(this).attr("id");
+        var data = $(tblEdit).DataTable().row(id).data();
+    }
+    else if($('#status_id_details').val() == '15' || $('#status_id_details').val() == '16' || $('#status_id_details').val() == '17'){
+        tblEdit = 'table.incItems';
         var id = $(this).attr("id");
         var data = $(tblEdit).DataTable().row(id).data();
     }

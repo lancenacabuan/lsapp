@@ -356,6 +356,8 @@
                         <th>UOM</th>
                         <th>SERIAL</th>
                         <th>LOCATION</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
             </table>

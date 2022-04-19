@@ -819,9 +819,6 @@ class StockRequestController extends Controller
     }
 
     public function logSched(Request $request){
-        Requests::where('request_number', $request->request_number)
-            ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn, 'prepdate' => date('Y-m-d')]);
-        
         if($request->req_type_id == '4' || $request->req_type_id == '5'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
@@ -855,6 +852,9 @@ class StockRequestController extends Controller
         }
         else {
             $result = 'true';
+
+            Requests::where('request_number', $request->request_number)
+                ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn, 'prepdate' => date('Y-m-d')]);
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;

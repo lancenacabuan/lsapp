@@ -537,6 +537,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         $(".prephide").hide();
                         $("#incItemsModal").show();
+                        $('#increceive_label').show();
                         $(".divResched").show();
                         $(".btnReceive").show();
                     }
@@ -833,6 +834,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             $(".prephide").hide();
             $("#incItemsModal").show();
+            $('#increceive_label').show();
             $(".divResched").show();
             $(".btnReceive").show();
         }

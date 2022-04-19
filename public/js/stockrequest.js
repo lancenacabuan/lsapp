@@ -684,6 +684,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         if(req_type_id == '3'){
                             $(".btnReceive").html('RECEIVE DEMO');
                         }
+                        if($("#current_role").val() == '["sales"]'){
+                            $('#receive_label').show();
+                        }
                     }
                     if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14' || requestStatus == '19' || requestStatus == '20'){
                         $("#transitItemsModal").show();
@@ -762,6 +765,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#incFooter").hide();
                     }
                     if(requestStatus == '17' && $("#current_role").val() == '["sales"]'){
+                        $('#increceive_label').show();
                         $("#inc2Footer").show();
                     }
                     if(requestStatus == '18'){
@@ -1434,6 +1438,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             if(req_type_id == '3'){
                 $(".btnReceive").html('RECEIVE DEMO');
             }
+            if($("#current_role").val() == '["sales"]'){
+                $('#receive_label').show();
+            }
         }
         if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14' || requestStatus == '19' || requestStatus == '20'){
             $("#transitItemsModal").show();
@@ -1512,6 +1519,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#incFooter").hide();
         }
         if(requestStatus == '17' && $("#current_role").val() == '["sales"]'){
+            $('#increceive_label').show();
             $("#inc2Footer").show();
         }
         if(requestStatus == '18'){
@@ -3299,6 +3307,7 @@ $('.btnReceive').on('click', function(){
                             },
                             data:{
                                 'request_number': $('#request_num_details').val(),
+                                'request_type': $('#req_type_id_details').val(),
                                 'status': $('#status_id_details').val(),
                                 'inc': inc
                             },

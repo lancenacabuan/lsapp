@@ -145,6 +145,10 @@
                     <h6 id="incmodalheader" class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
                 </div>
                 <div class="modal-body">
+                    <div id="increceive_label" class="alert alert-primary" role="alert" style="display: none;">
+                        <i class='fa fa-exclamation-triangle'></i>
+                        <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+                    </div>
                     <div class="form-inline divResched" style="margin-left: 35px; display: none;">
                         <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
                         <input class="form-control form-control-sm" id="reprep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>

@@ -330,7 +330,7 @@ class StockRequestController extends Controller
 
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['out','assembly','assembled'])
+            ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
@@ -694,6 +694,9 @@ class StockRequestController extends Controller
             }
             else {
                 $result = 'true';
+
+                Stock::where('request_number', $request->request_number)
+                    ->update(['status' => 'out']);
                 
                 $userlogs = new UserLogs;
                 $userlogs->user_id = auth()->user()->id;
@@ -934,9 +937,16 @@ class StockRequestController extends Controller
                 ->where('status', '=', 'out')
                 ->update(['status' => 'incomplete']);
             
-            Stock::where('request_number', $request->request_number)
-                ->where('status', '=', 'received')
-                ->update(['status' => 'out']);
+            if($request->request_type == '3'){
+                Stock::where('request_number', $request->request_number)
+                    ->where('status', '=', 'received')
+                    ->update(['status' => 'demo']);
+            }
+            else{
+                Stock::where('request_number', $request->request_number)
+                    ->where('status', '=', 'received')
+                    ->update(['status' => 'out']);
+            }
         }
 
         if($request->inc == 'true'){
@@ -946,86 +956,96 @@ class StockRequestController extends Controller
             $userlogs->save();
         }
         else{
-            // do{
-            //     $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate, prepdate')
-            //         ->where('requests.request_number', $request->request_number)
-            //         ->join('users', 'users.id', '=', 'requests.requested_by')
-            //         ->join('request_type', 'request_type.id', '=', 'requests.request_type')
-            //         ->get();
+            do{
+                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate, prepdate')
+                    ->where('requests.request_number', $request->request_number)
+                    ->join('users', 'users.id', '=', 'requests.requested_by')
+                    ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                    ->get();
     
-            //         $request_details = str_replace('[','',$request_details);
-            //         $request_details = str_replace(']','',$request_details);
-            //         $request_details = json_decode($request_details);
-            // }
-            // while(!$request_details);
+                    $request_details = str_replace('[','',$request_details);
+                    $request_details = str_replace(']','',$request_details);
+                    $request_details = json_decode($request_details);
+            }
+            while(!$request_details);
     
-            // do{
-            //     $prep = Requests::selectRaw('users.name AS prepby')
-            //         ->where('requests.request_number', $request->request_number)
-            //         ->join('users', 'users.id', '=', 'requests.prepared_by')
-            //         ->get();
+            do{
+                $prep = Requests::selectRaw('users.name AS prepby')
+                    ->where('requests.request_number', $request->request_number)
+                    ->join('users', 'users.id', '=', 'requests.prepared_by')
+                    ->get();
                 
-            //         $prep = str_replace('[','',$prep);
-            //         $prep = str_replace(']','',$prep);
-            //         $prep = json_decode($prep);
-            // }
-            // while(!$prep);
+                    $prep = str_replace('[','',$prep);
+                    $prep = str_replace(']','',$prep);
+                    $prep = json_decode($prep);
+            }
+            while(!$prep);
+
+            $include = Requests::query()->select('request_number')
+                ->where('assembly_reqnum', $request->request_number)
+                ->get();
+        
+            $include = str_replace("{\"request_number\":","",$include);
+            $include = str_replace("}","",$include);
+            $include = json_decode($include);
+            $include[] = $request->request_number;
+
+            do{
+                $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                    ->whereIn('request_number', $include)
+                    ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+                    ->join('items','items.id','stocks.item_id')
+                    ->join('categories','categories.id','items.category_id')
+                    ->join('locations','locations.id','stocks.location_id')
+                    ->get()
+                    ->sortBy('item')
+                    ->sortBy('category');
+            }
+            while(!$items);
             
-            // do{
-            //     $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-            //         ->where('request_number', $request->request_number)
-            //         ->join('items','items.id','stocks.item_id')
-            //         ->join('categories','categories.id','items.category_id')
-            //         ->join('locations','locations.id','stocks.location_id')
-            //         ->get()
-            //         ->sortBy('item')
-            //         ->sortBy('category');
-            // }
-            // while(!$items);
-            
-            // $subject = 'STOCK REQUEST NO. '.$request->request_number;
-            // $user = User::role('admin')->get();
-            // foreach($user as $key){
-            //     $details = [
-            //         'name' => ucwords($key->name),
-            //         'action' => 'STOCK REQUEST',
-            //         'request_number' => $request->request_number,
-            //         'reqdate' => $request_details->reqdate,
-            //         'requested_by' => $request_details->reqby,
-            //         'needdate' => $request_details->needdate,
-            //         'reqtype' => $request_details->reqtype,
-            //         'client_name' => $request_details->client_name,
-            //         'location' => $request_details->location,
-            //         'reference' => $request_details->reference,
-            //         'prepared_by' => $prep->prepby,
-            //         'prepdate' => $request_details->prepdate,
-            //         'scheddate' => $request_details->schedule,
-            //         'receivedby' => auth()->user()->name,
-            //         'role' => 'Admin',
-            //         'items' => $items
-            //     ];
-            //     Mail::to($key->email)->send(new receivedRequest($details, $subject));
-            // }
+            $subject = 'STOCK REQUEST NO. '.$request->request_number;
+            $user = User::role('admin')->get();
+            foreach($user as $key){
+                $details = [
+                    'name' => ucwords($key->name),
+                    'action' => 'STOCK REQUEST',
+                    'request_number' => $request->request_number,
+                    'reqdate' => $request_details->reqdate,
+                    'requested_by' => $request_details->reqby,
+                    'needdate' => $request_details->needdate,
+                    'reqtype' => $request_details->reqtype,
+                    'client_name' => $request_details->client_name,
+                    'location' => $request_details->location,
+                    'reference' => $request_details->reference,
+                    'prepared_by' => $prep->prepby,
+                    'prepdate' => $request_details->prepdate,
+                    'scheddate' => $request_details->schedule,
+                    'receivedby' => auth()->user()->name,
+                    'role' => 'Admin',
+                    'items' => $items
+                ];
+                Mail::to($key->email)->send(new receivedRequest($details, $subject));
+            }
     
-            // $details = [
-            //     'name' => $request_details->reqby,
-            //     'action' => 'STOCK REQUEST',
-            //     'request_number' => $request->request_number,
-            //     'reqdate' => $request_details->reqdate,
-            //     'requested_by' => $request_details->reqby,
-            //     'needdate' => $request_details->needdate,
-            //     'reqtype' => $request_details->reqtype,
-            //     'client_name' => $request_details->client_name,
-            //     'location' => $request_details->location,
-            //     'reference' => $request_details->reference,
-            //     'prepared_by' => $prep->prepby,
-            //     'prepdate' => $request_details->prepdate,
-            //     'scheddate' => $request_details->schedule,
-            //     'receivedby' => auth()->user()->name,
-            //     'role' => 'Sales',
-            //     'items' => $items
-            // ];
-            // Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
+            $details = [
+                'name' => $request_details->reqby,
+                'action' => 'STOCK REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'client_name' => $request_details->client_name,
+                'location' => $request_details->location,
+                'reference' => $request_details->reference,
+                'prepared_by' => $prep->prepby,
+                'prepdate' => $request_details->prepdate,
+                'scheddate' => $request_details->schedule,
+                'receivedby' => auth()->user()->name,
+                'role' => 'Sales',
+                'items' => $items
+            ];
+            Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
@@ -1166,7 +1186,7 @@ class StockRequestController extends Controller
 
         $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['out','assembly','assembled'])
+            ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')

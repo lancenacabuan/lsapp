@@ -45,8 +45,8 @@
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
                 <input class="form-control form-control-sm" id="request_type_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm dfchide" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
-                <input class="form-control form-control-sm dfchide" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm dfchide demohide" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
+                <input class="form-control form-control-sm dfchide demohide" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <span id="warehouse_note" style="color: Red; font-size: 12px; margin-top: -15px; display: none;">Please select location to store the Assembled Item/s.</span>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">

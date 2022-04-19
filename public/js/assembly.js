@@ -201,7 +201,7 @@ $('table.assemblyTable').DataTable({
             data: 'status',
             "render": function(data, type, row){
                 if(row.status_id == '6'){
-                    return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
+                    return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                 }
                 else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23'){
                     return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";

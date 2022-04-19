@@ -523,7 +523,7 @@ $('table.stocktransferTable').DataTable({
             data: 'status',
             "render": function(data, type, row){
                 if(row.status_id == '6'){
-                    return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+"</span>";
+                    return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                 }
                 else if(row.status_id == '1'){
                     return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";

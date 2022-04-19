@@ -303,7 +303,7 @@
             <div class="prephide">
             <hr>
             @role('sales') {{---ROLES---}}
-            <button type="button" id="btnReceive" class="btn btn-primary float-right bp">RECEIVE</button>
+            <button type="button" id="btnReceive" class="btn btn-primary float-right bp" disabled>RECEIVE</button>
             <button type="button" id="btnSale" class="btn btn-primary float-right bp" style="display: none;">SALE</button>
             <span class="float-right" style="width: 10px;">&nbsp;</span>
             <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;">RETURN</button>
@@ -325,7 +325,6 @@
         </div>
         </div>
         </div>
-        @role('admin|encoder') {{---ROLES---}}
         <div id="incItemsModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 id="incmodalheader" class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
@@ -357,6 +356,7 @@
                 </thead>
             </table>
             <br>
+            @role('admin|encoder') {{---ROLES---}}
             <div id="incFooter">
             <hr>
             <input type="button" class="btn btn-primary float-right bp" id="btnReschedule" style="display: none;" value="RESCHEDULE">
@@ -368,9 +368,9 @@
             <br>
             <br>
             </div>
+            @endrole
         </div>
         </div>
-        @endrole
     </div>
     </div>
 </div>

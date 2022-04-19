@@ -326,6 +326,7 @@ $('#btnSave').on('click', function(){
                     $.ajax({
                         type:'post',
                         url:'/saveReqNum',
+                        async: false,
                         headers: {
                             'X-CSRF-TOKEN': $("#csrf").val()
                         },
@@ -345,6 +346,7 @@ $('#btnSave').on('click', function(){
                                     $.ajax({
                                         type:'post',
                                         url:'/saveRequest',
+                                        async: false,
                                         headers: {
                                             'X-CSRF-TOKEN': $("#csrf").val()
                                         },
@@ -722,16 +724,26 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         var ajax_url = '/incItems';
                         $("#transitItemsModal").show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        if(req_type_id != '5'){
+                            document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                        }
                         $(".prephide").hide();
                         $("#incItemsModal").show();
                         $("#divResched").show();
                         $('#resched').attr('max', maxDate);
                         $("#btnReschedule").show();
+                        if($("#current_role").val() == '["sales"]'){
+                            $(".dfc").hide();
+                            $("#divResched").hide();
+                        }
                     }
                     if(requestStatus == '16'){
                         var ajax_url = '/incItems';
                         $("#transitItemsModal").show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        if(req_type_id != '5'){
+                            document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                        }
                         $(".prephide").hide();
                         $("#incItemsModal").show();
                         $("#divResched1").show();
@@ -741,6 +753,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         var ajax_url = '/incItems';
                         $("#transitItemsModal").show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        if(req_type_id != '5'){
+                            document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                        }
                         $(".prephide").hide();
                         $("#incItemsModal").show();
                         $("#divResched1").show();
@@ -1033,51 +1048,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     ]
                 });
             
+                $('table.transItems').dataTable().fnDestroy();
                 $('table.transItems').DataTable({
-                    columnDefs: [
-                        {
-                            "targets": [5],
-                            "visible": false,
-                            "searchable": false
-                        },
-                        {   
-                            "render": function(data, type, row, meta){
-                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnReceive" id="'+ meta.row +'">RECEIVE</button>';
-                            },
-                            "defaultContent": '',
-                            "data": null,
-                            "targets": [4]
-                        }
-                    ],
-                    searching: false,
-                    paging: false,
-                    ordering: false,
-                    info: false,
-                    language: {
-                        processing: "Loading...",
-                        emptyTable: "No data available in table"
-                    },
-                    serverSide: true,
-                    ajax: {
-                        url: '/schedItems',
-                        data: {
-                            request_number: req_num,
-                        }
-                    },
-                    order:[],
-                    columns: [
-                        { data: 'category' },
-                        { data: 'item' },
-                        { data: 'qty' },
-                        { data: 'uom' },
-                        { data: 'serial' },
-                        { data: 'location' },
-                        { data: 'serial' },
-                        { data: 'item_id' }
-                    ]
-                });
-            
-                $('table.transItems1').DataTable({
                     searching: false,
                     paging: false,
                     ordering: false,
@@ -1103,6 +1075,97 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'location' }
                     ]
                 });
+            
+                if(requestStatus == '3' || requestStatus == '4'){
+                    $('table.transItems1').DataTable({
+                        columnDefs: [
+                            {
+                                "targets": [7],
+                                "visible": false,
+                                "searchable": false
+                            },
+                            {
+                                "render": function(data, type, row, meta){
+                                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                },
+                                "defaultContent": '',
+                                "data": null,
+                                "targets": [6]
+                            }
+                        ],
+                        searching: false,
+                        paging: false,
+                        ordering: false,
+                        info: false,
+                        language: {
+                            processing: "Loading...",
+                            emptyTable: "No data available in table"
+                        },
+                        serverSide: true,
+                        ajax: {
+                            url: '/schedItems',
+                            data: {
+                                request_number: req_num,
+                            }
+                        },
+                        order:[],
+                        columns: [
+                            { data: 'category' },
+                            { data: 'item' },
+                            { data: 'qty' },
+                            { data: 'uom' },
+                            { data: 'serial' },
+                            { data: 'location' },
+                            { data: 'id' },
+                            { data: 'id' }
+                        ]
+                    });
+                }
+                else{
+                    $('table.transItems1').DataTable({
+                        columnDefs: [
+                            {
+                                "targets": [6,7],
+                                "visible": false,
+                                "searchable": false
+                            },
+                            {
+                                "render": function(data, type, row, meta){
+                                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                },
+                                "defaultContent": '',
+                                "data": null,
+                                "targets": [6]
+                            }
+                        ],
+                        searching: false,
+                        paging: false,
+                        ordering: false,
+                        info: false,
+                        language: {
+                            processing: "Loading...",
+                            emptyTable: "No data available in table"
+                        },
+                        serverSide: true,
+                        ajax: {
+                            url: '/schedItems',
+                            data: {
+                                request_number: req_num,
+                            }
+                        },
+                        order:[],
+                        columns: [
+                            { data: 'category' },
+                            { data: 'item' },
+                            { data: 'qty' },
+                            { data: 'uom' },
+                            { data: 'serial' },
+                            { data: 'location' },
+                            { data: 'id' },
+                            { data: 'id' }
+                        ]
+                    });
+                }
 
                 if(ajax_url != '/schedItems'){
                     $('table.incItems').dataTable().fnDestroy();
@@ -1346,16 +1409,26 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             var ajax_url = '/incItems';
             $("#transitItemsModal").show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            if(req_type_id != '5'){
+                document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+            }
             $(".prephide").hide();
             $("#incItemsModal").show();
             $("#divResched").show();
             $('#resched').attr('max', maxDate);
             $("#btnReschedule").show();
+            if($("#current_role").val() == '["sales"]'){
+                $(".dfc").hide();
+                $("#divResched").hide();
+            }
         }
         if(requestStatus == '16'){
             var ajax_url = '/incItems';
             $("#transitItemsModal").show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            if(req_type_id != '5'){
+                document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+            }
             $(".prephide").hide();
             $("#incItemsModal").show();
             $("#divResched1").show();
@@ -1365,6 +1438,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             var ajax_url = '/incItems';
             $("#transitItemsModal").show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            if(req_type_id != '5'){
+                document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+            }
             $(".prephide").hide();
             $("#incItemsModal").show();
             $("#divResched1").show();
@@ -1657,6 +1733,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         ]
     });
 
+    $('table.transItems').dataTable().fnDestroy();
     $('table.transItems').DataTable({
         searching: false,
         paging: false,
@@ -1684,49 +1761,96 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         ]
     });
 
-    $('table.transItems1').DataTable({
-        columnDefs: [
-            {
-                "targets": [7],
-                "visible": false,
-                "searchable": false
-            },
-            {   
-                "render": function(data, type, row, meta){
-                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+    if(requestStatus == '3' || requestStatus == '4'){
+        $('table.transItems1').DataTable({
+            columnDefs: [
+                {
+                    "targets": [7],
+                    "visible": false,
+                    "searchable": false
                 },
-                "defaultContent": '',
-                "data": null,
-                "targets": [6]
-            }
-        ],
-        searching: false,
-        paging: false,
-        ordering: false,
-        info: false,
-        language: {
-            processing: "Loading...",
-            emptyTable: "No data available in table"
-        },
-        serverSide: true,
-        ajax: {
-            url: '/schedItems',
-            data: {
-                request_number: req_num,
-            }
-        },
-        order:[],
-        columns: [
-            { data: 'category' },
-            { data: 'item' },
-            { data: 'qty' },
-            { data: 'uom' },
-            { data: 'serial' },
-            { data: 'location' },
-            { data: 'id' },
-            { data: 'id' }
-        ]
-    });
+                {
+                    "render": function(data, type, row, meta){
+                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                    },
+                    "defaultContent": '',
+                    "data": null,
+                    "targets": [6]
+                }
+            ],
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false,
+            language: {
+                processing: "Loading...",
+                emptyTable: "No data available in table"
+            },
+            serverSide: true,
+            ajax: {
+                url: '/schedItems',
+                data: {
+                    request_number: req_num,
+                }
+            },
+            order:[],
+            columns: [
+                { data: 'category' },
+                { data: 'item' },
+                { data: 'qty' },
+                { data: 'uom' },
+                { data: 'serial' },
+                { data: 'location' },
+                { data: 'id' },
+                { data: 'id' }
+            ]
+        });
+    }
+    else{
+        $('table.transItems1').DataTable({
+            columnDefs: [
+                {
+                    "targets": [6,7],
+                    "visible": false,
+                    "searchable": false
+                },
+                {
+                    "render": function(data, type, row, meta){
+                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                    },
+                    "defaultContent": '',
+                    "data": null,
+                    "targets": [6]
+                }
+            ],
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false,
+            language: {
+                processing: "Loading...",
+                emptyTable: "No data available in table"
+            },
+            serverSide: true,
+            ajax: {
+                url: '/schedItems',
+                data: {
+                    request_number: req_num,
+                }
+            },
+            order:[],
+            columns: [
+                { data: 'category' },
+                { data: 'item' },
+                { data: 'qty' },
+                { data: 'uom' },
+                { data: 'serial' },
+                { data: 'location' },
+                { data: 'id' },
+                { data: 'id' }
+            ]
+        });
+    }
 
     if(ajax_url != '/schedItems'){
         $('table.incItems').dataTable().fnDestroy();
@@ -2057,6 +2181,7 @@ $('#btnReason').on('click', function(){
                 $.ajax({
                     type:'post',
                     url:'/disapproveRequest',
+                    async: false,
                     headers: {
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
@@ -2149,75 +2274,6 @@ $('.btnTransit').on('click', function(){
                     else{
                         $('#detailsStockRequest').hide();
                         swal("FOR RECEIVING FAILED", "STOCK REQUEST", "error");
-                        setTimeout(function(){location.href="/stockrequest"}, 2000);
-                    }
-                },
-                error: function(data){
-                    if(data.status == 401){
-                        window.location.href = '/stockrequest';
-                    }
-                    alert(data.responseText);
-                }
-            });
-        }
-    });    
-});
-
-$('#btnReceive').on('click', function(){
-    swal({
-        title: "RECEIVE STOCK REQUEST?",
-        text: "You are about to RECEIVE this Stock Request!",
-        icon: "warning",
-        buttons: true,
-    })
-    .then((willDelete) => {
-        if(willDelete){
-            $.ajax({
-                type:'post',
-                url:'/receiveRequest',
-                headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val()
-                },
-                data:{
-                    'request_number': $('#request_num_details').val(),
-                    'request_type': $('#req_type_id_details').val()
-                },
-                success: function(data){
-                    if(data == 'true'){
-                        scrollReset();
-                        $('#detailsStockRequest').hide();
-                        $('#detailsStockRequest').modal('dispose');
-                        $('#loading').show(); Spinner(); Spinner.show();
-                        $.ajax({
-                            type:'post',
-                            url:'/logReceive',
-                            headers: {
-                                'X-CSRF-TOKEN': $("#csrf").val()
-                            },
-                            data:{
-                                'request_number': $('#request_num_details').val()
-                            },
-                            success: function(data){
-                                if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
-                                    swal("RECEIVE SUCCESS", "STOCK REQUEST", "success");
-                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
-                                }
-                                else{
-                                    return false;
-                                }
-                            },
-                            error: function(data){
-                                if(data.status == 401){
-                                    window.location.href = '/stockrequest';
-                                }
-                                alert(data.responseText);
-                            }
-                        });
-                    }
-                    else{
-                        $('#detailsStockRequest').hide();
-                        swal("RECEIVE FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },
@@ -2411,6 +2467,7 @@ $('#btnReschedule').on('click', function(){
                     },
                     data:{
                         'request_number': $('#request_num_details').val(),
+                        'request_type': $('#req_type_id_details').val(),
                         'resched': $("#resched").val()
                     },
                     success: function(data){
@@ -2483,6 +2540,7 @@ $('#btnReceiveAssembled').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/assembly/receiveAssembled',
+                async: false,
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
@@ -2495,6 +2553,7 @@ $('#btnReceiveAssembled').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/assembly/addAssembled',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -2669,6 +2728,33 @@ $('.stockDetails tbody').on('click', 'tr', function(){
     }
     else{
         $('#btnProceed').prop('disabled', false);
+    }
+});
+
+$('.table.transItems').DataTable().on('select', function(){});
+$('.transItems tbody').on('click', 'tr', function(){
+    if($("#current_role").val() != '["sales"]'){
+        return false;
+    }
+    var requestStatus = $('#status_id_details').val();
+    if(requestStatus == '3' || requestStatus == '4'){
+        var table = $('table.transItems').DataTable();
+        var data = table.row(this).data();
+        item_count = table.data().count();
+    
+        $(this).toggleClass('selected');
+        if(items.includes(data.id) == true){
+            items = items.filter(item => item !== data.id);
+        }
+        else {
+            items.push(data.id);
+        }
+        if(items.length == 0){
+            $('#btnReceive').prop('disabled', true);
+        }
+        else{
+            $('#btnReceive').prop('disabled', false);
+        }
     }
 });
 
@@ -2989,6 +3075,114 @@ $('#btnBack').on('click', function(){
     $("#btnProceed").show();
 });
 
+$('#btnReceive').on('click', function(){
+    var inc = 'false';
+    var inctype = 'COMPLETE';
+    if(items.length < item_count){
+        inc = 'true';
+        inctype = 'INCOMPLETE';
+    }
+    swal({
+        title: "RECEIVE "+inctype+" STOCK REQUEST?",
+        text: "You are about to RECEIVE this Stock Request!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type: 'post',
+                url: '/receiveRequest',
+                async: false,
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'request_type': $('#req_type_id_details').val(),
+                    'inc': inc
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        for(var i=0; i < items.length; i++){
+                            $.ajax({
+                                type: 'post',
+                                url: '/receiveItems',
+                                async: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'request_type': $('#req_type_id_details').val(),
+                                    'status': $('#status_id_details').val(),
+                                    'id': items[i]
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        return true;
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        scrollReset();
+                        $('#detailsStockRequest').hide();
+                        $('#detailsStockRequest').modal('dispose');
+                        $('#loading').show(); Spinner(); Spinner.show();
+                        $.ajax({
+                            type: 'post',
+                            url: '/logReceive',
+                            headers: {
+                                'X-CSRF-TOKEN': $("#csrf").val()
+                            },
+                            data:{
+                                'request_number': $('#request_num_details').val(),
+                                'status': $('#status_id_details').val(),
+                                'inc': inc
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide(); Spinner.hide();
+                                    swal("RECEIVED "+inctype, "STOCK REQUEST", "success");
+                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    }
+                    else{
+                        $('#detailsStockRequest').hide();
+                        swal("RECEIVE FAILED", "STOCK REQUEST", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
+});
+
 $('#btnReceiveDfc').on('click', function(){
     var inc = 'false';
     var inctype = 'COMPLETE';
@@ -3007,6 +3201,7 @@ $('#btnReceiveDfc').on('click', function(){
             $.ajax({
                 type: 'post',
                 url: '/receiveDefective',
+                async: false,
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
@@ -3020,6 +3215,7 @@ $('#btnReceiveDfc').on('click', function(){
                             $.ajax({
                                 type: 'post',
                                 url: '/receiveDfcItems',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },

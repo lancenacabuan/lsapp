@@ -73,8 +73,6 @@ Route::any('/disapproveRequest',[StockRequestController::class,'disapproveReques
 Route::any('/logDisapprove',[StockRequestController::class,'logDisapprove']);
 Route::any('/reschedRequest',[StockRequestController::class,'reschedRequest']);
 Route::any('/inTransit',[StockRequestController::class,'inTransit']);
-Route::any('/receiveRequest',[StockRequestController::class,'receiveRequest']);
-Route::any('/logReceive',[StockRequestController::class,'logReceive']);
 Route::any('/saleRequest',[StockRequestController::class,'saleRequest']);
 Route::any('/returnRequest',[StockRequestController::class,'returnRequest']);
 Route::get('/checkStatus',[StockRequestController::class,'checkStatus']);
@@ -83,6 +81,9 @@ Route::get('/setserials',[StockRequestController::class,'setserials']);
 Route::get('/setlocation',[StockRequestController::class,'setlocation']);
 Route::any('/prepareItems',[StockRequestController::class,'prepareItems']);
 Route::any('/logSched',[StockRequestController::class,'logSched']);
+Route::any('/receiveRequest',[StockRequestController::class,'receiveRequest']);
+Route::any('/receiveItems',[StockRequestController::class,'receiveItems']);
+Route::any('/logReceive',[StockRequestController::class,'logReceive']);
 Route::any('/receiveDefective',[StockRequestController::class,'receiveDefective']);
 Route::any('/receiveDfcItems',[StockRequestController::class,'receiveDfcItems']);
 Route::any('/logReceiveDfc',[StockRequestController::class,'logReceiveDfc']);

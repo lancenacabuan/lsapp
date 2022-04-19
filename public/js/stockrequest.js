@@ -682,12 +682,12 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(requestStatus == '3' || requestStatus == '4'){
                         $("#transitItemsModal").show();
                         if(req_type_id == '3'){
-                            $("#btnReceive").html('RECEIVE DEMO');
+                            $(".btnReceive").html('RECEIVE DEMO');
                         }
                     }
                     if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14' || requestStatus == '19' || requestStatus == '20'){
                         $("#transitItemsModal").show();
-                        $("#btnReceive").hide();
+                        $(".btnReceive").hide();
                         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                         if(req_type_id == '3' && requestStatus == '9'){
                             $("#btnSale").show();
@@ -716,7 +716,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     }
                     if(requestStatus == '10'){
                         $("#transitItemsModal").show();
-                        $("#btnReceive").hide();
+                        $(".btnReceive").hide();
                         $("#btnSale").hide();
                         $("#btnReturn").hide();
                         document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
@@ -761,6 +761,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $(".divResched1").show();
                         $("#incFooter").hide();
                     }
+                    if(requestStatus == '17' && $("#current_role").val() == '["sales"]'){
+                        $("#inc2Footer").show();
+                    }
                     if(requestStatus == '18'){
                         var ajax_url = '/dfcItems';
                         $('#transitItemsModal').show();
@@ -802,7 +805,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#incFooter").hide();
                     }
                     if(value.user_id != $('#current_user').val()){
-                        $("#btnReceive").hide();
+                        $(".btnReceive").hide();
                         $("#btnSale").hide();
                         $("#btnReturn").hide();
                     }
@@ -1165,7 +1168,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 }
 
                 if(ajax_url != '/schedItems'){
-                    if($("#current_role").val() == '["admin"]' || $("#current_role").val() == '["encoder"]'){
+                    if(($("#current_role").val() == '["admin"]' || $("#current_role").val() == '["encoder"]') && (requestStatus == '15' || requestStatus == '16' || requestStatus == '17')){
                         $('table.incItems').dataTable().fnDestroy();
                         $('table.incItems').DataTable({
                             columnDefs: [
@@ -1429,12 +1432,12 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(requestStatus == '3' || requestStatus == '4'){
             $("#transitItemsModal").show();
             if(req_type_id == '3'){
-                $("#btnReceive").html('RECEIVE DEMO');
+                $(".btnReceive").html('RECEIVE DEMO');
             }
         }
         if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14' || requestStatus == '19' || requestStatus == '20'){
             $("#transitItemsModal").show();
-            $("#btnReceive").hide();
+            $(".btnReceive").hide();
             document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
             if(req_type_id == '3' && requestStatus == '9'){
                 $("#btnSale").show();
@@ -1463,7 +1466,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         }
         if(requestStatus == '10'){
             $("#transitItemsModal").show();
-            $("#btnReceive").hide();
+            $(".btnReceive").hide();
             $("#btnSale").hide();
             $("#btnReturn").hide();
             document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
@@ -1508,6 +1511,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $(".divResched1").show();
             $("#incFooter").hide();
         }
+        if(requestStatus == '17' && $("#current_role").val() == '["sales"]'){
+            $("#inc2Footer").show();
+        }
         if(requestStatus == '18'){
             var ajax_url = '/dfcItems';
             $('#transitItemsModal').show();
@@ -1549,7 +1555,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#incFooter").hide();
         }
         if(data.user_id != $('#current_user').val()){
-            $("#btnReceive").hide();
+            $(".btnReceive").hide();
             $("#btnSale").hide();
             $("#btnReturn").hide();
         }
@@ -1912,7 +1918,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     }
 
     if(ajax_url != '/schedItems'){
-        if($("#current_role").val() == '["admin"]' || $("#current_role").val() == '["encoder"]'){
+        if(($("#current_role").val() == '["admin"]' || $("#current_role").val() == '["encoder"]') && (requestStatus == '15' || requestStatus == '16' || requestStatus == '17')){
             $('table.incItems').dataTable().fnDestroy();
             $('table.incItems').DataTable({
                 columnDefs: [
@@ -2879,10 +2885,10 @@ $('.transItems tbody').on('click', 'tr', function(){
             items.push(data.id);
         }
         if(items.length == 0){
-            $('#btnReceive').prop('disabled', true);
+            $('.btnReceive').prop('disabled', true);
         }
         else{
-            $('#btnReceive').prop('disabled', false);
+            $('.btnReceive').prop('disabled', false);
         }
     }
 });
@@ -2907,6 +2913,25 @@ $('.incItems tbody').on('click', 'tr', function(){
         }
         else{
             $('#btnReceiveDfc').prop('disabled', false);
+        }
+    }
+    if(requestStatus == '17' && $("#current_role").val() == '["sales"]'){
+        var table = $('table.incItems').DataTable();
+        var data = table.row(this).data();
+        item_count = table.data().count();
+    
+        $(this).toggleClass('selected');
+        if(items.includes(data.id) == true){
+            items = items.filter(item => item !== data.id);
+        }
+        else {
+            items.push(data.id);
+        }
+        if(items.length == 0){
+            $('.btnReceive').prop('disabled', true);
+        }
+        else{
+            $('.btnReceive').prop('disabled', false);
         }
     }
 });
@@ -3204,7 +3229,7 @@ $('#btnBack').on('click', function(){
     $("#btnProceed").show();
 });
 
-$('#btnReceive').on('click', function(){
+$('.btnReceive').on('click', function(){
     var inc = 'false';
     var inctype = 'COMPLETE';
     if(items.length < item_count){

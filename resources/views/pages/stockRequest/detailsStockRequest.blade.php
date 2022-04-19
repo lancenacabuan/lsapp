@@ -303,7 +303,7 @@
             <div class="prephide">
             <hr>
             @role('sales') {{---ROLES---}}
-            <button type="button" id="btnReceive" class="btn btn-primary float-right bp" disabled>RECEIVE</button>
+            <button type="button" class="btn btn-primary float-right bp btnReceive" disabled>RECEIVE</button>
             <button type="button" id="btnSale" class="btn btn-primary float-right bp" style="display: none;">SALE</button>
             <span class="float-right" style="width: 10px;">&nbsp;</span>
             <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;">RETURN</button>
@@ -371,6 +371,14 @@
             <span class="float-right rcvShow" style="width: 10px; display: none;">&nbsp;</span>
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="showMore" style="display: none;" value="SHOW DETAILS">
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="showLess" style="display: none;" value="HIDE DETAILS">
+            <br>
+            <br>
+            </div>
+            @endrole
+            @role('sales') {{---ROLES---}}
+            <div id="inc2Footer" style="display: none">
+            <hr>
+            <button type="button" class="btn btn-primary float-right bp btnReceive" disabled>RECEIVE</button>
             <br>
             <br>
             </div>

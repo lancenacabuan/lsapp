@@ -10,6 +10,7 @@ use App\Http\Controllers\AssemblyController;
 use App\Http\Controllers\FileMaintenanceController;
 
 Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
+Route::fallback(function(){ return redirect("/"); });
 
 //Index
 Route::get('/',[PagesController::class,'index']);

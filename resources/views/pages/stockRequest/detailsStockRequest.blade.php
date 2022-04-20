@@ -154,11 +154,11 @@
                         <th>REQUESTED</th>
                         <th>PENDING</th>
                         <th>MAIN BRANCH</th>
-                        <th class="d-none"></th>
-                        <th class="d-none">A1</th>
-                        <th class="d-none">A2</th>
-                        <th class="d-none">A3</th>
-                        <th class="d-none">A4</th>
+                        <th></th>
+                        <th>A1</th>
+                        <th>A2</th>
+                        <th>A3</th>
+                        <th>A4</th>
                         <th style="color: red;">BALINTAWAK</th>
                         <th style="color: red;">MALABON</th>
                     </tr>

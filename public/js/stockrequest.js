@@ -829,12 +829,25 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#sd1").show();
                         $("#sd2").hide();
                     }
+                    if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6'){
+                        var targetStockDetails = [6,7,8,9,10];
+                        var targetStockDetails1 = [5];
+                        var targetStockDetails2 = [6];
+                    }
+                    else{
+                        var targetStockDetails = [4,5,6,7,8,9,10,11,12];
+                        var targetStockDetails1 = [4,5];
+                        var targetStockDetails2 = [4,5,6];
+                    }
+                    if($("#current_role").val() == '["sales"]'){
+                        $("#proceed_label").hide();
+                    }
                     
-                $('table.stockDetails').dataTable().fnDestroy();
-                $('table.stockDetails').DataTable({
+                $('table.stockDetails').dataTable().fnDestroy();    
+                $('table.stockDetails').DataTable({ 
                     columnDefs: [
                         {
-                            "targets": [6,7,8,9,10],
+                            "targets": targetStockDetails,
                             "visible": false,
                             "searchable": false
                         },
@@ -885,13 +898,13 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     ],
                     orderCellsTop: true,
                     fixedHeader: true,            
-                });
+                }); 
                 
                 $('table.stockDetails1').dataTable().fnDestroy();    
                 $('table.stockDetails1').DataTable({ 
                     columnDefs: [
                         {
-                            "targets": [5],
+                            "targets": targetStockDetails1,
                             "visible": false,
                             "searchable": false
                         }
@@ -935,7 +948,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 $('table.stockDetails2').DataTable({ 
                     columnDefs: [
                         {
-                            "targets": [6],
+                            "targets": targetStockDetails2,
                             "visible": false,
                             "searchable": false
                         },
@@ -987,7 +1000,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 $('table.schedItems').DataTable({
                     columnDefs: [
                         {
-                            "targets": [6,7],
+                            "targets": [7],
                             "visible": false,
                             "searchable": false
                         },
@@ -1057,6 +1070,13 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
             
                 $('table.transItems').dataTable().fnDestroy();
                 $('table.transItems').DataTable({
+                    columnDefs: [
+                        {
+                            "targets": [5],
+                            "visible": false,
+                            "searchable": false
+                        },
+                    ],
                     searching: false,
                     paging: false,
                     ordering: false,
@@ -1087,7 +1107,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('table.transItems1').DataTable({
                         columnDefs: [
                             {
-                                "targets": [7],
+                                "targets": [5,7],
                                 "visible": false,
                                 "searchable": false
                             },
@@ -1132,7 +1152,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('table.transItems1').DataTable({
                         columnDefs: [
                             {
-                                "targets": [6,7],
+                                "targets": [5,6,7],
                                 "visible": false,
                                 "searchable": false
                             },
@@ -1173,14 +1193,14 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         ]
                     });
                 }
-
+            
                 if(ajax_url != '/schedItems'){
                     if(($("#current_role").val() == '["admin"]' || $("#current_role").val() == '["encoder"]') && (requestStatus == '15' || requestStatus == '16' || requestStatus == '17')){
                         $('table.incItems').dataTable().fnDestroy();
                         $('table.incItems').DataTable({
                             columnDefs: [
                                 {
-                                    "targets": [7],
+                                    "targets": [5,7],
                                     "visible": false,
                                     "searchable": false
                                 },
@@ -1226,7 +1246,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('table.incItems').DataTable({
                             columnDefs: [
                                 {
-                                    "targets": [6,7],
+                                    "targets": [5,6,7],
                                     "visible": false,
                                     "searchable": false
                                 },
@@ -1586,12 +1606,25 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#sd1").show();
             $("#sd2").hide();
         }
+        if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6'){
+            var targetStockDetails = [6,7,8,9,10];
+            var targetStockDetails1 = [5];
+            var targetStockDetails2 = [6];
+        }
+        else{
+            var targetStockDetails = [4,5,6,7,8,9,10,11,12];
+            var targetStockDetails1 = [4,5];
+            var targetStockDetails2 = [4,5,6];
+        }
+        if($("#current_role").val() == '["sales"]'){
+            $("#proceed_label").hide();
+        }
         
     $('table.stockDetails').dataTable().fnDestroy();    
     $('table.stockDetails').DataTable({ 
         columnDefs: [
             {
-                "targets": [6,7,8,9,10],
+                "targets": targetStockDetails,
                 "visible": false,
                 "searchable": false
             },
@@ -1648,7 +1681,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     $('table.stockDetails1').DataTable({ 
         columnDefs: [
             {
-                "targets": [5],
+                "targets": targetStockDetails1,
                 "visible": false,
                 "searchable": false
             }
@@ -1692,7 +1725,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     $('table.stockDetails2').DataTable({ 
         columnDefs: [
             {
-                "targets": [6],
+                "targets": targetStockDetails2,
                 "visible": false,
                 "searchable": false
             },
@@ -1814,6 +1847,13 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
 
     $('table.transItems').dataTable().fnDestroy();
     $('table.transItems').DataTable({
+        columnDefs: [
+            {
+                "targets": [5],
+                "visible": false,
+                "searchable": false
+            },
+        ],
         searching: false,
         paging: false,
         ordering: false,
@@ -1844,7 +1884,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('table.transItems1').DataTable({
             columnDefs: [
                 {
-                    "targets": [7],
+                    "targets": [5,7],
                     "visible": false,
                     "searchable": false
                 },
@@ -1889,7 +1929,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('table.transItems1').DataTable({
             columnDefs: [
                 {
-                    "targets": [6,7],
+                    "targets": [5,6,7],
                     "visible": false,
                     "searchable": false
                 },
@@ -1937,7 +1977,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('table.incItems').DataTable({
                 columnDefs: [
                     {
-                        "targets": [7],
+                        "targets": [5,7],
                         "visible": false,
                         "searchable": false
                     },
@@ -1983,7 +2023,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('table.incItems').DataTable({
                 columnDefs: [
                     {
-                        "targets": [6,7],
+                        "targets": [5,6,7],
                         "visible": false,
                         "searchable": false
                     },

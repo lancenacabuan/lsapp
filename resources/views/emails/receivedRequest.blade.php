@@ -26,7 +26,6 @@
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">QTY</th>
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">UOM</th>
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">SERIAL</th>
-                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">LOCATION</th>
                 </tr>
             </thead>
             @foreach($details['items'] as $x)
@@ -36,7 +35,6 @@
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->qty}}</td>
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->uom}}</td>
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->serial}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->location}}</td>
             </tr>
             @endforeach 
         </table>

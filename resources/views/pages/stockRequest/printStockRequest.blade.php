@@ -81,7 +81,6 @@
                                 <th>QTY</th>
                                 <th>UOM</th>
                                 <th>SERIAL</th>
-                                <th>LOCATION</th>
                             </tr>
                             @foreach($list3 as $x)
                             <tr>
@@ -90,7 +89,6 @@
                                 <td>{{$x->qty}}</td>
                                 <td>{{$x->uom}}</td>
                                 <td>{{$x->serial}}</td>
-                                <td>{{$x->location}}</td>
                             </tr>
                             @endforeach
                         </thead>

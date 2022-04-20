@@ -112,6 +112,22 @@ class StockRequestController extends Controller
         return response($result);
     }
 
+    public function uploadFile(Request $request){
+        $extension = $request->reference_upload->getClientOriginalExtension();
+        $reference_upload = time().'_'.$request->reqnum.'.'.$extension;
+        $path = $request->reference_upload->move(public_path('/uploads'), $reference_upload);
+
+        if($path){
+            Requests::where('request_number', $request->reqnum)
+                ->update(['reference_upload' => $reference_upload]);
+        }
+        else{
+            return redirect()->to('/stockrequest');
+        }
+
+        return redirect()->to('/stockrequest?submit=success');
+    }
+
     public function saveRequest(Request $request){
         do{
             $stockRequest = new StockRequest;

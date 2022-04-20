@@ -93,6 +93,23 @@ function decodeHtml(str){
     return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
 }
 
+function validate_fileupload(reference_upload){
+    if(!/(\.bmp|\.png|\.gif|\.jpg|\.jpeg)$/i.test(reference_upload.value)){
+        swal('Invalid image file type!', 'Please upload an image file with a valid file extension.', 'error');      
+        $('#reference_upload').val('');
+        $('#reference_upload').focus();
+        return false;   
+    }
+    return true; 
+}
+
+$(document).ready(function(){
+    if($(location).attr('pathname')+window.location.search == '/stockrequest?submit=success'){
+        swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
+        setTimeout(function(){location.href="/stockrequest"}, 2000);
+    }
+});
+
 function generatedr(){
     var today = new Date();
     var month = today.getMonth()+1;
@@ -122,6 +139,7 @@ function generatedr(){
         success: function(data){
             if(data == 'unique'){
                 document.getElementById("request_num").value = request_number;
+                document.getElementById("reqnum").value = request_number;
             }
             else{
                 generatedr();
@@ -155,8 +173,9 @@ function runFunction(){
         var client_name = $.trim($('#client_name').val());
         var location_name = $.trim($('#location').val());
         var reference = $.trim($('#reference').val());
+        var reference_upload = $('#reference_upload').val();
         if($('.reference_field').is(':visible')){
-            if(needdate && request_type && client_name && location_name && reference){
+            if(needdate && request_type && client_name && location_name && reference && reference_upload){
                 $('#requestDetails').show();
             }
             else{
@@ -309,87 +328,56 @@ $('#btnSave').on('click', function(){
     var client_name = $.trim($('#client_name').val());
     var location_name = $.trim($('#location').val());
     var reference = $.trim($('#reference').val());
-    if(needdate && request_type && client_name && location_name){
-        if(needdate < minDate){
-            swal('Minimum Date is today!','Select within date range from today onwards.','error');
-            return false;
-        }
-        else{
-            swal({
-                title: "SUBMIT STOCK REQUEST?",
-                text: "You are about to SUBMIT this STOCK REQUEST!",
-                icon: "warning",
-                buttons: true,
-            })
-            .then((willDelete) => {
-                if(willDelete){
-                    $.ajax({
-                        type:'post',
-                        url:'/saveReqNum',
-                        async: false,
-                        headers: {
-                            'X-CSRF-TOKEN': $("#csrf").val()
-                        },
-                        data:{
-                            'request_number': $('#request_num').val(),
-                            'needdate': needdate,
-                            'request_type': request_type,
-                            'client_name': client_name,
-                            'location': location_name,
-                            'reference': reference,
-                        },
-                        success: function(data){
-                            if(data == 'true'){
-                                var myTable = $('#stockRequestTable').DataTable();
-                                var form_data  = myTable.rows().data();
-                                $.each(form_data, function(key, value){
-                                    $.ajax({
-                                        type:'post',
-                                        url:'/saveRequest',
-                                        async: false,
-                                        headers: {
-                                            'X-CSRF-TOKEN': $("#csrf").val()
-                                        },
-                                        data:{
-                                            'request_number': $('#request_num').val(),
-                                            'category': value[0],
-                                            'item': value[1],
-                                            'quantity': value[4]
-                                        },
-                                        success: function(data){
-                                            if(data == 'true'){
-                                                return true;
-                                            }
-                                            else{
-                                                return false;
-                                            }
-                                        },
-                                        error: function(data){
-                                            if(data.status == 401){
-                                                window.location.href = '/stockrequest';
-                                            }
-                                            alert(data.responseText);
-                                        }
-                                    });
-                                });
-                                scrollReset();
-                                $('#newStockRequest').hide();
-                                $('#newStockRequest').modal('dispose');
-                                $('#loading').show(); Spinner(); Spinner.show();
+    var reference_upload = $('#reference_upload').val();
+    if(needdate < minDate){
+        swal('Minimum Date is today!','Select within date range from today onwards.','error');
+        return false;
+    }
+    else{
+        swal({
+            title: "SUBMIT STOCK REQUEST?",
+            text: "You are about to SUBMIT this STOCK REQUEST!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url:'/saveReqNum',
+                    async: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val()
+                    },
+                    data:{
+                        'request_number': $('#request_num').val(),
+                        'needdate': needdate,
+                        'request_type': request_type,
+                        'client_name': client_name,
+                        'location': location_name,
+                        'reference': reference
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            var myTable = $('#stockRequestTable').DataTable();
+                            var form_data  = myTable.rows().data();
+                            $.each(form_data, function(key, value){
                                 $.ajax({
                                     type:'post',
-                                    url:'/logSave',
+                                    url:'/saveRequest',
+                                    async: false,
                                     headers: {
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
                                         'request_number': $('#request_num').val(),
+                                        'category': value[0],
+                                        'item': value[1],
+                                        'quantity': value[4]
                                     },
                                     success: function(data){
                                         if(data == 'true'){
-                                            $('#loading').hide(); Spinner.hide();
-                                            swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
-                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                            return true;
                                         }
                                         else{
                                             return false;
@@ -402,47 +390,63 @@ $('#btnSave').on('click', function(){
                                         alert(data.responseText);
                                     }
                                 });
-                            }
-                            else if(data == 'duplicate'){
-                                swal("INVALID ENTRY", "Reference SO/PO Number already exists! Please double check the SO/PO Number and try again.", "error");
-                                return false;
-                            }
-                            else{
-                                $('#newStockRequest').hide();
-                                swal("SUBMIT FAILED", "STOCK REQUEST", "error");
-                                setTimeout(function(){location.href="/stockrequest"}, 2000);
-                            }
-                        },
-                        error: function(data){
-                            if(data.status == 401){
-                                window.location.href = '/stockrequest';
-                            }
-                            alert(data.responseText);
+                            });
+                            scrollReset();
+                            $('#newStockRequest').hide();
+                            $('#newStockRequest').modal('dispose');
+                            $('#loading').show(); Spinner(); Spinner.show();
+                            $.ajax({
+                                type:'post',
+                                url:'/logSave',
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'request_number': $('#request_num').val(),
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        $('#loading').hide(); Spinner.hide();
+                                        if(reference_upload){
+                                            $('#btnSubmit').click();
+                                        }
+                                        else{
+                                            swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
+                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                        }
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
                         }
-                    });
-                }
-            });
-        }
-    }
-    else{
-        var required_fields = [];
-        var required_list;
-        if(!needdate){
-            required_fields.push('*Date Needed');
-        }
-        if(!request_type){
-            required_fields.push('*Request Type');
-        }
-        if(!client_name){
-            required_fields.push('*Client Name');
-        }
-        if(!location_name){
-            required_fields.push('*Address / Branch');
-        }
-        required_list = required_fields.join("\r\n");
-        swal('Please fill up all required fields!', required_list, 'error');
-        return false;
-    }   
+                        else if(data == 'duplicate'){
+                            swal("INVALID ENTRY", "Reference SO/PO Number already exists! Please double check the SO/PO Number and try again.", "error");
+                            return false;
+                        }
+                        else{
+                            $('#newStockRequest').hide();
+                            swal("SUBMIT FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
+    }  
 });
 
 $('#close').on('click', function(){

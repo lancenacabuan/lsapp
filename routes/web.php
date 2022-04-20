@@ -58,6 +58,7 @@ Route::get('/setuom',[StockRequestController::class,'setuom']);
 Route::any('/saveReqNum',[StockRequestController::class,'saveReqNum']);
 Route::any('/saveRequest',[StockRequestController::class,'saveRequest']);
 Route::any('/logSave',[StockRequestController::class,'logSave']);
+Route::any('/uploadFile',[StockRequestController::class,'uploadFile'])->name('uploadFile');
 Route::get('/request_data',[StockRequestController::class,'request_data']);
 Route::get('/reqModal',[StockRequestController::class,'reqModal']);
 Route::get('/requestDetails',[StockRequestController::class,'requestDetails']);

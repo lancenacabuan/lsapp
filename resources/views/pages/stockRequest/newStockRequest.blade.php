@@ -5,8 +5,7 @@
             <h6 class="modal-title w-100">NEW STOCK REQUEST</h6>    
             <button type="button" class="btn-close btn-close-white close" id="close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background-color: white; color: black;">                
-            <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+        <div class="modal-body" style="background-color: white; color: black;">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
@@ -36,6 +35,15 @@
                 <label class="form-control form-control-sm reference_field" style="width: 160px; display: none;">Reference SO/PO No.</label>
                 <input class="form-control form-control-sm reference_field" id="reference" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field">
             </div>
+            <form id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+                <input type="hidden" name="reqnum" id="reqnum">
+                <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
+                    <div class="reference_field" style="width: 450px; display: none;">&nbsp;</div>
+                    <input class="reference_field" id="reference_upload" name="reference_upload" type="file" style="zoom: 90%; display: none;" onchange="validate_fileupload(this);">
+                    <button class="d-none" id="btnSubmit" type="submit" form="formUpload" value="Submit">Submit</button>
+                </div>
+            </form>
         </div>
         <div id="requestDetails" style="display: none;">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">

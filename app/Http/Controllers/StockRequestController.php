@@ -455,20 +455,36 @@ class StockRequestController extends Controller
     }
 
     public function delReqItem(Request $request){
-        $reqitems = StockRequest::where('request_number', $request->req_num)
-            ->where('item', $request->item_id)
-            ->delete();
+        do{
+            $reqitems = StockRequest::where('request_number', $request->req_num)
+                ->where('item', $request->item_id)
+                ->delete();
+        }
+        while(!$reqitems);
         
         if(!$reqitems){
             $result = 'false';
         }
         else {
             $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "REMOVED STOCK REQUEST ITEM: User successfully removed from request list $request->quantity-$request->uom/s of '$request->item' from Stock Request No. $request->req_num.";
+            $userlogs->save();
         }
 
         $count = StockRequest::where('request_number', $request->req_num)->count();
         if($count == 0){
-            Requests::where('request_number', $request->req_num)->delete();
+            do{
+                $sql = Requests::where('request_number', $request->req_num)->delete();
+            }
+            while(!$sql);
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "DELETED STOCK REQUEST: User successfully deleted Stock Request No. $request->req_num.";
+            $userlogs->save();
         }
 
         $data = array('result' => $result, 'count' => $count);

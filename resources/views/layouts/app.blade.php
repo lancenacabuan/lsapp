@@ -194,6 +194,7 @@
             @yield('content')
         </main>
     </div>
+    <div style="font-size: 12px; position: fixed; bottom: 0; user-select: none;">v1.0.1.0</div>
     @if(Request::is('/'))
         <script src="{{ asset('js/home.js') }}"></script>
     @endif

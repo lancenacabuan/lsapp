@@ -922,7 +922,10 @@ $(document).on('click', '.btndelItem', function(){
         },
         data: {
             req_num: $('#request_num_details').val(),
-            item_id: data.item_id
+            item_id: data.item_id,
+            item: data.item,
+            uom: data.uom,
+            quantity: data.quantity
         },
         success: function(data){
             if(data.result == 'false'){

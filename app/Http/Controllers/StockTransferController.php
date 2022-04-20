@@ -370,20 +370,36 @@ class StockTransferController extends Controller
     }
 
     public function delTransItem(Request $request){
-        $transitems = StockTransfer::where('request_number', $request->req_num)
-            ->where('item', $request->item_id)
-            ->delete();
+        do{
+            $reqitems = StockTransfer::where('request_number', $request->req_num)
+                ->where('item', $request->item_id)
+                ->delete();
+        }
+        while(!$reqitems);
         
-        if(!$transitems){
+        if(!$reqitems){
             $result = 'false';
         }
         else {
             $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "REMOVED STOCK TRANSFER REQUEST ITEM: User successfully removed from transfer request list $request->quantity-$request->uom/s of '$request->item' from Stock Transfer Request No. $request->req_num.";
+            $userlogs->save();
         }
 
         $count = StockTransfer::where('request_number', $request->req_num)->count();
         if($count == 0){
-            RequestTransfer::where('request_number', $request->req_num)->delete();
+            do{
+                $sql = RequestTransfer::where('request_number', $request->req_num)->delete();
+            }
+            while(!$sql);
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "DELETED STOCK TRANSFER REQUEST: User successfully deleted Stock Transfer Request No. $request->req_num.";            
+            $userlogs->save();
         }
 
         $data = array('result' => $result, 'count' => $count);

@@ -663,6 +663,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 if(data == '18' || data == '21'){
                                     $("#warning").hide();
                                     $("#btnProceed").hide();
+                                    $("#divAdjust").hide();
                                     $(".rcvDef").show();
                                 }
                             }
@@ -684,6 +685,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7){
                         $("#proceed_label").hide();
                         $("#btnProceed").hide();
+                        $("#divAdjust").hide();
                     }
                     if(requestStatus == '2' || requestStatus == '5'){
                         $("#schedItemsModal").show();
@@ -1442,6 +1444,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     if(data == '18' || data == '21'){
                         $("#warning").hide();
                         $("#btnProceed").hide();
+                        $("#divAdjust").hide();
                         $(".rcvDef").show();
                     }
                 }
@@ -1463,6 +1466,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7){
             $("#proceed_label").hide();
             $("#btnProceed").hide();
+            $("#divAdjust").hide();
         }
         if(requestStatus == '2' || requestStatus == '5'){
             $("#schedItemsModal").show();
@@ -3013,6 +3017,7 @@ $("#btnProceed").unbind('click').click(function(){
     }
     $("#stockDetailsrequest *").prop('disabled', true);
     $("#btnProceed").hide();
+    $("#divAdjust").hide();
     $("#reqContents").empty();
     $("#requestItems").slideDown();
     $('#schedOn').attr('max', maxDate);
@@ -3290,6 +3295,7 @@ $('#btnBack').on('click', function(){
     $("#requestItems").hide();
     $("#schedOn").val('');
     $("#btnProceed").show();
+    $("#divAdjust").show();
 });
 
 $('.btnReceive').on('click', function(){

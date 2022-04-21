@@ -209,6 +209,7 @@
         </div>
         </div>
         <div id="schedItemsModal" style="display: none;">
+        <div id="divAdjust"><br><br><br></div>
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div>

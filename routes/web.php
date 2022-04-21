@@ -53,6 +53,7 @@ Route::get('/stock_data',[StocksController::class,'stock_data']);
 //Stock Requests
 Route::get('/stockrequest',[StockRequestController::class,'stockrequest']);
 Route::get('/generatedr',[StockRequestController::class,'generatedr']);
+Route::get('/getInclusive',[StockRequestController::class,'getInclusive']);
 Route::get('/itemsreq',[StockRequestController::class,'itemsreq']);
 Route::get('/setuom',[StockRequestController::class,'setuom']);
 Route::any('/saveReqNum',[StockRequestController::class,'saveReqNum']);

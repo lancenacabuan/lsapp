@@ -165,17 +165,18 @@ $(".btnNewStockRequest").on('click', function(){
     generatedr();
 });
 
-setInterval(runFunction, 200);
+setInterval(runFunction, 100);
 function runFunction(){
     if($('#newStockRequest').is(':visible')){
         var needdate = $('#needdate').val();
         var request_type = $('#request_type').val();
+        var warranty_type = $('#warranty_type').val();
         var client_name = $.trim($('#client_name').val());
         var location_name = $.trim($('#location').val());
         var reference = $.trim($('#reference').val());
         var reference_upload = $('#reference_upload').val();
         if($('.reference_field').is(':visible')){
-            if(needdate && request_type && client_name && location_name && reference && reference_upload){
+            if(needdate && request_type && warranty_type && client_name && location_name && reference && reference_upload){
                 $('#requestDetails').show();
             }
             else{
@@ -193,7 +194,7 @@ function runFunction(){
     }
 }
 
-setInterval(checkLocation, 200);
+setInterval(checkLocation, 100);
 function checkLocation(){
     if($('#detailsStockRequest').is(':visible') && $('#status_id_details').val() == '13'){
         var warehouse = $('#warehouse_details').val();
@@ -211,12 +212,56 @@ function checkLocation(){
 $('#request_type').on('change', function(){
     var reqtype = $(this).val();
     $('#reference').val('');
+    $('#warranty_type').val('');
     if(reqtype == '2'){
         $('.reference_field').show();
     }
     else{
         $('.reference_field').hide();
+        $('#warranty_field').hide();
     }
+});
+
+$('#warranty_type').on('change', function(){
+    $('#warranty_field').show();
+    $('.listInclusive').hide();
+    var id = $(this).val();
+    $.ajax({
+        type: 'get', 
+        url: '/getInclusive', 
+        data:{
+            id: id
+        }, 
+        success: function(data){
+            $('#duration').val(data[0].Duration+' MONTH/S');
+            if(data[0].Inclusive != null){
+                if(data[0].Inclusive.indexOf('Software') > -1){
+                    $('#software').show();
+                }
+                if(data[0].Inclusive.indexOf('Onsite Visit') > -1){
+                    $('#onsite').show();
+                }
+                if(data[0].Inclusive.indexOf('Phone Support') > -1){
+                    $('#phone').show();
+                }
+                if(data[0].Inclusive.indexOf('Hardware') > -1){
+                    $('#hardware').show();
+                }
+                if(data[0].Inclusive.indexOf('Parts Replacement') > -1){
+                    $('#replacement').show();
+                }
+                if(data[0].Inclusive.indexOf('Service Unit') > -1){
+                    $('#su').show();
+                }
+            }              
+        },
+        error: function(data){
+            if(data.status == 401){
+                window.location.href = '/stockrequest';
+            }
+            alert(data.responseText);
+        }
+    });    
 });
 
 $('#categoryReq').on('change', function(){
@@ -325,6 +370,7 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
 $('#btnSave').on('click', function(){
     var needdate = $('#needdate').val();
     var request_type = $('#request_type').val();
+    var warranty_type = $('#warranty_type').val();
     var client_name = $.trim($('#client_name').val());
     var location_name = $.trim($('#location').val());
     var reference = $.trim($('#reference').val());
@@ -353,6 +399,7 @@ $('#btnSave').on('click', function(){
                         'request_number': $('#request_num').val(),
                         'needdate': needdate,
                         'request_type': request_type,
+                        'warranty_type': warranty_type,
                         'client_name': client_name,
                         'location': location_name,
                         'reference': reference

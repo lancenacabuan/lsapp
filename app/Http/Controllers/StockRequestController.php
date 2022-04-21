@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\Item;
 use App\Models\Location;
 use App\Models\RequestType;
+use App\Models\Warranty;
 use App\Models\Status;
 use App\Models\Stock;
 use App\Models\StockRequest;
@@ -40,8 +41,9 @@ class StockRequestController extends Controller
         $categories = Category::select('id','category')->get()->sortBy('category');
         $items = Item::select('id','item')->get()->sortBy('item');
         $req_types = RequestType::select('id','name')->whereIn('id',['2','3'])->get();            
+        $warranty_types = Warranty::select('id','Warranty_Name')->get()->sortBy('Warranty_Name');
         
-        return view('/pages/stockrequest', compact('categories','items','req_types'));
+        return view('/pages/stockrequest', compact('categories','items','req_types','warranty_types'));
     }
 
     public function generatedr(Request $request){
@@ -52,6 +54,14 @@ class StockRequestController extends Controller
             return response('unique');
         }
         return response('duplicate');
+    }
+
+    public function getInclusive(Request $request){       
+        $list = Warranty::query()->select()
+            ->where('id',$request->id)
+            ->get();
+        
+        return response()->json($list);
     }
 
     public function itemsreq(Request $request){       
@@ -93,6 +103,7 @@ class StockRequestController extends Controller
                 $requests->requested_by = auth()->user()->id;
                 $requests->needdate = $request->needdate;
                 $requests->request_type = $request->request_type;
+                $requests->warranty_type = $request->warranty_type;
                 $requests->status = '6';
                 $requests->client_name = ucwords($request->client_name);
                 $requests->location = ucwords($request->location);

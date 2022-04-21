@@ -218,12 +218,12 @@ $('#request_type').on('change', function(){
     }
     else{
         $('.reference_field').hide();
-        $('#warranty_field').hide();
+        $('.warranty_field').hide();
     }
 });
 
 $('#warranty_type').on('change', function(){
-    $('#warranty_field').show();
+    $('.warranty_field').show();
     $('.listInclusive').hide();
     var id = $(this).val();
     $.ajax({
@@ -233,25 +233,67 @@ $('#warranty_type').on('change', function(){
             id: id
         }, 
         success: function(data){
-            $('#duration').val(data[0].Duration+' MONTH/S');
+            $('.duration').val(data[0].Duration+' MONTH/S');
             if(data[0].Inclusive != null){
                 if(data[0].Inclusive.indexOf('Software') > -1){
-                    $('#software').show();
+                    $('.software').show();
                 }
                 if(data[0].Inclusive.indexOf('Onsite Visit') > -1){
-                    $('#onsite').show();
+                    $('.onsite').show();
                 }
                 if(data[0].Inclusive.indexOf('Phone Support') > -1){
-                    $('#phone').show();
+                    $('.phone').show();
                 }
                 if(data[0].Inclusive.indexOf('Hardware') > -1){
-                    $('#hardware').show();
+                    $('.hardware').show();
                 }
                 if(data[0].Inclusive.indexOf('Parts Replacement') > -1){
-                    $('#replacement').show();
+                    $('.replacement').show();
                 }
                 if(data[0].Inclusive.indexOf('Service Unit') > -1){
-                    $('#su').show();
+                    $('.su').show();
+                }
+            }              
+        },
+        error: function(data){
+            if(data.status == 401){
+                window.location.href = '/stockrequest';
+            }
+            alert(data.responseText);
+        }
+    });    
+});
+
+$('#warranty_type_details').on('change', function(){
+    $('.warranty_field').show();
+    $('.listInclusive').hide();
+    var id = $(this).val();
+    $.ajax({
+        type: 'get', 
+        url: '/getInclusive', 
+        data:{
+            id: id
+        }, 
+        success: function(data){
+            $('.duration').val(data[0].Duration+' MONTH/S');
+            if(data[0].Inclusive != null){
+                if(data[0].Inclusive.indexOf('Software') > -1){
+                    $('.software').show();
+                }
+                if(data[0].Inclusive.indexOf('Onsite Visit') > -1){
+                    $('.onsite').show();
+                }
+                if(data[0].Inclusive.indexOf('Phone Support') > -1){
+                    $('.phone').show();
+                }
+                if(data[0].Inclusive.indexOf('Hardware') > -1){
+                    $('.hardware').show();
+                }
+                if(data[0].Inclusive.indexOf('Parts Replacement') > -1){
+                    $('.replacement').show();
+                }
+                if(data[0].Inclusive.indexOf('Service Unit') > -1){
+                    $('.su').show();
                 }
             }              
         },
@@ -644,6 +686,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#requested_by_details').val(req_by);
                 var req_type = value.req_type;
                     $('#request_type_details').val(req_type);
+                var warranty_type = value.warranty_type;
+                    $('#warranty_type_details').val(warranty_type);
+                    $("#warranty_type_details").trigger('change');
                 var item_id = value.item_id;
                     $('#item_id_details').val(item_id);
                 var item_desc = value.item_desc;
@@ -669,7 +714,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#reference_details').val(reference);
                 var reason = value.reason;
                     $('#reason_details').val(reason);
-                var reference_attachment = data.reference_upload;
+                var reference_attachment = value.reference_upload;
                     $('#reference_attachment').attr('src', '/uploads/'+reference_attachment).show();
             
                     $('.modal-body').html();
@@ -677,6 +722,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
 
                     var ajax_url = '/schedItems';
 
+                    if(req_type_id != '2'){
+                        $(".sales_details").hide();
+                    }
                     if(req_type_id == '1' || req_type_id == '5'){
                         $("#client_name_label").hide();
                         $("#client_name_details").hide();
@@ -695,9 +743,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(req_type_id == '4'){
                         $(".dfchide").hide();
                         $(".dfcshow").show();
-                    }
-                    if(req_type_id == '3'){
-                        $(".demohide").hide();
                     }
                     if(req_type_id == '4' && requestStatus == '1'){
                         $.ajax({ 
@@ -1425,6 +1470,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#requested_by_details').val(req_by);
     var req_type = data.req_type;
         $('#request_type_details').val(req_type);
+    var warranty_type = data.warranty_type;
+        $('#warranty_type_details').val(warranty_type);
+        $("#warranty_type_details").trigger('change');
     var item_id = data.item_id;
         $('#item_id_details').val(item_id);
     var item_desc = data.item_desc;
@@ -1458,6 +1506,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
 
         var ajax_url = '/schedItems';
 
+        if(req_type_id != '2'){
+            $(".sales_details").hide();
+        }
         if(req_type_id == '1' || req_type_id == '5'){
             $("#client_name_label").hide();
             $("#client_name_details").hide();
@@ -1476,9 +1527,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(req_type_id == '4'){
             $(".dfchide").hide();
             $(".dfcshow").show();
-        }
-        if(req_type_id == '3'){
-            $(".demohide").hide();
         }
         if(req_type_id == '4' && requestStatus == '1'){
             $.ajax({ 

@@ -45,15 +45,39 @@
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
                 <input class="form-control form-control-sm" id="request_type_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm dfchide demohide" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
-                <input class="form-control form-control-sm dfchide demohide" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm dfchide sales_details" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
+                <input class="form-control form-control-sm dfchide sales_details" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <span id="warehouse_note" style="color: Red; font-size: 12px; margin-top: -15px; display: none;">Please select location to store the Assembled Item/s.</span>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
                 <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <button type="button" id="btnShowAttachment" class="btn btn-primary bp demohide" style="zoom: 85%;">SHOW ATTACHMENT</button>
+                <button type="button" id="btnShowAttachment" class="btn btn-primary bp sales_details" style="zoom: 85%;">SHOW ATTACHMENT</button>
                 <button type="button" id="btnHideAttachment" class="btn btn-primary bp" style="zoom: 85%; display: none;">HIDE ATTACHMENT</button>
+            </div>
+            <div class="form-inline sales_details" style="margin-left: 35px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 160px;">Warranty Type</label>
+                <select class="form-select form-control-sm" id="warranty_type_details" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;" disabled>
+                    <option value="" selected disabled>Select Warranty Type</option>
+                    @foreach($warranty_types as $warranty_type)
+                        <option value="{{$warranty_type->id}}">{{strtoupper($warranty_type->Warranty_Name)}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="warranty_field sales_details" style="zoom: 85%; margin-top: 5px; margin-left: 35px; line-height: 70%; display: none;">
+                <div class="form-inline" style="margin-left: 35px;">
+                    <label class="form-control form-control-sm" style="width: 190px; border-color: white; font-weight: bolder;">DURATION:</label>
+                    <input class="form-control form-control-sm duration" style="width: 250px; margin-right: 10px; font-size: 18px; border-color: white; background-color: white; font-weight: bolder; pointer-events: none;" type="text" readonly>
+                </div>
+                <div class="form-inline" style="margin-left: 35px;">
+                    <label class="form-control form-control-sm" style="width: 160px; border-color: white; font-weight: bolder;">INCLUSIVE:</label>
+                </div>
+                <p class="phone listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Phone Support</p>
+                <p class="onsite listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Onsite Support</p>
+                <p class="software listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Software</p>
+                <p class="hardware listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Hardware</p>
+                <p class="replacement listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Parts Replacement</p>
+                <p class="su listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Service Unit</p>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" name="reason_label" id="reason_label" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>

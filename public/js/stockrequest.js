@@ -622,6 +622,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#reference_details').val(reference);
                 var reason = value.reason;
                     $('#reason_details').val(reason);
+                var reference_attachment = data.reference_upload;
+                    $('#reference_attachment').attr('src', '/uploads/'+reference_attachment).show();
             
                     $('.modal-body').html();
                     $('#detailsStockRequest').modal('show');
@@ -1399,6 +1401,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#reference_details').val(reference);
     var reason = data.reason;
         $('#reason_details').val(reason);
+    var reference_attachment = data.reference_upload;
+        $('#reference_attachment').attr('src', '/uploads/'+reference_attachment).show();
 
         $('.modal-body').html();
         $('#detailsStockRequest').modal('show');
@@ -3501,6 +3505,18 @@ $('#btnReceiveDfc').on('click', function(){
             });
         }
     });
+});
+
+$("#btnShowAttachment").on('click', function(){
+    $("#btnShowAttachment").hide();
+    $("#btnHideAttachment").show();
+    $("#attachmentModal").slideDown();
+});
+
+$("#btnHideAttachment").on('click', function(){
+    $("#btnShowAttachment").show();
+    $("#btnHideAttachment").hide();
+    $("#attachmentModal").slideUp();
 });
 
 $("#btnShowDetails").on('click', function(){

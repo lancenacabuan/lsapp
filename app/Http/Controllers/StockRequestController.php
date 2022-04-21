@@ -792,7 +792,16 @@ class StockRequestController extends Controller
             ->limit(1)
             ->get();
 
-        return DataTables::of($list)->toJson();
+        return DataTables::of($list)
+        ->addColumn('qtystock', function (StockRequest $list){
+            $stocks = Stock::query()
+                ->where('item_id', $list->item_id)
+                ->whereIn('location_id', ['1','2','3','4'])
+                ->where('status', 'in')
+                ->count();
+            return $stocks;
+        })
+        ->toJson();
     }
 
     public function setserials(Request $request){

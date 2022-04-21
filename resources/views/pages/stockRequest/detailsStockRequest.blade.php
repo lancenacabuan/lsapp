@@ -110,6 +110,7 @@
             <h6 class="modal-title w-100">REQUEST DETAILS</h6>
         </div>
         <div class="modal-body">
+            @role('admin|encoder') {{---ROLES---}}
             <div id="proceed_label" class="alert alert-primary" role="alert">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please click table rows to select from the requested items for preparation.
@@ -122,7 +123,7 @@
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>CANNOT PROCEED:</strong> Please receive first <b>defective items</b> by clicking the DEFECTIVE DETAILS button below before processing replacements.
             </div>
-            <br>
+            @endrole
             @role('sales|approver - sales') {{---ROLES---}}
             <div id="sd1" style="display: none;">
             <table id="stockDetailsrequest" class="table stockDetails1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
@@ -175,20 +176,17 @@
                 </thead>
             </table>
             @endrole
-            <br>
             @role('approver - sales') {{---ROLES---}}
-            <input type="button" class="btn btn-primary float-right bp" id="btnApprove" value="APPROVE">
-            <input type="button" class="btn btn-primary bp" id="btnDisapprove" value="DISAPPROVE">
+            <input type="button" class="btn btn-primary float-right bp mt-4" id="btnApprove" value="APPROVE">
+            <input type="button" class="btn btn-primary bp mt-4" id="btnDisapprove" value="DISAPPROVE">
             @endrole
             @role('admin|encoder') {{---ROLES---}}
-            <input type="button" class="btn btn-primary float-right bp" id="btnProceed" value="PROCEED" disabled>
-            <button type="button" id="btnDefDetails" class="btn btn-primary float-right bp rcvDef" style="display: none;">DEFECTIVE DETAILS</button>
-            <br>
+            <input type="button" class="btn btn-primary float-right bp my-4" id="btnProceed" value="PROCEED" disabled>
+            <button type="button" id="btnDefDetails" class="btn btn-primary float-right bp my-4 rcvDef" style="display: none;">DEFECTIVE DETAILS</button>
             @endrole
             @role('sales') {{---ROLES---}}
-            <button type="button" id="btnDelete" class="btn btn-dark bp">DELETE</button>
+            <button type="button" id="btnDelete" class="btn btn-dark bp mt-4">DELETE</button>
             @endrole
-            <br>
         </div>
         <div id="requestItems" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
@@ -268,10 +266,12 @@
             <h6 id="modalheader" class="modal-title w-100">FOR RECEIVING ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
+            @role('sales') {{---ROLES---}}
             <div id="receive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
             </div>
+            @endrole
             <div class="prephide">
                 <div class="form-inline" style="margin-left: 35px;">
                     <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
@@ -344,10 +344,12 @@
             <h6 id="incmodalheader" class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
+            @role('sales') {{---ROLES---}}
             <div id="increceive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
             </div>
+            @endrole
             <div class="form-inline divResched" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
                 <input class="form-control form-control-sm" id="reprep_by1" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>

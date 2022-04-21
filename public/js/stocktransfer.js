@@ -1513,7 +1513,7 @@ $("#btnProceed").unbind('click').click(function(){
 $('#btnBack').on('click', function(){
     $("#transferDetails *").prop('disabled', false);
     $('#btnSubmit').prop('disabled', true);
-    $("#requestItems").slideUp();
+    $("#requestItems").hide();
     $("#schedOn").val('');
     $("#btnProceed").show();
 });

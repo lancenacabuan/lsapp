@@ -408,7 +408,7 @@ $('#btnSave').on('click', function(){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
                                         if(reference_upload){
-                                            $('#btnSubmit').click();
+                                            $('#btnUpload').click();
                                         }
                                         else{
                                             swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
@@ -3140,13 +3140,11 @@ $("#btnProceed").unbind('click').click(function(){
                 for(var m=0; m < j; m++){
                     let id = '#location'+m;
                     $('#serial'+m).on('change', function(){
-                        if(req_type_id != '5'){
-                            if($('.serials').filter(function(){ return !!this.value; }).length == 0){
-                                $('#btnSubmit').prop('disabled', true);
-                            }
-                            else{
-                                $('#btnSubmit').prop('disabled', false);
-                            }
+                        if($('.serials').filter(function(){ return !!this.value; }).length == 0){
+                            $('#btnSubmit').prop('disabled', true);
+                        }
+                        else{
+                            $('#btnSubmit').prop('disabled', false);
                         }
                         var serial_id = $(this).val();
                         $.ajax({
@@ -3289,7 +3287,7 @@ $('#btnBack').on('click', function(){
     }
     $("#stockDetailsrequest *").prop('disabled', false);
     $('#btnSubmit').prop('disabled', true);
-    $("#requestItems").slideUp();
+    $("#requestItems").hide();
     $("#schedOn").val('');
     $("#btnProceed").show();
 });

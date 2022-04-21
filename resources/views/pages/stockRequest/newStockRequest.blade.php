@@ -41,7 +41,7 @@
                 <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                     <div class="reference_field" style="width: 450px; display: none;">&nbsp;</div>
                     <input class="reference_field" id="reference_upload" name="reference_upload" type="file" style="zoom: 90%; display: none;" onchange="validate_fileupload(this);">
-                    <button class="d-none" id="btnSubmit" type="submit" form="formUpload" value="Submit">Submit</button>
+                    <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
                 </div>
             </form>
         </div>

@@ -670,6 +670,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                             "targets": [13]
                         }
                     ],
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -713,6 +714,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                 });
                 
                 $('table.transItems').DataTable({
+                    searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
@@ -843,6 +845,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
                 "targets": [13]
             }
         ],
+        searching: false,
         paging: false,
         ordering: false,
         info: false,
@@ -886,6 +889,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     });
     
     $('table.transItems').DataTable({
+        searching: false,
         paging: false,
         ordering: false,
         info: false,

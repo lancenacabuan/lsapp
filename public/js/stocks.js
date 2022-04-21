@@ -153,7 +153,23 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 { data: 'modDate' },
                 { data: 'name' },
                 { data: 'serial' },
-                { data: 'location' },
+                {
+                    data: 'location',
+                    "render": function(data, type, row){
+                        if(row.status == 'defectives'){
+                            return 'DEFECTIVE';
+                        }
+                        else if(row.status == 'demo'){
+                            return 'DEMO';
+                        }
+                        else if(row.status == 'assembly'){
+                            return 'ASSEMBLY';
+                        }
+                        else{
+                            return row.location
+                        }
+                    }
+                },
                 { data: 'rack' },
                 { data: 'row' }
             ],

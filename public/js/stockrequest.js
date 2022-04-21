@@ -1450,55 +1450,55 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         keyboard: false
     });
     var table = $('table.stockrequestTable').DataTable(); 
-    var data = table.row(this).data();
-    var requestStatus = data.status_id;
+    var value = table.row(this).data();
+    var requestStatus = value.status_id;
         $('#status_id_details').val(requestStatus);
-    var req_type_id = data.req_type_id;
+    var req_type_id = value.req_type_id;
         $('#req_type_id_details').val(req_type_id);
-    var req_date = data.date;
+    var req_date = value.date;
         req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
         $('#reqdate_details').val(req_date);
-    var need_date = data.needdate;
+    var need_date = value.needdate;
         maxDate = need_date;
         need_date = moment(need_date).format('dddd, MMMM DD, YYYY');
         $('#needdate_details').val(need_date);
-    var req_num = data.req_num;
+    var req_num = value.req_num;
         $('#request_num_details').val(req_num);
-    var asm_req_num = data.assembly_reqnum;
+    var asm_req_num = value.assembly_reqnum;
         $('#asm_request_num_details').val(asm_req_num);
-    var req_by = data.req_by;
+    var req_by = value.req_by;
         $('#requested_by_details').val(req_by);
-    var req_type = data.req_type;
+    var req_type = value.req_type;
         $('#request_type_details').val(req_type);
-    var warranty_type = data.warranty_type;
+    var warranty_type = value.warranty_type;
         $('#warranty_type_details').val(warranty_type);
         $("#warranty_type_details").trigger('change');
-    var item_id = data.item_id;
+    var item_id = value.item_id;
         $('#item_id_details').val(item_id);
-    var item_desc = data.item_desc;
+    var item_desc = value.item_desc;
         $('#item_desc_details').val(item_desc);
-    var qty = data.qty;
+    var qty = value.qty;
         $('#qty_details').val(qty);
-    var status = data.status;
+    var status = value.status;
         $('#status_details').val(status);
-    var prep_by = data.prep_by;
+    var prep_by = value.prep_by;
         $('#prep_by').val(prep_by);
         $('#prep_by1').val(prep_by);
         $('#reprep_by').val(prep_by);
-    var sched = data.sched;
+    var sched = value.sched;
         sched = moment(sched).format('dddd, MMMM DD, YYYY');
         $('#sched').val(sched);
         $('#sched1').val(sched);
         $('#resched1').val(sched);
-    var client_name = data.client_name;
+    var client_name = value.client_name;
         $('#client_name_details').val(client_name);
-    var location_name = data.location;
+    var location_name = value.location;
         $('#location_details').val(location_name);
-    var reference = data.reference;
+    var reference = value.reference;
         $('#reference_details').val(reference);
-    var reason = data.reason;
+    var reason = value.reason;
         $('#reason_details').val(reason);
-    var reference_attachment = data.reference_upload;
+    var reference_attachment = value.reference_upload;
         $('#reference_attachment').attr('src', '/uploads/'+reference_attachment).show();
 
         $('.modal-body').html();
@@ -1695,12 +1695,12 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
             $("#incFooter").hide();
         }
-        if(data.user_id != $('#current_user').val()){
+        if(value.user_id != $('#current_user').val()){
             $(".btnReceive").hide();
             $("#btnSale").hide();
             $("#btnReturn").hide();
         }
-        if(data.user_id == $('#current_user').val() && $("#current_role").val() == '["sales"]'){
+        if(value.user_id == $('#current_user').val() && $("#current_role").val() == '["sales"]'){
             $("#sd2").show();
             $("#sd1").hide();
         }

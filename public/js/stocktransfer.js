@@ -750,33 +750,33 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         keyboard: false
     });
     var table = $('table.stocktransferTable').DataTable(); 
-    var data = table.row(this).data();
-    var requestStatus = data.status_id;
-    var req_date = data.date;
+    var value = table.row(this).data();
+    var requestStatus = value.status_id;
+    var req_date = value.date;
         req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
         $('#reqdate_details').val(req_date);
-    var need_date = data.needdate;
+    var need_date = value.needdate;
         maxDate = need_date;
         need_date = moment(need_date).format('dddd, MMMM DD, YYYY');
         $('#needdate_details').val(need_date);
-    var req_num = data.req_num;
+    var req_num = value.req_num;
         $('#request_num_details').val(req_num);
-    var req_by = data.req_by;
+    var req_by = value.req_by;
         $('#reqby_details').val(req_by);
-    var status = data.status;
+    var status = value.status;
         $('#status_details').val(status);
-    var prep_by = data.prep_by;
+    var prep_by = value.prep_by;
         $('#prep_by').val(prep_by);
         $('#prep_by1').val(prep_by);
-    var sched = data.sched;
+    var sched = value.sched;
         sched = moment(sched).format('dddd, MMMM DD, YYYY');
         $('#sched').val(sched);
         $('#sched1').val(sched);
-    var locfrom = data.locfrom;
+    var locfrom = value.locfrom;
         $('#locfrom_details').val(locfrom);
-    var locto = data.locto;
+    var locto = value.locto;
         $('#locto_details').val(locto);
-    var reason = data.reason;
+    var reason = value.reason;
         $('#reason_details').val(reason);
     var btnDel = '';
     var hideCol = '';
@@ -789,7 +789,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     if(locfrom == 6){
         hideCol = 11;
     }
-    if(data.user_id != $('#current_user').val()){
+    if(value.user_id != $('#current_user').val()){
         $("#btnDelete").hide();
         btnDel = 13;
     }

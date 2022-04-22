@@ -340,7 +340,7 @@ $('#btnSave').on('click', function(){
         else{
             swal({
                 title: "SUBMIT STOCK TRANSFER REQUEST?",
-                text: "You are about to SUBMIT this STOCK TRANSFER REQUEST!",
+                text: "Please review the details of your request. Hit OK to confirm or CANCEL to edit it.",
                 icon: "warning",
                 buttons: true,
             })

@@ -178,17 +178,21 @@ function runFunction(){
         if($('.reference_field').is(':visible')){
             if(needdate && request_type && warranty_type && client_name && location_name && reference && reference_upload){
                 $('#requestDetails').show();
+                $('.header_label').hide();
             }
             else{
                 $('#requestDetails').hide();
+                $('.header_label').show();
             }
         }
         else{
             if(needdate && request_type && client_name && location_name){
                 $('#requestDetails').show();
+                $('.header_label').hide();
             }
             else{
                 $('#requestDetails').hide();
+                $('.header_label').show();
             }
         }
     }
@@ -396,7 +400,13 @@ $(".add-row").on('click', function(){
         $('#stockRequestDiv').toggle();
         $('#btnClose').show();
         $('#btnSave').show();
-    } 
+    }
+    if($('#stockRequestTable tbody').children().length==0){
+        $('.submit_label').show();
+    }
+    else{
+        $('.submit_label').hide();
+    }
 });
 
 $("#stockRequestTable").on('click', '.delete-row', function(){
@@ -406,6 +416,7 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
         $('#stockRequestDiv').removeClass();
         $('#btnClose').hide();
         $('#btnSave').hide();
+        $('.submit_label').show();
     }
 });
 
@@ -424,7 +435,7 @@ $('#btnSave').on('click', function(){
     else{
         swal({
             title: "SUBMIT STOCK REQUEST?",
-            text: "You are about to SUBMIT this STOCK REQUEST!",
+            text: "Please review the details of your request. Hit OK to confirm or CANCEL to edit it.",
             icon: "warning",
             buttons: true,
         })

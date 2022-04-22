@@ -11,26 +11,34 @@
             <input type="hidden" id="status_id_details">
             <input type="hidden" id="item_id_details">
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
-                <input class="form-control form-control-sm"  id="reqdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" style="width: 160px;">Stock Request No.</label>
-                <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" id="qty_label" style="width: 60px; display: none;">Qty</label>
-                <input class="form-control form-control-sm" id="qty_details" style="width: 100px; display: none;" type="number" readonly>
-            </div>
-            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
-                <input class="form-control form-control-sm"  id="needdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm dfchide" id="client_name_label" style="width: 160px;">Client Name</label>
-                <input class="form-control form-control-sm dfchide" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" id="item_desc_label" style="width: 160px; display: none;">Assembled Item Name</label>
-                <input class="form-control form-control-sm" id="item_desc_details" style="width: 450px; margin-right: 10px; display: none;" type="text" readonly>
+                <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
+                <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm dfcshow" style="width: 160px; display: none;">Assembly Request No.</label>
                 <input class="form-control form-control-sm dfcshow" id="asm_request_num_details" onclick="copyAsmReqNum()" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
+                <input class="form-control form-control-sm" id="request_type_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px;">Stock Request No.</label>
+                <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
+            </div>
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
+                <input class="form-control form-control-sm"  id="needdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
+                <input class="form-control form-control-sm"  id="reqdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" id="qty_label" style="width: 60px; display: none;">Qty</label>
+                <input class="form-control form-control-sm" id="qty_details" style="width: 100px; display: none;" type="number" readonly>
+            </div>
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
+                <label class="form-control form-control-sm dfchide" id="client_name_label" style="width: 160px;">Client Name</label>
+                <input class="form-control form-control-sm dfchide" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="requested_by_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" id="item_desc_label" style="width: 160px; display: none;">Assembled Item Name</label>
+                <input class="form-control form-control-sm" id="item_desc_details" style="width: 450px; margin-right: 10px; display: none;" type="text" readonly>
+            </div>
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm dfchide" id="location_label" style="width: 160px;">Address / Branch</label>
                 <input class="form-control form-control-sm dfchide" id="location_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" id="warehouse_label" style="width: 160px; display: none;">TO New Location</label>
@@ -41,28 +49,20 @@
                     <option value="3">A3</option>
                     <option value="4">A4</option>
                 </select>
-            </div>
-            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
-                <input class="form-control form-control-sm" id="request_type_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm dfchide sales_details" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
                 <input class="form-control form-control-sm dfchide sales_details" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <span id="warehouse_note" style="color: Red; font-size: 12px; margin-top: -15px; display: none;">Please select location to store the Assembled Item/s.</span>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
-                <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <button type="button" id="btnShowAttachment" class="btn btn-primary bp sales_details" style="zoom: 85%;">VIEW ATTACHMENT</button>
-                <button type="button" id="btnHideAttachment" class="btn btn-primary bp" style="zoom: 85%; display: none;">HIDE ATTACHMENT</button>
-            </div>
-            <div class="form-inline sales_details" style="margin-left: 35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Warranty Type</label>
-                <select class="form-select form-control-sm" id="warranty_type_details" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;" disabled>
+                <label class="form-control form-control-sm sales_details" style="width: 160px;">Warranty Type</label>
+                <select class="form-select form-control-sm sales_details" id="warranty_type_details" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;" disabled>
                     <option value="" selected disabled>Select Warranty Type</option>
                     @foreach($warranty_types as $warranty_type)
-                        <option value="{{$warranty_type->id}}">{{strtoupper($warranty_type->Warranty_Name)}}</option>
+                    <option value="{{$warranty_type->id}}">{{strtoupper($warranty_type->Warranty_Name)}}</option>
                     @endforeach
                 </select>
+                <button type="button" id="btnShowAttachment" class="btn btn-primary bp sales_details" style="zoom: 85%;">VIEW ATTACHMENT</button>
+                <button type="button" id="btnHideAttachment" class="btn btn-primary bp" style="zoom: 85%; display: none;">HIDE ATTACHMENT</button>
+                <span id="warehouse_note" style="color: Red; font-size: 12px; display: none;">Please select location to store the Assembled Item/s.</span>
             </div>
             <div class="warranty_field sales_details" style="zoom: 85%; margin-top: 5px; margin-left: 35px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">

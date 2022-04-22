@@ -49,8 +49,8 @@
                     <option value="3">A3</option>
                     <option value="4">A4</option>
                 </select>
-                <label class="form-control form-control-sm dfchide sales_details" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
-                <input class="form-control form-control-sm dfchide sales_details" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm dfchide sales_details soldShow" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
+                <input class="form-control form-control-sm dfchide sales_details soldShow" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm sales_details" style="width: 160px;">Warranty Type</label>

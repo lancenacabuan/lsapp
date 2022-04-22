@@ -77,6 +77,7 @@ Route::any('/logDisapprove',[StockRequestController::class,'logDisapprove']);
 Route::any('/reschedRequest',[StockRequestController::class,'reschedRequest']);
 Route::any('/inTransit',[StockRequestController::class,'inTransit']);
 Route::any('/saleRequest',[StockRequestController::class,'saleRequest']);
+Route::any('/logSold',[StockRequestController::class,'logSold']);
 Route::any('/returnRequest',[StockRequestController::class,'returnRequest']);
 Route::get('/checkStatus',[StockRequestController::class,'checkStatus']);
 Route::get('/stockreq',[StockRequestController::class,'stockreq']);

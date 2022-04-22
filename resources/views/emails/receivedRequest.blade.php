@@ -3,7 +3,7 @@
 <body>
     <p>Hello, {{$details['name']}}!<br>
     This is to inform you that a {{$details['action']}} has been 
-    <span style="color: blue;"><strong>RECEIVED</strong></span> by {{$details['receivedby']}}.<br>
+    <span style="color: blue;"><strong>{{$details['verb']}}</strong></span> by {{$details['receivedby']}}.<br>
     </p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     <p>

@@ -1376,18 +1376,10 @@ $("#btnProceed").unbind('click').click(function(){
                                 });
             
                                 s.forEach(v => {
-                                    if(v.serial == 'N/A'){
-                                        $(vid).append($('<option>', {
-                                            value: v.id,
-                                            text: v.serial+' - '+v.location
-                                        }));
-                                    }
-                                    else{
-                                        $(vid).append($('<option>', {
-                                            value: v.id,
-                                            text: v.serial
-                                        }));
-                                    }
+                                    $(vid).append($('<option>', {
+                                        value: v.id,
+                                        text: v.serial
+                                    }));
                                 });
                                 $(vid).chosen();
                             },

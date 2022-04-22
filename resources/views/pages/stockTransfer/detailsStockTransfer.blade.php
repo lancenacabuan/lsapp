@@ -8,15 +8,17 @@
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
-                <input class="form-control form-control-sm"  id="reqdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" style="width: 200px;">Stock Transfer Request No.</label>
-                <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
+                <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
                 <input class="form-control form-control-sm"  id="needdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" style="width: 200px;">FROM Location</label>
+                <label class="form-control form-control-sm" style="width: 200px;">Stock Transfer Request No.</label>
+                <input class="form-control form-control-sm" id="request_num_details" onclick="copyReqNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
+            </div>
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 160px;">FROM Location</label>
                 <select class="form-select form-control-sm" id="locfrom_details" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height:30px !important; width: 280px;" disabled>
                     <option value="" selected disabled>Select Location</option>
                     <option value="5">BALINTAWAK</option>
@@ -25,11 +27,11 @@
                         <option value="{{$location->id}}">{{$location->location}}</option>
                     @endforeach --}}
                 </select>
+                <label class="form-control form-control-sm" style="width: 200px;">Date Requested</label>
+                <input class="form-control form-control-sm"  id="reqdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
-                <input class="form-control form-control-sm" id="reqby_details" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
-                <label class="form-control form-control-sm" style="width: 200px;">TO New Location</label>
+                <label class="form-control form-control-sm" style="width: 160px;">TO New Location</label>
                 <select class="form-select form-control-sm" id="locto_details" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height:30px !important; width: 280px;" disabled>
                     <option value="" selected disabled>Select Location</option>
                     <option value="1">A1</option>
@@ -40,10 +42,8 @@
                         <option value="{{$location->id}}">{{$location->location}}</option>
                     @endforeach --}}
                 </select>
-            </div>
-            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
-                <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm" style="width: 200px;">Requested By</label>
+                <input class="form-control form-control-sm" id="reqby_details" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" name="reason_label" id="reason_label" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>

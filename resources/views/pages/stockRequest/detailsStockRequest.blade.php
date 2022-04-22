@@ -52,7 +52,7 @@
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
                 <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <button type="button" id="btnShowAttachment" class="btn btn-primary bp sales_details" style="zoom: 85%;">SHOW ATTACHMENT</button>
+                <button type="button" id="btnShowAttachment" class="btn btn-primary bp sales_details" style="zoom: 85%;">VIEW ATTACHMENT</button>
                 <button type="button" id="btnHideAttachment" class="btn btn-primary bp" style="zoom: 85%; display: none;">HIDE ATTACHMENT</button>
             </div>
             <div class="form-inline sales_details" style="margin-left: 35px; margin-top: 10px;">
@@ -97,7 +97,7 @@
             <h6 class="modal-title w-100">REFERENCE SO/PO NO. ATTACHMENT</h6>
         </div>
         <div class="modal-body text-center">
-            <img id="reference_attachment" style="height: 100%;">
+            <img id="reference_attachment" style="width: 100%;">
         </div>
         </div>
         <div id="asmItemsModal" style="display: none;">

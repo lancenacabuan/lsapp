@@ -588,6 +588,9 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
             });
             transitem.forEach(value => {
                 var requestStatus = value.status_id;
+                    $('#status_id_details').val(requestStatus);
+                var req_type_id = value.req_type_id;
+                    $('#req_type_id_details').val(req_type_id);
                 var req_date = value.date;
                     req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
                     $('#reqdate_details').val(req_date);
@@ -763,6 +766,9 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     var table = $('table.stocktransferTable').DataTable(); 
     var value = table.row(this).data();
     var requestStatus = value.status_id;
+        $('#status_id_details').val(requestStatus);
+    var req_type_id = value.req_type_id;
+        $('#req_type_id_details').val(req_type_id);
     var req_date = value.date;
         req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
         $('#reqdate_details').val(req_date);
@@ -1246,6 +1252,10 @@ $('#btnReceive').on('click', function(){
 var items = [];
 $('table.transferDetails').DataTable().on('select', function(){});
 $('.transferDetails tbody').on('click', 'tr', function(){
+    var requestStatus = $('#status_id_details').val();
+    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7){
+        return false;
+    }
     var table = $('table.transferDetails').DataTable();
     var data = table.row(this).data();
     var pend = data.pending;

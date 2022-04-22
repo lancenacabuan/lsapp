@@ -7,6 +7,8 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+            <input type="hidden" id="req_type_id_details">
+            <input type="hidden" id="status_id_details">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
                 <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
@@ -78,18 +80,16 @@
                     </tr>
                 </thead>
             </table>
-            <br>
             @role('approver - warehouse') {{---ROLES---}}
-            <input type="button" class="btn btn-primary float-right bp" id="btnApprove" value="APPROVE">
-            <input type="button" class="btn btn-primary bp" id="btnDisapprove" value="DISAPPROVE">
+            <input type="button" class="btn btn-primary float-right bp mt-4" id="btnApprove" value="APPROVE">
+            <input type="button" class="btn btn-primary bp mt-4" id="btnDisapprove" value="DISAPPROVE">
             @endrole
             @role('admin|encoder') {{---ROLES---}}
-            <input type="button" class="btn btn-primary float-right bp" id="btnProceed" value="PROCEED" disabled>
+            <input type="button" class="btn btn-primary float-right bp mt-4" id="btnProceed" value="PROCEED" disabled>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
-            <button type="button" id="btnDelete" class="btn btn-dark bp">DELETE</button>
+            <button type="button" id="btnDelete" class="btn btn-dark bp mt-4">DELETE</button>
             @endrole
-            <br>
         </div>
         <div id="requestItems" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">

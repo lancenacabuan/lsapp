@@ -670,10 +670,13 @@ class StockTransferController extends Controller
             while(!$trans);
             
             do{
-                $items = Transfer::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, transferred_items.serial AS serial, transferred_items.qty AS qty')
-                    ->where('request_number', $request->request_number)
-                    ->join('items','items.id','transferred_items.items_id')
+                $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                    ->where('stocks.request_number', $request->request_number)
+                    ->whereIn('stocks.status', ['in','trans'])
+                    ->join('request_transfer','request_transfer.request_number','stocks.request_number')
+                    ->join('items','items.id','stocks.item_id')
                     ->join('categories','categories.id','items.category_id')
+                    ->join('locations','locations.id','request_transfer.locfrom')
                     ->get()
                     ->sortBy('item')
                     ->sortBy('category');
@@ -877,8 +880,9 @@ class StockTransferController extends Controller
         $list2 = str_replace(']','',$list2);
         $list2 = json_decode($list2);
         
-        $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, locations.location AS location')
+        $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('stocks.request_number', $request->request_number)
+            ->whereIn('stocks.status', ['in','trans'])
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')

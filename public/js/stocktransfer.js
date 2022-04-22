@@ -619,6 +619,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     $('#reason_details').val(reason);
                 var btnDel = '';
                 var hideCol = '';
+                var hideEdit = '';
             
                 $('.modal-body').html();
                 $('#detailsStockTransfer').modal('show');
@@ -666,7 +667,8 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     $("#processModal").show();
                     document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                     $(".transitItemsModal").show();
-                    $("#btnReceive").hide();
+                    $(".btnReceive").hide();
+                    hideEdit = 5;
                 }
             
                 $('table.transferDetails').dataTable().fnDestroy();
@@ -732,6 +734,11 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                 $('table.transItems').dataTable().fnDestroy();
                 $('table.transItems').DataTable({
                     columnDefs: [
+                        {
+                            "targets": [hideEdit],
+                            "visible": false,
+                            "searchable": false
+                        },
                         {   
                             "render": function(data, type, row, meta){
                                     return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
@@ -813,6 +820,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $('#reason_details').val(reason);
     var btnDel = '';
     var hideCol = '';
+    var hideEdit = '';
 
     $('.modal-body').html();
     $('#detailsStockTransfer').modal('show');
@@ -860,7 +868,8 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $("#processModal").show();
         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
         $(".transitItemsModal").show();
-        $("#btnReceive").hide();
+        $(".btnReceive").hide();
+        hideEdit = 5;
     }
 
     $('table.transferDetails').dataTable().fnDestroy();
@@ -926,6 +935,11 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     $('table.transItems').dataTable().fnDestroy();
     $('table.transItems').DataTable({
         columnDefs: [
+            {
+                "targets": [hideEdit],
+                "visible": false,
+                "searchable": false
+            },
             {   
                 "render": function(data, type, row, meta){
                         return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';

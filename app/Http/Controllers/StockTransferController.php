@@ -356,8 +356,9 @@ class StockTransferController extends Controller
     }
 
     public function transItems(Request $request){
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, locations.location AS location')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('stocks.request_number', $request->request_number)
+            ->whereIn('stocks.status', ['in','trans'])
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
@@ -367,6 +368,43 @@ class StockTransferController extends Controller
             ->sortBy('category');
 
         return DataTables::of($list)->make(true);
+    }
+
+    public function incTransItems(Request $request){
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+            ->where('stocks.request_number', $request->request_number)
+            ->where('stocks.status', 'incomplete')
+            ->join('request_transfer','request_transfer.request_number','stocks.request_number')
+            ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','request_transfer.locfrom')
+            ->get()
+            ->sortBy('item')
+            ->sortBy('category');
+
+        return DataTables::of($list)->make(true);
+    }
+
+    public function editTransSerial(Request $request){
+        do{
+            $sql = Stock::where('id', $request->id)
+                ->update(['serial' => $request->newserial, 'user_id' => auth()->user()->id]);
+        }
+        while(!$sql);
+        
+        if(!$sql){
+            $result = 'false';
+        }
+        else{
+            $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "EDITED ITEM SERIAL: User successfully edited Serial from '$request->origserial' to '$request->newserial' of Item '$request->item' with Category '$request->category'.";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 
     public function delTransItem(Request $request){
@@ -545,30 +583,19 @@ class StockTransferController extends Controller
     }
 
     public function receiveTransfer(Request $request){
-        $sql = RequestTransfer::where('request_number', $request->request_number)
-            ->update(['status' => '8']);
-        
-        $list = Transfer::select('items_id','request_number','locfrom','locto','serial','qty')
-            ->where('request_number', $request->request_number)
-            ->get();
-        foreach($list as $key){
-            if($key->serial == ''){
-                for($x = 0; $x < $key->qty; $x++){
-                    Stock::where('item_id',$key->items_id)
-                    ->where('location_id',$key->locto)
-                    ->where('status', 'trans')
-                    ->limit(1)
-                    ->update(['status' => 'in']);
-                }
+        if($request->inc == 'true'){
+            do{
+                $sql = RequestTransfer::where('request_number', $request->request_number)
+                    ->update(['status' => '15']);
             }
-            else{
-                Stock::where('serial',$key->serial)
-                ->where('item_id',$key->items_id)
-                ->where('location_id',$key->locto)
-                ->where('status', 'trans')
-                ->limit(1)
-                ->update(['status' => 'in']);
+            while(!$sql);
+        }
+        else{
+            do{
+                $sql = RequestTransfer::where('request_number', $request->request_number)
+                    ->update(['status' => '8']);
             }
+            while(!$sql);
         }
         
         if(!$sql){
@@ -577,106 +604,143 @@ class StockTransferController extends Controller
         else {
             $result = 'true';
         }
-        
+
         return response($result);
     }
 
-    public function logTransReceive(Request $request){
-        do{
-            $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, users.name AS reqby, users.email AS email, needdate, prepdate, locfrom, locto, schedule')
-                ->where('request_transfer.request_number', $request->request_number)
-                ->join('users', 'users.id', '=', 'request_transfer.requested_by')
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
-        }
-        while(!$request_details);
-
-        do{
-            $trans = RequestTransfer::selectRaw('users.name AS prepby')
-                ->where('request_transfer.request_number', $request->request_number)
-                ->join('users', 'users.id', '=', 'request_transfer.prepared_by')
-                ->get();
-            
-                $trans = str_replace('[','',$trans);
-                $trans = str_replace(']','',$trans);
-                $trans = json_decode($trans);
-        }
-        while(!$trans);
-        
-        do{
-            $items = Transfer::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, transferred_items.serial AS serial, transferred_items.qty AS qty')
-                ->where('request_number', $request->request_number)
-                ->join('items','items.id','transferred_items.items_id')
-                ->join('categories','categories.id','items.category_id')
-                ->get()
-                ->sortBy('item')
-                ->sortBy('category');
-        }
-        while(!$items);
-        
-        do{
-            $locfrom = Location::query()->select('location')->where('id',$request_details->locfrom)->get();
-        }
-        while(!$locfrom);
-        $locfrom = str_replace('[{"location":"','', $locfrom);
-        $locfrom = str_replace('"}]','', $locfrom);
-
-        do{
-            $locto = Location::query()->select('location')->where('id',$request_details->locto)->get();
-        }
-        while(!$locto);
-        $locto = str_replace('[{"location":"','', $locto);
-        $locto = str_replace('"}]','', $locto);
-
-        $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
-        $user = User::role('admin')->get();
-        foreach($user as $key){
-            if($key->email != $request_details->email){
-                $details = [
-                    'name' => ucwords($key->name),
-                    'action' => 'STOCK TRANSFER REQUEST',
-                    'request_number' => $request->request_number,
-                    'reqdate' => $request_details->reqdate,
-                    'requested_by' => $request_details->reqby,
-                    'needdate' => $request_details->needdate,
-                    'locfrom' => $locfrom,
-                    'locto' => $locto,
-                    'prepared_by' => $trans->prepby,
-                    'prepdate' => $request_details->prepdate,
-                    'scheddate' => $request_details->schedule,
-                    'receivedby' => auth()->user()->name,
-                    'role' => 'Admin',
-                    'items' => $items
-                ];
-                Mail::to($key->email)->send(new receivedTransfer($details, $subject));
+    public function receiveTransItems(Request $request){
+        if($request->status == '3' || $request->status == '4'){
+            do{
+                $sql = Stock::where('id', $request->id)
+                    ->update(['status' => 'received']);
             }
+            while(!$sql);
+        }
+        if($request->status == '17'){
+            do{
+                $sql = Stock::where('id', $request->id)
+                    ->update(['status' => 'in']);
+            }
+            while(!$sql);
+        }
+        
+        return response('true');
+    }
+
+    public function logTransReceive(Request $request){
+        if($request->status == '3' || $request->status == '4'){
+            Stock::where('request_number', $request->request_number)
+                ->where('status', '=', 'trans')
+                ->update(['status' => 'incomplete']);
+            
+            Stock::where('request_number', $request->request_number)
+                ->where('status', '=', 'received')
+                ->update(['status' => 'in']);
         }
 
-        $details = [
-            'name' => $request_details->reqby,
-            'action' => 'STOCK TRANSFER REQUEST',
-            'request_number' => $request->request_number,
-            'reqdate' => $request_details->reqdate,
-            'requested_by' => $request_details->reqby,
-            'needdate' => $request_details->needdate,
-            'locfrom' => $locfrom,
-            'locto' => $locto,
-            'prepared_by' => $trans->prepby,
-            'prepdate' => $request_details->prepdate,
-            'scheddate' => $request_details->schedule,
-            'receivedby' => auth()->user()->name,
-            'role' => 'Admin / Encoder',
-            'items' => $items
-        ];
-        Mail::to($request_details->email)->send(new receivedTransfer($details, $subject));
-
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "RECEIVED STOCK TRANSFER REQUEST: User successfully received Stock Transfer Request No. $request->request_number.";
-        $userlogs->save();
+        if($request->inc == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED INCOMPLETE STOCK TRANSFER REQUEST: User successfully received incomplete requested transfer items of Stock Transfer Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        else{
+            do{
+                $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, users.name AS reqby, users.email AS email, needdate, prepdate, locfrom, locto, schedule')
+                    ->where('request_transfer.request_number', $request->request_number)
+                    ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+                    ->get();
+    
+                    $request_details = str_replace('[','',$request_details);
+                    $request_details = str_replace(']','',$request_details);
+                    $request_details = json_decode($request_details);
+            }
+            while(!$request_details);
+    
+            do{
+                $trans = RequestTransfer::selectRaw('users.name AS prepby')
+                    ->where('request_transfer.request_number', $request->request_number)
+                    ->join('users', 'users.id', '=', 'request_transfer.prepared_by')
+                    ->get();
+                
+                    $trans = str_replace('[','',$trans);
+                    $trans = str_replace(']','',$trans);
+                    $trans = json_decode($trans);
+            }
+            while(!$trans);
+            
+            do{
+                $items = Transfer::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, transferred_items.serial AS serial, transferred_items.qty AS qty')
+                    ->where('request_number', $request->request_number)
+                    ->join('items','items.id','transferred_items.items_id')
+                    ->join('categories','categories.id','items.category_id')
+                    ->get()
+                    ->sortBy('item')
+                    ->sortBy('category');
+            }
+            while(!$items);
+            
+            do{
+                $locfrom = Location::query()->select('location')->where('id',$request_details->locfrom)->get();
+            }
+            while(!$locfrom);
+            $locfrom = str_replace('[{"location":"','', $locfrom);
+            $locfrom = str_replace('"}]','', $locfrom);
+    
+            do{
+                $locto = Location::query()->select('location')->where('id',$request_details->locto)->get();
+            }
+            while(!$locto);
+            $locto = str_replace('[{"location":"','', $locto);
+            $locto = str_replace('"}]','', $locto);
+    
+            $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
+            $user = User::role('admin')->get();
+            foreach($user as $key){
+                if($key->email != $request_details->email){
+                    $details = [
+                        'name' => ucwords($key->name),
+                        'action' => 'STOCK TRANSFER REQUEST',
+                        'request_number' => $request->request_number,
+                        'reqdate' => $request_details->reqdate,
+                        'requested_by' => $request_details->reqby,
+                        'needdate' => $request_details->needdate,
+                        'locfrom' => $locfrom,
+                        'locto' => $locto,
+                        'prepared_by' => $trans->prepby,
+                        'prepdate' => $request_details->prepdate,
+                        'scheddate' => $request_details->schedule,
+                        'receivedby' => auth()->user()->name,
+                        'role' => 'Admin',
+                        'items' => $items
+                    ];
+                    Mail::to($key->email)->send(new receivedTransfer($details, $subject));
+                }
+            }
+    
+            $details = [
+                'name' => $request_details->reqby,
+                'action' => 'STOCK TRANSFER REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'locfrom' => $locfrom,
+                'locto' => $locto,
+                'prepared_by' => $trans->prepby,
+                'prepdate' => $request_details->prepdate,
+                'scheddate' => $request_details->schedule,
+                'receivedby' => auth()->user()->name,
+                'role' => 'Admin / Encoder',
+                'items' => $items
+            ];
+            Mail::to($request_details->email)->send(new receivedTransfer($details, $subject));
+    
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED COMPLETE STOCK TRANSFER REQUEST: User successfully received complete requested transfer items of Stock Transfer Request No. $request->request_number.";
+            $userlogs->save();
+        }
 
         return response('true');
     }

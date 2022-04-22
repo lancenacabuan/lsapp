@@ -110,6 +110,8 @@ Route::get('/transfer_data',[StockTransferController::class,'transfer_data']);
 Route::get('/transModal',[StockTransferController::class,'transModal']);
 Route::get('/transferDetails',[StockTransferController::class,'transferDetails']);
 Route::get('/transItems',[StockTransferController::class,'transItems']);
+Route::get('/incTransItems',[StockTransferController::class,'incTransItems']);
+Route::any('/editTransSerial',[StockTransferController::class,'editTransSerial']);
 Route::any('/delTransItem',[StockTransferController::class,'delTransItem']);
 Route::any('/deleteTransfer',[StockTransferController::class,'deleteTransfer']);
 Route::any('/approveTransfer',[StockTransferController::class,'approveTransfer']);
@@ -117,6 +119,7 @@ Route::any('/disapproveTransfer',[StockTransferController::class,'disapproveTran
 Route::any('/logTransDisapprove',[StockTransferController::class,'logTransDisapprove']);
 Route::any('/forReceiving',[StockTransferController::class,'forReceiving']);
 Route::any('/receiveTransfer',[StockTransferController::class,'receiveTransfer']);
+Route::any('/receiveTransItems',[StockTransferController::class,'receiveTransItems']);
 Route::any('/logTransReceive',[StockTransferController::class,'logTransReceive']);
 Route::get('/stocktrans',[StockTransferController::class,'stocktrans']);
 Route::get('/settransserials',[StockTransferController::class,'settransserials']);

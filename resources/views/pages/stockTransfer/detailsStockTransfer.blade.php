@@ -111,18 +111,30 @@
             <br>
         </div>
         </div>
-        <div id="schedItemsModal" style="display: none;">
+        <div id="processModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
+            <h6 id="modalheader" class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
-            <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
-                <input class="form-control form-control-sm" id="prep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
+            <div class="schedItemsModal" style="display: none;">
+                <div class="form-inline" style="margin-left: 35px;">
+                    <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
+                    <input class="form-control form-control-sm" id="prep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
+                </div>
+                <div class="form-inline" style="margin-left: 35px;">
+                    <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
+                    <input class="form-control form-control-sm" id="sched" style="width: 280px;" type="text" readonly>
+                </div>
             </div>
-            <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
-                <input class="form-control form-control-sm" id="sched" style="width: 280px;" type="text" readonly>
+            <div class="transitItemsModal" style="display: none;">
+                <div class="form-inline" style="margin-left: 35px;">
+                    <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
+                    <input class="form-control form-control-sm" id="prep_by1" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
+                </div>
+                <div class="form-inline" style="margin-left: 35px;">
+                    <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
+                    <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
+                </div>
             </div>
             <br>
             <table class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
@@ -133,51 +145,41 @@
                         <th>QTY</th>
                         <th>UOM</th>
                         <th>SERIAL</th>
+                        <th></th>
                     </tr>
                 </thead>
             </table>
             <br>
             <hr>
             @role('admin|encoder') {{---ROLES---}}
-            <input type="button" class="btn btn-primary float-right bp" id="btnTransit" class="button" value="FOR RECEIVING">
+            <button type="button" id="btnTransit" class="btn btn-primary float-right bp schedItemsModal" style="display: none">FOR RECEIVING</button>
+            <button type="button" class="btnReceive btn btn-primary float-right bp transitItemsModal" style="display: none" disabled>RECEIVE</button>
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br>
         </div>
         </div>
-        <div id="transitItemsModal" style="display: none;">
-        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
-            <h6 id="modalheader" class="modal-title w-100">FOR RECEIVING ITEM DETAILS</h6>
+    </div>
+    </div>
+</div>
+<div class="modal fade in" id="editSerialModal">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
+            <h6 class="modal-title w-100">EDIT ITEM SERIAL</h6>            
+            <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body">
-            <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
-                <input class="form-control form-control-sm" id="prep_by1" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
-            </div>
-            <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
-                <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
-            </div>
+        <div class="modal-body" style="background-color: white; color: black;">
+            <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+            <input type="hidden" name="x_id" id="x_id">
+            <input type="hidden" name="y_serial" id="y_serial">
+            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_category" id="x_category" readonly>
+            <textarea style="margin-bottom: 8px; font-size: 12px; resize: none;" class="form-control" rows="5" name="x_item" id="x_item" readonly></textarea>
+            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_serial" id="x_serial" placeholder="Input Item Serial." autocomplete="off">
             <br>
-            <table class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
-                <thead>
-                    <tr>
-                        <th>CATEGORY</th>
-                        <th>ITEM DESCRIPTION</th>
-                        <th>QTY</th>
-                        <th>UOM</th>
-                        <th>SERIAL</th>
-                    </tr>
-                </thead>
-            </table>
-            <br>
-            <hr>
-            @role('admin|encoder') {{---ROLES---}}
-            <button type="button" id="btnReceive" class="btn btn-primary float-right bp">RECEIVE</button>
-            @endrole
-            <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-            <br>
-        </div>
+            <button type="button" id="btnEdit" class="btn btn-primary float-right bp" style="zoom: 80%;">EDIT</button>
+            <span class="float-right" style="width: 5px;">&nbsp;</span>
+            <button type="button" id="btnClear" class="btn btn-primary float-right bp" style="zoom: 80%;">CLEAR</button>
         </div>
     </div>
     </div>
@@ -194,7 +196,7 @@
             <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100" autocomplete="off"></textarea>
             <span style="color: Red; font-size: 12px;">*Required Field</span><br>
             <span id='limit' style="font-size: 12px;"></span>
-            <button type="button" id="btnReason" class="btn btn-primary float-right bp">OK</button>
+            <button type="button" id="btnReason" class="btn btn-primary float-right bp" style="zoom: 80%;">OK</button>
         </div>
     </div>
     </div>

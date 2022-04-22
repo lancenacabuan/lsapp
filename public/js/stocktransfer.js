@@ -654,15 +654,19 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     $("#btnProceed").hide();
                 }
                 if(requestStatus == '2' || requestStatus == '5'){
-                    $("#schedItemsModal").show();
+                    $("#processModal").show();
+                    $(".schedItemsModal").show();
                 }
                 if(requestStatus == '3' || requestStatus == '4'){
-                    $("#transitItemsModal").show();
+                    $("#processModal").show();
+                    document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
+                    $(".transitItemsModal").show();
                 }
                 if(requestStatus == '8'){
-                    $("#transitItemsModal").show();
-                    $("#btnReceive").hide();
+                    $("#processModal").show();
                     document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                    $(".transitItemsModal").show();
+                    $("#btnReceive").hide();
                 }
             
                 $('table.transferDetails').dataTable().fnDestroy();
@@ -725,7 +729,18 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     fixedHeader: true,            
                 });
                 
+                $('table.transItems').dataTable().fnDestroy();
                 $('table.transItems').DataTable({
+                    columnDefs: [
+                        {   
+                            "render": function(data, type, row, meta){
+                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                            },
+                            "defaultContent": '',
+                            "data": null,
+                            "targets": [5]
+                        }
+                    ],
                     searching: false,
                     paging: false,
                     ordering: false,
@@ -747,7 +762,8 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                         { data: 'item' },
                         { data: 'qty' },
                         { data: 'uom' },
-                        { data: 'serial' }
+                        { data: 'serial' },
+                        { data: 'id' }
                     ]
                 });
             });
@@ -832,15 +848,19 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $("#btnProceed").hide();
     }
     if(requestStatus == '2' || requestStatus == '5'){
-        $("#schedItemsModal").show();
+        $("#processModal").show();
+        $(".schedItemsModal").show();
     }
     if(requestStatus == '3' || requestStatus == '4'){
-        $("#transitItemsModal").show();
+        $("#processModal").show();
+        document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
+        $(".transitItemsModal").show();
     }
     if(requestStatus == '8'){
-        $("#transitItemsModal").show();
-        $("#btnReceive").hide();
+        $("#processModal").show();
         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+        $(".transitItemsModal").show();
+        $("#btnReceive").hide();
     }
 
     $('table.transferDetails').dataTable().fnDestroy();
@@ -903,7 +923,18 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         fixedHeader: true,            
     });
     
+    $('table.transItems').dataTable().fnDestroy();
     $('table.transItems').DataTable({
+        columnDefs: [
+            {   
+                "render": function(data, type, row, meta){
+                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                },
+                "defaultContent": '',
+                "data": null,
+                "targets": [5]
+            }
+        ],
         searching: false,
         paging: false,
         ordering: false,
@@ -925,9 +956,120 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
             { data: 'item' },
             { data: 'qty' },
             { data: 'uom' },
-            { data: 'serial' }
+            { data: 'serial' },
+            { data: 'id' }
         ]
     });
+});
+
+var tblEdit;
+$(document).on('click', '.btnEditSerial', function(){
+    if($('#status_id_details').val() == '2' || $('#status_id_details').val() == '5'){
+        tblEdit = 'table.transItems';
+        var id = $(this).attr("id");
+        var data = $(tblEdit).DataTable().row(id).data();
+    }
+    else if($('#status_id_details').val() == '3' || $('#status_id_details').val() == '4'){
+        tblEdit = 'table.transItems';
+        var id = $(this).attr("id");
+        var data = $(tblEdit).DataTable().row(id).data();
+    }
+    else if($('#status_id_details').val() == '15' || $('#status_id_details').val() == '16' || $('#status_id_details').val() == '17'){
+        tblEdit = 'table.incItems';
+        var id = $(this).attr("id");
+        var data = $(tblEdit).DataTable().row(id).data();
+    }
+    else{
+        window.location.reload();
+    }
+
+    $('#x_id').val(data.id);
+    $('#x_category').val(decodeHtml(data.category));
+    $('#x_item').val(decodeHtml(data.item));
+    $('#y_serial').val(data.serial);
+    $('#x_serial').val(data.serial);
+
+    $('#editSerialModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    $('.modal-body').html();
+    $('#editSerialModal').modal('show');
+});
+
+$('#btnClear').on('click', function(){
+    $('#x_serial').val('');
+    $('#x_serial').focus();
+});
+
+$('#btnEdit').on('click', function(){
+    var id = $('#x_id').val();
+    var category = $('#x_category').val();
+    var item = $('#x_item').val();
+    var origserial = $('#y_serial').val().toUpperCase();
+    var newserial = $.trim($('#x_serial').val()).toUpperCase();
+    if(newserial == ''){
+        newserial = 'N/A';
+    }
+    if(origserial == newserial){
+        swal("NO CHANGES FOUND", "Item Serial is still the same!", "error");
+        return false;
+    }
+    else{
+        swal({
+            title: "Confirm Serial: "+newserial+'?',
+            text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to recheck details.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url: '/editTransSerial',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val()
+                    },
+                    data: {
+                        id: id,
+                        category: category,
+                        item: item,
+                        origserial: origserial,
+                        newserial: newserial
+                    },
+                    success: function(data){
+                        if(data == 'false'){
+                            $('#editSerialModal').hide();
+                            $('#editSerialModal').modal('dispose');
+                            swal({
+                                title: "EDIT FAILED",
+                                text: "ITEM SERIAL",
+                                icon: "error",
+                                timer: 2000
+                            });
+                            $(tblEdit).DataTable().ajax.reload();
+                        }
+                        else{
+                            $('#editSerialModal').hide();
+                            $('#editSerialModal').modal('dispose');
+                            swal({
+                                title: "EDIT SUCCESS",
+                                text: "ITEM SERIAL",
+                                icon: "success",
+                                timer: 2000
+                            });
+                            $(tblEdit).DataTable().ajax.reload();
+                        }
+                    },
+                    error: function(data){
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
+    }
 });
 
 $(document).on('click', '.btndelItem', function(){
@@ -1181,75 +1323,8 @@ $('#btnTransit').on('click', function(){
     });    
 });
 
-$('#btnReceive').on('click', function(){
-    swal({
-        title: "RECEIVE STOCK TRANSFER REQUEST?",
-        text: "You are about to RECEIVE this Stock Transfer Request!",
-        icon: "warning",
-        buttons: true,
-    })
-    .then((willDelete) => {
-        if(willDelete){
-            $.ajax({
-                type:'post',
-                url:'/receiveTransfer',
-                headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val()
-                },
-                data:{
-                    'request_number': $('#request_num_details').val()
-                },
-                success: function(data){
-                    if(data == 'true'){
-                        scrollReset();
-                        $('#detailsStockTransfer').hide();
-                        $('#detailsStockTransfer').modal('dispose');
-                        $('#loading').show(); Spinner(); Spinner.show();
-                        $.ajax({
-                            type:'post',
-                            url:'/logTransReceive',
-                            headers: {
-                                'X-CSRF-TOKEN': $("#csrf").val()
-                            },
-                            data:{
-                                'request_number': $('#request_num_details').val()
-                            },
-                            success: function(data){
-                                if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
-                                    swal("RECEIVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
-                                    setTimeout(function(){location.href="/stocktransfer"}, 2000);
-                                }
-                                else{
-                                    return false;
-                                }
-                            },
-                            error: function(data){
-                                if(data.status == 401){
-                                    window.location.href = '/stocktransfer';
-                                }
-                                alert(data.responseText);
-                            }
-                        });
-                    }
-                    else{
-                        $('#detailsStockTransfer').hide();
-                        swal("RECEIVE FAILED", "STOCK TRANSFER REQUEST", "error");
-                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
-                    }
-                },
-                error: function(data){
-                    if(data.status == 401){
-                        window.location.href = '/stocktransfer';
-                    }
-                    alert(data.responseText);
-                }
-            });
-        }
-    });    
-});
-
 var items = [];
+var item_count = 0;
 $('table.transferDetails').DataTable().on('select', function(){});
 $('.transferDetails tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
@@ -1290,6 +1365,30 @@ $('.transferDetails tbody').on('click', 'tr', function(){
     }
     else{
         $('#btnProceed').prop('disabled', false);
+    }
+});
+
+$('.table.transItems').DataTable().on('select', function(){});
+$('.transItems tbody').on('click', 'tr', function(){
+    var requestStatus = $('#status_id_details').val();
+    if(requestStatus == '3' || requestStatus == '4'){
+        var table = $('table.transItems').DataTable();
+        var data = table.row(this).data();
+        item_count = table.data().count();
+    
+        $(this).toggleClass('selected');
+        if(items.includes(data.id) == true){
+            items = items.filter(item => item !== data.id);
+        }
+        else {
+            items.push(data.id);
+        }
+        if(items.length == 0){
+            $('.btnReceive').prop('disabled', true);
+        }
+        else{
+            $('.btnReceive').prop('disabled', false);
+        }
     }
 });
 
@@ -1531,6 +1630,112 @@ $('#btnBack').on('click', function(){
     $("#requestItems").hide();
     $("#schedOn").val('');
     $("#btnProceed").show();
+});
+
+$('.btnReceive').on('click', function(){
+    var inc = 'false';
+    var inctype = 'COMPLETE';
+    if(items.length < item_count){
+        inc = 'true';
+        inctype = 'INCOMPLETE';
+    }
+    swal({
+        title: "RECEIVE "+inctype+" STOCK TRANSFER REQUEST?",
+        text: "You are about to RECEIVE this Stock Transfer Request!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type: 'post',
+                url: '/receiveTransfer',
+                async: false,
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'inc': inc
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        for(var i=0; i < items.length; i++){
+                            $.ajax({
+                                type: 'post',
+                                url: '/receiveTransItems',
+                                async: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'status': $('#status_id_details').val(),
+                                    'id': items[i]
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        return true;
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stocktransfer';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        scrollReset();
+                        $('#detailsStockTransfer').hide();
+                        $('#detailsStockTransfer').modal('dispose');
+                        $('#loading').show(); Spinner(); Spinner.show();
+                        $.ajax({
+                            type: 'post',
+                            url: '/logTransReceive',
+                            headers: {
+                                'X-CSRF-TOKEN': $("#csrf").val()
+                            },
+                            data:{
+                                'request_number': $('#request_num_details').val(),
+                                'status': $('#status_id_details').val(),
+                                'inc': inc
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide(); Spinner.hide();
+                                    swal("RECEIVED "+inctype, "STOCK TRANSFER REQUEST", "success");
+                                    setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stocktransfer';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    }
+                    else{
+                        $('#detailsStockTransfer').hide();
+                        swal("RECEIVE FAILED", "STOCK TRANSFER REQUEST", "error");
+                        setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stocktransfer';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
 });
 
 $('.btnPrint').on('click', function(){

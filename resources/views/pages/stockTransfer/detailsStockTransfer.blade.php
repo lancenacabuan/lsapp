@@ -5,7 +5,7 @@
             <h6 class="modal-title w-100">STOCK TRANSFER REQUEST DETAILS</h6>            
             <button type="button" class="btn-close btn-close-white close" id='modalClose' data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background-color: white; color: black;">                          
+        <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
@@ -189,7 +189,7 @@
             <h6 class="modal-title w-100">REASON FOR DISAPPROVAL</h6>            
             <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background-color: white; color: black;">                          
+        <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100" autocomplete="off"></textarea>
             <span style="color: Red; font-size: 12px;">*Required Field</span><br>

@@ -116,15 +116,20 @@ $(".btnNewAssembly").on('click', function(){
     generateReqNum();
 });
 
-setInterval(checkNewAssembly, 200);
+setInterval(checkNewAssembly, 100);
 function checkNewAssembly(){
     if($('#newAssembly').is(':visible')){
         if($('#needdate').val() && $('#assembly').val() && $('#qty').val() > 0 && $('#assemblypartsDetails').is(':hidden')){
             $('#btnAssemblyProceed').show();
+            $('.header_label').hide();
         }
         else{
             $('#btnAssemblyProceed').hide();
+            $('.header_label').show();
         }
+    }
+    if($('#assemblypartsDetails').is(':visible')){
+        $('.header_label').hide();
     }
 }
 

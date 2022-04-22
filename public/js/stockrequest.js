@@ -426,10 +426,14 @@ $('#btnSave').on('click', function(){
     var warranty_type = $('#warranty_type').val();
     var client_name = $.trim($('#client_name').val());
     var location_name = $.trim($('#location').val());
-    var reference = $.trim($('#reference').val());
+    var reference = $.trim($('#reference').val()).toUpperCase();
     var reference_upload = $('#reference_upload').val();
     if(needdate < minDate){
         swal('Minimum Date is today!','Select within date range from today onwards.','error');
+        return false;
+    }
+    else if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(reference) == true){
+        swal('Invalid Reference SO/PO No.!','Please input a valid Reference SO/PO Number.','error');
         return false;
     }
     else{

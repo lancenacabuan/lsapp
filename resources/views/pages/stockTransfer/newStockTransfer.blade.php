@@ -5,7 +5,7 @@
             <h6 class="modal-title w-100">NEW STOCK TRANSFER</h6>    
             <button type="button" class="btn-close btn-close-white close" id="close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background-color: white; color: black;">                
+        <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left: 20px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
@@ -41,44 +41,52 @@
                     @endforeach --}}
                 </select>
             </div>
+            <div class="header_label alert alert-primary mt-4" role="alert">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Please fill up all required fields to proceed.
+            </div>
         </div>
         <div id="transrequestDetails" style="display: none;">
-        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">REQUEST DETAILS</h6>
-        </div>        
-        <form class="mt-2 mb-2">
-            <div class="form-inline" style="margin-left: 20px;">
-                <select class="form-select" id="category" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
-                        <option value="" selected disabled>Select Category</option>
-                </select>
-                <select class="form-select" id="item" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 5px;">
-                        <option value="" selected disabled>Select Item</option>
-                </select>
-                <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="text" placeholder="UOM" readonly>
-                <input class="form-control" id="qty" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="number" placeholder="Qty" disabled>
-                <input class="form-control" id="qtystock" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="text" placeholder="Stock" readonly>
-                <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 75%; margin-left: 5px; margin-top: -1px;">
-            </div>          
-        </form>
-        <div class="container-fluid"  id="#divNewStockTransfer">
-            <table id='tblNewStockTransfer' class="table tblNewStockTransfer" style="cursor: pointer; font-size: 12px; display: none;">
-                <thead>
-                    <tr>
-                        <th>CATEGORY</th>
-                        <th>ITEM DESCRIPTION</th>
-                        <th>QTY</th>
-                        <th>UOM</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>      
-            </table>
-        </div>
-        <div class="col-md-12 mt-2 mb-4">
-            <button type="submit" id="btnClose" class="btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CLOSE</button>
-            <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
-        </div>
+            <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
+                <h6 class="modal-title w-100">REQUEST DETAILS</h6>
+            </div>
+            <div class="modal-body" style="background-color: white; color: black;">
+                <form class="mt-2 mb-2">
+                    <div class="form-inline" style="margin-left: 20px;">
+                        <select class="form-select" id="category" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
+                                <option value="" selected disabled>Select Category</option>
+                        </select>
+                        <select class="form-select" id="item" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 5px;">
+                                <option value="" selected disabled>Select Item</option>
+                        </select>
+                        <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="text" placeholder="UOM" readonly>
+                        <input class="form-control" id="qty" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="number" placeholder="Qty" disabled>
+                        <input class="form-control" id="qtystock" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="text" placeholder="Stock" readonly>
+                        <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 75%; margin-left: 5px; margin-top: -1px;">
+                    </div>          
+                </form>
+                <div class="container-fluid"  id="#divNewStockTransfer">
+                    <table id='tblNewStockTransfer' class="table tblNewStockTransfer" style="cursor: pointer; font-size: 12px; display: none;">
+                        <thead>
+                            <tr>
+                                <th>CATEGORY</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>QTY</th>
+                                <th>UOM</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>      
+                    </table>
+                </div>
+                <div class="submit_label alert alert-primary mt-4" role="alert">
+                    <i class='fa fa-exclamation-triangle'></i>
+                    <strong>NOTE:</strong> Please fill up all required fields to proceed.
+                </div>
+                <button type="submit" id="btnClose" class="btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
+                <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
+            </div>
         </div>
     </div>
     </div>

@@ -101,14 +101,16 @@ $(".btnNewStockTransfer").on('click', function(){
     generateReqNum();
 });
 
-setInterval(runFunction, 200);
+setInterval(runFunction, 100);
 function runFunction(){
     if($('#newStockTransfer').is(':visible')){
         if($('#needdate').val() && $('#locfrom').val() && $('#locto').val()){
             $('#transrequestDetails').show();
+            $('.header_label').hide();
         }
         else{
             $('#transrequestDetails').hide();
+            $('.header_label').show();
         }
     }
 }
@@ -311,7 +313,13 @@ $(".add-row").on('click', function(){
             $('#btnClose').show();
             $('#btnSave').show();
         }
-    } 
+    }
+    if($('#tblNewStockTransfer tbody').children().length==0){
+        $('.submit_label').show();
+    }
+    else{
+        $('.submit_label').hide();
+    }
 });
 
 $("#tblNewStockTransfer").on('click', '.delete-row', function(){
@@ -328,6 +336,7 @@ $("#tblNewStockTransfer").on('click', '.delete-row', function(){
         $('#btnClose').hide();
         $('#btnSave').hide();
         $('#locfrom').prop('disabled', false);
+        $('.submit_label').show();
     }
 });
 

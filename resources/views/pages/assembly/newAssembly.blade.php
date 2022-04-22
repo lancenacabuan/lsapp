@@ -5,7 +5,7 @@
             <h6 class="modal-title w-100">NEW ASSEMBLY REQUEST</h6>    
             <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background-color: white; color: black;">                
+        <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
@@ -30,31 +30,36 @@
                 <input class="form-control" id="qty" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px;" type="number" placeholder="Qty">
                 <button type="submit" id="btnAssemblyProceed" class="btn btn-primary bp" style="zoom: 80%; margin-left: 10px; display: none;">PROCEED</button>
             </div>
+            <div class="header_label alert alert-primary mt-4" role="alert">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Please fill up all required fields to proceed.
+            </div>
         </div>
         <div id="assemblypartsDetails" style="display: none;">
-        <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">PARTS NEEDED</h6>
-        </div>
-        <div class="container-fluid mt-2"  id="#divPartsDetails">
-            <table id='tblPartsDetails' class="table tblPartsDetails" style="cursor: pointer; font-size: 12px; width: 100%;">
-                <thead>
-                    <tr>
-                        <th>CATEGORY</th>
-                        <th>ITEM DESCRIPTION</th>
-                        <th>QTY</th>
-                        <th>UOM</th>
-                        <th>CATEGORY ID</th>
-                        <th>ITEM ID</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>      
-            </table>
-        </div>
-        <div class="col-md-12 mt-4 mb-4">
-            <button type="submit" id="btnAssemblyBack" class="btn btn-primary bp">BACK</button>
-            <button type="submit" id="btnAssemblySave" class="btn btn-primary float-right bp" disabled>SUBMIT</button>
-        </div>
+            <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
+                <h6 class="modal-title w-100">PARTS NEEDED</h6>
+            </div>
+            <div class="modal-body" style="background-color: white; color: black;">
+                <div class="container-fluid mt-2"  id="#divPartsDetails">
+                    <table id='tblPartsDetails' class="table tblPartsDetails" style="cursor: pointer; font-size: 12px; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>CATEGORY</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>QTY</th>
+                                <th>UOM</th>
+                                <th>CATEGORY ID</th>
+                                <th>ITEM ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>      
+                    </table>
+                </div>
+                <hr>
+                <button type="submit" id="btnAssemblyBack" class="btn btn-primary bp">BACK</button>
+                <button type="submit" id="btnAssemblySave" class="btn btn-primary float-right bp" disabled>SUBMIT</button>
+            </div>
         </div>
     </div>
     </div>

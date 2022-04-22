@@ -5,7 +5,7 @@
             <h6 class="modal-title w-100">UPDATE CATEGORY DETAILS</h6>    
             <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background-color: white; color: black;">                
+        <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input type="hidden" name="category_id" id="category_id">
             <input type="hidden" name="category_original" id="category_original">

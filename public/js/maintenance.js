@@ -1079,7 +1079,13 @@ $(".add-row").on('click', function(){
         $('#divCreateItem').toggle();
         $('#btnClose').show();
         $('#btnSave').show();
-    } 
+    }
+    if($('#tblCreateItem tbody').children().length==0){
+        $('.submit_label').show();
+    }
+    else{
+        $('.submit_label').hide();
+    }
 });
 
 $("#tblCreateItem").on('click', '.delete-row', function(){
@@ -1089,6 +1095,7 @@ $("#tblCreateItem").on('click', '.delete-row', function(){
         $('#divCreateItem').removeClass();
         $('#btnClose').hide();
         $('#btnSave').hide();
+        $('.submit_label').show();
     }
 });
 

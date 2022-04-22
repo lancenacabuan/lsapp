@@ -5,7 +5,7 @@
             <h6 class="modal-title w-100">STOCK REQUEST DETAILS</h6>            
             <button type="button" class="btn-close btn-close-white close" id='modalClose' data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background-color: white; color: black;">                          
+        <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input type="hidden" id="req_type_id_details">
             <input type="hidden" id="status_id_details">
@@ -479,7 +479,7 @@
             <h6 class="modal-title w-100">REASON FOR DISAPPROVAL</h6>            
             <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background-color: white; color: black;">                          
+        <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="4" name="reason" id="reason" maxlength="100" autocomplete="off"></textarea>
             <span style="color: Red; font-size: 12px;">*Required Field</span><br>
@@ -496,7 +496,7 @@
             <h6 class="modal-title w-100">REFERENCE SO/PO NUMBER</h6>            
             <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background-color: white; color: black;">                          
+        <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_reference" id="x_reference" placeholder="SO/PO Number" autocomplete="off">
             <span style="color: Red; font-size: 12px;">Please input SO/PO Number to proceed.</span>

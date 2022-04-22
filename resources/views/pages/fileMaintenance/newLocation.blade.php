@@ -5,7 +5,7 @@
             <h6 class="modal-title w-100">NEW LOCATION REQUEST</h6>    
             <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" style="background-color: white; color: black;">                
+        <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline">
                 <label class="form-control form-control-sm" style="width:120px;">Location Name</label>

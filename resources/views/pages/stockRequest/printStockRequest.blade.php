@@ -52,7 +52,7 @@
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Client Name:</td>
                 <td colspan="2" class="tdHide">{{$list->client_name}}</td>
                 <td colspan="2" style="font-weight: bold; display: none;" class="tdAssembly">Assembled Item Name:</td>
-                <td colspan="2" style="display: none;" class="tdAssembly" id="ellipsis">{{$list->item_desc}}</td>
+                <td colspan="2" style="display: none;" class="tdAssembly" id="ellipsis">{{$list1->item_desc ?? 'N/A'}}</td>
             </tr>
             <tr height="20">
                 <td colspan="2" height="20" style="font-weight: bold;">Prepared By:</td>

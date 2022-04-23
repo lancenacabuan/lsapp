@@ -358,6 +358,7 @@ class StockTransferController extends Controller
     public function transItems(Request $request){
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('transferred_items.request_number', $request->request_number)
+            ->where('stocks.status', '!=', 'incomplete')
             ->join('transferred_items','transferred_items.request_number','stocks.request_number')
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')
@@ -566,21 +567,73 @@ class StockTransferController extends Controller
         return response('true');
     }
 
-    public function forReceiving(Request $request){
-        RequestTransfer::where('request_number', $request->request_number)
-            ->where('status','2')
-            ->update(['status' => '3']);
-
-        RequestTransfer::where('request_number', $request->request_number)
-            ->where('status','5')
-            ->update(['status' => '4']);
+    public function reschedTransRequest(Request $request){
+        do{
+            $sql = RequestTransfer::where('request_number', $request->request_number)
+                ->update(['status' => '16', 'prepared_by' => auth()->user()->id, 'schedule' => $request->resched]);
+        }
+        while(!$sql);
         
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "FOR RECEIVING STOCK TRANSFER REQUEST: User successfully processed for receiving Stock Transfer Request No. $request->request_number.";
-        $userlogs->save();
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
 
-        return response('true');
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RESCHEDULED STOCK TRANSFER REQUEST: User successfully rescheduled on $request->resched Stock Transfer Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        
+        return response($result);
+    }
+
+    public function forReceiving(Request $request){
+        if($request->status == '2'){
+            do{
+                $sql = RequestTransfer::where('request_number', $request->request_number)
+                    ->where('status','2')
+                    ->update(['status' => '3']);
+            }
+            while(!$sql);
+            $sched = 'FOR RECEIVING';
+        }
+        else if($request->status == '5'){
+            do{
+                $sql = RequestTransfer::where('request_number', $request->request_number)
+                    ->where('status','5')
+                    ->update(['status' => '4']);
+            }
+            while(!$sql);
+            $sched = 'PARTIAL FOR RECEIVING';
+        }
+        else if($request->status == '16'){
+            do{
+                $sql = RequestTransfer::where('request_number', $request->request_number)
+                    ->where('status','16')
+                    ->update(['status' => '17']);
+            }
+            while(!$sql);
+            $sched = 'FOR RECEIVING';
+        }
+        else{
+            return response('false');
+        }
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = $sched." STOCK TRANSFER REQUEST: User successfully processed for receiving Stock Transfer Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 
     public function receiveTransfer(Request $request){
@@ -673,6 +726,7 @@ class StockTransferController extends Controller
             do{
                 $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                     ->where('transferred_items.request_number', $request->request_number)
+                    ->where('stocks.status', '!=', 'incomplete')
                     ->join('transferred_items','transferred_items.request_number','stocks.request_number')
                     ->join('request_transfer','request_transfer.request_number','stocks.request_number')
                     ->join('items','items.id','stocks.item_id')
@@ -884,6 +938,7 @@ class StockTransferController extends Controller
         
         $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('transferred_items.request_number', $request->request_number)
+            ->where('stocks.status', '!=', 'incomplete')
             ->join('transferred_items','transferred_items.request_number','stocks.request_number')
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')

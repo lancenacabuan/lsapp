@@ -13,6 +13,7 @@ $(function(){
 
     $('#needdate').attr('min', minDate);
     $('#schedOn').attr('min', minDate);
+    $('#resched').attr('min', minDate);
 });
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -534,13 +535,13 @@ $('table.stocktransferTable').DataTable({
                 if(row.status_id == '6'){
                     return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                 }
-                else if(row.status_id == '1'){
+                else if(row.status_id == '1' || row.status_id == '15'){
                     return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '2' || row.status_id == '5'){
+                else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
                     return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '3' || row.status_id == '4'){
+                else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '17'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '8'){
@@ -607,10 +608,12 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                 var prep_by = value.prep_by;
                     $('#prep_by').val(prep_by);
                     $('#prep_by1').val(prep_by);
+                    $('#reprep_by').val(prep_by);
                 var sched = value.sched;
                     sched = moment(sched).format('dddd, MMMM DD, YYYY');
                     $('#sched').val(sched);
                     $('#sched1').val(sched);
+                    $('#resched1').val(sched);
                 var locfrom = value.locfrom;
                     $('#locfrom_details').val(locfrom);
                 var locto = value.locto;
@@ -620,7 +623,8 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                 var btnDel = '';
                 var hideCol = '';
                 var hideEdit = '';
-            
+                var hideEdit1 = '';
+
                 $('.modal-body').html();
                 $('#detailsStockTransfer').modal('show');
                 if(locfrom == 5){
@@ -646,11 +650,11 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     $("#reason_label").show();
                     $("#reason_details").show();
                 }
-                if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8'){
+                if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus >= 8){
                     $("#btnDelete").hide();
                     btnDel = 13;
                 }
-                if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8'){
+                if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus >= 8){
                     $("#proceed_label").hide();
                     $("#btnProceed").hide();
                 }
@@ -671,13 +675,42 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     $(".btnReceive").hide();
                     hideEdit = 5;
                 }
+                if(requestStatus == '15'){
+                    $("#processModal").show();
+                    document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                    $(".btnReceive").hide();
+                    hideEdit = 5;
+                    $("#incItemsModal").show();
+                    $('.divResched').show();
+                    $('#resched').attr('max', maxDate);
+                }
+                if(requestStatus == '16'){
+                    $("#processModal").show();
+                    document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                    $(".btnReceive").hide();
+                    hideEdit = 5;
+                    $("#incItemsModal").show();
+                    $('.divResched1').show();
+                }
+                if(requestStatus == '17'){
+                    $("#processModal").show();
+                    document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                    $(".btnReceive").hide();
+                    hideEdit = 5;
+                    $("#incItemsModal").show();
+                    $("#increceive_label").show();
+                    $('.divResched1').show();
+                    hideEdit1 = 5;
+                    $(".btnTransit").hide();
+                    $(".btnReceiveInc").show();
+                }
                 if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6'){
                     var transferDetails = [5,6,7,8,9,10,hideCol,btnDel];
                 }
                 else{
                     var transferDetails = [4,5,6,7,8,9,10,11,12,13];
                 }
-            
+
                 $('table.transferDetails').dataTable().fnDestroy();
                 $('table.transferDetails').DataTable({ 
                     columnDefs: [
@@ -780,6 +813,49 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                         { data: 'id' }
                     ]
                 });
+
+                $('table.incItems').dataTable().fnDestroy();
+                $('table.incItems').DataTable({
+                    columnDefs: [
+                        {
+                            "targets": [hideEdit1],
+                            "visible": false,
+                            "searchable": false
+                        },
+                        {
+                            "render": function(data, type, row, meta){
+                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                            },
+                            "defaultContent": '',
+                            "data": null,
+                            "targets": [5]
+                        }
+                    ],
+                    searching: false,
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    language: {
+                        processing: "Loading...",
+                        emptyTable: "No data available in table"
+                    },
+                    serverSide: true,
+                    ajax: {
+                        url: '/incTransItems',
+                        data: {
+                            request_number: $('#request_num_details').val(),
+                        }
+                    },
+                    order:[],
+                    columns: [
+                        { data: 'category' },
+                        { data: 'item' },
+                        { data: 'qty' },
+                        { data: 'uom' },
+                        { data: 'serial' },
+                        { data: 'id' }
+                    ]
+                });
             });
         },
         error: function(data){
@@ -815,10 +891,12 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     var prep_by = value.prep_by;
         $('#prep_by').val(prep_by);
         $('#prep_by1').val(prep_by);
+        $('#reprep_by').val(prep_by);
     var sched = value.sched;
         sched = moment(sched).format('dddd, MMMM DD, YYYY');
         $('#sched').val(sched);
         $('#sched1').val(sched);
+        $('#resched1').val(sched);
     var locfrom = value.locfrom;
         $('#locfrom_details').val(locfrom);
     var locto = value.locto;
@@ -828,6 +906,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     var btnDel = '';
     var hideCol = '';
     var hideEdit = '';
+    var hideEdit1 = '';
 
     $('.modal-body').html();
     $('#detailsStockTransfer').modal('show');
@@ -854,11 +933,11 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $("#reason_label").show();
         $("#reason_details").show();
     }
-    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus == '8'){
+    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus >= 8){
         $("#btnDelete").hide();
         btnDel = 13;
     }
-    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus == '8'){
+    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus >= 8){
         $("#proceed_label").hide();
         $("#btnProceed").hide();
     }
@@ -878,6 +957,35 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $(".transitItemsModal").show();
         $(".btnReceive").hide();
         hideEdit = 5;
+    }
+    if(requestStatus == '15'){
+        $("#processModal").show();
+        document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+        $(".btnReceive").hide();
+        hideEdit = 5;
+        $("#incItemsModal").show();
+        $('.divResched').show();
+        $('#resched').attr('max', maxDate);
+    }
+    if(requestStatus == '16'){
+        $("#processModal").show();
+        document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+        $(".btnReceive").hide();
+        hideEdit = 5;
+        $("#incItemsModal").show();
+        $('.divResched1').show();
+    }
+    if(requestStatus == '17'){
+        $("#processModal").show();
+        document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+        $(".btnReceive").hide();
+        hideEdit = 5;
+        $("#incItemsModal").show();
+        $("#increceive_label").show();
+        $('.divResched1').show();
+        hideEdit1 = 5;
+        $(".btnTransit").hide();
+        $(".btnReceiveInc").show();
     }
     if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6'){
         var transferDetails = [5,6,7,8,9,10,hideCol,btnDel];
@@ -974,6 +1082,49 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         serverSide: true,
         ajax: {
             url: '/transItems',
+            data: {
+                request_number: $('#request_num_details').val(),
+            }
+        },
+        order:[],
+        columns: [
+            { data: 'category' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' },
+            { data: 'id' }
+        ]
+    });
+
+    $('table.incItems').dataTable().fnDestroy();
+    $('table.incItems').DataTable({
+        columnDefs: [
+            {
+                "targets": [hideEdit1],
+                "visible": false,
+                "searchable": false
+            },
+            {
+                "render": function(data, type, row, meta){
+                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                },
+                "defaultContent": '',
+                "data": null,
+                "targets": [5]
+            }
+        ],
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false,
+        language: {
+            processing: "Loading...",
+            emptyTable: "No data available in table"
+        },
+        serverSide: true,
+        ajax: {
+            url: '/incTransItems',
             data: {
                 request_number: $('#request_num_details').val(),
             }
@@ -1310,7 +1461,7 @@ $('#btnReason').on('click', function(){
     }
 });
 
-$('#btnTransit').on('click', function(){
+$('.btnTransit').on('click', function(){
     swal({
         title: "FOR RECEIVING?",
         text: "You are about to move these items FOR RECEIVING!",
@@ -1326,7 +1477,8 @@ $('#btnTransit').on('click', function(){
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
-                    'request_number': $('#request_num_details').val()
+                    'request_number': $('#request_num_details').val(),
+                    'status': $('#status_id_details').val()
                 },
                 success: function(data){
                     if(data == 'true'){
@@ -1351,12 +1503,68 @@ $('#btnTransit').on('click', function(){
     });    
 });
 
+$('#btnReschedule').on('click', function(){
+    if(!$("#resched").val()){
+        swal('Recheduled On is required!','Select within date range from today up to Date Needed.','error');
+        return false;
+    }
+    else if($("#resched").val() < minDate){
+        swal('Minimum Date is today!','Select within date range from today up to Date Needed.','error');
+        return false;
+    }
+    else if($("#resched").val() > maxDate){
+        swal('Exceed Date Needed deadline!','Select within date range from today up to Date Needed.','error');
+        return false;
+    }
+    else{
+        swal({
+            title: "RESCHEDULE STOCK TRANSFER REQUEST?",
+            text: "You are about to RESCHEDULE this STOCK TRANSFER REQUEST!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url:'/reschedTransRequest',
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val()
+                    },
+                    data:{
+                        'request_number': $('#request_num_details').val(),
+                        'resched': $("#resched").val()
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            $('#detailsStockTransfer').hide();
+                            swal("RESCHEDULE SUCCESS", "STOCK TRANSFER REQUEST", "success");
+                            setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                        }
+                        else{
+                            $('#detailsStockTransfer').hide();
+                            swal("RESCHEDULE FAILED", "STOCK TRANSFER REQUEST", "error");
+                            setTimeout(function(){location.href="/stocktransfer"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stocktransfer';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
+    }
+});
+
 var items = [];
 var item_count = 0;
 $('table.transferDetails').DataTable().on('select', function(){});
 $('.transferDetails tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
-    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7){
+    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus >= 8){
         return false;
     }
     var table = $('table.transferDetails').DataTable();
@@ -1401,6 +1609,30 @@ $('.transItems tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
     if(requestStatus == '3' || requestStatus == '4'){
         var table = $('table.transItems').DataTable();
+        var data = table.row(this).data();
+        item_count = table.data().count();
+    
+        $(this).toggleClass('selected');
+        if(items.includes(data.id) == true){
+            items = items.filter(item => item !== data.id);
+        }
+        else {
+            items.push(data.id);
+        }
+        if(items.length == 0){
+            $('.btnReceive').prop('disabled', true);
+        }
+        else{
+            $('.btnReceive').prop('disabled', false);
+        }
+    }
+});
+
+$('.table.incItems').DataTable().on('select', function(){});
+$('.incItems tbody').on('click', 'tr', function(){
+    var requestStatus = $('#status_id_details').val();
+    if(requestStatus == '17'){
+        var table = $('table.incItems').DataTable();
         var data = table.row(this).data();
         item_count = table.data().count();
     

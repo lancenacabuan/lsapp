@@ -154,12 +154,59 @@
                 </thead>
             </table>
             <br>
-            <hr>
+            <hr class="schedItemsModal transitItemsModal" style="display: none;">
             @role('admin|encoder') {{---ROLES---}}
-            <button type="button" id="btnTransit" class="btn btn-primary float-right bp schedItemsModal" style="display: none">FOR RECEIVING</button>
+            <button type="button" class="btnTransit btn btn-primary float-right bp schedItemsModal" style="display: none">FOR RECEIVING</button>
             <button type="button" class="btnReceive btn btn-primary float-right bp transitItemsModal" style="display: none" disabled>RECEIVE</button>
             @endrole
-            <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
+            <button type="button" class="btnPrint btn btn-primary bp schedItemsModal transitItemsModal" style="display: none;">PRINT PREVIEW</button>
+            <br class="schedItemsModal transitItemsModal" style="display: none;">
+        </div>
+        </div>
+        <div id="incItemsModal" style="display: none;">
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
+            <h6 id="incmodalheader" class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
+        </div>
+        <div class="modal-body">
+            <div id="increceive_label" class="alert alert-primary" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+            </div>
+            <div class="form-inline divResched" style="margin-left: 35px; display: none;">
+                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
+                <input class="form-control form-control-sm" id="reprep_by1" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
+            </div>
+            <div class="form-inline divResched" style="margin-left: 35px; display: none;">
+                <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
+                <input class="form-control form-control-sm" id="resched" style="width: 280px;" type="date">
+            </div>
+            <div class="form-inline divResched1" style="margin-left: 35px; display: none;">
+                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
+                <input class="form-control form-control-sm" id="reprep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
+            </div>
+            <div class="form-inline divResched1" style="margin-left: 35px; display: none;">
+                <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
+                <input class="form-control form-control-sm" id="resched1" style="width: 280px;" type="text" readonly>
+            </div>
+            <br>
+            <table id="incItems" class="table incItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>CATEGORY</th>
+                        <th>ITEM DESCRIPTION</th>
+                        <th>QTY</th>
+                        <th>UOM</th>
+                        <th>SERIAL</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+            <br>
+            <hr>
+            <input type="button" class="btn btn-primary float-right bp divResched" id="btnReschedule" style="display: none;" value="RESCHEDULE">
+            <input type="button" class="btn btn-primary float-right bp btnTransit divResched1" style="display: none;" value="FOR RECEIVING">
+            <button type="button" class="btn btn-primary float-right bp btnReceive btnReceiveInc" disabled>RECEIVE</button>
+            <br>
             <br>
         </div>
         </div>

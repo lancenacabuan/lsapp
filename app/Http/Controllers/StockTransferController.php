@@ -357,12 +357,13 @@ class StockTransferController extends Controller
 
     public function transItems(Request $request){
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-            ->where('stocks.request_number', $request->request_number)
-            ->whereIn('stocks.status', ['in','trans'])
+            ->where('transferred_items.request_number', $request->request_number)
+            ->join('transferred_items','transferred_items.request_number','stocks.request_number')
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','request_transfer.locfrom')
+            ->groupBy('category','item','uom','serial','qty','item_id','id','location')
             ->get()
             ->sortBy('item')
             ->sortBy('category');
@@ -671,12 +672,13 @@ class StockTransferController extends Controller
             
             do{
                 $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-                    ->where('stocks.request_number', $request->request_number)
-                    ->whereIn('stocks.status', ['in','trans'])
+                    ->where('transferred_items.request_number', $request->request_number)
+                    ->join('transferred_items','transferred_items.request_number','stocks.request_number')
                     ->join('request_transfer','request_transfer.request_number','stocks.request_number')
                     ->join('items','items.id','stocks.item_id')
                     ->join('categories','categories.id','items.category_id')
                     ->join('locations','locations.id','request_transfer.locfrom')
+                    ->groupBy('category','item','uom','serial','qty','item_id','id','location')
                     ->get()
                     ->sortBy('item')
                     ->sortBy('category');
@@ -881,12 +883,13 @@ class StockTransferController extends Controller
         $list2 = json_decode($list2);
         
         $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-            ->where('stocks.request_number', $request->request_number)
-            ->whereIn('stocks.status', ['in','trans'])
+            ->where('transferred_items.request_number', $request->request_number)
+            ->join('transferred_items','transferred_items.request_number','stocks.request_number')
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','request_transfer.locfrom')
+            ->groupBy('category','item','uom','serial','qty','item_id','id','location')
             ->get()
             ->sortBy('item')
             ->sortBy('category');

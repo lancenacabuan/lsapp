@@ -116,6 +116,10 @@
             <h6 id="modalheader" class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
+            <div class="alert alert-primary transitItemsModal" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+            </div>
             <div class="schedItemsModal" style="display: none;">
                 <div class="form-inline" style="margin-left: 35px;">
                     <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>

@@ -662,6 +662,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     $("#processModal").show();
                     document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
                     $(".transitItemsModal").show();
+                    hideEdit = 5;
                 }
                 if(requestStatus == '8'){
                     $("#processModal").show();
@@ -670,12 +671,18 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     $(".btnReceive").hide();
                     hideEdit = 5;
                 }
+                if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6'){
+                    var transferDetails = [5,6,7,8,9,10,hideCol,btnDel];
+                }
+                else{
+                    var transferDetails = [4,5,6,7,8,9,10,11,12,13];
+                }
             
                 $('table.transferDetails').dataTable().fnDestroy();
                 $('table.transferDetails').DataTable({ 
                     columnDefs: [
                         {
-                            "targets": [5,6,7,8,9,10,hideCol,btnDel],
+                            "targets": transferDetails,
                             "visible": false,
                             "searchable": false
                         },
@@ -863,6 +870,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $("#processModal").show();
         document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
         $(".transitItemsModal").show();
+        hideEdit = 5;
     }
     if(requestStatus == '8'){
         $("#processModal").show();
@@ -871,12 +879,18 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $(".btnReceive").hide();
         hideEdit = 5;
     }
+    if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6'){
+        var transferDetails = [5,6,7,8,9,10,hideCol,btnDel];
+    }
+    else{
+        var transferDetails = [4,5,6,7,8,9,10,11,12,13];
+    }
 
     $('table.transferDetails').dataTable().fnDestroy();
     $('table.transferDetails').DataTable({ 
         columnDefs: [
             {
-                "targets": [5,6,7,8,9,10,hideCol,btnDel],
+                "targets": transferDetails,
                 "visible": false,
                 "searchable": false
             },

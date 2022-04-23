@@ -1656,6 +1656,7 @@ $("#btnProceed").unbind('click').click(function(){
     var j = 0;
     var reqnum = $('#request_num_details').val();
     $("#transferDetails *").prop('disabled',true);
+    $("#proceed_label").hide();
     $("#btnProceed").hide();
     $("#reqContents").empty();
     $("#requestItems").slideDown();
@@ -1886,6 +1887,7 @@ $("#btnProceed").unbind('click').click(function(){
 
 $('#btnBack').on('click', function(){
     $("#transferDetails *").prop('disabled', false);
+    $("#proceed_label").show();
     $('#btnSubmit').prop('disabled', true);
     $("#requestItems").hide();
     $("#schedOn").val('');

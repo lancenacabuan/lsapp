@@ -3183,6 +3183,7 @@ $("#btnProceed").unbind('click').click(function(){
         });
     }
     $("#stockDetailsrequest *").prop('disabled', true);
+    $("#proceed_label").hide();
     $("#btnProceed").hide();
     $("#divAdjust").hide();
     $("#reqContents").empty();
@@ -3458,6 +3459,7 @@ $('#btnBack').on('click', function(){
         items = [];
     }
     $("#stockDetailsrequest *").prop('disabled', false);
+    $("#proceed_label").show();
     $('#btnSubmit').prop('disabled', true);
     $("#requestItems").hide();
     $("#schedOn").val('');

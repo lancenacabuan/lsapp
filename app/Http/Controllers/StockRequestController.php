@@ -208,7 +208,7 @@ class StockRequestController extends Controller
     public function request_data(){
         if(auth()->user()->hasanyRole('approver - sales')){ //---ROLES---//
             $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, warranty_type')
-            ->whereIn('requests.status', ['6'])
+            ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
             ->join('status', 'status.id', '=', 'requests.status')
@@ -835,6 +835,30 @@ class StockRequestController extends Controller
             Mail::to($key->email)->send(new receivedRequest($details, $subject));
         }
 
+        $user = User::role('approver - sales')->get();
+        foreach($user as $key){
+            $details = [
+                'name' => ucwords($key->name),
+                'action' => 'STOCK REQUEST',
+                'verb' => 'SOLD',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'client_name' => $request_details->client_name,
+                'location' => $request_details->location,
+                'reference' => $request_details->reference,
+                'prepared_by' => $prep->prepby,
+                'prepdate' => $request_details->prepdate,
+                'scheddate' => $request_details->schedule,
+                'receivedby' => auth()->user()->name,
+                'role' => 'Approver - Sales',
+                'items' => $items
+            ];
+            Mail::to($key->email)->send(new receivedRequest($details, $subject));
+        }
+
         $details = [
             'name' => $request_details->reqby,
             'action' => 'STOCK REQUEST',
@@ -1188,6 +1212,30 @@ class StockRequestController extends Controller
                     'scheddate' => $request_details->schedule,
                     'receivedby' => auth()->user()->name,
                     'role' => 'Admin',
+                    'items' => $items
+                ];
+                Mail::to($key->email)->send(new receivedRequest($details, $subject));
+            }
+
+            $user = User::role('approver - sales')->get();
+            foreach($user as $key){
+                $details = [
+                    'name' => ucwords($key->name),
+                    'action' => 'STOCK REQUEST',
+                    'verb' => 'RECEIVED',
+                    'request_number' => $request->request_number,
+                    'reqdate' => $request_details->reqdate,
+                    'requested_by' => $request_details->reqby,
+                    'needdate' => $request_details->needdate,
+                    'reqtype' => $request_details->reqtype,
+                    'client_name' => $request_details->client_name,
+                    'location' => $request_details->location,
+                    'reference' => $request_details->reference,
+                    'prepared_by' => $prep->prepby,
+                    'prepdate' => $request_details->prepdate,
+                    'scheddate' => $request_details->schedule,
+                    'receivedby' => auth()->user()->name,
+                    'role' => 'Approver - Sales',
                     'items' => $items
                 ];
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));

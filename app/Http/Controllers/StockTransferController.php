@@ -205,7 +205,7 @@ class StockTransferController extends Controller
     public function transfer_data(){
         if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
             $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
-            ->whereIn('request_transfer.status', ['6'])
+            ->whereNotIn('request_transfer.status', ['7','8'])
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
             ->orderBy('request_transfer.created_at', 'DESC')
@@ -771,6 +771,29 @@ class StockTransferController extends Controller
                         'scheddate' => $request_details->schedule,
                         'receivedby' => auth()->user()->name,
                         'role' => 'Admin',
+                        'items' => $items
+                    ];
+                    Mail::to($key->email)->send(new receivedTransfer($details, $subject));
+                }
+            }
+
+            $user = User::role('approver - warehouse')->get();
+            foreach($user as $key){
+                if($key->email != $request_details->email){
+                    $details = [
+                        'name' => ucwords($key->name),
+                        'action' => 'STOCK TRANSFER REQUEST',
+                        'request_number' => $request->request_number,
+                        'reqdate' => $request_details->reqdate,
+                        'requested_by' => $request_details->reqby,
+                        'needdate' => $request_details->needdate,
+                        'locfrom' => $locfrom,
+                        'locto' => $locto,
+                        'prepared_by' => $trans->prepby,
+                        'prepdate' => $request_details->prepdate,
+                        'scheddate' => $request_details->schedule,
+                        'receivedby' => auth()->user()->name,
+                        'role' => 'Approver - Warehouse',
                         'items' => $items
                     ];
                     Mail::to($key->email)->send(new receivedTransfer($details, $subject));

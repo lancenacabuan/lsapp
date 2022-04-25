@@ -676,6 +676,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                     $(".transitItemsModal").show();
                     $(".btnReceive").hide();
+                    $(".receive_label").hide();
                     hideEdit = 5;
                 }
                 if(requestStatus == '15'){
@@ -968,6 +969,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
         $(".transitItemsModal").show();
         $(".btnReceive").hide();
+        $(".receive_label").hide();
         hideEdit = 5;
     }
     if(requestStatus == '15'){

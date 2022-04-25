@@ -117,7 +117,7 @@
         </div>
         <div class="modal-body">
             @role('admin|encoder') {{---ROLES---}}
-            <div class="alert alert-primary transitItemsModal" role="alert" style="display: none;">
+            <div class="alert alert-primary transitItemsModal receive_label" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
             </div>

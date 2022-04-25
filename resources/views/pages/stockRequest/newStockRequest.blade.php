@@ -43,10 +43,12 @@
                         <option value="{{$warranty_type->id}}">{{strtoupper($warranty_type->Warranty_Name)}}</option>
                     @endforeach
                 </select>
-                <form id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
+                <label class="form-control form-control-sm reference_field" style="width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
+                <button class="form-control btn btn-primary bp reference_field" style="width: 280px; height: 30px; line-height: 30%; font-size: 14px; text-align: left; white-space: nowrap; width: 280px; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span id="upload_label">Upload Image File (Less than 5MB)</span></button>
+                <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                     <input type="hidden" name="reqnum" id="reqnum">
-                    <input class="reference_field" id="reference_upload" name="reference_upload" type="file" style="zoom: 90%; display: none;" onchange="validate_fileupload(this);">
+                    <input id="reference_upload" name="reference_upload" type="file" style="zoom: 90%; display: none;" onchange="validate_fileupload(this);">
                     <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
                 </form>
             </div>

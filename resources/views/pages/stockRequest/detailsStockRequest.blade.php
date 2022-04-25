@@ -94,7 +94,7 @@
         </div>
         <div id="attachmentModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">REFERENCE SO/PO NO. ATTACHMENT</h6>
+            <h6 class="modal-title w-100">ATTACHMENT SO/PO</h6>
         </div>
         <div class="modal-body text-center">
             <img id="reference_attachment" style="width: 100%;">

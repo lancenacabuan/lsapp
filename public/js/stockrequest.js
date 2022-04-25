@@ -94,12 +94,22 @@ function decodeHtml(str){
 }
 
 function validate_fileupload(reference_upload){
-    if(!/(\.bmp|\.png|\.gif|\.jpg|\.jpeg)$/i.test(reference_upload.value)){
-        swal('Invalid image file type!', 'Please upload an image file with a valid file extension.', 'error');      
+    $('#upload_label').html('Upload Image File (Less than 5MB)');
+    if(!/(\.jpg|\.jpeg|\.png|\.gif)$/i.test(reference_upload.value)){
+        swal('Invalid image file type or format!', 'Please upload an image file with a valid file type/format like the following: jpeg/jpg, png, or gif.', 'error');      
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         return false;   
     }
+    const oFile = document.getElementById("reference_upload").files[0];
+    if(oFile.size > 5242880){
+        swal('Exceeded maximum file size (5MB)!', 'Please upload a valid image file with a file size not greater than 5MB.', 'error');      
+        $('#reference_upload').val('');
+        $('#reference_upload').focus();
+        return false; 
+    }
+    $('#upload_label').html(reference_upload.value.split("\\").pop());
+    
     return true; 
 }
 
@@ -216,7 +226,9 @@ function checkLocation(){
 $('#request_type').on('change', function(){
     var reqtype = $(this).val();
     $('#reference').val('');
+    $('#reference_upload').val('');
     $('#warranty_type').val('');
+    $('#upload_label').html('Upload Image File (Less than 5MB)');
     if(reqtype == '2'){
         $('.reference_field').show();
     }

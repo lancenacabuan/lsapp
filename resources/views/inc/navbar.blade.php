@@ -16,11 +16,6 @@
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
                 </li>
-                @role('viewer') {{---ROLES---}}
-                <li class="nav-item">
-                    <a class="nav-link n {{ Request::is('assembly') ? 'active' : '' }}" href="{{ url('/assembly') }}">ASSEMBLY</a>
-                </li>
-                @endrole
                 @role('admin') {{---ROLES---}}
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('maintenance*') ? 'active' : '' }}" href="{{ url('/maintenance') }}">MAINTENANCE</a>

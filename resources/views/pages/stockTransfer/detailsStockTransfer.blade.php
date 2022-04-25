@@ -116,10 +116,12 @@
             <h6 id="modalheader" class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
+            @role('admin|encoder') {{---ROLES---}}
             <div class="alert alert-primary transitItemsModal" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
             </div>
+            @endrole
             <div class="schedItemsModal" style="display: none;">
                 <div class="form-inline" style="margin-left: 35px;">
                     <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
@@ -168,6 +170,7 @@
             <h6 id="incmodalheader" class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
+            @role('admin|encoder') {{---ROLES---}}
             <div id="increceive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
@@ -180,6 +183,7 @@
                 <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
                 <input class="form-control form-control-sm" id="resched" style="width: 280px;" type="date">
             </div>
+            @endrole
             <div class="form-inline divResched1" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
                 <input class="form-control form-control-sm" id="reprep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
@@ -202,12 +206,14 @@
                 </thead>
             </table>
             <br>
+            @role('admin|encoder') {{---ROLES---}}
             <hr>
             <input type="button" class="btn btn-primary float-right bp divResched" id="btnReschedule" style="display: none;" value="RESCHEDULE">
             <input type="button" class="btn btn-primary float-right bp btnTransit divResched1" style="display: none;" value="FOR RECEIVING">
             <button type="button" class="btn btn-primary float-right bp btnReceive btnReceiveInc" disabled>RECEIVE</button>
             <br>
             <br>
+            @endrole
         </div>
         </div>
     </div>

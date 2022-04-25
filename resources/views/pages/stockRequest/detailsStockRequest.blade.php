@@ -375,6 +375,7 @@
                 <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
             </div>
             @endrole
+            @role('admin|encoder') {{---ROLES---}}
             <div class="form-inline divResched" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
                 <input class="form-control form-control-sm" id="reprep_by1" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
@@ -383,6 +384,7 @@
                 <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
                 <input class="form-control form-control-sm" id="resched" style="width: 280px;" type="date">
             </div>
+            @endrole
             <div class="form-inline divResched1" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
                 <input class="form-control form-control-sm" id="reprep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>

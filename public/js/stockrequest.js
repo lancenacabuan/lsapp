@@ -3038,6 +3038,12 @@ var items = [];
 var item_count = 0;
 $('table.stockDetails').DataTable().on('select', function(){});
 $('.stockDetails tbody').on('click', 'tr', function(){
+    if($("#current_role").val() == '["sales"]'){
+        return false;
+    }
+    if($("#current_role").val() == '["viewer"]'){
+        return false;
+    }
     var requestStatus = $('#status_id_details').val();
     if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7){
         return false;
@@ -3132,7 +3138,7 @@ $('.transItems tbody').on('click', 'tr', function(){
 $('.table.incItems').DataTable().on('select', function(){});
 $('.incItems tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
-    if(requestStatus == '18' || requestStatus == '21'){
+    if((requestStatus == '18' || requestStatus == '21') && ($("#current_role").val() == '["admin"]' || $("#current_role").val() == '["encoder"]')){
         var table = $('table.incItems').DataTable();
         var data = table.row(this).data();
         item_count = table.data().count();

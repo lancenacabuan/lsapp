@@ -9,6 +9,7 @@
     {{-- <button class="btn btn-primary bp" type="button">IMPORT</button> --}}
     <br><br>
     @endrole
+    <input type="hidden" id="current_role" value="{{auth()->user()->getRoleNames()}}">
     <div id="CategoryTableDiv">
         <table id="CategoryTable" class="table-hover table CategoryTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            

@@ -783,7 +783,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 if(data == '18' || data == '21'){
                                     $("#warning").hide();
                                     $("#btnProceed").hide();
-                                    $(".divAdjust").hide();
                                     $(".rcvDef").show();
                                 }
                             }
@@ -805,7 +804,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7){
                         $("#proceed_label").hide();
                         $("#btnProceed").hide();
-                        $(".divAdjust").hide();
                     }
                     if(requestStatus == '2' || requestStatus == '5'){
                         $("#schedItemsModal").show();
@@ -973,8 +971,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(requestStatus == '24'){
                         $("#proceed_label").show();
                         $("#btnProceed").show();
-                        $(".divAdjust").show();
-                        $(".prephide").hide();
                     }
                     if(value.user_id != $('#current_user').val()){
                         $(".btnReceive").hide();
@@ -1631,7 +1627,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     if(data == '18' || data == '21'){
                         $("#warning").hide();
                         $("#btnProceed").hide();
-                        $(".divAdjust").hide();
                         $(".rcvDef").show();
                     }
                 }
@@ -1653,7 +1648,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7){
             $("#proceed_label").hide();
             $("#btnProceed").hide();
-            $(".divAdjust").hide();
         }
         if(requestStatus == '2' || requestStatus == '5'){
             $("#schedItemsModal").show();
@@ -1821,8 +1815,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(requestStatus == '24'){
             $("#proceed_label").show();
             $("#btnProceed").show();
-            $(".divAdjust").show();
-            $(".prephide").hide();
         }
         if(value.user_id != $('#current_user').val()){
             $(".btnReceive").hide();
@@ -3329,7 +3321,6 @@ $("#btnProceed").unbind('click').click(function(){
     $("#stockDetailsrequest *").prop('disabled', true);
     $("#proceed_label").hide();
     $("#btnProceed").hide();
-    $(".divAdjust").hide();
     $("#reqContents").empty();
     $("#requestItems").slideDown();
     $('#schedOn').attr('max', maxDate);
@@ -3608,18 +3599,15 @@ $('#btnBack').on('click', function(){
     $("#requestItems").hide();
     $("#schedOn").val('');
     $("#btnProceed").show();
-    $(".divAdjust").show();
 });
 
 $('.btnReceive').on('click', function(){
     var inc = 'false';
-    var inctype = 'COMPLETE';
     if(items.length < item_count){
         inc = 'true';
-        inctype = 'INCOMPLETE';
     }
     swal({
-        title: "RECEIVE "+inctype+" STOCK REQUEST?",
+        title: "RECEIVE STOCK REQUEST?",
         text: "You are about to RECEIVE this Stock Request!",
         icon: "warning",
         buttons: true,
@@ -3688,7 +3676,7 @@ $('.btnReceive').on('click', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide(); Spinner.hide();
-                                    swal("RECEIVED "+inctype, "STOCK REQUEST", "success");
+                                    swal("RECEIVE SUCCESS", "STOCK REQUEST", "success");
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
                                 else{
@@ -3838,16 +3826,16 @@ $("#btnHideAttachment").on('click', function(){
 
 $("#btnShowDetails").on('click', function(){
     $("#divAssembly").hide();
-    $("#request_info").slideDown();
+    $("#request_info").show();
 });
 
 $("#btnHideDetails").on('click', function(){
     $("#divAssembly").show();
-    $("#request_info").slideUp();
+    $("#request_info").hide();
 });
 
 $("#showMore").on('click', function(){
-    $("#request_info").slideDown();
+    $("#request_info").show();
     $("#showMore").hide();
     $("#showLess").show();
 });

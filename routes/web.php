@@ -63,6 +63,7 @@ Route::any('/uploadFile',[StockRequestController::class,'uploadFile'])->name('up
 Route::get('/request_data',[StockRequestController::class,'request_data']);
 Route::get('/reqModal',[StockRequestController::class,'reqModal']);
 Route::get('/requestDetails',[StockRequestController::class,'requestDetails']);
+Route::get('/receivedItems',[StockRequestController::class,'receivedItems']);
 Route::get('/schedItems',[StockRequestController::class,'schedItems']);
 Route::get('/incItems',[StockRequestController::class,'incItems']);
 Route::get('/dfcItems',[StockRequestController::class,'dfcItems']);
@@ -91,6 +92,7 @@ Route::any('/logReceive',[StockRequestController::class,'logReceive']);
 Route::any('/receiveDefective',[StockRequestController::class,'receiveDefective']);
 Route::any('/receiveDfcItems',[StockRequestController::class,'receiveDfcItems']);
 Route::any('/logReceiveDfc',[StockRequestController::class,'logReceiveDfc']);
+Route::get('/checkProcessed',[StockRequestController::class,'checkProcessed']);
 Route::get('/getReceive',[StockRequestController::class,'getReceive']);
 Route::get('/getLink',[StockRequestController::class,'getLink']);
 Route::get('/printRequest',[StockRequestController::class,'printRequest']);

@@ -232,8 +232,29 @@
             <br>
         </div>
         </div>
+        <div id="receivedItemsModal" style="display: none;">
+        <div class="divAdjust"><br><br><br></div>
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
+            <h6 id="receivedheader" class="modal-title w-100">RECEIVED ITEM DETAILS</h6>
+        </div>
+        <div class="modal-body">
+            <br>
+            <table id="receivedItems" class="table receivedItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>CATEGORY</th>
+                        <th>ITEM DESCRIPTION</th>
+                        <th>QTY</th>
+                        <th>UOM</th>
+                        <th>SERIAL</th>
+                    </tr>
+                </thead>
+            </table>
+            <br>
+        </div>
+        </div>
         <div id="schedItemsModal" style="display: none;">
-        <div id="divAdjust"><br><br><br></div>
+        <div class="divAdjust"><br><br><br></div>
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div>
@@ -287,6 +308,7 @@
         </div>
         </div>
         <div id="transitItemsModal" style="display: none;">
+        <div class="divAdjust"><br><br><br></div>
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 id="modalheader" class="modal-title w-100">FOR RECEIVING ITEM DETAILS</h6>
         </div>

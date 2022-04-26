@@ -361,6 +361,29 @@ class StockRequestController extends Controller
         ->make(true);
     }
 
+    public function receivedItems(Request $request){
+        $include = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $include = str_replace("{\"request_number\":","",$include);
+        $include = str_replace("}","",$include);
+        $include = json_decode($include);
+        $include[] = $request->request_number;
+
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+            ->whereIn('request_number', $include)
+            ->whereIn('stocks.status', ['out','demo','assembled'])
+            ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','stocks.location_id')
+            ->get()
+            ->sortBy('item')
+            ->sortBy('category');
+
+        return DataTables::of($list)->make(true);
+    }
+    
     public function schedItems(Request $request){
         $include = Requests::query()->select('request_number')
             ->where('assembly_reqnum', $request->request_number)
@@ -373,7 +396,7 @@ class StockRequestController extends Controller
 
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+            ->whereIn('stocks.status', ['prep','assembly'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
@@ -703,7 +726,7 @@ class StockRequestController extends Controller
                     ->update(['status' => '17']);
             }
             while(!$sql);
-            $sched = 'FOR RECEIVING';
+            $sched = 'INCOMPLETE FOR RECEIVING';
         }
         else{
             return response('false');
@@ -800,7 +823,7 @@ class StockRequestController extends Controller
         do{
             $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                 ->whereIn('request_number', $include)
-                ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+                ->whereIn('stocks.status', ['out','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
                 ->join('locations','locations.id','stocks.location_id')
@@ -987,7 +1010,7 @@ class StockRequestController extends Controller
         else{
             do{
                 $sql = Stock::where('id',$request->stock_id)
-                    ->update(['status' => 'out', 'request_number' => $request->request_number]);
+                    ->update(['status' => 'prep', 'request_number' => $request->request_number]);
             }
             while(!$sql);
         }
@@ -1066,6 +1089,7 @@ class StockRequestController extends Controller
             while(!$sql);
         }
         else{
+            $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
             if($request->request_type == '3'){
                 do{
                     $sql = Requests::where('request_number', $request->request_number)
@@ -1074,11 +1098,20 @@ class StockRequestController extends Controller
                 while(!$sql);
             }
             else{
-                do{
-                    $sql = Requests::where('request_number', $request->request_number)
-                        ->update(['status' => '8']);
+                if($total == 0){
+                    do{
+                        $sql = Requests::where('request_number', $request->request_number)
+                            ->update(['status' => '8']);
+                    }
+                    while(!$sql);
                 }
-                while(!$sql);
+                else{
+                    do{
+                        $sql = Requests::where('request_number', $request->request_number)
+                            ->update(['status' => '24']);
+                    }
+                    while(!$sql);
+                }
             }
         }
 
@@ -1096,6 +1129,7 @@ class StockRequestController extends Controller
         if($request->status == '3' || $request->status == '4'){
             do{
                 $sql = Stock::where('id', $request->id)
+                    ->whereNotIn('status', ['out','demo','assembled'])
                     ->update(['status' => 'received']);
             }
             while(!$sql);
@@ -1122,10 +1156,6 @@ class StockRequestController extends Controller
 
     public function logReceive(Request $request){
         if($request->status == '3' || $request->status == '4'){
-            Stock::where('request_number', $request->request_number)
-                ->where('status', '=', 'out')
-                ->update(['status' => 'incomplete']);
-            
             if($request->request_type == '3'){
                 Stock::where('request_number', $request->request_number)
                     ->where('status', '=', 'received')
@@ -1136,15 +1166,22 @@ class StockRequestController extends Controller
                     ->where('status', '=', 'received')
                     ->update(['status' => 'out']);
             }
+
+            Stock::where('request_number', $request->request_number)
+                ->whereNotIn('status', ['out','demo','assembled'])
+                ->update(['status' => 'incomplete']);
         }
+        $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
 
         if($request->inc == 'true'){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
             $userlogs->activity = "RECEIVED INCOMPLETE STOCK REQUEST: User successfully received incomplete requested items of Stock Request No. $request->request_number.";
             $userlogs->save();
+
+            return response('true');
         }
-        else{
+        else if($total == 0){
             do{
                 $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate, prepdate')
                     ->where('requests.request_number', $request->request_number)
@@ -1182,7 +1219,7 @@ class StockRequestController extends Controller
             do{
                 $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                     ->whereIn('request_number', $include)
-                    ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+                    ->whereIn('stocks.status', ['out','demo','assembled'])
                     ->join('items','items.id','stocks.item_id')
                     ->join('categories','categories.id','items.category_id')
                     ->join('locations','locations.id','stocks.location_id')
@@ -1267,6 +1304,129 @@ class StockRequestController extends Controller
             $userlogs->activity = "RECEIVED COMPLETE STOCK REQUEST: User successfully received complete requested items of Stock Request No. $request->request_number.";
             $userlogs->save();
         }
+        else{
+            do{
+                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate, prepdate')
+                    ->where('requests.request_number', $request->request_number)
+                    ->join('users', 'users.id', '=', 'requests.requested_by')
+                    ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                    ->get();
+    
+                    $request_details = str_replace('[','',$request_details);
+                    $request_details = str_replace(']','',$request_details);
+                    $request_details = json_decode($request_details);
+            }
+            while(!$request_details);
+    
+            do{
+                $prep = Requests::selectRaw('users.name AS prepby')
+                    ->where('requests.request_number', $request->request_number)
+                    ->join('users', 'users.id', '=', 'requests.prepared_by')
+                    ->get();
+                
+                    $prep = str_replace('[','',$prep);
+                    $prep = str_replace(']','',$prep);
+                    $prep = json_decode($prep);
+            }
+            while(!$prep);
+
+            $include = Requests::query()->select('request_number')
+                ->where('assembly_reqnum', $request->request_number)
+                ->get();
+        
+            $include = str_replace("{\"request_number\":","",$include);
+            $include = str_replace("}","",$include);
+            $include = json_decode($include);
+            $include[] = $request->request_number;
+
+            do{
+                $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                    ->whereIn('request_number', $include)
+                    ->whereIn('stocks.status', ['out','demo','assembled'])
+                    ->join('items','items.id','stocks.item_id')
+                    ->join('categories','categories.id','items.category_id')
+                    ->join('locations','locations.id','stocks.location_id')
+                    ->get()
+                    ->sortBy('item')
+                    ->sortBy('category');
+            }
+            while(!$items);
+            
+            $subject = 'STOCK REQUEST NO. '.$request->request_number;
+            $user = User::role('admin')->get();
+            foreach($user as $key){
+                $details = [
+                    'name' => ucwords($key->name),
+                    'action' => 'STOCK REQUEST',
+                    'verb' => 'PARTIALLY RECEIVED',
+                    'request_number' => $request->request_number,
+                    'reqdate' => $request_details->reqdate,
+                    'requested_by' => $request_details->reqby,
+                    'needdate' => $request_details->needdate,
+                    'reqtype' => $request_details->reqtype,
+                    'client_name' => $request_details->client_name,
+                    'location' => $request_details->location,
+                    'reference' => $request_details->reference,
+                    'prepared_by' => $prep->prepby,
+                    'prepdate' => $request_details->prepdate,
+                    'scheddate' => $request_details->schedule,
+                    'receivedby' => auth()->user()->name,
+                    'role' => 'Admin',
+                    'items' => $items
+                ];
+                Mail::to($key->email)->send(new receivedRequest($details, $subject));
+            }
+
+            $user = User::role('approver - sales')->get();
+            foreach($user as $key){
+                $details = [
+                    'name' => ucwords($key->name),
+                    'action' => 'STOCK REQUEST',
+                    'verb' => 'PARTIALLY RECEIVED',
+                    'request_number' => $request->request_number,
+                    'reqdate' => $request_details->reqdate,
+                    'requested_by' => $request_details->reqby,
+                    'needdate' => $request_details->needdate,
+                    'reqtype' => $request_details->reqtype,
+                    'client_name' => $request_details->client_name,
+                    'location' => $request_details->location,
+                    'reference' => $request_details->reference,
+                    'prepared_by' => $prep->prepby,
+                    'prepdate' => $request_details->prepdate,
+                    'scheddate' => $request_details->schedule,
+                    'receivedby' => auth()->user()->name,
+                    'role' => 'Approver - Sales',
+                    'items' => $items
+                ];
+                Mail::to($key->email)->send(new receivedRequest($details, $subject));
+            }
+    
+            $details = [
+                'name' => $request_details->reqby,
+                'action' => 'STOCK REQUEST',
+                'verb' => 'PARTIALLY RECEIVED',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'client_name' => $request_details->client_name,
+                'location' => $request_details->location,
+                'reference' => $request_details->reference,
+                'prepared_by' => $prep->prepby,
+                'prepdate' => $request_details->prepdate,
+                'scheddate' => $request_details->schedule,
+                'receivedby' => auth()->user()->name,
+                'role' => 'Sales',
+                'items' => $items
+            ];
+            Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED PARTIAL STOCK REQUEST: User successfully received partial requested items of Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
 
         return response('true');
     }
@@ -1332,6 +1492,16 @@ class StockRequestController extends Controller
         return response('true');
     }
 
+    public function checkProcessed(Request $request){       
+
+        $count = Stock::query()->select()
+            ->where('request_number', $request->request_number)
+            ->where('status', 'out')
+            ->count();
+                
+        return $count;
+    }
+    
     public function getReceive(Request $request){       
         $include = Requests::query()->select('request_number')
             ->where('assembly_reqnum', $request->request_number)
@@ -1408,7 +1578,7 @@ class StockRequestController extends Controller
 
         $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+            ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')

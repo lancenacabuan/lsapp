@@ -488,6 +488,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     $('#detailsAssembly').modal('show');
 
                     var ajax_url = '/schedItems';
+                    var rcv_url = '/schedItems';
                     var targetArray = [5,6];
 
                     if(req_type_id == '4'){
@@ -517,6 +518,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
                     }
                     if(requestStatus == '14'){
+                        var rcv_url = '/receivedItems';
                         $('#prepItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
                         $('#asmItemsModal').show();
@@ -637,7 +639,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     },
                     serverSide: true,
                     ajax: {
-                        url: '/schedItems',
+                        url: rcv_url,
                         data: {
                             request_number: req_num,
                         }
@@ -794,6 +796,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         $('#detailsAssembly').modal('show');
 
         var ajax_url = '/schedItems';
+        var rcv_url = '/schedItems';
         var targetArray = [5,6];
 
         if(req_type_id == '4'){
@@ -823,6 +826,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
         }
         if(requestStatus == '14'){
+            var rcv_url = '/receivedItems';
             $('#prepItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
             $('#asmItemsModal').show();
@@ -945,7 +949,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         },
         serverSide: true,
         ajax: {
-            url: '/schedItems',
+            url: rcv_url,
             data: {
                 request_number: req_num,
             }

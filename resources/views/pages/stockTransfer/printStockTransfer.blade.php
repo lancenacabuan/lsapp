@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('content')
+@role('sales|approver - sales|assembler')
+<script>
+    window.location = '/';
+</script>
+@endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
 <div class="container-fluid">
     <button id="btnPrint" type="button" class="btn btn-primary bp" style="margin-right: 5px;">PRINT</button>

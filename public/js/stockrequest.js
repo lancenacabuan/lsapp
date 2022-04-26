@@ -874,6 +874,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $("#btnHideDetails").show();
                             $("#divAssembly").show();
                             $("#request_info").hide();
+                            $("#transitItemsModal").hide();
                         }
                         if(requestStatus == '14'){
                             document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
@@ -940,6 +941,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
                         $("#request_info").hide();
+                        $("#receivedItemsModal").hide();
                         $(".rcvShow").show();
                         $("#showMore").show();
                         $("#showLess").hide();
@@ -951,13 +953,16 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE DEFECTIVE ITEM DETAILS';
                         $("#request_info").hide();
+                        $("#receivedItemsModal").hide();
                         $(".rcvShow").show();
                         $("#showMore").show();
                         $("#showLess").hide();
                     }
                     if(requestStatus == '22'){
-                        $("#receivedItemsModal").show();
-                        document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        var rcv_url = 'receivedItems';
+                        $("#transitItemsModal").show();
+                        $(".prephide").hide();
+                        document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         $(".pendshow").show();
                     }
                     if(requestStatus == '23'){
@@ -1718,6 +1723,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $("#btnHideDetails").show();
                 $("#divAssembly").show();
                 $("#request_info").hide();
+                $("#transitItemsModal").hide();
             }
             if(requestStatus == '14'){
                 document.getElementById('modalheader').innerHTML = 'ASSEMBLED ITEM PARTS DETAILS';
@@ -1784,6 +1790,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
             $("#request_info").hide();
+            $("#receivedItemsModal").hide();
             $(".rcvShow").show();
             $("#showMore").show();
             $("#showLess").hide();
@@ -1795,13 +1802,16 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE DEFECTIVE ITEM DETAILS';
             $("#request_info").hide();
+            $("#receivedItemsModal").hide();
             $(".rcvShow").show();
             $("#showMore").show();
             $("#showLess").hide();
         }
         if(requestStatus == '22'){
-            $("#receivedItemsModal").show();
-            document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            var rcv_url = 'receivedItems';
+            $("#transitItemsModal").show();
+            $(".prephide").hide();
+            document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             $(".pendshow").show();
         }
         if(requestStatus == '23'){
@@ -3827,21 +3837,25 @@ $("#btnHideAttachment").on('click', function(){
 $("#btnShowDetails").on('click', function(){
     $("#divAssembly").hide();
     $("#request_info").show();
+    $("#transitItemsModal").show();
 });
 
 $("#btnHideDetails").on('click', function(){
     $("#divAssembly").show();
     $("#request_info").hide();
+    $("#transitItemsModal").hide();
 });
 
 $("#showMore").on('click', function(){
     $("#request_info").show();
+    $("#receivedItemsModal").show();
     $("#showMore").hide();
     $("#showLess").show();
 });
 
 $("#showLess").on('click', function(){
     $("#request_info").hide();
+    $("#receivedItemsModal").hide();
     $("#showMore").show();
     $("#showLess").hide();
 });

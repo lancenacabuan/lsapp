@@ -244,6 +244,7 @@ class StockRequestController extends Controller
                 ->get();
             $items = str_replace("[{\"item\":\"","",$items);
             $items = str_replace("\"}]","",$items);
+            $items = str_replace("[]","",$items);
             
             return $items;
         })
@@ -277,6 +278,7 @@ class StockRequestController extends Controller
                 ->get();
             $items = str_replace("[{\"item\":\"","",$items);
             $items = str_replace("\"}]","",$items);
+            $items = str_replace("[]","",$items);
             
             return $items;
         })
@@ -373,7 +375,7 @@ class StockRequestController extends Controller
 
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['out','demo','assembled'])
+            ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
@@ -823,7 +825,7 @@ class StockRequestController extends Controller
         do{
             $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                 ->whereIn('request_number', $include)
-                ->whereIn('stocks.status', ['out','demo','assembled'])
+                ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
                 ->join('locations','locations.id','stocks.location_id')
@@ -1129,7 +1131,7 @@ class StockRequestController extends Controller
         if($request->status == '3' || $request->status == '4'){
             do{
                 $sql = Stock::where('id', $request->id)
-                    ->whereNotIn('status', ['out','demo','assembled'])
+                    ->whereNotIn('status', ['out','demo','assembly','assembled'])
                     ->update(['status' => 'received']);
             }
             while(!$sql);
@@ -1168,7 +1170,7 @@ class StockRequestController extends Controller
             }
 
             Stock::where('request_number', $request->request_number)
-                ->whereNotIn('status', ['out','demo','assembled'])
+                ->whereNotIn('status', ['out','demo','assembly','assembled'])
                 ->update(['status' => 'incomplete']);
         }
         $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
@@ -1219,7 +1221,7 @@ class StockRequestController extends Controller
             do{
                 $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                     ->whereIn('request_number', $include)
-                    ->whereIn('stocks.status', ['out','demo','assembled'])
+                    ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                     ->join('items','items.id','stocks.item_id')
                     ->join('categories','categories.id','items.category_id')
                     ->join('locations','locations.id','stocks.location_id')
@@ -1342,7 +1344,7 @@ class StockRequestController extends Controller
             do{
                 $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                     ->whereIn('request_number', $include)
-                    ->whereIn('stocks.status', ['out','demo','assembled'])
+                    ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                     ->join('items','items.id','stocks.item_id')
                     ->join('categories','categories.id','items.category_id')
                     ->join('locations','locations.id','stocks.location_id')

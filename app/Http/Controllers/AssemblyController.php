@@ -121,18 +121,28 @@ class AssemblyController extends Controller
     }
 
     public function request_data(){
-        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, needdate, requests.item_id AS item_id, items.item AS item_desc, qty, assembly_reqnum')
+        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, needdate, requests.item_id AS item_id, qty, assembly_reqnum')
         ->where('requests.requested_by', auth()->user()->id)
         ->whereIn('requests.request_type', ['4','5'])
         ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
         ->join('users', 'users.id', '=', 'requests.requested_by')
         ->join('request_type', 'request_type.id', '=', 'requests.request_type')
         ->join('status', 'status.id', '=', 'requests.status')
-        ->join('items', 'items.id', '=', 'requests.item_id')
         ->orderBy('requests.created_at', 'DESC')
         ->get();
 
         return DataTables::of($list)
+        ->addColumn('item_desc', function (Requests $list){
+            $items = Item::query()
+                ->select('item')
+                ->where('id', $list->item_id)
+                ->get();
+            $items = str_replace("[{\"item\":\"","",$items);
+            $items = str_replace("\"}]","",$items);
+            $items = str_replace("[]","",$items);
+            
+            return $items;
+        })
         ->addColumn('prep_by', function (Requests $list){
             $users = User::query()
                 ->select('name')

@@ -10,9 +10,12 @@
     <p>
         Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
-        Requested By: {{$details['requested_by']}}<br>
+        Requested By: {{$details['requested_by']}}<br><br>
         FROM Location: {{$details['locfrom']}}<br>
-        TO New Location: {{$details['locto']}}<br><br>
+        TO New Location: {{$details['locto']}}
+        <br><br>
+        <strong>REQUESTED ITEMS</strong>
+        <br><br>
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>

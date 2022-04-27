@@ -5,13 +5,16 @@
     A new {{$details['action']}} is waiting for your approval.<br></p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     <p>
+        Request Type: {{$details['reqtype']}}<br>
         Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
-        Requested By: {{$details['requested_by']}}<br>
-        Request Type: {{$details['reqtype']}}<br>
+        Requested By: {{$details['requested_by']}}<br><br>
         Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
-        Reference SO/PO No.: {{$details['reference']}}<br><br>
+        Reference SO/PO No.: {{$details['reference']}}
+        <br><br>
+        <strong>REQUESTED ITEMS</strong>
+        <br><br>
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>

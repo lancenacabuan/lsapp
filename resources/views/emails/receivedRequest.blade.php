@@ -7,17 +7,20 @@
     </p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     <p>
+        Request Type: {{$details['reqtype']}}<br>
         Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
-        Requested By: {{$details['requested_by']}}<br>
-        Request Type: {{$details['reqtype']}}<br>
+        Requested By: {{$details['requested_by']}}<br><br>
         Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
-        Reference SO/PO No.: {{$details['reference']}}<br>
+        Reference SO/PO No.: {{$details['reference']}}<br><br>
         Date Prepared: {{Carbon\Carbon::parse($details['prepdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Prepared By: {{$details['prepared_by']}}<br>
         Date Scheduled: {{Carbon\Carbon::parse($details['scheddate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
-        Date Received: {{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}<br><br>
+        Date Received: {{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}
+        <br><br>
+        <strong>{{$details['verb']}} ITEMS</strong>
+        <br>
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>
@@ -39,6 +42,29 @@
             @endforeach 
         </table>
         <br><br>
+        @if($details['pendcount'] > 0)
+        <strong>PENDING ITEMS</strong>
+        <br><br>
+        <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">CATEGORY</th>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">ITEM DESCRIPTION</th>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">QTY</th>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">UOM</th>
+                </tr>
+            </thead>
+            @foreach($details['penditems'] as $i)
+            <tr>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$i->category}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$i->item}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$i->pending}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$i->uom}}</td>
+            </tr>
+            @endforeach 
+        </table>
+        <br><br>
+        @endif
         Kindly login to your {{$details['role']}} account if you wish to view or download this request by clicking on the link below.<br>
         Thank you!
     </p>

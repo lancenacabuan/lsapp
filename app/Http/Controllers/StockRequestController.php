@@ -1251,7 +1251,9 @@ class StockRequestController extends Controller
                     'scheddate' => $request_details->schedule,
                     'receivedby' => auth()->user()->name,
                     'role' => 'Admin',
-                    'items' => $items
+                    'items' => $items,
+                    'pendcount' => 0,
+                    'penditems' => NULL
                 ];
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
@@ -1275,7 +1277,9 @@ class StockRequestController extends Controller
                     'scheddate' => $request_details->schedule,
                     'receivedby' => auth()->user()->name,
                     'role' => 'Approver - Sales',
-                    'items' => $items
+                    'items' => $items,
+                    'pendcount' => 0,
+                    'penditems' => NULL
                 ];
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
@@ -1297,7 +1301,9 @@ class StockRequestController extends Controller
                 'scheddate' => $request_details->schedule,
                 'receivedby' => auth()->user()->name,
                 'role' => 'Sales',
-                'items' => $items
+                'items' => $items,
+                'pendcount' => 0,
+                'penditems' => NULL
             ];
             Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
 
@@ -1353,6 +1359,24 @@ class StockRequestController extends Controller
                     ->sortBy('category');
             }
             while(!$items);
+
+            do{
+                $pendcount = StockRequest::query()->select()
+                    ->where('request_number', $request->request_number)
+                    ->where('pending', '>', '0')
+                    ->count();
+            }
+            while(!$pendcount);
+
+            do{
+                $penditems = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','pending')
+                    ->join('categories', 'categories.id', 'stock_request.category')
+                    ->join('items', 'items.id', 'stock_request.item')
+                    ->where('request_number', $request->request_number)
+                    ->where('pending', '>', '0')
+                    ->get();
+            }
+            while(!$penditems);
             
             $subject = 'STOCK REQUEST NO. '.$request->request_number;
             $user = User::role('admin')->get();
@@ -1374,7 +1398,9 @@ class StockRequestController extends Controller
                     'scheddate' => $request_details->schedule,
                     'receivedby' => auth()->user()->name,
                     'role' => 'Admin',
-                    'items' => $items
+                    'items' => $items,
+                    'pendcount' => $pendcount,
+                    'penditems' => $penditems
                 ];
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
@@ -1398,7 +1424,9 @@ class StockRequestController extends Controller
                     'scheddate' => $request_details->schedule,
                     'receivedby' => auth()->user()->name,
                     'role' => 'Approver - Sales',
-                    'items' => $items
+                    'items' => $items,
+                    'pendcount' => $pendcount,
+                    'penditems' => $penditems
                 ];
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
@@ -1420,7 +1448,9 @@ class StockRequestController extends Controller
                 'scheddate' => $request_details->schedule,
                 'receivedby' => auth()->user()->name,
                 'role' => 'Sales',
-                'items' => $items
+                'items' => $items,
+                'pendcount' => $pendcount,
+                'penditems' => $penditems
             ];
             Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
 

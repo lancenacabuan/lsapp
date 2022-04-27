@@ -672,12 +672,13 @@ class StockRequestController extends Controller
     }
 
     public function reschedRequest(Request $request){
-        if($request->request_type == '5'){
+        if($request->request_type == '4' || $request->request_type == '5'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
                     ->update(['status' => '17', 'prepared_by' => auth()->user()->id, 'schedule' => $request->resched]);
             }
             while(!$sql);
+            $sched = 'RESCHEDULED FOR RECEIVING';
         }
         else{
             do{
@@ -685,6 +686,7 @@ class StockRequestController extends Controller
                     ->update(['status' => '16', 'prepared_by' => auth()->user()->id, 'schedule' => $request->resched]);
             }
             while(!$sql);
+            $sched = 'RESCHEDULED';
         }
         
         if(!$sql){
@@ -695,7 +697,7 @@ class StockRequestController extends Controller
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "RESCHEDULED STOCK REQUEST: User successfully rescheduled on $request->resched Stock Request No. $request->request_number.";
+            $userlogs->activity = $sched." STOCK REQUEST: User successfully rescheduled on $request->resched Stock Request No. $request->request_number.";
             $userlogs->save();
         }
         
@@ -1537,7 +1539,7 @@ class StockRequestController extends Controller
 
         $count = Stock::query()->select()
             ->where('request_number', $request->request_number)
-            ->where('status', 'out')
+            ->whereIn('status', ['out','demo'])
             ->count();
                 
         return $count;

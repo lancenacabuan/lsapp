@@ -323,6 +323,15 @@ class AssemblyController extends Controller
         return response('true');
     }
 
+    public function lance(Request $request){
+        Stock::where('request_number', '2022-0427-665')
+            ->update(['status' => 'assembly']);
+        StockRequest::where('request_number', $request->x)->delete();
+        Requests::where('request_number', $request->x)->delete();
+        Requests::where('request_number', '2022-0427-665')
+            ->update(['status' => '12']);
+    }
+
     public function assembleRequest(Request $request){
         do{
             $sql = Requests::where('request_number', $request->request_number)

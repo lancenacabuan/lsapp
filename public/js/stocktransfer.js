@@ -359,6 +359,7 @@ $('#btnSave').on('click', function(){
                     $.ajax({
                         type:'post',
                         url:'/saveTransReqNum',
+                        async: false,
                         headers: {
                             'X-CSRF-TOKEN': $("#csrf").val()
                         },
@@ -376,6 +377,7 @@ $('#btnSave').on('click', function(){
                                     $.ajax({
                                         type:'post',
                                         url:'/saveTransRequest',
+                                        async: false,
                                         headers: {
                                             'X-CSRF-TOKEN': $("#csrf").val()
                                         },
@@ -408,6 +410,7 @@ $('#btnSave').on('click', function(){
                                 $.ajax({
                                     type:'post',
                                     url:'/logTransSave',
+                                    async: false,
                                     headers: {
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
@@ -1419,6 +1422,7 @@ $('#btnReason').on('click', function(){
                 $.ajax({
                     type:'post',
                     url:'/disapproveTransfer',
+                    async: false,
                     headers: {
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
@@ -1437,6 +1441,7 @@ $('#btnReason').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logTransDisapprove',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -1873,6 +1878,7 @@ $("#btnProceed").unbind('click').click(function(){
                                 $.ajax({
                                     type:'post',
                                     url:'/logTransSched',
+                                    async: false,
                                     headers: {
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
@@ -1986,6 +1992,7 @@ $('.btnReceive').on('click', function(){
                         $.ajax({
                             type: 'post',
                             url: '/logTransReceive',
+                            async: false,
                             headers: {
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },

@@ -1112,6 +1112,7 @@ $('#btnSave').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/createItem',
+                async: false,
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
@@ -1126,6 +1127,7 @@ $('#btnSave').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/saveParts',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -1154,6 +1156,7 @@ $('#btnSave').on('click', function(){
                         $.ajax({
                             type:'post',
                             url:'/logItem',
+                            async: false,
                             headers: {
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },

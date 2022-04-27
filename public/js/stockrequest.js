@@ -514,6 +514,7 @@ $('#btnSave').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logSave',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -2656,6 +2657,7 @@ $('#btnReason').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logDisapprove',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -2765,6 +2767,7 @@ $('#btnSale').on('click', function(){
                 $.ajax({
                     type:'post',
                     url:'/saleRequest',
+                    async: false,
                     headers: {
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
@@ -2782,6 +2785,7 @@ $('#btnSale').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logSold',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -2841,6 +2845,7 @@ $('#btnReference').on('click', function(){
                 $.ajax({
                     type:'post',
                     url:'/saleRequest',
+                    async: false,
                     headers: {
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
@@ -2860,6 +2865,7 @@ $('#btnReference').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logSold',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -3107,6 +3113,7 @@ $('#btnReceiveAssembled').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/assembly/logAssembled',
+                async: false,
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
@@ -3556,6 +3563,7 @@ $("#btnProceed").unbind('click').click(function(){
                                 $.ajax({
                                     type:'post',
                                     url:'/logSched',
+                                    async: false,
                                     headers: {
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
@@ -3674,6 +3682,7 @@ $('.btnReceive').on('click', function(){
                         $.ajax({
                             type: 'post',
                             url: '/logReceive',
+                            async: false,
                             headers: {
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },
@@ -3780,6 +3789,7 @@ $('#btnReceiveDfc').on('click', function(){
                         $.ajax({
                             type: 'post',
                             url: '/logReceiveDfc',
+                            async: false,
                             headers: {
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },

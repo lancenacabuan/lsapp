@@ -336,6 +336,7 @@ $('#btnAssemblySave').on('click', function(){
                 $.ajax({
                     type:'post',
                     url:'/assembly/saveReqNum',
+                    async: false,
                     headers: {
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
@@ -353,6 +354,7 @@ $('#btnAssemblySave').on('click', function(){
                                 $.ajax({
                                     type:'post',
                                     url:'/assembly/saveRequest',
+                                    async: false,
                                     headers: {
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
@@ -382,6 +384,7 @@ $('#btnAssemblySave').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/assembly/logSave',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -1140,6 +1143,7 @@ $('.btnReceive').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/assembly/receiveRequest',
+                async: false,
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
@@ -1155,6 +1159,7 @@ $('.btnReceive').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/assembly/receiveItems',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -1185,6 +1190,7 @@ $('.btnReceive').on('click', function(){
                         $.ajax({
                             type:'post',
                             url:'/assembly/logReceive',
+                            async: false,
                             headers: {
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },
@@ -1241,6 +1247,7 @@ $('#btnDefective').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/assembly/defectiveRequest',
+                async: false,
                 headers: {
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
@@ -1254,6 +1261,7 @@ $('#btnDefective').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/assembly/defectiveItems',
+                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -1284,6 +1292,7 @@ $('#btnDefective').on('click', function(){
                         $.ajax({
                             type:'post',
                             url:'/assembly/logDefective',
+                            async: false,
                             headers: {
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },

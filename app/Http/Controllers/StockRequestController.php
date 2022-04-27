@@ -1093,11 +1093,20 @@ class StockRequestController extends Controller
         else{
             $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
             if($request->request_type == '3'){
-                do{
-                    $sql = Requests::where('request_number', $request->request_number)
-                        ->update(['status' => '9']);
+                if($total == 0){
+                    do{
+                        $sql = Requests::where('request_number', $request->request_number)
+                            ->update(['status' => '9']);
+                    }
+                    while(!$sql);
                 }
-                while(!$sql);
+                else{
+                    do{
+                        $sql = Requests::where('request_number', $request->request_number)
+                            ->update(['status' => '24']);
+                    }
+                    while(!$sql);
+                }
             }
             else{
                 if($total == 0){

@@ -14,7 +14,7 @@
         Reference SO/PO No.: {{$details['reference']}}
         <br><br>
         <strong>REQUESTED ITEMS</strong>
-        <br><br>
+        <br>
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>

@@ -410,7 +410,6 @@ $('#btnSave').on('click', function(){
                                 $.ajax({
                                     type:'post',
                                     url:'/logTransSave',
-                                    async: false,
                                     headers: {
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
@@ -1441,7 +1440,6 @@ $('#btnReason').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logTransDisapprove',
-                                async: false,
                                 headers: {
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
@@ -1878,7 +1876,6 @@ $("#btnProceed").unbind('click').click(function(){
                                 $.ajax({
                                     type:'post',
                                     url:'/logTransSched',
-                                    async: false,
                                     headers: {
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
@@ -1992,7 +1989,6 @@ $('.btnReceive').on('click', function(){
                         $.ajax({
                             type: 'post',
                             url: '/logTransReceive',
-                            async: false,
                             headers: {
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },

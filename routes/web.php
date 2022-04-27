@@ -131,8 +131,6 @@ Route::any('/logTransSched',[StockTransferController::class,'logTransSched']);
 Route::get('/printTransferRequest',[StockTransferController::class,'printTransferRequest']);
 //
 
-Route::get('/lance',[AssemblyController::class,'lance']);
-
 //Assembly
 Route::get('/assembly',[AssemblyController::class,'assembly']);
 Route::get('/assembly/generateReqNum',[AssemblyController::class,'generateReqNum']);

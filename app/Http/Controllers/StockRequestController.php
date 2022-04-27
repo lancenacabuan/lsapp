@@ -364,15 +364,17 @@ class StockRequestController extends Controller
     }
 
     public function receivedItems(Request $request){
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if($request->included != 'no'){
+            $include = Requests::query()->select('request_number')
+                ->where('assembly_reqnum', $request->request_number)
+                ->get();
+            
+            $include = str_replace("{\"request_number\":","",$include);
+            $include = str_replace("}","",$include);
+            $include = json_decode($include);
+        }
         $include[] = $request->request_number;
-
+        
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
@@ -387,13 +389,15 @@ class StockRequestController extends Controller
     }
     
     public function schedItems(Request $request){
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if($request->included != 'no'){
+            $include = Requests::query()->select('request_number')
+                ->where('assembly_reqnum', $request->request_number)
+                ->get();
+            
+            $include = str_replace("{\"request_number\":","",$include);
+            $include = str_replace("}","",$include);
+            $include = json_decode($include);
+        }
         $include[] = $request->request_number;
 
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')

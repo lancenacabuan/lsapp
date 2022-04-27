@@ -493,6 +493,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     var ajax_url = '/schedItems';
                     var rcv_url = '/schedItems';
                     var targetArray = [5,6];
+                    var included = 'yes';
 
                     if(req_type_id == '4'){
                         $(".rephide").hide();
@@ -582,6 +583,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         $("#incFooter").hide();
                     }
                     if(requestStatus == '22'){
+                        var included = 'no';
                         $('#prepItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         $(".prephide").hide();
@@ -645,6 +647,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         url: rcv_url,
                         data: {
                             request_number: req_num,
+                            included: included
                         }
                     },
                     order:[],
@@ -801,6 +804,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         var ajax_url = '/schedItems';
         var rcv_url = '/schedItems';
         var targetArray = [5,6];
+        var included = 'yes';
 
         if(req_type_id == '4'){
             $(".rephide").hide();
@@ -890,6 +894,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $("#incFooter").hide();
         }
         if(requestStatus == '22'){
+            var included = 'no';
             $('#prepItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             $(".prephide").hide();
@@ -955,6 +960,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             url: rcv_url,
             data: {
                 request_number: req_num,
+                included: included
             }
         },
         order:[],

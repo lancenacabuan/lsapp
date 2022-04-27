@@ -750,6 +750,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
 
                     var ajax_url = '/schedItems';
                     var rcv_url = '/schedItems';
+                    var included = 'yes';
 
                     if(req_type_id != '2'){
                         $(".sales_details").hide();
@@ -961,6 +962,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     }
                     if(requestStatus == '22'){
                         var rcv_url = 'receivedItems';
+                        var included = 'no';
                         $("#transitItemsModal").show();
                         $(".prephide").hide();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
@@ -1371,6 +1373,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             url: rcv_url,
                             data: {
                                 request_number: req_num,
+                                included: included
                             }
                         },
                         order:[],
@@ -1599,6 +1602,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
 
         var ajax_url = '/schedItems';
         var rcv_url = '/schedItems';
+        var included = 'yes';
 
         if(req_type_id != '2'){
             $(".sales_details").hide();
@@ -1810,6 +1814,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         }
         if(requestStatus == '22'){
             var rcv_url = 'receivedItems';
+            var included = 'no';
             $("#transitItemsModal").show();
             $(".prephide").hide();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
@@ -2220,6 +2225,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 url: rcv_url,
                 data: {
                     request_number: req_num,
+                    included: included
                 }
             },
             order:[],

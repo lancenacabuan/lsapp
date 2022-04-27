@@ -615,8 +615,8 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     columns: [
                         { data: 'category' },
                         { data: 'item' },
-                        { data: 'quantity' },
-                        { data: 'uom' }
+                        { data: 'uom' },
+                        { data: 'quantity' }
                     ],          
                 });
 
@@ -923,8 +923,8 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         columns: [
             { data: 'category' },
             { data: 'item' },
-            { data: 'quantity' },
-            { data: 'uom' }
+            { data: 'uom' },
+            { data: 'quantity' }
         ],
         orderCellsTop: true,
         fixedHeader: true,            

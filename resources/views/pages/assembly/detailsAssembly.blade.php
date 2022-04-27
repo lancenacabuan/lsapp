@@ -72,19 +72,16 @@
                 <h6 class="modal-title w-100">REQUEST DETAILS</h6>
             </div>
             <div class="modal-body">
-                <br>
                 <table id="stockDetails" class="table stockDetails display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                     <thead>
                         <tr>
                             <th>CATEGORY</th>
                             <th>ITEM DESCRIPTION</th>
-                            <th>REQUESTED</th>
                             <th>UOM</th>
+                            <th>REQUESTED</th>
                         </tr>
                     </thead>
                 </table>
-                <br>
-                <br>
             </div>
             <div id="prepItemsModal" style="display: none;">
                 <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">

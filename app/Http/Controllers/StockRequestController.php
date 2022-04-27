@@ -756,18 +756,13 @@ class StockRequestController extends Controller
     }
 
     public function saleRequest(Request $request){
-        if($request->check == 'true'){
-            $reference = 0;
+        if(trim($request->reference) != ''){
+            $reference = Requests::query()->select()
+                ->whereRaw('LOWER(reference) = ?',strtolower($request->reference))
+                ->count();
         }
         else{
-            if(trim($request->reference) != ''){
-                $reference = Requests::query()->select()
-                    ->whereRaw('LOWER(reference) = ?',strtolower($request->reference))
-                    ->count();
-            }
-            else{
-                $reference = 0;
-            }
+            $reference = 0;
         }
         if($reference != 0){
             $result = 'duplicate';
@@ -784,16 +779,27 @@ class StockRequestController extends Controller
             }
             else {
                 $result = 'true';
-
-                Stock::where('request_number', $request->request_number)
-                    ->update(['status' => 'out']);
             }
         }
 
         return response($result);
     }
 
+    public function sellItems(Request $request){
+        do{
+            $sql = Stock::where('id', $request->id)
+                ->whereIn('status', ['demo'])
+                ->update(['status' => 'out']);
+        }
+        while(!$sql);
+        
+        return response('true');
+    }
+
     public function logSold(Request $request){
+        Stock::where('request_number', $request->request_number)
+            ->where('status', '=', 'demo')
+            ->update(['status' => 'in', 'request_number' => '']);
         do{
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate, prepdate')
                 ->where('requests.request_number', $request->request_number)
@@ -831,7 +837,7 @@ class StockRequestController extends Controller
         do{
             $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                 ->whereIn('request_number', $include)
-                ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+                ->whereIn('stocks.status', ['out'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
                 ->join('locations','locations.id','stocks.location_id')
@@ -861,7 +867,9 @@ class StockRequestController extends Controller
                 'scheddate' => $request_details->schedule,
                 'receivedby' => auth()->user()->name,
                 'role' => 'Admin',
-                'items' => $items
+                'items' => $items,
+                'pendcount' => 0,
+                'penditems' => NULL
             ];
             Mail::to($key->email)->send(new receivedRequest($details, $subject));
         }
@@ -885,7 +893,9 @@ class StockRequestController extends Controller
                 'scheddate' => $request_details->schedule,
                 'receivedby' => auth()->user()->name,
                 'role' => 'Approver - Sales',
-                'items' => $items
+                'items' => $items,
+                'pendcount' => 0,
+                'penditems' => NULL
             ];
             Mail::to($key->email)->send(new receivedRequest($details, $subject));
         }
@@ -907,7 +917,9 @@ class StockRequestController extends Controller
             'scheddate' => $request_details->schedule,
             'receivedby' => auth()->user()->name,
             'role' => 'Sales',
-            'items' => $items
+            'items' => $items,
+            'pendcount' => 0,
+            'penditems' => NULL
         ];
         Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
 
@@ -920,28 +932,45 @@ class StockRequestController extends Controller
     }
 
     public function returnRequest(Request $request){
+        if($request->all == 'true'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '11']);
+            }
+            while(!$sql);
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+            }
+
+            return response($result);
+        }
+        else{
+            return response('true');
+        }
+    }
+
+    public function returnItems(Request $request){
         do{
-            $sql = Requests::where('request_number', $request->request_number)
-                ->update(['status' => '11']);
+            $sql = Stock::where('id', $request->id)
+                ->whereIn('status', ['demo'])
+                ->update(['status' => 'in', 'request_number' => '']);
         }
         while(!$sql);
         
-        Stock::where('request_number', $request->request_number)
-            ->update(['status' => 'in', 'request_number' => '']);
-        
-        if(!$sql){
-            $result = 'false';
-        }
-        else {
-            $result = 'true';
+        return response('true');
+    }
 
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "RETURNED STOCK REQUEST: User successfully returned Stock Request No. $request->request_number.";
-            $userlogs->save();
-        }
+    public function logReturn(Request $request){
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "RETURNED STOCK REQUEST ITEMS: User successfully returned items of Stock Request No. $request->request_number.";
+        $userlogs->save();
 
-        return response($result);
+        return response('true');
     }
 
     public function checkStatus(Request $request){       

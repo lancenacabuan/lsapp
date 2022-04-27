@@ -316,6 +316,10 @@
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
             </div>
+            <div id="demoreceive_label" class="alert alert-primary" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Please select table rows to confirm items <b>FOR SALE or FOR RETURN</b> then click the corresponding button below.
+            </div>
             @endrole
             <div class="prephide">
                 <div class="form-inline" style="margin-left: 35px;">
@@ -363,9 +367,9 @@
             <hr>
             @role('sales') {{---ROLES---}}
             <button type="button" class="btn btn-primary float-right bp btnReceive" disabled>RECEIVE</button>
-            <button type="button" id="btnSale" class="btn btn-primary float-right bp" style="display: none;">SALE</button>
+            <button type="button" id="btnSale" class="btn btn-primary float-right bp" style="display: none;" disabled>SALE</button>
             <span class="float-right" style="width: 10px;">&nbsp;</span>
-            <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;">RETURN</button>
+            <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;" disabled>RETURN</button>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
             <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp" style="display: none;" disabled>RECEIVE ASSEMBLED</button>

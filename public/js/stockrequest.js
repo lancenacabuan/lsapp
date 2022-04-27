@@ -861,6 +861,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $(".btnReceive").hide();
                         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                         if(req_type_id == '3' && requestStatus == '9'){
+                            $('#demoreceive_label').show();
                             $("#btnSale").show();
                             $("#btnReturn").show();
                         }
@@ -1713,6 +1714,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $(".btnReceive").hide();
             document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
             if(req_type_id == '3' && requestStatus == '9'){
+                $('#demoreceive_label').show();
                 $("#btnSale").show();
                 $("#btnReturn").show();
             }
@@ -2752,214 +2754,6 @@ $('.btnTransit').on('click', function(){
     });    
 });
 
-$('#btnSale').on('click', function(){
-    var reference_details = $.trim($('#reference_details').val());
-    if(reference_details == ''){
-        $('#referenceModal').modal({
-            backdrop: 'static',
-            keyboard: false
-        });
-        $('#referenceModal').modal('show');
-    }
-    else{
-        swal({
-            title: "FOR SALE STOCK REQUEST?",
-            text: "You are about to SELL this STOCK REQUEST!",
-            icon: "warning",
-            buttons: true,
-        })
-        .then((willDelete) => {
-            if(willDelete){
-                $.ajax({
-                    type:'post',
-                    url:'/saleRequest',
-                    async: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val()
-                    },
-                    data:{
-                        'request_number': $('#request_num_details').val(),
-                        'reference': reference_details,
-                        'check': 'true'
-                    },
-                    success: function(data){
-                        if(data == 'true'){
-                            scrollReset();
-                            $('#detailsStockRequest').hide();
-                            $('#detailsStockRequest').modal('dispose');
-                            $('#loading').show(); Spinner(); Spinner.show();
-                            $.ajax({
-                                type:'post',
-                                url:'/logSold',
-                                async: false,
-                                headers: {
-                                    'X-CSRF-TOKEN': $("#csrf").val()
-                                },
-                                data:{
-                                    'request_number': $('#request_num_details').val()
-                                },
-                                success: function(data){
-                                    if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
-                                        swal("SALE SUCCESS", "STOCK REQUEST", "success");
-                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
-                                    }
-                                    else{
-                                        return false;
-                                    }
-                                },
-                                error: function(data){
-                                    if(data.status == 401){
-                                        window.location.href = '/stockrequest';
-                                    }
-                                    alert(data.responseText);
-                                }
-                            });
-                        }
-                        else{
-                            $('#detailsStockRequest').hide();
-                            swal("SALE FAILED", "STOCK REQUEST", "error");
-                            setTimeout(function(){location.href="/stockrequest"}, 2000);
-                        }
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            window.location.href = '/stockrequest';
-                        }
-                        alert(data.responseText);
-                    }
-                });
-            }
-        }); 
-    }
-});
-
-$('#btnReference').on('click', function(){
-    if($.trim($('#x_reference').val()) == ''){
-        swal("SO/PO NUMBER REQUIRED", "Please fill up required field!", "error");
-        return false;
-    }
-    else{
-        swal({
-            title: "FOR SALE STOCK REQUEST?",
-            text: "You are about to SELL this STOCK REQUEST!",
-            icon: "warning",
-            buttons: true,
-        })
-        .then((willDelete) => {
-            if(willDelete){
-                $.ajax({
-                    type:'post',
-                    url:'/saleRequest',
-                    async: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val()
-                    },
-                    data:{
-                        'request_number': $('#request_num_details').val(),
-                        'reference': $('#x_reference').val(),
-                        'check': 'false'
-                    },
-                    success: function(data){
-                        if(data == 'true'){
-                            scrollReset();
-                            $('#referenceModal').hide();
-                            $('#referenceModal').modal('dispose');
-                            $('#detailsStockRequest').hide();
-                            $('#detailsStockRequest').modal('dispose');
-                            $('#loading').show(); Spinner(); Spinner.show();
-                            $.ajax({
-                                type:'post',
-                                url:'/logSold',
-                                async: false,
-                                headers: {
-                                    'X-CSRF-TOKEN': $("#csrf").val()
-                                },
-                                data:{
-                                    'request_number': $('#request_num_details').val()
-                                },
-                                success: function(data){
-                                    if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
-                                        swal("SALE SUCCESS", "STOCK REQUEST", "success");
-                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
-                                    }
-                                    else{
-                                        return false;
-                                    }
-                                },
-                                error: function(data){
-                                    if(data.status == 401){
-                                        window.location.href = '/stockrequest';
-                                    }
-                                    alert(data.responseText);
-                                }
-                            });
-                        }
-                        else if(data == 'duplicate'){
-                            swal("INVALID ENTRY", "Reference SO/PO Number already exists! Please double check the SO/PO Number and try again.", "error");
-                            return false;
-                        }
-                        else{
-                            $('#referenceModal').hide();
-                            $('#detailsStockRequest').hide();
-                            swal("SALE FAILED", "STOCK REQUEST", "error");
-                            setTimeout(function(){location.href="/stockrequest"}, 2000);
-                        }
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            window.location.href = '/stockrequest';
-                        }
-                        alert(data.responseText);
-                    }
-                });
-            }
-        }); 
-    }
-});
-
-$('#btnReturn').on('click', function(){
-    swal({
-        title: "RETURN STOCK REQUEST?",
-        text: "You are about to RETURN this STOCK REQUEST!",
-        icon: "warning",
-        buttons: true,
-    })
-    .then((willDelete) => {
-        if(willDelete){
-            $.ajax({
-                type:'post',
-                url:'/returnRequest',
-                headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val()
-                },
-                data:{
-                    'request_number': $('#request_num_details').val()
-                },
-                success: function(data){
-                    if(data == 'true'){
-                        $('#detailsStockRequest').hide();
-                        swal("RETURN SUCCESS", "STOCK REQUEST", "success");
-                        setTimeout(function(){location.href="/stockrequest"}, 2000);
-                    }
-                    else{
-                        $('#detailsStockRequest').hide();
-                        swal("RETURN FAILED", "STOCK REQUEST", "error");
-                        setTimeout(function(){location.href="/stockrequest"}, 2000);
-                    }
-                },
-                error: function(data){
-                    if(data.status == 401){
-                        window.location.href = '/stockrequest';
-                    }
-                    alert(data.responseText);
-                }
-            });
-        }
-    }); 
-});
-
 $('#btnReschedule').on('click', function(){
     if(!$("#resched").val()){
         swal('Recheduled On is required!','Select within date range from today up to Date Needed.','error');
@@ -3284,6 +3078,27 @@ $('.transItems tbody').on('click', 'tr', function(){
         }
         else{
             $('.btnReceive').prop('disabled', false);
+        }
+    }
+    if(requestStatus == '9'){
+        var table = $('table.transItems').DataTable();
+        var data = table.row(this).data();
+        item_count = table.data().count();
+    
+        $(this).toggleClass('selected');
+        if(items.includes(data.id) == true){
+            items = items.filter(item => item !== data.id);
+        }
+        else {
+            items.push(data.id);
+        }
+        if(items.length == 0){
+            $('#btnSale').prop('disabled', true);
+            $('#btnReturn').prop('disabled', true);
+        }
+        else{
+            $('#btnSale').prop('disabled', false);
+            $('#btnReturn').prop('disabled', false);
         }
     }
 });
@@ -3836,6 +3651,228 @@ $('#btnReceiveDfc').on('click', function(){
             });
         }
     });
+});
+
+$('#btnSale').on('click', function(){
+    $('#referenceModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $('#referenceModal').modal('show');
+});
+
+$('#btnReference').on('click', function(){
+    var reference = $.trim($('#x_reference').val()).toUpperCase();
+    if(reference == ''){
+        swal("SO/PO NUMBER REQUIRED", "Please fill up required field!", "error");
+        return false;
+    }
+    else{
+        swal({
+            title: "FOR SALE STOCK REQUEST? CONFIRM REFERENCE PO/SO NO.: "+reference,
+            text: "You are about to SELL the selected item/s of this STOCK REQUEST! Items that are not selected will be returned to warehouse stocks. CONTINUE?",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url:'/saleRequest',
+                    async: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val()
+                    },
+                    data:{
+                        'request_number': $('#request_num_details').val(),
+                        'reference': reference,
+                        'check': 'false'
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            for(var i=0; i < items.length; i++){
+                                $.ajax({
+                                    type: 'post',
+                                    url: '/sellItems',
+                                    async: false,
+                                    headers: {
+                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                    },
+                                    data:{
+                                        'id': items[i]
+                                    },
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            return true;
+                                        }
+                                        else{
+                                            return false;
+                                        }
+                                    },
+                                    error: function(data){
+                                        if(data.status == 401){
+                                            window.location.href = '/stockrequest';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
+                            }
+                            scrollReset();
+                            $('#referenceModal').hide();
+                            $('#referenceModal').modal('dispose');
+                            $('#detailsStockRequest').hide();
+                            $('#detailsStockRequest').modal('dispose');
+                            $('#loading').show(); Spinner(); Spinner.show();
+                            $.ajax({
+                                type:'post',
+                                url:'/logSold',
+                                async: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'request_number': $('#request_num_details').val()
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        $('#loading').hide(); Spinner.hide();
+                                        swal("SALE SUCCESS", "STOCK REQUEST", "success");
+                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        else if(data == 'duplicate'){
+                            swal("INVALID ENTRY", "Reference SO/PO Number already exists! Please double check the SO/PO Number and try again.", "error");
+                            return false;
+                        }
+                        else{
+                            $('#referenceModal').hide();
+                            $('#detailsStockRequest').hide();
+                            swal("SALE FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        }); 
+    }
+});
+
+$('#btnReturn').on('click', function(){
+    var all = 'false';
+    if(items.length == item_count){
+        all = 'true';
+    }
+    swal({
+        title: "RETURN STOCK REQUEST?",
+        text: "You are about to RETURN the selected item/s of this STOCK REQUEST! Items that are not selected will remain listed for either sales or return. CONTINUE?",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type:'post',
+                url:'/returnRequest',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'all': all
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        for(var i=0; i < items.length; i++){
+                            $.ajax({
+                                type: 'post',
+                                url: '/returnItems',
+                                async: false,
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'id': items[i]
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        return true;
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        scrollReset();
+                        $('#detailsStockRequest').hide();
+                        $('#detailsStockRequest').modal('dispose');
+                        $('#loading').show(); Spinner(); Spinner.show();
+                        $.ajax({
+                            type:'post',
+                            url:'/logReturn',
+                            async: false,
+                            headers: {
+                                'X-CSRF-TOKEN': $("#csrf").val()
+                            },
+                            data:{
+                                'request_number': $('#request_num_details').val()
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide(); Spinner.hide();
+                                    swal("RETURN SUCCESS", "STOCK REQUEST", "success");
+                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    }
+                    else{
+                        $('#detailsStockRequest').hide();
+                        swal("RETURN FAILED", "STOCK REQUEST", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    }); 
 });
 
 $("#btnShowAttachment").on('click', function(){

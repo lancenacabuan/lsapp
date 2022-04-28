@@ -688,7 +688,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     hideEdit = 5;
                     $("#incItemsModal").show();
                     $('.divResched').show();
-                    $('#resched').attr('max', maxDate);
+                    // $('#resched').attr('max', maxDate);
                     if($("#current_role").val() == '["viewer"]'){
                         hideEdit1 = 5;
                     }
@@ -981,7 +981,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         hideEdit = 5;
         $("#incItemsModal").show();
         $('.divResched').show();
-        $('#resched').attr('max', maxDate);
+        // $('#resched').attr('max', maxDate);
         if($("#current_role").val() == '["viewer"]'){
             hideEdit1 = 5;
         }
@@ -1535,10 +1535,10 @@ $('#btnReschedule').on('click', function(){
         swal('Minimum Date is today!','Select within date range from today up to Date Needed.','error');
         return false;
     }
-    else if($("#resched").val() > maxDate){
-        swal('Exceed Date Needed deadline!','Select within date range from today up to Date Needed.','error');
-        return false;
-    }
+    // else if($("#resched").val() > maxDate){
+    //     swal('Exceed Date Needed deadline!','Select within date range from today up to Date Needed.','error');
+    //     return false;
+    // }
     else{
         swal({
             title: "RESCHEDULE STOCK TRANSFER REQUEST?",
@@ -1739,7 +1739,7 @@ $("#btnProceed").unbind('click').click(function(){
     $("#btnProceed").hide();
     $("#reqContents").empty();
     $("#requestItems").slideDown();
-    $('#schedOn').attr('max', maxDate);
+    // $('#schedOn').attr('max', maxDate);
     for(var i=0; i < items.length; i++){
         $.ajax({ 
             type:'get', 
@@ -1883,10 +1883,10 @@ $("#btnProceed").unbind('click').click(function(){
                         swal('Minimum Date is today!','Select within date range from today up to Date Needed.','error');
                         return false;
                     }
-                    else if($("#schedOn").val() > maxDate){
-                        swal('Exceed Date Needed deadline!','Select within date range from today up to Date Needed.','error');
-                        return false;
-                    }
+                    // else if($("#schedOn").val() > maxDate){
+                    //     swal('Exceed Date Needed deadline!','Select within date range from today up to Date Needed.','error');
+                    //     return false;
+                    // }
                     else{
                         swal({
                             title: "SCHEDULE STOCK TRANSFER REQUEST?",

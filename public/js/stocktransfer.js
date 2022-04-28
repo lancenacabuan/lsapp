@@ -1582,53 +1582,96 @@ $('#btnReschedule').on('click', function(){
     }
 });
 
+setInterval(checkReqType, 0);
+function checkReqType(){
+    if($('#detailsStockTransfer').is(':visible')){
+        var status_id = $('#status_id_details').val();
+        var locfrom = $('#locfrom_details').val();
+
+        var table = $('#transferDetails').DataTable();
+        var count = 0;
+
+        if(status_id == '1'){
+            $("#warning").show();
+            $("#proceed_label").hide();
+            $("#btnProceed").prop('disabled', false);
+            $("#transferDetails *").prop('disabled', true);
+            table.column(4).visible(false);
+            var form_data  = $('#transferDetails').DataTable().rows().data();
+            if(locfrom == '5'){
+                $('#warning_span').html('BALINTAWAK');
+                form_data.each(function(value, index){
+                    if(parseInt(value.qtybal) < parseInt(value.quantity)){
+                        $("#btnProceed").prop('disabled', true);
+                        count++;
+                        return false;
+                    }
+                });
+            }
+            if(locfrom == '6'){
+                $('#warning_span').html('MALABON');
+                form_data.each(function(value, index){
+                    if(parseInt(value.qtymal) < parseInt(value.quantity)){
+                        $("#btnProceed").prop('disabled', true);
+                        count++;
+                        return false;
+                    }
+                });
+            }
+            if(count == 0){
+                $("#warning").hide();
+            }
+        }
+    }
+}
+
 var items = [];
 var item_count = 0;
-$('table.transferDetails').DataTable().on('select', function(){});
-$('.transferDetails tbody').on('click', 'tr', function(){
-    if($("#current_role").val() == '["viewer"]'){
-        return false;
-    }
-    var requestStatus = $('#status_id_details').val();
-    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus >= 8){
-        return false;
-    }
-    var table = $('table.transferDetails').DataTable();
-    var data = table.row(this).data();
-    var pend = data.pending;
-    var item_id = data.item_id;
-    var bal = data.qtybal;
-    var mal = data.qtymal;
+// $('table.transferDetails').DataTable().on('select', function(){});
+// $('.transferDetails tbody').on('click', 'tr', function(){
+//     if($("#current_role").val() == '["viewer"]'){
+//         return false;
+//     }
+//     var requestStatus = $('#status_id_details').val();
+//     if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus >= 8){
+//         return false;
+//     }
+//     var table = $('table.transferDetails').DataTable();
+//     var data = table.row(this).data();
+//     var pend = data.pending;
+//     var item_id = data.item_id;
+//     var bal = data.qtybal;
+//     var mal = data.qtymal;
 
-    if($('#locfrom_details').val() == 5){
-        var stock = bal;
-    }
-    if($('#locfrom_details').val() == 6){
-        var stock = mal;
-    }
+//     if($('#locfrom_details').val() == 5){
+//         var stock = bal;
+//     }
+//     if($('#locfrom_details').val() == 6){
+//         var stock = mal;
+//     }
 
-    if(pend == 0){
-        swal('Item is fullfiled!','','success');
-    }
-    else if(stock == 0){
-        swal('Item out of stock!','','error');
-    }
-    else{
-        $(this).toggleClass('selected');
-        if(items.includes(item_id) == true){
-            items = items.filter(item => item !== item_id);
-        }
-        else {
-            items.push(item_id);
-        }
-    }
-    if(items.length == 0){
-        $('#btnProceed').prop('disabled', true);
-    }
-    else{
-        $('#btnProceed').prop('disabled', false);
-    }
-});
+//     if(pend == 0){
+//         swal('Item is fullfiled!','','success');
+//     }
+//     else if(stock == 0){
+//         swal('Item out of stock!','','error');
+//     }
+//     else{
+//         $(this).toggleClass('selected');
+//         if(items.includes(item_id) == true){
+//             items = items.filter(item => item !== item_id);
+//         }
+//         else {
+//             items.push(item_id);
+//         }
+//     }
+//     if(items.length == 0){
+//         $('#btnProceed').prop('disabled', true);
+//     }
+//     else{
+//         $('#btnProceed').prop('disabled', false);
+//     }
+// });
 
 $('.table.transItems').DataTable().on('select', function(){});
 $('.transItems tbody').on('click', 'tr', function(){
@@ -1687,6 +1730,10 @@ $('.incItems tbody').on('click', 'tr', function(){
 $("#btnProceed").unbind('click').click(function(){
     var j = 0;
     var reqnum = $('#request_num_details').val();
+    var form_data  = $('#transferDetails').DataTable().rows().data();
+    form_data.each(function(value, index){
+        items.push(value.item_id);
+    });
     $("#transferDetails *").prop('disabled',true);
     $("#proceed_label").hide();
     $("#btnProceed").hide();
@@ -1817,6 +1864,15 @@ $("#btnProceed").unbind('click').click(function(){
                             $('#btnSubmit').prop('disabled', false);
                         }
                     });
+                }
+                setInterval(checkSerials, 0);
+                function checkSerials(){
+                    if($('.serials').filter(function(){ return !!this.value; }).length != j){
+                        $('#btnSubmit').prop('disabled', true);
+                    }
+                    else{
+                        $('#btnSubmit').prop('disabled', false);
+                    }
                 }
                 $("#btnSubmit").unbind('click').click(function(){
                     if(!$("#schedOn").val()){

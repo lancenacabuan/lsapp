@@ -141,7 +141,7 @@
             </div>
             <div id="warning" class="alert alert-warning" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>CANNOT PROCEED:</strong> Available stocks of Main Branch should be equal or more than the quantity of all requested items.
+                <strong>CANNOT PROCEED:</strong> Available stocks of MAIN BRANCH should be equal or more than the quantity of all requested items.
             </div>
             <div id="warningdfc" class="alert alert-warning rcvDef" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>

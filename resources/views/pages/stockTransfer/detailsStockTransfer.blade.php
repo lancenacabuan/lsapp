@@ -60,6 +60,10 @@
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please click table rows to select from the requested items for preparation.
             </div>
+            <div id="warning" class="alert alert-warning" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>CANNOT PROCEED:</strong> Available stocks of <span id="warning_span">MAIN BRANCH</span> should be equal or more than the quantity of all requested items.
+            </div>
             <table id="transferDetails" class="table transferDetails table-hover display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>

@@ -689,9 +689,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     $("#incItemsModal").show();
                     $('.divResched').show();
                     // $('#resched').attr('max', maxDate);
-                    if($("#current_role").val() == '["viewer"]'){
-                        hideEdit1 = 5;
-                    }
+                    hideEdit1 = 5;
                 }
                 if(requestStatus == '16'){
                     $("#processModal").show();
@@ -700,9 +698,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     hideEdit = 5;
                     $("#incItemsModal").show();
                     $('.divResched1').show();
-                    if($("#current_role").val() == '["viewer"]'){
-                        hideEdit1 = 5;
-                    }
+                    hideEdit1 = 5;
                 }
                 if(requestStatus == '17'){
                     $("#processModal").show();
@@ -982,9 +978,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $("#incItemsModal").show();
         $('.divResched').show();
         // $('#resched').attr('max', maxDate);
-        if($("#current_role").val() == '["viewer"]'){
-            hideEdit1 = 5;
-        }
+        hideEdit1 = 5;
     }
     if(requestStatus == '16'){
         $("#processModal").show();
@@ -993,9 +987,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         hideEdit = 5;
         $("#incItemsModal").show();
         $('.divResched1').show();
-        if($("#current_role").val() == '["viewer"]'){
-            hideEdit1 = 5;
-        }
+        hideEdit1 = 5;
     }
     if(requestStatus == '17'){
         $("#processModal").show();

@@ -1396,7 +1396,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('table.incItems').DataTable({
                             columnDefs: [
                                 {
-                                    "targets": [5,7],
+                                    "targets": [5,6,7],
                                     "visible": false,
                                     "searchable": false
                                 },
@@ -2249,7 +2249,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('table.incItems').DataTable({
                 columnDefs: [
                     {
-                        "targets": [5,7],
+                        "targets": [5,6,7],
                         "visible": false,
                         "searchable": false
                     },

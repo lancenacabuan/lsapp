@@ -45,7 +45,7 @@ class ResetPassword extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject('Account Create / Reset Password')
             ->line('You are receiving this email because we received a create or reset password request for your account.')
-            ->action('Create / Reset Password', url('password/reset', $this->token))
+            ->action('Create / Reset Password', url('password/reset/'.$this->token.'?email='.$notifiable->email))
             ->line('If you did not request a create / reset password for your account, no further action is required.');
     }
 

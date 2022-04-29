@@ -1861,9 +1861,11 @@ $("#btnProceed").unbind('click').click(function(){
                 function checkSerials(){
                     if($('.serials').filter(function(){ return !!this.value; }).length != j){
                         $('#btnSubmit').prop('disabled', true);
+                        $('#schedwarning').show();
                     }
                     else{
                         $('#btnSubmit').prop('disabled', false);
+                        $('#schedwarning').hide();
                     }
                 }
                 $("#btnSubmit").unbind('click').click(function(){

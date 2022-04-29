@@ -176,7 +176,7 @@ class StockRequestController extends Controller
         while(!$items);
         
         $subject = 'STOCK REQUEST NO. '.$request->request_number;
-        $user = User::role('approver - sales')->get();
+        $user = User::role('approver - sales')->where('status','ACTIVE')->get();
         foreach($user as $key){
             $details = [
                 'name' => ucwords($key->name),
@@ -846,7 +846,7 @@ class StockRequestController extends Controller
         while(!$items);
         
         $subject = 'STOCK REQUEST NO. '.$request->request_number;
-        $user = User::role('admin')->get();
+        $user = User::role('admin')->where('status','ACTIVE')->get();
         foreach($user as $key){
             $details = [
                 'name' => ucwords($key->name),
@@ -872,7 +872,7 @@ class StockRequestController extends Controller
             Mail::to($key->email)->send(new receivedRequest($details, $subject));
         }
 
-        $user = User::role('approver - sales')->get();
+        $user = User::role('approver - sales')->where('status','ACTIVE')->get();
         foreach($user as $key){
             $details = [
                 'name' => ucwords($key->name),
@@ -1280,7 +1280,7 @@ class StockRequestController extends Controller
             while(!$items);
             
             $subject = 'STOCK REQUEST NO. '.$request->request_number;
-            $user = User::role('admin')->get();
+            $user = User::role('admin')->where('status','ACTIVE')->get();
             foreach($user as $key){
                 $details = [
                     'name' => ucwords($key->name),
@@ -1306,7 +1306,7 @@ class StockRequestController extends Controller
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
 
-            $user = User::role('approver - sales')->get();
+            $user = User::role('approver - sales')->where('status','ACTIVE')->get();
             foreach($user as $key){
                 $details = [
                     'name' => ucwords($key->name),
@@ -1427,7 +1427,7 @@ class StockRequestController extends Controller
             while(!$penditems);
             
             $subject = 'STOCK REQUEST NO. '.$request->request_number;
-            $user = User::role('admin')->get();
+            $user = User::role('admin')->where('status','ACTIVE')->get();
             foreach($user as $key){
                 $details = [
                     'name' => ucwords($key->name),
@@ -1453,7 +1453,7 @@ class StockRequestController extends Controller
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
 
-            $user = User::role('approver - sales')->get();
+            $user = User::role('approver - sales')->where('status','ACTIVE')->get();
             foreach($user as $key){
                 $details = [
                     'name' => ucwords($key->name),

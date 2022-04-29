@@ -177,7 +177,7 @@ class StockTransferController extends Controller
         $locto = str_replace('"}]','', $locto);
 
         $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
-        $user = User::role('approver - warehouse')->get();
+        $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
         foreach($user as $key){
             $details = [
                 'name' => ucwords($key->name),
@@ -754,7 +754,7 @@ class StockTransferController extends Controller
             $locto = str_replace('"}]','', $locto);
     
             $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
-            $user = User::role('admin')->get();
+            $user = User::role('admin')->where('status','ACTIVE')->get();
             foreach($user as $key){
                 if($key->email != $request_details->email){
                     $details = [
@@ -777,7 +777,7 @@ class StockTransferController extends Controller
                 }
             }
 
-            $user = User::role('approver - warehouse')->get();
+            $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
             foreach($user as $key){
                 if($key->email != $request_details->email){
                     $details = [

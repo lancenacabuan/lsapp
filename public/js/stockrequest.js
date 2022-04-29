@@ -3058,6 +3058,9 @@ $("#btnProceed").unbind('click').click(function(){
             items.push(value.item_id);
         });
     }
+    if(req_type_id == '2'){
+        $('#schedtext').html('WARRANTY TYPES AND SERIALS');
+    }
     $("#stockDetailsrequest *").prop('disabled', true);
     $("#proceed_label").hide();
     $("#btnProceed").hide();
@@ -3132,20 +3135,29 @@ $("#btnProceed").unbind('click').click(function(){
                         details.setAttribute("id", "details"+j);
                         details.setAttribute("type", "button");
                         details.setAttribute("class", "form-control btn-primary bp details");
-                        details.setAttribute("style", "font-size: 12px; width: 145px; height: 30px; height: 30px; margin-left: 130px; margin-bottom: -70px; display: none;");
+                        details.setAttribute("style", "font-size: 12px; width: 145px; height: 30px; margin-left: 130px; margin-bottom: -70px; display: none;");
                         details.textContent = 'WARRANTY DETAILS';
                         var hideDetails = document.createElement("span");
                         hideDetails.setAttribute("id", "hideDetails"+j);
-                        hideDetails.setAttribute("style", "font-size: 12px; width: 145px; height: 30px; height: 30px; margin-left: 130px; margin-bottom: -70px;");
+                        hideDetails.setAttribute("style", "font-size: 12px; width: 145px; height: 30px; margin-left: 130px; margin-bottom: -70px;");
                         hideDetails.textContent = " ";
+                        var block = document.createElement("span");
+                        block.setAttribute("id", "block"+j);
+                        block.setAttribute("style", "background-color: white; font-size: 12px; width: 365px; height: 30px; margin-left: -100px; margin-bottom: -70px;");
+                        block.textContent = " ";
                         document.getElementById("reqContents").appendChild(id);
                         document.getElementById("reqContents").appendChild(x);
                         document.getElementById("reqContents").appendChild(y);
                         document.getElementById("reqContents").appendChild(qty);
-                        document.getElementById("reqContents").appendChild(warranty);
-                        document.getElementById("reqContents").appendChild(required);
-                        document.getElementById("reqContents").appendChild(details);
-                        document.getElementById("reqContents").appendChild(hideDetails);
+                        if(req_type_id == '2'){
+                            document.getElementById("reqContents").appendChild(warranty);
+                            document.getElementById("reqContents").appendChild(required);
+                            document.getElementById("reqContents").appendChild(details);
+                            document.getElementById("reqContents").appendChild(hideDetails);
+                        }
+                        else{
+                            document.getElementById("reqContents").appendChild(block);
+                        }
                         document.getElementById("reqContents").appendChild(uom);
                         document.getElementById("reqContents").appendChild(serial);
                         document.getElementById("reqContents").appendChild(z);
@@ -3326,14 +3338,28 @@ $("#btnProceed").unbind('click').click(function(){
                         });
                     });
                 }
-                if(req_type_id == '4' || req_type_id == '5'){
+                if(req_type_id == '2' || req_type_id == '3' || req_type_id == '4' || req_type_id == '5'){
                     setInterval(checkSerials, 0);
                     function checkSerials(){
-                        if($('.serials').filter(function(){ return !!this.value; }).length != j){
-                            $('#btnSubmit').prop('disabled', true);
+                        if(req_type_id == '2'){
+                            if($('.serials').filter(function(){ return !!this.value; }).length == j && $('.warranty').filter(function(){ return !!this.value; }).length == j){
+                                $('#btnSubmit').prop('disabled', false);
+                                $('#schedwarning').hide();
+                            }
+                            else{
+                                $('#btnSubmit').prop('disabled', true);
+                                $('#schedwarning').show();
+                            }
                         }
                         else{
-                            $('#btnSubmit').prop('disabled', false);
+                            if($('.serials').filter(function(){ return !!this.value; }).length != j){
+                                $('#btnSubmit').prop('disabled', true);
+                                $('#schedwarning').show();
+                            }
+                            else{
+                                $('#btnSubmit').prop('disabled', false);
+                                $('#schedwarning').hide();
+                            }
                         }
                     }
                 }

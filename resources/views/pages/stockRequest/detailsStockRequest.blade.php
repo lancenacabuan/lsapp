@@ -205,6 +205,10 @@
                 <input class="form-control form-control-sm" id="schedOn" style="width: 280px;" type="date">
             </div>
             <div class="form-inline" style="margin-left: 35px;" id="reqContents"></div>
+            <div id="schedwarning" class="alert alert-warning mt-4" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>CANNOT PROCEED:</strong> Please select all corresponding <strong><span id="schedtext">SERIALS</span></strong> on every item to continue scheduling request. 
+            </div>
             <hr>
             <input type="button" class="btn btn-primary bp" id="btnBack" value="BACK">
             <input type="button" class="btn btn-primary float-right bp" id="btnSubmit" value="SCHEDULE" disabled>

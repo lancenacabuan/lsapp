@@ -1051,7 +1051,7 @@ class StockRequestController extends Controller
         else{
             do{
                 $sql = Stock::where('id',$request->stock_id)
-                    ->update(['status' => 'prep', 'request_number' => $request->request_number]);
+                    ->update(['status' => 'prep', 'warranty_id' => $request->warranty_id, 'request_number' => $request->request_number]);
             }
             while(!$sql);
         }

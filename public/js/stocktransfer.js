@@ -1968,6 +1968,7 @@ $("#btnProceed").unbind('click').click(function(){
 });
 
 $('#btnBack').on('click', function(){
+    items = [];
     $("#transferDetails *").prop('disabled', false);
     $("#proceed_label").show();
     $('#btnSubmit').prop('disabled', true);

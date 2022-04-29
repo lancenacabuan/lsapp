@@ -1012,6 +1012,12 @@ class StockRequestController extends Controller
         ->toJson();
     }
 
+    public function setwarranty(Request $request){
+        $list = Warranty::select('id','Warranty_Name')->orderBy('Warranty_Name','ASC')->get();
+        
+        return response()->json($list);
+    }
+
     public function setserials(Request $request){
         $list = Stock::select('stocks.id AS id','serial','location_id','location')
             ->where('stocks.item_id', $request->item_id)

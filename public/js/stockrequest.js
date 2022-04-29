@@ -3209,16 +3209,25 @@ $("#btnProceed").unbind('click').click(function(){
                         uom.setAttribute("id", "uom"+j);
                         uom.setAttribute("type", "text");
                         uom.setAttribute("class", "form-control");
-                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 20px; margin-bottom: 10px;");
                         uom.setAttribute("value", value.uom);
                         var serial = document.createElement("select");
                         serial.setAttribute("id", "serial"+j);
                         serial.setAttribute("class", "form-control serials");
                         serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        var warranty = document.createElement("select");
+                        warranty.setAttribute("id", "warranty"+j);
+                        warranty.setAttribute("class", "form-control warranty");
+                        warranty.setAttribute("style", "width: 210px; font-size: 12px; margin-left: -100px; margin-bottom: -70px;");
+                        var required = document.createElement("span");
+                        required.setAttribute("style", "font-size: 12px; color: Red; margin-left: -200px; margin-bottom: -120px;");
+                        required.textContent = "*Required Field";
                         document.getElementById("reqContents").appendChild(id);
                         document.getElementById("reqContents").appendChild(x);
                         document.getElementById("reqContents").appendChild(y);
                         document.getElementById("reqContents").appendChild(qty);
+                        document.getElementById("reqContents").appendChild(warranty);
+                        document.getElementById("reqContents").appendChild(required);
                         document.getElementById("reqContents").appendChild(uom);
                         document.getElementById("reqContents").appendChild(serial);
                         document.getElementById("reqContents").appendChild(z);
@@ -3229,6 +3238,8 @@ $("#btnProceed").unbind('click').click(function(){
                         $("#uom"+j).prop('readonly', true);
                         $("#location"+j).prop('disabled', true);
                         $("#serial"+j).append("<option value='' selected>Select Serial</option>");
+                        $("#warranty"+j).append("<option value='' selected disabled>Select Warranty Type</option>");
+                        $("#warranty"+j).append("<option value='0'>NO WARRANTY</option>");
                         let vid = "#serial"+j;
                         $.ajax({
                             type:'get',
@@ -3256,6 +3267,29 @@ $("#btnProceed").unbind('click').click(function(){
                                     }
                                 });
                                 $(vid).chosen();
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                        let vidx = "#warranty"+j;
+                        $.ajax({
+                            type:'get',
+                            url:'/setwarranty',
+                            success: function(dx){
+                                var sx = $.map(dx, function(vx){
+                                    return [vx];
+                                });
+            
+                                sx.forEach(vx => {
+                                    $(vidx).append($('<option>', {
+                                        value: vx.id,
+                                        text: (vx.Warranty_Name).toUpperCase()
+                                    }));
+                                });
                             },
                             error: function(data){
                                 if(data.status == 401){

@@ -27,4 +27,6 @@ $('table.user_logs').DataTable({
     }
 });
 
-setInterval(function(){ $('table.user_logs').DataTable().ajax.reload(null, false); }, 3000);
+setInterval(function(){
+    $('table.user_logs').DataTable().ajax.reload(null, false);
+}, 10000);

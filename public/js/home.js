@@ -26,3 +26,5 @@ $('table.user_logs').DataTable({
         $('#loading').hide(); Spinner.hide();
     }
 });
+
+setInterval(function(){ $('table.user_logs').DataTable().ajax.reload(null, false); }, 3000);

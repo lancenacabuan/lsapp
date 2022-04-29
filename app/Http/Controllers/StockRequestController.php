@@ -546,6 +546,15 @@ class StockRequestController extends Controller
 
         $count = StockRequest::where('request_number', $request->req_num)->count();
         if($count == 0){
+            $file = Requests::select('reference_upload')->where('request_number', $request->req_num)->get();
+            $file = str_replace("[{\"reference_upload\":\"","",$file);
+            $file = str_replace("\"}]","",$file);
+            $file = str_replace("[]","",$file);
+            $file = 'uploads/'.$file;
+            if(file_exists(public_path($file))){
+                unlink(public_path($file));
+            }
+
             do{
                 $sql = Requests::where('request_number', $request->req_num)->delete();
             }
@@ -562,6 +571,15 @@ class StockRequestController extends Controller
     }
 
     public function deleteRequest(Request $request){
+        $file = Requests::select('reference_upload')->where('request_number', $request->request_number)->get();
+        $file = str_replace("[{\"reference_upload\":\"","",$file);
+        $file = str_replace("\"}]","",$file);
+        $file = str_replace("[]","",$file);
+        $file = 'uploads/'.$file;
+        if(file_exists(public_path($file))){
+            unlink(public_path($file));
+        }
+
         do{
             $sqlquery = Requests::where('request_number', $request->request_number)->delete();
         }

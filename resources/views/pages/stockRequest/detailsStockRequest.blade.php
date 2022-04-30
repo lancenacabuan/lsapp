@@ -53,8 +53,8 @@
                 <input class="form-control form-control-sm dfchide sales_details soldShow" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                <button type="button" id="btnShowAttachment" class="btn btn-primary bp sales_details" style="zoom: 85%; margin-left: 530px;">VIEW ATTACHMENT</button>
-                <button type="button" id="btnHideAttachment" class="btn btn-primary bp" style="zoom: 85%; margin-left: 530px; display: none;">HIDE ATTACHMENT</button>
+                <button type="button" id="btnShowAttachment" class="btn btn-primary bp sales_details soldShow" style="zoom: 85%; width: 188px; margin-left: 530px;">VIEW ATTACHMENT</button>
+                <button type="button" id="btnHideAttachment" class="btn btn-primary bp" style="zoom: 85%; width: 188px; margin-left: 530px; display: none;">HIDE ATTACHMENT</button>
                 <span id="warehouse_note" style="color: Red; font-size: 12px; display: none;">Please select location to store the Assembled Item/s.</span>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">

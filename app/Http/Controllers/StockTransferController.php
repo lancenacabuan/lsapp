@@ -666,14 +666,14 @@ class StockTransferController extends Controller
         if($request->status == '3' || $request->status == '4'){
             do{
                 $sql = Stock::where('id', $request->id)
-                    ->update(['status' => 'received']);
+                    ->update(['status' => 'received', 'user_id' => auth()->user()->id]);
             }
             while(!$sql);
         }
         if($request->status == '17'){
             do{
                 $sql = Stock::where('id', $request->id)
-                    ->update(['status' => 'in']);
+                    ->update(['status' => 'in', 'user_id' => auth()->user()->id]);
             }
             while(!$sql);
         }
@@ -685,11 +685,11 @@ class StockTransferController extends Controller
         if($request->status == '3' || $request->status == '4'){
             Stock::where('request_number', $request->request_number)
                 ->where('status', '=', 'trans')
-                ->update(['status' => 'incomplete']);
+                ->update(['status' => 'incomplete', 'user_id' => auth()->user()->id]);
             
             Stock::where('request_number', $request->request_number)
                 ->where('status', '=', 'received')
-                ->update(['status' => 'in']);
+                ->update(['status' => 'in', 'user_id' => auth()->user()->id]);
         }
 
         if($request->inc == 'true'){
@@ -886,7 +886,7 @@ class StockTransferController extends Controller
         if($result == 'true'){
             do{
                 $sql = Stock::where('id',$request->stock_id)
-                    ->update(['request_number' => $request->request_number, 'status' => 'trans', 'location_id' => $request->locto]);
+                    ->update(['request_number' => $request->request_number, 'status' => 'trans', 'user_id' => auth()->user()->id, 'location_id' => $request->locto]);
             }
             while(!$sql);
             

@@ -85,6 +85,7 @@ Route::any('/returnItems',[StockRequestController::class,'returnItems']);
 Route::any('/logReturn',[StockRequestController::class,'logReturn']);
 Route::get('/checkStatus',[StockRequestController::class,'checkStatus']);
 Route::get('/stockreq',[StockRequestController::class,'stockreq']);
+Route::get('/soldreq',[StockRequestController::class,'soldreq']);
 Route::get('/setwarranty',[StockRequestController::class,'setwarranty']);
 Route::get('/setserials',[StockRequestController::class,'setserials']);
 Route::get('/setlocation',[StockRequestController::class,'setlocation']);

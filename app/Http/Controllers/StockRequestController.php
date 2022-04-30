@@ -805,7 +805,7 @@ class StockRequestController extends Controller
         do{
             $sql = Stock::where('id', $request->id)
                 ->whereIn('status', ['demo'])
-                ->update(['status' => 'out']);
+                ->update(['status' => 'out', 'user_id' => auth()->user()->id, 'warranty_id' => $request->warranty_id]);
         }
         while(!$sql);
         
@@ -815,7 +815,7 @@ class StockRequestController extends Controller
     public function logSold(Request $request){
         Stock::where('request_number', $request->request_number)
             ->where('status', '=', 'demo')
-            ->update(['status' => 'in', 'request_number' => '']);
+            ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
         do{
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate, prepdate')
                 ->where('requests.request_number', $request->request_number)
@@ -973,7 +973,7 @@ class StockRequestController extends Controller
         do{
             $sql = Stock::where('id', $request->id)
                 ->whereIn('status', ['demo'])
-                ->update(['status' => 'in', 'request_number' => '']);
+                ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
         }
         while(!$sql);
         
@@ -1028,6 +1028,19 @@ class StockRequestController extends Controller
         ->toJson();
     }
 
+    public function soldreq(Request $request){
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+            ->where('stocks.id', $request->item_id)
+            ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
+            ->join('locations','locations.id','stocks.location_id')
+            ->get()
+            ->sortBy('item')
+            ->sortBy('category');
+
+        return DataTables::of($list)->make(true);
+    }
+
     public function setwarranty(Request $request){
         $list = Warranty::select('id','Warranty_Name')->orderBy('Warranty_Name','ASC')->get();
         
@@ -1062,14 +1075,14 @@ class StockRequestController extends Controller
         if($request->req_type_id == '4' || $request->req_type_id == '5'){
             do{
                 $sql = Stock::where('id',$request->stock_id)
-                    ->update(['status' => 'assembly', 'request_number' => $request->request_number]);
+                    ->update(['status' => 'assembly', 'user_id' => auth()->user()->id, 'request_number' => $request->request_number]);
             }
             while(!$sql);
         }
         else{
             do{
                 $sql = Stock::where('id',$request->stock_id)
-                    ->update(['status' => 'prep', 'warranty_id' => $request->warranty_id, 'request_number' => $request->request_number]);
+                    ->update(['status' => 'prep', 'user_id' => auth()->user()->id, 'warranty_id' => $request->warranty_id, 'request_number' => $request->request_number]);
             }
             while(!$sql);
         }
@@ -1198,7 +1211,7 @@ class StockRequestController extends Controller
             do{
                 $sql = Stock::where('id', $request->id)
                     ->whereNotIn('status', ['out','demo','assembly','assembled'])
-                    ->update(['status' => 'received']);
+                    ->update(['status' => 'received', 'user_id' => auth()->user()->id]);
             }
             while(!$sql);
         }
@@ -1206,14 +1219,14 @@ class StockRequestController extends Controller
             if($request->request_type == '3'){
                 do{
                     $sql = Stock::where('id', $request->id)
-                        ->update(['status' => 'demo']);
+                        ->update(['status' => 'demo', 'user_id' => auth()->user()->id]);
                 }
                 while(!$sql);
             }
             else{
                 do{
                     $sql = Stock::where('id', $request->id)
-                        ->update(['status' => 'out']);
+                        ->update(['status' => 'out', 'user_id' => auth()->user()->id]);
                 }
                 while(!$sql);
             }
@@ -1227,17 +1240,17 @@ class StockRequestController extends Controller
             if($request->request_type == '3'){
                 Stock::where('request_number', $request->request_number)
                     ->where('status', '=', 'received')
-                    ->update(['status' => 'demo']);
+                    ->update(['status' => 'demo', 'user_id' => auth()->user()->id]);
             }
             else{
                 Stock::where('request_number', $request->request_number)
                     ->where('status', '=', 'received')
-                    ->update(['status' => 'out']);
+                    ->update(['status' => 'out', 'user_id' => auth()->user()->id]);
             }
 
             Stock::where('request_number', $request->request_number)
                 ->whereNotIn('status', ['out','demo','assembly','assembled'])
-                ->update(['status' => 'incomplete']);
+                ->update(['status' => 'incomplete', 'user_id' => auth()->user()->id]);
         }
         $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
 
@@ -1558,7 +1571,7 @@ class StockRequestController extends Controller
     public function receiveDfcItems(Request $request){
         do{
             $sql = Stock::where('id', $request->id)
-                ->update(['status' => 'dfcreceived']);
+                ->update(['status' => 'dfcreceived', 'user_id' => auth()->user()->id]);
         }
         while(!$sql);
         
@@ -1568,11 +1581,11 @@ class StockRequestController extends Controller
     public function logReceiveDfc(Request $request){
         Stock::where('request_number', $request->request_number)
             ->where('status', '=', 'defective')
-            ->update(['status' => 'incdefective']);
+            ->update(['status' => 'incdefective', 'user_id' => auth()->user()->id]);
         
         Stock::where('request_number', $request->request_number)
             ->where('status', '=', 'dfcreceived')
-            ->update(['status' => 'defectives']);
+            ->update(['status' => 'defectives', 'user_id' => auth()->user()->id]);
 
         if($request->inc == 'true'){
             $userlogs = new UserLogs;

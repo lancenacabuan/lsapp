@@ -3477,6 +3477,216 @@ $('#btnBack').on('click', function(){
     $("#btnProceed").show();
 });
 
+$("#btnSale").unbind('click').click(function(){
+    var j = 0;
+    var reqnum = $('#request_num_details').val();
+    $("#transItems *").prop('disabled', true);
+    $("#demoreceive_label").hide();
+    $(".soldhide").hide();
+    $("#soldContents").empty();
+    $("#soldItems").slideDown();
+    for(var i=0; i < items.length; i++){
+        $.ajax({ 
+            type:'get', 
+            url:'/soldreq', 
+            data:{
+                'item_id': items[i]
+            }, 
+            success: function(data){
+                var reqitem = $.map(data.data, function(value, index){ 
+                    return [value];
+                });
+
+                reqitem.forEach(value => {
+                    var pid = document.createElement("input");
+                    pid.setAttribute("id", "stock_idx"+j);
+                    pid.setAttribute("type", "hidden");
+                    pid.setAttribute("value", value.id);
+                    var id = document.createElement("input");
+                    id.setAttribute("id", "item_idx"+j);
+                    id.setAttribute("type", "hidden");
+                    id.setAttribute("value", value.item_id);
+                    var x = document.createElement("input");
+                    x.setAttribute("id", "categoryx"+j);
+                    x.setAttribute("type", "text");
+                    x.setAttribute("class", "form-control");
+                    x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
+                    x.setAttribute("value", value.category);
+                    var y = document.createElement("textarea");
+                    y.setAttribute("id", "itemx"+j);
+                    y.setAttribute("class", "form-control");
+                    y.setAttribute("rows", "4");
+                    y.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-top: 52px; margin-bottom: 10px; resize: none;");
+                    var qty = document.createElement("input");
+                    qty.setAttribute("id", "qtyx"+j);
+                    qty.setAttribute("type", "number");
+                    qty.setAttribute("class", "form-control");
+                    qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                    qty.setAttribute("value", '1');
+                    var uom = document.createElement("input");
+                    uom.setAttribute("id", "uomx"+j);
+                    uom.setAttribute("type", "text");
+                    uom.setAttribute("class", "form-control");
+                    uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                    uom.setAttribute("value", value.uom);
+                    var serial = document.createElement("input");
+                    serial.setAttribute("id", "serialx"+j);
+                    serial.setAttribute("class", "form-control");
+                    serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                    serial.setAttribute("value", value.serial);
+                    var warranty = document.createElement("select");
+                    warranty.setAttribute("id", "warrantyx"+j);
+                    warranty.setAttribute("class", "form-control warrantyx");
+                    warranty.setAttribute("style", "width: 210px; font-size: 12px; margin-left: -420px; margin-bottom: -70px;");
+                    var required = document.createElement("span");
+                    required.setAttribute("id", "requiredx"+j);
+                    required.setAttribute("style", "font-size: 12px; color: Red; margin-left: -355px; margin-bottom: -120px; margin-right: 250px;");
+                    required.textContent = "*Required Field";
+                    var details = document.createElement("button");
+                    details.setAttribute("id", "detailsx"+j);
+                    details.setAttribute("type", "button");
+                    details.setAttribute("class", "form-control btn-primary bp details");
+                    details.setAttribute("style", "font-size: 12px; width: 145px; height: 30px; margin-left: 10px; margin-bottom: -70px; display: none;");
+                    details.textContent = 'WARRANTY DETAILS';
+                    var hideDetails = document.createElement("span");
+                    hideDetails.setAttribute("id", "hideDetailsx"+j);
+                    hideDetails.setAttribute("style", "font-size: 12px; width: 145px; height: 30px; margin-left: 10px; margin-bottom: -70px;");
+                    hideDetails.textContent = " ";
+                    document.getElementById("soldContents").appendChild(pid);
+                    document.getElementById("soldContents").appendChild(id);
+                    document.getElementById("soldContents").appendChild(x);
+                    document.getElementById("soldContents").appendChild(y);
+                    document.getElementById("soldContents").appendChild(qty);
+                    document.getElementById("soldContents").appendChild(uom);
+                    document.getElementById("soldContents").appendChild(serial);
+                    document.getElementById("soldContents").appendChild(warranty);
+                    document.getElementById("soldContents").appendChild(details);
+                    document.getElementById("soldContents").appendChild(hideDetails);
+                    document.getElementById("soldContents").appendChild(required);
+                    $("#itemx"+j).html(value.item);
+                    $("#categoryx"+j).prop('readonly', true);
+                    $("#itemx"+j).prop('readonly', true);
+                    $("#qtyx"+j).prop('readonly', true);
+                    $("#uomx"+j).prop('readonly', true);
+                    $("#serialx"+j).prop('readonly', true);
+                    $("#warrantyx"+j).append("<option value='' selected disabled>Select Warranty Type</option>");
+                    $("#warrantyx"+j).append("<option value='0'>NO WARRANTY</option>");
+                    let vidx = "#warrantyx"+j;
+                    $.ajax({
+                        type:'get',
+                        url:'/setwarranty',
+                        success: function(dx){
+                            var sx = $.map(dx, function(vx){
+                                return [vx];
+                            });
+        
+                            sx.forEach(vx => {
+                                $(vidx).append($('<option>', {
+                                    value: vx.id,
+                                    text: (vx.Warranty_Name).toUpperCase()
+                                }));
+                            });
+                        },
+                        error: function(data){
+                            if(data.status == 401){
+                                window.location.href = '/stockrequest';
+                            }
+                            alert(data.responseText);
+                        }
+                    });
+                    j++;
+                });
+                for(var my=0; my < j; my++){
+                    let idy = my;
+                    $('#warrantyx'+my).on('change', function(){
+                        if($("#warrantyx"+idy).val() == '' || $("#warrantyx"+idy).val() == '0'){
+                            $('#detailsx'+idy).hide();
+                            $('#hideDetailsx'+idy).show();
+                            document.getElementById('requiredx'+idy).style.color = "Red";
+                        }
+                        else{
+                            $('#detailsx'+idy).show();
+                            $('#hideDetailsx'+idy).hide();
+                            document.getElementById('requiredx'+idy).style.color = "White";
+                        }
+                        if($("#warrantyx"+idy).val() == '0'){
+                            document.getElementById('requiredx'+idy).style.color = "White";
+                        }
+                    });
+                }
+                for(var mx=0; mx < j; mx++){
+                    let idx = mx;
+                    $('#detailsx'+mx).on('click', function(){
+                        $('.warranty_title').html($("#warrantyx"+idx+" option:selected").text());
+                        var id = $("#warrantyx"+idx).val();
+                        $('.listInclusive').hide();
+                        $.ajax({
+                            type: 'get', 
+                            url: '/getInclusive', 
+                            data:{
+                                id: id
+                            }, 
+                            success: function(data){
+                                $('.duration').val(data[0].Duration+' MONTH/S');
+                                if(data[0].Inclusive != null){
+                                    if(data[0].Inclusive.indexOf('Software') > -1){
+                                        $('.software').show();
+                                    }
+                                    if(data[0].Inclusive.indexOf('Onsite Visit') > -1){
+                                        $('.onsite').show();
+                                    }
+                                    if(data[0].Inclusive.indexOf('Phone Support') > -1){
+                                        $('.phone').show();
+                                    }
+                                    if(data[0].Inclusive.indexOf('Hardware') > -1){
+                                        $('.hardware').show();
+                                    }
+                                    if(data[0].Inclusive.indexOf('Parts Replacement') > -1){
+                                        $('.replacement').show();
+                                    }
+                                    if(data[0].Inclusive.indexOf('Service Unit') > -1){
+                                        $('.su').show();
+                                    }
+                                }              
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    });
+                }
+                setInterval(checkWarranty, 0);
+                function checkWarranty(){
+                    if($('.warrantyx').filter(function(){ return !!this.value; }).length != j){
+                        $('#btnConfirm').prop('disabled', true);
+                        $('#soldwarning').show();
+                    }
+                    else{
+                        $('#btnConfirm').prop('disabled', false);
+                        $('#soldwarning').hide();
+                    }
+                }
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/stockrequest';
+                }
+                alert(data.responseText);
+            }
+        });
+    }
+});
+
+$('#btnCancel').on('click', function(){
+    $("#transItems *").prop('disabled', false);
+    $("#demoreceive_label").show();
+    $(".soldhide").show();
+    $("#soldItems").hide();
+});
+
 $('.btnReceive').on('click', function(){
     var inc = 'false';
     if(items.length < item_count){
@@ -3688,7 +3898,7 @@ $('#btnReceiveDfc').on('click', function(){
     });
 });
 
-$('#btnSale').on('click', function(){
+$('#btnConfirm').on('click', function(){
     $('#referenceModal').modal({
         backdrop: 'static',
         keyboard: false
@@ -3734,7 +3944,8 @@ $('#btnReference').on('click', function(){
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
-                                        'id': items[i]
+                                        'id': $('#stock_idx'+i).val(),
+                                        'warranty_id': $('#warrantyx'+i).val()
                                     },
                                     success: function(data){
                                         if(data == 'true'){

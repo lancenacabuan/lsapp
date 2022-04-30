@@ -345,7 +345,7 @@
             </table> 
             @endrole
             <br>
-            <div class="prephide">
+            <div class="prephide soldhide">
             <hr>
             @role('sales') {{---ROLES---}}
             <button type="button" class="btn btn-primary float-right bp btnReceive" disabled>RECEIVE</button>
@@ -435,6 +435,22 @@
             <br>
             </div>
             @endrole
+        </div>
+        </div>
+        <div id="soldItems" style="display: none;">
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
+            <h6 class="modal-title w-100">ITEMS FOR SALE DETAILS</h6>
+        </div>
+        <div class="modal-body">
+            <div class="form-inline" style="margin-left: 35px;" id="soldContents"></div>
+            <div id="soldwarning" class="alert alert-warning mt-4" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>CANNOT PROCEED:</strong> Please select all corresponding <strong>WARRANTY TYPES</strong> on every item to continue selling items. 
+            </div>
+            <hr>
+            <input type="button" class="btn btn-primary bp" id="btnCancel" value="CANCEL">
+            <input type="button" class="btn btn-primary float-right bp" id="btnConfirm" value="CONFIRM" disabled>
+            <br>
         </div>
         </div>
     </div>

@@ -195,14 +195,14 @@ class AssemblyController extends Controller
         if($request->status == '3'){
             do{
                 $sql = Stock::where('id', $request->id)
-                    ->update(['status' => 'received']);
+                    ->update(['status' => 'received', 'user_id' => auth()->user()->id]);
             }
             while(!$sql);
         }
         if($request->status == '17'){
             do{
                 $sql = Stock::where('id', $request->id)
-                    ->update(['status' => 'assembly']);
+                    ->update(['status' => 'assembly', 'user_id' => auth()->user()->id]);
             }
             while(!$sql);
         }
@@ -214,11 +214,11 @@ class AssemblyController extends Controller
         if($request->status == '3'){
             Stock::where('request_number', $request->request_number)
                 ->where('status', '=', 'assembly')
-                ->update(['status' => 'incomplete']);
+                ->update(['status' => 'incomplete', 'user_id' => auth()->user()->id]);
             
             Stock::where('request_number', $request->request_number)
                 ->where('status', '=', 'received')
-                ->update(['status' => 'assembly']);
+                ->update(['status' => 'assembly', 'user_id' => auth()->user()->id]);
         }
 
         if($request->inc == 'true'){
@@ -279,7 +279,7 @@ class AssemblyController extends Controller
     public function defectiveItems(Request $request){
         do{
             $sql = Stock::where('id', $request->id)
-                ->update(['status' => 'defective']);
+                ->update(['status' => 'defective', 'user_id' => auth()->user()->id]);
         }
         while(!$sql);
         
@@ -362,7 +362,7 @@ class AssemblyController extends Controller
 
             Stock::whereIn('request_number', $include)
                 ->where('status', 'assembly')
-                ->update(['status' => 'assembled']);
+                ->update(['status' => 'assembled', 'user_id' => auth()->user()->id]);
         }
 
         return response($result);

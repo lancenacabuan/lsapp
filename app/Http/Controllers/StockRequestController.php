@@ -1661,13 +1661,15 @@ class StockRequestController extends Controller
         $list = str_replace(']','',$list);
         $list = json_decode($list);
 
-        $list1 = Item::selectRaw('items.item AS item_desc')
-            ->where('id', '=', $list->item_id)
-            ->get();
-        
-        $list1 = str_replace('[','',$list1);
-        $list1 = str_replace(']','',$list1);
-        $list1 = json_decode($list1);
+        if($list){
+            $list1 = Item::selectRaw('items.item AS item_desc')
+                ->where('id', '=', $list->item_id)
+                ->get();
+
+            $list1 = str_replace('[','',$list1);
+            $list1 = str_replace(']','',$list1);
+            $list1 = json_decode($list1);
+        }
 
         $list2 = Requests::selectRaw('users.name AS prepby')
             ->where('requests.request_number', $request->request_number)
@@ -1701,6 +1703,6 @@ class StockRequestController extends Controller
             return redirect()->to('/stockrequest');
         }
 
-        return view('/pages/stockRequest/printStockRequest', compact('list', 'list1','list2','list3'));
+        return view('/pages/stockRequest/printStockRequest', compact('list','list1','list2','list3'));
     }
 }

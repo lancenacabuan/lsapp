@@ -1,11 +1,14 @@
 $('#btnChangePassword').on('click', function(){
-var pass1 = $('#pass1').val();
-var pass2 = $('#pass2').val();
-var pass3 = $('#pass3').val();
-
+    var pass1 = $('#pass1').val();
+    var pass2 = $('#pass2').val();
+    var pass3 = $('#pass3').val();
+    if(pass2.length < 8 || pass3.length < 8){
+        $('#form_changepassword')[0].reportValidity();
+        return false;
+    }
     if(pass1!="" && pass2!="" && pass3!=""){
         if(pass2 != pass3){
-            swal('ERROR','Confirm Password must be the same as New Password!','error');
+            swal('UPDATE ERROR','Confirm Password must be the same as New Password!','error');
         }
         else {
             $.ajax({
@@ -29,7 +32,7 @@ var pass3 = $('#pass3').val();
                         setTimeout(function(){window.location.href="/"} , 2000);
                     }
                     else{
-                        swal('ERROR','Incorrect Current Password!', 'error');
+                        swal('UPDATE ERROR','Incorrect Current Password!', 'error');
                     }
                 },
                 error: function(data){

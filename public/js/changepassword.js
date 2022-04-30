@@ -2,11 +2,15 @@ $('#btnChangePassword').on('click', function(){
     var pass1 = $('#pass1').val();
     var pass2 = $('#pass2').val();
     var pass3 = $('#pass3').val();
-    if(pass2.length < 8 || pass3.length < 8){
+    if(pass1 == "" || pass2 == "" || pass3 == ""){
         $('#form_changepassword')[0].reportValidity();
         return false;
     }
-    if(pass1!="" && pass2!="" && pass3!=""){
+    else if(pass1.length < 8 || pass2.length < 8 || pass3.length < 8){
+        $('#form_changepassword')[0].reportValidity();
+        return false;
+    }
+    else{
         if(pass2 != pass3){
             swal('UPDATE ERROR','Confirm Password must be the same as New Password!','error');
         }
@@ -43,8 +47,5 @@ $('#btnChangePassword').on('click', function(){
                 }
             });
         }
-    }
-    else{
-        swal('REQUIRED','Please fill up all required fields!','error');
     }
 });

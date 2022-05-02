@@ -118,6 +118,14 @@ $(document).ready(function(){
         swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
         setTimeout(function(){location.href="/stockrequest"}, 2000);
     }
+    else if($(location).attr('pathname')+window.location.search == '/stockrequest?sale=success'){
+        swal("SALE SUCCESS", "STOCK REQUEST", "success");
+        setTimeout(function(){location.href="/stockrequest"}, 2000);
+    }
+    else if($(location).attr('pathname')+window.location.search == '/stockrequest?upload=failed'){
+        swal("UPLOAD FAILED", "STOCK REQUEST", "error");
+        setTimeout(function(){location.href="/stockrequest"}, 2000);
+    }
 });
 
 function generatedr(){
@@ -630,6 +638,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#needdate_details').val(need_date);
                 var req_num = value.req_num;
                     $('#request_num_details').val(req_num);
+                    $('#reqnum').val(req_num);
                 var asm_req_num = value.assembly_reqnum;
                     $('#asm_request_num_details').val(asm_req_num);
                 var req_by = value.req_by;
@@ -664,6 +673,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 var reference_attachment = value.reference_upload;
                     $('#reference_attachment').attr('src', '/uploads/'+reference_attachment).show();
             
+                    $('#action').val('');
                     $('.modal-body').html();
                     $('#detailsStockRequest').modal('show');
 
@@ -1480,6 +1490,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#needdate_details').val(need_date);
     var req_num = value.req_num;
         $('#request_num_details').val(req_num);
+        $('#reqnum').val(req_num);
     var asm_req_num = value.assembly_reqnum;
         $('#asm_request_num_details').val(asm_req_num);
     var req_by = value.req_by;
@@ -1514,6 +1525,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     var reference_attachment = value.reference_upload;
         $('#reference_attachment').attr('src', '/uploads/'+reference_attachment).show();
 
+        $('#action').val('');
         $('.modal-body').html();
         $('#detailsStockRequest').modal('show');
 
@@ -3994,14 +4006,14 @@ $('#btnReference').on('click', function(){
                                 data:{
                                     'request_number': $('#request_num_details').val()
                                 },
-                                success: function(data){
+                                success: function(data){                                    
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
-                                        swal("SALE SUCCESS", "STOCK REQUEST", "success");
-                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                        $('#btnUpload').click();
                                     }
                                     else{
-                                        return false;
+                                        swal("SALE FAILED", "STOCK REQUEST", "error");
+                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
                                     }
                                 },
                                 error: function(data){

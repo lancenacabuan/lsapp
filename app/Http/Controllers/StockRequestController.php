@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -122,19 +123,29 @@ class StockRequestController extends Controller
     }
 
     public function uploadFile(Request $request){
+        $datetime = Carbon::now()->isoformat('YYYYMMDDHHmmss');
         $extension = $request->reference_upload->getClientOriginalExtension();
-        $reference_upload = time().'_'.$request->reqnum.'.'.$extension;
-        $path = $request->reference_upload->move(public_path('/uploads'), $reference_upload);
+        $reference_upload = $datetime.'_'.$request->reqnum.'.'.$extension;
+        do{
+            $path = $request->reference_upload->move(public_path('/uploads'), $reference_upload);
+        }
+        while(!$path);
 
         if($path){
             Requests::where('request_number', $request->reqnum)
                 ->update(['reference_upload' => $reference_upload]);
         }
         else{
-            return redirect()->to('/stockrequest');
+            return redirect()->to('/stockrequest?upload=failed');
         }
 
-        return redirect()->to('/stockrequest?submit=success');
+        if($request->action == 'SUBMIT'){
+            return redirect()->to('/stockrequest?submit=success');
+        }
+        else{
+            return redirect()->to('/stockrequest?sale=success');
+        }
+
     }
 
     public function saveRequest(Request $request){

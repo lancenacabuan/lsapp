@@ -116,7 +116,7 @@ $(".btnNewAssembly").on('click', function(){
     generateReqNum();
 });
 
-setInterval(checkNewAssembly, 100);
+setInterval(checkNewAssembly, 0);
 function checkNewAssembly(){
     if($('#newAssembly').is(':visible')){
         if($('#needdate').val() && $('#assembly').val() && $('#qty').val() > 0 && $('#assemblypartsDetails').is(':hidden')){

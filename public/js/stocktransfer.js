@@ -102,7 +102,7 @@ $(".btnNewStockTransfer").on('click', function(){
     generateReqNum();
 });
 
-setInterval(runFunction, 100);
+setInterval(runFunction, 0);
 function runFunction(){
     if($('#newStockTransfer').is(':visible')){
         if($('#needdate').val() && $('#locfrom').val() && $('#locto').val()){

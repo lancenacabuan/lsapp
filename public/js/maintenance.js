@@ -979,7 +979,7 @@ $('#btnUpdateLocation').on('click', function(){
     }
 });
 
-setInterval(checkCreateItem, 200);
+setInterval(checkCreateItem, 0);
 function checkCreateItem(){
     var item_description = $.trim($('#aic_item_description').val());
     if($('#createItem').is(':visible')){
@@ -1203,7 +1203,7 @@ $('#btnSave').on('click', function(){
     });
 });
 
-setInterval(runCompare, 200);
+setInterval(runCompare, 0);
 function runCompare(){
     if($('#detailsAssemblyItem').is(':visible')){
         var item_current = $.trim($('#aim_item_name_details').val());

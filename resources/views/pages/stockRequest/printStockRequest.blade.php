@@ -83,6 +83,30 @@
             </tr>
             <tr height="20">
                 <td colspan="9" height="20">
+                    @if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10))
+                    <table id="stockReqTable" class="table stockReqTable display" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>CATEGORY</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>QTY</th>
+                                <th>UOM</th>
+                                <th>SERIAL</th>
+                                <th>WARRANTY TYPE</th>
+                            </tr>
+                            @foreach($list3 as $x)
+                            <tr>
+                                <td>{{$x['category']}}</td>
+                                <td>{{$x['item']}}</td>
+                                <td>{{$x['qty']}}</td>
+                                <td>{{$x['uom']}}</td>
+                                <td>{{strtoupper($x['serial'])}}</td>
+                                <td>{{strtoupper($x['Warranty_Name'])}}</td>
+                            </tr>
+                            @endforeach
+                        </thead>
+                    </table>
+                    @else
                     <table id="stockReqTable" class="table stockReqTable display" style="margin-top: 10px;">
                         <thead>
                             <tr>
@@ -94,15 +118,16 @@
                             </tr>
                             @foreach($list3 as $x)
                             <tr>
-                                <td>{{$x->category}}</td>
-                                <td>{{$x->item}}</td>
-                                <td>{{$x->qty}}</td>
-                                <td>{{$x->uom}}</td>
-                                <td>{{$x->serial}}</td>
+                                <td>{{$x['category']}}</td>
+                                <td>{{$x['item']}}</td>
+                                <td>{{$x['qty']}}</td>
+                                <td>{{$x['uom']}}</td>
+                                <td>{{strtoupper($x['serial'])}}</td>
                             </tr>
                             @endforeach
                         </thead>
-                    </table> 
+                    </table>
+                    @endif
                 </td>
             </tr>
             <tr height="20" class="extend" style="display: none;">

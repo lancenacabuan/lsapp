@@ -21,6 +21,30 @@
         <br><br>
         <strong>{{$details['verb']}} ITEMS</strong>
         <br>
+        @if($details['req_type_id'] == 2 || ($details['req_type_id'] == 3 && $details['status_id'] == 10))
+        <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">CATEGORY</th>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">ITEM DESCRIPTION</th>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">QTY</th>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">UOM</th>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">SERIAL</th>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">WARRANTY TYPE</th>
+                </tr>
+            </thead>
+            @foreach($details['items'] as $x)
+            <tr>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['category']}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['item']}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['qty']}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['uom']}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x['serial'])}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x['Warranty_Name'])}}</td>
+            </tr>
+            @endforeach 
+        </table>
+        @else
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>
@@ -33,14 +57,15 @@
             </thead>
             @foreach($details['items'] as $x)
             <tr>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->category}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->item}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->qty}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->uom}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->serial}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['category']}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['item']}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['qty']}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['uom']}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x['serial'])}}</td>
             </tr>
             @endforeach 
         </table>
+        @endif
         <br><br>
         @if($details['pendcount'] > 0)
         <strong>PENDING ITEMS</strong>

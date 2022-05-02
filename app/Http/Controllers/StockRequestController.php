@@ -828,10 +828,11 @@ class StockRequestController extends Controller
             ->where('status', '=', 'demo')
             ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
         do{
-            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate, prepdate')
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, reference, schedule, needdate, prepdate')
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                ->join('status', 'status.id', '=', 'requests.status')
                 ->get();
 
                 $request_details = str_replace('[','',$request_details);
@@ -862,7 +863,7 @@ class StockRequestController extends Controller
         $include[] = $request->request_number;
 
         do{
-            $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+            $items = Stock::query()->select('categories.category AS category', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['out'])
                 ->join('items','items.id','stocks.item_id')
@@ -870,7 +871,16 @@ class StockRequestController extends Controller
                 ->join('locations','locations.id','stocks.location_id')
                 ->get()
                 ->sortBy('item')
-                ->sortBy('category');
+                ->sortBy('category')
+                ->toArray();
+            foreach($items as $key => $value){
+                if($value['warranty_id'] == '0'){
+                    $items[$key]['Warranty_Name'] = 'NO WARRANTY';
+                }
+                else{
+                    $items[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
+                }
+            }
         }
         while(!$items);
         
@@ -896,7 +906,9 @@ class StockRequestController extends Controller
                 'role' => 'Admin',
                 'items' => $items,
                 'pendcount' => 0,
-                'penditems' => NULL
+                'penditems' => NULL,
+                'req_type_id' => $request_details->req_type_id,
+                'status_id' => $request_details->status_id
             ];
             Mail::to($key->email)->send(new receivedRequest($details, $subject));
         }
@@ -922,7 +934,9 @@ class StockRequestController extends Controller
                 'role' => 'Approver - Sales',
                 'items' => $items,
                 'pendcount' => 0,
-                'penditems' => NULL
+                'penditems' => NULL,
+                'req_type_id' => $request_details->req_type_id,
+                'status_id' => $request_details->status_id
             ];
             Mail::to($key->email)->send(new receivedRequest($details, $subject));
         }
@@ -946,7 +960,9 @@ class StockRequestController extends Controller
             'role' => 'Sales',
             'items' => $items,
             'pendcount' => 0,
-            'penditems' => NULL
+            'penditems' => NULL,
+            'req_type_id' => $request_details->req_type_id,
+            'status_id' => $request_details->status_id
         ];
         Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
 
@@ -1275,10 +1291,11 @@ class StockRequestController extends Controller
         }
         else if($total == 0){
             do{
-                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate, prepdate')
+                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, reference, schedule, needdate, prepdate')
                     ->where('requests.request_number', $request->request_number)
                     ->join('users', 'users.id', '=', 'requests.requested_by')
                     ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                    ->join('status', 'status.id', '=', 'requests.status')
                     ->get();
     
                     $request_details = str_replace('[','',$request_details);
@@ -1308,18 +1325,43 @@ class StockRequestController extends Controller
             $include = json_decode($include);
             $include[] = $request->request_number;
 
-            do{
-                $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-                    ->whereIn('request_number', $include)
-                    ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
-                    ->join('items','items.id','stocks.item_id')
-                    ->join('categories','categories.id','items.category_id')
-                    ->join('locations','locations.id','stocks.location_id')
-                    ->get()
-                    ->sortBy('item')
-                    ->sortBy('category');
+            if($request_details->req_type_id == 2 || ($request_details->req_type_id == 3 && $request_details->status_id == 10)){
+                do{
+                    $items = Stock::query()->select('categories.category AS category', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+                        ->whereIn('request_number', $include)
+                        ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+                        ->join('items','items.id','stocks.item_id')
+                        ->join('categories','categories.id','items.category_id')
+                        ->join('locations','locations.id','stocks.location_id')
+                        ->get()
+                        ->sortBy('item')
+                        ->sortBy('category')
+                        ->toArray();
+                    foreach($items as $key => $value){
+                        if($value['warranty_id'] == '0'){
+                            $items[$key]['Warranty_Name'] = 'NO WARRANTY';
+                        }
+                        else{
+                            $items[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
+                        }
+                    }
+                }
+                while(!$items);
             }
-            while(!$items);
+            else{
+                do{
+                    $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                        ->whereIn('request_number', $include)
+                        ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+                        ->join('items','items.id','stocks.item_id')
+                        ->join('categories','categories.id','items.category_id')
+                        ->join('locations','locations.id','stocks.location_id')
+                        ->get()
+                        ->sortBy('item')
+                        ->sortBy('category');
+                }
+                while(!$items);
+            }
             
             $subject = 'STOCK REQUEST NO. '.$request->request_number;
             $user = User::role('admin')->where('status','ACTIVE')->get();
@@ -1343,7 +1385,9 @@ class StockRequestController extends Controller
                     'role' => 'Admin',
                     'items' => $items,
                     'pendcount' => 0,
-                    'penditems' => NULL
+                    'penditems' => NULL,
+                    'req_type_id' => $request_details->req_type_id,
+                    'status_id' => $request_details->status_id
                 ];
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
@@ -1369,7 +1413,9 @@ class StockRequestController extends Controller
                     'role' => 'Approver - Sales',
                     'items' => $items,
                     'pendcount' => 0,
-                    'penditems' => NULL
+                    'penditems' => NULL,
+                    'req_type_id' => $request_details->req_type_id,
+                    'status_id' => $request_details->status_id
                 ];
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
@@ -1393,7 +1439,9 @@ class StockRequestController extends Controller
                 'role' => 'Sales',
                 'items' => $items,
                 'pendcount' => 0,
-                'penditems' => NULL
+                'penditems' => NULL,
+                'req_type_id' => $request_details->req_type_id,
+                'status_id' => $request_details->status_id
             ];
             Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
 
@@ -1404,10 +1452,11 @@ class StockRequestController extends Controller
         }
         else{
             do{
-                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, schedule, needdate, prepdate')
+                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, reference, schedule, needdate, prepdate')
                     ->where('requests.request_number', $request->request_number)
                     ->join('users', 'users.id', '=', 'requests.requested_by')
                     ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                    ->join('status', 'status.id', '=', 'requests.status')
                     ->get();
     
                     $request_details = str_replace('[','',$request_details);
@@ -1437,18 +1486,43 @@ class StockRequestController extends Controller
             $include = json_decode($include);
             $include[] = $request->request_number;
 
-            do{
-                $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-                    ->whereIn('request_number', $include)
-                    ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
-                    ->join('items','items.id','stocks.item_id')
-                    ->join('categories','categories.id','items.category_id')
-                    ->join('locations','locations.id','stocks.location_id')
-                    ->get()
-                    ->sortBy('item')
-                    ->sortBy('category');
+            if($request_details->req_type_id == 2 || ($request_details->req_type_id == 3 && $request_details->status_id == 10)){
+                do{
+                    $items = Stock::query()->select('categories.category AS category', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+                        ->whereIn('request_number', $include)
+                        ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+                        ->join('items','items.id','stocks.item_id')
+                        ->join('categories','categories.id','items.category_id')
+                        ->join('locations','locations.id','stocks.location_id')
+                        ->get()
+                        ->sortBy('item')
+                        ->sortBy('category')
+                        ->toArray();
+                    foreach($items as $key => $value){
+                        if($value['warranty_id'] == '0'){
+                            $items[$key]['Warranty_Name'] = 'NO WARRANTY';
+                        }
+                        else{
+                            $items[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
+                        }
+                    }
+                }
+                while(!$items);
             }
-            while(!$items);
+            else{
+                do{
+                    $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                        ->whereIn('request_number', $include)
+                        ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+                        ->join('items','items.id','stocks.item_id')
+                        ->join('categories','categories.id','items.category_id')
+                        ->join('locations','locations.id','stocks.location_id')
+                        ->get()
+                        ->sortBy('item')
+                        ->sortBy('category');
+                }
+                while(!$items);
+            }
 
             do{
                 $pendcount = StockRequest::query()->select()
@@ -1490,7 +1564,9 @@ class StockRequestController extends Controller
                     'role' => 'Admin',
                     'items' => $items,
                     'pendcount' => $pendcount,
-                    'penditems' => $penditems
+                    'penditems' => $penditems,
+                    'req_type_id' => $request_details->req_type_id,
+                    'status_id' => $request_details->status_id
                 ];
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
@@ -1516,7 +1592,9 @@ class StockRequestController extends Controller
                     'role' => 'Approver - Sales',
                     'items' => $items,
                     'pendcount' => $pendcount,
-                    'penditems' => $penditems
+                    'penditems' => $penditems,
+                    'req_type_id' => $request_details->req_type_id,
+                    'status_id' => $request_details->status_id
                 ];
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
@@ -1540,7 +1618,9 @@ class StockRequestController extends Controller
                 'role' => 'Sales',
                 'items' => $items,
                 'pendcount' => $pendcount,
-                'penditems' => $penditems
+                'penditems' => $penditems,
+                'req_type_id' => $request_details->req_type_id,
+                'status_id' => $request_details->status_id
             ];
             Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
 
@@ -1700,15 +1780,38 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-            ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
-            ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
-            ->join('locations','locations.id','stocks.location_id')
-            ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+        if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10)){
+            $list3 = Stock::query()->select('categories.category AS category', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
+                ->join('items','items.id','stocks.item_id')
+                ->join('categories','categories.id','items.category_id')
+                ->join('locations','locations.id','stocks.location_id')
+                ->get()
+                ->sortBy('item')
+                ->sortBy('category')
+                ->toArray();
+                // return $list3;
+            foreach($list3 as $key => $value){
+                if($value['warranty_id'] == '0'){
+                    $list3[$key]['Warranty_Name'] = 'NO WARRANTY';
+                }
+                else{
+                    $list3[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
+                }
+            }
+        }
+        else{
+            $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
+                ->join('items','items.id','stocks.item_id')
+                ->join('categories','categories.id','items.category_id')
+                ->join('locations','locations.id','stocks.location_id')
+                ->get()
+                ->sortBy('item')
+                ->sortBy('category');
+        }
 
         if(!$list || !$list2 || !$list3){
             return redirect()->to('/stockrequest');

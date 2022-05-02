@@ -246,7 +246,7 @@ $('#request_type').on('change', function(){
     var reqtype = $(this).val();
     $('#reference').val('');
     $('#reference_upload').val('');
-    $('#upload_label').html('Upload Image File (Less than 5MB)');
+    $('.upload_label').html('Upload Image File (Less than 5MB)');
     if(reqtype == '2'){
         $('.reference_field').show();
     }

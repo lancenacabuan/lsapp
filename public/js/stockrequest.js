@@ -94,7 +94,7 @@ function decodeHtml(str){
 }
 
 function validate_fileupload(reference_upload){
-    $('#upload_label').html('Upload Image File (Less than 5MB)');
+    $('.upload_label').html('Upload Image File (Less than 5MB)');
     if(!/(\.jpg|\.jpeg|\.png|\.gif)$/i.test(reference_upload.value)){
         swal('Invalid image file type or format!', 'Please upload an image file with a valid file type/format like the following: jpeg/jpg, png, or gif.', 'error');      
         $('#reference_upload').val('');
@@ -108,7 +108,7 @@ function validate_fileupload(reference_upload){
         $('#reference_upload').focus();
         return false; 
     }
-    $('#upload_label').html(reference_upload.value.split("\\").pop());
+    $('.upload_label').html(reference_upload.value.split("\\").pop());
     
     return true; 
 }
@@ -175,7 +175,7 @@ $(".btnNewStockRequest").on('click', function(){
     generatedr();
 });
 
-setInterval(runFunction, 100);
+setInterval(runFunction, 0);
 function runFunction(){
     if($('#newStockRequest').is(':visible')){
         var needdate = $('#needdate').val();
@@ -205,9 +205,21 @@ function runFunction(){
             }
         }
     }
+    if($('#referenceModal').is(':visible')){
+        var reference = $.trim($('#x_reference').val());
+        var reference_upload = $('#reference_upload').val();
+        if(reference && reference_upload){
+            $('#btnReference').show();
+            $('#reference_note').hide();
+        }
+        else{
+            $('#btnReference').hide();
+            $('#reference_note').show();
+        }
+    }
 }
 
-setInterval(checkLocation, 100);
+setInterval(checkLocation, 0);
 function checkLocation(){
     if($('#detailsStockRequest').is(':visible') && $('#status_id_details').val() == '13'){
         var warehouse = $('#warehouse_details').val();
@@ -3910,6 +3922,10 @@ $('#btnReference').on('click', function(){
     var reference = $.trim($('#x_reference').val()).toUpperCase();
     if(reference == ''){
         swal("SO/PO NUMBER REQUIRED", "Please fill up required field!", "error");
+        return false;
+    }
+    else if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(reference) == true){
+        swal('Invalid Reference SO/PO No.!','Please input a valid Reference SO/PO Number.','error');
         return false;
     }
     else{

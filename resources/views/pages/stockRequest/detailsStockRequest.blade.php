@@ -516,14 +516,15 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">REFERENCE SO/PO NUMBER</h6>            
+            <h6 class="modal-title w-100">REFERENCE SO/PO</h6>            
             <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_reference" id="x_reference" placeholder="SO/PO Number" autocomplete="off">
-            <span style="color: Red; font-size: 12px;">Please input SO/PO Number to proceed.</span>
-            <button type="button" id="btnReference" class="btn btn-primary float-right bp" style="zoom: 80%;">OK</button>
+            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_reference" id="x_reference" placeholder="Please input SO/PO Number." autocomplete="off">
+            <button class="form-control btn btn-primary bp" style="zoom: 90%; margin-bottom: 8px; width: 295px; height: 30px; line-height: 30%; font-size: 14px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File (Less than 5MB)</span></button>
+            <span id="reference_note" style="color: Red; font-size: 12px;">*SO/PO Number and Attachment are required.</span>
+            <button type="button" id="btnReference" class="btn btn-primary mt-2 float-right bp" style="zoom: 80%;">OK</button>
         </div>
     </div>
     </div>

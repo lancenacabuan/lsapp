@@ -35,7 +35,7 @@
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->item}}</td>
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->qty}}</td>
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->uom}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->serial}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x->serial)}}</td>
             </tr>
             @endforeach 
         </table>

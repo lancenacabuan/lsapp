@@ -82,7 +82,7 @@
                                 <td>{{$x->item}}</td>
                                 <td>{{$x->qty}}</td>
                                 <td>{{$x->uom}}</td>
-                                <td>{{$x->serial}}</td>
+                                <td>{{strtoupper($x->serial)}}</td>
                             </tr>
                             @endforeach
                         </thead>

@@ -1791,7 +1791,6 @@ class StockRequestController extends Controller
                 ->sortBy('item')
                 ->sortBy('category')
                 ->toArray();
-                // return $list3;
             foreach($list3 as $key => $value){
                 if($value['warranty_id'] == '0'){
                     $list3[$key]['Warranty_Name'] = 'NO WARRANTY';

@@ -4006,7 +4006,7 @@ $('#btnReference').on('click', function(){
                                 data:{
                                     'request_number': $('#request_num_details').val()
                                 },
-                                success: function(data){                                    
+                                success: function(data){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
                                         $('#btnUpload').click();

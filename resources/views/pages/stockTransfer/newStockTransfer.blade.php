@@ -53,10 +53,10 @@
             <div class="modal-body" style="background-color: white; color: black;">
                 <form class="mt-2 mb-2">
                     <div class="form-inline" style="margin-left: 20px;">
-                        <select class="form-select" id="category" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
+                        <select class="form-control form-select" id="category" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
                                 <option value="" selected disabled>Select Category</option>
                         </select>
-                        <select class="form-select" id="item" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 5px;">
+                        <select class="form-control form-select" id="item" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 5px;">
                                 <option value="" selected disabled>Select Item</option>
                         </select>
                         <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="text" placeholder="UOM" readonly>

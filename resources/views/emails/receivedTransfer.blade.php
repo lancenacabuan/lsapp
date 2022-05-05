@@ -23,7 +23,7 @@
             <thead>
                 <tr>
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">CATEGORY</th>
-                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">ITEM DESCRIPTION</th>
+                    <th style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">ITEM DESCRIPTION</th>
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">QTY</th>
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">UOM</th>
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">SERIAL</th>
@@ -32,7 +32,7 @@
             @foreach($details['items'] as $x)
             <tr>
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->category}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->item}}</td>
+                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$x->item}}</td>
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->qty}}</td>
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->uom}}</td>
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x->serial)}}</td>

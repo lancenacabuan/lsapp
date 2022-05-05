@@ -182,11 +182,11 @@ class StockRequestController extends Controller
         if($request_details->reqtype == 'SALES'){
             do{
                 $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
-                ->join('categories', 'categories.id', 'stock_request.category')
-                ->join('items', 'items.id', 'stock_request.item')
-                ->where('request_number', $request->request_number)
-                ->get()
-                ->toArray();
+                    ->join('categories', 'categories.id', 'stock_request.category')
+                    ->join('items', 'items.id', 'stock_request.item')
+                    ->where('request_number', $request->request_number)
+                    ->get()
+                    ->toArray();
                 foreach($items as $key => $value){
                     if($value['warranty'] == '0'){
                         $items[$key]['Warranty_Name'] = 'NO WARRANTY';

@@ -267,6 +267,7 @@ $('#request_type').on('change', function(){
     $("#qtyReq").val('');
     $("#uom").val('');
     $("#warrantyReq").val('');
+    $('#warrantyDetails').hide();
     $("#stockRequestTable tbody tr").remove();
     if($('#stockRequestTable tbody').children().length==0){
         $('#stockRequestTable').hide();
@@ -326,6 +327,52 @@ $('#itemReq').on('change', function(){
     });
 });
 
+$('#warrantyReq').on('change', function(){
+    var id = $(this).val();
+    if(id == 0 || id == ''){
+        $('#warrantyDetails').hide();
+        return false;
+    }
+    $('#warrantyDetails').show();
+    $('.listInclusive').hide();
+    $.ajax({
+        type: 'get', 
+        url: '/getInclusive', 
+        data:{
+            id: id
+        }, 
+        success: function(data){
+            $('.duration').val(data[0].Duration+' MONTH/S');
+            if(data[0].Inclusive != null){
+                if(data[0].Inclusive.indexOf('Software') > -1){
+                    $('.software').show();
+                }
+                if(data[0].Inclusive.indexOf('Onsite Visit') > -1){
+                    $('.onsite').show();
+                }
+                if(data[0].Inclusive.indexOf('Phone Support') > -1){
+                    $('.phone').show();
+                }
+                if(data[0].Inclusive.indexOf('Hardware') > -1){
+                    $('.hardware').show();
+                }
+                if(data[0].Inclusive.indexOf('Parts Replacement') > -1){
+                    $('.replacement').show();
+                }
+                if(data[0].Inclusive.indexOf('Service Unit') > -1){
+                    $('.su').show();
+                }
+            }              
+        },
+        error: function(data){
+            if(data.status == 401){
+                window.location.href = '/stockrequest';
+            }
+            alert(data.responseText);
+        }
+    });
+});
+
 $(".add-row").on('click', function(){
     var request_type = $('#request_type').val();
     var category = $("#categoryReq option:selected").text();
@@ -366,6 +413,7 @@ $(".add-row").on('click', function(){
                 qty = $("#qtyReq").val('');
                 uom = $('#uom').val('');
                 warranty = $("#warrantyReq").val('');
+                $('#warrantyDetails').hide();
                 return false;
             }
             else {
@@ -379,6 +427,7 @@ $(".add-row").on('click', function(){
         qty = $("#qtyReq").val('');
         uom = $('#uom').val('');
         warranty = $("#warrantyReq").val('');
+        $('#warrantyDetails').hide();
         $('#stockRequestTable').show();
         $('#stockRequestDiv').toggle();
         $('#btnClose').show();

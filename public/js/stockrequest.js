@@ -340,15 +340,15 @@ $(".add-row").on('click', function(){
         var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>" + warranty_id + "</td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td>" + warranty + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
     }
     else{
-        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>&nbsp;</td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td style='display: none;'>&nbsp;</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'></td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td style='display: none;'></td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
     }
     var ctr = 'false';
     if(request_type == '2' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "" || warranty == "Select Warranty Type")){
-        swal('REQUIRED','Please select an item!','error');
+        swal('REQUIRED','Please fill up all required item details!','error');
         return false;
     }
     else if(request_type == '3' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "")){
-        swal('REQUIRED','Please select an item!','error');
+        swal('REQUIRED','Please fill up all required item details!','error');
         return false;
     }
     else{
@@ -458,7 +458,8 @@ $('#btnSave').on('click', function(){
                                         'request_number': $('#request_num').val(),
                                         'category': value[0],
                                         'item': value[1],
-                                        'quantity': value[4]
+                                        'warranty': value[2],
+                                        'quantity': value[5]
                                     },
                                     success: function(data){
                                         if(data == 'true'){

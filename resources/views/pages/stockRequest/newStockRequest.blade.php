@@ -85,6 +85,7 @@
                             <tr>
                                 <th style="display: none;">CATEGORY ID</th>
                                 <th style="display: none;">ITEM ID</th>
+                                <th style="display: none;">WARRANTY ID</th>
                                 <th>CATEGORY</th>
                                 <th>ITEM DESCRIPTION</th>
                                 <th>QTY</th>

@@ -1152,8 +1152,14 @@ class StockRequestController extends Controller
         }
         else{
             do{
+                if($request->warranty_id == 'null'){
+                    $warranty_id = '';
+                }
+                else{
+                    $warranty_id = $request->warranty_id;
+                }
                 $sql = Stock::where('id',$request->stock_id)
-                    ->update(['status' => 'prep', 'user_id' => auth()->user()->id, 'warranty_id' => $request->warranty_id, 'request_number' => $request->request_number]);
+                    ->update(['status' => 'prep', 'user_id' => auth()->user()->id, 'warranty_id' => $warranty_id, 'request_number' => $request->request_number]);
             }
             while(!$sql);
         }

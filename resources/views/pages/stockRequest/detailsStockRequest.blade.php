@@ -545,12 +545,14 @@
                 <div class="form-inline" style="margin-left: 35px;">
                     <label class="form-control form-control-sm" style="width: 160px; border-color: white; font-weight: bolder;">INCLUSIVE:</label>
                 </div>
-                <p class="phone listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Phone Support</p>
-                <p class="onsite listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Onsite Support</p>
-                <p class="software listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Software</p>
-                <p class="hardware listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Hardware</p>
-                <p class="replacement listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Parts Replacement</p>
-                <p class="su listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Service Unit</p>
+                <div style="margin-top: -22px;">
+                    <p class="phone listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Phone Support</p>
+                    <p class="onsite listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Onsite Support</p>
+                    <p class="software listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Software</p>
+                    <p class="hardware listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Hardware</p>
+                    <p class="replacement listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Parts Replacement</p>
+                    <p class="su listInclusive" style="margin-left: 220px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Service Unit</p>
+                </div>
             </div>
         </div>
     </div>

@@ -23,7 +23,7 @@
                     <div class="form-group row" style="margin-top: -10px;">
                         <label for="inclusive" class="col-md-4 col-form-label text-md-right"><b>{{ __('INCLUSIVE:') }}</b></label>
                     </div>
-                    <div class="form-group row" style="margin-top: -20px;">
+                    <div class="form-group row" style="margin-top: -46px;">
                         <div class="form-check" style="text-align: left; margin-left: 32%;">
                             <input type="checkbox" class="cb" id="phone" value="Phone Support"> Phone Support<br>      
                             <input type="checkbox" class="cb" id="onsite" value="Onsite Visit"> Onsite Support<br>      

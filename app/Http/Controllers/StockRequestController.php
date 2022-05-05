@@ -41,9 +41,10 @@ class StockRequestController extends Controller
         }
         $categories = Category::select('id','category')->get()->sortBy('category');
         $items = Item::select('id','item')->get()->sortBy('item');
-        $req_types = RequestType::select('id','name')->whereIn('id',['2','3'])->get();            
+        $req_types = RequestType::select('id','name')->whereIn('id',['2','3'])->get();
+        $warranty = Warranty::select('id','Warranty_Name')->get()->sortBy('Warranty_Name');
         
-        return view('/pages/stockrequest', compact('categories','items','req_types'));
+        return view('/pages/stockrequest', compact('categories','items','req_types','warranty'));
     }
 
     public function generatedr(Request $request){

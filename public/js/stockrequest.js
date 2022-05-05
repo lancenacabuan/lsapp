@@ -225,6 +225,15 @@ function runFunction(){
             $('#reference_note').show();
         }
     }
+    if($('#requestDetails').is(':visible')){
+        var request_type = $('#request_type').val();
+        if(request_type == '2'){
+            $('.classWarranty').show();
+        }
+        else{
+            $('.classWarranty').hide();
+        }
+    }
 }
 
 setInterval(checkLocation, 0);
@@ -252,6 +261,19 @@ $('#request_type').on('change', function(){
     }
     else{
         $('.reference_field').hide();
+    }
+    $("#categoryReq").val('');
+    $("#itemReq").find('option').remove().end().append('<option value="">Select Item</option>').val();
+    $("#qtyReq").val('');
+    $("#uom").val('');
+    $("#warrantyReq").val('');
+    $("#stockRequestTable tbody tr").remove();
+    if($('#stockRequestTable tbody').children().length==0){
+        $('#stockRequestTable').hide();
+        $('#stockRequestDiv').removeClass();
+        $('#btnClose').hide();
+        $('#btnSave').hide();
+        $('.submit_label').show();
     }
 });
 
@@ -305,15 +327,27 @@ $('#itemReq').on('change', function(){
 });
 
 $(".add-row").on('click', function(){
+    var request_type = $('#request_type').val();
     var category = $("#categoryReq option:selected").text();
     var item = $("#itemReq option:selected").text();
+    var warranty = $("#warrantyReq option:selected").text();
     var category_id = $("#categoryReq").val();
     var item_id = $("#itemReq").val();
+    var warranty_id = $("#warrantyReq").val();
     let qty = $("#qtyReq").val();
     var uom = $("#uom").val();
-    var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+    if(request_type == '2'){
+        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>" + warranty_id + "</td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td>" + warranty + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+    }
+    else{
+        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>&nbsp;</td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td style='display: none;'>&nbsp;</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+    }
     var ctr = 'false';
-    if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
+    if(request_type == '2' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "" || warranty == "Select Warranty Type")){
+        swal('REQUIRED','Please select an item!','error');
+        return false;
+    }
+    else if(request_type == '3' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "")){
         swal('REQUIRED','Please select an item!','error');
         return false;
     }
@@ -323,12 +357,15 @@ $(".add-row").on('click', function(){
         for(i = 1; i < count; i++){
             var objCells = table.rows.item(i).cells;
             if(item_id==objCells.item(1).innerHTML){
-                objCells.item(4).innerHTML = parseInt(objCells.item(4).innerHTML) + parseInt(qty);
+                objCells.item(5).innerHTML = parseInt(objCells.item(5).innerHTML) + parseInt(qty);
+                objCells.item(7).innerHTML = warranty;
+                objCells.item(2).innerHTML = warranty_id;
                 ctr = 'true';
                 category = $("#categoryReq").val('');
-                item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val()
+                item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val();
                 qty = $("#qtyReq").val('');
                 uom = $('#uom').val('');
+                warranty = $("#warrantyReq").val('');
                 return false;
             }
             else {
@@ -338,9 +375,10 @@ $(".add-row").on('click', function(){
         if(ctr == 'false')
         { $("#stockRequestTable tbody").append(markup); }
         category = $("#categoryReq").val('');
-        item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val()
+        item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val();
         qty = $("#qtyReq").val('');
         uom = $('#uom').val('');
+        warranty = $("#warrantyReq").val('');
         $('#stockRequestTable').show();
         $('#stockRequestDiv').toggle();
         $('#btnClose').show();

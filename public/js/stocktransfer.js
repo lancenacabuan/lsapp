@@ -290,7 +290,7 @@ $(".add-row").on('click', function(){
                     objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
                     ctr = 'true';
                     category = $("#category").val('');
-                    item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
+                    item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val();
                     qty = $("#qty").val('');
                     qtystock = $("#qtystock").val('');
                     uom = $("#uom").val('');
@@ -304,7 +304,7 @@ $(".add-row").on('click', function(){
             if(ctr == 'false')
             { $("#tblNewStockTransfer tbody").append(markup); }
             category = $("#category").val('');
-            item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
+            item = $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val();
             qty = $("#qty").val('');
             qtystock = $("#qtystock").val('');
             uom = $("#uom").val('');
@@ -325,7 +325,7 @@ $(".add-row").on('click', function(){
 
 $("#tblNewStockTransfer").on('click', '.delete-row', function(){
     $("#category").val('');
-    $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val()
+    $("#item").find('option').remove().end().append('<option value="">Select Item</option>').val();
     $("#qty").val('');
     $("#qtystock").val('');
     $("#uom").val('');

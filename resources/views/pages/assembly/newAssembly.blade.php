@@ -21,7 +21,7 @@
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Assembled Item Name</label>
-                <select class="form-select" id="assembly" class="form-control-sm" style="width: 650px; margin-right: 10px; font-size: 12px;" required>
+                <select class="form-control form-select" id="assembly" style="width: 650px; margin-right: 10px; font-size: 12px;" required>
                     <option value="" selected disabled>Select Assembled Item</option>
                     @foreach($items as $item)
                         <option value="{{$item->id}}">{{strtoupper($item->item)}}</option>

@@ -1060,7 +1060,7 @@ $(".add-row").on('click', function(){
                 objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
                 ctr = 'true';
                 category = $("#categoryAssembly").val('');
-                item = $("#itemAssembly").find('option').remove().end().append('<option value="0">Select Item</option>').val()
+                item = $("#itemAssembly").find('option').remove().end().append('<option value="0">Select Item</option>').val();
                 qty = $("#qtyAssembly").val('');
                 uom = $('#uomAssembly').val('');
                 return false;
@@ -1072,7 +1072,7 @@ $(".add-row").on('click', function(){
         if(ctr == 'false')
         { $("#tblCreateItem tbody").append(markup); }
         category = $("#categoryAssembly").val('');
-        item = $("#itemAssembly").find('option').remove().end().append('<option value="0">Select Item</option>').val()
+        item = $("#itemAssembly").find('option').remove().end().append('<option value="0">Select Item</option>').val();
         qty = $("#qtyAssembly").val('');
         uom = $('#uomAssembly').val('');
         $('#tblCreateItem').show();

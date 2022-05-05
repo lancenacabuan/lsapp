@@ -18,14 +18,14 @@
             </div>
             <div class="modal-body" style="background-color: white; color: black;">
                 <form class="mt-2 mb-2">
-                    <div class="form-inline" style="margin-left:50px;">
-                        <select class="form-select" id="categoryAssembly" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
+                    <div class="form-inline" style="margin-left: 35px;">
+                        <select class="form-control form-select" id="categoryAssembly" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
                                 <option value="" selected disabled>Select Category</option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
                                 @endforeach
                         </select>
-                        <select class="form-select" id="itemAssembly" class="form-control" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 10px;">
+                        <select class="form-control form-select" id="itemAssembly" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 10px;">
                             <option value="" selected disabled>Select Item</option>
                         </select>
                         <input class="form-control" id="uomAssembly" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>

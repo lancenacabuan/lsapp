@@ -3152,6 +3152,10 @@ $("#btnProceed").unbind('click').click(function(){
                         id.setAttribute("id", "item_id"+j);
                         id.setAttribute("type", "hidden");
                         id.setAttribute("value", value.item_id);
+                        var warranty = document.createElement("input");
+                        warranty.setAttribute("id", "warranty"+j);
+                        warranty.setAttribute("type", "hidden");
+                        warranty.setAttribute("value", value.warranty_id);
                         var x = document.createElement("input");
                         x.setAttribute("id", "category"+j);
                         x.setAttribute("type", "text");
@@ -3184,6 +3188,7 @@ $("#btnProceed").unbind('click').click(function(){
                         serial.setAttribute("class", "form-control serials");
                         serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
                         document.getElementById("reqContents").appendChild(id);
+                        document.getElementById("reqContents").appendChild(warranty);
                         document.getElementById("reqContents").appendChild(x);
                         document.getElementById("reqContents").appendChild(y);
                         document.getElementById("reqContents").appendChild(qty);
@@ -3329,6 +3334,7 @@ $("#btnProceed").unbind('click').click(function(){
                                                 'req_type_id': req_type_id,
                                                 'stock_id': $('#serial'+n).val(),
                                                 'item_id': $('#item_id'+n).val(),
+                                                'warranty_id': $('#warranty'+n).val(),
                                                 'qty': $('#qty'+n).val()
                                             },
                                             success: function(data){

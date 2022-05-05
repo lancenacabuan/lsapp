@@ -1075,7 +1075,7 @@ class StockRequestController extends Controller
     }
 
     public function stockreq(Request $request){       
-        $list = StockRequest::select('categories.category AS category', 'items.item AS item', 'items.id AS item_id', 'stock_request.quantity AS qty', 'stock_request.served AS served', 'stock_request.pending AS pending', 'items.UOM AS uom')
+        $list = StockRequest::select('categories.category AS category', 'items.item AS item', 'items.id AS item_id', 'stock_request.quantity AS qty', 'stock_request.served AS served', 'stock_request.pending AS pending', 'items.UOM AS uom', 'stock_request.warranty AS warranty_id')
             ->where('stock_request.item', $request->item_id)
             ->where('stock_request.request_number', $request->reqnum)
             ->where('stocks.status','in')

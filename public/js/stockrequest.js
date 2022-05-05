@@ -3121,9 +3121,6 @@ $("#btnProceed").unbind('click').click(function(){
             items.push(value.item_id);
         });
     }
-    if(req_type_id == '2'){
-        $('#schedtext').html('WARRANTY TYPES AND SERIALS');
-    }
     $("#stockDetailsrequest *").prop('disabled', true);
     $("#proceed_label").hide();
     $("#btnProceed").hide();
@@ -3180,47 +3177,16 @@ $("#btnProceed").unbind('click').click(function(){
                         uom.setAttribute("id", "uom"+j);
                         uom.setAttribute("type", "text");
                         uom.setAttribute("class", "form-control");
-                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: -255px; margin-bottom: 10px;");
+                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
                         uom.setAttribute("value", value.uom);
                         var serial = document.createElement("select");
                         serial.setAttribute("id", "serial"+j);
                         serial.setAttribute("class", "form-control serials");
                         serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                        var warranty = document.createElement("select");
-                        warranty.setAttribute("id", "warranty"+j);
-                        warranty.setAttribute("class", "form-control warranty");
-                        warranty.setAttribute("style", "width: 210px; font-size: 12px; margin-left: -100px; margin-bottom: -70px;");
-                        var required = document.createElement("span");
-                        required.setAttribute("id", "required"+j);
-                        required.setAttribute("style", "font-size: 12px; color: Red; margin-left: -200px; margin-bottom: -120px;");
-                        required.textContent = "*Required Field";
-                        var details = document.createElement("button");
-                        details.setAttribute("id", "details"+j);
-                        details.setAttribute("type", "button");
-                        details.setAttribute("class", "form-control btn-primary bp details");
-                        details.setAttribute("style", "font-size: 12px; width: 145px; height: 30px; margin-left: 130px; margin-bottom: -70px; display: none;");
-                        details.textContent = 'WARRANTY DETAILS';
-                        var hideDetails = document.createElement("span");
-                        hideDetails.setAttribute("id", "hideDetails"+j);
-                        hideDetails.setAttribute("style", "font-size: 12px; width: 145px; height: 30px; margin-left: 130px; margin-bottom: -70px;");
-                        hideDetails.textContent = " ";
-                        var block = document.createElement("span");
-                        block.setAttribute("id", "block"+j);
-                        block.setAttribute("style", "background-color: white; font-size: 12px; width: 365px; height: 30px; margin-left: -100px; margin-bottom: -70px;");
-                        block.textContent = " ";
                         document.getElementById("reqContents").appendChild(id);
                         document.getElementById("reqContents").appendChild(x);
                         document.getElementById("reqContents").appendChild(y);
                         document.getElementById("reqContents").appendChild(qty);
-                        if(req_type_id == '2'){
-                            document.getElementById("reqContents").appendChild(warranty);
-                            document.getElementById("reqContents").appendChild(required);
-                            document.getElementById("reqContents").appendChild(details);
-                            document.getElementById("reqContents").appendChild(hideDetails);
-                        }
-                        else{
-                            document.getElementById("reqContents").appendChild(block);
-                        }
                         document.getElementById("reqContents").appendChild(uom);
                         document.getElementById("reqContents").appendChild(serial);
                         document.getElementById("reqContents").appendChild(z);
@@ -3231,8 +3197,6 @@ $("#btnProceed").unbind('click').click(function(){
                         $("#uom"+j).prop('readonly', true);
                         $("#location"+j).prop('disabled', true);
                         $("#serial"+j).append("<option value='' selected>Select Serial</option>");
-                        $("#warranty"+j).append("<option value='' selected disabled>Select Warranty Type</option>");
-                        $("#warranty"+j).append("<option value='0'>NO WARRANTY</option>");
                         let vid = "#serial"+j;
                         $.ajax({
                             type:'get',
@@ -3260,29 +3224,6 @@ $("#btnProceed").unbind('click').click(function(){
                                     }
                                 });
                                 $(vid).chosen();
-                            },
-                            error: function(data){
-                                if(data.status == 401){
-                                    window.location.href = '/stockrequest';
-                                }
-                                alert(data.responseText);
-                            }
-                        });
-                        let vidx = "#warranty"+j;
-                        $.ajax({
-                            type:'get',
-                            url:'/setwarranty',
-                            success: function(dx){
-                                var sx = $.map(dx, function(vx){
-                                    return [vx];
-                                });
-            
-                                sx.forEach(vx => {
-                                    $(vidx).append($('<option>', {
-                                        value: vx.id,
-                                        text: (vx.Warranty_Name).toUpperCase()
-                                    }));
-                                });
                             },
                             error: function(data){
                                 if(data.status == 401){
@@ -3339,90 +3280,16 @@ $("#btnProceed").unbind('click').click(function(){
                         });
                     });
                 }
-                for(var my=0; my < j; my++){
-                    let idy = my;
-                    $('#warranty'+my).on('change', function(){
-                        if($("#warranty"+idy).val() == '' || $("#warranty"+idy).val() == '0'){
-                            $('#details'+idy).hide();
-                            $('#hideDetails'+idy).show();
-                            document.getElementById('required'+idy).style.color = "Red";
-                        }
-                        else{
-                            $('#details'+idy).show();
-                            $('#hideDetails'+idy).hide();
-                            document.getElementById('required'+idy).style.color = "White";
-                        }
-                        if($("#warranty"+idy).val() == '0'){
-                            document.getElementById('required'+idy).style.color = "White";
-                        }
-                    });
-                }
-                for(var mx=0; mx < j; mx++){
-                    let idx = mx;
-                    $('#details'+mx).on('click', function(){
-                        $('.warranty_title').html($("#warranty"+idx+" option:selected").text());
-                        var id = $("#warranty"+idx).val();
-                        $('.listInclusive').hide();
-                        $.ajax({
-                            type: 'get', 
-                            url: '/getInclusive', 
-                            data:{
-                                id: id
-                            }, 
-                            success: function(data){
-                                $('.duration').val(data[0].Duration+' MONTH/S');
-                                if(data[0].Inclusive != null){
-                                    if(data[0].Inclusive.indexOf('Software') > -1){
-                                        $('.software').show();
-                                    }
-                                    if(data[0].Inclusive.indexOf('Onsite Visit') > -1){
-                                        $('.onsite').show();
-                                    }
-                                    if(data[0].Inclusive.indexOf('Phone Support') > -1){
-                                        $('.phone').show();
-                                    }
-                                    if(data[0].Inclusive.indexOf('Hardware') > -1){
-                                        $('.hardware').show();
-                                    }
-                                    if(data[0].Inclusive.indexOf('Parts Replacement') > -1){
-                                        $('.replacement').show();
-                                    }
-                                    if(data[0].Inclusive.indexOf('Service Unit') > -1){
-                                        $('.su').show();
-                                    }
-                                }              
-                            },
-                            error: function(data){
-                                if(data.status == 401){
-                                    window.location.href = '/stockrequest';
-                                }
-                                alert(data.responseText);
-                            }
-                        });
-                    });
-                }
                 if(req_type_id == '2' || req_type_id == '3' || req_type_id == '4' || req_type_id == '5'){
                     setInterval(checkSerials, 0);
                     function checkSerials(){
-                        if(req_type_id == '2'){
-                            if($('.serials').filter(function(){ return !!this.value; }).length == j && $('.warranty').filter(function(){ return !!this.value; }).length == j){
-                                $('#btnSubmit').prop('disabled', false);
-                                $('#schedwarning').hide();
-                            }
-                            else{
-                                $('#btnSubmit').prop('disabled', true);
-                                $('#schedwarning').show();
-                            }
+                        if($('.serials').filter(function(){ return !!this.value; }).length != j){
+                            $('#btnSubmit').prop('disabled', true);
+                            $('#schedwarning').show();
                         }
                         else{
-                            if($('.serials').filter(function(){ return !!this.value; }).length != j){
-                                $('#btnSubmit').prop('disabled', true);
-                                $('#schedwarning').show();
-                            }
-                            else{
-                                $('#btnSubmit').prop('disabled', false);
-                                $('#schedwarning').hide();
-                            }
+                            $('#btnSubmit').prop('disabled', false);
+                            $('#schedwarning').hide();
                         }
                     }
                 }
@@ -3462,7 +3329,6 @@ $("#btnProceed").unbind('click').click(function(){
                                                 'req_type_id': req_type_id,
                                                 'stock_id': $('#serial'+n).val(),
                                                 'item_id': $('#item_id'+n).val(),
-                                                'warranty_id': $('#warranty'+n).val(),
                                                 'qty': $('#qty'+n).val()
                                             },
                                             success: function(data){

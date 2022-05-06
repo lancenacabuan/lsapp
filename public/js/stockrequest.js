@@ -4109,6 +4109,10 @@ $('#btnReturn').on('click', function(){
 });
 
 $("#btnShowAttachment").on('click', function(){
+    var imgsrc = document.getElementById("reference_attachment").src;
+    if(imgsrc.includes('NA.png') == true){
+        $('#reference_attachment').css({'width': '25%'});
+    }
     $("#btnShowAttachment").hide();
     $("#btnHideAttachment").show();
     $("#attachmentModal").slideDown();

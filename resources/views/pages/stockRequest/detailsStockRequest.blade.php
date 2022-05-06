@@ -75,7 +75,7 @@
             <h6 class="modal-title w-100">ATTACHMENT SO/PO</h6>
         </div>
         <div class="modal-body text-center">
-            <img id="reference_attachment" style="width: 100%;" onerror="this.src='NA.png';">
+            <img id="reference_attachment" style="width: 100%;">
         </div>
         </div>
         <div id="asmItemsModal" style="display: none;">

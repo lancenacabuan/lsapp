@@ -229,11 +229,9 @@ function runFunction(){
         var request_type = $('#request_type').val();
         if(request_type == '2'){
             $('.classWarranty').show();
-            document.getElementById("request_header").style.height = "240px";
         }
         else{
             $('.classWarranty').hide();
-            document.getElementById("request_header").style.height = "";
         }
     }
 }

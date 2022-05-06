@@ -46,7 +46,7 @@
                     <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
                 </form>
             </div>
-            <div id="warrantyDetails" style="zoom: 85%; margin-top: -230px; margin-left: 990px; line-height: 70%; display: none;">
+            <div id="warrantyDetails" style="zoom: 85%; height: 230px; margin-top: -230px; margin-left: 990px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">
                     <input class="form-control form-control-sm warrantyName" style="width: 300px; margin-right: 10px; font-size: 18px; border-color: white; background-color: white; font-weight: bolder; pointer-events: none;" type="text" readonly>
                 </div>
@@ -65,6 +65,9 @@
                     <p class="replacement listInclusive" style="margin-left: 150px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Parts Replacement</p>
                     <p class="su listInclusive" style="margin-left: 150px; display: none;"><span style="color: green; font-weight: bolder;">✓&nbsp;</span>Service Unit</p>
                 </div>
+            </div>
+            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
+                <label class="form-control form-control-sm reference_field" style="width: 860px; border-color: white; display: none;">&nbsp;</label>
             </div>
             <div class="header_label alert alert-primary mt-4" role="alert">
                 <i class='fa fa-exclamation-triangle'></i>

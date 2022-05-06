@@ -229,9 +229,11 @@ function runFunction(){
         var request_type = $('#request_type').val();
         if(request_type == '2'){
             $('.classWarranty').show();
+            document.getElementById("request_header").style.height = "240px";
         }
         else{
             $('.classWarranty').hide();
+            document.getElementById("request_header").style.height = "";
         }
     }
 }
@@ -342,6 +344,7 @@ $('#warrantyReq').on('change', function(){
             id: id
         }, 
         success: function(data){
+            $('.warrantyName').val((data[0].Warranty_Name).toUpperCase());
             $('.duration').val(data[0].Duration+' MONTH/S');
             if(data[0].Inclusive != null){
                 if(data[0].Inclusive.indexOf('Software') > -1){

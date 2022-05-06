@@ -5,7 +5,7 @@
             <h6 class="modal-title w-100">NEW STOCK REQUEST</h6>    
             <button type="button" class="btn-close btn-close-white close" id="close" data-bs-dismiss="modal"></button>
         </div>
-        <div id="request_header" class="modal-body" style="background-color: white; color: black;">
+        <div class="modal-body" style="background-color: white; color: black;">
             <div class="form-inline" style="margin-left: 5px;">
                 <label class="form-control form-control-sm" style="width: 130px;">Request Type</label>
                 <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;">

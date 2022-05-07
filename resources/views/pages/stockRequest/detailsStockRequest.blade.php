@@ -76,6 +76,7 @@
         </div>
         <div class="modal-body text-center">
             <img id="reference_attachment" style="width: 100%;">
+            <img id="reference_hidden" style="width: 100%; display: none;">
         </div>
         </div>
         <div id="asmItemsModal" style="display: none;">

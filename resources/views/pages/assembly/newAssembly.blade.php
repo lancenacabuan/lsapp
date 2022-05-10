@@ -27,7 +27,7 @@
                         <option value="{{$item->id}}">{{strtoupper($item->item)}}</option>
                     @endforeach
                 </select>
-                <input class="form-control" id="qty" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px;" type="number" placeholder="Qty">
+                <input class="form-control" id="qty" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px;" type="number" placeholder="Qty" onkeyup="if(value<0) value=0;">
                 <button type="submit" id="btnAssemblyProceed" class="btn btn-primary bp" style="zoom: 80%; margin-left: 10px; display: none;">PROCEED</button>
             </div>
             <div class="header_label alert alert-primary mt-4" role="alert">

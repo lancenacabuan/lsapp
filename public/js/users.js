@@ -240,6 +240,26 @@ $('#btnUpdate').on('click', function(){
     }
 });
 
+$('#role').on('change', function(){
+    var role = $('#role').val();
+    if(role == ''){
+        $('#role').css({"color":"Gray"});
+    }
+    else{
+        $('#role').css({"color":"Black"});
+    }
+});
+
+$('#role1').on('change', function(){
+    var role1 = $('#role1').val();
+    if(role1 == ''){
+        $('#role1').css({"color":"Gray"});
+    }
+    else{
+        $('#role1').css({"color":"Black"});
+    }
+});
+
 $('.close').on('click', function(){
     location.reload();
 });

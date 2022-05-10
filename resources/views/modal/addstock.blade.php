@@ -60,7 +60,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Quantity</label>
                         </div>
-                        <input type="number" id="qty" name="qty" min="1" style="width: 615px;" placeholder="0"  autocomplete="off" required>
+                        <input type="number" id="qty" name="qty" min="1" style="width: 615px;" placeholder="0"  autocomplete="off" onkeyup="if(value<1) value=1;" required>
                     </div>
                     <div class="input-group mb-3" id="serialdiv">
                         <div class="input-group-prepend">

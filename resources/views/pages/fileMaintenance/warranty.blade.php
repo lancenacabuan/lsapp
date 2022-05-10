@@ -17,7 +17,7 @@
                     <div class="form-group row" style="margin-top: -10px;">
                         <label for="duration" class="col-md-4 col-form-label text-md-right">{{ __('Duration (MONTHS)') }}</label>
                         <div class="col-md-6">
-                            <input id="duration" type="number" min="1" class="form-control form-control-sm" name="duration" style="color: black;" autocomplete="off" required>
+                            <input id="duration" type="number" min="1" class="form-control form-control-sm" name="duration" style="color: black;" autocomplete="off" onkeyup="if(value<1) value=1;" required>
                         </div>
                     </div>
                     <div class="form-group row" style="margin-top: -10px;">

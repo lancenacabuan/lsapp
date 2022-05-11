@@ -18,6 +18,15 @@
             <a class="nav-link" id="nav5" href="{{ url('/maintenance?tbl=warranty') }}"><strong>WARRANTY</strong></a>
         </li>
     </ul>
+    @role('admin') {{---ROLES---}}
+    <div style="float: right; margin-top: -45px;">
+        <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" data-keyboard="false" style="display: none;">NEW ITEM</button>
+        <button class="btn btn-primary bp btnCreateItem" type="button" data-toggle="modal" data-target="#createItem" data-backdrop="static" data-keyboard="false" style="display: none;">CREATE ITEM</button>
+        <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" data-keyboard="false" style="display: none;">NEW CATEGORY</button>
+        <button class="btn btn-primary bp btnNewLocation" type="button" style="display: none;">REQUEST NEW LOCATION</button>
+        <button class="btn btn-primary bp btnNewWarranty" type="button" style="display: none;">NEW WARRANTY</button>
+    </div>
+    @endrole
     <div style="margin-top: -3px; color: white; height: 20px; background-color: #0d1a80;"></div>
     <br>
     <table class="table-hover table itemTable" id="itemTable" style="width: 100%; display: none; cursor: pointer;">
@@ -73,14 +82,6 @@
             </tr>
         </thead>
     </table>
-    @role('admin') {{---ROLES---}}
-    <hr>
-    <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" data-keyboard="false" style="display: none;">NEW ITEM</button>
-    <button class="btn btn-primary bp btnCreateItem" type="button" data-toggle="modal" data-target="#createItem" data-backdrop="static" data-keyboard="false" style="display: none;">CREATE ITEM</button>
-    <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" data-keyboard="false" style="display: none;">NEW CATEGORY</button>
-    <button class="btn btn-primary bp btnNewLocation" type="button" style="display: none;">REQUEST NEW LOCATION</button>
-    <button class="btn btn-primary bp btnNewWarranty" type="button" style="display: none;">NEW WARRANTY</button>
-    @endrole
 </div>
 <style>
     .active-link{

@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
     @role('assembler') {{---ROLES---}}
-    <button class="btn btn-primary bp btnNewAssembly" type="button">NEW ASSEMBLY</button>
+    <button class="btn btn-primary bp btnNewAssembly float-right mb-4" type="button">NEW ASSEMBLY</button>
     <br><br>
     @endrole
     <table id="assemblyTable" class="table assemblyTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">

@@ -114,7 +114,7 @@ class PagesController extends Controller
         return DataTables::of($list)->make(true);
     }
 
-    public function users_save(Request $request){
+    public function validate_users_save(Request $request){
         $email = User::query()->select()
             ->where('email',$request->email)
             ->count();
@@ -127,50 +127,50 @@ class PagesController extends Controller
             return response()->json($data);
         }
         else {
-            $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-            $pass = array();
-            $charLength = strlen($char) - 1;
-            for($i = 0; $i < 8; $i++){
-                $n = rand(0, $charLength);
-                $pass[] = $char[$n];
-            }
-            $password = implode($pass);
-
-            $name = ucwords($request->name);
-
-            $users = new User;
-            $users->name = $name;
-            $users->email = strtolower($request->email);
-            $users->password = Hash::make($password);
-            $users->assignRole($request->role);
-            $users->status = 'ACTIVE';
-            $sql = $users->save();
-            $id = $users->id;
-
-            if(!$sql){
-                $result = 'false';
-            }
-            else {
-                $result = 'true';
-            }
-            
-            $data = array('result' => $result, 'id' => $id, 'name' => $name, 'email' => strtolower($request->email));
+            $data = array('result' => 'true');
             return response()->json($data);
         }
     }
+    
+    public function users_save(Request $request){
+        $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array();
+        $charLength = strlen($char) - 1;
+        for($i = 0; $i < 8; $i++){
+            $n = rand(0, $charLength);
+            $pass[] = $char[$n];
+        }
+        $password = implode($pass);
+    
+        $name = ucwords($request->name);
+    
+        $users = new User;
+        $users->name = $name;
+        $users->email = strtolower($request->email);
+        $users->password = Hash::make($password);
+        $users->assignRole($request->role);
+        $users->status = 'ACTIVE';
+        $sql = $users->save();
+        $id = $users->id;
+    
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
 
-    public function logNewUser(Request $request){
-        Password::broker()->sendResetLink(['email'=>$request->email]);
-
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "USER ADDED: User successfully saved details of $request->name with UserID#$request->id.";
-        $userlogs->save();
-
-        return response('true');
+            Password::broker()->sendResetLink(['email'=>$request->email]);
+    
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "USER ADDED: User successfully saved details of $request->name with UserID#$id.";
+            $userlogs->save();
+        }
+        
+        return response($result);
     }
 
-    public function users_update(Request $request){
+    public function validate_users_update(Request $request){
         if(strtolower($request->email1) != strtolower($request->email2)){
             $email = User::query()->select()
                 ->where('email',$request->email1)
@@ -186,31 +186,35 @@ class PagesController extends Controller
             return response('duplicate');
         }
         else {
-            $name = ucwords($request->name1);
-            
-            $users = User::find($request->input('id1'));
-            $users->name = $name;
-            $users->email = strtolower($request->email1);
-            $users->removeRole($request->role2);
-            $users->assignRole($request->role1);
-            $users->status = $request->status1;
-            $sql = $users->save();
-
-            if(!$sql){
-                $result = 'false';
-            }
-            else {
-                $result = 'true';
-            }
-
-            if($result == 'true'){
-                $userlogs = new UserLogs;
-                $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "USER UPDATED: User successfully updated details of $name with UserID#$request->id1.";
-                $userlogs->save();
-            }
-
-            return response($result);
+            return response('true');
         }
+    }
+    
+    public function users_update(Request $request){
+        $name = ucwords($request->name1);
+        
+        $users = User::find($request->input('id1'));
+        $users->name = $name;
+        $users->email = strtolower($request->email1);
+        $users->removeRole($request->role2);
+        $users->assignRole($request->role1);
+        $users->status = $request->status1;
+        $sql = $users->save();
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        if($result == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "USER UPDATED: User successfully updated details of $name with UserID#$request->id1.";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 }

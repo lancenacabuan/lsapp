@@ -39,56 +39,59 @@ $('#btnAddUser').on('click', function(){
 });
 
 $('#btnSave').on('click', function(){
-    var name = $.trim($('#name').val());
-    var email = $.trim($('#email').val());
+    var name = $.trim($('#name').val()).toUpperCase();
+    var email = $.trim($('#email').val()).toLowerCase();
     var role = $('#role').val();
 
     if(name != "" && email != "" && $('#role').find('option:selected').text() != "Select User Level"){
-        swal({
-            title: "ADD NEW USER?",
-            text: "You are about to ADD a new user!",
-            icon: "warning",
-            buttons: true,
-        })
-        .then((willDelete) => {
-            if(willDelete){
-                $.ajax({
-                    url: "users/save",
-                    type: "POST",
-                    headers: {
-                    'X-CSRF-TOKEN': $("#csrf").val()
-                    },
-                    data: {
-                        _token: $("#csrf").val(),
-                        name: name,
-                        email: email,
-                        role: role
-                    },
-                    success: function(data){
-                        if(data.result == 'true'){
+        $.ajax({
+            url: "/users/validate/save",
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $("#csrf").val()
+            },
+            data: {
+                _token: $("#csrf").val(),
+                name: name,
+                email: email,
+                role: role
+            },
+            success: function(data){
+                if(data.result == 'true'){
+                    swal({
+                        title: "ADD NEW USER?",
+                        text: "You are about to ADD a new user!",
+                        icon: "warning",
+                        buttons: true,
+                    })
+                    .then((willDelete) => {
+                        if(willDelete){
                             scrollReset();
                             $('#addUser').hide();
                             $('#addUser').modal('dispose');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
-                                url: "/logNewUser",
+                                url: "/users/save",
                                 type: "POST",
                                 headers: {
                                 'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data: {
-                                    id: data.id,
-                                    name: data.name,
-                                    email: data.email
+                                    _token: $("#csrf").val(),
+                                    name: name,
+                                    email: email,
+                                    role: role
                                 },
                                 success: function(data){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
-                                        swal("SAVE SUCCESS", "USER ACCOUNT", "success");
+                                        swal("SAVE SUCCESS", "New user saved successfully!", "success");
                                         setTimeout(function(){window.location.href="/users"}, 2000);
                                     }
                                     else{
-                                        return false;
+                                        $('#addUser').hide();
+                                        swal("SAVE FAILED", "USER ACCOUNT", "error");
+                                        setTimeout(function(){window.location.href="/users"}, 2000);
                                     }
                                 },
                                 error: function(data){
@@ -99,27 +102,27 @@ $('#btnSave').on('click', function(){
                                 }
                             });
                         }
-                        else if(data.result == 'invalid'){
-                            swal("INVALID EMAIL", "USER ACCOUNT", "error");
-                            return false;
-                        }
-                        else if(data.result == 'duplicate'){
-                            swal("DUPLICATE EMAIL", "USER ACCOUNT", "error");
-                            return false;
-                        }
-                        else{
-                            $('#addUser').hide();
-                            swal("SAVE FAILED", "USER ACCOUNT", "error");
-                            setTimeout(function(){window.location.href="/users"}, 2000);
-                        }
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            window.location.href = '/users';
-                        }
-                        alert(data.responseText);
-                    }
-                });
+                    });
+                }
+                else if(data.result == 'invalid'){
+                    swal("INVALID EMAIL", "Enter a valid email address!", "error");
+                    return false;
+                }
+                else if(data.result == 'duplicate'){
+                    swal("DUPLICATE EMAIL", "Email address already exists!", "error");
+                    return false;
+                }
+                else{
+                    $('#addUser').hide();
+                    swal("SAVE FAILED", "USER ACCOUNT", "error");
+                    setTimeout(function(){window.location.href="/users"}, 2000);
+                }
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/users';
+                }
+                alert(data.responseText);
             }
         });
     }
@@ -184,57 +187,91 @@ $('#btnUpdate').on('click', function(){
         return false;
     }
     else{
-        swal({
-            title: "UPDATE USER?",
-            text: "You are about to UPDATE this user!",
-            icon: "warning",
-            buttons: true,
-        })
-        .then((willDelete) => {
-            if(willDelete){
-                $.ajax({
-                    url: "users/update",
-                    type: "PUT",
-                    headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val()
-                        },
-                    data: {
-                        _token: $("#csrf").val(),
-                        id1: id1,
-                        name1: name1,
-                        name2: name2,
-                        email1: email1,
-                        email2: email2,
-                        role1: role1,
-                        role2: role2,
-                        status1: status1,
-                        status2: status2
-                    },
-                    success: function(data){
-                        if(data == 'true'){
-                            $('#updateUser').hide();
-                            swal("UPDATE SUCCESS", "USER ACCOUNT", "success");
-                            setTimeout(function(){window.location.href="/users"}, 2000);
+        $.ajax({
+            url: "/users/validate/update",
+            type: "PUT",
+            headers: {
+                'X-CSRF-TOKEN': $("#csrf").val()
+            },
+            data: {
+                _token: $("#csrf").val(),
+                id1: id1,
+                name1: name1,
+                name2: name2,
+                email1: email1,
+                email2: email2,
+                role1: role1,
+                role2: role2,
+                status1: status1,
+                status2: status2
+            },
+            success: function(data){
+                if(data == 'true'){
+                    swal({
+                        title: "UPDATE USER?",
+                        text: "You are about to UPDATE this user!",
+                        icon: "warning",
+                        buttons: true,
+                    })
+                    .then((willDelete) => {
+                        if(willDelete){
+                            $.ajax({
+                                url: "/users/update",
+                                type: "PUT",
+                                headers: {
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data: {
+                                    _token: $("#csrf").val(),
+                                    id1: id1,
+                                    name1: name1,
+                                    name2: name2,
+                                    email1: email1,
+                                    email2: email2,
+                                    role1: role1,
+                                    role2: role2,
+                                    status1: status1,
+                                    status2: status2
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        $('#updateUser').hide();
+                                        swal("UPDATE SUCCESS", "USER ACCOUNT", "success");
+                                        setTimeout(function(){window.location.href="/users"}, 2000);
+                                    }
+                                    else{
+                                        $('#updateUser').hide();
+                                        swal("UPDATE FAILED", "USER ACCOUNT", "error");
+                                        setTimeout(function(){window.location.href="/users"}, 2000);
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/users';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
                         }
-                        else if(data == 'invalid'){
-                            swal("INVALID EMAIL", "USER ACCOUNT", "error");
-                        }
-                        else if(data == 'duplicate'){
-                            swal("DUPLICATE EMAIL", "USER ACCOUNT", "error");
-                        }
-                        else{
-                            $('#updateUser').hide();
-                            swal("UPDATE FAILED", "USER ACCOUNT", "error");
-                            setTimeout(function(){window.location.href="/users"}, 2000);
-                        }
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            window.location.href = '/users';
-                        }
-                        alert(data.responseText);
-                    }
-                });
+                    });
+                }
+                else if(data == 'invalid'){
+                    swal("INVALID EMAIL", "Enter a valid email address!", "error");
+                }
+                else if(data == 'duplicate'){
+                    swal("DUPLICATE EMAIL", "Email address already exists!", "error");
+                }
+                else{
+                    $('#updateUser').hide();
+                    swal("UPDATE FAILED", "USER ACCOUNT", "error");
+                    setTimeout(function(){window.location.href="/users"}, 2000);
+                }
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/users';
+                }
+                alert(data.responseText);
             }
         });
     }

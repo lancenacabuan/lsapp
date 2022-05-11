@@ -25,8 +25,9 @@ Route::any('/password_save',[PagesController::class,'password_save']);
 //Users
 Route::get('/users',[PagesController::class,'users']);
 Route::get('/users_data',[PagesController::class,'users_data']);
+Route::any('/users/validate/save',[PagesController::class,'validate_users_save']);
 Route::any('/users/save',[PagesController::class,'users_save']);
-Route::any('/logNewUser',[PagesController::class,'logNewUser']);
+Route::any('/users/validate/update',[PagesController::class,'validate_users_update']);
 Route::any('/users/update',[PagesController::class,'users_update']);
 //
 

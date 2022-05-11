@@ -52,11 +52,13 @@
                 <label class="form-control form-control-sm dfchide sales_details soldShow" id="reference_label" style="width: 160px;">Reference SO/PO No.</label>
                 <input class="form-control form-control-sm dfchide sales_details soldShow" id="reference_details" onclick="copyRefNum()" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
+            @role('sales|approver - sales') {{---ROLES---}}
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <button type="button" id="btnShowAttachment" class="btn btn-primary bp sales_details soldShow" style="zoom: 85%; width: 188px; margin-left: 530px;">VIEW ATTACHMENT</button>
                 <button type="button" id="btnHideAttachment" class="btn btn-primary bp" style="zoom: 85%; width: 188px; margin-left: 530px; display: none;">HIDE ATTACHMENT</button>
                 <span id="warehouse_note" style="color: Red; font-size: 12px; display: none;">Please select location to store the Assembled Item/s.</span>
             </div>
+            @endrole
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" name="reason_label" id="reason_label" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>
                 <textarea class="form-control" name="reason_details" id="reason_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="4" readonly></textarea>

@@ -54,6 +54,17 @@
             user-select: none;
             cursor: wait;
         }
+        a, img, thead, .xD {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-select: none;
+            user-drag: none;
+        }
+        table {
+            user-select: text !important;
+        }
         nav {
             background: #0d1a80;
         }
@@ -190,7 +201,7 @@
         @include('inc.navbar')
     @endif
     <div id="app" class="container-fluid">
-        <main class="py-4">
+        <main class="py-4 xD">
             @yield('content')
         </main>
     </div>

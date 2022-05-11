@@ -62,9 +62,6 @@
             user-select: none;
             user-drag: none;
         }
-        table {
-            user-select: text !important;
-        }
         nav {
             background: #0d1a80;
         }
@@ -201,7 +198,7 @@
         @include('inc.navbar')
     @endif
     <div id="app" class="container-fluid">
-        <main class="py-4 xD">
+        <main class="py-4">
             @yield('content')
         </main>
     </div>

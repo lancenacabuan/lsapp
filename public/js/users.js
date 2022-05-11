@@ -39,8 +39,8 @@ $('#btnAddUser').on('click', function(){
 });
 
 $('#btnSave').on('click', function(){
-    var name = $.trim($('#name').val()).toUpperCase();
-    var email = $.trim($('#email').val()).toLowerCase();
+    var name = $.trim($('#name').val());
+    var email = $.trim($('#email').val());
     var role = $('#role').val();
 
     if(name != "" && email != "" && $('#role').find('option:selected').text() != "Select User Level"){

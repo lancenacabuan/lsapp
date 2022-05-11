@@ -159,11 +159,11 @@ class PagesController extends Controller
         else {
             $result = 'true';
 
-            Password::broker()->sendResetLink(['email'=>$request->email]);
+            Password::broker()->sendResetLink(['email'=>strtolower($request->email)]);
     
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "USER ADDED: User successfully saved details of $request->name with UserID#$id.";
+            $userlogs->activity = "USER ADDED: User successfully saved details of $name with UserID#$id.";
             $userlogs->save();
         }
         

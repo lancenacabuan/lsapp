@@ -37,6 +37,10 @@
         function scrollReset(){
             $('html, body').animate({scrollTop:0}, 10);
         }
+        $(document).on('keyup', '#x_serial', function(){
+            var serial = $('#x_serial').val().toUpperCase();
+            $('#x_serial').val(serial);
+        });
     </script>
     <style>
         #loading {
@@ -86,8 +90,9 @@
             color: white;
         }
         .close {
-            color: white;
             zoom: 80%;
+            color: white;
+            opacity: 100%;
         }
         .chosen-container-single .chosen-single {
             margin-top: -12px !important;

@@ -185,6 +185,9 @@ $(document).on('click', '#ItemSerialTable tbody tr', function(){
         return false;
     }
     var trdata = ItemSerialTable.row(this).data();
+    if(trdata.status == 'defectives'){
+        return false;
+    }
     $('#x_id').val(trdata.stock_id);
     $('#x_category').val(decodeHtml(trdata.category));
     $('#x_item').val(decodeHtml(trdata.item));
@@ -198,6 +201,11 @@ $(document).on('click', '#ItemSerialTable tbody tr', function(){
 
     $('.modal-body').html();
     $('#editSerialModal').modal('show');
+});
+
+$('#serial').on('keyup', function(){
+    var serial = $('#serial').val().toUpperCase();
+    $('#serial').val(serial);
 });
 
 $('#btnClear').on('click', function(){

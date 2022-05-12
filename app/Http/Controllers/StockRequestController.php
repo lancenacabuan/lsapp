@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\emailForRequest;
 use App\Mail\disapprovedRequest;
 use App\Mail\receivedRequest;
+use App\Mail\editSerial;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Location;
@@ -548,6 +549,21 @@ class StockRequestController extends Controller
         }
         else{
             $result = 'true';
+
+            $subject = "EDITED ITEM SERIAL: '$request->origserial' => '$request->newserial'";
+            $user = User::role('admin')->where('status','ACTIVE')->get();
+            foreach($user as $key){
+                $details = [
+                    'name' => ucwords($key->name),
+                    'editdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
+                    'edited_by' => auth()->user()->name,
+                    'category' => $request->category,
+                    'item' => $request->item,
+                    'serialfrom' => $request->origserial,
+                    'serialto' => $request->newserial
+                ];
+                Mail::to($key->email)->send(new editSerial($details, $subject));
+            }
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;

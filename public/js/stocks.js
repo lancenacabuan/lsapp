@@ -236,6 +236,10 @@ $('#btnEdit').on('click', function(){
         })
         .then((willDelete) => {
             if(willDelete){
+                scrollReset();
+                $('#editSerialModal').hide();
+                $('#editSerialModal').modal('dispose');
+                $('#loading').show(); Spinner(); Spinner.show();
                 $.ajax({
                     type:'post',
                     url: '/editSerial',
@@ -251,8 +255,7 @@ $('#btnEdit').on('click', function(){
                     },
                     success: function(data){
                         if(data == 'false'){
-                            $('#editSerialModal').hide();
-                            $('#editSerialModal').modal('dispose');
+                            $('#loading').hide(); Spinner.hide();
                             swal({
                                 title: "EDIT FAILED",
                                 text: "ITEM SERIAL",
@@ -262,8 +265,7 @@ $('#btnEdit').on('click', function(){
                             $('table.ItemSerialTable').DataTable().ajax.reload();
                         }
                         else{
-                            $('#editSerialModal').hide();
-                            $('#editSerialModal').modal('dispose');
+                            $('#loading').hide(); Spinner.hide();
                             swal({
                                 title: "EDIT SUCCESS",
                                 text: "ITEM SERIAL",

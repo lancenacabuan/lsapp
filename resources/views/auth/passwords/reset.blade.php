@@ -20,7 +20,7 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" readonly>
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert" style="zoom: 80%;">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -34,7 +34,7 @@
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" maxlength="30" required autocomplete="new-password" autofocus>
 
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert" style="zoom: 80%;">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

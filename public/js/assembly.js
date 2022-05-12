@@ -499,6 +499,9 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         $(".repshow").show();
                     }
 
+                    if(requestStatus == '1'){
+                        $("#btnDelete").show();
+                    }
                     if(requestStatus == '2'){
                         var targetArray = [6];
                         $('#prepItemsModal').show();
@@ -810,6 +813,9 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $(".repshow").show();
         }
 
+        if(requestStatus == '1'){
+            $("#btnDelete").show();
+        }
         if(requestStatus == '2'){
             var targetArray = [6];
             $('#prepItemsModal').show();
@@ -1058,6 +1064,48 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             ]
         });
     }
+});
+
+$('#btnDelete').on('click', function(){
+    swal({
+        title: "DELETE ASSEMBLY STOCK REQUEST?",
+        text: "You are about to DELETE your ASSEMBLY STOCK REQUEST!\n This will be permanently deleted from the system.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type:'post', 
+                url:'/deleteRequest',
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    'request_number': $('#request_num_details').val()
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        $('#detailsAssembly').hide();
+                        swal("DELETE SUCCESS", "ASSEMBLY REQUEST", "success");
+                        setTimeout(function(){location.href="/assembly"}, 2000);
+                    }
+                    else{
+                        $('#detailsAssembly').hide();
+                        swal("DELETE FAILED", "ASSEMBLY REQUEST", "error");
+                        setTimeout(function(){location.href="/assembly"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/assembly';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });   
 });
 
 var items = [];

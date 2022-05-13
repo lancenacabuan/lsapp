@@ -156,7 +156,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 {
                     data: 'location',
                     "render": function(data, type, row){
-                        if(row.status == 'defectives'){
+                        if(row.status == 'defectives' || row.status == 'FOR RECEIVING'){
                             return 'DEFECTIVE';
                         }
                         else if(row.status == 'demo'){

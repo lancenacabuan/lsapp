@@ -63,7 +63,7 @@ class StocksController extends Controller
             ->addColumn('Defective', function(Category $Category){
                 $Defective = Stock::query()
                     ->where('category_id', $Category->id)
-                    ->where('status', 'defectives')
+                    ->whereIn('status', ['defectives', 'FOR RECEIVING'])
                     ->count();
                 return $Defective;
             })
@@ -132,7 +132,7 @@ class StocksController extends Controller
             ->addColumn('Total_stocks', function(Category $Category){
                 $Total_stocks = Stock::query()
                     ->where('category_id', $Category->id)
-                    ->whereIn('status', ['in','defectives','demo','assembly'])
+                    ->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly'])
                     ->count();
                 return $Total_stocks;
             })->make(true);
@@ -146,7 +146,7 @@ class StocksController extends Controller
             ->join('locations', 'locations.id', 'location_id')
             ->join('users', 'users.id', 'user_id')
             ->where('item_id', $request->ItemId)
-            ->whereIn('stocks.status', ['in','defectives','demo','assembly'])
+            ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
             ->get();
         
         return DataTables::of($stock)->make(true);
@@ -165,7 +165,7 @@ class StocksController extends Controller
             ->addColumn('Defective', function(Item $Item){
                 $Defective = Stock::query()
                     ->where('item_id', $Item->id)
-                    ->where('status', 'defectives')
+                    ->whereIn('status', ['defectives', 'FOR RECEIVING'])
                     ->count();
                 return $Defective;
             })
@@ -234,7 +234,7 @@ class StocksController extends Controller
             ->addColumn('Total_stocks', function(Item $Item){
                 $Total_stocks = Stock::query()
                     ->where('item_id', $Item->id)
-                    ->whereIn('status', ['in','defectives','demo','assembly'])
+                    ->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly'])
                     ->count();
                 return $Total_stocks;
             })

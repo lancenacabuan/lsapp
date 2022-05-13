@@ -16,6 +16,11 @@
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
                 </li>
+                @role('admin|encoder|viewer') {{---ROLES---}}
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('defective') ? 'active' : '' }}" href="{{ url('/defective') }}">DEFECTIVE</a>
+                </li>
+                @endrole
                 @role('admin') {{---ROLES---}}
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('maintenance*') ? 'active' : '' }}" href="{{ url('/maintenance') }}">MAINTENANCE</a>

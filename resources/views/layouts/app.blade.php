@@ -229,6 +229,9 @@
     @if(Request::is('assembly'))
         <script src="{{ asset('js/assembly.js') }}"></script>
     @endif
+    @if(Request::is('defective'))
+        <script src="{{ asset('js/defective.js') }}"></script>
+    @endif
     @if(Request::is('maintenance'))
         <script src="{{ asset('js/maintenance.js') }}"></script>
     @endif

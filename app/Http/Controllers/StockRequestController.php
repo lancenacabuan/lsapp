@@ -1742,7 +1742,7 @@ class StockRequestController extends Controller
         
         Stock::where('request_number', $request->request_number)
             ->where('status', '=', 'dfcreceived')
-            ->update(['status' => 'defectives', 'user_id' => auth()->user()->id]);
+            ->update(['status' => 'defectives', 'user_id' => auth()->user()->id, 'defectiveDate' => date("Y-m-d H:i:s")]);
 
         if($request->inc == 'true'){
             $userlogs = new UserLogs;

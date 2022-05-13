@@ -7,6 +7,7 @@ use App\Http\Controllers\StocksController;
 use App\Http\Controllers\StockRequestController;
 use App\Http\Controllers\StockTransferController;
 use App\Http\Controllers\AssemblyController;
+use App\Http\Controllers\DefectiveController;
 use App\Http\Controllers\FileMaintenanceController;
 
 Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
@@ -162,6 +163,13 @@ Route::any('/logItem',[AssemblyController::class,'logItem']);
 Route::get('/itemDetails',[AssemblyController::class,'itemDetails']);
 Route::any('/changeItem',[AssemblyController::class,'changeItem']);
 Route::get('/partsDetails',[AssemblyController::class,'partsDetails']);
+//
+
+//Defective
+Route::get('/defective',[DefectiveController::class,'defective']);
+Route::get('/defective/data',[DefectiveController::class,'defective_data']);
+Route::any('/defective/return',[DefectiveController::class,'defective_return']);
+Route::any('/generateReturnNum',[DefectiveController::class,'generateReturnNum']);
 //
 
 //Maintenance

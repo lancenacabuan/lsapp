@@ -58,7 +58,7 @@ class StocksController extends Controller
             (
                 'categories.category as Category'
             )
-        )->get();
+        )->orderBy('Category', 'ASC')->get();
         return DataTables::of($list)
             ->addColumn('Defective', function(Category $Category){
                 $Defective = Stock::query()
@@ -147,6 +147,7 @@ class StocksController extends Controller
             ->join('users', 'users.id', 'user_id')
             ->where('item_id', $request->ItemId)
             ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
+            ->orderBy('modDate', 'DESC')
             ->get();
         
         return DataTables::of($stock)->make(true);
@@ -160,7 +161,8 @@ class StocksController extends Controller
                 'items.item as Item'
             )
         )
-        ->where('items.category_id', $request->CategoryId)->get();
+        ->where('items.category_id', $request->CategoryId)
+        ->orderBy('Item', 'ASC')->get();
          return DataTables::of($list)
             ->addColumn('Defective', function(Item $Item){
                 $Defective = Stock::query()

@@ -52,14 +52,18 @@ class FileMaintenanceController extends Controller
     public function fm_items(){
         $list = Item::select('items.id', 'items.item', 'categories.category', 'items.category_id', 'items.UOM')
             ->where('items.assemble', 'NO')
-            ->join('categories', 'categories.id', 'category_id');
+            ->join('categories', 'categories.id', 'category_id')
+            ->orderBy('item', 'ASC')
+            ->get();
         return DataTables::of($list)->make(true);
     }
 
     public function asm_items(){
         $list = Item::select('items.id', 'items.item', 'categories.category', 'items.category_id', 'items.UOM')
             ->where('items.assemble', 'YES')
-            ->join('categories', 'categories.id', 'category_id');
+            ->join('categories', 'categories.id', 'category_id')
+            ->orderBy('item', 'ASC')
+            ->get();
         return DataTables::of($list)->make(true);
     }
 
@@ -69,7 +73,7 @@ class FileMaintenanceController extends Controller
     }
 
     public function fm_locations(){
-        $list = Location::select('id AS location_id', 'location', 'status')->whereNotIn('id',['7','8','9','10'])->get();
+        $list = Location::select('id AS location_id', 'location', 'status')->orderBy('location', 'ASC')->get();
         return DataTables::of($list)->make(true);
     }
 

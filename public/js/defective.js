@@ -1,37 +1,37 @@
-if($("#current_role").val() == '["viewer"]'){
-    $('table.defectiveTable').dataTable().fnDestroy();
-    $('#loading').show(); Spinner(); Spinner.show();
-    $('table.defectiveTable').DataTable({ 
-        language: {
-            processing: "Loading...",
-            emptyTable: "No data available in table"
+$('table.defectiveTable').dataTable().fnDestroy();
+$('#loading').show(); Spinner(); Spinner.show();
+$('table.defectiveTable').DataTable({ 
+    language: {
+        processing: "Loading...",
+        emptyTable: "No data available in table"
+    },
+    serverSide: true,
+    ajax: {
+        url: '/defective/data',
+    },
+    columnDefs: [
+        {
+            "targets": [0],
+            "visible": false,
+            "searchable": false
         },
-        serverSide: true,
-        ajax: {
-            url: '/defective/data',
-        },
-        columnDefs: [
-            {
-                "targets": [0],
-                "visible": false,
-                "searchable": false
-            },
-            {
-                "targets": [1],
-                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
-            }
-        ],
-        columns: [
-            { data: 'stock_id' },
-            { data: 'defectiveDate' },
-            { data: 'name' },
-            { data: 'return_number' },
-            { data: 'category' },
-            { data: 'item' },
-            { data: 'serial' },
-            {
-                data: 'status',
-                "render": function(data, type, row, meta){
+        {
+            "targets": [1],
+            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
+        }
+    ],
+    columns: [
+        { data: 'stock_id' },
+        { data: 'defectiveDate' },
+        { data: 'name' },
+        { data: 'return_number' },
+        { data: 'category' },
+        { data: 'item' },
+        { data: 'serial' },
+        {
+            data: 'status',
+            "render": function(data, type, row, meta){
+                if($("#current_role").val() == '["viewer"]'){
                     if(row.status == 'defectives'){
                         return "<span style='color: Red; font-weight: bold;'>FOR RETURN</span>";
                     }
@@ -39,48 +39,7 @@ if($("#current_role").val() == '["viewer"]'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
                 }
-            },
-        ],
-        order:[[1, 'asc'], [2, 'asc']],
-        initComplete: function(){
-            $('#loading').hide(); Spinner.hide();
-        }
-    });
-}
-else{
-    $('table.defectiveTable').dataTable().fnDestroy();
-    $('#loading').show(); Spinner(); Spinner.show();
-    $('table.defectiveTable').DataTable({ 
-        language: {
-            processing: "Loading...",
-            emptyTable: "No data available in table"
-        },
-        serverSide: true,
-        ajax: {
-            url: '/defective/data',
-        },
-        columnDefs: [
-            {
-                "targets": [0],
-                "visible": false,
-                "searchable": false
-            },
-            {
-                "targets": [1],
-                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
-            }
-        ],
-        columns: [
-            { data: 'stock_id' },
-            { data: 'defectiveDate' },
-            { data: 'name' },
-            { data: 'return_number' },
-            { data: 'category' },
-            { data: 'item' },
-            { data: 'serial' },
-            {
-                data: 'status',
-                "render": function(data, type, row, meta){
+                else{
                     if(row.status == 'defectives'){
                         return "<button style='zoom: 85%;' class='btn btn-primary bp btnReturnItem' id='"+ meta.row +"'>RETURN</button>";
                     }
@@ -88,14 +47,14 @@ else{
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
                 }
-            },
-        ],
-        order:[[1, 'asc'], [2, 'asc']],
-        initComplete: function(){
-            $('#loading').hide(); Spinner.hide();
-        }
-    });
-}
+            }
+        },
+    ],
+    order:[[1, 'asc'], [2, 'asc']],
+    initComplete: function(){
+        $('#loading').hide(); Spinner.hide();
+    }
+});
 
 function generateReturnNum(){
     var today = new Date();

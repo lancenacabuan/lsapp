@@ -118,7 +118,23 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         columns: [
             { data: 'location_id' },
             { data: 'location' },
-            { data: 'status' }
+            {
+                data: 'status',
+                "render": function(data, type, row){
+                    if(row.status == 'ACTIVE'){
+                        return "<span class='d-none'>"+row.status+"</span><span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
+                    }
+                    if(row.status == 'INACTIVE'){
+                        return "<span class='d-none'>"+row.status+"</span><span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
+                    }
+                    if(row.status == 'PENDING'){
+                        return "<span class='d-none'>"+row.status+"</span><span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
+                    }
+                    if(row.status.includes('CHANGE REQUESTED')){
+                        return "<span class='d-none'>"+row.status+"</span><span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
+                    }
+                }
+            }
         ],
         order:[[1, 'asc']],
         initComplete: function(){

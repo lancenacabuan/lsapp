@@ -20,7 +20,17 @@ $('table.userTable').DataTable({
         { data: 'user_name' },
         { data: 'user_email' },
         { data: 'role_name' },
-        { data: 'user_status' }
+        {
+            data: 'user_status',
+            "render": function(data, type, row){
+                if(row.user_status == 'ACTIVE'){
+                    return "<span class='d-none'>"+row.user_status+"</span><span style='color: Green; font-weight: bold;'>"+row.user_status+"</span>";
+                }
+                if(row.user_status == 'INACTIVE'){
+                    return "<span class='d-none'>"+row.user_status+"</span><span style='color: Red; font-weight: bold;'>"+row.user_status+"</span>";
+                }
+            }
+        }
     ],
     order:[[3, 'asc'], [1, 'asc']],
     initComplete: function(){

@@ -208,11 +208,10 @@
         </main>
     </div>
     @if(Request::is('/'))
-        <script src="{{ asset('js/home.js') }}"></script>
+        <script src="{{ asset('js/index.js') }}"></script>
     @endif
     @if(Request::is('stocks'))
         <script src="{{ asset('js/stocks.js') }}"></script>
-        <script src="{{ asset('js/item.js') }}"></script>
     @endif
     @if(Request::is('stockrequest'))
         <script src="{{ asset('js/stockrequest.js') }}"></script>

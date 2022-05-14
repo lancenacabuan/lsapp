@@ -9,7 +9,7 @@
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Item Description</label>
-                <input class="form-control form-control-sm" style="width: 730px; margin-right: 10px;" name="aic_item_description" id="aic_item_description" required></textarea>
+                <input class="form-control form-control-sm" style="width: 730px; margin-right: 10px;" name="aic_item_description" id="aic_item_description" maxlength="255" placeholder="Please enter assembled item description to proceed" required></textarea>
             </div>
         </div>
         <div id="partsDetails" style="display: none;">

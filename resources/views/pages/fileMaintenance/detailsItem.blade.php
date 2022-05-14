@@ -1,5 +1,5 @@
 <div class="modal fade in" id="detailsItem">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">UPDATE ITEM DETAILS</h6>    
@@ -13,8 +13,8 @@
             <input type="hidden" name="item_name_details_original" id="item_name_details_original">
             <input type="hidden" name="item_uom_details_original" id="item_uom_details_original">
             <div class="form-inline">
-                <label class="form-control form-control-sm" style="width:165px;">Category Name</label>
-                <select class="form-control-sm form-select-sm" id="item_category_details" style="padding: 0.25rem 0.5rem; height:30px !important; width:590px;">
+                <label class="form-control form-control-sm" style="width: 165px;">Category Name</label>
+                <select class="form-control-sm form-select-sm" id="item_category_details" style="padding: 0.25rem 0.5rem; height: 30px !important; width: 600px;">
                     <option value="" selected disabled>Select Category</option>
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
@@ -22,20 +22,19 @@
                 </select>
             </div>
             <div class="form-inline" style="margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width:165px;">Item Description</label>
-                <input class="form-control form-control-sm" id="item_name_details" style="width: 590px;" type="text" maxlength="255">
+                <label class="form-control form-control-sm" style="width: 165px;">Item Description</label>
+                <input class="form-control form-control-sm" id="item_name_details" style="width: 600px;" type="text" maxlength="255" placeholder="Please enter item description">
             </div>
             <div class="form-inline" style="margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width:165px;">Unit of Measure (UOM)</label>
-                <select class="form-control-sm form-select-sm" id="item_uom_details" style="padding: 0.25rem 0.5rem; height:30px !important; width:590px;">
+                <label class="form-control form-control-sm" style="width: 165px;">Unit of Measure (UOM)</label>
+                <select class="form-control-sm form-select-sm" id="item_uom_details" style="padding: 0.25rem 0.5rem; height: 30px !important; width: 600px;">
                     <option value="" selected disabled>Select UOM</option>
                     <option value="Unit">Unit</option>
                     <option value="Pc">Pc</option>
                     <option value="Meter">Meter</option>
                 </select>
             </div>
-            <br>
-            <button type="button" id="btnUpdateItem" class="btn btn-primary float-right bp" style="margin-right: 10px; margin-top: 10px;">UPDATE</button>
+            <button type="button" id="btnUpdateItem" class="btn btn-primary float-right bp" style="margin-top: 10px;">UPDATE</button>
         </div>
     </div>
     </div>

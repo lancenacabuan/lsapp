@@ -276,13 +276,13 @@ class FileMaintenanceController extends Controller
 
     public function logNewLocation(Request $request){
         $user = array(
-            'c4lance@outlook.com',
-            'lancenacabuan@yahoo.com',
-            'lorenzonacabuan@gmail.com'
-            // 'gerard.mallari@gmail.com',
-            // 'jolopez@ideaserv.com.ph',
-            // 'lancenacabuan@outlook.com',
+            // 'c4lance@outlook.com',
+            // 'lancenacabuan@yahoo.com',
             // 'lorenzonacabuan@gmail.com'
+            'gerard.mallari@gmail.com',
+            'jolopez@ideaserv.com.ph',
+            'lancenacabuan@outlook.com',
+            'lorenzonacabuan@gmail.com'
         );
         $subject = 'NEW LOCATION REQUEST: '.$request->location;
         foreach($user as $email){
@@ -359,13 +359,13 @@ class FileMaintenanceController extends Controller
 
     public function requestStatusChange(Request $request){
         $user = array(
-            'c4lance@outlook.com',
-            'lancenacabuan@yahoo.com',
-            'lorenzonacabuan@gmail.com'
-            // 'gerard.mallari@gmail.com',
-            // 'jolopez@ideaserv.com.ph',
-            // 'lancenacabuan@outlook.com',
+            // 'c4lance@outlook.com',
+            // 'lancenacabuan@yahoo.com',
             // 'lorenzonacabuan@gmail.com'
+            'gerard.mallari@gmail.com',
+            'jolopez@ideaserv.com.ph',
+            'lancenacabuan@outlook.com',
+            'lorenzonacabuan@gmail.com'
         );
         $subject = 'LOCATION STATUS CHANGE REQUEST: '.$request->location;
         foreach($user as $email){

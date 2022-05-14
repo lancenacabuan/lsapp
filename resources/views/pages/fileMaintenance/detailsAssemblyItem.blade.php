@@ -11,7 +11,7 @@
             <input type="hidden" name="aim_item_name_details_original" id="aim_item_name_details_original">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Item Description</label>
-                <input class="form-control form-control-sm" style="width: 730px; margin-right: 10px;" name="aim_item_name_details" id="aim_item_name_details" required></textarea>
+                <input class="form-control form-control-sm" style="width: 730px; margin-right: 10px;" name="aim_item_name_details" id="aim_item_name_details" maxlength="255" placeholder="Please enter assembled item description to proceed" required></textarea>
             </div>
         </div>
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">

@@ -44,6 +44,11 @@ $('#btnAddUser').on('click', function(){
         keyboard: false
     });
 
+    $('#name').val('');
+    $('#email').val('');
+    $('#role').val('');
+    $('#role').css({"color":"Gray"});
+
     $('.modal-body').html();
     $('#addUser').modal('show');
 });
@@ -305,8 +310,4 @@ $('#role1').on('change', function(){
     else{
         $('#role1').css({"color":"Black"});
     }
-});
-
-$('.close').on('click', function(){
-    location.reload();
 });

@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
     @role('admin|encoder') {{---ROLES---}}
-    <button class="btn btn-primary bp btnNewStockTransfer float-right mb-4" type="button">NEW STOCK TRANSFER</button>
+    <button class="btn btn-primary bp btnNewStockTransfer float-right mb-2" type="button">NEW STOCK TRANSFER</button>
     <br><br>
     @endrole
     <input type="hidden" id="current_user" value="{{auth()->user()->id}}">

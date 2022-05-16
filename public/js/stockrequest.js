@@ -263,7 +263,7 @@ $('#request_type').on('change', function(){
         $('.reference_field').hide();
     }
     $("#categoryReq").val('');
-    $("#itemReq").find('option').remove().end().append('<option value="">Select Item</option>').val();
+    $("#itemReq").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
     $("#qtyReq").val('');
     $("#uom").val('');
     $("#warrantyReq").val('');
@@ -410,7 +410,7 @@ $(".add-row").on('click', function(){
                 objCells.item(2).innerHTML = warranty_id;
                 ctr = 'true';
                 category = $("#categoryReq").val('');
-                item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val();
+                item = $("#itemReq").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
                 qty = $("#qtyReq").val('');
                 uom = $('#uom').val('');
                 warranty = $("#warrantyReq").val('');
@@ -424,7 +424,7 @@ $(".add-row").on('click', function(){
         if(ctr == 'false')
         { $("#stockRequestTable tbody").append(markup); }
         category = $("#categoryReq").val('');
-        item = $("#itemReq").find('option').remove().end().append('<option value="0">Select Item</option>').val();
+        item = $("#itemReq").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
         qty = $("#qtyReq").val('');
         uom = $('#uom').val('');
         warranty = $("#warrantyReq").val('');

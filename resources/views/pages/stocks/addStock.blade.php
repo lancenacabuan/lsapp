@@ -24,7 +24,7 @@
                             <label class="input-group-text" style="width: 140px;">Item</label>
                         </div>
                         <select id="item" name="item" style="width: 628px;" required>
-                            <option value="">Select Item</option>
+                            <option value="" selected disabled>Select Item</option>
                         </select>
                     </div>
                     <div class="input-group mb-3">

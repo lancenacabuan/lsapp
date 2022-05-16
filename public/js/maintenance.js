@@ -377,12 +377,17 @@ function decodeHtml(str){
     return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
 }
 
-$('.close').on('click', function(){
-    location.reload();
-});
-
-$('#btnClose').on('click', function(){
-    location.reload();
+$('.btnNewItem').on('click', function(){
+    $('#newItem').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $('#item_category').val('');
+    $('#item_name').val('');
+    $('#item_uom').val('');
+    
+    $('.modal-body').html();
+    $('#newItem').modal('show');
 });
 
 $('#btnSaveItem').on('click', function(){
@@ -541,6 +546,17 @@ $('#btnUpdateItem').on('click', function(){
             }
         });
     }
+});
+
+$('.btnNewCategory').on('click', function(){
+    $('#newCategory').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $('#category').val('');
+    
+    $('.modal-body').html();
+    $('#newCategory').modal('show');
 });
 
 $('#btnSaveCategory').on('click', function(){
@@ -731,6 +747,7 @@ $(".btnNewLocation").on('click', function(){
         backdrop: 'static',
         keyboard: false
     });
+    $('#location').val('');
 
     $('.modal-body').html();
     $('#newLocation').modal('show');
@@ -1007,6 +1024,29 @@ function checkCreateItem(){
         }
     }
 }
+
+$(".btnCreateItem").on('click', function(){
+    $('#createItem').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $('#aic_item_description').val('');
+    $("#categoryAssembly").val('');
+    $("#itemAssembly").find('option').remove().end().append('<option value="0">Select Item</option>').val();
+    $("#qtyAssembly").val('');
+    $('#uomAssembly').val('');
+    $('#tblCreateItem tbody').empty();
+    if($('#tblCreateItem tbody').children().length==0){
+        $('#tblCreateItem').hide();
+        $('#divCreateItem').removeClass();
+        $('#btnClose').hide();
+        $('#btnSave').hide();
+        $('.submit_label').show();
+    }
+
+    $('.modal-body').html();
+    $('#createItem').modal('show');
+});
 
 $('#categoryAssembly').on('change', function(){
     var id = $('#categoryAssembly').val();

@@ -20,9 +20,9 @@
     </ul>
     @role('admin') {{---ROLES---}}
     <div style="float: right; margin-top: -45px;">
-        <button class="btn btn-primary bp btnNewItem" type="button" data-toggle="modal" data-target="#newItem" data-backdrop="static" data-keyboard="false" style="display: none;">NEW ITEM</button>
-        <button class="btn btn-primary bp btnCreateItem" type="button" data-toggle="modal" data-target="#createItem" data-backdrop="static" data-keyboard="false" style="display: none;">CREATE ITEM</button>
-        <button class="btn btn-primary bp btnNewCategory" type="button" data-toggle="modal" data-target="#newCategory" data-backdrop="static" data-keyboard="false" style="display: none;">NEW CATEGORY</button>
+        <button class="btn btn-primary bp btnNewItem" type="button" style="display: none;">NEW ITEM</button>
+        <button class="btn btn-primary bp btnCreateItem" type="button" style="display: none;">CREATE ASSEMBLED ITEM</button>
+        <button class="btn btn-primary bp btnNewCategory" type="button" style="display: none;">NEW CATEGORY</button>
         <button class="btn btn-primary bp btnNewLocation" type="button" style="display: none;">REQUEST NEW LOCATION</button>
         <button class="btn btn-primary bp btnNewWarranty" type="button" style="display: none;">NEW WARRANTY</button>
     </div>

@@ -185,7 +185,7 @@ $(document).on('click', '#ItemSerialTable tbody tr', function(){
         return false;
     }
     var trdata = ItemSerialTable.row(this).data();
-    if(trdata.status == 'defectives'){
+    if(trdata.status == 'defectives' || trdata.status == 'FOR RECEIVING'){
         return false;
     }
     $('#x_id').val(trdata.stock_id);

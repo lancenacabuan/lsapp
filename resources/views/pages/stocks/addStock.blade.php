@@ -66,7 +66,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Serial</label>
                         </div>
-                        <input type="text" id="serial" name="serial" placeholder="Enter Serial (Note: Leave blank if N/A)" style="width: 628px; border-width: thin;" autocomplete="off">
+                        <input type="text" id="serial" name="serial" placeholder="Enter Serial (Note: Leave blank if N/A)" style="width: 628px; border-width: thin;" autocomplete="off" onkeypress="return specialChar(event)">
                     </div>
                 </form>
                 <br>

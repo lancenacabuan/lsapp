@@ -126,8 +126,8 @@ $(document).on('click', '.btnReturnItem', function(){
                     stock_id: data.stock_id,
                     category_id: data.category_id,
                     item_id: data.item_id,
-                    category: data.category,
-                    item: data.item,
+                    category: decodeHtml(data.category),
+                    item: decodeHtml(data.item),
                     serial: data.serial
                 },
                 success: function(data){
@@ -157,3 +157,14 @@ $(document).on('click', '.btnReturnItem', function(){
         }
     });
 });
+
+function decodeHtml(str){
+    var map = {
+        '&amp;': '&', 
+        '&lt;': '<', 
+        '&gt;': '>', 
+        '&quot;': '"', 
+        '&#039;': "'"
+    };
+    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
+}

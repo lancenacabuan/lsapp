@@ -755,63 +755,68 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#reference_details').val(reference);
                 var reason = value.reason;
                     $('#reason_details').val(reason);
-                var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
-                var reference_attachments = decodeHtml(reference_uploads).split(',');
-                    for(var i=0; i < reference_attachments.length; i++){
-                        var btn = document.createElement("input");
-                        btn.setAttribute("id", "btnSlide"+(i+1));
-                        btn.setAttribute("value", i+1);
-                        btn.setAttribute("type", "button");
-                        btn.setAttribute("class", "w3-button demo");
-                        btn.setAttribute("onclick", "currentDiv("+(i+1)+")");
-                        var img = document.createElement("img");
-                        img.setAttribute("id", "reference_attachment"+i);
-                        img.setAttribute("class", "mySlides");
-                        var imgx = document.createElement("img");
-                        imgx.setAttribute("id", "reference_hidden"+i);
-                        document.getElementById("slidesBtn").appendChild(btn);
-                        document.getElementById("slidesContent").appendChild(img);
-                        document.getElementById("hiddenContent").appendChild(imgx);
-                        var reference_attachment = reference_attachments[i].replace(/\"/g,'');
-            
-                        $.ajax({
-                            type: 'get',
-                            url: '/checkURL',
-                            async: false,
-                            data:{
-                                'reference': reference_attachment,
-                                'check': 'beta'
-                            },
-                            success: function(data){
-                                if(data == 'true'){
-                                    $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
-                                    $('#reference_attachment'+i).css({'width': '100%'});
-                                }
-                                else{
-                                    $.ajax({
-                                        type: 'get',
-                                        url: '/checkURL',
-                                        async: false,
-                                        data:{
-                                            'reference': reference_attachment,
-                                            'check': 'live'
-                                        },
-                                        success: function(data){
-                                            if(data == 'true'){
-                                                $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
-                                                $('#reference_attachment'+i).css({'width': '100%'});
+                    if(req_type_id == '2' || (req_type_id == '3' && requestStatus == '10')){
+                        var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
+                        var reference_attachments = decodeHtml(reference_uploads).split(',');
+                        for(var i=0; i < reference_attachments.length; i++){
+                            var btn = document.createElement("input");
+                            btn.setAttribute("id", "btnSlide"+(i+1));
+                            btn.setAttribute("value", i+1);
+                            btn.setAttribute("type", "button");
+                            btn.setAttribute("class", "w3-button demo");
+                            btn.setAttribute("onclick", "currentDiv("+(i+1)+")");
+                            var img = document.createElement("img");
+                            img.setAttribute("id", "reference_attachment"+i);
+                            img.setAttribute("class", "mySlides");
+                            var imgx = document.createElement("img");
+                            imgx.setAttribute("id", "reference_hidden"+i);
+                            document.getElementById("slidesBtn").appendChild(btn);
+                            document.getElementById("slidesContent").appendChild(img);
+                            document.getElementById("hiddenContent").appendChild(imgx);
+                            var reference_attachment = reference_attachments[i].replace(/\"/g,'');
+                
+                            $.ajax({
+                                type: 'get',
+                                url: '/checkURL',
+                                async: false,
+                                data:{
+                                    'reference': reference_attachment,
+                                    'check': 'beta'
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
+                                        $('#reference_attachment'+i).css({'width': '100%'});
+                                    }
+                                    else{
+                                        $.ajax({
+                                            type: 'get',
+                                            url: '/checkURL',
+                                            async: false,
+                                            data:{
+                                                'reference': reference_attachment,
+                                                'check': 'live'
+                                            },
+                                            success: function(data){
+                                                if(data == 'true'){
+                                                    $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
+                                                    $('#reference_attachment'+i).css({'width': '100%'});
+                                                }
+                                                else{
+                                                    $('#reference_attachment'+i).attr('src', 'NA.png').show();
+                                                    $('#reference_attachment'+i).css({'width': '25%'});
+                                                }
                                             }
-                                            else{
-                                                $('#reference_attachment'+i).attr('src', 'NA.png').show();
-                                                $('#reference_attachment'+i).css({'width': '25%'});
-                                            }
-                                        }
-                                    });
+                                        });
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
+                        $('#btnSlide1').click();
+                        if(reference_attachments.length == 1){
+                            $("#slidesCtrl").hide();
+                        }
                     }
-                    $('#btnSlide1').click();
             
                     $('#action').val('');
                     $('.modal-body').html();
@@ -1662,63 +1667,68 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#reference_details').val(reference);
     var reason = value.reason;
         $('#reason_details').val(reason);
-    var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
-    var reference_attachments = decodeHtml(reference_uploads).split(',');
-        for(var i=0; i < reference_attachments.length; i++){
-            var btn = document.createElement("input");
-            btn.setAttribute("id", "btnSlide"+(i+1));
-            btn.setAttribute("value", i+1);
-            btn.setAttribute("type", "button");
-            btn.setAttribute("class", "w3-button demo");
-            btn.setAttribute("onclick", "currentDiv("+(i+1)+")");
-            var img = document.createElement("img");
-            img.setAttribute("id", "reference_attachment"+i);
-            img.setAttribute("class", "mySlides");
-            var imgx = document.createElement("img");
-            imgx.setAttribute("id", "reference_hidden"+i);
-            document.getElementById("slidesBtn").appendChild(btn);
-            document.getElementById("slidesContent").appendChild(img);
-            document.getElementById("hiddenContent").appendChild(imgx);
-            var reference_attachment = reference_attachments[i].replace(/\"/g,'');
-
-            $.ajax({
-                type: 'get',
-                url: '/checkURL',
-                async: false,
-                data:{
-                    'reference': reference_attachment,
-                    'check': 'beta'
-                },
-                success: function(data){
-                    if(data == 'true'){
-                        $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
-                        $('#reference_attachment'+i).css({'width': '100%'});
-                    }
-                    else{
-                        $.ajax({
-                            type: 'get',
-                            url: '/checkURL',
-                            async: false,
-                            data:{
-                                'reference': reference_attachment,
-                                'check': 'live'
-                            },
-                            success: function(data){
-                                if(data == 'true'){
-                                    $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
-                                    $('#reference_attachment'+i).css({'width': '100%'});
+        if(req_type_id == '2' || (req_type_id == '3' && requestStatus == '10')){
+            var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
+            var reference_attachments = decodeHtml(reference_uploads).split(',');
+            for(var i=0; i < reference_attachments.length; i++){
+                var btn = document.createElement("input");
+                btn.setAttribute("id", "btnSlide"+(i+1));
+                btn.setAttribute("value", i+1);
+                btn.setAttribute("type", "button");
+                btn.setAttribute("class", "w3-button demo");
+                btn.setAttribute("onclick", "currentDiv("+(i+1)+")");
+                var img = document.createElement("img");
+                img.setAttribute("id", "reference_attachment"+i);
+                img.setAttribute("class", "mySlides");
+                var imgx = document.createElement("img");
+                imgx.setAttribute("id", "reference_hidden"+i);
+                document.getElementById("slidesBtn").appendChild(btn);
+                document.getElementById("slidesContent").appendChild(img);
+                document.getElementById("hiddenContent").appendChild(imgx);
+                var reference_attachment = reference_attachments[i].replace(/\"/g,'');
+    
+                $.ajax({
+                    type: 'get',
+                    url: '/checkURL',
+                    async: false,
+                    data:{
+                        'reference': reference_attachment,
+                        'check': 'beta'
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
+                            $('#reference_attachment'+i).css({'width': '100%'});
+                        }
+                        else{
+                            $.ajax({
+                                type: 'get',
+                                url: '/checkURL',
+                                async: false,
+                                data:{
+                                    'reference': reference_attachment,
+                                    'check': 'live'
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
+                                        $('#reference_attachment'+i).css({'width': '100%'});
+                                    }
+                                    else{
+                                        $('#reference_attachment'+i).attr('src', 'NA.png').show();
+                                        $('#reference_attachment'+i).css({'width': '25%'});
+                                    }
                                 }
-                                else{
-                                    $('#reference_attachment'+i).attr('src', 'NA.png').show();
-                                    $('#reference_attachment'+i).css({'width': '25%'});
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }
+            $('#btnSlide1').click();
+            if(reference_attachments.length == 1){
+                $("#slidesCtrl").hide();
+            }
         }
-        $('#btnSlide1').click();
 
         $('#action').val('');
         $('.modal-body').html();

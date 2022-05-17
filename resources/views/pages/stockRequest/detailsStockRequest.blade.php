@@ -77,14 +77,14 @@
             <h6 class="modal-title w-100">ATTACHMENT SO/PO</h6>
         </div>
         <div class="modal-body text-center">
-            <div class="w3-center">
+            <div id="slidesCtrl" class="w3-center">
                 <div class="w3-section">
                   <button class="w3-button w3-light-grey" onclick="plusDivs(-1)">❮ Prev</button>
                   <button class="w3-button w3-light-grey" onclick="plusDivs(1)">Next ❯</button>
                 </div>
                 <div id="slidesBtn"></div>
+                <br>
             </div>
-            <br>
             <div id="slidesContent">
             </div>
             <div id="hiddenContent" style="display: none;"></div>

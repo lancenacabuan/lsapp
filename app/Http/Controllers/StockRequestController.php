@@ -614,11 +614,13 @@ class StockRequestController extends Controller
         $count = StockRequest::where('request_number', $request->req_num)->count();
         if($count == 0){
             $files = Requests::where('request_number', $request->req_num)->first()->reference_upload;
-            $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
-            foreach($files as $file){
-                $file = str_replace('"','',$file);
-                if(file_exists(public_path('uploads/'.$file))){
-                    unlink(public_path('uploads/'.$file));
+            if($files != NULL){
+                $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+                foreach($files as $file){
+                    $file = str_replace('"','',$file);
+                    if(file_exists(public_path('uploads/'.$file))){
+                        unlink(public_path('uploads/'.$file));
+                    }
                 }
             }
 
@@ -639,11 +641,13 @@ class StockRequestController extends Controller
 
     public function deleteRequest(Request $request){
         $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
-        $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
-        foreach($files as $file){
-            $file = str_replace('"','',$file);
-            if(file_exists(public_path('uploads/'.$file))){
-                unlink(public_path('uploads/'.$file));
+        if($files != NULL){
+            $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+            foreach($files as $file){
+                $file = str_replace('"','',$file);
+                if(file_exists(public_path('uploads/'.$file))){
+                    unlink(public_path('uploads/'.$file));
+                }
             }
         }
 

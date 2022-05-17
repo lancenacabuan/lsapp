@@ -93,6 +93,20 @@ function decodeHtml(str){
     return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
 }
 
+function UrlExists(url, cb){
+    jQuery.ajax({
+        url:            url,
+        crossDomain:    true,
+        dataType:       'text',
+        type:           'GET',
+        async:          false,
+        complete: function(xhr){
+            if(typeof cb === 'function')
+               cb.apply(this, [xhr.status]);
+        }
+    });
+}
+
 function validate_fileupload(reference_upload){
     $('.upload_label').html('Upload Image File (Less than 5MB)');
     if(!/(\.jpg|\.jpeg|\.png|\.gif)$/i.test(reference_upload.value)){
@@ -1618,15 +1632,60 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#reference_details').val(reference);
     var reason = value.reason;
         $('#reason_details').val(reason);
-    var reference_attachment = value.reference_upload;
-        $('#reference_attachment').attr('src', '/uploads/'+reference_attachment).show();
-        $('#reference_attachment').on("error", function(){
-            $('#reference_attachment').attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment);
-            $('#reference_hidden').attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment);
-            $('#reference_hidden').on("error", function(){
-                $('#reference_attachment').attr('src', 'NA.png');
+    var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
+    var reference_attachments = decodeHtml(reference_uploads).split(',');
+        for(var i=0; i < reference_attachments.length; i++){
+            var btn = document.createElement("input");
+            btn.setAttribute("id", "btnSlide"+(i+1));
+            btn.setAttribute("value", i+1);
+            btn.setAttribute("type", "button");
+            btn.setAttribute("class", "w3-button demo");
+            btn.setAttribute("onclick", "currentDiv("+(i+1)+")");
+            var img = document.createElement("img");
+            img.setAttribute("id", "reference_attachment"+i);
+            img.setAttribute("class", "mySlides");
+            var imgx = document.createElement("img");
+            imgx.setAttribute("id", "reference_hidden"+i);
+            document.getElementById("slidesBtn").appendChild(btn);
+            document.getElementById("slidesContent").appendChild(img);
+            document.getElementById("hiddenContent").appendChild(imgx);
+            var reference_attachment = reference_attachments[i].replace(/\"/g,'');
+
+            UrlExists('/uploads/'+reference_attachment, function(status){
+                if(status === 200){
+                    console.log('1');
+                    $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
+                    $('#reference_attachment'+i).css({'width': '100%'});
+                }
+                else{
+                    UrlExists('https://mainwh.apsoft.com.ph/uploads/'+reference_attachment, function(status){
+                        if(status === 200){
+                            console.log('2');
+                            $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
+                            $('#reference_attachment'+i).css({'width': '100%'});
+                        }
+                        else{
+                            console.log('3');
+                            $('#reference_attachment'+i).attr('src', 'NA.png').show();
+                            $('#reference_attachment'+i).css({'width': '25%'});
+                        }
+                    });
+                }
             });
-        });
+
+            // $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
+            // $('#reference_attachment'+i).css({'width': '100%'});
+            // $('#reference_attachment'+i).on("error", function(){
+            //     $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
+            //     $('#reference_attachment'+i).css({'width': '100%'});
+            //     $('#reference_hidden'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment);
+            //     $('#reference_hidden'+i).on("error", function(){
+            //         $('#reference_attachment'+i).attr('src', 'NA.png').show();
+            //         $('#reference_attachment'+i).css({'width': '25%'});
+            //     });
+            // });
+        }
+        $('#btnSlide1').click();
 
         $('#action').val('');
         $('.modal-body').html();
@@ -4125,10 +4184,6 @@ $('#btnReturn').on('click', function(){
 });
 
 $("#btnShowAttachment").on('click', function(){
-    var imgsrc = document.getElementById("reference_attachment").src;
-    if(imgsrc.includes('NA.png') == true){
-        $('#reference_attachment').css({'width': '25%'});
-    }
     $("#btnShowAttachment").hide();
     $("#btnHideAttachment").show();
     $("#attachmentModal").slideDown();

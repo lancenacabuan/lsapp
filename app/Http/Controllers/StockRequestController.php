@@ -125,21 +125,21 @@ class StockRequestController extends Controller
     }
 
     public function uploadFile(Request $request){
-        $datetime = Carbon::now()->isoformat('YYYYMMDDHHmmss');
-        $extension = $request->reference_upload->getClientOriginalExtension();
-        $reference_upload = $datetime.'_'.$request->reqnum.'.'.$extension;
-        do{
-            $path = $request->reference_upload->move(public_path('/uploads'), $reference_upload);
+        $x = 1;
+        $reference_upload = array();
+        foreach($request->reference_upload as $upload){
+            $datetime = Carbon::now()->isoformat('YYYYMMDDHHmmss');
+            $extension = $upload->getClientOriginalExtension();
+            $filename = $datetime.'_'.$request->reqnum.'-'.$x.'.'.$extension;
+            array_push($reference_upload, $filename);
+            $x++;
         }
-        while(!$path);
+        for($i=0; $i < count($reference_upload); $i++){
+            $request->reference_upload[$i]->move(public_path('/uploads'), $reference_upload[$i]);
+        }
 
-        if($path){
-            Requests::where('request_number', $request->reqnum)
-                ->update(['reference_upload' => $reference_upload]);
-        }
-        else{
-            return redirect()->to('/stockrequest?upload=failed');
-        }
+        Requests::where('request_number', $request->reqnum)
+            ->update(['reference_upload' => $reference_upload]);
 
         if($request->action == 'SUBMIT'){
             return redirect()->to('/stockrequest?submit=success');
@@ -149,6 +149,32 @@ class StockRequestController extends Controller
         }
 
     }
+
+    // public function uploadFile(Request $request){
+    //     $datetime = Carbon::now()->isoformat('YYYYMMDDHHmmss');
+    //     $extension = $request->reference_upload->getClientOriginalExtension();
+    //     $reference_upload = $datetime.'_'.$request->reqnum.'.'.$extension;
+    //     do{
+    //         $path = $request->reference_upload->move(public_path('/uploads'), $reference_upload);
+    //     }
+    //     while(!$path);
+
+    //     if($path){
+    //         Requests::where('request_number', $request->reqnum)
+    //             ->update(['reference_upload' => $reference_upload]);
+    //     }
+    //     else{
+    //         return redirect()->to('/stockrequest?upload=failed');
+    //     }
+
+    //     if($request->action == 'SUBMIT'){
+    //         return redirect()->to('/stockrequest?submit=success');
+    //     }
+    //     else{
+    //         return redirect()->to('/stockrequest?sale=success');
+    //     }
+
+    // }
 
     public function saveRequest(Request $request){
         do{

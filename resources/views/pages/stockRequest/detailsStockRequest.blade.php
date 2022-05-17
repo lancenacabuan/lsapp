@@ -77,9 +77,17 @@
             <h6 class="modal-title w-100">ATTACHMENT SO/PO</h6>
         </div>
         <div class="modal-body text-center">
-            <img id="reference_attachment" style="width: 100%;">
-            <img id="reference_hidden" style="width: 100%; display: none;">
-        </div>
+            <div class="w3-center">
+                <div class="w3-section">
+                  <button class="w3-button w3-light-grey" onclick="plusDivs(-1)">❮ Prev</button>
+                  <button class="w3-button w3-light-grey" onclick="plusDivs(1)">Next ❯</button>
+                </div>
+                <div id="slidesBtn"></div>
+            </div>
+            <br>
+            <div id="slidesContent">
+            </div>
+            <div id="hiddenContent" style="display: none;"></div>
         </div>
         <div id="asmItemsModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
@@ -561,6 +569,11 @@
     </div>
     </div>
 </div>
+<style>
+    .mySlides{
+        display:none
+    }
+</style>
 <script>
 $(document).ready(function(){
     var max = 100;
@@ -573,4 +586,32 @@ $(document).ready(function(){
         $('#limit').html(text_remaining + ' characters remaining');
     });
 });
+</script>
+<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+    
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+    
+    function currentDiv(n) {
+        showDivs(slideIndex = n);
+    }
+    
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        if (n > x.length) {slideIndex = 1}    
+        if (n < 1) {slideIndex = x.length}
+        for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";  
+        }
+        for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" w3-blue", "");
+        }
+        $(x[slideIndex-1]).show();
+        $(dots[slideIndex-1]).addClass("w3-blue");
+    }
 </script>

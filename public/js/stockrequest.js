@@ -122,10 +122,6 @@ $(document).ready(function(){
         swal("SALE SUCCESS", "STOCK REQUEST", "success");
         setTimeout(function(){location.href="/stockrequest"}, 2000);
     }
-    else if($(location).attr('pathname')+window.location.search == '/stockrequest?upload=failed'){
-        swal("UPLOAD FAILED", "STOCK REQUEST", "error");
-        setTimeout(function(){location.href="/stockrequest"}, 2000);
-    }
 });
 
 function generatedr(){

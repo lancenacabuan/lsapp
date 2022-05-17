@@ -42,9 +42,10 @@ class StockTransferController extends Controller
     }
 
     public function generateReqNum(Request $request){
-        $reqnumR = Requests::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumR1 = Requests::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumR2 = Requests::query()->select()->where('reference_upload','LIKE','%'.$request->request_number.'%')->count();
         $reqnumT = RequestTransfer::query()->select()->where('request_number',$request->request_number)->count();
-        $reqnum = $reqnumR + $reqnumT;
+        $reqnum = $reqnumR1 + $reqnumR2 + $reqnumT;
         if($reqnum == 0){
             return response('unique');
         }

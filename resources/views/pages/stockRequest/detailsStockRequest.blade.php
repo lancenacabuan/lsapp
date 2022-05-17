@@ -89,6 +89,7 @@
             </div>
             <div id="hiddenContent" style="display: none;"></div>
         </div>
+        </div>
         <div id="asmItemsModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">RECEIVED ASSEMBLED ITEM DETAILS</h6>

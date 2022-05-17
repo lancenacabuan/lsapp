@@ -65,9 +65,10 @@ class StockRequestController extends Controller
     }
 
     public function generatedr(Request $request){
-        $reqnumR = Requests::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumR1 = Requests::query()->select()->where('request_number',$request->request_number)->count();
+        $reqnumR2 = Requests::query()->select()->where('reference_upload','LIKE','%'.$request->request_number.'%')->count();
         $reqnumT = RequestTransfer::query()->select()->where('request_number',$request->request_number)->count();
-        $reqnum = $reqnumR + $reqnumT;
+        $reqnum = $reqnumR1 + $reqnumR2 + $reqnumT;
         if($reqnum == 0){
             return response('unique');
         }
@@ -165,33 +166,7 @@ class StockRequestController extends Controller
         }
 
     }
-
-    // public function uploadFile(Request $request){
-    //     $datetime = Carbon::now()->isoformat('YYYYMMDDHHmmss');
-    //     $extension = $request->reference_upload->getClientOriginalExtension();
-    //     $reference_upload = $datetime.'_'.$request->reqnum.'.'.$extension;
-    //     do{
-    //         $path = $request->reference_upload->move(public_path('/uploads'), $reference_upload);
-    //     }
-    //     while(!$path);
-
-    //     if($path){
-    //         Requests::where('request_number', $request->reqnum)
-    //             ->update(['reference_upload' => $reference_upload]);
-    //     }
-    //     else{
-    //         return redirect()->to('/stockrequest?upload=failed');
-    //     }
-
-    //     if($request->action == 'SUBMIT'){
-    //         return redirect()->to('/stockrequest?submit=success');
-    //     }
-    //     else{
-    //         return redirect()->to('/stockrequest?sale=success');
-    //     }
-
-    // }
-
+    
     public function saveRequest(Request $request){
         do{
             $stockRequest = new StockRequest;
@@ -638,13 +613,13 @@ class StockRequestController extends Controller
 
         $count = StockRequest::where('request_number', $request->req_num)->count();
         if($count == 0){
-            $file = Requests::select('reference_upload')->where('request_number', $request->req_num)->get();
-            $file = str_replace("[{\"reference_upload\":\"","",$file);
-            $file = str_replace("\"}]","",$file);
-            $file = str_replace("[]","",$file);
-            $file = 'uploads/'.$file;
-            if(file_exists(public_path($file))){
-                unlink(public_path($file));
+            $files = Requests::where('request_number', $request->req_num)->first()->reference_upload;
+            $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+            foreach($files as $file){
+                $file = str_replace('"','',$file);
+                if(file_exists(public_path('uploads/'.$file))){
+                    unlink(public_path('uploads/'.$file));
+                }
             }
 
             do{
@@ -663,13 +638,13 @@ class StockRequestController extends Controller
     }
 
     public function deleteRequest(Request $request){
-        $file = Requests::select('reference_upload')->where('request_number', $request->request_number)->get();
-        $file = str_replace("[{\"reference_upload\":\"","",$file);
-        $file = str_replace("\"}]","",$file);
-        $file = str_replace("[]","",$file);
-        $file = 'uploads/'.$file;
-        if(file_exists(public_path($file))){
-            unlink(public_path($file));
+        $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+        $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+        foreach($files as $file){
+            $file = str_replace('"','',$file);
+            if(file_exists(public_path('uploads/'.$file))){
+                unlink(public_path('uploads/'.$file));
+            }
         }
 
         do{

@@ -1,4 +1,4 @@
-<div class="d-flex xD" title="v1.0.2.2">
+<div class="d-flex xD mb-2" title="v1.0.2.3">
     <a href="/">
         <img class="p-2 align-self-end" src="{{asset('idsi.png')}}" style="width: auto; height: 90px; line-height: 90px;">
     </a>

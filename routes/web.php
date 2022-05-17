@@ -103,6 +103,7 @@ Route::get('/checkProcessed',[StockRequestController::class,'checkProcessed']);
 Route::get('/getReceive',[StockRequestController::class,'getReceive']);
 Route::get('/getLink',[StockRequestController::class,'getLink']);
 Route::get('/printRequest',[StockRequestController::class,'printRequest']);
+Route::get('/checkURL',[StockRequestController::class,'checkURL']);
 //
 
 //Stock Transfer

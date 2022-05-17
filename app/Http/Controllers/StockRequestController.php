@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\emailForRequest;
@@ -46,6 +47,21 @@ class StockRequestController extends Controller
         $warranty = Warranty::select('id','Warranty_Name')->get()->sortBy('Warranty_Name');
         
         return view('/pages/stockrequest', compact('categories','items','req_types','warranty'));
+    }
+
+    public function checkURL(Request $request){
+        if($request->check == 'beta'){
+            $checkURL = Http::get('https://mainwh.idsi.com.ph/uploads/'.$request->reference);
+        }
+        else{
+            $checkURL = Http::get('https://mainwh.apsoft.com.ph/uploads/'.$request->reference);
+        }
+        if($checkURL->successful()){
+            return response('true');
+        }
+        else{
+            return response('false');
+        }
     }
 
     public function generatedr(Request $request){

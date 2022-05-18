@@ -94,7 +94,7 @@ function decodeHtml(str){
 }
 
 function validate_fileupload(reference_upload){
-    $('.upload_label').html('Upload Image File/s (Less than 5MB)');
+    $('.upload_label').html('Upload Image File/s less than 5MB each');
     var files_length = $("#reference_upload").get(0).files.length;
     for(var i = 0; i < files_length; ++i) {
         var file1=$("#reference_upload").get(0).files[i].name;
@@ -120,7 +120,7 @@ function validate_fileupload(reference_upload){
         $('.upload_label').html('UPLOADED ('+files_length+') IMAGE FILES');
     }
     else{
-        $('.upload_label').html('Upload Image File/s (Less than 5MB)');
+        $('.upload_label').html('Upload Image File/s less than 5MB each');
     }
     
     return true;
@@ -199,10 +199,12 @@ function runFunction(){
         var request_type = $('#request_type').val();
         var client_name = $.trim($('#client_name').val());
         var location_name = $.trim($('#location').val());
+        var contact = $.trim($('#contact').val());
+        var remarks = $.trim($('#remarks').val());
         var reference = $.trim($('#reference').val());
         var reference_upload = $('#reference_upload').val();
         if($('.reference_field').is(':visible')){
-            if(needdate && request_type && client_name && location_name && reference && reference_upload){
+            if(needdate && request_type && client_name && location_name && contact && reference && reference_upload){
                 $('#requestDetails').show();
                 $('.header_label').hide();
             }
@@ -262,9 +264,11 @@ function checkLocation(){
 
 $('#request_type').on('change', function(){
     var reqtype = $(this).val();
+    $('#contact').val('');
+    $('#remarks').val('');
     $('#reference').val('');
     $('#reference_upload').val('');
-    $('.upload_label').html('Upload Image File/s (Less than 5MB)');
+    $('.upload_label').html('Upload Image File/s less than 5MB each');
     if(reqtype == '2'){
         $('.reference_field').show();
     }
@@ -467,7 +471,9 @@ $('#btnSave').on('click', function(){
     var request_type = $('#request_type').val();
     var client_name = $.trim($('#client_name').val());
     var location_name = $.trim($('#location').val());
-    var reference = $.trim($('#reference').val()).toUpperCase();
+    var contact = $.trim($('#contact').val());
+    var remarks = $.trim($('#remarks').val());
+    var reference = ($.trim($('#reference').val()).toUpperCase().split("\n")).join(', ');
     var reference_upload = $('#reference_upload').val();
     if(needdate < minDate){
         swal('Minimum Date is today!','Select within date range from today onwards.','error');
@@ -499,6 +505,8 @@ $('#btnSave').on('click', function(){
                         'request_type': request_type,
                         'client_name': client_name,
                         'location': location_name,
+                        'contact': contact,
+                        'remarks': remarks,
                         'reference': reference
                     },
                     success: function(data){

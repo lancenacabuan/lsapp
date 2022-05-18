@@ -39,11 +39,11 @@
                 <label class="form-control form-control-sm reference_field" style="margin-top: -38px; width: 130px; display: none;">Remarks</label>
                 <textarea class="form-control reference_field" name="remarks" id="remarks" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="Optional Field"></textarea>
                 <label class="form-control form-control-sm reference_field" style="margin-top: -38px; width: 160px; display: none;">Reference SO/PO No.</label>
-                <textarea class="form-control reference_field" name="reference" id="reference" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="(Press 'Enter' to separate multiple inputs.)          Required Field"></textarea>
+                <textarea class="form-control reference_field spChar" name="reference" id="reference" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="(Press 'Enter' to separate multiple inputs.)          Required Field"></textarea>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm reference_field" style="margin-left: 420px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
-                <button class="form-control btn btn-primary bp reference_field" style="width: 280px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s (Less than 5MB)</span></button>
+                <button class="form-control btn btn-primary bp reference_field" style="width: 280px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                     <input type="hidden" name="reqnum" id="reqnum">

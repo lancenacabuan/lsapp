@@ -533,8 +533,8 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_reference" id="x_reference" placeholder="Please input SO/PO Number." autocomplete="off">
-            <button class="form-control btn btn-primary bp" style="zoom: 90%; margin-bottom: 8px; width: 295px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s (Less than 5MB)</span></button>
+            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm spChar" type="text" name="x_reference" id="x_reference" placeholder="Please input SO/PO Number." autocomplete="off">
+            <button class="form-control btn btn-primary bp" style="zoom: 90%; margin-bottom: 8px; width: 295px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
             <span id="reference_note" style="color: Red; font-size: 12px;">*SO/PO Number and Attachment are required.</span>
             <button type="button" id="btnReference" class="btn btn-primary mt-2 float-right bp" style="zoom: 80%;">OK</button>
         </div>

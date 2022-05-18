@@ -52,6 +52,9 @@
                     <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
                 </form>
             </div>
+            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
+                <span class="reference_field" style="margin-left: 420px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple image files for upload.</span>
+            </div>
             <div id="warrantyDetails" style="zoom: 85%; height: 320px; margin-top: -320px; margin-left: 990px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">
                     <input class="form-control form-control-sm warrantyName" style="width: 300px; margin-right: 10px; font-size: 18px; border-color: white; background-color: white; font-weight: bolder; pointer-events: none;" type="text" readonly>

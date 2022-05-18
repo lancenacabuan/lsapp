@@ -104,40 +104,27 @@ class StockRequestController extends Controller
     }
 
     public function saveReqNum(Request $request){
-        if(trim($request->reference) != ''){
-            $reference = Requests::query()->select()
-                ->whereRaw('LOWER(reference) = ?',strtolower($request->reference))
-                ->count();
+        do{
+            $requests = new Requests;
+            $requests->request_number = $request->request_number;
+            $requests->requested_by = auth()->user()->id;
+            $requests->needdate = $request->needdate;
+            $requests->request_type = $request->request_type;
+            $requests->status = '6';
+            $requests->client_name = ucwords($request->client_name);
+            $requests->location = ucwords($request->location);
+            $requests->contact = ucwords($request->contact);
+            $requests->remarks = ucfirst($request->remarks);
+            $requests->reference = strtoupper($request->reference);
+            $sql = $requests->save();
         }
-        else{
-            $reference = 0;
-        }
-        if($reference != 0){
-            $result = 'duplicate';
+        while(!$sql);
+
+        if(!$sql){
+            $result = 'false';
         }
         else {
-            do{
-                $requests = new Requests;
-                $requests->request_number = $request->request_number;
-                $requests->requested_by = auth()->user()->id;
-                $requests->needdate = $request->needdate;
-                $requests->request_type = $request->request_type;
-                $requests->status = '6';
-                $requests->client_name = ucwords($request->client_name);
-                $requests->location = ucwords($request->location);
-                $requests->contact = ucwords($request->contact);
-                $requests->remarks = ucfirst($request->remarks);
-                $requests->reference = strtoupper($request->reference);
-                $sql = $requests->save();
-            }
-            while(!$sql);
-
-            if(!$sql){
-                $result = 'false';
-            }
-            else {
-                $result = 'true';
-            }
+            $result = 'true';
         }
 
         return response($result);

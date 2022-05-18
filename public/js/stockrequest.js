@@ -81,34 +81,49 @@ function decodeHtml(str){
 function validate_fileupload(reference_upload){
     $('.upload_label').html('Upload Image File/s less than 5MB each');
     var files_length = $("#reference_upload").get(0).files.length;
+    var error_ext = 0;
+    var error_mb = 0;
     for(var i = 0; i < files_length; ++i) {
         var file1=$("#reference_upload").get(0).files[i].name;
         var file_size = $("#reference_upload").get(0).files[i].size;
-        var ext = file1.split('.').pop().toLowerCase();                            
+        var ext = file1.split('.').pop().toLowerCase();
         if($.inArray(ext,['jpg','jpeg','png','gif'])===-1){
-            swal('Invalid image file type or format!', 'Please upload an image file with a valid file type/format like the following: jpeg/jpg, png, or gif.', 'error');      
-            $('#reference_upload').val('');
-            $('#reference_upload').focus();
-            return false;
+            error_ext++;
         }
         if(file_size > 5242880){
-            swal('Exceeded maximum file size (5MB)!', 'Please upload a valid image file with a file size not greater than 5MB.', 'error');      
-            $('#reference_upload').val('');
-            $('#reference_upload').focus();
-            return false;
+            error_mb++;
         }
     }
-    if(files_length == 1){
-        $('.upload_label').html(reference_upload.value.split("\\").pop());
+    if(error_ext > 0 && error_mb > 0){
+        swal('INVALID image file type AND EXCEEDED maximum file size (5MB)!', 'Please upload image file/s with valid file type like the following: jpeg/jpg, png, or gif; AND with file size not greater than 5MB each.', 'error');      
+        $('#reference_upload').val('');
+        $('#reference_upload').focus();
+        return false;
     }
-    else if(files_length > 1){
-        $('.upload_label').html('UPLOADED ('+files_length+') IMAGE FILES');
+    else if(error_ext > 0){
+        swal('INVALID image file type!', 'Please upload image file/s with valid file type like the following: jpeg/jpg, png, or gif.', 'error');      
+        $('#reference_upload').val('');
+        $('#reference_upload').focus();
+        return false;
+    }
+    else if(error_mb > 0){
+        swal('EXCEEDED maximum file size (5MB)!', 'Please upload valid image file/s with file size not greater than 5MB each.', 'error');      
+        $('#reference_upload').val('');
+        $('#reference_upload').focus();
+        return false;
     }
     else{
-        $('.upload_label').html('Upload Image File/s less than 5MB each');
+        if(files_length == 1){
+            $('.upload_label').html(reference_upload.value.split("\\").pop());
+        }
+        else if(files_length > 1){
+            $('.upload_label').html('UPLOADED ('+files_length+') IMAGE FILES');
+        }
+        else{
+            $('.upload_label').html('Upload Image File/s less than 5MB each');
+        }
+        return true;
     }
-    
-    return true;
 }
 
 $(document).ready(function(){

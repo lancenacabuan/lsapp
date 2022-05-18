@@ -30,10 +30,10 @@
                 <input class="form-control form-control-sm" id="requested_by" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 130px;">Address / Branch</label>
-                <input class="form-control form-control-sm" id="location" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field">
-                <label class="form-control form-control-sm reference_field" style="width: 160px; display: none;">Reference SO/PO No.</label>
-                <input class="form-control form-control-sm reference_field" id="reference" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field">
+                <label class="form-control form-control-sm" style="margin-top: -38px; width: 130px;">Address / Branch</label>
+                <textarea class="form-control" name="location" id="location" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="(Press 'Enter' to separate multiple inputs.)          Required Field"></textarea>
+                <label class="form-control form-control-sm reference_field" style="margin-top: -38px; width: 160px; display: none;">Reference SO/PO No.</label>
+                <textarea class="form-control reference_field" name="reference" id="reference" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="(Press 'Enter' to separate multiple inputs.)          Required Field"></textarea>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm reference_field" style="width: 130px; display: none;">Contact Person</label>
@@ -50,7 +50,7 @@
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm reference_field" style="margin-top: -56px; width: 130px; display: none;">Remarks</label>
-                <textarea class="form-control reference_field" name="remarks" id="remarks" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="4"></textarea>
+                <textarea class="form-control reference_field" name="remarks" id="remarks" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="4" placeholder="Optional Field"></textarea>
             </div>
             <div id="warrantyDetails" style="zoom: 85%; height: 340px; margin-top: -340px; margin-left: 990px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">

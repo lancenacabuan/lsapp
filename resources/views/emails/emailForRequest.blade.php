@@ -11,7 +11,11 @@
         Requested By: {{$details['requested_by']}}<br><br>
         Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
-        Reference SO/PO No.: {{$details['reference']}}
+        @if($details['reqtype'] == 'SALES')
+        Reference SO/PO No.: {{$details['reference']}}<br><br>
+        Contact Person: {{$details['contact']}}<br>
+        Remarks: {{$details['remarks']}}<br>
+        @endif
         <br><br>
         <strong>REQUESTED ITEMS</strong>
         <br>

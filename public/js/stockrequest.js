@@ -50,21 +50,6 @@ function copyAsmReqNum(){
     });
 }
 
-function copyRefNum(){
-    if($("#reference_details").val() != ''){
-        var copyText = document.getElementById("reference_details");
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        navigator.clipboard.writeText(copyText.value);
-        swal({
-            title: copyText.value,
-            text: "Copied to Clipboard!",
-            icon: "success",
-            timer: 2000
-        });
-    }
-}
-
 function sweet(title, text, icon, btnName, url){
     swal(title, text, icon, {
         buttons: {
@@ -772,6 +757,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#client_name_details').val(client_name);
                 var location_name = value.location;
                     $('#location_details').val(location_name);
+                var contact = value.contact;
+                    $('#contact_details').val(contact);
+                var remarks = value.remarks;
+                    $('#remarks_details').val(remarks);
                 var reference = value.reference;
                     $('#reference_details').val(reference);
                 var reason = value.reason;
@@ -1684,6 +1673,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#client_name_details').val(client_name);
     var location_name = value.location;
         $('#location_details').val(location_name);
+    var contact = value.contact;
+        $('#contact_details').val(contact);
+    var remarks = value.remarks;
+        $('#remarks_details').val(remarks);
     var reference = value.reference;
         $('#reference_details').val(reference);
     var reason = value.reason;

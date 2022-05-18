@@ -125,6 +125,8 @@ class StockRequestController extends Controller
                 $requests->status = '6';
                 $requests->client_name = ucwords($request->client_name);
                 $requests->location = ucwords($request->location);
+                $requests->contact = ucwords($request->contact);
+                $requests->remarks = ucfirst($request->remarks);
                 $requests->reference = strtoupper($request->reference);
                 $sql = $requests->save();
             }
@@ -186,7 +188,7 @@ class StockRequestController extends Controller
 
     public function logSave(Request $request){
         do{
-            $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, reference, needdate')
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, contact, remarks, reference, needdate')
                 ->where('requests.request_number', $request->request_number)
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->get();
@@ -240,6 +242,8 @@ class StockRequestController extends Controller
                 'reqtype' => $request_details->reqtype,
                 'client_name' => $request_details->client_name,
                 'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
                 'reference' => $request_details->reference,
                 'role' => 'Approver - Sales',
                 'items' => $items
@@ -257,7 +261,7 @@ class StockRequestController extends Controller
 
     public function request_data(){
         if(auth()->user()->hasanyRole('approver - sales')){ //---ROLES---//
-            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload')
+            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload')
             ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -266,7 +270,7 @@ class StockRequestController extends Controller
             ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
-            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload')
+            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload')
             ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -276,7 +280,7 @@ class StockRequestController extends Controller
             ->get();
         }
         else{
-            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload')
+            $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload')
             ->where('requests.requested_by', auth()->user()->id)
             ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
@@ -312,7 +316,7 @@ class StockRequestController extends Controller
     }
 
     public function reqModal(Request $request){
-        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload')
+        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload')
             ->where('requests.request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -714,7 +718,7 @@ class StockRequestController extends Controller
 
     public function logDisapprove(Request $request){
         do{
-            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, reference, reason, needdate')
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, contact, remarks, reference, reason, needdate')
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -767,6 +771,8 @@ class StockRequestController extends Controller
             'reqtype' => $request_details->reqtype,
             'client_name' => $request_details->client_name,
             'location' => $request_details->location,
+            'contact' => $request_details->contact,
+            'remarks' => $request_details->remarks,
             'reference' => $request_details->reference,
             'reason' => $request_details->reason,
             'disapprovedby' => auth()->user()->name,
@@ -909,7 +915,7 @@ class StockRequestController extends Controller
             ->where('status', '=', 'demo')
             ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
         do{
-            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, reference, schedule, needdate, prepdate')
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, schedule, needdate, prepdate')
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -979,6 +985,8 @@ class StockRequestController extends Controller
                 'reqtype' => $request_details->reqtype,
                 'client_name' => $request_details->client_name,
                 'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
                 'reference' => $request_details->reference,
                 'prepared_by' => $prep->prepby,
                 'prepdate' => $request_details->prepdate,
@@ -1007,6 +1015,8 @@ class StockRequestController extends Controller
                 'reqtype' => $request_details->reqtype,
                 'client_name' => $request_details->client_name,
                 'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
                 'reference' => $request_details->reference,
                 'prepared_by' => $prep->prepby,
                 'prepdate' => $request_details->prepdate,
@@ -1033,6 +1043,8 @@ class StockRequestController extends Controller
             'reqtype' => $request_details->reqtype,
             'client_name' => $request_details->client_name,
             'location' => $request_details->location,
+            'contact' => $request_details->contact,
+            'remarks' => $request_details->remarks,
             'reference' => $request_details->reference,
             'prepared_by' => $prep->prepby,
             'prepdate' => $request_details->prepdate,
@@ -1378,7 +1390,7 @@ class StockRequestController extends Controller
         }
         else if($total == 0){
             do{
-                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, reference, schedule, needdate, prepdate')
+                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, schedule, needdate, prepdate')
                     ->where('requests.request_number', $request->request_number)
                     ->join('users', 'users.id', '=', 'requests.requested_by')
                     ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -1464,6 +1476,8 @@ class StockRequestController extends Controller
                     'reqtype' => $request_details->reqtype,
                     'client_name' => $request_details->client_name,
                     'location' => $request_details->location,
+                    'contact' => $request_details->contact,
+                    'remarks' => $request_details->remarks,
                     'reference' => $request_details->reference,
                     'prepared_by' => $prep->prepby,
                     'prepdate' => $request_details->prepdate,
@@ -1492,6 +1506,8 @@ class StockRequestController extends Controller
                     'reqtype' => $request_details->reqtype,
                     'client_name' => $request_details->client_name,
                     'location' => $request_details->location,
+                    'contact' => $request_details->contact,
+                    'remarks' => $request_details->remarks,
                     'reference' => $request_details->reference,
                     'prepared_by' => $prep->prepby,
                     'prepdate' => $request_details->prepdate,
@@ -1518,6 +1534,8 @@ class StockRequestController extends Controller
                 'reqtype' => $request_details->reqtype,
                 'client_name' => $request_details->client_name,
                 'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
                 'reference' => $request_details->reference,
                 'prepared_by' => $prep->prepby,
                 'prepdate' => $request_details->prepdate,
@@ -1539,7 +1557,7 @@ class StockRequestController extends Controller
         }
         else{
             do{
-                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, reference, schedule, needdate, prepdate')
+                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, schedule, needdate, prepdate')
                     ->where('requests.request_number', $request->request_number)
                     ->join('users', 'users.id', '=', 'requests.requested_by')
                     ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -1643,6 +1661,8 @@ class StockRequestController extends Controller
                     'reqtype' => $request_details->reqtype,
                     'client_name' => $request_details->client_name,
                     'location' => $request_details->location,
+                    'contact' => $request_details->contact,
+                    'remarks' => $request_details->remarks,
                     'reference' => $request_details->reference,
                     'prepared_by' => $prep->prepby,
                     'prepdate' => $request_details->prepdate,
@@ -1671,6 +1691,8 @@ class StockRequestController extends Controller
                     'reqtype' => $request_details->reqtype,
                     'client_name' => $request_details->client_name,
                     'location' => $request_details->location,
+                    'contact' => $request_details->contact,
+                    'remarks' => $request_details->remarks,
                     'reference' => $request_details->reference,
                     'prepared_by' => $prep->prepby,
                     'prepdate' => $request_details->prepdate,
@@ -1697,6 +1719,8 @@ class StockRequestController extends Controller
                 'reqtype' => $request_details->reqtype,
                 'client_name' => $request_details->client_name,
                 'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
                 'reference' => $request_details->reference,
                 'prepared_by' => $prep->prepby,
                 'prepdate' => $request_details->prepdate,
@@ -1827,7 +1851,7 @@ class StockRequestController extends Controller
     }
 
     public function printRequest(Request $request){
-        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS req_date, requests.request_number AS req_num, requests.requested_by AS user_id, users.name AS req_by, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, reference, needdate, prepdate, requests.item_id AS item_id, qty, assembly_reqnum')
+        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS req_date, requests.request_number AS req_num, requests.requested_by AS user_id, users.name AS req_by, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, needdate, prepdate, requests.item_id AS item_id, qty, assembly_reqnum')
             ->where('request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')

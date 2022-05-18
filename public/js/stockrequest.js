@@ -94,23 +94,36 @@ function decodeHtml(str){
 }
 
 function validate_fileupload(reference_upload){
-    $('.upload_label').html('Upload Image File (Less than 5MB)');
-    if(!/(\.jpg|\.jpeg|\.png|\.gif)$/i.test(reference_upload.value)){
-        swal('Invalid image file type or format!', 'Please upload an image file with a valid file type/format like the following: jpeg/jpg, png, or gif.', 'error');      
-        $('#reference_upload').val('');
-        $('#reference_upload').focus();
-        return false;   
+    $('.upload_label').html('Upload Image File/s (Less than 5MB)');
+    var files_length = $("#reference_upload").get(0).files.length;
+    for(var i = 0; i < files_length; ++i) {
+        var file1=$("#reference_upload").get(0).files[i].name;
+        var file_size = $("#reference_upload").get(0).files[i].size;
+        var ext = file1.split('.').pop().toLowerCase();                            
+        if($.inArray(ext,['jpg','jpeg','png','gif'])===-1){
+            swal('Invalid image file type or format!', 'Please upload an image file with a valid file type/format like the following: jpeg/jpg, png, or gif.', 'error');      
+            $('#reference_upload').val('');
+            $('#reference_upload').focus();
+            return false;
+        }
+        if(file_size > 5242880){
+            swal('Exceeded maximum file size (5MB)!', 'Please upload a valid image file with a file size not greater than 5MB.', 'error');      
+            $('#reference_upload').val('');
+            $('#reference_upload').focus();
+            return false;
+        }
     }
-    const oFile = document.getElementById("reference_upload").files[0];
-    if(oFile.size > 5242880){
-        swal('Exceeded maximum file size (5MB)!', 'Please upload a valid image file with a file size not greater than 5MB.', 'error');      
-        $('#reference_upload').val('');
-        $('#reference_upload').focus();
-        return false; 
+    if(files_length == 1){
+        $('.upload_label').html(reference_upload.value.split("\\").pop());
     }
-    $('.upload_label').html(reference_upload.value.split("\\").pop());
+    else if(files_length > 1){
+        $('.upload_label').html('UPLOADED ('+files_length+') IMAGE FILES');
+    }
+    else{
+        $('.upload_label').html('Upload Image File/s (Less than 5MB)');
+    }
     
-    return true; 
+    return true;
 }
 
 $(document).ready(function(){
@@ -251,7 +264,7 @@ $('#request_type').on('change', function(){
     var reqtype = $(this).val();
     $('#reference').val('');
     $('#reference_upload').val('');
-    $('.upload_label').html('Upload Image File (Less than 5MB)');
+    $('.upload_label').html('Upload Image File/s (Less than 5MB)');
     if(reqtype == '2'){
         $('.reference_field').show();
     }

@@ -30,15 +30,19 @@
                 <input class="form-control form-control-sm" id="requested_by" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="margin-top: -38px; width: 130px;">Address / Branch</label>
-                <textarea class="form-control" name="location" id="location" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="(Press 'Enter' to separate multiple inputs.)          Required Field"></textarea>
+                <label class="form-control form-control-sm" style="width: 130px;">Address / Branch</label>
+                <input class="form-control form-control-sm" id="location" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field">
+                <label class="form-control form-control-sm reference_field" style="width: 160px; display: none;">Contact Person</label>
+                <input class="form-control form-control-sm reference_field" id="contact" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field">
+            </div>
+            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
+                <label class="form-control form-control-sm reference_field" style="margin-top: -38px; width: 130px; display: none;">Remarks</label>
+                <textarea class="form-control reference_field" name="remarks" id="remarks" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="Optional Field"></textarea>
                 <label class="form-control form-control-sm reference_field" style="margin-top: -38px; width: 160px; display: none;">Reference SO/PO No.</label>
                 <textarea class="form-control reference_field" name="reference" id="reference" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="(Press 'Enter' to separate multiple inputs.)          Required Field"></textarea>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm reference_field" style="width: 130px; display: none;">Contact Person</label>
-                <input class="form-control form-control-sm reference_field" id="contact" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field">
-                <label class="form-control form-control-sm reference_field" style="width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
+                <label class="form-control form-control-sm reference_field" style="margin-left: 420px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
                 <button class="form-control btn btn-primary bp reference_field" style="width: 280px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s (Less than 5MB)</span></button>
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
@@ -48,11 +52,7 @@
                     <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
                 </form>
             </div>
-            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm reference_field" style="margin-top: -56px; width: 130px; display: none;">Remarks</label>
-                <textarea class="form-control reference_field" name="remarks" id="remarks" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="4" placeholder="Optional Field"></textarea>
-            </div>
-            <div id="warrantyDetails" style="zoom: 85%; height: 340px; margin-top: -340px; margin-left: 990px; line-height: 70%; display: none;">
+            <div id="warrantyDetails" style="zoom: 85%; height: 320px; margin-top: -320px; margin-left: 990px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">
                     <input class="form-control form-control-sm warrantyName" style="width: 300px; margin-right: 10px; font-size: 18px; border-color: white; background-color: white; font-weight: bolder; pointer-events: none;" type="text" readonly>
                 </div>

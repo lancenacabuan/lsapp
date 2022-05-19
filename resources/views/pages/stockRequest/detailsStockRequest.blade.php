@@ -3,7 +3,7 @@
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">STOCK REQUEST DETAILS</h6>            
-            <button type="button" class="btn-close btn-close-white close" id='modalClose' data-bs-dismiss="modal"></button>
+            <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
@@ -221,7 +221,10 @@
             @endrole
             @role('sales') {{---ROLES---}}
             <button type="button" id="btnDelete" class="btn btn-danger bp mt-4">DELETE</button>
-            <button type="button" id="btnSaveChanges" class="btn btn-success bp mt-4 float-right" style="display: none;">SAVE CHANGES</button>
+            <button type="button" id="btnSaveChanges" class="btn btn-success bp mt-4 float-right" style="width: 150px; display: none;">SAVE CHANGES</button>
+            <button type="button" id="btnEditDetails" class="btn btn-primary bp mt-4 float-right" style="width: 150px; display: none;">EDIT DETAILS</button>
+            <span class="float-right" style="width: 10px;">&nbsp;</span>
+            <button type="button" class="btnClose btn btn-primary bp mt-4 float-right">CANCEL</button>
             @endrole
         </div>
         </div>

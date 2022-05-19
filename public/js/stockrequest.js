@@ -1,4 +1,4 @@
-var minDate, maxDate;
+var minDate, maxDate, editMode;
 $(function(){
     var dtToday = new Date();
     
@@ -254,7 +254,7 @@ function runFunction(){
             }
         }
     }
-    if($('#detailsStockRequest').is(':visible') && $("#current_role").val() == '["sales"]' && $("#status_details").val() == 'FOR APPROVAL'){
+    if($('#detailsStockRequest').is(':visible') && $("#current_role").val() == '["sales"]' && $("#status_details").val() == 'FOR APPROVAL' && editMode == true){
         var needdate = $('#needdate_details').val();
         var request_type = $('#request_type_details').val();
         var client_name = $.trim($('#client_name_details').val());
@@ -265,31 +265,31 @@ function runFunction(){
         var reference_upload = $('#reference_upload').val();
         if(request_type == 'SALES' && $('.reupload').is(':hidden')){
             if(needdate && client_name && location_name && contact && reference){
-                $('#btnSaveChanges').show();
+                $('#btnSaveChanges').prop('disabled', false);
                 $('.header_label').hide();
             }
             else{
-                $('#btnSaveChanges').hide();
+                $('#btnSaveChanges').prop('disabled', true);
                 $('.header_label').show();
             }
         }
         else if(request_type == 'SALES' && $('.reupload').is(':visible')){
             if(needdate && client_name && location_name && contact && reference && reference_upload){
-                $('#btnSaveChanges').show();
+                $('#btnSaveChanges').prop('disabled', false);
                 $('.header_label').hide();
             }
             else{
-                $('#btnSaveChanges').hide();
+                $('#btnSaveChanges').prop('disabled', true);
                 $('.header_label').show();
             }
         }
         else{
             if(needdate && client_name && location_name && contact){
-                $('#btnSaveChanges').show();
+                $('#btnSaveChanges').prop('disabled', false);
                 $('.header_label').hide();
             }
             else{
-                $('#btnSaveChanges').hide();
+                $('#btnSaveChanges').prop('disabled', true);
                 $('.header_label').show();
             }
         }
@@ -781,15 +781,11 @@ $(document).on('click', '#btnRemoveAttachment', function(){
     });   
 });
 
-$('#close').on('click', function(){
+$('.close').on('click', function(){
     window.location.href = '/stockrequest';
 });
 
-$('#btnClose').on('click', function(){
-    window.location.href = '/stockrequest';
-});
-
-$('#modalClose').on('click', function(){
+$('.btnClose').on('click', function(){
     window.location.href = '/stockrequest';
 });
 
@@ -1067,26 +1063,34 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#reason_details').val(reason);
 
                     if($("#current_role").val() == '["sales"]' && requestStatus == '6'){
-                        $('#needdate').val(value.needdate);
-                        $('#client_name').val(client_name);
-                        $('#location').val(location_name);
-                        $('#contact').val(contact);
-                        $('#remarks').val(remarks);
-                        $('#reference').val(reference);
+                        $('#btnEditDetails').show();
                         
-                        $('#needdate_details').attr('type', 'date');
-                        $('#needdate_details').attr('min', minDate);
-                        $('#needdate_details').val(value.needdate);
-                        $('#needdate_details').prop('readonly', false);
-                        $('#client_name_details').prop('readonly', false);
-                        $('#location_details').prop('readonly', false);
-                        $('#remarks_details').prop('readonly', false);
-                        $('#contact_details').prop('readonly', false);
-                        reference =  reference.replaceAll(', ', '\n');
-                        $('#reference_details').val(reference);
-                        $('#reference_details').prop('readonly', false);
-                        $('#btnRemoveAttachment').show();
-                        $('#action').val('EDIT');
+                        $(document).on('click', '#btnEditDetails', function(){
+                            editMode = true;
+                            $('#btnEditDetails').hide();
+                            $('#btnSaveChanges').show();
+            
+                            $('#needdate').val(value.needdate);
+                            $('#client_name').val(client_name);
+                            $('#location').val(location_name);
+                            $('#contact').val(contact);
+                            $('#remarks').val(remarks);
+                            $('#reference').val(reference);
+                
+                            $('#needdate_details').attr('type', 'date');
+                            $('#needdate_details').attr('min', minDate);
+                            $('#needdate_details').val(value.needdate);
+                            $('#needdate_details').prop('readonly', false);
+                            $('#client_name_details').prop('readonly', false);
+                            $('#location_details').prop('readonly', false);
+                            $('#remarks_details').prop('readonly', false);
+                            $('#contact_details').prop('readonly', false);
+                            reference =  reference.replaceAll(', ', '\n');
+                            $('#reference_details').val(reference);
+                            $('#reference_details').prop('readonly', false);
+                            $('#btnRemoveAttachment').show();
+                            $('#action').val('EDIT');
+                        });
                     }
                     else{
                         $('#action').val('');
@@ -2008,26 +2012,34 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#reason_details').val(reason);
 
         if($("#current_role").val() == '["sales"]' && requestStatus == '6'){
-            $('#needdate').val(value.needdate);
-            $('#client_name').val(client_name);
-            $('#location').val(location_name);
-            $('#contact').val(contact);
-            $('#remarks').val(remarks);
-            $('#reference').val(reference);
+            $('#btnEditDetails').show();
+            
+            $(document).on('click', '#btnEditDetails', function(){
+                editMode = true;
+                $('#btnEditDetails').hide();
+                $('#btnSaveChanges').show();
 
-            $('#needdate_details').attr('type', 'date');
-            $('#needdate_details').attr('min', minDate);
-            $('#needdate_details').val(value.needdate);
-            $('#needdate_details').prop('readonly', false);
-            $('#client_name_details').prop('readonly', false);
-            $('#location_details').prop('readonly', false);
-            $('#remarks_details').prop('readonly', false);
-            $('#contact_details').prop('readonly', false);
-            reference =  reference.replaceAll(', ', '\n');
-            $('#reference_details').val(reference);
-            $('#reference_details').prop('readonly', false);
-            $('#btnRemoveAttachment').show();
-            $('#action').val('EDIT');
+                $('#needdate').val(value.needdate);
+                $('#client_name').val(client_name);
+                $('#location').val(location_name);
+                $('#contact').val(contact);
+                $('#remarks').val(remarks);
+                $('#reference').val(reference);
+    
+                $('#needdate_details').attr('type', 'date');
+                $('#needdate_details').attr('min', minDate);
+                $('#needdate_details').val(value.needdate);
+                $('#needdate_details').prop('readonly', false);
+                $('#client_name_details').prop('readonly', false);
+                $('#location_details').prop('readonly', false);
+                $('#remarks_details').prop('readonly', false);
+                $('#contact_details').prop('readonly', false);
+                reference =  reference.replaceAll(', ', '\n');
+                $('#reference_details').val(reference);
+                $('#reference_details').prop('readonly', false);
+                $('#btnRemoveAttachment').show();
+                $('#action').val('EDIT');
+            });
         }
         else{
             $('#action').val('');

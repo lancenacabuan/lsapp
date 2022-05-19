@@ -99,6 +99,8 @@ function validate_fileupload(reference_upload){
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
+        $('.disupload1').hide();
+        $('#xbtn_upload').css("width", "100%");
         return false;
     }
     else if(error_ext > 0){
@@ -106,6 +108,8 @@ function validate_fileupload(reference_upload){
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
+        $('.disupload1').hide();
+        $('#xbtn_upload').css("width", "100%");
         return false;
     }
     else if(error_mb > 0){
@@ -113,20 +117,36 @@ function validate_fileupload(reference_upload){
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
+        $('.disupload1').hide();
+        $('#xbtn_upload').css("width", "100%");
         return false;
     }
     else{
         if(files_length == 1){
             $('.upload_label').html(reference_upload.value.split("\\").pop());
-            $('.disupload').show();
+            if($('#referenceModal').is(':hidden')){
+                $('.disupload').show();
+            }
+            else{
+                $('.disupload1').show();
+                $('#xbtn_upload').css("width", "263px");
+            }
         }
         else if(files_length > 1){
             $('.upload_label').html('UPLOADED ('+files_length+') IMAGE FILES');
-            $('.disupload').show();
+            if($('#referenceModal').is(':hidden')){
+                $('.disupload').show();
+            }
+            else{
+                $('.disupload1').show();
+                $('#xbtn_upload').css("width", "263px");
+            }
         }
         else{
             $('.upload_label').html('Upload Image File/s less than 5MB each');
             $('.disupload').hide();
+            $('.disupload1').hide();
+            $('#xbtn_upload').css("width", "100%");
         }
         return true;
     }
@@ -736,6 +756,13 @@ $(document).on('click', '.disupload', function(){
     $('#reference_upload').val('');
     $('.upload_label').html('Upload Image File/s less than 5MB each');
     $('.disupload').hide();
+});
+
+$(document).on('click', '.disupload1', function(){
+    $('#reference_upload').val('');
+    $('.upload_label').html('Upload Image File/s less than 5MB each');
+    $('.disupload1').hide();
+    $('#xbtn_upload').css("width", "100%");
 });
 
 $(document).on('click', '#btnRemoveAttachment', function(){
@@ -4349,13 +4376,9 @@ $('#btnConfirm').on('click', function(){
 });
 
 $('#btnReference').on('click', function(){
-    var reference = $.trim($('#x_reference').val()).toUpperCase();
+    var reference = ($.trim($('#x_reference').val()).toUpperCase().split("\n")).join(', ');
     if(reference == ''){
         swal("SO/PO NUMBER REQUIRED", "Please fill up required field!", "error");
-        return false;
-    }
-    else if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(reference) == true){
-        swal('Invalid Reference SO/PO No.!','Please input a valid Reference SO/PO Number.','error');
         return false;
     }
     else{

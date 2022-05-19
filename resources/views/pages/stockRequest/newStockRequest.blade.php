@@ -39,7 +39,7 @@
                 <label class="form-control form-control-sm reference_field" style="margin-top: -38px; width: 130px; display: none;">Remarks</label>
                 <textarea class="form-control reference_field" name="remarks" id="remarks" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="Optional Field" maxlength="200"></textarea>
                 <label class="form-control form-control-sm reference_field" style="margin-top: -38px; width: 160px; display: none;">Reference SO/PO No.</label>
-                <textarea class="form-control reference_field spChar" name="reference" id="reference" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="(Press 'Enter' to separate multiple inputs.)          Required Field" maxlength="500"></textarea>
+                <textarea class="form-control reference_field spChar" name="reference" id="reference" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field" maxlength="500"></textarea>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm reference_field" style="margin-left: 420px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>

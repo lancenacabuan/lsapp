@@ -74,6 +74,9 @@
                 <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -38px; height: 30px; line-height: 30%; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
                 <button class="form-control btn btn-primary bp reupload" style="width: 280px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
             </div>
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
+                <span class="reupload" style="margin-left: 450px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple image files for upload.</span>
+            </div>
             @role('sales')
             <div class="header_label alert alert-primary mt-4" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
@@ -552,8 +555,9 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm spChar" type="text" name="x_reference" id="x_reference" placeholder="Please input SO/PO Number." autocomplete="off">
-            <button class="form-control btn btn-primary bp" style="zoom: 90%; margin-bottom: 8px; width: 295px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
+            <textarea class="form-control spChar" id="x_reference" style="margin-bottom: 8px; font-size: 12px; resize: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field"></textarea>
+            <button class="form-control btn btn-danger disupload1" title="Remove Attachments" style="zoom: 90%; margin-top: -8px; width: 30px; height: 30px; padding: 0px; display: none;"><i class="fa fa-trash"></i></button>
+            <button id="xbtn_upload" class="form-control btn btn-primary bp" style="zoom: 90%; margin-bottom: 8px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
             <span id="reference_note" style="color: Red; font-size: 12px;">*SO/PO Number and Attachment are required.</span>
             <button type="button" id="btnReference" class="btn btn-primary mt-2 float-right bp" style="zoom: 80%;">OK</button>
         </div>

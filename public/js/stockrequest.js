@@ -1064,6 +1064,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
 
                     if($("#current_role").val() == '["sales"]' && requestStatus == '6'){
                         $('#btnEditDetails').show();
+                        $('.btnCancelDetails').show();
                         
                         $(document).on('click', '#btnEditDetails', function(){
                             editMode = true;
@@ -2013,6 +2014,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
 
         if($("#current_role").val() == '["sales"]' && requestStatus == '6'){
             $('#btnEditDetails').show();
+            $('.btnCancelDetails').show();
             
             $(document).on('click', '#btnEditDetails', function(){
                 editMode = true;

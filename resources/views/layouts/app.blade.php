@@ -102,6 +102,7 @@
         .bp {
             font-weight: bold;
             background-color: #0d1a80;
+            border-color: #0d1a80;
             color: white;
         }
         .close {

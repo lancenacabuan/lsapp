@@ -43,6 +43,7 @@
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm reference_field" style="margin-left: 420px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
+                <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -38px; height: 30px; line-height: 30%; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
                 <button class="form-control btn btn-primary bp reference_field" style="width: 280px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">

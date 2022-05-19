@@ -98,29 +98,35 @@ function validate_fileupload(reference_upload){
         swal('INVALID image file type AND EXCEEDED maximum file size (5MB)!', 'Please upload image file/s with valid file type like the following: jpeg/jpg, png, or gif; AND with file size not greater than 5MB each.', 'error');      
         $('#reference_upload').val('');
         $('#reference_upload').focus();
+        $('.disupload').hide();
         return false;
     }
     else if(error_ext > 0){
         swal('INVALID image file type!', 'Please upload image file/s with valid file type like the following: jpeg/jpg, png, or gif.', 'error');      
         $('#reference_upload').val('');
         $('#reference_upload').focus();
+        $('.disupload').hide();
         return false;
     }
     else if(error_mb > 0){
         swal('EXCEEDED maximum file size (5MB)!', 'Please upload valid image file/s with file size not greater than 5MB each.', 'error');      
         $('#reference_upload').val('');
         $('#reference_upload').focus();
+        $('.disupload').hide();
         return false;
     }
     else{
         if(files_length == 1){
             $('.upload_label').html(reference_upload.value.split("\\").pop());
+            $('.disupload').show();
         }
         else if(files_length > 1){
             $('.upload_label').html('UPLOADED ('+files_length+') IMAGE FILES');
+            $('.disupload').show();
         }
         else{
             $('.upload_label').html('Upload Image File/s less than 5MB each');
+            $('.disupload').hide();
         }
         return true;
     }
@@ -224,6 +230,46 @@ function runFunction(){
             }
         }
     }
+    if($('#detailsStockRequest').is(':visible') && $("#current_role").val() == '["sales"]' && $("#status_details").val() == 'FOR APPROVAL'){
+        var needdate = $('#needdate_details').val();
+        var request_type = $('#request_type_details').val();
+        var client_name = $.trim($('#client_name_details').val());
+        var location_name = $.trim($('#location_details').val());
+        var contact = $.trim($('#contact_details').val());
+        var remarks = $.trim($('#remarks_details').val());
+        var reference = $.trim($('#reference_details').val());
+        var reference_upload = $('#reference_upload').val();
+        if(request_type == 'SALES' && $('.reupload').is(':hidden')){
+            if(needdate && client_name && location_name && contact && reference){
+                $('#btnEditDetails').show();
+                $('.header_label').hide();
+            }
+            else{
+                $('#btnEditDetails').hide();
+                $('.header_label').show();
+            }
+        }
+        if(request_type == 'SALES' && $('.reupload').is(':visible')){
+            if(needdate && client_name && location_name && contact && reference && reference_upload){
+                $('#btnEditDetails').show();
+                $('.header_label').hide();
+            }
+            else{
+                $('#btnEditDetails').hide();
+                $('.header_label').show();
+            }
+        }
+        else{
+            if(needdate && client_name && location_name){
+                $('#btnEditDetails').show();
+                $('.header_label').hide();
+            }
+            else{
+                $('#btnEditDetails').hide();
+                $('.header_label').show();
+            }
+        }
+    }
     if($('#referenceModal').is(':visible')){
         var reference = $.trim($('#x_reference').val());
         var reference_upload = $('#reference_upload').val();
@@ -269,6 +315,7 @@ $('#request_type').on('change', function(){
     $('#reference').val('');
     $('#reference_upload').val('');
     $('.upload_label').html('Upload Image File/s less than 5MB each');
+    $('.disupload').hide();
     if(reqtype == '2'){
         $('.reference_field').show();
     }
@@ -600,6 +647,30 @@ $('#btnSave').on('click', function(){
             }
         });
     }  
+});
+
+$(document).on('click', '.disupload', function(){
+    $('#reference_upload').val('');
+    $('.upload_label').html('Upload Image File/s less than 5MB each');
+    $('.disupload').hide();
+});
+
+$(document).on('click', '#btnRemoveAttachment', function(){
+    swal({
+        title: "REMOVE ATTACHMENTS?",
+        text: "You are about to REMOVE your ATTACHMENT SO/PO!\n This will be permanently deleted from the system.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $("#attachmentModal").slideUp();
+            $("#btnShowAttachment").hide();
+            $("#btnHideAttachment").hide();
+            $(".reupload").show();
+        }
+    });   
 });
 
 $('#close').on('click', function(){
@@ -1708,6 +1779,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             reference =  reference.replaceAll(', ', '\n');
             $('#reference_details').val(reference);
             $('#reference_details').prop('readonly', false);
+            $('#btnRemoveAttachment').show();
         }
 
         if(req_type_id == '2' || (req_type_id == '3' && requestStatus == '10')){

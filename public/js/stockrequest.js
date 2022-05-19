@@ -775,7 +775,7 @@ if($("#current_role").val() == '["sales"]'){
         columnDefs: [
             {
                 "targets": [0],
-                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
+                "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
             },
             {
                 "targets": [5,8,9,10,11,12,13,14,15,16,18],
@@ -797,7 +797,7 @@ if($("#current_role").val() == '["sales"]'){
             url: '/request_data',
         },
         columns: [
-            { data: 'date' },
+            { data: 'reqdate' },
             {
                 data: 'needdate',
                 "render": function(data, type, row){
@@ -874,7 +874,7 @@ else{
         columnDefs: [
             {
                 "targets": [0],
-                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
+                "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
             },
             {
                 "targets": [8,9,10,11,12,13,14,15,16,18],
@@ -896,7 +896,7 @@ else{
             url: '/request_data',
         },
         columns: [
-            { data: 'date' },
+            { data: 'reqdate' },
             {
                 data: 'needdate',
                 "render": function(data, type, row){

@@ -487,7 +487,7 @@ $('table.stocktransferTable').DataTable({
     columnDefs: [
         {
             "targets": [0],
-            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
+            "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
         },
         {
             "targets": [7,8,9,10,11,12,13],
@@ -504,7 +504,7 @@ $('table.stocktransferTable').DataTable({
         url: '/transfer_data',
     },
     columns: [
-        { data: 'date' },
+        { data: 'reqdate' },
         {
             data: 'needdate',
             "render": function(data, type, row){

@@ -445,10 +445,10 @@ $(".add-row").on('click', function(){
     let qty = $("#qtyReq").val();
     var uom = $("#uom").val();
     if(request_type == '2'){
-        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>" + warranty_id + "</td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td>" + warranty + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>" + warranty_id + "</td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td>" + warranty + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
     }
     else{
-        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'></td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td style='display: none;'></td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-primary bp'>REMOVE</button> </td></tr>";
+        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'></td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td style='display: none;'></td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
     }
     var ctr = 'false';
     if(request_type == '2' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "" || warranty == "Select Warranty Type")){
@@ -1400,7 +1400,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         },
                         {   
                             "render": function(data, type, row, meta){
-                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                                    return '<button style="zoom: 75%;" class="btn btn-danger bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                             },
                             "defaultContent": '',
                             "data": null,
@@ -2331,7 +2331,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             },
             {   
                 "render": function(data, type, row, meta){
-                        return '<button style="zoom: 75%;" class="btn btn-primary bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                        return '<button style="zoom: 75%;" class="btn btn-danger bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                 },
                 "defaultContent": '',
                 "data": null,

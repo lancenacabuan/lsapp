@@ -244,7 +244,7 @@ function runFunction(){
             }
         }
         else{
-            if(needdate && request_type && client_name && location_name){
+            if(needdate && request_type && client_name && location_name && contact){
                 $('#requestDetails').show();
                 $('.header_label').hide();
             }
@@ -284,7 +284,7 @@ function runFunction(){
             }
         }
         else{
-            if(needdate && client_name && location_name){
+            if(needdate && client_name && location_name && contact){
                 $('#btnEditDetails').show();
                 $('.header_label').hide();
             }
@@ -334,8 +334,6 @@ function checkLocation(){
 
 $('#request_type').on('change', function(){
     var reqtype = $(this).val();
-    $('#contact').val('');
-    $('#remarks').val('');
     $('#reference').val('');
     $('#reference_upload').val('');
     $('.upload_label').html('Upload Image File/s less than 5MB each');

@@ -56,7 +56,7 @@
                 <label class="form-control form-control-sm dfchide sales_details soldShow" style="margin-top: -38px; width: 160px;">Remarks</label>
                 <textarea class="form-control dfchide sales_details soldShow" id="remarks_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" readonly></textarea>
                 <label class="form-control form-control-sm dfchide sales_details soldShow" style="margin-top: -38px; width: 160px;">Reference SO/PO No.</label>
-                <textarea class="form-control dfchide sales_details soldShow" id="reference_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" readonly></textarea>
+                <textarea class="form-control dfchide sales_details soldShow spChar" id="reference_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" readonly></textarea>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 @role('sales|approver - sales') {{---ROLES---}}

@@ -10,11 +10,11 @@
     <table id="stockrequestTable" class="table stockrequestTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white; font-size: 15px;">                            
             <tr>
+                <th style="width: 150px;">DATE REQUESTED</th>
                 <th style="width: 150px;">DATE NEEDED</th>
                 <th>CLIENT NAME</th>
                 <th>ADDRESS / BRANCH</th>
                 <th>REFERENCE SO/PO NO.</th>
-                <th style="width: 150px;">DATE REQUESTED</th>
                 <th>REQUESTED BY</th>
                 <th>REQUEST TYPE</th>
                 <th style="width: 200px;">STATUS</th>

@@ -957,6 +957,21 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#reference_details').val(reference);
                 var reason = value.reason;
                     $('#reason_details').val(reason);
+
+                    if($("#current_role").val() == '["sales"]' && requestStatus == '6'){
+                        $('#needdate_details').attr('type', 'date');
+                        $('#needdate_details').val(value.needdate);
+                        $('#needdate_details').prop('readonly', false);
+                        $('#client_name_details').prop('readonly', false);
+                        $('#location_details').prop('readonly', false);
+                        $('#remarks_details').prop('readonly', false);
+                        $('#contact_details').prop('readonly', false);
+                        reference =  reference.replaceAll(', ', '\n');
+                        $('#reference_details').val(reference);
+                        $('#reference_details').prop('readonly', false);
+                        $('#btnRemoveAttachment').show();
+                    }
+                    
                     if(req_type_id == '2' || (req_type_id == '3' && requestStatus == '10')){
                         var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
                         var reference_attachments = decodeHtml(reference_uploads).split(',');

@@ -298,7 +298,8 @@ class StockRequestController extends Controller
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
             ->join('status', 'status.id', '=', 'requests.status')
-            ->orderBy('requests.created_at', 'DESC')
+            ->orderBy('requests.created_at', 'ASC')
+            ->orderBy('requests.needdate', 'ASC')
             ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
@@ -307,8 +308,8 @@ class StockRequestController extends Controller
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
             ->join('status', 'status.id', '=', 'requests.status')
-            ->orderBy('requests.needdate', 'ASC')
             ->orderBy('requests.created_at', 'ASC')
+            ->orderBy('requests.needdate', 'ASC')
             ->get();
         }
         else{
@@ -318,7 +319,8 @@ class StockRequestController extends Controller
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
             ->join('status', 'status.id', '=', 'requests.status')
-            ->orderBy('requests.created_at', 'DESC')
+            ->orderBy('requests.created_at', 'ASC')
+            ->orderBy('requests.needdate', 'ASC')
             ->get();
         }
 

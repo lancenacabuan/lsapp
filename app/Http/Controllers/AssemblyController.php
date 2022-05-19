@@ -129,7 +129,8 @@ class AssemblyController extends Controller
         ->join('users', 'users.id', '=', 'requests.requested_by')
         ->join('request_type', 'request_type.id', '=', 'requests.request_type')
         ->join('status', 'status.id', '=', 'requests.status')
-        ->orderBy('requests.created_at', 'DESC')
+        ->orderBy('requests.created_at', 'ASC')
+        ->orderBy('requests.needdate', 'ASC')
         ->get();
 
         return DataTables::of($list)

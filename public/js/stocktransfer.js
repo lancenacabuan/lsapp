@@ -486,7 +486,7 @@ $('#loading').show(); Spinner(); Spinner.show();
 $('table.stocktransferTable').DataTable({ 
     columnDefs: [
         {
-            "targets": [1],
+            "targets": [0],
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
         },
         {
@@ -504,6 +504,7 @@ $('table.stocktransferTable').DataTable({
         url: '/transfer_data',
     },
     columns: [
+        { data: 'date' },
         {
             data: 'needdate',
             "render": function(data, type, row){
@@ -526,7 +527,6 @@ $('table.stocktransferTable').DataTable({
                 }
             }
         },
-        { data: 'date' },
         { data: 'req_num' },
         { data: 'req_by' },
         { data: 'location_from' },

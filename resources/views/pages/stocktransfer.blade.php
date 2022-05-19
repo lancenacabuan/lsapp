@@ -10,8 +10,8 @@
     <table id="stocktransferTable" class="table stocktransferTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white; font-size: 15px;">
             <tr>
-                <th style="width: 150px;">DATE NEEDED</th>
                 <th style="width: 150px;">DATE REQUESTED</th>
+                <th style="width: 150px;">DATE NEEDED</th>
                 <th style="width: 150px;">REQUEST NUMBER</th>
                 <th>REQUESTED BY</th>
                 <th style="width: 180px;">FROM LOCATION</th>

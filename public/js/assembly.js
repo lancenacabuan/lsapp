@@ -146,7 +146,7 @@ $('#loading').show(); Spinner(); Spinner.show();
 $('table.assemblyTable').DataTable({ 
     columnDefs: [
         {
-            "targets": [1],
+            "targets": [0],
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
         },
         {
@@ -164,6 +164,7 @@ $('table.assemblyTable').DataTable({
         url: '/assembly/request_data',
     },
     columns: [
+        { data: 'date' },
         {
             data: 'needdate',
             "render": function(data, type, row){
@@ -186,7 +187,6 @@ $('table.assemblyTable').DataTable({
                 }
             }
         },
-        { data: 'date' },
         { data: 'req_num' },
         { data: 'req_by' },
         { data: 'req_type' },

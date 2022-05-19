@@ -253,7 +253,7 @@ function runFunction(){
                 $('.header_label').show();
             }
         }
-        if(request_type == 'SALES' && $('.reupload').is(':visible')){
+        else if(request_type == 'SALES' && $('.reupload').is(':visible')){
             if(needdate && client_name && location_name && contact && reference && reference_upload){
                 $('#btnEditDetails').show();
                 $('.header_label').hide();

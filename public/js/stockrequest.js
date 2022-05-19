@@ -137,6 +137,10 @@ $(document).ready(function(){
         swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
         setTimeout(function(){location.href="/stockrequest"}, 2000);
     }
+    else if($(location).attr('pathname')+window.location.search == '/stockrequest?edit=success'){
+        swal("EDIT SUCCESS", "STOCK REQUEST", "success");
+        setTimeout(function(){location.href="/stockrequest"}, 2000);
+    }
     else if($(location).attr('pathname')+window.location.search == '/stockrequest?sale=success'){
         swal("SALE SUCCESS", "STOCK REQUEST", "success");
         setTimeout(function(){location.href="/stockrequest"}, 2000);
@@ -526,10 +530,6 @@ $('#btnSave').on('click', function(){
         swal('Minimum Date is today!','Select within date range from today onwards.','error');
         return false;
     }
-    else if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(reference) == true){
-        swal('Invalid Reference SO/PO No.!','Please input a valid Reference SO/PO Number.','error');
-        return false;
-    }
     else{
         swal({
             title: "SUBMIT STOCK REQUEST?",
@@ -647,6 +647,89 @@ $('#btnSave').on('click', function(){
             }
         });
     }  
+});
+
+$(document).on('click', '#btnEditDetails', function(){
+    var needdate = $('#needdate').val();
+    var client_name = $('#client_name').val();
+    var location_name = $('#location').val();
+    var contact = $('#contact').val();
+    var remarks = $('#remarks').val();
+    var reference = $('#reference').val();
+    var needdate_details = $('#needdate_details').val();
+    var client_name_details = $.trim($('#client_name_details').val());
+    var location_details = $.trim($('#location_details').val());
+    var contact_details = $.trim($('#contact_details').val());
+    var remarks_details = $.trim($('#remarks_details').val());
+    var reference_details = ($.trim($('#reference_details').val()).toUpperCase().split("\n")).join(', ');
+    var reference_upload = $('#reference_upload').val();
+    if($('.reupload').is(':hidden')){
+        if(needdate == needdate_details && client_name == client_name_details && location_name == location_details && contact == contact_details && remarks == remarks_details && reference == reference_details){
+            swal("NO CHANGES FOUND", "Stock Request Details are still all the same!", "error");
+            return false;
+        }
+    }
+    if(needdate_details < minDate){
+        swal('Minimum Date is today!','Select within date range from today onwards.','error');
+        return false;
+    }
+    else{
+        swal({
+            title: "EDIT STOCK REQUEST DETAILS?",
+            text: "Please review the details of your request. Hit OK to confirm or CANCEL to edit it.",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                scrollReset();
+                $('#detailsStockRequest').hide();
+                $('#detailsStockRequest').modal('dispose');
+                $('#loading').show(); Spinner(); Spinner.show();
+                $.ajax({
+                    type:'post',
+                    url:'/editRequest',
+                    async: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $("#csrf").val()
+                    },
+                    data:{
+                        'request_number': $('#request_num_details').val(),
+                        'needdate': needdate_details,
+                        'client_name': client_name_details,
+                        'location': location_details,
+                        'contact': contact_details,
+                        'remarks': remarks_details,
+                        'reference': reference_details,
+                        'reference_upload': reference_upload
+                    },
+                    success: function(data){
+                        $('#loading').hide(); Spinner.hide();
+                        if(data == 'true'){
+                            if(reference_upload){
+                                $('#btnUpload').click();
+                            }
+                            else{
+                                swal("EDIT SUCCESS", "STOCK REQUEST", "success");
+                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                            }
+                        }
+                        else{
+                            $('#newStockRequest').hide();
+                            swal("EDIT FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        })
+    }
 });
 
 $(document).on('click', '.disupload', function(){
@@ -959,7 +1042,15 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#reason_details').val(reason);
 
                     if($("#current_role").val() == '["sales"]' && requestStatus == '6'){
+                        $('#needdate').val(value.needdate);
+                        $('#client_name').val(client_name);
+                        $('#location').val(location_name);
+                        $('#contact').val(contact);
+                        $('#remarks').val(remarks);
+                        $('#reference').val(reference);
+                        
                         $('#needdate_details').attr('type', 'date');
+                        $('#needdate_details').attr('min', minDate);
                         $('#needdate_details').val(value.needdate);
                         $('#needdate_details').prop('readonly', false);
                         $('#client_name_details').prop('readonly', false);
@@ -970,6 +1061,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#reference_details').val(reference);
                         $('#reference_details').prop('readonly', false);
                         $('#btnRemoveAttachment').show();
+                        $('#action').val('EDIT');
+                    }
+                    else{
+                        $('#action').val('');
                     }
                     
                     if(req_type_id == '2' || (req_type_id == '3' && requestStatus == '10')){
@@ -1034,8 +1129,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $("#slidesCtrl").hide();
                         }
                     }
-            
-                    $('#action').val('');
                     $('.modal-body').html();
                     $('#detailsStockRequest').modal('show');
 
@@ -1890,7 +1983,15 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#reason_details').val(reason);
 
         if($("#current_role").val() == '["sales"]' && requestStatus == '6'){
+            $('#needdate').val(value.needdate);
+            $('#client_name').val(client_name);
+            $('#location').val(location_name);
+            $('#contact').val(contact);
+            $('#remarks').val(remarks);
+            $('#reference').val(reference);
+
             $('#needdate_details').attr('type', 'date');
+            $('#needdate_details').attr('min', minDate);
             $('#needdate_details').val(value.needdate);
             $('#needdate_details').prop('readonly', false);
             $('#client_name_details').prop('readonly', false);
@@ -1901,6 +2002,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('#reference_details').val(reference);
             $('#reference_details').prop('readonly', false);
             $('#btnRemoveAttachment').show();
+            $('#action').val('EDIT');
+        }
+        else{
+            $('#action').val('');
         }
 
         if(req_type_id == '2' || (req_type_id == '3' && requestStatus == '10')){
@@ -1965,8 +2070,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $("#slidesCtrl").hide();
             }
         }
-
-        $('#action').val('');
         $('.modal-body').html();
         $('#detailsStockRequest').modal('show');
 

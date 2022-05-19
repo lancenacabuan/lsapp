@@ -130,6 +130,48 @@ class StockRequestController extends Controller
         return response($result);
     }
 
+    public function editRequest(Request $request){
+        do{
+            $sql = Requests::where('request_number', '=', $request->request_number)
+                ->update([
+                    'needdate' => $request->needdate,
+                    'client_name' => ucwords($request->client_name),
+                    'location' => ucwords($request->location),
+                    'contact' => ucwords($request->contact),
+                    'remarks' => ucfirst($request->remarks),
+                    'reference' => strtoupper($request->reference)
+                ]);
+        }
+        while(!$sql);
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
+            if($request->reference_upload){
+                $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+                if($files != NULL){
+                    $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+                    foreach($files as $file){
+                        $file = str_replace('"','',$file);
+                        if(file_exists(public_path('uploads/'.$file))){
+                            unlink(public_path('uploads/'.$file));
+                        }
+                    }
+                }
+            }
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "EDITED STOCK REQUEST: User successfully edited details of Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
+    }
+
     public function uploadFile(Request $request){
         $x = 1;
         $reference_upload = array();
@@ -149,6 +191,9 @@ class StockRequestController extends Controller
 
         if($request->action == 'SUBMIT'){
             return redirect()->to('/stockrequest?submit=success');
+        }
+        else if($request->action == 'EDIT'){
+            return redirect()->to('/stockrequest?edit=success');
         }
         else{
             return redirect()->to('/stockrequest?sale=success');

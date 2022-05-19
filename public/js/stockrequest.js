@@ -619,11 +619,11 @@ $('#loading').show(); Spinner(); Spinner.show();
 $('table.stockrequestTable').DataTable({ 
     columnDefs: [
         {
-            "targets": [1],
+            "targets": [4],
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY')
         },
         {
-            "targets": [7,8,9,10,11,12,13,14,15,16,17,18],
+            "targets": [8,9,10,11,12,13,14,15,16,17,18],
             "visible": false,
             "searchable": false
         }
@@ -659,9 +659,10 @@ $('table.stockrequestTable').DataTable({
                 }
             }
         },
-        { data: 'date' },
-        { data: 'req_num' },
+        { data: 'client_name' },
+        { data: 'location' },
         { data: 'reference' },
+        { data: 'date' },
         { data: 'req_by' },
         { data: 'req_type' },
         {
@@ -698,9 +699,8 @@ $('table.stockrequestTable').DataTable({
         { data: 'prep_by' },
         { data: 'sched' },
         { data: 'user_id' },
-        { data: 'client_name' },
-        { data: 'location' },
         { data: 'reason' },
+        { data: 'req_num' },
         { data: 'assembly_reqnum' },
     ],
     order:[],

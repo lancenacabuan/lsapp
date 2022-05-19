@@ -265,31 +265,31 @@ function runFunction(){
         var reference_upload = $('#reference_upload').val();
         if(request_type == 'SALES' && $('.reupload').is(':hidden')){
             if(needdate && client_name && location_name && contact && reference){
-                $('#btnEditDetails').show();
+                $('#btnSaveChanges').show();
                 $('.header_label').hide();
             }
             else{
-                $('#btnEditDetails').hide();
+                $('#btnSaveChanges').hide();
                 $('.header_label').show();
             }
         }
         else if(request_type == 'SALES' && $('.reupload').is(':visible')){
             if(needdate && client_name && location_name && contact && reference && reference_upload){
-                $('#btnEditDetails').show();
+                $('#btnSaveChanges').show();
                 $('.header_label').hide();
             }
             else{
-                $('#btnEditDetails').hide();
+                $('#btnSaveChanges').hide();
                 $('.header_label').show();
             }
         }
         else{
             if(needdate && client_name && location_name && contact){
-                $('#btnEditDetails').show();
+                $('#btnSaveChanges').show();
                 $('.header_label').hide();
             }
             else{
-                $('#btnEditDetails').hide();
+                $('#btnSaveChanges').hide();
                 $('.header_label').show();
             }
         }
@@ -667,7 +667,7 @@ $('#btnSave').on('click', function(){
     }  
 });
 
-$(document).on('click', '#btnEditDetails', function(){
+$(document).on('click', '#btnSaveChanges', function(){
     var needdate = $('#needdate').val();
     var client_name = $('#client_name').val();
     var location_name = $('#location').val();

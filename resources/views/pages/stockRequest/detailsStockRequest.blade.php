@@ -32,7 +32,7 @@
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm dfchide" id="client_name_label" style="width: 160px;">Client Name</label>
-                <input class="form-control form-control-sm dfchide" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <input class="form-control form-control-sm dfchide" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" readonly>
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="requested_by_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" id="item_desc_label" style="width: 160px; display: none;">Assembled Item Name</label>
@@ -40,9 +40,9 @@
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm dfchide" id="location_label" style="width: 160px;">Address / Branch</label>
-                <input class="form-control form-control-sm dfchide" id="location_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <input class="form-control form-control-sm dfchide" id="location_details" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" readonly>
                 <label class="form-control form-control-sm dfchide soldShow" style="width: 160px;">Contact Person</label>
-                <input class="form-control form-control-sm dfchide soldShow" id="contact_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <input class="form-control form-control-sm dfchide soldShow" id="contact_details" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" readonly>
                 <label class="form-control form-control-sm" id="warehouse_label" style="width: 160px; display: none;">TO New Location</label>
                 <select class="form-select form-control-sm" id="warehouse_details" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px; display: none;">
                     <option value="" selected disabled>Select Location</option>
@@ -54,9 +54,9 @@
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm dfchide soldShow" style="margin-top: -38px; width: 160px;">Remarks</label>
-                <textarea class="form-control dfchide soldShow" id="remarks_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" readonly></textarea>
+                <textarea class="form-control dfchide soldShow" id="remarks_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Optional Field" readonly></textarea>
                 <label class="form-control form-control-sm dfchide sales_details soldShow" style="margin-top: -38px; width: 160px;">Reference SO/PO No.</label>
-                <textarea class="form-control dfchide sales_details soldShow spChar" id="reference_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" readonly></textarea>
+                <textarea class="form-control dfchide sales_details soldShow spChar" id="reference_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field" readonly></textarea>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 @role('sales|approver - sales') {{---ROLES---}}
@@ -221,10 +221,10 @@
             @endrole
             @role('sales') {{---ROLES---}}
             <button type="button" id="btnDelete" class="btn btn-danger bp mt-4">DELETE</button>
-            <button type="button" id="btnSaveChanges" class="btn btn-success bp mt-4 float-right" style="width: 150px; display: none;">SAVE CHANGES</button>
-            <button type="button" id="btnEditDetails" class="btn btn-primary bp mt-4 float-right" style="width: 150px; display: none;">EDIT DETAILS</button>
+            <button type="button" id="btnSaveChanges" class="btn btn-success bp mt-4 float-right" style="width: 140px; display: none;">SAVE CHANGES</button>
+            <button type="button" id="btnEditDetails" class="btn btn-primary bp mt-4 float-right" style="width: 140px; display: none;">EDIT DETAILS</button>
             <span class="float-right" style="width: 10px;">&nbsp;</span>
-            <button type="button" class="btnClose btn btn-primary bp mt-4 float-right">CANCEL</button>
+            <button type="button" class="btnClose btn btn-primary bp mt-4 float-right" data-bs-dismiss="modal">CANCEL</button>
             @endrole
         </div>
         </div>

@@ -1891,30 +1891,24 @@ class StockRequestController extends Controller
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
             ->join('status', 'status.id', '=', 'requests.status')
             ->orderBy('requests.created_at', 'DESC')
-            ->get();
+            ->first();
 
-        $list = str_replace('[','',$list);
-        $list = str_replace(']','',$list);
-        $list = json_decode($list);
-
-        if($list){
-            $list1 = Item::selectRaw('items.item AS item_desc')
-                ->where('id', '=', $list->item_id)
-                ->get();
-
-            $list1 = str_replace('[','',$list1);
-            $list1 = str_replace(']','',$list1);
-            $list1 = json_decode($list1);
+        if(!$list){
+            return redirect()->to('/stockrequest');
         }
+
+        $list1 = Item::selectRaw('items.item AS item_desc')
+            ->where('id', '=', $list->item_id)
+            ->first();
 
         $list2 = Requests::selectRaw('users.name AS prepby')
             ->where('requests.request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'requests.prepared_by')
-            ->get();
+            ->first();
         
-        $list2 = str_replace('[','',$list2);
-        $list2 = str_replace(']','',$list2);
-        $list2 = json_decode($list2);
+        if(!$list2){
+            return redirect()->to('/stockrequest');
+        }
         
         $include = Requests::query()->select('request_number')
             ->where('assembly_reqnum', $request->request_number)
@@ -1956,8 +1950,8 @@ class StockRequestController extends Controller
                 ->sortBy('item')
                 ->sortBy('category');
         }
-
-        if(!$list || !$list2 || !$list3){
+        
+        if(!$list3){
             return redirect()->to('/stockrequest');
         }
 

@@ -948,20 +948,13 @@ class StockTransferController extends Controller
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
             ->join('status', 'status.id', '=', 'request_transfer.status')
             ->orderBy('request_transfer.created_at', 'DESC')
-            ->get();
-        $list = str_replace('[','',$list);
-        $list = str_replace(']','',$list);
-        $list = json_decode($list);
-
+            ->first();
+        
         $list2 = RequestTransfer::selectRaw('users.name AS prepby')
             ->where('request_transfer.request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'request_transfer.prepared_by')
-            ->get();
-        
-        $list2 = str_replace('[','',$list2);
-        $list2 = str_replace(']','',$list2);
-        $list2 = json_decode($list2);
-        
+            ->first();
+                
         $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('transferred_items.request_number', $request->request_number)
             ->where('stocks.status', '!=', 'incomplete')

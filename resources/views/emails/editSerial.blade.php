@@ -9,7 +9,7 @@
         Category: {{$details['category']}}<br>
         Item Description: {{$details['item']}}<br><br>
         Edited Serial FROM: {{$details['serialfrom']}}<br>
-        Edited Serial INTO: {{$details['serialto']}}<br>
+        Edited Serial TO: {{$details['serialto']}}<br>
         <br><br>
         Thank you!
     </p>

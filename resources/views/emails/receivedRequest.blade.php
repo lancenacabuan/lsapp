@@ -13,7 +13,12 @@
         Requested By: {{$details['requested_by']}}<br><br>
         Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
-        Reference SO/PO No.: {{$details['reference']}}<br><br>
+        Contact Person: {{$details['contact']}}<br>
+        Remarks: {{$details['remarks']}}
+        @if($details['req_type_id'] == 2 || ($details['req_type_id'] == 3 && $details['status_id'] == 10))
+        <br><br>Reference SO/PO No.: {{$details['reference']}}
+        @endif
+        <br><br>
         Date Prepared: {{Carbon\Carbon::parse($details['prepdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Prepared By: {{$details['prepared_by']}}<br>
         Date Scheduled: {{Carbon\Carbon::parse($details['scheddate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>

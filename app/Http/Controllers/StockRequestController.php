@@ -2048,7 +2048,7 @@ class StockRequestController extends Controller
                 foreach($user as $keyx){
                     $details = [
                         'name' => ucwords($keyx->name),
-                        'action' => '3-Days Prior its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'action' => 'is 3-Days Prior its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                         'request_number' => $value['req_num'],
                         'reqdate' => $value['req_date'],
                         'requested_by' => $value['req_by'],
@@ -2067,7 +2067,7 @@ class StockRequestController extends Controller
                 }
                 $details = [
                     'name' => $value['req_by'],
-                    'action' => '3-Days Prior its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'action' => 'is 3-Days Prior its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                     'request_number' => $value['req_num'],
                     'reqdate' => $value['req_date'],
                     'requested_by' => $value['req_by'],

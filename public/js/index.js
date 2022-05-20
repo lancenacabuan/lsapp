@@ -17,7 +17,7 @@ $('#loading').show(); Spinner(); Spinner.show();
         ],
         columns: [
             { data: 'date', width: '15%' },
-            { data: 'username', width: '12%' },
+            { data: 'username', width: '15%' },
             { data: 'role', width: '12%' },
             { data: 'activity' }
         ],

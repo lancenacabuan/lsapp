@@ -191,11 +191,12 @@ class PagesController extends Controller
     }
     
     public function users_update(Request $request){
-        $name = ucwords($request->name1);
+        $name1 = ucwords($request->name1);
+        $email1 = strtolower($request->email1);
         
         $users = User::find($request->input('id1'));
-        $users->name = $name;
-        $users->email = strtolower($request->email1);
+        $users->name = $name1;
+        $users->email = $email1;
         $users->removeRole($request->role2);
         $users->assignRole($request->role1);
         $users->status = $request->status1;
@@ -209,9 +210,34 @@ class PagesController extends Controller
         }
 
         if($result == 'true'){
+            if($name1 != $request->name2){
+                $name = "[Fullname: FROM '$request->name2' TO '$name1']";
+            }
+            else{
+                $name = NULL;
+            }
+            if($email1 != $request->email2){
+                $email = "[Email: FROM '$request->email2' TO '$email1']";
+            }
+            else{
+                $email = NULL;
+            }
+            if($request->role1 != $request->role2){
+                $role = "[User Level: FROM '$request->role2' TO '$request->role1']";
+            }
+            else{
+                $role = NULL;
+            }
+            if($request->status1 != $request->status2){
+                $status = "[Status: FROM '$request->status2' TO '$request->status1']";
+            }
+            else{
+                $status = NULL;
+            }
+
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "USER UPDATED: User successfully updated details of $name with UserID#$request->id1.";
+            $userlogs->activity = "USER UPDATED: User successfully updated details of $request->name2 with UserID#$request->id1 with the following CHANGES: $name $email $role $status.";
             $userlogs->save();
         }
 

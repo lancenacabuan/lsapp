@@ -129,7 +129,7 @@ document.addEventListener("contextmenu", function(e){
 
 $(document).ready(function(){
     var req_date = $('#req_date').html();
-    req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
+    req_date = moment(req_date).format('dddd, MMMM DD, YYYY');
     $('#req_date').html(req_date);
 
     var need_date = $('#need_date').html();

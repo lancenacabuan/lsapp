@@ -161,11 +161,31 @@ class StockRequestController extends Controller
                         }
                     }
                 }
+                $reference_upload = '[ATTACHMENT SO/PO: Upload Image/s have been changed.]';
+            }
+
+            if($request->needdate != $request->needdate_orig){
+                $needdate = "[Date Needed: FROM '$request->needdate_orig' INTO '$request->needdate']";
+            }
+            if($request->client_name != $request->client_name_orig){
+                $client_name = "[Client Name: FROM '$request->client_name_orig' INTO '$request->client_name']";
+            }
+            if($request->location != $request->location_orig){
+                $location_name = "[Address / Branch: FROM '$request->location_orig' INTO '$request->location']";
+            }
+            if($request->contact != $request->contact_orig){
+                $contact = "[Contact Person: FROM '$request->contact_orig' INTO '$request->contact']";
+            }
+            if($request->remarks != $request->remarks_orig){
+                $remarks = "[Remarks: FROM '$request->remarks_orig' INTO '$request->remarks']";
+            }
+            if($request->reference != $request->reference_orig){
+                $reference = "[Reference SO/PO No.: FROM '$request->reference_orig' INTO '$request->reference']";
             }
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "EDITED STOCK REQUEST: User successfully edited details of Stock Request No. $request->request_number.";
+            $userlogs->activity = "EDITED STOCK REQUEST: User successfully edited details of Stock Request No. $request->request_number with the following CHANGES: $needdate $client_name $location_name $contact $remarks $reference $reference_upload.";
             $userlogs->save();
         }
 

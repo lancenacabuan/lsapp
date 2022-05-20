@@ -687,67 +687,67 @@ $(document).on('click', '#btnSaveChanges', function(){
             return false;
         }
     }
-    if(needdate_details < minDate){
-        swal('Minimum Date is today!','Select within date range from today onwards.','error');
-        return false;
-    }
-    else{
-        swal({
-            title: "EDIT STOCK REQUEST DETAILS?",
-            text: "Please review the details of your request. Hit OK to confirm or CANCEL to edit it.",
-            icon: "warning",
-            buttons: true,
-        })
-        .then((willDelete) => {
-            if(willDelete){
-                scrollReset();
-                $('#detailsStockRequest').hide();
-                $('#detailsStockRequest').modal('dispose');
-                $('#loading').show(); Spinner(); Spinner.show();
-                $.ajax({
-                    type:'post',
-                    url:'/editRequest',
-                    async: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $("#csrf").val()
-                    },
-                    data:{
-                        'request_number': $('#request_num_details').val(),
-                        'needdate': needdate_details,
-                        'client_name': client_name_details,
-                        'location': location_details,
-                        'contact': contact_details,
-                        'remarks': remarks_details,
-                        'reference': reference_details,
-                        'reference_upload': reference_upload
-                    },
-                    success: function(data){
-                        $('#loading').hide(); Spinner.hide();
-                        if(data == 'true'){
-                            if(reference_upload){
-                                $('#btnUpload').click();
-                            }
-                            else{
-                                swal("EDIT SUCCESS", "STOCK REQUEST", "success");
-                                setTimeout(function(){location.href="/stockrequest"}, 2000);
-                            }
+    swal({
+        title: "EDIT STOCK REQUEST DETAILS?",
+        text: "Please review the details of your request. Hit OK to confirm or CANCEL to edit it.",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            scrollReset();
+            $('#detailsStockRequest').hide();
+            $('#detailsStockRequest').modal('dispose');
+            $('#loading').show(); Spinner(); Spinner.show();
+            $.ajax({
+                type:'post',
+                url:'/editRequest',
+                async: false,
+                headers: {
+                    'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'needdate_orig': needdate,
+                    'client_name_orig': client_name,
+                    'location_orig': location_name,
+                    'contact_orig': contact,
+                    'remarks_orig': remarks,
+                    'reference_orig': reference,
+                    'needdate': needdate_details,
+                    'client_name': client_name_details,
+                    'location': location_details,
+                    'contact': contact_details,
+                    'remarks': remarks_details,
+                    'reference': reference_details,
+                    'reference_upload': reference_upload
+                },
+                success: function(data){
+                    $('#loading').hide(); Spinner.hide();
+                    if(data == 'true'){
+                        if(reference_upload){
+                            $('#btnUpload').click();
                         }
                         else{
-                            $('#newStockRequest').hide();
-                            swal("EDIT FAILED", "STOCK REQUEST", "error");
+                            swal("EDIT SUCCESS", "STOCK REQUEST", "success");
                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                         }
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            window.location.href = '/stockrequest';
-                        }
-                        alert(data.responseText);
                     }
-                });
-            }
-        })
-    }
+                    else{
+                        $('#newStockRequest').hide();
+                        swal("EDIT FAILED", "STOCK REQUEST", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    })
 });
 
 $(document).on('click', '.disupload', function(){
@@ -1079,7 +1079,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $('#reference').val(reference);
                 
                             $('#needdate_details').attr('type', 'date');
-                            $('#needdate_details').attr('min', minDate);
                             $('#needdate_details').val(value.needdate);
                             $('#needdate_details').prop('readonly', false);
                             $('#client_name_details').prop('readonly', false);
@@ -2029,7 +2028,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $('#reference').val(reference);
     
                 $('#needdate_details').attr('type', 'date');
-                $('#needdate_details').attr('min', minDate);
                 $('#needdate_details').val(value.needdate);
                 $('#needdate_details').prop('readonly', false);
                 $('#client_name_details').prop('readonly', false);

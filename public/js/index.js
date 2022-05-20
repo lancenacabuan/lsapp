@@ -5,7 +5,6 @@ $('#loading').show(); Spinner(); Spinner.show();
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
-        scrollX: true,
         serverSide: true,
         ajax: {
             url: '/index_data',
@@ -17,9 +16,9 @@ $('#loading').show(); Spinner(); Spinner.show();
             },
         ],
         columns: [
-            { data: 'date' },
-            { data: 'username' },
-            { data: 'role' },
+            { data: 'date', width: '15%' },
+            { data: 'username', width: '12%' },
+            { data: 'role', width: '12%' },
             { data: 'activity' }
         ],
         order:[],

@@ -163,24 +163,45 @@ class StockRequestController extends Controller
                 }
                 $reference_upload = '[ATTACHMENT SO/PO: Upload Image/s have been changed.]';
             }
+            else{
+                $reference_upload = NULL;
+            }
 
             if($request->needdate != $request->needdate_orig){
-                $needdate = "[Date Needed: FROM '$request->needdate_orig' INTO '$request->needdate']";
+                $needdate = "[Date Needed: FROM '$request->needdate_orig' TO '$request->needdate']";
+            }
+            else{
+                $needdate = NULL;
             }
             if($request->client_name != $request->client_name_orig){
-                $client_name = "[Client Name: FROM '$request->client_name_orig' INTO '$request->client_name']";
+                $client_name = "[Client Name: FROM '$request->client_name_orig' TO '$request->client_name']";
+            }
+            else{
+                $client_name = NULL;
             }
             if($request->location != $request->location_orig){
-                $location_name = "[Address / Branch: FROM '$request->location_orig' INTO '$request->location']";
+                $location_name = "[Address / Branch: FROM '$request->location_orig' TO '$request->location']";
+            }
+            else{
+                $location_name = NULL;
             }
             if($request->contact != $request->contact_orig){
-                $contact = "[Contact Person: FROM '$request->contact_orig' INTO '$request->contact']";
+                $contact = "[Contact Person: FROM '$request->contact_orig' TO '$request->contact']";
+            }
+            else{
+                $contact = NULL;
             }
             if($request->remarks != $request->remarks_orig){
-                $remarks = "[Remarks: FROM '$request->remarks_orig' INTO '$request->remarks']";
+                $remarks = "[Remarks: FROM '$request->remarks_orig' TO '$request->remarks']";
+            }
+            else{
+                $remarks = NULL;
             }
             if($request->reference != $request->reference_orig){
-                $reference = "[Reference SO/PO No.: FROM '$request->reference_orig' INTO '$request->reference']";
+                $reference = "[Reference SO/PO No.: FROM '$request->reference_orig' TO '$request->reference']";
+            }
+            else{
+                $reference = NULL;
             }
 
             $userlogs = new UserLogs;

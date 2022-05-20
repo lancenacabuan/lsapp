@@ -41,7 +41,7 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
     </div>
     <br><br>
     <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">USER ACTIVITIES</div>
-    <table id="user_logs" class="table user_logs display nowrap" style="width: 100%; font-size: 12px;">
+    <table id="user_logs" class="table user_logs display" style="width: 100%; font-size: 12px;">
         <thead style="background-color: #0d1a80; color: white; font-size: 14px;">
             <tr class="tbsearch">
                 <td>

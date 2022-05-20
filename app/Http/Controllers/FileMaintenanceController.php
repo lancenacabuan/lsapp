@@ -144,19 +144,19 @@ class FileMaintenanceController extends Controller
                 $result = 'true';
 
                 if(strtoupper($request->item_name) != strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original && $request->item_uom == $request->item_uom_original){
-                    $activity = "ITEM UPDATED: User successfully updated Item Description from '$request->item_name_original' into '$item_name' with ItemID#$id under Category '$request->category_name'.";
+                    $activity = "ITEM UPDATED: User successfully updated Item Description FROM '$request->item_name_original' TO '$item_name' with ItemID#$id under Category '$request->category_name'.";
                 }
                 else if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category != $request->item_category_original && $request->item_uom == $request->item_uom_original){
-                    $activity = "ITEM UPDATED: User successfully updated Item Category of '$item_name' with ItemID#$id changed from '$request->category_name_original' into '$request->category_name' with new CategoryID#'$request->item_category'.";
+                    $activity = "ITEM UPDATED: User successfully updated Item Category of '$item_name' with ItemID#$id changed FROM '$request->category_name_original' TO '$request->category_name' with new CategoryID#'$request->item_category'.";
                 }
                 else if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original && $request->item_uom != $request->item_uom_original){
-                    $activity = "ITEM UPDATED: User successfully updated Item UOM of '$item_name' with ItemID#$id changed from '$request->item_uom_original' into '$request->item_uom'.";
+                    $activity = "ITEM UPDATED: User successfully updated Item UOM of '$item_name' with ItemID#$id changed FROM '$request->item_uom_original' TO '$request->item_uom'.";
                 }
                 else{
-                    $activity = "ITEM UPDATED: User successfully updated details of ItemID#$id with changes: 
-                        Category Name: '$request->category_name_original' => '$request->category_name', 
-                        Item Description: '$request->item_name_original' => '$item_name', 
-                        UOM: '$request->item_uom_original' => '$request->item_uom'.
+                    $activity = "ITEM UPDATED: User successfully updated details of ItemID#$id with the following CHANGES: 
+                        [Category Name: FROM '$request->category_name_original' TO '$request->category_name'], 
+                        [Item Description: FROM '$request->item_name_original' TO '$item_name'], 
+                        [UOM: FROM '$request->item_uom_original' TO '$request->item_uom'].
                         ";
                 }
 
@@ -239,7 +239,7 @@ class FileMaintenanceController extends Controller
     public function logUpdateCategory(Request $request){
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "CATEGORY UPDATED: User successfully updated Category from '$request->category_original' into '$request->category_details' with CategoryID#$request->category_id.";
+        $userlogs->activity = "CATEGORY UPDATED: User successfully updated Category FROM '$request->category_original' TO '$request->category_details' with CategoryID#$request->category_id.";
         $userlogs->save();
 
         return response('true');
@@ -348,7 +348,7 @@ class FileMaintenanceController extends Controller
 
                 $userlogs = new UserLogs;
                 $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "LOCATION UPDATED: User successfully updated Location from '$request->location_original' into '$location_details' with LocationID#$id.";
+                $userlogs->activity = "LOCATION UPDATED: User successfully updated Location FROM '$request->location_original' TO '$location_details' with LocationID#$id.";
                 $userlogs->save();
             }
             
@@ -381,7 +381,7 @@ class FileMaintenanceController extends Controller
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "LOCATION STATUS CHANGE REQUESTED: User successfully requested Location Status Change of '$request->location' FROM '$request->status_original' INTO '$request->status' with LocationID#$request->id.";
+        $userlogs->activity = "LOCATION STATUS CHANGE REQUESTED: User successfully requested Location Status Change of '$request->location' FROM '$request->status_original' TO '$request->status' with LocationID#$request->id.";
         $userlogs->save();
 
         return response('true');

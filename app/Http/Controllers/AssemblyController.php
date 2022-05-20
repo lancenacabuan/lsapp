@@ -512,7 +512,7 @@ class AssemblyController extends Controller
                 
                 $userlogs = new UserLogs;
                 $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "ASSEMBLED ITEM UPDATED: User successfully updated Assembled Item Description from '$request->item_name_original' into '$item_name' with ItemID#$id.";
+                $userlogs->activity = "ASSEMBLED ITEM UPDATED: User successfully updated Assembled Item Description FROM '$request->item_name_original' TO '$item_name' with ItemID#$id.";
                 $userlogs->save();
             }
         }

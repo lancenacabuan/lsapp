@@ -33,53 +33,63 @@
                 <td colspan="9">&nbsp;</td>
             </tr>
             <tr height="20">
-                <td colspan="2" height="20" style="font-weight: bold;">Date Requested:</td>
-                <td colspan="2" id="req_date">{{$list->req_date}}</td>
+                <td colspan="2" style="font-weight: bold;">Request Type:</td>
+                <td colspan="2" id="req_type">{{$list->req_type}}</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;">Stock Request No.:</td>
                 <td colspan="2">{{$list->req_num}}</td>
             </tr>
             <tr height="20">
-                <td colspan="2" height="20" style="font-weight: bold;">Date Needed:</td>
-                <td colspan="2" id="need_date">{{$list->needdate}}</td>
-                <td>&nbsp;</td>
-                <td colspan="2" style="font-weight: bold;" class="tdHide">Reference SO/PO No.:</td>
-                <td colspan="2" class="tdHide">{{$list->reference}}</td>
-                <td colspan="2" style="font-weight: bold; display: none;" class="tdShow">Assembly Request No.:</td>
-                <td colspan="2" style="display: none;" class="tdShow">{{$list->assembly_reqnum}}</td>
-            </tr>
-            <tr height="20">
-                <td colspan="2" height="20" style="font-weight: bold;">Requested By:</td>
-                <td colspan="2">{{$list->req_by}}</td>
+                <td colspan="2" style="font-weight: bold;">Date Requested:</td>
+                <td colspan="2" id="req_date">{{$list->req_date}}</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;">Date Scheduled:</td>
                 <td colspan="2" id="sched">{{$list->sched}}</td>
             </tr>
             <tr height="20">
-                <td colspan="2" height="20" style="font-weight: bold;">Date Prepared:</td>
-                <td colspan="2" id="prep_date">{{$list->prepdate}}</td>
+                <td colspan="2" style="font-weight: bold;">Date Needed:</td>
+                <td colspan="2" id="need_date">{{$list->needdate}}</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Client Name:</td>
                 <td colspan="2" class="tdHide">{{$list->client_name}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;">Requested By:</td>
+                <td colspan="2">{{$list->req_by}}</td>
+                <td>&nbsp;</td>
+                <td colspan="2" style="font-weight: bold;" class="tdHide">Address / Branch:</td>
+                <td colspan="2" class="tdHide">{{$list->location}}</td>
+                <td colspan="2" style="font-weight: bold; display: none;" class="tdShow">Assembly Request No.:</td>
+                <td colspan="2" style="display: none;" class="tdShow">{{$list->assembly_reqnum}}</td>
                 <td colspan="2" style="font-weight: bold; display: none;" class="tdAssembly">Assembled Item Name:</td>
                 <td colspan="2" style="display: none;" class="tdAssembly" id="ellipsis">{{$list1->item_desc ?? 'N/A'}}</td>
             </tr>
             <tr height="20">
-                <td colspan="2" height="20" style="font-weight: bold;">Prepared By:</td>
-                <td colspan="2">{{$list2->prepby}}</td>
+                <td colspan="2" style="font-weight: bold;">Date Prepared:</td>
+                <td colspan="2" id="prep_date">{{$list->prepdate}}</td>
                 <td>&nbsp;</td>
-                <td colspan="2" style="font-weight: bold;" class="tdHide">Address / Branch:</td>
-                <td colspan="2" class="tdHide">{{$list->location}}</td>
+                <td colspan="2" style="font-weight: bold;" class="tdHide">Contact Person:</td>
+                <td colspan="2" class="tdHide">{{$list->contact}}</td>
                 <td colspan="2" style="font-weight: bold; display: none;" class="tdAssembly">Quantity:</td>
                 <td colspan="2" style="display: none;" class="tdAssembly">{{$list->qty}}-Unit/s</td>
             </tr>
             <tr height="20">
-                <td colspan="2" height="20" style="font-weight: bold;">Request Type:</td>
-                <td colspan="2" id="req_type">{{$list->req_type}}</td>
-                <td colspan="5">&nbsp;</td>
+                <td colspan="2" style="font-weight: bold;">Prepared By:</td>
+                <td colspan="2">{{$list2->prepby}}</td>
+                <td>&nbsp;</td>
+                <td colspan="2" style="font-weight: bold;" class="tdHide">Remarks:</td>
+                <td colspan="2" class="tdHide">{{$list->remarks}}</td>
             </tr>
             <tr height="20">
-                <td colspan="9" height="20">&nbsp;</td>
+                @if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10))
+                <td colspan="2" style="font-weight: bold;" class="tdHide">Reference SO/PO No.:</td>
+                <td colspan="7" class="tdHide">{{$list->reference}}</td>
+                @else
+                <td colspan="9">&nbsp;</td>
+                @endif
+            </tr>
+            <tr height="20">
+                <td colspan="9">&nbsp;</td>
             </tr>
             <tr height="20">
                 <td colspan="9" height="20">
@@ -170,7 +180,7 @@ document.addEventListener("contextmenu", function(e){
 
 $(document).ready(function(){
     var req_date = $('#req_date').html();
-    req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
+    req_date = moment(req_date).format('dddd, MMMM DD, YYYY');
     $('#req_date').html(req_date);
 
     var need_date = $('#need_date').html();

@@ -105,6 +105,7 @@ Route::get('/getReceive',[StockRequestController::class,'getReceive']);
 Route::get('/getLink',[StockRequestController::class,'getLink']);
 Route::get('/printRequest',[StockRequestController::class,'printRequest']);
 Route::get('/checkURL',[StockRequestController::class,'checkURL']);
+Route::any('/stockrequest/notify',[StockRequestController::class,'notify']);
 //
 
 //Stock Transfer
@@ -138,6 +139,7 @@ Route::get('/settransserials',[StockTransferController::class,'settransserials']
 Route::any('/transferItems',[StockTransferController::class,'transferItems']);
 Route::any('/logTransSched',[StockTransferController::class,'logTransSched']);
 Route::get('/printTransferRequest',[StockTransferController::class,'printTransferRequest']);
+Route::any('/stocktransfer/notify',[StockTransferController::class,'notify']);
 //
 
 //Assembly

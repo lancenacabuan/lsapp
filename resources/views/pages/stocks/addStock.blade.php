@@ -12,7 +12,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Category</label>
                         </div>
-                        <select id="category" name="category" style="width: 628px;" required>
+                        <select id="category" name="category" style="width: 630px;" required>
                                 <option value="" selected disabled>Select Category</option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
@@ -23,7 +23,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Item</label>
                         </div>
-                        <select id="item" name="item" style="width: 628px;" required>
+                        <select id="item" name="item" style="width: 630px;" required>
                             <option value="" selected disabled>Select Item</option>
                         </select>
                     </div>
@@ -31,7 +31,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Location</label>
                         </div>
-                        <select id="location" name="location" style="width: 628px;" required>
+                        <select id="location" name="location" style="width: 630px;" required>
                                 <option value="" selected disabled>Select Location</option>
                                 @foreach($locations as $location)
                                     <option value="{{$location->id}}">{{$location->location}}</option>
@@ -42,31 +42,31 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Rack No.</label>
                         </div>
-                        <input type="text" id="rack" name="rack" placeholder="Enter Rack No. (Optional)" style="width: 628px; border-width: thin;" autocomplete="off">
+                        <input type="text" id="rack" name="rack" placeholder="Enter Rack No. (Optional)" style="width: 630px; border-width: thin;" autocomplete="off">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Row No.</label>
                         </div>
-                        <input type="text" id="row" name="row" placeholder="Enter Row No. (Optional)" style="width: 628px; border-width: thin;" autocomplete="off">
+                        <input type="text" id="row" name="row" placeholder="Enter Row No. (Optional)" style="width: 630px; border-width: thin;" autocomplete="off">
                     </div>
                     <div class="input-group mb-3" id="uomdiv">
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">UOM</label>
                         </div>
-                        <input type="text" id="uom" name="uom" style="width: 628px; border-width: thin;" disabled>
+                        <input type="text" id="uom" name="uom" style="width: 630px; border-width: thin;" disabled>
                     </div>
                     <div class="input-group mb-3" id="qtydiv">
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Quantity</label>
                         </div>
-                        <input type="number" id="qty" name="qty" min="1" style="width: 628px; border-width: thin;" placeholder="0"  autocomplete="off" onkeyup="if(value<1) value=1;" required>
+                        <input type="number" id="qty" name="qty" min="1" style="width: 630px; border-width: thin;" placeholder="0"  autocomplete="off" onkeyup="if(value<1) value=1;" required>
                     </div>
                     <div class="input-group mb-3" id="serialdiv">
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Serial</label>
                         </div>
-                        <input type="text" id="serial" name="serial" placeholder="Enter Serial (Note: Leave blank if N/A)" style="width: 628px; border-width: thin;" autocomplete="off" onkeypress="return specialChar(event)">
+                        <input type="text" id="serial" name="serial" placeholder="Enter Serial (Note: Leave blank if N/A)" style="width: 630px; border-width: thin;" autocomplete="off" onkeypress="return specialChar(event)">
                     </div>
                 </form>
                 <br>

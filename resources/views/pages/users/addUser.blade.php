@@ -11,19 +11,19 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" style="width: 100px;">Fullname</label>
                 </div>
-                <input type="text" id="name" name="name" style="width: 367px; border-width: thin;" placeholder="Please enter account user fullname">
+                <input type="text" id="name" name="name" style="width: 370px; border-width: thin;" placeholder="Please enter account user fullname">
             </div> 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text" style="width: 100px;">Email</label>
                 </div>
-                <input type="email" id="email" name="email" style="width: 367px; border-width: thin;" placeholder="Please enter account user email">
+                <input type="email" id="email" name="email" style="width: 370px; border-width: thin;" placeholder="Please enter account user email">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text" style="width: 100px;">User Level</label>
                 </div>
-                <select id="role" name="role" style="width: 367px !important; color: Gray !important;">
+                <select id="role" name="role" style="width: 370px !important; color: Gray !important;">
                     <option value="" selected disabled>Select User Level</option>
                     @foreach($role as $roles)
                         <option value="{{$roles->name}}" style="color: Black;">{{strtoupper($roles->name)}}</option>

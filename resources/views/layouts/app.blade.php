@@ -112,6 +112,7 @@
         }
         .swal-modal{
             zoom: 80% !important;
+            width: 420px !important;
         }
         .swal-text{
             zoom: 120% !important;

@@ -1,31 +1,30 @@
-var table;
 $('#loading').show(); Spinner(); Spinner.show();
-    table = $('table.user_logs').DataTable({
-        language: {
-            processing: "Loading...",
-            emptyTable: "No data available in table"
+var table = $('table.user_logs').DataTable({
+    language: {
+        processing: "Loading...",
+        emptyTable: "No data available in table"
+    },
+    serverSide: true,
+    ajax: {
+        url: '/index_data',
+    },
+    columnDefs: [
+        {
+            "targets": [0],
+            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
         },
-        serverSide: true,
-        ajax: {
-            url: '/index_data',
-        },
-        columnDefs: [
-            {
-                "targets": [0],
-                "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
-            },
-        ],
-        columns: [
-            { data: 'date', width: '15%' },
-            { data: 'username', width: '15%' },
-            { data: 'role', width: '12%' },
-            { data: 'activity' }
-        ],
-        order:[],
-        initComplete: function(){
-            $('#loading').hide(); Spinner.hide();
-        }
-    });
+    ],
+    columns: [
+        { data: 'date', width: '15%' },
+        { data: 'username', width: '15%' },
+        { data: 'role', width: '12%' },
+        { data: 'activity' }
+    ],
+    order:[],
+    initComplete: function(){
+        return notifyDeadline();
+    }
+});
 
 $('.filter-input').on('keyup', function(){
     table.column($(this).data('column'))

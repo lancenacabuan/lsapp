@@ -238,7 +238,7 @@ $('table.assemblyTable').DataTable({
     ],
     order:[],
     initComplete: function(){
-        $('#loading').hide(); Spinner.hide();
+        return notifyDeadline();
     }
 });
 

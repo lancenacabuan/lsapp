@@ -28,7 +28,7 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
         ],
         order:[[2, 'asc']],
         initComplete: function(){
-            $('#loading').hide(); Spinner.hide();
+            return notifyDeadline();
         }
     });
 }
@@ -61,7 +61,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         ],
         order:[[2, 'asc']],
         initComplete: function(){
-            $('#loading').hide(); Spinner.hide();
+            return notifyDeadline();
         }
     });
 }
@@ -91,7 +91,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         ],
         order:[[1, 'asc']],
         initComplete: function(){
-            $('#loading').hide(); Spinner.hide();
+            return notifyDeadline();
         }
     });
 }
@@ -138,7 +138,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         ],
         order:[[1, 'asc']],
         initComplete: function(){
-            $('#loading').hide(); Spinner.hide();
+            return notifyDeadline();
         }
     });
 }
@@ -160,7 +160,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         },
         async: false,
         initComplete: function(){
-            $('#loading').hide(); Spinner.hide();
+            return notifyDeadline();
         },
         columns: [
             { data: 'Warranty_Name', name:'Warranty_Name'},

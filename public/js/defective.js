@@ -52,7 +52,7 @@ $('table.defectiveTable').DataTable({
     ],
     order:[[1, 'asc'], [2, 'asc']],
     initComplete: function(){
-        $('#loading').hide(); Spinner.hide();
+        return notifyDeadline();
     }
 });
 

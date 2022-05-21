@@ -223,6 +223,17 @@
             @yield('content')
         </main>
     </div>
+    <script>
+        function notifyDeadline(){
+            $.ajax({
+                type: 'get', 
+                url: '/stockrequest/notify',
+                success: function(){
+                    $('#loading').hide(); Spinner.hide();
+                }
+            });
+        }
+    </script>
     @if(Request::is('/'))
         <script src="{{ asset('js/index.js') }}"></script>
     @endif

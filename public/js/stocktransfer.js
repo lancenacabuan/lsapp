@@ -564,7 +564,7 @@ $('table.stocktransferTable').DataTable({
     ],
     order:[],
     initComplete: function(){
-        $('#loading').hide(); Spinner.hide();
+        return notifyDeadline();
     }
 });
 

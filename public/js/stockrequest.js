@@ -886,7 +886,7 @@ if($("#current_role").val() == '["sales"]'){
         ],
         order:[],
         initComplete: function(){
-            $('#loading').hide(); Spinner.hide();
+            return notifyDeadline();
         }
     });
 }
@@ -985,7 +985,7 @@ else{
         ],
         order:[],
         initComplete: function(){
-            $('#loading').hide(); Spinner.hide();
+            return notifyDeadline();
         }
     });
 }

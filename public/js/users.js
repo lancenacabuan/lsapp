@@ -34,7 +34,7 @@ $('table.userTable').DataTable({
     ],
     order:[[3, 'asc'], [1, 'asc']],
     initComplete: function(){
-        $('#loading').hide(); Spinner.hide();
+        return notifyDeadline();
     }
 });
 

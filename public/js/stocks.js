@@ -28,7 +28,7 @@ function category(){
                 { data: 'Total_stocks' }
             ],
             initComplete: function(){
-                $('#loading').hide(); Spinner.hide();
+                return notifyDeadline();
             }
         });
 }
@@ -77,7 +77,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
                 { data: 'Total_stocks' }
             ],
             initComplete: function(){
-                $('#loading').hide(); Spinner.hide();
+                return notifyDeadline();
             }
         });
 });
@@ -116,7 +116,7 @@ $('#btnBack').on('click', function(){
                 { data: 'Total_stocks' }
             ],
             initComplete: function(){
-                $('#loading').hide(); Spinner.hide();
+                return notifyDeadline();
             }
         });
 });
@@ -175,7 +175,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
             ],
             order:[[1, 'desc']],
             initComplete: function(){
-                $('#loading').hide(); Spinner.hide();
+                return notifyDeadline();
             }
         });
 });

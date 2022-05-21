@@ -2065,6 +2065,27 @@ class StockRequestController extends Controller
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
+                $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+                foreach($user as $keyx){
+                    $details = [
+                        'name' => ucwords($keyx->name),
+                        'action' => 'is 3-Days Prior its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'request_number' => $value['req_num'],
+                        'reqdate' => $value['req_date'],
+                        'requested_by' => $value['req_by'],
+                        'needdate' => $value['needdate'],
+                        'reqtype' => $value['req_type'],
+                        'status' => $value['status'],
+                        'client_name' => $value['client_name'],
+                        'location' => $value['location'],
+                        'contact' => $value['contact'],
+                        'remarks' => $value['remarks'],
+                        'reference' => $value['reference'],
+                        'role' => 'Approver - Sales',
+                        'items' => $items
+                    ];
+                    Mail::to($keyx->email)->send(new notifRequest($details, $subject));
+                }
                 $details = [
                     'name' => $value['req_by'],
                     'action' => 'is 3-Days Prior its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
@@ -2084,7 +2105,7 @@ class StockRequestController extends Controller
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }
-            if($difference == '0' && $value['notify'] == '3-Days'){
+            if($difference == '0' && ($value['notify'] == '3-Days' || !$value['notify'])){
                 Requests::where('request_number',$value['req_num'])->update(['notify' => 'Today']);       
                 $subject = '[DEADLINE TODAY] STOCK REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
@@ -2108,6 +2129,27 @@ class StockRequestController extends Controller
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
+                $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+                foreach($user as $keyx){
+                    $details = [
+                        'name' => ucwords($keyx->name),
+                        'action' => 'is now due today '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'request_number' => $value['req_num'],
+                        'reqdate' => $value['req_date'],
+                        'requested_by' => $value['req_by'],
+                        'needdate' => $value['needdate'],
+                        'reqtype' => $value['req_type'],
+                        'status' => $value['status'],
+                        'client_name' => $value['client_name'],
+                        'location' => $value['location'],
+                        'contact' => $value['contact'],
+                        'remarks' => $value['remarks'],
+                        'reference' => $value['reference'],
+                        'role' => 'Approver - Sales',
+                        'items' => $items
+                    ];
+                    Mail::to($keyx->email)->send(new notifRequest($details, $subject));
+                }
                 $details = [
                     'name' => $value['req_by'],
                     'action' => 'is now due today '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
@@ -2127,7 +2169,7 @@ class StockRequestController extends Controller
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }
-            if($difference == '-1' && $value['notify'] == 'Today'){
+            if($difference == '-1' && ($value['notify'] == 'Today' || !$value['notify'])){
                 Requests::where('request_number',$value['req_num'])->update(['notify' => 'Overdue']);       
                 $subject = '[OVERDUE] STOCK REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
@@ -2147,6 +2189,27 @@ class StockRequestController extends Controller
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
                         'role' => 'Admin',
+                        'items' => $items
+                    ];
+                    Mail::to($keyx->email)->send(new notifRequest($details, $subject));
+                }
+                $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+                foreach($user as $keyx){
+                    $details = [
+                        'name' => ucwords($keyx->name),
+                        'action' => 'has already gone past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'request_number' => $value['req_num'],
+                        'reqdate' => $value['req_date'],
+                        'requested_by' => $value['req_by'],
+                        'needdate' => $value['needdate'],
+                        'reqtype' => $value['req_type'],
+                        'status' => $value['status'],
+                        'client_name' => $value['client_name'],
+                        'location' => $value['location'],
+                        'contact' => $value['contact'],
+                        'remarks' => $value['remarks'],
+                        'reference' => $value['reference'],
+                        'role' => 'Approver - Sales',
                         'items' => $items
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));

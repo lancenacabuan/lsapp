@@ -2065,14 +2065,14 @@ class StockRequestController extends Controller
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
                         'assembly_reqnum' => $value['assembly_reqnum'],
-                        'item_desc' => $item_desc,
+                        'item_desc' => $item_desc->item_desc,
                         'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
-                if($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT'){
+                if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
                     $user = User::role('approver - sales')->where('status','ACTIVE')->get();
                     foreach($user as $keyx){
                         $details = [
@@ -2090,7 +2090,7 @@ class StockRequestController extends Controller
                             'remarks' => $value['remarks'],
                             'reference' => $value['reference'],
                             'assembly_reqnum' => $value['assembly_reqnum'],
-                            'item_desc' => $item_desc,
+                            'item_desc' => $item_desc->item_desc,
                             'qty' => $value['qty'],
                             'role' => 'Approver - Sales',
                             'items' => $items
@@ -2113,7 +2113,7 @@ class StockRequestController extends Controller
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
                     'assembly_reqnum' => $value['assembly_reqnum'],
-                    'item_desc' => $item_desc,
+                    'item_desc' => $item_desc->item_desc,
                     'qty' => $value['qty'],
                     'role' => 'own user',
                     'items' => $items
@@ -2140,14 +2140,14 @@ class StockRequestController extends Controller
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
                         'assembly_reqnum' => $value['assembly_reqnum'],
-                        'item_desc' => $item_desc,
+                        'item_desc' => $item_desc->item_desc,
                         'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
-                if($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT'){
+                if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
                     $user = User::role('approver - sales')->where('status','ACTIVE')->get();
                     foreach($user as $keyx){
                         $details = [
@@ -2165,7 +2165,7 @@ class StockRequestController extends Controller
                             'remarks' => $value['remarks'],
                             'reference' => $value['reference'],
                             'assembly_reqnum' => $value['assembly_reqnum'],
-                            'item_desc' => $item_desc,
+                            'item_desc' => $item_desc->item_desc,
                             'qty' => $value['qty'],
                             'role' => 'Approver - Sales',
                             'items' => $items
@@ -2188,7 +2188,7 @@ class StockRequestController extends Controller
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
                     'assembly_reqnum' => $value['assembly_reqnum'],
-                    'item_desc' => $item_desc,
+                    'item_desc' => $item_desc->item_desc,
                     'qty' => $value['qty'],
                     'role' => 'own user',
                     'items' => $items
@@ -2215,14 +2215,14 @@ class StockRequestController extends Controller
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
                         'assembly_reqnum' => $value['assembly_reqnum'],
-                        'item_desc' => $item_desc,
+                        'item_desc' => $item_desc->item_desc,
                         'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
-                if($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT'){
+                if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
                     $user = User::role('approver - sales')->where('status','ACTIVE')->get();
                     foreach($user as $keyx){
                         $details = [
@@ -2240,7 +2240,7 @@ class StockRequestController extends Controller
                             'remarks' => $value['remarks'],
                             'reference' => $value['reference'],
                             'assembly_reqnum' => $value['assembly_reqnum'],
-                            'item_desc' => $item_desc,
+                            'item_desc' => $item_desc->item_desc,
                             'qty' => $value['qty'],
                             'role' => 'Approver - Sales',
                             'items' => $items
@@ -2263,7 +2263,7 @@ class StockRequestController extends Controller
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
                     'assembly_reqnum' => $value['assembly_reqnum'],
-                    'item_desc' => $item_desc,
+                    'item_desc' => $item_desc->item_desc,
                     'qty' => $value['qty'],
                     'role' => 'own user',
                     'items' => $items

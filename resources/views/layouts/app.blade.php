@@ -110,6 +110,12 @@
             color: white;
             opacity: 100%;
         }
+        .swal-modal{
+            zoom: 80% !important;
+        }
+        .swal-text{
+            zoom: 120% !important;
+        }
         .chosen-container-single .chosen-single {
             margin-top: -12px !important;
             margin-left: 10px !important;

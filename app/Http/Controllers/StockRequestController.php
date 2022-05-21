@@ -2065,7 +2065,7 @@ class StockRequestController extends Controller
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
                         'assembly_reqnum' => $value['assembly_reqnum'],
-                        'item_desc' => $item_desc->item_desc,
+                        'item_desc' => $item_desc['item_desc'] ?? '',
                         'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items
@@ -2090,7 +2090,7 @@ class StockRequestController extends Controller
                             'remarks' => $value['remarks'],
                             'reference' => $value['reference'],
                             'assembly_reqnum' => $value['assembly_reqnum'],
-                            'item_desc' => $item_desc->item_desc,
+                            'item_desc' => $item_desc['item_desc'] ?? '',
                             'qty' => $value['qty'],
                             'role' => 'Approver - Sales',
                             'items' => $items
@@ -2113,7 +2113,7 @@ class StockRequestController extends Controller
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
                     'assembly_reqnum' => $value['assembly_reqnum'],
-                    'item_desc' => $item_desc->item_desc,
+                    'item_desc' => $item_desc['item_desc'] ?? '',
                     'qty' => $value['qty'],
                     'role' => 'own user',
                     'items' => $items
@@ -2140,7 +2140,7 @@ class StockRequestController extends Controller
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
                         'assembly_reqnum' => $value['assembly_reqnum'],
-                        'item_desc' => $item_desc->item_desc,
+                        'item_desc' => $item_desc['item_desc'] ?? '',
                         'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items
@@ -2165,7 +2165,7 @@ class StockRequestController extends Controller
                             'remarks' => $value['remarks'],
                             'reference' => $value['reference'],
                             'assembly_reqnum' => $value['assembly_reqnum'],
-                            'item_desc' => $item_desc->item_desc,
+                            'item_desc' => $item_desc['item_desc'] ?? '',
                             'qty' => $value['qty'],
                             'role' => 'Approver - Sales',
                             'items' => $items
@@ -2188,7 +2188,7 @@ class StockRequestController extends Controller
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
                     'assembly_reqnum' => $value['assembly_reqnum'],
-                    'item_desc' => $item_desc->item_desc,
+                    'item_desc' => $item_desc['item_desc'] ?? '',
                     'qty' => $value['qty'],
                     'role' => 'own user',
                     'items' => $items
@@ -2215,7 +2215,7 @@ class StockRequestController extends Controller
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
                         'assembly_reqnum' => $value['assembly_reqnum'],
-                        'item_desc' => $item_desc->item_desc,
+                        'item_desc' => $item_desc['item_desc'] ?? '',
                         'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items
@@ -2240,7 +2240,7 @@ class StockRequestController extends Controller
                             'remarks' => $value['remarks'],
                             'reference' => $value['reference'],
                             'assembly_reqnum' => $value['assembly_reqnum'],
-                            'item_desc' => $item_desc->item_desc,
+                            'item_desc' => $item_desc['item_desc'] ?? '',
                             'qty' => $value['qty'],
                             'role' => 'Approver - Sales',
                             'items' => $items
@@ -2263,7 +2263,7 @@ class StockRequestController extends Controller
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
                     'assembly_reqnum' => $value['assembly_reqnum'],
-                    'item_desc' => $item_desc->item_desc,
+                    'item_desc' => $item_desc['item_desc'] ?? '',
                     'qty' => $value['qty'],
                     'role' => 'own user',
                     'items' => $items

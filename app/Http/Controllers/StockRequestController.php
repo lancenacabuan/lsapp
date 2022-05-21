@@ -2012,6 +2012,10 @@ class StockRequestController extends Controller
             ->toArray();
         
         foreach($list as $key => $value){
+            $item_desc = Item::selectRaw('items.item AS item_desc')
+                ->where('id', '=', $value['item_id'])
+                ->first();
+
             $today = new DateTime(date("Y-m-d"));
             $deadline = new DateTime($value['needdate']);
 
@@ -2048,7 +2052,7 @@ class StockRequestController extends Controller
                 foreach($user as $keyx){
                     $details = [
                         'name' => ucwords($keyx->name),
-                        'action' => 'is 3-Days Prior its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'action' => 'is 3-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                         'request_number' => $value['req_num'],
                         'reqdate' => $value['req_date'],
                         'requested_by' => $value['req_by'],
@@ -2060,35 +2064,43 @@ class StockRequestController extends Controller
                         'contact' => $value['contact'],
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
+                        'assembly_reqnum' => $value['assembly_reqnum'],
+                        'item_desc' => $item_desc,
+                        'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
-                $user = User::role('approver - sales')->where('status','ACTIVE')->get();
-                foreach($user as $keyx){
-                    $details = [
-                        'name' => ucwords($keyx->name),
-                        'action' => 'is 3-Days Prior its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                        'request_number' => $value['req_num'],
-                        'reqdate' => $value['req_date'],
-                        'requested_by' => $value['req_by'],
-                        'needdate' => $value['needdate'],
-                        'reqtype' => $value['req_type'],
-                        'status' => $value['status'],
-                        'client_name' => $value['client_name'],
-                        'location' => $value['location'],
-                        'contact' => $value['contact'],
-                        'remarks' => $value['remarks'],
-                        'reference' => $value['reference'],
-                        'role' => 'Approver - Sales',
-                        'items' => $items
-                    ];
-                    Mail::to($keyx->email)->send(new notifRequest($details, $subject));
+                if($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT'){
+                    $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+                    foreach($user as $keyx){
+                        $details = [
+                            'name' => ucwords($keyx->name),
+                            'action' => 'is 3-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                            'request_number' => $value['req_num'],
+                            'reqdate' => $value['req_date'],
+                            'requested_by' => $value['req_by'],
+                            'needdate' => $value['needdate'],
+                            'reqtype' => $value['req_type'],
+                            'status' => $value['status'],
+                            'client_name' => $value['client_name'],
+                            'location' => $value['location'],
+                            'contact' => $value['contact'],
+                            'remarks' => $value['remarks'],
+                            'reference' => $value['reference'],
+                            'assembly_reqnum' => $value['assembly_reqnum'],
+                            'item_desc' => $item_desc,
+                            'qty' => $value['qty'],
+                            'role' => 'Approver - Sales',
+                            'items' => $items
+                        ];
+                        Mail::to($keyx->email)->send(new notifRequest($details, $subject));
+                    }
                 }
                 $details = [
                     'name' => $value['req_by'],
-                    'action' => 'is 3-Days Prior its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'action' => 'is 3-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                     'request_number' => $value['req_num'],
                     'reqdate' => $value['req_date'],
                     'requested_by' => $value['req_by'],
@@ -2100,7 +2112,10 @@ class StockRequestController extends Controller
                     'contact' => $value['contact'],
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
-                    'role' => 'Sales',
+                    'assembly_reqnum' => $value['assembly_reqnum'],
+                    'item_desc' => $item_desc,
+                    'qty' => $value['qty'],
+                    'role' => 'own user',
                     'items' => $items
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
@@ -2112,7 +2127,7 @@ class StockRequestController extends Controller
                 foreach($user as $keyx){
                     $details = [
                         'name' => ucwords($keyx->name),
-                        'action' => 'is now due today '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                         'request_number' => $value['req_num'],
                         'reqdate' => $value['req_date'],
                         'requested_by' => $value['req_by'],
@@ -2124,35 +2139,43 @@ class StockRequestController extends Controller
                         'contact' => $value['contact'],
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
+                        'assembly_reqnum' => $value['assembly_reqnum'],
+                        'item_desc' => $item_desc,
+                        'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
-                $user = User::role('approver - sales')->where('status','ACTIVE')->get();
-                foreach($user as $keyx){
-                    $details = [
-                        'name' => ucwords($keyx->name),
-                        'action' => 'is now due today '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                        'request_number' => $value['req_num'],
-                        'reqdate' => $value['req_date'],
-                        'requested_by' => $value['req_by'],
-                        'needdate' => $value['needdate'],
-                        'reqtype' => $value['req_type'],
-                        'status' => $value['status'],
-                        'client_name' => $value['client_name'],
-                        'location' => $value['location'],
-                        'contact' => $value['contact'],
-                        'remarks' => $value['remarks'],
-                        'reference' => $value['reference'],
-                        'role' => 'Approver - Sales',
-                        'items' => $items
-                    ];
-                    Mail::to($keyx->email)->send(new notifRequest($details, $subject));
+                if($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT'){
+                    $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+                    foreach($user as $keyx){
+                        $details = [
+                            'name' => ucwords($keyx->name),
+                            'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                            'request_number' => $value['req_num'],
+                            'reqdate' => $value['req_date'],
+                            'requested_by' => $value['req_by'],
+                            'needdate' => $value['needdate'],
+                            'reqtype' => $value['req_type'],
+                            'status' => $value['status'],
+                            'client_name' => $value['client_name'],
+                            'location' => $value['location'],
+                            'contact' => $value['contact'],
+                            'remarks' => $value['remarks'],
+                            'reference' => $value['reference'],
+                            'assembly_reqnum' => $value['assembly_reqnum'],
+                            'item_desc' => $item_desc,
+                            'qty' => $value['qty'],
+                            'role' => 'Approver - Sales',
+                            'items' => $items
+                        ];
+                        Mail::to($keyx->email)->send(new notifRequest($details, $subject));
+                    }
                 }
                 $details = [
                     'name' => $value['req_by'],
-                    'action' => 'is now due today '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                     'request_number' => $value['req_num'],
                     'reqdate' => $value['req_date'],
                     'requested_by' => $value['req_by'],
@@ -2164,7 +2187,10 @@ class StockRequestController extends Controller
                     'contact' => $value['contact'],
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
-                    'role' => 'Sales',
+                    'assembly_reqnum' => $value['assembly_reqnum'],
+                    'item_desc' => $item_desc,
+                    'qty' => $value['qty'],
+                    'role' => 'own user',
                     'items' => $items
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
@@ -2176,7 +2202,7 @@ class StockRequestController extends Controller
                 foreach($user as $keyx){
                     $details = [
                         'name' => ucwords($keyx->name),
-                        'action' => 'has already gone past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                         'request_number' => $value['req_num'],
                         'reqdate' => $value['req_date'],
                         'requested_by' => $value['req_by'],
@@ -2188,35 +2214,43 @@ class StockRequestController extends Controller
                         'contact' => $value['contact'],
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
+                        'assembly_reqnum' => $value['assembly_reqnum'],
+                        'item_desc' => $item_desc,
+                        'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
-                $user = User::role('approver - sales')->where('status','ACTIVE')->get();
-                foreach($user as $keyx){
-                    $details = [
-                        'name' => ucwords($keyx->name),
-                        'action' => 'has already gone past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                        'request_number' => $value['req_num'],
-                        'reqdate' => $value['req_date'],
-                        'requested_by' => $value['req_by'],
-                        'needdate' => $value['needdate'],
-                        'reqtype' => $value['req_type'],
-                        'status' => $value['status'],
-                        'client_name' => $value['client_name'],
-                        'location' => $value['location'],
-                        'contact' => $value['contact'],
-                        'remarks' => $value['remarks'],
-                        'reference' => $value['reference'],
-                        'role' => 'Approver - Sales',
-                        'items' => $items
-                    ];
-                    Mail::to($keyx->email)->send(new notifRequest($details, $subject));
+                if($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT'){
+                    $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+                    foreach($user as $keyx){
+                        $details = [
+                            'name' => ucwords($keyx->name),
+                            'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                            'request_number' => $value['req_num'],
+                            'reqdate' => $value['req_date'],
+                            'requested_by' => $value['req_by'],
+                            'needdate' => $value['needdate'],
+                            'reqtype' => $value['req_type'],
+                            'status' => $value['status'],
+                            'client_name' => $value['client_name'],
+                            'location' => $value['location'],
+                            'contact' => $value['contact'],
+                            'remarks' => $value['remarks'],
+                            'reference' => $value['reference'],
+                            'assembly_reqnum' => $value['assembly_reqnum'],
+                            'item_desc' => $item_desc,
+                            'qty' => $value['qty'],
+                            'role' => 'Approver - Sales',
+                            'items' => $items
+                        ];
+                        Mail::to($keyx->email)->send(new notifRequest($details, $subject));
+                    }
                 }
                 $details = [
                     'name' => $value['req_by'],
-                    'action' => 'has already gone past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                     'request_number' => $value['req_num'],
                     'reqdate' => $value['req_date'],
                     'requested_by' => $value['req_by'],
@@ -2228,7 +2262,10 @@ class StockRequestController extends Controller
                     'contact' => $value['contact'],
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
-                    'role' => 'Sales',
+                    'assembly_reqnum' => $value['assembly_reqnum'],
+                    'item_desc' => $item_desc,
+                    'qty' => $value['qty'],
+                    'role' => 'own user',
                     'items' => $items
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));

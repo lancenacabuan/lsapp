@@ -4,16 +4,25 @@
     <p>Hello, {{$details['name']}}!<br>
     This is to inform you that a Stock Request {{$details['action']}}<br></p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
+    @if($details['reqtype'] == 'REPLACEMENT')
+    <strong>Assembly Request No.: {{$details['assembly_reqnum']}}</strong><br>
+    @endif
     <strong>Status: {{$details['status']}}</strong><br>
     <p>
         Request Type: {{$details['reqtype']}}<br>
         Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
-        Requested By: {{$details['requested_by']}}<br><br>
-        Client Name: {{$details['client_name']}}<br>
+        Requested By: {{$details['requested_by']}}
+        @if($details['reqtype'] == 'ASSEMBLY')
+        <br><br>Assembled Item Name: {{$details['item_desc']}}<br>
+        Quantity: {{$details['qty']}}-Unit/s
+        @endif
+        @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'DEMO UNIT')
+        <br><br>Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
         Contact Person: {{$details['contact']}}<br>
         Remarks: {{$details['remarks']}}
+        @endif
         @if($details['reqtype'] == 'SALES')
         <br><br>Reference SO/PO No.: {{$details['reference']}}
         @endif

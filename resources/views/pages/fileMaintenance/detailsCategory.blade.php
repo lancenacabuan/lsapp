@@ -11,7 +11,7 @@
             <input type="hidden" name="category_original" id="category_original">
             <div class="form-inline">
                 <label class="form-control form-control-sm" style="width: 120px;">Category Name</label>
-                <input class="form-control form-control-sm" id="category_details" style="width: 345px;" type="text" maxlength="150" placeholder="Please enter category name">
+                <input class="form-control form-control-sm" id="category_details" style="width: 348px;" type="text" maxlength="150" placeholder="Please enter category name">
             </div>
             <button type="button" id="btnUpdateCategory" class="btn btn-primary float-right bp" style="margin-top: 10px;">UPDATE</button>
         </div>

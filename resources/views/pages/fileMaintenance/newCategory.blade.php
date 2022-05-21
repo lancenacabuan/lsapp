@@ -9,7 +9,7 @@
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline">
                 <label class="form-control form-control-sm" style="width: 120px;">Category Name</label>
-                <input class="form-control form-control-sm" id="category" style="width: 345px;" type="text" maxlength="150" placeholder="Please enter category name">
+                <input class="form-control form-control-sm" id="category" style="width: 348px;" type="text" maxlength="150" placeholder="Please enter category name">
             </div>
             <button type="button" id="btnSaveCategory" class="btn btn-primary float-right bp" style="margin-top: 10px;">SUBMIT</button>
         </div>

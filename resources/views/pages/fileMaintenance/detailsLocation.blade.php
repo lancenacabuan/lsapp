@@ -11,7 +11,7 @@
             <input type="hidden" name="location_original" id="location_original">
             <input type="hidden" name="status_original" id="status_original">
             <div class="form-inline">
-                <label class="form-control form-control-sm" style="width: 115px;">Location Name</label>
+                <label class="form-control form-control-sm" style="width: 118px;">Location Name</label>
                 <input class="form-control form-control-sm" id="location_details" style="width: 240px;" type="text" maxlength="100" placeholder="Please enter location name">            
                 <label class="switch">
                     <input type="checkbox" id="status" class="togBtn" value="ACTIVE">

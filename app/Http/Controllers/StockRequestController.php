@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\notifRequest;
+use App\Mail\notifTransfer;
 use App\Mail\emailForRequest;
 use App\Mail\disapprovedRequest;
 use App\Mail\receivedRequest;
@@ -21,6 +22,7 @@ use App\Models\Warranty;
 use App\Models\Status;
 use App\Models\Stock;
 use App\Models\StockRequest;
+use App\Models\StockTransfer;
 use App\Models\Requests;
 use App\Models\RequestTransfer;
 use App\Models\User;
@@ -2002,7 +2004,7 @@ class StockRequestController extends Controller
     }
 
     public function notify(){
-        $list = Requests::select('requests.id AS req_id', 'requests.created_at AS req_date', 'requests.request_number AS req_num', 'requests.requested_by AS user_id', 'users.name AS req_by', 'users.email AS email', 'request_type.name AS req_type', 'status.status AS status', 'users.name AS req_by', 'request_type.id AS req_type_id', 'status.id AS status_id', 'requests.schedule AS sched', 'prepared_by', 'client_name', 'location', 'contact', 'remarks', 'reference', 'needdate', 'prepdate', 'requests.item_id AS item_id', 'qty', 'assembly_reqnum', 'notify')
+        $stockrequest = Requests::select('requests.id AS req_id', 'requests.created_at AS req_date', 'requests.request_number AS req_num', 'requests.requested_by AS user_id', 'users.name AS req_by', 'users.email AS email', 'request_type.name AS req_type', 'status.status AS status', 'users.name AS req_by', 'request_type.id AS req_type_id', 'status.id AS status_id', 'requests.schedule AS sched', 'prepared_by', 'client_name', 'location', 'contact', 'remarks', 'reference', 'needdate', 'prepdate', 'requests.item_id AS item_id', 'qty', 'assembly_reqnum', 'notify')
             ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -2011,7 +2013,7 @@ class StockRequestController extends Controller
             ->get()
             ->toArray();
         
-        foreach($list as $key => $value){
+        foreach($stockrequest as $key => $value){
             $item_desc = Item::selectRaw('items.item AS item_desc')
                 ->where('id', '=', $value['item_id'])
                 ->first();
@@ -2022,7 +2024,7 @@ class StockRequestController extends Controller
             $difference = $today->diff($deadline)->format("%r%a");
 
             if(($difference > 0 && $difference <= 3) && !$value['notify']){
-                Requests::where('request_number',$value['req_num'])->update(['notify' => '3-Days']);
+                Requests::where('request_number', $value['req_num'])->update(['notify' => '3-Days']);
                 if($value['req_type'] == 'SALES'){
                     $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('categories', 'categories.id', 'stock_request.category')
@@ -2120,7 +2122,7 @@ class StockRequestController extends Controller
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }
             if($difference == 0 && ($value['notify'] == '3-Days' || !$value['notify'])){
-                Requests::where('request_number',$value['req_num'])->update(['notify' => 'Today']);
+                Requests::where('request_number', $value['req_num'])->update(['notify' => 'Today']);
                 if($value['req_type'] == 'SALES'){
                     $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('categories', 'categories.id', 'stock_request.category')
@@ -2218,7 +2220,7 @@ class StockRequestController extends Controller
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }
             if($difference <= -1 && ($value['notify'] == 'Today' || !$value['notify'])){
-                Requests::where('request_number',$value['req_num'])->update(['notify' => 'Overdue']);
+                Requests::where('request_number', $value['req_num'])->update(['notify' => 'Overdue']);
                 if($value['req_type'] == 'SALES'){
                     $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('categories', 'categories.id', 'stock_request.category')
@@ -2314,6 +2316,223 @@ class StockRequestController extends Controller
                     'items' => $items
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
+            }
+        }
+
+        $stocktransfer = RequestTransfer::select('request_transfer.id AS req_id', 'request_transfer.created_at AS req_date', 'request_transfer.request_number AS req_num', 'request_transfer.requested_by AS user_id', 'users.name AS req_by', 'status.status AS status', 'users.email AS email', 'status.id AS status_id', 'request_transfer.schedule AS sched', 'prepared_by', 'needdate', 'prepdate', 'locfrom', 'locto', 'notify')
+            ->whereNotIn('request_transfer.status', ['7','8'])
+            ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+            ->join('status', 'status.id', '=', 'request_transfer.status')
+            ->orderBy('request_transfer.created_at', 'DESC')
+            ->get()
+            ->toArray();
+
+        foreach($stocktransfer as $key => $value){
+            $today = new DateTime(date("Y-m-d"));
+            $deadline = new DateTime($value['needdate']);
+
+            $difference = $today->diff($deadline)->format("%r%a");
+
+            if(($difference > 0 && $difference <= 3) && !$value['notify']){
+                RequestTransfer::where('request_number', $value['req_num'])->update(['notify' => '3-Days']);
+                $locfrom = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locfrom'])->first()->location;
+                $locto = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locto'])->first()->location;
+                $items = StockTransfer::selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, quantity')
+                    ->where('request_number', $value['req_num'])
+                    ->join('categories', 'categories.id', 'stock_transfer.category')
+                    ->join('items', 'items.id', 'stock_transfer.item')
+                    ->orderBy('item', 'ASC')
+                    ->orderBy('category', 'ASC')
+                    ->get();
+                $subject = '[LAST '.$difference.' DAY/S] STOCK TRANSFER REQUEST NO. '.$value['req_num'];
+                $user = User::role('admin')->where('status','ACTIVE')->get();
+                foreach($user as $key){
+                    if($key->email != $value['email']){
+                        $details = [
+                            'name' => ucwords($key->name),
+                            'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                            'request_number' => $value['req_num'],
+                            'reqdate' => $value['req_date'],
+                            'requested_by' => $value['req_by'],
+                            'needdate' => $value['needdate'],
+                            'locfrom' => $locfrom,
+                            'locto' => $locto,
+                            'status' => $value['status'],
+                            'role' => 'Admin',
+                            'items' => $items
+                        ];
+                        Mail::to($key->email)->send(new notifTransfer($details, $subject));
+                    }
+                }
+                if($value['status'] == 'FOR APPROVAL'){        
+                    $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
+                    foreach($user as $key){
+                        if($key->email != $value['email']){
+                            $details = [
+                                'name' => ucwords($key->name),
+                                'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                                'request_number' => $value['req_num'],
+                                'reqdate' => $value['req_date'],
+                                'requested_by' => $value['req_by'],
+                                'needdate' => $value['needdate'],
+                                'locfrom' => $locfrom,
+                                'locto' => $locto,
+                                'status' => $value['status'],
+                                'role' => 'Approver - Warehouse',
+                                'items' => $items
+                            ];
+                            Mail::to($key->email)->send(new notifTransfer($details, $subject));
+                        }
+                    }
+                }
+                $details = [
+                    'name' => $value['req_by'],
+                    'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'request_number' => $value['req_num'],
+                    'reqdate' => $value['req_date'],
+                    'requested_by' => $value['req_by'],
+                    'needdate' => $value['needdate'],
+                    'locfrom' => $locfrom,
+                    'locto' => $locto,
+                    'status' => $value['status'],
+                    'role' => 'Admin / Encoder',
+                    'items' => $items
+                ];
+                Mail::to($value['email'])->send(new notifTransfer($details, $subject));
+            }
+            if($difference == 0 && ($value['notify'] == '3-Days' || !$value['notify'])){
+                RequestTransfer::where('request_number', $value['req_num'])->update(['notify' => 'Today']);
+                $locfrom = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locfrom'])->first()->location;
+                $locto = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locto'])->first()->location;
+                $items = StockTransfer::selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, quantity')
+                    ->where('request_number', $value['req_num'])
+                    ->join('categories', 'categories.id', 'stock_transfer.category')
+                    ->join('items', 'items.id', 'stock_transfer.item')
+                    ->orderBy('item', 'ASC')
+                    ->orderBy('category', 'ASC')
+                    ->get();
+                $subject = '[DEADLINE TODAY] STOCK TRANSFER REQUEST NO. '.$value['req_num'];
+                $user = User::role('admin')->where('status','ACTIVE')->get();
+                foreach($user as $key){
+                    if($key->email != $value['email']){
+                        $details = [
+                            'name' => ucwords($key->name),
+                            'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                            'request_number' => $value['req_num'],
+                            'reqdate' => $value['req_date'],
+                            'requested_by' => $value['req_by'],
+                            'needdate' => $value['needdate'],
+                            'locfrom' => $locfrom,
+                            'locto' => $locto,
+                            'status' => $value['status'],
+                            'role' => 'Admin',
+                            'items' => $items
+                        ];
+                        Mail::to($key->email)->send(new notifTransfer($details, $subject));
+                    }
+                }
+                if($value['status'] == 'FOR APPROVAL'){        
+                    $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
+                    foreach($user as $key){
+                        if($key->email != $value['email']){
+                            $details = [
+                                'name' => ucwords($key->name),
+                                'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                                'request_number' => $value['req_num'],
+                                'reqdate' => $value['req_date'],
+                                'requested_by' => $value['req_by'],
+                                'needdate' => $value['needdate'],
+                                'locfrom' => $locfrom,
+                                'locto' => $locto,
+                                'status' => $value['status'],
+                                'role' => 'Approver - Warehouse',
+                                'items' => $items
+                            ];
+                            Mail::to($key->email)->send(new notifTransfer($details, $subject));
+                        }
+                    }
+                }
+                $details = [
+                    'name' => $value['req_by'],
+                    'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'request_number' => $value['req_num'],
+                    'reqdate' => $value['req_date'],
+                    'requested_by' => $value['req_by'],
+                    'needdate' => $value['needdate'],
+                    'locfrom' => $locfrom,
+                    'locto' => $locto,
+                    'status' => $value['status'],
+                    'role' => 'Admin / Encoder',
+                    'items' => $items
+                ];
+                Mail::to($value['email'])->send(new notifTransfer($details, $subject));
+            }
+            if($difference <= -1 && ($value['notify'] == 'Today' || !$value['notify'])){
+                RequestTransfer::where('request_number', $value['req_num'])->update(['notify' => 'Overdue']);
+                $locfrom = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locfrom'])->first()->location;
+                $locto = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locto'])->first()->location;
+                $items = StockTransfer::selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, quantity')
+                    ->where('request_number', $value['req_num'])
+                    ->join('categories', 'categories.id', 'stock_transfer.category')
+                    ->join('items', 'items.id', 'stock_transfer.item')
+                    ->orderBy('item', 'ASC')
+                    ->orderBy('category', 'ASC')
+                    ->get();
+                $subject = '[OVERDUE] STOCK TRANSFER REQUEST NO. '.$value['req_num'];
+                $user = User::role('admin')->where('status','ACTIVE')->get();
+                foreach($user as $key){
+                    if($key->email != $value['email']){
+                        $details = [
+                            'name' => ucwords($key->name),
+                            'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                            'request_number' => $value['req_num'],
+                            'reqdate' => $value['req_date'],
+                            'requested_by' => $value['req_by'],
+                            'needdate' => $value['needdate'],
+                            'locfrom' => $locfrom,
+                            'locto' => $locto,
+                            'status' => $value['status'],
+                            'role' => 'Admin',
+                            'items' => $items
+                        ];
+                        Mail::to($key->email)->send(new notifTransfer($details, $subject));
+                    }
+                }
+                if($value['status'] == 'FOR APPROVAL'){        
+                    $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
+                    foreach($user as $key){
+                        if($key->email != $value['email']){
+                            $details = [
+                                'name' => ucwords($key->name),
+                                'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                                'request_number' => $value['req_num'],
+                                'reqdate' => $value['req_date'],
+                                'requested_by' => $value['req_by'],
+                                'needdate' => $value['needdate'],
+                                'locfrom' => $locfrom,
+                                'locto' => $locto,
+                                'status' => $value['status'],
+                                'role' => 'Approver - Warehouse',
+                                'items' => $items
+                            ];
+                            Mail::to($key->email)->send(new notifTransfer($details, $subject));
+                        }
+                    }
+                }
+                $details = [
+                    'name' => $value['req_by'],
+                    'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'request_number' => $value['req_num'],
+                    'reqdate' => $value['req_date'],
+                    'requested_by' => $value['req_by'],
+                    'needdate' => $value['needdate'],
+                    'locfrom' => $locfrom,
+                    'locto' => $locto,
+                    'status' => $value['status'],
+                    'role' => 'Admin / Encoder',
+                    'items' => $items
+                ];
+                Mail::to($value['email'])->send(new notifTransfer($details, $subject));
             }
         }
     }

@@ -2021,7 +2021,7 @@ class StockRequestController extends Controller
 
             $difference = $today->diff($deadline)->format("%r%a");
 
-            if($difference == '3' && !$value['notify']){
+            if(($difference > 0 && $difference <= 3) && !$value['notify']){
                 Requests::where('request_number',$value['req_num'])->update(['notify' => '3-Days']);
                 if($value['req_type'] == 'SALES'){
                     $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
@@ -2046,12 +2046,12 @@ class StockRequestController extends Controller
                         ->where('request_number', $value['req_num'])
                         ->get();
                 }
-                $subject = '[LAST 3 DAYS] STOCK REQUEST NO. '.$value['req_num'];
+                $subject = '[LAST '.$difference.' DAY/S] STOCK REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
                 foreach($user as $keyx){
                     $details = [
                         'name' => ucwords($keyx->name),
-                        'action' => 'is 3-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                         'request_number' => $value['req_num'],
                         'reqdate' => $value['req_date'],
                         'requested_by' => $value['req_by'],
@@ -2076,7 +2076,7 @@ class StockRequestController extends Controller
                     foreach($user as $keyx){
                         $details = [
                             'name' => ucwords($keyx->name),
-                            'action' => 'is 3-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                            'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                             'request_number' => $value['req_num'],
                             'reqdate' => $value['req_date'],
                             'requested_by' => $value['req_by'],
@@ -2099,7 +2099,7 @@ class StockRequestController extends Controller
                 }
                 $details = [
                     'name' => $value['req_by'],
-                    'action' => 'is 3-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                     'request_number' => $value['req_num'],
                     'reqdate' => $value['req_date'],
                     'requested_by' => $value['req_by'],
@@ -2119,7 +2119,7 @@ class StockRequestController extends Controller
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }
-            if($difference == '0' && ($value['notify'] == '3-Days' || !$value['notify'])){
+            if($difference == 0 && ($value['notify'] == '3-Days' || !$value['notify'])){
                 Requests::where('request_number',$value['req_num'])->update(['notify' => 'Today']);
                 if($value['req_type'] == 'SALES'){
                     $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
@@ -2217,7 +2217,7 @@ class StockRequestController extends Controller
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }
-            if($difference == '-1' && ($value['notify'] == 'Today' || !$value['notify'])){
+            if($difference <= -1 && ($value['notify'] == 'Today' || !$value['notify'])){
                 Requests::where('request_number',$value['req_num'])->update(['notify' => 'Overdue']);
                 if($value['req_type'] == 'SALES'){
                     $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')

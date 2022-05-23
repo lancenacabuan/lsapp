@@ -66,7 +66,7 @@
             z-index: 100000;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(192, 192, 192, 0.5);
+            background-color: rgba(192, 192, 192, 0.65);
             background-repeat: no-repeat;
             background-position: center;
             text-align: center;
@@ -216,9 +216,13 @@
     </style>
 </head>
 <body>
-    <div id="loading">
-        <strong style="color: #0d1a80; font-size: 40px; line-height: 125vh;">
+    <div id="loading" style="color: #0d1a80; line-height: 60vh;">
+        <strong style="font-size: 40px;">
             Please Wait...
+        </strong>
+        <br>
+        <strong style="font-size: 22px;">
+            Please DO NOT interrupt or cancel this process.
         </strong>
     </div>
     @if (!Auth::guest())

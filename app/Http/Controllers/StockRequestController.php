@@ -2021,32 +2021,31 @@ class StockRequestController extends Controller
 
             $difference = $today->diff($deadline)->format("%r%a");
 
-            if($value['req_type'] == 'SALES'){
-                $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
-                    ->join('categories', 'categories.id', 'stock_request.category')
-                    ->join('items', 'items.id', 'stock_request.item')
-                    ->where('request_number', $value['req_num'])
-                    ->get()
-                    ->toArray();
-                foreach($items as $keys => $values){
-                    if($values['warranty'] == '0'){
-                        $items[$keys]['Warranty_Name'] = 'NO WARRANTY';
-                    }
-                    else{
-                        $items[$keys]['Warranty_Name'] = Warranty::query()->where('id',$values['warranty'])->first()->Warranty_Name;
-                    }
-                }
-            }
-            else{
-                $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
-                    ->join('categories', 'categories.id', 'stock_request.category')
-                    ->join('items', 'items.id', 'stock_request.item')
-                    ->where('request_number', $value['req_num'])
-                    ->get();
-            }
-
             if($difference == '3' && !$value['notify']){
                 Requests::where('request_number',$value['req_num'])->update(['notify' => '3-Days']);
+                if($value['req_type'] == 'SALES'){
+                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
+                        ->join('categories', 'categories.id', 'stock_request.category')
+                        ->join('items', 'items.id', 'stock_request.item')
+                        ->where('request_number', $value['req_num'])
+                        ->get()
+                        ->toArray();
+                    foreach($items as $keys => $values){
+                        if($values['warranty'] == '0'){
+                            $items[$keys]['Warranty_Name'] = 'NO WARRANTY';
+                        }
+                        else{
+                            $items[$keys]['Warranty_Name'] = Warranty::query()->where('id',$values['warranty'])->first()->Warranty_Name;
+                        }
+                    }
+                }
+                else{
+                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
+                        ->join('categories', 'categories.id', 'stock_request.category')
+                        ->join('items', 'items.id', 'stock_request.item')
+                        ->where('request_number', $value['req_num'])
+                        ->get();
+                }
                 $subject = '[LAST 3 DAYS] STOCK REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
                 foreach($user as $keyx){
@@ -2121,7 +2120,30 @@ class StockRequestController extends Controller
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }
             if($difference == '0' && ($value['notify'] == '3-Days' || !$value['notify'])){
-                Requests::where('request_number',$value['req_num'])->update(['notify' => 'Today']);       
+                Requests::where('request_number',$value['req_num'])->update(['notify' => 'Today']);
+                if($value['req_type'] == 'SALES'){
+                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
+                        ->join('categories', 'categories.id', 'stock_request.category')
+                        ->join('items', 'items.id', 'stock_request.item')
+                        ->where('request_number', $value['req_num'])
+                        ->get()
+                        ->toArray();
+                    foreach($items as $keys => $values){
+                        if($values['warranty'] == '0'){
+                            $items[$keys]['Warranty_Name'] = 'NO WARRANTY';
+                        }
+                        else{
+                            $items[$keys]['Warranty_Name'] = Warranty::query()->where('id',$values['warranty'])->first()->Warranty_Name;
+                        }
+                    }
+                }
+                else{
+                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
+                        ->join('categories', 'categories.id', 'stock_request.category')
+                        ->join('items', 'items.id', 'stock_request.item')
+                        ->where('request_number', $value['req_num'])
+                        ->get();
+                }
                 $subject = '[DEADLINE TODAY] STOCK REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
                 foreach($user as $keyx){
@@ -2196,7 +2218,30 @@ class StockRequestController extends Controller
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }
             if($difference == '-1' && ($value['notify'] == 'Today' || !$value['notify'])){
-                Requests::where('request_number',$value['req_num'])->update(['notify' => 'Overdue']);       
+                Requests::where('request_number',$value['req_num'])->update(['notify' => 'Overdue']);
+                if($value['req_type'] == 'SALES'){
+                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
+                        ->join('categories', 'categories.id', 'stock_request.category')
+                        ->join('items', 'items.id', 'stock_request.item')
+                        ->where('request_number', $value['req_num'])
+                        ->get()
+                        ->toArray();
+                    foreach($items as $keys => $values){
+                        if($values['warranty'] == '0'){
+                            $items[$keys]['Warranty_Name'] = 'NO WARRANTY';
+                        }
+                        else{
+                            $items[$keys]['Warranty_Name'] = Warranty::query()->where('id',$values['warranty'])->first()->Warranty_Name;
+                        }
+                    }
+                }
+                else{
+                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
+                        ->join('categories', 'categories.id', 'stock_request.category')
+                        ->join('items', 'items.id', 'stock_request.item')
+                        ->where('request_number', $value['req_num'])
+                        ->get();
+                }
                 $subject = '[OVERDUE] STOCK REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
                 foreach($user as $keyx){

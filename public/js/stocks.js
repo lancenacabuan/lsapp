@@ -1,5 +1,16 @@
 var CategoryTable, ItemTable, ItemSerialTable, categoryID, categoryName;
 
+$(document).ready(function(){
+    if($(location).attr('pathname')+window.location.search == '/stocks?import=success_without_errors'){
+        swal("IMPORT SUCCESS", "ADD STOCKS via import file is successful without errors.", "success");
+        setTimeout(function(){location.href="/stocks"}, 2000);
+    }
+    else if($(location).attr('pathname')+window.location.search == '/stocks?import=success_with_errors'){
+        swal("IMPORT SUCCESS", "ADD STOCKS via import file is successful with errors.", "success");
+        setTimeout(function(){location.href="/stocks"}, 2000);
+    }
+});
+
 function category(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
@@ -474,6 +485,62 @@ $('#item').on('change', function(){
         }
     });
 });
+
+$('#btnImport').on('click', function(){
+    $('#importStock').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    $('.modal-body').html();
+    $('#importStock').modal('show');
+});
+
+$('#btnDetach').on('click', function(){
+    $('#xlsx').val('');
+});
+
+function validate_xlsx(xlsx){
+    var files_length = $("#xlsx").get(0).files.length;
+    var error_ext = 0;
+    var error_mb = 0;
+    if(files_length > 1){
+        swal('EXCEEDED allowed number of file upload!', 'Please upload only ONE (1) valid EXCEL file.', 'error');      
+        $('#xlsx').val('');
+        $('#xlsx').focus();
+        return false;
+    }
+    for(var i = 0; i < files_length; ++i) {
+        var file1=$("#xlsx").get(0).files[i].name;
+        var file_size = $("#xlsx").get(0).files[i].size;
+        var ext = file1.split('.').pop().toLowerCase();
+        if($.inArray(ext,['xls','xlsx'])===-1){
+            error_ext++;
+        }
+        if(file_size > (5242880 * 2)){
+            error_mb++;
+        }
+    }
+    if(error_ext > 0 && error_mb > 0){
+        swal('INVALID file type AND EXCEEDED maximum file size (10MB)!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx; AND with file size not greater than 10MB.', 'error');      
+        $('#xlsx').val('');
+        $('#xlsx').focus();
+        return false;
+    }
+    else if(error_ext > 0){
+        swal('INVALID file type!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx.', 'error');      
+        $('#xlsx').val('');
+        $('#xlsx').focus();
+        return false;
+    }
+    else if(error_mb > 0){
+        swal('EXCEEDED maximum file size (10MB)!', 'Please upload a valid EXCEL file with file size not greater than 10MB.', 'error');      
+        $('#xlsx').val('');
+        $('#xlsx').focus();
+        return false;
+    }
+    return true;
+}
 
 function decodeHtml(str){
     var map = {

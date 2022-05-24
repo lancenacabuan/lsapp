@@ -5,6 +5,8 @@
     <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
     @role('admin|encoder') {{---ROLES---}}
     <button class="btn btn-primary bp float-right mb-2" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
+    <span class="float-right" style="margin-right: 5px;">&nbsp;</span>
+    <button class="btn btn-primary bp float-right mb-2" type="button" id="btnImport">IMPORT</button>
     <br><br>
     @endrole
     <input type="hidden" id="current_role" value="{{auth()->user()->getRoleNames()}}">
@@ -87,4 +89,5 @@
     </div>
 </div>
 @include('pages.stocks.addStock')
+@include('pages.stocks.importStock')
 @endsection

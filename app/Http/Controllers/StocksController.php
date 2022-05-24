@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StocksImport;
 use App\Models\Stock;
 use App\Models\Category;
 use App\Models\Item;
@@ -364,5 +366,41 @@ class StocksController extends Controller
             $stocks->save();
         }
         return response()->json($stocks);
+    }
+
+    public function import(Request $request){
+        $file = $request->file('xlsx');
+        $import = new StocksImport;
+        $data = Excel::toArray($import, $file);
+        $failed_rows = [];
+        foreach($data[0] as $key => $value){
+            $row_num = 2;
+            $add = new Stock;
+            $add->user_id = auth()->user()->id;
+            $add->category_id = $value['category'];
+            $add->item_id = $value['item'];
+            $add->location_id = $value['location'];
+            $add->rack = $value['rack'];
+            $add->row = $value['row'];
+            $add->qty = $value['qty'];
+            $add->serial = $value['serial'];
+            $add->status = 'in';
+            $sql = $add->save();
+            if(!$sql){
+                array_push($failed_rows, $row_num);
+            }
+            else{
+                // $userlogs = new UserLogs;
+                // $userlogs->user_id = auth()->user()->id;
+                // $userlogs->activity = "ADDED STOCK: User successfully added $qty-$uom/s Stock of '$item_name' to $location_name.";
+                // $userlogs->save();
+            }
+        }
+        if(count($failed_rows) == 0){
+            return redirect()->to('/stocks?import=success_without_errors');
+        }
+        else{
+            return redirect()->to('/stocks?import=success_with_errors');
+        }
     }
 }

@@ -1,16 +1,5 @@
 var CategoryTable, ItemTable, ItemSerialTable, categoryID, categoryName;
 
-$(document).ready(function(){
-    if($(location).attr('pathname')+window.location.search == '/stocks?import=success_without_errors'){
-        swal("IMPORT SUCCESS", "ADD STOCKS via import file is successful without errors.", "success");
-        setTimeout(function(){location.href="/stocks"}, 2000);
-    }
-    else if($(location).attr('pathname')+window.location.search == '/stocks?import=success_with_errors'){
-        swal("IMPORT SUCCESS", "ADD STOCKS via import file is successful with errors.", "success");
-        setTimeout(function(){location.href="/stocks"}, 2000);
-    }
-});
-
 function category(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
@@ -542,6 +531,26 @@ function validate_xlsx(xlsx){
     return true;
 }
 
+$('#btnUpload').on('click', function(){
+    if($('#xlsx')[0].files.length === 0){
+        $('#btnSubmit').click();
+    }
+    else{
+        swal({
+            title: "UPLOAD FILE IMPORT?",
+            text: "Click 'OK' button to ADD STOCKS via uploading import file; otherwise, click 'Cancel' button to select a different file.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $('#btnSubmit').click();
+            }
+        });
+    }
+});
+
 function decodeHtml(str){
     var map = {
         '&amp;': '&', 
@@ -562,4 +571,22 @@ $('#btnReset').on('click', function(){
     $('#uomdiv').hide();
     $('#qtydiv').hide();
     $('#serialdiv').hide();
+});
+
+$(document).ready(function(){
+    if($(location).attr('pathname')+window.location.search == '/stocks?import=success_without_errors'){
+        $('#loading').hide(); Spinner.hide();
+        swal("IMPORT SUCCESS", "ADD STOCKS via import file is successful without errors.", "success");
+        setTimeout(function(){location.href="/stocks"}, 2000);
+    }
+    else if($(location).attr('pathname')+window.location.search == '/stocks?import=success_with_errors'){
+        $('#loading').hide(); Spinner.hide();
+        swal("IMPORT SUCCESS", "ADD STOCKS via import file is successful with errors.", "success");
+        setTimeout(function(){location.href="/stocks"}, 2000);
+    }
+    else if($(location).attr('pathname')+window.location.search == '/stocks?import=failed'){
+        $('#loading').hide(); Spinner.hide();
+        swal("IMPORT FAILED", "ADD STOCKS via import file has failed.", "error");
+        setTimeout(function(){location.href="/stocks"}, 2000);
+    }
 });

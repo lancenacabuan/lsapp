@@ -152,21 +152,6 @@ function validate_fileupload(reference_upload){
     }
 }
 
-$(document).ready(function(){
-    if($(location).attr('pathname')+window.location.search == '/stockrequest?submit=success'){
-        swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
-        setTimeout(function(){location.href="/stockrequest"}, 2000);
-    }
-    else if($(location).attr('pathname')+window.location.search == '/stockrequest?edit=success'){
-        swal("EDIT SUCCESS", "STOCK REQUEST", "success");
-        setTimeout(function(){location.href="/stockrequest"}, 2000);
-    }
-    else if($(location).attr('pathname')+window.location.search == '/stockrequest?sale=success'){
-        swal("SALE SUCCESS", "STOCK REQUEST", "success");
-        setTimeout(function(){location.href="/stockrequest"}, 2000);
-    }
-});
-
 function generatedr(){
     var today = new Date();
     var month = today.getMonth()+1;
@@ -354,7 +339,7 @@ $('#request_type').on('change', function(){
     if($('#stockRequestTable tbody').children().length==0){
         $('#stockRequestTable').hide();
         $('#stockRequestDiv').removeClass();
-        $('#btnClose').hide();
+        $('.btnClose').hide();
         $('#btnSave').hide();
         $('.submit_label').show();
     }
@@ -513,7 +498,7 @@ $(".add-row").on('click', function(){
         $('#warrantyDetails').hide();
         $('#stockRequestTable').show();
         $('#stockRequestDiv').toggle();
-        $('#btnClose').show();
+        $('.btnClose').show();
         $('#btnSave').show();
     }
     if($('#stockRequestTable tbody').children().length==0){
@@ -529,7 +514,7 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
     if($('#stockRequestTable tbody').children().length==0){
         $('#stockRequestTable').hide();
         $('#stockRequestDiv').removeClass();
-        $('#btnClose').hide();
+        $('.btnClose').hide();
         $('#btnSave').hide();
         $('.submit_label').show();
     }
@@ -4670,4 +4655,22 @@ $(document).on('click', '.detailsClose', function(){
 
 $('.btnPrint').on('click', function(){
     window.location.href = '/printRequest?request_number='+$('#request_num_details').val();
+});
+
+$(document).ready(function(){
+    if($(location).attr('pathname')+window.location.search == '/stockrequest?submit=success'){
+        $('#loading').hide(); Spinner.hide();
+        swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
+        setTimeout(function(){location.href="/stockrequest"}, 2000);
+    }
+    else if($(location).attr('pathname')+window.location.search == '/stockrequest?edit=success'){
+        $('#loading').hide(); Spinner.hide();
+        swal("EDIT SUCCESS", "STOCK REQUEST", "success");
+        setTimeout(function(){location.href="/stockrequest"}, 2000);
+    }
+    else if($(location).attr('pathname')+window.location.search == '/stockrequest?sale=success'){
+        $('#loading').hide(); Spinner.hide();
+        swal("SALE SUCCESS", "STOCK REQUEST", "success");
+        setTimeout(function(){location.href="/stockrequest"}, 2000);
+    }
 });

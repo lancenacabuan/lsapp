@@ -66,7 +66,7 @@
             z-index: 100000;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(192, 192, 192, 0.65);
+            background-color: rgba(192, 192, 192, 0.85);
             background-repeat: no-repeat;
             background-position: center;
             text-align: center;

@@ -1172,7 +1172,7 @@ class StockRequestController extends Controller
         do{
             $sql = Stock::where('id', $request->id)
                 ->whereIn('status', ['demo'])
-                ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
+                ->update(['status' => 'in', 'request_number' => '', 'warranty_id' => '', 'user_id' => auth()->user()->id]);
         }
         while(!$sql);
         

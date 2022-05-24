@@ -339,7 +339,7 @@ $('#request_type').on('change', function(){
     if($('#stockRequestTable tbody').children().length==0){
         $('#stockRequestTable').hide();
         $('#stockRequestDiv').removeClass();
-        $('.btnClose').hide();
+        $('.btnCloseCancel').hide();
         $('#btnSave').hide();
         $('.submit_label').show();
     }
@@ -498,7 +498,7 @@ $(".add-row").on('click', function(){
         $('#warrantyDetails').hide();
         $('#stockRequestTable').show();
         $('#stockRequestDiv').toggle();
-        $('.btnClose').show();
+        $('.btnCloseCancel').show();
         $('#btnSave').show();
     }
     if($('#stockRequestTable tbody').children().length==0){
@@ -514,7 +514,7 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
     if($('#stockRequestTable tbody').children().length==0){
         $('#stockRequestTable').hide();
         $('#stockRequestDiv').removeClass();
-        $('.btnClose').hide();
+        $('.btnCloseCancel').hide();
         $('#btnSave').hide();
         $('.submit_label').show();
     }
@@ -764,10 +764,6 @@ $(document).on('click', '#btnRemoveAttachment', function(){
             $(".reupload").show();
         }
     });   
-});
-
-$('.close').on('click', function(){
-    window.location.href = '/stockrequest';
 });
 
 $('.btnClose').on('click', function(){

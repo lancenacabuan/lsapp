@@ -3,7 +3,7 @@
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">NEW STOCK REQUEST</h6>    
-            <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
+            <button type="button" class="btn-close btn-close-white close btnClose" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <div class="form-inline" style="margin-left: 5px;">
@@ -56,7 +56,7 @@
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <span class="reference_field" style="margin-left: 420px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple image files for upload.</span>
             </div>
-            <div id="warrantyDetails" style="zoom: 85%; height: 320px; margin-top: -320px; margin-left: 990px; line-height: 70%; display: none;">
+            <div id="warrantyDetails" style="zoom: 85%; height: 260px; margin-top: -260px; margin-left: 990px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">
                     <input class="form-control form-control-sm warrantyName" style="width: 300px; margin-right: 10px; font-size: 18px; border-color: white; background-color: white; font-weight: bolder; pointer-events: none;" type="text" readonly>
                 </div>
@@ -135,7 +135,7 @@
                     <i class='fa fa-exclamation-triangle'></i>
                     <strong>NOTE:</strong> Please fill up all required fields to proceed.
                 </div>
-                <button type="submit" class="btnClose btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
+                <button type="submit" class="btnClose btnCloseCancel btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
                 <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
             </div>
         </div>

@@ -3,7 +3,7 @@
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">STOCK REQUEST DETAILS</h6>            
-            <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
+            <button type="button" class="btn-close btn-close-white close btnClose" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
@@ -561,8 +561,9 @@
             <textarea class="form-control spChar" id="x_reference" style="margin-bottom: 8px; font-size: 12px; resize: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field"></textarea>
             <button class="form-control btn btn-danger disupload1" title="Remove Attachments" style="zoom: 90%; margin-top: -8px; width: 30px; height: 30px; padding: 0px; display: none;"><i class="fa fa-trash"></i></button>
             <button id="xbtn_upload" class="form-control btn btn-primary bp" style="zoom: 90%; margin-bottom: 8px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
+            <span style="color: Red; font-size: 12px;">Use 'Ctrl + Left Click' to select multiple files.</span>
             <span id="reference_note" style="color: Red; font-size: 12px;">*SO/PO Number and Attachment are required.</span>
-            <button type="button" id="btnReference" class="btn btn-primary mt-2 float-right bp" style="zoom: 80%;">OK</button>
+            <br><button type="button" id="btnReference" class="btn btn-primary mt-2 float-right bp" style="zoom: 80%;">OK</button>
         </div>
     </div>
     </div>

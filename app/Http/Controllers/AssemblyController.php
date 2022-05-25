@@ -100,7 +100,6 @@ class AssemblyController extends Controller
         do{
             $stockRequest = new StockRequest;
             $stockRequest->request_number = $request->request_number;
-            $stockRequest->category = $request->category;
             $stockRequest->item = $request->item;
             $stockRequest->quantity = $request->quantity * $request->qty;
             $stockRequest->served = '0';

@@ -248,7 +248,6 @@ class StockRequestController extends Controller
         do{
             $stockRequest = new StockRequest;
             $stockRequest->request_number = $request->request_number;
-            $stockRequest->category = $request->category;
             $stockRequest->item = $request->item;
             $stockRequest->quantity = $request->quantity;
             $stockRequest->served = '0';

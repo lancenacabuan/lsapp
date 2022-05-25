@@ -22,12 +22,6 @@ class StocksController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    public function item(){
-        $item = Item::select('items.*', 'category')
-            ->join('categories', 'category_id', '=', 'categories.id');
-        return DataTables::of($item)->make(true);
-    }
 
     public function stocks(){
         if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
@@ -275,40 +269,6 @@ class StocksController extends Controller
             ->where('id',$request->id)
             ->get();
         return response($data);
-    }
-
-    public function locations(Request $request){
-        $location = Stock::query()
-            ->select('location_id','location')
-            ->join('locations','locations.id','location_id')
-            ->where('status', 'in')
-            ->where('item_id', $request->item_id)
-            ->groupBy('location_id')
-            ->get();
-        return response()->json($location);
-    }
-
-    public function stocksAvailable(Request $request){
-        $count = Stock::query()
-                ->select('category_id','items_id','location_id','status')
-                ->where('category_id',$request->category_id)
-                ->where('item_id',$request->item_id)
-                ->where('location_id',$request->location_id)
-                ->where('status','in')
-                ->count();
-        return response()->json($count);
-    }
-
-    public function itemstrans(Request $request){
-        $list = Item::query()
-                ->join('stocks', 'item_id', '=', 'items.id')
-                ->select('items.id','item','items.category_id','stocks.location_id','stocks.status')
-                ->where('items.category_id',$request->categories)
-                ->where('items.id',$request->items)
-                ->where('stocks.location_id',$request->locationfrom)
-                ->where('stocks.status','in')
-                ->get();
-        return $list;
     }
      
     public function store(Request $request){

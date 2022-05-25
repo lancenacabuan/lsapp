@@ -261,10 +261,10 @@ class StocksController extends Controller
     }
 
     public function getUOM(Request $request){
-        $uom = Item::query()->select('UOM as uom')
+        $data = Item::selectRaw('UOM, prodcode')
             ->where('id',$request->id)
-            ->first();
-        return response()->json($uom);
+            ->get();
+        return response($data);
     }
 
     public function items(Request $request){

@@ -35,6 +35,7 @@ function category(){
 
 $(document).ready(function(){   
     category();
+    $('#prodcodediv').hide();
     $('#uomdiv').hide();
     $('#qtydiv').hide();
     $('#serialdiv').hide();
@@ -437,6 +438,7 @@ $('#category').on('change', function(){
             alert(data.responseText);
         }
     });
+    $('#prodcodediv').hide();
     $('#uomdiv').hide();
     $('#qtydiv').hide();
     $('#serialdiv').hide();
@@ -447,21 +449,28 @@ $('#item').on('change', function(){
     $.ajax({
         type: 'get',
         url: 'getUOM',
-        data: { 'id': id },            
+        data:{
+            'id': id
+        },            
         success: function(data){
-            if(data.uom == "Unit"){
+            console.log(data);
+            if(data[0].UOM == "Unit"){
+                $('#prodcodediv').show();
                 $('#uomdiv').show();
                 $('#qtydiv').show();
                 $('#serialdiv').show();
-                $('#uom').val(data.uom);
+                $('#prodcode').val(data[0].prodcode);
+                $('#uom').val(data[0].UOM);
                 $('#qty').val('1');
                 $('#qty').prop('disabled', true);
             }
             else{
+                $('#prodcodediv').show();
                 $('#uomdiv').show();
                 $('#qtydiv').show();
                 $('#serialdiv').hide();
-                $('#uom').val(data.uom);
+                $('#prodcode').val(data[0].prodcode);
+                $('#uom').val(data[0].UOM);
                 $('#qty').val('0');
                 $('#qty').prop('disabled', false);
             }
@@ -568,6 +577,7 @@ $('#backBtn').on('click', function(){
 
 $('#btnReset').on('click', function(){
     $('#AddStockForm').trigger('reset');
+    $('#prodcodediv').hide();
     $('#uomdiv').hide();
     $('#qtydiv').hide();
     $('#serialdiv').hide();

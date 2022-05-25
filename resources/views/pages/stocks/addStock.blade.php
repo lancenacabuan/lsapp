@@ -27,6 +27,12 @@
                             <option value="" selected disabled>Select Item</option>
                         </select>
                     </div>
+                    <div class="input-group mb-3" id="prodcodediv">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width: 140px;">Product Code</label>
+                        </div>
+                        <input type="text" id="prodcode" name="prodcode" style="width: 630px; border-width: thin;" disabled>
+                    </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Location</label>

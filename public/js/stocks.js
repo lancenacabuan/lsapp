@@ -66,6 +66,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
             },
             columns: [
                 { data: 'Item' },
+                { data: 'ProdCode' },
                 { data: 'Defective' },
                 { data: 'Demo' },
                 { data: 'Assembly' },
@@ -105,6 +106,7 @@ $('#btnBack').on('click', function(){
             },
             columns: [
                 { data: 'Item' },
+                { data: 'ProdCode' },
                 { data: 'Defective' },
                 { data: 'Demo' },
                 { data: 'Assembly' },
@@ -453,7 +455,6 @@ $('#item').on('change', function(){
             'id': id
         },            
         success: function(data){
-            console.log(data);
             if(data[0].UOM == "Unit"){
                 $('#prodcodediv').show();
                 $('#uomdiv').show();

@@ -160,7 +160,7 @@ class StocksController extends Controller
             'items.id',
             DB::raw
             (
-                'items.item as Item'
+                'items.item as Item, items.prodcode as ProdCode'
             )
         )
         ->where('items.category_id', $request->CategoryId)

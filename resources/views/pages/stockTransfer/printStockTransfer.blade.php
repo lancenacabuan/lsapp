@@ -70,16 +70,16 @@
                     <table id="stockTransTable" class="table stockTransTable display" style="margin-top: 10px;">
                         <thead>
                             <tr>
-                                <th>CATEGORY</th>
                                 <th>ITEM DESCRIPTION</th>
+                                <th>ITEM CODE</th>
                                 <th>QTY</th>
                                 <th>UOM</th>
                                 <th>SERIAL</th>
                             </tr>
                             @foreach($list3 as $x)
                             <tr>
-                                <td>{{$x->category}}</td>
                                 <td>{{$x->item}}</td>
+                                <td>{{$x->prodcode}}</td>
                                 <td>{{$x->qty}}</td>
                                 <td>{{$x->uom}}</td>
                                 <td>{{strtoupper($x->serial)}}</td>

@@ -2012,7 +2012,7 @@ class StockRequestController extends Controller
                 foreach($user as $keyx){
                     $details = [
                         'name' => ucwords($keyx->name),
-                        'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                         'request_number' => $value['req_num'],
                         'reqdate' => $value['req_date'],
                         'requested_by' => $value['req_by'],
@@ -2037,7 +2037,7 @@ class StockRequestController extends Controller
                     foreach($user as $keyx){
                         $details = [
                             'name' => ucwords($keyx->name),
-                            'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                            'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                             'request_number' => $value['req_num'],
                             'reqdate' => $value['req_date'],
                             'requested_by' => $value['req_by'],
@@ -2060,7 +2060,7 @@ class StockRequestController extends Controller
                 }
                 $details = [
                     'name' => $value['req_by'],
-                    'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                     'request_number' => $value['req_num'],
                     'reqdate' => $value['req_date'],
                     'requested_by' => $value['req_by'],
@@ -2303,7 +2303,7 @@ class StockRequestController extends Controller
                     if($key->email != $value['email']){
                         $details = [
                             'name' => ucwords($key->name),
-                            'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                            'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                             'request_number' => $value['req_num'],
                             'reqdate' => $value['req_date'],
                             'requested_by' => $value['req_by'],
@@ -2323,7 +2323,7 @@ class StockRequestController extends Controller
                         if($key->email != $value['email']){
                             $details = [
                                 'name' => ucwords($key->name),
-                                'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                                'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                                 'request_number' => $value['req_num'],
                                 'reqdate' => $value['req_date'],
                                 'requested_by' => $value['req_by'],
@@ -2340,7 +2340,7 @@ class StockRequestController extends Controller
                 }
                 $details = [
                     'name' => $value['req_by'],
-                    'action' => 'is '.$difference.'-DAYS PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                     'request_number' => $value['req_num'],
                     'reqdate' => $value['req_date'],
                     'requested_by' => $value['req_by'],

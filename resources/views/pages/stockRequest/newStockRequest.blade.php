@@ -122,7 +122,7 @@
                                 <th style="display: none;">WARRANTY ID</th>
                                 <th style="display: none;">CATEGORY</th>
                                 <th>ITEM DESCRIPTION</th>
-                                <th>PRODUCT CODE</th>
+                                <th>ITEM CODE</th>
                                 <th>QTY</th>
                                 <th>UOM</th>
                                 <th class="classWarranty">WARRANTY TYPE</th>

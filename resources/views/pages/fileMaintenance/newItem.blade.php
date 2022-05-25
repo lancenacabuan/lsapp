@@ -21,8 +21,8 @@
                 <input class="form-control form-control-sm" id="item_name" style="width: 600px;" type="text" maxlength="255" placeholder="Please enter item description">
             </div>
             <div class="form-inline" style="margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 168px;">Product Code</label>
-                <input class="form-control form-control-sm" id="prodcode" style="width: 600px;" type="text" maxlength="255" placeholder="Please enter product code">
+                <label class="form-control form-control-sm" style="width: 168px;">Item Code</label>
+                <input class="form-control form-control-sm" id="prodcode" style="width: 600px;" type="text" maxlength="255" placeholder="Please enter item code">
             </div>
             <div class="form-inline" style="margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 168px;">Unit of Measure (UOM)</label>

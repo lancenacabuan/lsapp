@@ -36,7 +36,7 @@
                 <th>ITEM DESCRIPTION</th>
                 <th>CATEGORY ID</th>
                 <th>UOM</th>
-                <th>PRODUCT CODE</th>
+                <th>ITEM CODE</th>
             </tr>
         </thead>
     </table>

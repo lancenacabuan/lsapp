@@ -158,7 +158,7 @@ class FileMaintenanceController extends Controller
                     $item_desc = NULL;
                 }
                 if($request->prodcode != $request->prodcode_original){
-                    $prodcode = "[Product Code: FROM '$request->prodcode_original' TO '$request->prodcode']";
+                    $prodcode = "[Item Code: FROM '$request->prodcode_original' TO '$request->prodcode']";
                 }
                 else{
                     $prodcode = NULL;

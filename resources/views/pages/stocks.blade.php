@@ -35,7 +35,7 @@
             <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
                     <th>ITEM DESCRIPTION</th>
-                    <th>PRODUCT CODE</th>
+                    <th>ITEM CODE</th>
                     <th>DEFECTIVE</th>
                     <th>DEMO</th>
                     <th>ASSEMBLY</th>

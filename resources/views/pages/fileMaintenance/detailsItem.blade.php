@@ -11,6 +11,7 @@
             <input type="hidden" name="category_name_details_original" id="category_name_details_original">
             <input type="hidden" name="item_category_details_original" id="item_category_details_original">
             <input type="hidden" name="item_name_details_original" id="item_name_details_original">
+            <input type="hidden" name="prodcode_details_original" id="prodcode_details_original">
             <input type="hidden" name="item_uom_details_original" id="item_uom_details_original">
             <div class="form-inline">
                 <label class="form-control form-control-sm" style="width: 168px;">Category Name</label>
@@ -24,6 +25,10 @@
             <div class="form-inline" style="margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 168px;">Item Description</label>
                 <input class="form-control form-control-sm" id="item_name_details" style="width: 600px;" type="text" maxlength="255" placeholder="Please enter item description">
+            </div>
+            <div class="form-inline" style="margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 168px;">Product Code</label>
+                <input class="form-control form-control-sm" id="prodcode_details" style="width: 600px;" type="text" maxlength="255" placeholder="Please enter product code">
             </div>
             <div class="form-inline" style="margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 168px;">Unit of Measure (UOM)</label>

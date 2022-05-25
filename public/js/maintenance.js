@@ -24,7 +24,8 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
             { data: 'category' },
             { data: 'item' },
             { data: 'category_id' },
-            { data: 'UOM' }
+            { data: 'UOM' },
+            { data: 'prodcode' }
         ],
         order:[[2, 'asc']],
         initComplete: function(){
@@ -394,8 +395,9 @@ $('#btnSaveItem').on('click', function(){
     var category_name = $('#item_category').find('option:selected').text();
     var item_category = $('#item_category').val();
     var item_name = $.trim($('#item_name').val());
+    var prodcode = $.trim($('#prodcode').val());
     var item_uom = $('#item_uom').val();
-    if(item_name != "" && $('#item_category').find('option:selected').text() != 'Select Category' && $('#item_uom').find('option:selected').text() != 'Select UOM'){
+    if(item_name != "" && prodcode != "" && $('#item_category').find('option:selected').text() != 'Select Category' && $('#item_uom').find('option:selected').text() != 'Select UOM'){
         swal({
             title: "ADD NEW ITEM?",
             text: "You are about to ADD this new item!",
@@ -415,6 +417,7 @@ $('#btnSaveItem').on('click', function(){
                         category_name: category_name,
                         item_category: item_category,
                         item_name: item_name,
+                        prodcode: prodcode,
                         item_uom: item_uom
                     },
                     success: function(data){
@@ -466,6 +469,9 @@ $('#itemTable tbody').on('click', 'tr', function(){
     var item_name = decodeHtml(data.item);
         $('#item_name_details').val(item_name);
         $('#item_name_details_original').val(item_name);
+    var prodcode = data.prodcode;
+        $('#prodcode_details').val(prodcode);
+        $('#prodcode_details_original').val(prodcode);
     var item_uom = data.UOM;
         $('#item_uom_details').val(item_uom);
         $('#item_uom_details_original').val(item_uom);
@@ -479,17 +485,19 @@ $('#btnUpdateItem').on('click', function(){
     var category_name_original = $('#category_name_details_original').val();
     var item_category_original = $('#item_category_details_original').val();
     var item_name_original = $('#item_name_details_original').val();
+    var prodcode_original = $('#prodcode_details_original').val();
     var item_uom_original = $('#item_uom_details_original').val();
     var category_name = $('#item_category_details').find('option:selected').text();
     var item_category = $('#item_category_details').val();
     var item_name = $.trim($('#item_name_details').val());
+    var prodcode = $.trim($('#prodcode_details').val());
     var item_uom = $('#item_uom_details').val();
     
-    if(item_name == "" || $('#item_category_details').find('option:selected').text() == 'Select Category' || $('#item_uom_details').find('option:selected').text() == 'Select UOM'){
+    if(item_name == "" || prodcode == "" || $('#item_category_details').find('option:selected').text() == 'Select Category' || $('#item_uom_details').find('option:selected').text() == 'Select UOM'){
         swal('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
-    else if(item_name_original.toUpperCase() == item_name.toUpperCase() && item_category_original == item_category && item_uom_original == item_uom){
+    else if(item_name_original.toUpperCase() == item_name.toUpperCase() && prodcode_original == prodcode && item_category_original == item_category && item_uom_original == item_uom){
         swal("NO CHANGES FOUND", "Item Details are still all the same!", "error");
         return false;
     }
@@ -514,10 +522,12 @@ $('#btnUpdateItem').on('click', function(){
                         category_name_original: category_name_original,
                         item_category_original: item_category_original,
                         item_name_original: item_name_original,
+                        prodcode_original: prodcode_original,
                         item_uom_original: item_uom_original,
                         category_name: category_name,
                         item_category: item_category,
                         item_name: item_name,
+                        prodcode: prodcode,
                         item_uom: item_uom
                     },
                     success: function(data){
@@ -546,6 +556,28 @@ $('#btnUpdateItem').on('click', function(){
             }
         });
     }
+});
+
+$(document).on('keyup', '#prodcode', function(){
+    var prodcode = $('#prodcode').val().toUpperCase();
+    $('#prodcode').val(prodcode);
+});
+
+$(document).on('keypress', '#prodcode', function(e){
+    var k;
+    document.all ? k = e.keyCode : k = e.which;
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 45 || (k >= 48 && k <= 57));
+});
+
+$(document).on('keyup', '#prodcode_details', function(){
+    var prodcode_details = $('#prodcode_details').val().toUpperCase();
+    $('#prodcode_details').val(prodcode_details);
+});
+
+$(document).on('keypress', '#prodcode_details', function(e){
+    var k;
+    document.all ? k = e.keyCode : k = e.which;
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 45 || (k >= 48 && k <= 57));
 });
 
 $('.btnNewCategory').on('click', function(){

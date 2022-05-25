@@ -12,7 +12,7 @@
                         <div class="col-md-12 form-group">
                             <input type="file" id="xlsx" name="xlsx" class="form-control" onchange="validate_xlsx(this);" required/>
                         </div>
-                        <span style="color: Red; font-size: 14px;">Please upload an EXCEL (.xlx/.xlsx) file with less than 10MB.</span>
+                        <span style="color: Red; font-size: 14px;">Please upload an EXCEL (.xls/.xlsx) file with less than 10MB.</span>
                     </div>
                     <br>
                     <button type="button" id="btnDetach" class="btn btn-primary bp">RESET</button>

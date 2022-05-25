@@ -50,7 +50,7 @@ class FileMaintenanceController extends Controller
     }
 
     public function fm_items(){
-        $list = Item::select('items.id', 'items.item', 'categories.category', 'items.category_id', 'items.UOM')
+        $list = Item::select('items.id', 'items.item', 'items.prodcode', 'categories.category', 'items.category_id', 'items.UOM')
             ->where('items.assemble', 'NO')
             ->join('categories', 'categories.id', 'category_id')
             ->orderBy('item', 'ASC')
@@ -59,7 +59,7 @@ class FileMaintenanceController extends Controller
     }
 
     public function asm_items(){
-        $list = Item::select('items.id', 'items.item', 'categories.category', 'items.category_id', 'items.UOM')
+        $list = Item::select('items.id', 'items.item', 'items.prodcode', 'categories.category', 'items.category_id', 'items.UOM')
             ->where('items.assemble', 'YES')
             ->join('categories', 'categories.id', 'category_id')
             ->orderBy('item', 'ASC')
@@ -91,6 +91,7 @@ class FileMaintenanceController extends Controller
             $items = new Item;
             $items->created_by = auth()->user()->id;
             $items->item = $item_name;
+            $items->prodcode = $request->prodcode;
             $items->category_id = $request->item_category;
             $items->UOM = $request->item_uom;
             $sql = $items->save();
@@ -132,6 +133,7 @@ class FileMaintenanceController extends Controller
             $items = Item::find($request->input('item_id'));
             $items->created_by = auth()->user()->id;
             $items->item = $item_name;
+            $items->prodcode = $request->prodcode;
             $items->category_id = $request->item_category;
             $items->UOM = $request->item_uom;
             $sql = $items->save();
@@ -142,27 +144,35 @@ class FileMaintenanceController extends Controller
             }
             else {
                 $result = 'true';
-
-                if(strtoupper($request->item_name) != strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original && $request->item_uom == $request->item_uom_original){
-                    $activity = "ITEM UPDATED: User successfully updated Item Description FROM '$request->item_name_original' TO '$item_name' with ItemID#$id under Category '$request->category_name'.";
-                }
-                else if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category != $request->item_category_original && $request->item_uom == $request->item_uom_original){
-                    $activity = "ITEM UPDATED: User successfully updated Item Category of '$item_name' with ItemID#$id changed FROM '$request->category_name_original' TO '$request->category_name' with new CategoryID#'$request->item_category'.";
-                }
-                else if(strtoupper($request->item_name) == strtoupper($request->item_name_original) && $request->item_category == $request->item_category_original && $request->item_uom != $request->item_uom_original){
-                    $activity = "ITEM UPDATED: User successfully updated Item UOM of '$item_name' with ItemID#$id changed FROM '$request->item_uom_original' TO '$request->item_uom'.";
+                
+                if($request->item_category != $request->item_category_original){
+                    $category_name = "[Category Name: FROM '$request->category_name_original' TO '$request->category_name']";
                 }
                 else{
-                    $activity = "ITEM UPDATED: User successfully updated details of ItemID#$id with the following CHANGES: 
-                        [Category Name: FROM '$request->category_name_original' TO '$request->category_name'], 
-                        [Item Description: FROM '$request->item_name_original' TO '$item_name'], 
-                        [UOM: FROM '$request->item_uom_original' TO '$request->item_uom'].
-                        ";
+                    $category_name = NULL;
+                }
+                if(strtoupper($request->item_name) != strtoupper($request->item_name_original)){
+                    $item_desc = "[Item Description: FROM '$request->item_name_original' TO '$item_name']";
+                }
+                else{
+                    $item_desc = NULL;
+                }
+                if($request->prodcode != $request->prodcode_original){
+                    $prodcode = "[Product Code: FROM '$request->prodcode_original' TO '$request->prodcode']";
+                }
+                else{
+                    $prodcode = NULL;
+                }
+                if($request->item_uom != $request->item_uom_original){
+                    $item_uom = "[Unit of Measure (UOM): FROM '$request->item_uom_original' TO '$request->item_uom']";
+                }
+                else{
+                    $item_uom = NULL;
                 }
 
                 $userlogs = new UserLogs;
                 $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = $activity;
+                $userlogs->activity = "ITEM UPDATED: User successfully updated details of '$request->item_name_original' with the following CHANGES: $category_name $item_desc $prodcode $item_uom.";
                 $userlogs->save();
             }
 

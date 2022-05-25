@@ -331,8 +331,9 @@ $('#request_type').on('change', function(){
     }
     $("#categoryReq").val('');
     $("#itemReq").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
-    $("#qtyReq").val('');
+    $('#prodcode').val('');
     $("#uom").val('');
+    $("#qtyReq").val('');
     $("#warrantyReq").val('');
     $('#warrantyDetails').hide();
     $("#stockRequestTable tbody tr").remove();
@@ -348,23 +349,26 @@ $('#request_type').on('change', function(){
 $('#categoryReq').on('change', function(){
     var id = $('#categoryReq').val();
     var descOp = " ";
+    $('#prodcode').val('');
     $('#uom').val('');
+    $("#qtyReq").val('');
     $.ajax({ 
-        type:'get', 
-        url:'/itemsreq', 
-        data:{'category_id':id}, 
-        success: function(data) 
-            {
-                var itemcode = $.map(data, function(value, index){ 
-                    return [value];
-                });
-                descOp+='<option value="" selected disabled>Select Item</option>'; 
-                itemcode.forEach(value => {
-                    descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>'; 
-                });
-                
-                $("#itemReq").find('option').remove().end().append(descOp);                 
-            },
+        type: 'get', 
+        url: '/itemsreq', 
+        data:{
+            'category_id':id
+        }, 
+        success: function(data){
+            var itemcode = $.map(data, function(value, index){ 
+                return [value];
+            });
+            descOp+='<option value="" selected disabled>Select Item</option>'; 
+            itemcode.forEach(value => {
+                descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>'; 
+            });
+            
+            $("#itemReq").find('option').remove().end().append(descOp);                 
+        },
         error: function(data){
             if(data.status == 401){
                 window.location.href = '/stockrequest';
@@ -377,13 +381,14 @@ $('#categoryReq').on('change', function(){
 $('#itemReq').on('change', function(){
     var item_id = $(this).val();
     $.ajax({
-        type:'get', 
-        url:'/setuom', 
+        type: 'get', 
+        url: '/setuom', 
         data:{
             'item_id': item_id,
         }, 
         success: function(data){
-            $('#uom').val(data);
+            $('#prodcode').val(data[0].prodcode);
+            $('#uom').val(data[0].uom);
         },
         error: function(data){
             if(data.status == 401){
@@ -449,13 +454,14 @@ $(".add-row").on('click', function(){
     var category_id = $("#categoryReq").val();
     var item_id = $("#itemReq").val();
     var warranty_id = $("#warrantyReq").val();
-    let qty = $("#qtyReq").val();
+    var prodcode = $("#prodcode").val();
     var uom = $("#uom").val();
+    let qty = $("#qtyReq").val();
     if(request_type == '2'){
-        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>" + warranty_id + "</td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td>" + warranty + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
+        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>" + warranty_id + "</td><td style='display: none;'>" + category + "</td><td>" + item + "</td><td>" + prodcode + "</td><td>" + qty + "</td><td>" + uom + "</td><td>" + warranty + "</td><td><button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button></td></tr>";
     }
     else{
-        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'></td><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td style='display: none;'></td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
+        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'></td><td style='display: none;'>" + category + "</td><td>" + item + "</td><td>" + prodcode + "</td><td>" + qty + "</td><td>" + uom + "</td><td style='display: none;'></td><td><button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button></td></tr>";
     }
     var ctr = 'false';
     if(request_type == '2' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "" || warranty == "Select Warranty Type")){
@@ -472,14 +478,15 @@ $(".add-row").on('click', function(){
         for(i = 1; i < count; i++){
             var objCells = table.rows.item(i).cells;
             if(item_id==objCells.item(1).innerHTML){
-                objCells.item(5).innerHTML = parseInt(objCells.item(5).innerHTML) + parseInt(qty);
-                objCells.item(7).innerHTML = warranty;
+                objCells.item(6).innerHTML = parseInt(objCells.item(6).innerHTML) + parseInt(qty);
+                objCells.item(8).innerHTML = warranty;
                 objCells.item(2).innerHTML = warranty_id;
                 ctr = 'true';
                 category = $("#categoryReq").val('');
                 item = $("#itemReq").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
-                qty = $("#qtyReq").val('');
+                prodcode = $('#prodcode').val('');
                 uom = $('#uom').val('');
+                qty = $("#qtyReq").val('');
                 warranty = $("#warrantyReq").val('');
                 $('#warrantyDetails').hide();
                 return false;
@@ -492,8 +499,9 @@ $(".add-row").on('click', function(){
         { $("#stockRequestTable tbody").append(markup); }
         category = $("#categoryReq").val('');
         item = $("#itemReq").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
-        qty = $("#qtyReq").val('');
+        prodcode = $('#prodcode').val('');
         uom = $('#uom').val('');
+        qty = $("#qtyReq").val('');
         warranty = $("#warrantyReq").val('');
         $('#warrantyDetails').hide();
         $('#stockRequestTable').show();
@@ -576,7 +584,7 @@ $('#btnSave').on('click', function(){
                                         'category': value[0],
                                         'item': value[1],
                                         'warranty': value[2],
-                                        'quantity': value[5]
+                                        'quantity': value[6]
                                     },
                                     success: function(data){
                                         if(data == 'true'){

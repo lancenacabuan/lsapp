@@ -98,13 +98,11 @@ class StockRequestController extends Controller
     }
 
     public function setuom(Request $request){       
-        $uom = Item::query()->select('UOM as uom')
+        $data = Item::selectRaw('UOM as uom, prodcode')
             ->where('id',$request->item_id)
             ->get();
-        $uom = str_replace('[{"uom":"','',$uom);
-        $uom = str_replace('"}]','',$uom);
         
-        return response($uom);
+        return response($data);
     }
 
     public function saveReqNum(Request $request){

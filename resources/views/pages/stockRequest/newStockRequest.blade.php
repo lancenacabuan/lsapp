@@ -100,6 +100,7 @@
                         <select class="form-control form-select" id="itemReq" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 350px; margin-left: 10px;">
                             <option value="" selected disabled>Select Item</option>
                         </select>
+                        <input class="d-none" id="prodcode" type="hidden"/>
                         <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>
                         <input class="form-control" id="qtyReq" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty" onkeyup="if(value<0) value=0;">
                         <select class="form-control form-select classWarranty" id="warrantyReq" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 200px; margin-left: 10px;">
@@ -119,8 +120,9 @@
                                 <th style="display: none;">CATEGORY ID</th>
                                 <th style="display: none;">ITEM ID</th>
                                 <th style="display: none;">WARRANTY ID</th>
-                                <th>CATEGORY</th>
+                                <th style="display: none;">CATEGORY</th>
                                 <th>ITEM DESCRIPTION</th>
+                                <th>PRODUCT CODE</th>
                                 <th>QTY</th>
                                 <th>UOM</th>
                                 <th class="classWarranty">WARRANTY TYPE</th>

@@ -64,28 +64,32 @@ class StocksController extends Controller
         return DataTables::of($list)
             ->addColumn('Defective', function(Category $Category){
                 $Defective = Stock::query()
-                    ->where('category_id', $Category->id)
+                    ->join('items', 'items.id', 'stocks.item_id')
+                    ->where('items.category_id', $Category->id)
                     ->whereIn('status', ['defectives', 'FOR RECEIVING'])
                     ->count();
                 return $Defective;
             })
             ->addColumn('Demo', function(Category $Category){
                 $Demo = Stock::query()
-                    ->where('category_id', $Category->id)
+                    ->join('items', 'items.id', 'stocks.item_id')
+                    ->where('items.category_id', $Category->id)
                     ->where('status', 'demo')
                     ->count();
                 return $Demo;
             })
             ->addColumn('Assembly', function(Category $Category){
                 $Assembly = Stock::query()
-                    ->where('category_id', $Category->id)
+                    ->join('items', 'items.id', 'stocks.item_id')
+                    ->where('items.category_id', $Category->id)
                     ->where('status', 'assembly')
                     ->count();
                 return $Assembly;
             })
             ->addColumn('A1', function(Category $Category){
                 $A1 = Stock::query()
-                    ->where('category_id', $Category->id)
+                    ->join('items', 'items.id', 'stocks.item_id')
+                    ->where('items.category_id', $Category->id)
                     ->where('location_id', 1)
                     ->where('status', 'in')
                     ->count();
@@ -93,7 +97,8 @@ class StocksController extends Controller
             })
             ->addColumn('A2', function(Category $Category){
                 $A2 = Stock::query()
-                    ->where('category_id', $Category->id)
+                    ->join('items', 'items.id', 'stocks.item_id')
+                    ->where('items.category_id', $Category->id)
                     ->where('location_id', 2)
                     ->where('status', 'in')
                     ->count();
@@ -101,7 +106,8 @@ class StocksController extends Controller
             })
             ->addColumn('A3', function(Category $Category){
                 $A3 = Stock::query()
-                    ->where('category_id', $Category->id)
+                    ->join('items', 'items.id', 'stocks.item_id')
+                    ->where('items.category_id', $Category->id)
                     ->where('location_id', 3)
                     ->where('status', 'in')
                     ->count();
@@ -109,7 +115,8 @@ class StocksController extends Controller
             })
             ->addColumn('A4', function(Category $Category){
                 $A4 = Stock::query()
-                    ->where('category_id', $Category->id)
+                    ->join('items', 'items.id', 'stocks.item_id')
+                    ->where('items.category_id', $Category->id)
                     ->where('location_id', 4)
                     ->where('status', 'in')
                     ->count();
@@ -117,7 +124,8 @@ class StocksController extends Controller
             })
             ->addColumn('Balintawak', function(Category $Category){
                 $Balintawak = Stock::query()
-                    ->where('category_id', $Category->id)
+                    ->join('items', 'items.id', 'stocks.item_id')
+                    ->where('items.category_id', $Category->id)
                     ->where('location_id', 5)
                     ->where('status', 'in')
                     ->count();
@@ -125,7 +133,8 @@ class StocksController extends Controller
             })
             ->addColumn('Malabon', function(Category $Category){
                 $Malabon = Stock::query()
-                    ->where('category_id', $Category->id)
+                    ->join('items', 'items.id', 'stocks.item_id')
+                    ->where('items.category_id', $Category->id)
                     ->where('location_id', 6)
                     ->where('status', 'in')
                     ->count();
@@ -133,7 +142,8 @@ class StocksController extends Controller
             })
             ->addColumn('Total_stocks', function(Category $Category){
                 $Total_stocks = Stock::query()
-                    ->where('category_id', $Category->id)
+                    ->join('items', 'items.id', 'stocks.item_id')
+                    ->where('items.category_id', $Category->id)
                     ->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly'])
                     ->count();
                 return $Total_stocks;
@@ -267,16 +277,6 @@ class StocksController extends Controller
         return response($data);
     }
 
-    public function items(Request $request){
-        $list = Item::query()->select('item_id','item')
-            ->join('stocks', 'stocks.item_id', 'items.id')
-            ->where('stocks.status', 'in')
-            ->where('stocks.category_id',$request->category_id)
-            ->groupBy('items.id')
-            ->get();
-        return response()->json($list);
-    }
-
     public function locations(Request $request){
         $location = Stock::query()
             ->select('location_id','location')
@@ -316,7 +316,6 @@ class StocksController extends Controller
             do{
                 $stocks = new Stock;
                 $stocks->item_id = $request->item;
-                $stocks->category_id = $request->category;
                 $stocks->user_id =auth()->user()->id;
                 $stocks->location_id =$request->location;
                 $stocks->status = 'in';
@@ -337,7 +336,6 @@ class StocksController extends Controller
                 do{
                     $stocks = new Stock;
                     $stocks->item_id = $request->item;
-                    $stocks->category_id = $request->category;
                     $stocks->user_id =auth()->user()->id;
                     $stocks->location_id =$request->location;
                     $stocks->status = 'in';
@@ -377,7 +375,6 @@ class StocksController extends Controller
             $row_num = 2;
             $add = new Stock;
             $add->user_id = auth()->user()->id;
-            $add->category_id = $value['category'];
             $add->item_id = $value['item'];
             $add->location_id = $value['location'];
             $add->rack = $value['rack'];

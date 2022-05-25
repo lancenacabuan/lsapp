@@ -54,7 +54,8 @@ class StockTransferController extends Controller
 
     public function setcategory(Request $request){
         $list = Category::query()->select('categories.id AS category_id','categories.category AS category')
-            ->join('stocks','category_id','categories.id')
+            ->join('items','items.category_id','categories.id')
+            ->join('stocks','stocks.item_id','items.id')
             ->where('stocks.location_id',$request->location_id)
             ->where('stocks.status','in')
             ->groupBy('category_id')
@@ -125,7 +126,6 @@ class StockTransferController extends Controller
 
         $stockTransfer = new StockTransfer;
         $stockTransfer->request_number = $request->request_number;
-        $stockTransfer->category = $items->category_id;
         $stockTransfer->item = $items->id;
         $stockTransfer->quantity = $request->quantity;
         $stockTransfer->served = '0';

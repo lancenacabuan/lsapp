@@ -307,7 +307,6 @@ class AssemblyController extends Controller
             do{
                 $stockRequest = new StockRequest;
                 $stockRequest->request_number = $request->generatedReqNum;
-                $stockRequest->category = $key->category_id;
                 $stockRequest->item = $key->item_id;
                 $stockRequest->quantity = $key->quantity;
                 $stockRequest->served = '0';
@@ -376,7 +375,6 @@ class AssemblyController extends Controller
             $stocks->request_number = $request->request_number;
             $stocks->assembly_reqnum = $request->request_number;
             $stocks->item_id = $request->item_id;
-            $stocks->category_id = '58';
             $stocks->user_id =auth()->user()->id;
             $stocks->location_id =$request->location_id;
             $stocks->status = 'in';

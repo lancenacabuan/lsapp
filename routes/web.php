@@ -42,7 +42,6 @@ Route::get('/item_data',[StocksController::class,'item_data']);
 Route::get('/itemserial_data',[StocksController::class,'itemserial_data']);
 Route::post('/stocks/import',[StocksController::class,'import']);
 
-Route::get('/items',[StocksController::class,'items']);
 Route::get('/getUOM',[StocksController::class,'getUOM']);
 Route::get('/addStockitem',[StocksController::class,'addStockitem']);
 Route::get('/itemstrans',[StocksController::class,'itemstrans']);

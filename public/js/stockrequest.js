@@ -1454,8 +1454,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category' },
                         { data: 'item' },
+                        { data: 'prodcode' },
                         { data: 'uom' },
                         { data: 'quantity' },
                         { data: 'pending' },
@@ -1505,8 +1505,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category' },
                         { data: 'item' },
+                        { data: 'prodcode' },
                         { data: 'uom' },
                         { data: 'quantity' },
                         { data: 'pending' },
@@ -1557,8 +1557,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category' },
                         { data: 'item' },
+                        { data: 'prodcode' },
                         { data: 'uom' },
                         { data: 'quantity' },
                         { data: 'pending' },
@@ -1587,8 +1587,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category' },
                         { data: 'item' },
+                        { data: 'prodcode' },
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' }
@@ -1628,8 +1628,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category' },
                         { data: 'item' },
+                        { data: 'prodcode' },
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
@@ -1657,8 +1657,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category' },
                         { data: 'item' },
+                        { data: 'prodcode' },
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
@@ -1692,8 +1692,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'category' },
                         { data: 'item' },
+                        { data: 'prodcode' },
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
@@ -1735,8 +1735,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         },
                         order:[],
                         columns: [
-                            { data: 'category' },
                             { data: 'item' },
+                            { data: 'prodcode' },
                             { data: 'qty' },
                             { data: 'uom' },
                             { data: 'serial' },
@@ -1781,8 +1781,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         },
                         order:[],
                         columns: [
-                            { data: 'category' },
                             { data: 'item' },
+                            { data: 'prodcode' },
                             { data: 'qty' },
                             { data: 'uom' },
                             { data: 'serial' },
@@ -1829,8 +1829,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             },
                             order:[],
                             columns: [
-                                { data: 'category' },
                                 { data: 'item' },
+                                { data: 'prodcode' },
                                 { data: 'qty' },
                                 { data: 'uom' },
                                 { data: 'serial' },
@@ -1875,8 +1875,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             },
                             order:[],
                             columns: [
-                                { data: 'category' },
                                 { data: 'item' },
+                                { data: 'prodcode' },
                                 { data: 'qty' },
                                 { data: 'uom' },
                                 { data: 'serial' },
@@ -1926,8 +1926,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         },
                         order:[],
                         columns: [
-                            { data: 'category' },
                             { data: 'item' },
+                            { data: 'prodcode' },
                             { data: 'qty' },
                             { data: 'uom' },
                             { data: 'serial' },
@@ -2403,8 +2403,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category' },
             { data: 'item' },
+            { data: 'prodcode' },
             { data: 'uom' },
             { data: 'quantity' },
             { data: 'pending' },
@@ -2454,8 +2454,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category' },
             { data: 'item' },
+            { data: 'prodcode' },
             { data: 'uom' },
             { data: 'quantity' },
             { data: 'pending' },
@@ -2506,8 +2506,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category' },
             { data: 'item' },
+            { data: 'prodcode' },
             { data: 'uom' },
             { data: 'quantity' },
             { data: 'pending' },
@@ -2536,8 +2536,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category' },
             { data: 'item' },
+            { data: 'prodcode' },
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' }
@@ -2577,8 +2577,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category' },
             { data: 'item' },
+            { data: 'prodcode' },
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
@@ -2606,8 +2606,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category' },
             { data: 'item' },
+            { data: 'prodcode' },
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
@@ -2641,8 +2641,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'category' },
             { data: 'item' },
+            { data: 'prodcode' },
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
@@ -2684,8 +2684,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             },
             order:[],
             columns: [
-                { data: 'category' },
                 { data: 'item' },
+                { data: 'prodcode' },
                 { data: 'qty' },
                 { data: 'uom' },
                 { data: 'serial' },
@@ -2730,8 +2730,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             },
             order:[],
             columns: [
-                { data: 'category' },
                 { data: 'item' },
+                { data: 'prodcode' },
                 { data: 'qty' },
                 { data: 'uom' },
                 { data: 'serial' },
@@ -2778,8 +2778,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 },
                 order:[],
                 columns: [
-                    { data: 'category' },
                     { data: 'item' },
+                    { data: 'prodcode' },
                     { data: 'qty' },
                     { data: 'uom' },
                     { data: 'serial' },
@@ -2824,8 +2824,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 },
                 order:[],
                 columns: [
-                    { data: 'category' },
                     { data: 'item' },
+                    { data: 'prodcode' },
                     { data: 'qty' },
                     { data: 'uom' },
                     { data: 'serial' },
@@ -2875,8 +2875,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             },
             order:[],
             columns: [
-                { data: 'category' },
                 { data: 'item' },
+                { data: 'prodcode' },
                 { data: 'qty' },
                 { data: 'uom' },
                 { data: 'serial' },

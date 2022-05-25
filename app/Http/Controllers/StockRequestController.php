@@ -275,8 +275,7 @@ class StockRequestController extends Controller
 
         if($request_details->reqtype == 'SALES'){
             do{
-                $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
-                    ->join('categories', 'categories.id', 'stock_request.category')
+                $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
                     ->get()
@@ -294,8 +293,7 @@ class StockRequestController extends Controller
         }
         else{
             do{
-                $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
-                    ->join('categories', 'categories.id', 'stock_request.category')
+                $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
                     ->get();
@@ -426,11 +424,9 @@ class StockRequestController extends Controller
     }
 
     public function requestDetails(Request $request){
-        $stockreq = StockRequest::query()->select('categories.category','items.item','items.UOM AS uom','items.id AS item_id','quantity','served','pending')
-            ->join('categories', 'categories.id', 'stock_request.category')
+        $stockreq = StockRequest::query()->select('items.item','items.prodcode AS prodcode','items.UOM AS uom','items.id AS item_id','quantity','served','pending')
             ->join('items', 'items.id', 'stock_request.item')
             ->where('request_number',$request->reqnum)
-            ->groupBy('category','items.item','uom','quantity','served','pending','item_id')
             ->get();        
         
         return DataTables::of($stockreq)
@@ -505,15 +501,13 @@ class StockRequestController extends Controller
         }
         $include[] = $request->request_number;
         
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+            ->sortBy('item');
 
         return DataTables::of($list)->make(true);
     }
@@ -530,15 +524,13 @@ class StockRequestController extends Controller
         }
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.status', ['prep','assembly'])
             ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+            ->sortBy('item');
 
         return DataTables::of($list)->make(true);
     }
@@ -553,15 +545,13 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->where('stocks.status', 'incomplete')
             ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+            ->sortBy('item');
 
         return DataTables::of($list)->make(true);
     }
@@ -576,15 +566,13 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->where('stocks.status', 'defective')
             ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+            ->sortBy('item');
 
         return DataTables::of($list)->make(true);
     }
@@ -599,15 +587,13 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->where('stocks.status', 'incdefective')
             ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+            ->sortBy('item');
 
         return DataTables::of($list)->make(true);
     }
@@ -622,14 +608,12 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('assembly_reqnum', $include)
             ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+            ->sortBy('item');
 
         return DataTables::of($list)->make(true);
     }
@@ -808,8 +792,7 @@ class StockRequestController extends Controller
 
         if($request_details->reqtype == 'SALES'){
             do{
-                $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
-                    ->join('categories', 'categories.id', 'stock_request.category')
+                $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
                     ->get()
@@ -827,8 +810,7 @@ class StockRequestController extends Controller
         }
         else{
             do{
-                $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
-                    ->join('categories', 'categories.id', 'stock_request.category')
+                $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
                     ->get();
@@ -1026,15 +1008,13 @@ class StockRequestController extends Controller
         $include[] = $request->request_number;
 
         do{
-            $items = Stock::query()->select('categories.category AS category', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+            $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['out'])
                 ->join('items','items.id','stocks.item_id')
-                ->join('categories','categories.id','items.category_id')
                 ->join('locations','locations.id','stocks.location_id')
                 ->get()
                 ->sortBy('item')
-                ->sortBy('category')
                 ->toArray();
             foreach($items as $key => $value){
                 if($value['warranty_id'] == '0'){
@@ -1200,12 +1180,11 @@ class StockRequestController extends Controller
     }
 
     public function stockreq(Request $request){       
-        $list = StockRequest::select('categories.category AS category', 'items.item AS item', 'items.id AS item_id', 'stock_request.quantity AS qty', 'stock_request.served AS served', 'stock_request.pending AS pending', 'items.UOM AS uom', 'stock_request.warranty AS warranty_id')
+        $list = StockRequest::select('items.prodcode AS prodcode', 'items.item AS item', 'items.id AS item_id', 'stock_request.quantity AS qty', 'stock_request.served AS served', 'stock_request.pending AS pending', 'items.UOM AS uom', 'stock_request.warranty AS warranty_id')
             ->where('stock_request.item', $request->item_id)
             ->where('stock_request.request_number', $request->reqnum)
             ->where('stocks.status','in')
             ->whereIn('stocks.location_id',['1','2','3','4'])
-            ->join('categories','categories.id','=','stock_request.category')
             ->join('items','items.id','=','stock_request.item')
             ->join('stocks','stocks.item_id','stock_request.item')
             ->join('locations','locations.id','stocks.location_id')
@@ -1225,14 +1204,12 @@ class StockRequestController extends Controller
     }
 
     public function soldreq(Request $request){
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('stocks.id', $request->item_id)
             ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+            ->sortBy('item');
 
         return DataTables::of($list)->make(true);
     }
@@ -1502,15 +1479,13 @@ class StockRequestController extends Controller
 
             if($request_details->req_type_id == 2 || ($request_details->req_type_id == 3 && $request_details->status_id == 10)){
                 do{
-                    $items = Stock::query()->select('categories.category AS category', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+                    $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
-                        ->join('categories','categories.id','items.category_id')
                         ->join('locations','locations.id','stocks.location_id')
                         ->get()
                         ->sortBy('item')
-                        ->sortBy('category')
                         ->toArray();
                     foreach($items as $key => $value){
                         if($value['warranty_id'] == '0'){
@@ -1525,15 +1500,13 @@ class StockRequestController extends Controller
             }
             else{
                 do{
-                    $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                    $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
-                        ->join('categories','categories.id','items.category_id')
                         ->join('locations','locations.id','stocks.location_id')
                         ->get()
-                        ->sortBy('item')
-                        ->sortBy('category');
+                        ->sortBy('item');
                 }
                 while(!$items);
             }
@@ -1669,15 +1642,13 @@ class StockRequestController extends Controller
 
             if($request_details->req_type_id == 2 || ($request_details->req_type_id == 3 && $request_details->status_id == 10)){
                 do{
-                    $items = Stock::query()->select('categories.category AS category', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+                    $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
-                        ->join('categories','categories.id','items.category_id')
                         ->join('locations','locations.id','stocks.location_id')
                         ->get()
                         ->sortBy('item')
-                        ->sortBy('category')
                         ->toArray();
                     foreach($items as $key => $value){
                         if($value['warranty_id'] == '0'){
@@ -1692,15 +1663,13 @@ class StockRequestController extends Controller
             }
             else{
                 do{
-                    $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                    $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
-                        ->join('categories','categories.id','items.category_id')
                         ->join('locations','locations.id','stocks.location_id')
                         ->get()
-                        ->sortBy('item')
-                        ->sortBy('category');
+                        ->sortBy('item');
                 }
                 while(!$items);
             }
@@ -1714,8 +1683,7 @@ class StockRequestController extends Controller
             while(!$pendcount);
 
             do{
-                $penditems = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','pending')
-                    ->join('categories', 'categories.id', 'stock_request.category')
+                $penditems = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','pending')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
                     ->where('pending', '>', '0')
@@ -1962,15 +1930,13 @@ class StockRequestController extends Controller
         $include[] = $request->request_number;
 
         if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10)){
-            $list3 = Stock::query()->select('categories.category AS category', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+            $list3 = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
-                ->join('categories','categories.id','items.category_id')
                 ->join('locations','locations.id','stocks.location_id')
                 ->get()
                 ->sortBy('item')
-                ->sortBy('category')
                 ->toArray();
             foreach($list3 as $key => $value){
                 if($value['warranty_id'] == '0'){
@@ -1982,15 +1948,13 @@ class StockRequestController extends Controller
             }
         }
         else{
-            $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+            $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
-                ->join('categories','categories.id','items.category_id')
                 ->join('locations','locations.id','stocks.location_id')
                 ->get()
-                ->sortBy('item')
-                ->sortBy('category');
+                ->sortBy('item');
         }
         
         if(!$list3){
@@ -2023,8 +1987,7 @@ class StockRequestController extends Controller
             if(($difference > 0 && $difference <= 3) && !$value['notify']){
                 Requests::where('request_number', $value['req_num'])->update(['notify' => '3-Days']);
                 if($value['req_type'] == 'SALES'){
-                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
-                        ->join('categories', 'categories.id', 'stock_request.category')
+                    $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
                         ->get()
@@ -2039,8 +2002,7 @@ class StockRequestController extends Controller
                     }
                 }
                 else{
-                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
-                        ->join('categories', 'categories.id', 'stock_request.category')
+                    $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
                         ->get();
@@ -2121,8 +2083,7 @@ class StockRequestController extends Controller
             if($difference == 0 && ($value['notify'] == '3-Days' || !$value['notify'])){
                 Requests::where('request_number', $value['req_num'])->update(['notify' => 'Today']);
                 if($value['req_type'] == 'SALES'){
-                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
-                        ->join('categories', 'categories.id', 'stock_request.category')
+                    $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
                         ->get()
@@ -2137,8 +2098,7 @@ class StockRequestController extends Controller
                     }
                 }
                 else{
-                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
-                        ->join('categories', 'categories.id', 'stock_request.category')
+                    $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
                         ->get();
@@ -2219,8 +2179,7 @@ class StockRequestController extends Controller
             if($difference <= -1 && ($value['notify'] == 'Today' || !$value['notify'])){
                 Requests::where('request_number', $value['req_num'])->update(['notify' => 'Overdue']);
                 if($value['req_type'] == 'SALES'){
-                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity','warranty')
-                        ->join('categories', 'categories.id', 'stock_request.category')
+                    $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
                         ->get()
@@ -2235,8 +2194,7 @@ class StockRequestController extends Controller
                     }
                 }
                 else{
-                    $items = StockRequest::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
-                        ->join('categories', 'categories.id', 'stock_request.category')
+                    $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
                         ->get();
@@ -2334,12 +2292,10 @@ class StockRequestController extends Controller
                 RequestTransfer::where('request_number', $value['req_num'])->update(['notify' => '3-Days']);
                 $locfrom = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locfrom'])->first()->location;
                 $locto = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locto'])->first()->location;
-                $items = StockTransfer::selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, quantity')
+                $items = StockTransfer::selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, quantity')
                     ->where('request_number', $value['req_num'])
-                    ->join('categories', 'categories.id', 'stock_transfer.category')
                     ->join('items', 'items.id', 'stock_transfer.item')
                     ->orderBy('item', 'ASC')
-                    ->orderBy('category', 'ASC')
                     ->get();
                 $subject = '[LAST '.$difference.' DAY/S] STOCK TRANSFER REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
@@ -2401,12 +2357,10 @@ class StockRequestController extends Controller
                 RequestTransfer::where('request_number', $value['req_num'])->update(['notify' => 'Today']);
                 $locfrom = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locfrom'])->first()->location;
                 $locto = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locto'])->first()->location;
-                $items = StockTransfer::selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, quantity')
+                $items = StockTransfer::selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, quantity')
                     ->where('request_number', $value['req_num'])
-                    ->join('categories', 'categories.id', 'stock_transfer.category')
                     ->join('items', 'items.id', 'stock_transfer.item')
                     ->orderBy('item', 'ASC')
-                    ->orderBy('category', 'ASC')
                     ->get();
                 $subject = '[DEADLINE TODAY] STOCK TRANSFER REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
@@ -2468,12 +2422,10 @@ class StockRequestController extends Controller
                 RequestTransfer::where('request_number', $value['req_num'])->update(['notify' => 'Overdue']);
                 $locfrom = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locfrom'])->first()->location;
                 $locto = Location::selectRaw('locations.location AS location')->where('id', '=', $value['locto'])->first()->location;
-                $items = StockTransfer::selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, quantity')
+                $items = StockTransfer::selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, quantity')
                     ->where('request_number', $value['req_num'])
-                    ->join('categories', 'categories.id', 'stock_transfer.category')
                     ->join('items', 'items.id', 'stock_transfer.item')
                     ->orderBy('item', 'ASC')
-                    ->orderBy('category', 'ASC')
                     ->get();
                 $subject = '[OVERDUE] STOCK TRANSFER REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();

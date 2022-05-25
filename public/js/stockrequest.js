@@ -458,10 +458,10 @@ $(".add-row").on('click', function(){
     var uom = $("#uom").val();
     let qty = $("#qtyReq").val();
     if(request_type == '2'){
-        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>" + warranty_id + "</td><td style='display: none;'>" + category + "</td><td>" + item + "</td><td>" + prodcode + "</td><td>" + qty + "</td><td>" + uom + "</td><td>" + warranty + "</td><td><button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button></td></tr>";
+        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>" + warranty_id + "</td><td style='display: none;'>" + category + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td>" + warranty + "</td><td><button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button></td></tr>";
     }
     else{
-        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'></td><td style='display: none;'>" + category + "</td><td>" + item + "</td><td>" + prodcode + "</td><td>" + qty + "</td><td>" + uom + "</td><td style='display: none;'></td><td><button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button></td></tr>";
+        var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'></td><td style='display: none;'>" + category + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td style='display: none;'></td><td><button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button></td></tr>";
     }
     var ctr = 'false';
     if(request_type == '2' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "" || warranty == "Select Warranty Type")){
@@ -1454,8 +1454,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'item' },
                         { data: 'prodcode' },
+                        { data: 'item' },
                         { data: 'uom' },
                         { data: 'quantity' },
                         { data: 'pending' },
@@ -1505,8 +1505,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'item' },
                         { data: 'prodcode' },
+                        { data: 'item' },
                         { data: 'uom' },
                         { data: 'quantity' },
                         { data: 'pending' },
@@ -1557,8 +1557,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'item' },
                         { data: 'prodcode' },
+                        { data: 'item' },
                         { data: 'uom' },
                         { data: 'quantity' },
                         { data: 'pending' },
@@ -1587,8 +1587,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'item' },
                         { data: 'prodcode' },
+                        { data: 'item' },
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' }
@@ -1628,8 +1628,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'item' },
                         { data: 'prodcode' },
+                        { data: 'item' },
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
@@ -1657,8 +1657,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'item' },
                         { data: 'prodcode' },
+                        { data: 'item' },
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
@@ -1692,8 +1692,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     },
                     order:[],
                     columns: [
-                        { data: 'item' },
                         { data: 'prodcode' },
+                        { data: 'item' },
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
@@ -1735,8 +1735,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         },
                         order:[],
                         columns: [
-                            { data: 'item' },
                             { data: 'prodcode' },
+                            { data: 'item' },
                             { data: 'qty' },
                             { data: 'uom' },
                             { data: 'serial' },
@@ -1781,8 +1781,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         },
                         order:[],
                         columns: [
-                            { data: 'item' },
                             { data: 'prodcode' },
+                            { data: 'item' },
                             { data: 'qty' },
                             { data: 'uom' },
                             { data: 'serial' },
@@ -1829,8 +1829,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             },
                             order:[],
                             columns: [
-                                { data: 'item' },
                                 { data: 'prodcode' },
+                                { data: 'item' },
                                 { data: 'qty' },
                                 { data: 'uom' },
                                 { data: 'serial' },
@@ -1875,8 +1875,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             },
                             order:[],
                             columns: [
-                                { data: 'item' },
                                 { data: 'prodcode' },
+                                { data: 'item' },
                                 { data: 'qty' },
                                 { data: 'uom' },
                                 { data: 'serial' },
@@ -1926,8 +1926,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         },
                         order:[],
                         columns: [
-                            { data: 'item' },
                             { data: 'prodcode' },
+                            { data: 'item' },
                             { data: 'qty' },
                             { data: 'uom' },
                             { data: 'serial' },
@@ -2403,8 +2403,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'item' },
             { data: 'prodcode' },
+            { data: 'item' },
             { data: 'uom' },
             { data: 'quantity' },
             { data: 'pending' },
@@ -2454,8 +2454,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'item' },
             { data: 'prodcode' },
+            { data: 'item' },
             { data: 'uom' },
             { data: 'quantity' },
             { data: 'pending' },
@@ -2506,8 +2506,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'item' },
             { data: 'prodcode' },
+            { data: 'item' },
             { data: 'uom' },
             { data: 'quantity' },
             { data: 'pending' },
@@ -2536,8 +2536,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'item' },
             { data: 'prodcode' },
+            { data: 'item' },
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' }
@@ -2577,8 +2577,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'item' },
             { data: 'prodcode' },
+            { data: 'item' },
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
@@ -2606,8 +2606,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'item' },
             { data: 'prodcode' },
+            { data: 'item' },
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
@@ -2641,8 +2641,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         },
         order:[],
         columns: [
-            { data: 'item' },
             { data: 'prodcode' },
+            { data: 'item' },
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
@@ -2684,8 +2684,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             },
             order:[],
             columns: [
-                { data: 'item' },
                 { data: 'prodcode' },
+                { data: 'item' },
                 { data: 'qty' },
                 { data: 'uom' },
                 { data: 'serial' },
@@ -2730,8 +2730,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             },
             order:[],
             columns: [
-                { data: 'item' },
                 { data: 'prodcode' },
+                { data: 'item' },
                 { data: 'qty' },
                 { data: 'uom' },
                 { data: 'serial' },
@@ -2778,8 +2778,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 },
                 order:[],
                 columns: [
-                    { data: 'item' },
                     { data: 'prodcode' },
+                    { data: 'item' },
                     { data: 'qty' },
                     { data: 'uom' },
                     { data: 'serial' },
@@ -2824,8 +2824,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 },
                 order:[],
                 columns: [
-                    { data: 'item' },
                     { data: 'prodcode' },
+                    { data: 'item' },
                     { data: 'qty' },
                     { data: 'uom' },
                     { data: 'serial' },
@@ -2875,8 +2875,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             },
             order:[],
             columns: [
-                { data: 'item' },
                 { data: 'prodcode' },
+                { data: 'item' },
                 { data: 'qty' },
                 { data: 'uom' },
                 { data: 'serial' },
@@ -3693,13 +3693,13 @@ $("#btnProceed").unbind('click').click(function(){
                         x.setAttribute("id", "prodcode"+j);
                         x.setAttribute("type", "text");
                         x.setAttribute("class", "form-control");
-                        x.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
                         x.setAttribute("value", value.prodcode);
                         var y = document.createElement("textarea");
                         y.setAttribute("id", "item"+j);
                         y.setAttribute("class", "form-control");
                         y.setAttribute("rows", "4");
-                        y.setAttribute("style", "width: 250px; font-size: 12px; margin-top: 52px; margin-bottom: 10px; resize: none;");
+                        y.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-top: 52px; margin-bottom: 10px; resize: none;");
                         var z = document.createElement("select");
                         z.setAttribute("id", "location"+j);
                         z.setAttribute("class", "form-control");
@@ -3722,8 +3722,8 @@ $("#btnProceed").unbind('click').click(function(){
                         serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
                         document.getElementById("reqContents").appendChild(id);
                         document.getElementById("reqContents").appendChild(warranty);
-                        document.getElementById("reqContents").appendChild(y);
                         document.getElementById("reqContents").appendChild(x);
+                        document.getElementById("reqContents").appendChild(y);
                         document.getElementById("reqContents").appendChild(qty);
                         document.getElementById("reqContents").appendChild(uom);
                         document.getElementById("reqContents").appendChild(serial);
@@ -3978,13 +3978,13 @@ $("#btnSale").unbind('click').click(function(){
                     x.setAttribute("id", "prodcodex"+j);
                     x.setAttribute("type", "text");
                     x.setAttribute("class", "form-control");
-                    x.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                    x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
                     x.setAttribute("value", value.prodcode);
                     var y = document.createElement("textarea");
                     y.setAttribute("id", "itemx"+j);
                     y.setAttribute("class", "form-control");
                     y.setAttribute("rows", "4");
-                    y.setAttribute("style", "width: 250px; font-size: 12px; margin-top: 52px; margin-bottom: 10px; resize: none;");
+                    y.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-top: 52px; margin-bottom: 10px; resize: none;");
                     var qty = document.createElement("input");
                     qty.setAttribute("id", "qtyx"+j);
                     qty.setAttribute("type", "number");
@@ -4022,8 +4022,8 @@ $("#btnSale").unbind('click').click(function(){
                     hideDetails.textContent = " ";
                     document.getElementById("soldContents").appendChild(pid);
                     document.getElementById("soldContents").appendChild(id);
-                    document.getElementById("soldContents").appendChild(y);
                     document.getElementById("soldContents").appendChild(x);
+                    document.getElementById("soldContents").appendChild(y);
                     document.getElementById("soldContents").appendChild(qty);
                     document.getElementById("soldContents").appendChild(uom);
                     document.getElementById("soldContents").appendChild(serial);

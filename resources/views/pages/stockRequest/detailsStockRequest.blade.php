@@ -128,8 +128,8 @@
             <table id="asmItems" class="table asmItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>ITEM DESCRIPTION</th>
                         <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
                         <th>UOM</th>
                         <th>SERIAL</th>
@@ -164,8 +164,8 @@
             <table id="stockDetailsrequest" class="table stockDetails1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>ITEM DESCRIPTION</th>
                         <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
                         <th>UOM</th>
                         <th>REQUESTED</th>
                         <th>PENDING</th>
@@ -178,8 +178,8 @@
             <table id="stockDetailsrequest" class="table stockDetails2 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>ITEM DESCRIPTION</th>
                         <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
                         <th>UOM</th>
                         <th>REQUESTED</th>
                         <th>PENDING</th>
@@ -194,8 +194,8 @@
             <table id="stockDetailsrequest" class="table stockDetails table-hover display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>ITEM DESCRIPTION</th>
                         <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
                         <th>UOM</th>
                         <th>REQUESTED</th>
                         <th>PENDING</th>
@@ -261,8 +261,8 @@
             <table id="receivedItems" class="table receivedItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>ITEM DESCRIPTION</th>
                         <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
                         <th>UOM</th>
                         <th>SERIAL</th>
@@ -290,8 +290,8 @@
             <table id="schedItems" class="table schedItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>ITEM DESCRIPTION</th>
                         <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
                         <th>UOM</th>
                         <th>SERIAL</th>
@@ -306,8 +306,8 @@
             <table id="schedItems1" class="table schedItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>ITEM DESCRIPTION</th>
                         <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
                         <th>UOM</th>
                         <th>SERIAL</th>
@@ -355,8 +355,8 @@
             <table id="transItems" class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>ITEM DESCRIPTION</th>
                         <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
                         <th>UOM</th>
                         <th>SERIAL</th>
@@ -369,8 +369,8 @@
             <table id="transItems1" class="table transItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>ITEM DESCRIPTION</th>
                         <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
                         <th>UOM</th>
                         <th>SERIAL</th>
@@ -439,8 +439,8 @@
             <table id="incItems" class="table incItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>ITEM DESCRIPTION</th>
                         <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
                         <th>UOM</th>
                         <th>SERIAL</th>

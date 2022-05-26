@@ -39,9 +39,9 @@ class DefectiveController extends Controller
 
     public function defective_data(){
         $data = Stock::query()
-            ->select('stocks.id AS stock_id', 'categories.id AS category_id', 'items.id AS item_id', 'category', 'item', 'name', 'serial', 'return_number', 'stocks.status AS status', 'defectiveDate')
-            ->join('categories', 'categories.id', 'category_id')
+            ->select('stocks.id AS stock_id', 'categories.id AS category_id', 'items.id AS item_id', 'categories.category', 'item', 'name', 'serial', 'return_number', 'stocks.status AS status', 'defectiveDate')
             ->join('items', 'items.id', 'item_id')
+            ->join('categories', 'categories.id', 'category_id')
             ->join('users', 'users.id', 'user_id')
             ->whereIn('stocks.status', ['defectives','FOR RECEIVING'])
             ->get();

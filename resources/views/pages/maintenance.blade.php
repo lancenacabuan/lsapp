@@ -31,11 +31,11 @@
     <table class="table-hover table itemTable" id="itemTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white;">
             <tr>
-                <th>ITEM ID</th>
-                <th>CATEGORY NAME</th>
+                <th class="d-none">ITEM ID</th>
+                <th class="d-none">CATEGORY NAME</th>
                 <th>ITEM DESCRIPTION</th>
-                <th>CATEGORY ID</th>
-                <th>UOM</th>
+                <th class="d-none">CATEGORY ID</th>
+                <th class="d-none">UOM</th>
                 <th>ITEM CODE</th>
             </tr>
         </thead>
@@ -43,18 +43,19 @@
     <table class="table-hover table assemblyitemTable" id="assemblyitemTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white;">
             <tr>
-                <th>ITEM ID</th>
-                <th>CATEGORY NAME</th>
+                <th class="d-none">ITEM ID</th>
+                <th class="d-none">CATEGORY NAME</th>
                 <th>ITEM DESCRIPTION</th>
-                <th>CATEGORY ID</th>
-                <th>UOM</th>
+                <th class="d-none">CATEGORY ID</th>
+                <th class="d-none">UOM</th>
+                <th>ITEM CODE</th>
             </tr>
         </thead>
     </table>
     <table class="table-hover table categoryTable" id="categoryTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white;">
             <tr>
-                <th>CATEGORY ID</th>
+                <th class="d-none">CATEGORY ID</th>
                 <th>CATEGORY NAME</th>
             </tr>
         </thead>
@@ -62,7 +63,7 @@
     <table class="table-hover table locationTable" id="locationTable" style="width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white;">
             <tr>
-                <th>LOCATION ID</th>
+                <th class="d-none">LOCATION ID</th>
                 <th>LOCATION NAME</th>
                 <th>LOCATION STATUS</th>
             </tr>

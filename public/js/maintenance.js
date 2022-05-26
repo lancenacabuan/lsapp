@@ -58,7 +58,8 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
             { data: 'category' },
             { data: 'item' },
             { data: 'category_id' },
-            { data: 'UOM' }
+            { data: 'UOM' },
+            { data: 'prodcode' }
         ],
         order:[[2, 'asc']],
         initComplete: function(){

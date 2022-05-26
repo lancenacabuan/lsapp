@@ -99,6 +99,9 @@
                 <td colspan="9">&nbsp;</td>
             </tr>
             <tr height="20">
+                @php
+                $total = 0;
+                @endphp
                 <td colspan="9" height="20">
                     @if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10))
                     <table id="stockReqTable" class="table stockReqTable display" style="margin-top: 10px;">
@@ -111,7 +114,18 @@
                                 <th>SERIAL</th>
                                 <th>WARRANTY TYPE</th>
                             </tr>
+                        </thead>
+                        <tbody>
                             @foreach($list3 as $x)
+                            @php
+                                if($x['uom'] == 'Meter'){
+                                    $total+=1;
+                                }
+                                else{
+                                    $total+=$x['qty'];
+                                }
+                            @endphp
+                            @endphp
                             <tr>
                                 <td>{{$x['prodcode']}}</td>
                                 <td>{{$x['item']}}</td>
@@ -121,7 +135,14 @@
                                 <td>{{strtoupper($x['Warranty_Name'])}}</td>
                             </tr>
                             @endforeach
-                        </thead>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL:</th>
+                                <th>{{$total}}</th>
+                                <th colspan="3"></th>
+                            </tr>
+                        </tfoot>
                     </table>
                     @else
                     <table id="stockReqTable" class="table stockReqTable display" style="margin-top: 10px;">
@@ -133,7 +154,17 @@
                                 <th>UOM</th>
                                 <th>SERIAL</th>
                             </tr>
+                        </thead>
+                        <tbody>
                             @foreach($list3 as $x)
+                            @php
+                                if($x['uom'] == 'Meter'){
+                                    $total+=1;
+                                }
+                                else{
+                                    $total+=$x['qty'];
+                                }
+                            @endphp
                             <tr>
                                 <td>{{$x['prodcode']}}</td>
                                 <td>{{$x['item']}}</td>
@@ -142,7 +173,14 @@
                                 <td>{{strtoupper($x['serial'])}}</td>
                             </tr>
                             @endforeach
-                        </thead>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL:</th>
+                                <th>{{$total}}</th>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
                     </table>
                     @endif
                 </td>

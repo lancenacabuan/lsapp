@@ -1,11 +1,11 @@
 $('#loading').show(); Spinner(); Spinner.show();
 var table = $('table.user_logs').DataTable({
-    language: {
+    language:{
         processing: "Loading...",
         emptyTable: "No data available in table"
     },
     serverSide: true,
-    ajax: {
+    ajax:{
         url: '/index_data',
     },
     columnDefs: [
@@ -20,7 +20,7 @@ var table = $('table.user_logs').DataTable({
         { data: 'role', width: '12%' },
         { data: 'activity' }
     ],
-    order:[],
+    order: [],
     initComplete: function(){
         return notifyDeadline();
     }

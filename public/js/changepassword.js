@@ -18,10 +18,10 @@ $('#btnChangePassword').on('click', function(){
             $.ajax({
                 url: "password_save",
                 type: "PUT",
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
-                data: {
+                data:{
                     _token: $("#csrf").val(),
                     new: pass2,
                     current: pass1

@@ -236,7 +236,7 @@ $('table.assemblyTable').DataTable({
         { data: 'user_id' },
         { data: 'assembly_reqnum' }
     ],
-    order:[],
+    order: [],
     initComplete: function(){
         return notifyDeadline();
     }
@@ -278,7 +278,7 @@ $('#btnAssemblyProceed').on('click', function(){
                 alert(data.responseText);
             },
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -618,7 +618,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                             reqnum: req_num,
                         }
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -652,7 +652,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                             included: included
                         }
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -689,7 +689,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                                 request_number: req_num,
                             }
                         },
-                        order:[],
+                        order: [],
                         columns: [
                             { data: 'prodcode' },
                             { data: 'item' },
@@ -737,7 +737,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                                 request_number: req_num,
                             }
                         },
-                        order:[],
+                        order: [],
                         columns: [
                             { data: 'prodcode' },
                             { data: 'item' },
@@ -932,7 +932,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
                 reqnum: req_num,
             }
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -968,7 +968,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
                 included: included
             }
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -1005,7 +1005,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
                     request_number: req_num,
                 }
             },
-            order:[],
+            order: [],
             columns: [
                 { data: 'prodcode' },
                 { data: 'item' },
@@ -1053,7 +1053,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
                     request_number: req_num,
                 }
             },
-            order:[],
+            order: [],
             columns: [
                 { data: 'prodcode' },
                 { data: 'item' },

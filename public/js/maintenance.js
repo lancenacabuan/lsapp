@@ -5,12 +5,12 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
     $('#itemTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
     $('table.itemTable').DataTable({
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/fm_items',
         },
         columnDefs: [
@@ -27,7 +27,7 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
             { data: 'UOM' },
             { data: 'prodcode' }
         ],
-        order:[[2, 'asc']],
+        order: [[2, 'asc']],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -39,12 +39,12 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('#assemblyitemTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
     $('table.assemblyitemTable').DataTable({
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/asm_items',
         },
         columnDefs: [
@@ -61,7 +61,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
             { data: 'UOM' },
             { data: 'prodcode' }
         ],
-        order:[[2, 'asc']],
+        order: [[2, 'asc']],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -73,12 +73,12 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('#categoryTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
     $('table.categoryTable').DataTable({
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/fm_categories',
         },
         columnDefs: [
@@ -91,7 +91,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
             { data: 'id' },
             { data: 'category' }
         ],
-        order:[[1, 'asc']],
+        order: [[1, 'asc']],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -103,12 +103,12 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('#locationTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
     $('table.locationTable').DataTable({
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/fm_locations',
         },
         columnDefs: [
@@ -138,7 +138,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
                 }
             }
         ],
-        order:[[1, 'asc']],
+        order: [[1, 'asc']],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -151,13 +151,13 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('#loading').show(); Spinner(); Spinner.show();
     warranty = $('table.warrantyTable').DataTable({ 
         dom: 'rtp',
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         processing: false,
         serverSide: false,
-        ajax: {
+        ajax:{
             url: 'GetWarranty'
         },
         async: false,
@@ -302,7 +302,7 @@ $(document).on('click', '#subBtn', function(){
             url: "AddWarranty",
             type: "POST",
             dataType: 'json',
-            headers: {
+            headers:{
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data:{
@@ -323,7 +323,7 @@ $(document).on('click', '#subBtn', function(){
             url: "UpdateWarranty",
             type: "PUT",
             dataType: 'json',
-            headers: {
+            headers:{
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data:{
@@ -410,10 +410,10 @@ $('#btnSaveItem').on('click', function(){
                 $.ajax({
                     url: "/saveItem",
                     type: "POST",
-                    headers: {
+                    headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                     },
-                    data: {
+                    data:{
                         _token: $("#csrf").val(),
                         category_name: category_name,
                         item_category: item_category,
@@ -514,10 +514,10 @@ $('#btnUpdateItem').on('click', function(){
                 $.ajax({
                     url: "/updateItem",
                     type: "PUT",
-                    headers: {
+                    headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                     },
-                    data: {
+                    data:{
                         _token: $("#csrf").val(),
                         item_id: item_id,
                         category_name_original: category_name_original,
@@ -606,10 +606,10 @@ $('#btnSaveCategory').on('click', function(){
                 $.ajax({
                     url: "/saveCategory",
                     type: "POST",
-                    headers: {
+                    headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                     },
-                    data: {
+                    data:{
                         _token: $("#csrf").val(),
                         category: category
                     },
@@ -621,10 +621,10 @@ $('#btnSaveCategory').on('click', function(){
                             $.ajax({
                                 url: "/logNewCategory",
                                 type: "POST",
-                                headers: {
+                                headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                                 },
-                                data: {
+                                data:{
                                     id: data.id,
                                     category: data.category
                                 },
@@ -712,10 +712,10 @@ $('#btnUpdateCategory').on('click', function(){
                 $.ajax({
                     url: "/updateCategory",
                     type: "PUT",
-                    headers: {
+                    headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                     },
-                    data: {
+                    data:{
                         _token: $("#csrf").val(),
                         category_id: category_id,
                         category_original: category_original,
@@ -729,10 +729,10 @@ $('#btnUpdateCategory').on('click', function(){
                             $.ajax({
                                 url: "/logUpdateCategory",
                                 type: "POST",
-                                headers: {
+                                headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                                 },
-                                data: {
+                                data:{
                                     category_id: data.category_id,
                                     category_original: data.category_original,
                                     category_details: data.category_details
@@ -800,10 +800,10 @@ $('#btnSaveLocation').on('click', function(){
                 $.ajax({
                     url: "/saveLocation",
                     type: "POST",
-                    headers: {
+                    headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                     },
-                    data: {
+                    data:{
                         _token: $("#csrf").val(),
                         location: location_name
                     },
@@ -816,10 +816,10 @@ $('#btnSaveLocation').on('click', function(){
                             $.ajax({
                                 url: "/logNewLocation",
                                 type: "POST",
-                                headers: {
+                                headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                                 },
-                                data: {
+                                data:{
                                     id: data.id,
                                     location: data.location
                                 },
@@ -933,10 +933,10 @@ $('#btnUpdateLocation').on('click', function(){
                 $.ajax({
                     url: "/updateLocation",
                     type: "PUT",
-                    headers: {
+                    headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                     },
-                    data: {
+                    data:{
                         _token: $("#csrf").val(),
                         location_id: location_id,
                         location_details: location_details,
@@ -952,10 +952,10 @@ $('#btnUpdateLocation').on('click', function(){
                             $.ajax({
                                 url: "/requestStatusChange",
                                 type: "POST",
-                                headers: {
+                                headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                                 },
-                                data: {
+                                data:{
                                     id: data.id,
                                     location: data.location,
                                     status_original: data.status_original,
@@ -1008,10 +1008,10 @@ $('#btnUpdateLocation').on('click', function(){
                 $.ajax({
                     url: "/updateLocation",
                     type: "PUT",
-                    headers: {
+                    headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                     },
-                    data: {
+                    data:{
                         _token: $("#csrf").val(),
                         location_id: location_id,
                         location_original: location_original,
@@ -1232,7 +1232,7 @@ $('#btnSave').on('click', function(){
                 type:'post',
                 url:'/createItem',
                 async: false,
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -1248,7 +1248,7 @@ $('#btnSave').on('click', function(){
                                 type:'post',
                                 url:'/saveParts',
                                 async: false,
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -1276,7 +1276,7 @@ $('#btnSave').on('click', function(){
                             type:'post',
                             url:'/logItem',
                             async: false,
-                            headers: {
+                            headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },
                             data:{
@@ -1367,14 +1367,14 @@ $('#assemblyitemTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             emptyTable: "No data available in table",
             processing: "Loading...",
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/itemDetails',
-            data: {
+            data:{
                 item_id: item_id
             },
             dataType: 'json',
@@ -1385,7 +1385,7 @@ $('#assemblyitemTable tbody').on('click', 'tr', function(){
                 alert(data.responseText);
             },
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -1414,10 +1414,10 @@ $('#btnUpdate').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/changeItem',
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
-                data: {
+                data:{
                     item_id: item_id,
                     item_name_original: item_name_original,
                     item_name: item_name,

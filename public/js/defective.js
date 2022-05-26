@@ -1,12 +1,12 @@
 $('table.defectiveTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
 $('table.defectiveTable').DataTable({ 
-    language: {
+    language:{
         processing: "Loading...",
         emptyTable: "No data available in table"
     },
     serverSide: true,
-    ajax: {
+    ajax:{
         url: '/defective/data',
     },
     columnDefs: [
@@ -50,7 +50,7 @@ $('table.defectiveTable').DataTable({
             }
         },
     ],
-    order:[[1, 'asc'], [2, 'asc']],
+    order: [[1, 'asc'], [2, 'asc']],
     initComplete: function(){
         return notifyDeadline();
     }
@@ -118,10 +118,10 @@ $(document).on('click', '.btnReturnItem', function(){
             $.ajax({
                 type:'post',
                 url: '/defective/return',
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
-                data: {
+                data:{
                     return_number: $("#return_number").val(),
                     stock_id: data.stock_id,
                     category_id: data.category_id,

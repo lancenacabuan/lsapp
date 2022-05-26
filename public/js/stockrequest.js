@@ -52,9 +52,9 @@ function copyAsmReqNum(){
 
 function sweet(title, text, icon, btnName, url){
     swal(title, text, icon, {
-        buttons: {
+        buttons:{
             cancel: 'Cancel',
-            catch: {
+            catch:{
             text: btnName,
             value: 'button',
             }
@@ -554,7 +554,7 @@ $('#btnSave').on('click', function(){
                     type:'post',
                     url:'/saveReqNum',
                     async: false,
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
@@ -576,7 +576,7 @@ $('#btnSave').on('click', function(){
                                     type:'post',
                                     url:'/saveRequest',
                                     async: false,
-                                    headers: {
+                                    headers:{
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
@@ -609,7 +609,7 @@ $('#btnSave').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logSave',
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -696,7 +696,7 @@ $(document).on('click', '#btnSaveChanges', function(){
                 type:'post',
                 url:'/editRequest',
                 async: false,
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -798,12 +798,12 @@ if($("#current_role").val() == '["sales"]'){
                 "searchable": true
             }
         ],
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/request_data',
         },
         columns: [
@@ -873,7 +873,7 @@ if($("#current_role").val() == '["sales"]'){
             { data: 'req_num' },
             { data: 'assembly_reqnum' },
         ],
-        order:[],
+        order: [],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -897,12 +897,12 @@ else{
                 "searchable": true
             }
         ],
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/request_data',
         },
         columns: [
@@ -972,7 +972,7 @@ else{
             { data: 'req_num' },
             { data: 'assembly_reqnum' },
         ],
-        order:[],
+        order: [],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -984,12 +984,12 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
     reqnum = url.replace('?request_number=', '');
     $.ajax({
         url: '/reqModal',
-        headers: {
+        headers:{
             'X-CSRF-TOKEN': $("#csrf").val()
         },
         dataType: 'json',
         type: 'get',
-        data: {
+        data:{
             request_number: reqnum,
         },
         success: function(data){
@@ -1427,21 +1427,21 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             render: function(data,type,full,meta){
                                 return "<div style='color: red;'>"+data+"</div>";
                             },
-                            targets:[11,12]
+                            targets: [11,12]
                         }
                     ],
                     searching: false,
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         emptyTable: "No data available in table",
                         processing: "Loading...",
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: '/requestDetails',
-                        data: {
+                        data:{
                             reqnum: req_num,
                         },
                         dataType: 'json',
@@ -1452,7 +1452,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             alert(data.responseText);
                         },
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -1485,14 +1485,14 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         emptyTable: "No data available in table",
                         processing: "Loading...",
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: '/requestDetails',
-                        data: {
+                        data:{
                             reqnum: req_num,
                         },
                         dataType: 'json',
@@ -1503,7 +1503,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             alert(data.responseText);
                         },
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -1537,14 +1537,14 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         emptyTable: "No data available in table",
                         processing: "Loading...",
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: '/requestDetails',
-                        data: {
+                        data:{
                             reqnum: req_num,
                         },
                         dataType: 'json',
@@ -1555,7 +1555,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             alert(data.responseText);
                         },
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -1574,18 +1574,18 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: '/receivedItems',
-                        data: {
+                        data:{
                             request_number: req_num,
                         }
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -1615,18 +1615,18 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: '/schedItems',
-                        data: {
+                        data:{
                             request_number: req_num,
                         }
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -1644,18 +1644,18 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: '/schedItems',
-                        data: {
+                        data:{
                             request_number: req_num,
                         }
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -1679,18 +1679,18 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: rcv_url,
-                        data: {
+                        data:{
                             request_number: req_num,
                         }
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -1722,18 +1722,18 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         paging: false,
                         ordering: false,
                         info: false,
-                        language: {
+                        language:{
                             processing: "Loading...",
                             emptyTable: "No data available in table"
                         },
                         serverSide: true,
-                        ajax: {
+                        ajax:{
                             url: rcv_url,
-                            data: {
+                            data:{
                                 request_number: req_num,
                             }
                         },
-                        order:[],
+                        order: [],
                         columns: [
                             { data: 'prodcode' },
                             { data: 'item' },
@@ -1767,19 +1767,19 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         paging: false,
                         ordering: false,
                         info: false,
-                        language: {
+                        language:{
                             processing: "Loading...",
                             emptyTable: "No data available in table"
                         },
                         serverSide: true,
-                        ajax: {
+                        ajax:{
                             url: rcv_url,
-                            data: {
+                            data:{
                                 request_number: req_num,
                                 included: included
                             }
                         },
-                        order:[],
+                        order: [],
                         columns: [
                             { data: 'prodcode' },
                             { data: 'item' },
@@ -1816,18 +1816,18 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             paging: false,
                             ordering: false,
                             info: false,
-                            language: {
+                            language:{
                                 processing: "Loading...",
                                 emptyTable: "No data available in table"
                             },
                             serverSide: true,
-                            ajax: {
+                            ajax:{
                                 url: ajax_url,
-                                data: {
+                                data:{
                                     request_number: req_num,
                                 }
                             },
-                            order:[],
+                            order: [],
                             columns: [
                                 { data: 'prodcode' },
                                 { data: 'item' },
@@ -1862,18 +1862,18 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             paging: false,
                             ordering: false,
                             info: false,
-                            language: {
+                            language:{
                                 processing: "Loading...",
                                 emptyTable: "No data available in table"
                             },
                             serverSide: true,
-                            ajax: {
+                            ajax:{
                                 url: ajax_url,
-                                data: {
+                                data:{
                                     request_number: req_num,
                                 }
                             },
-                            order:[],
+                            order: [],
                             columns: [
                                 { data: 'prodcode' },
                                 { data: 'item' },
@@ -1913,18 +1913,18 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         paging: false,
                         ordering: false,
                         info: false,
-                        language: {
+                        language:{
                             processing: "Loading...",
                             emptyTable: "No data available in table"
                         },
                         serverSide: true,
-                        ajax: {
+                        ajax:{
                             url: '/asmItems',
-                            data: {
+                            data:{
                                 request_number: req_num,
                             }
                         },
-                        order:[],
+                        order: [],
                         columns: [
                             { data: 'prodcode' },
                             { data: 'item' },
@@ -2376,21 +2376,21 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 render: function(data,type,full,meta){
                     return "<div style='color: red;'>"+data+"</div>";
                 },
-                targets:[11,12]
+                targets: [11,12]
             }
         ],
         searching: false,
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             emptyTable: "No data available in table",
             processing: "Loading...",
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/requestDetails',
-            data: {
+            data:{
                 reqnum: req_num,
             },
             dataType: 'json',
@@ -2401,7 +2401,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 alert(data.responseText);
             },
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -2434,14 +2434,14 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             emptyTable: "No data available in table",
             processing: "Loading...",
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/requestDetails',
-            data: {
+            data:{
                 reqnum: req_num,
             },
             dataType: 'json',
@@ -2452,7 +2452,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 alert(data.responseText);
             },
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -2486,14 +2486,14 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             emptyTable: "No data available in table",
             processing: "Loading...",
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/requestDetails',
-            data: {
+            data:{
                 reqnum: req_num,
             },
             dataType: 'json',
@@ -2504,7 +2504,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 alert(data.responseText);
             },
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -2523,18 +2523,18 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/receivedItems',
-            data: {
+            data:{
                 request_number: req_num,
             }
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -2564,18 +2564,18 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/schedItems',
-            data: {
+            data:{
                 request_number: req_num,
             }
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -2593,18 +2593,18 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/schedItems',
-            data: {
+            data:{
                 request_number: req_num,
             }
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -2628,18 +2628,18 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: rcv_url,
-            data: {
+            data:{
                 request_number: req_num,
             }
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -2671,18 +2671,18 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             paging: false,
             ordering: false,
             info: false,
-            language: {
+            language:{
                 processing: "Loading...",
                 emptyTable: "No data available in table"
             },
             serverSide: true,
-            ajax: {
+            ajax:{
                 url: rcv_url,
-                data: {
+                data:{
                     request_number: req_num,
                 }
             },
-            order:[],
+            order: [],
             columns: [
                 { data: 'prodcode' },
                 { data: 'item' },
@@ -2716,19 +2716,19 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             paging: false,
             ordering: false,
             info: false,
-            language: {
+            language:{
                 processing: "Loading...",
                 emptyTable: "No data available in table"
             },
             serverSide: true,
-            ajax: {
+            ajax:{
                 url: rcv_url,
-                data: {
+                data:{
                     request_number: req_num,
                     included: included
                 }
             },
-            order:[],
+            order: [],
             columns: [
                 { data: 'prodcode' },
                 { data: 'item' },
@@ -2765,18 +2765,18 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 paging: false,
                 ordering: false,
                 info: false,
-                language: {
+                language:{
                     processing: "Loading...",
                     emptyTable: "No data available in table"
                 },
                 serverSide: true,
-                ajax: {
+                ajax:{
                     url: ajax_url,
-                    data: {
+                    data:{
                         request_number: req_num,
                     }
                 },
-                order:[],
+                order: [],
                 columns: [
                     { data: 'prodcode' },
                     { data: 'item' },
@@ -2811,18 +2811,18 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 paging: false,
                 ordering: false,
                 info: false,
-                language: {
+                language:{
                     processing: "Loading...",
                     emptyTable: "No data available in table"
                 },
                 serverSide: true,
-                ajax: {
+                ajax:{
                     url: ajax_url,
-                    data: {
+                    data:{
                         request_number: req_num,
                     }
                 },
-                order:[],
+                order: [],
                 columns: [
                     { data: 'prodcode' },
                     { data: 'item' },
@@ -2862,18 +2862,18 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             paging: false,
             ordering: false,
             info: false,
-            language: {
+            language:{
                 processing: "Loading...",
                 emptyTable: "No data available in table"
             },
             serverSide: true,
-            ajax: {
+            ajax:{
                 url: '/asmItems',
-                data: {
+                data:{
                     request_number: req_num,
                 }
             },
-            order:[],
+            order: [],
             columns: [
                 { data: 'prodcode' },
                 { data: 'item' },
@@ -2957,10 +2957,10 @@ $('#btnEdit').on('click', function(){
                 $.ajax({
                     type:'post',
                     url: '/editSerial',
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
-                    data: {
+                    data:{
                         id: id,
                         category: category,
                         item: item,
@@ -3004,10 +3004,10 @@ $(document).on('click', '.btndelItem', function(){
     $.ajax({
         type:'post',
         url: '/delReqItem',
-        headers: {
+        headers:{
             'X-CSRF-TOKEN': $("#csrf").val()
         },
-        data: {
+        data:{
             req_num: $('#request_num_details').val(),
             item_id: data.item_id,
             item: data.item,
@@ -3050,7 +3050,7 @@ $('#btnDelete').on('click', function(){
             $.ajax({
                 type:'post', 
                 url:'/deleteRequest',
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -3091,7 +3091,7 @@ $('#btnApprove').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/approveRequest',
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -3147,7 +3147,7 @@ $('#btnReason').on('click', function(){
                     type:'post',
                     url:'/disapproveRequest',
                     async: false,
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
@@ -3165,7 +3165,7 @@ $('#btnReason').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logDisapprove',
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -3221,7 +3221,7 @@ $('.btnTransit').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/inTransit',
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -3278,7 +3278,7 @@ $('#btnReschedule').on('click', function(){
                 $.ajax({
                     type:'post',
                     url:'/reschedRequest',
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
@@ -3357,7 +3357,7 @@ $('#btnReceiveAssembled').on('click', function(){
                 type:'post',
                 url:'/assembly/receiveAssembled',
                 async: false,
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -3370,7 +3370,7 @@ $('#btnReceiveAssembled').on('click', function(){
                                 type:'post',
                                 url:'/assembly/addAssembled',
                                 async: false,
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -3412,7 +3412,7 @@ $('#btnReceiveAssembled').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/assembly/logAssembled',
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -3859,7 +3859,7 @@ $("#btnProceed").unbind('click').click(function(){
                                             type:'post',
                                             url:'/prepareItems',
                                             async: false,
-                                            headers: {
+                                            headers:{
                                                 'X-CSRF-TOKEN': $("#csrf").val()
                                             },
                                             data:{
@@ -3890,7 +3890,7 @@ $("#btnProceed").unbind('click').click(function(){
                                 $.ajax({
                                     type:'post',
                                     url:'/logSched',
-                                    headers: {
+                                    headers:{
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
@@ -4172,7 +4172,7 @@ $('.btnReceive').on('click', function(){
                 type: 'post',
                 url: '/receiveRequest',
                 async: false,
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -4187,7 +4187,7 @@ $('.btnReceive').on('click', function(){
                                 type: 'post',
                                 url: '/receiveItems',
                                 async: false,
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -4218,7 +4218,7 @@ $('.btnReceive').on('click', function(){
                         $.ajax({
                             type: 'post',
                             url: '/logReceive',
-                            headers: {
+                            headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },
                             data:{
@@ -4281,7 +4281,7 @@ $('#btnReceiveDfc').on('click', function(){
                 type: 'post',
                 url: '/receiveDefective',
                 async: false,
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -4295,7 +4295,7 @@ $('#btnReceiveDfc').on('click', function(){
                                 type: 'post',
                                 url: '/receiveDfcItems',
                                 async: false,
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -4324,7 +4324,7 @@ $('#btnReceiveDfc').on('click', function(){
                         $.ajax({
                             type: 'post',
                             url: '/logReceiveDfc',
-                            headers: {
+                            headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },
                             data:{
@@ -4393,7 +4393,7 @@ $('#btnReference').on('click', function(){
                     type:'post',
                     url:'/saleRequest',
                     async: false,
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
@@ -4408,7 +4408,7 @@ $('#btnReference').on('click', function(){
                                     type: 'post',
                                     url: '/sellItems',
                                     async: false,
-                                    headers: {
+                                    headers:{
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
@@ -4440,7 +4440,7 @@ $('#btnReference').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logSold',
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -4503,7 +4503,7 @@ $('#btnReturn').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/returnRequest',
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -4517,7 +4517,7 @@ $('#btnReturn').on('click', function(){
                                 type: 'post',
                                 url: '/returnItems',
                                 async: false,
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -4546,7 +4546,7 @@ $('#btnReturn').on('click', function(){
                         $.ajax({
                             type:'post',
                             url:'/logReturn',
-                            headers: {
+                            headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },
                             data:{

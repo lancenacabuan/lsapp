@@ -58,7 +58,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     ItemTable = 
         $('table.ItemTable').DataTable({
             serverSide: true,
-            ajax: {
+            ajax:{
                 url: 'item_data',
                 data:{
                     CategoryId: trdata.id
@@ -98,7 +98,7 @@ $('#btnBack').on('click', function(){
     ItemTable = 
         $('table.ItemTable').DataTable({
             serverSide: true,
-            ajax: {
+            ajax:{
                 url: 'item_data',
                 data:{
                     CategoryId: categoryID
@@ -139,7 +139,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     ItemSerialTable = 
         $('table.ItemSerialTable').DataTable({
             serverSide: true,
-            ajax: {
+            ajax:{
                 url: 'itemserial_data',
                 data:{
                     ItemId: trdata.id
@@ -176,7 +176,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 { data: 'rack' },
                 { data: 'row' }
             ],
-            order:[[1, 'desc']],
+            order: [[1, 'desc']],
             initComplete: function(){
                 return notifyDeadline();
             }
@@ -252,10 +252,10 @@ $('#btnEdit').on('click', function(){
                 $.ajax({
                     type:'post',
                     url: '/editSerial',
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
-                    data: {
+                    data:{
                         id: id,
                         category: category,
                         item: item,
@@ -328,10 +328,10 @@ $('#butsave').on('click', function(){
                     $.ajax({
                         url: "stocks/save",
                         type: "POST",
-                        headers: {
+                        headers:{
                             'X-CSRF-TOKEN': $("#csrf").val()
                         },
-                        data: {
+                        data:{
                             _token: $("#csrf").val(),
                             category: category,
                             item: item,
@@ -378,10 +378,10 @@ $('#butsave').on('click', function(){
                     $.ajax({
                         url: "stocks/save",
                         type: "POST",
-                        headers: {
+                        headers:{
                             'X-CSRF-TOKEN': $("#csrf").val()
                         },
-                        data: {
+                        data:{
                             _token: $("#csrf").val(),
                             category: category,
                             item: item,
@@ -422,7 +422,7 @@ $('#category').on('change', function(){
     $.ajax({
         type: 'get',
         url: '/addStockitem',
-        data: { 'category_id': id },            
+        data:{ 'category_id': id },            
         success: function(data){
             var itemcode = $.map(data, function(value, index){
                 return [value];

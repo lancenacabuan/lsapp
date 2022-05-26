@@ -367,7 +367,7 @@ $('#btnSave').on('click', function(){
                     type:'post',
                     url:'/saveTransReqNum',
                     async: false,
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
@@ -385,7 +385,7 @@ $('#btnSave').on('click', function(){
                                     type:'post',
                                     url:'/saveTransRequest',
                                     async: false,
-                                    headers: {
+                                    headers:{
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
@@ -416,7 +416,7 @@ $('#btnSave').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logTransSave',
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -484,12 +484,12 @@ $('table.stocktransferTable').DataTable({
             "searchable": false
         }
     ],
-    language: {
+    language:{
         processing: "Loading...",
         emptyTable: "No data available in table"
     },
     serverSide: true,
-    ajax: {
+    ajax:{
         url: '/transfer_data',
     },
     columns: [
@@ -551,7 +551,7 @@ $('table.stocktransferTable').DataTable({
         { data: 'user_id' },
         { data: 'reason' }
     ],
-    order:[],
+    order: [],
     initComplete: function(){
         return notifyDeadline();
     }
@@ -562,12 +562,12 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
     reqnum = url.replace('?request_number=', '');
     $.ajax({
         url: '/transModal',
-        headers: {
+        headers:{
             'X-CSRF-TOKEN': $("#csrf").val()
         },
         dataType: 'json',
         type: 'get',
-        data: {
+        data:{
             request_number: reqnum,
         },
         success: function(data){
@@ -729,14 +729,14 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         emptyTable: "No data available in table",
                         processing: "Loading...",
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: '/transferDetails',
-                        data: {
+                        data:{
                             reqnum: req_num,
                         },
                         dataType: 'json',
@@ -747,7 +747,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                             alert(data.responseText);
                         },
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -789,18 +789,18 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: '/transItems',
-                        data: {
+                        data:{
                             request_number: $('#request_num_details').val(),
                         }
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -832,18 +832,18 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: '/incTransItems',
-                        data: {
+                        data:{
                             request_number: $('#request_num_details').val(),
                         }
                     },
-                    order:[],
+                    order: [],
                     columns: [
                         { data: 'prodcode' },
                         { data: 'item' },
@@ -1018,14 +1018,14 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             emptyTable: "No data available in table",
             processing: "Loading...",
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/transferDetails',
-            data: {
+            data:{
                 reqnum: req_num,
             },
             dataType: 'json',
@@ -1036,7 +1036,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
                 alert(data.responseText);
             },
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -1078,18 +1078,18 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/transItems',
-            data: {
+            data:{
                 request_number: $('#request_num_details').val(),
             }
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -1121,18 +1121,18 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/incTransItems',
-            data: {
+            data:{
                 request_number: $('#request_num_details').val(),
             }
         },
-        order:[],
+        order: [],
         columns: [
             { data: 'prodcode' },
             { data: 'item' },
@@ -1215,10 +1215,10 @@ $('#btnEdit').on('click', function(){
                 $.ajax({
                     type:'post',
                     url: '/editTransSerial',
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
-                    data: {
+                    data:{
                         id: id,
                         category: category,
                         item: item,
@@ -1262,10 +1262,10 @@ $(document).on('click', '.btndelItem', function(){
     $.ajax({
         type:'post',
         url: '/delTransItem',
-        headers: {
+        headers:{
             'X-CSRF-TOKEN': $("#csrf").val()
         },
-        data: {
+        data:{
             req_num: $('#request_num_details').val(),
             item_id: data.item_id,
             item: data.item,
@@ -1308,7 +1308,7 @@ $('#btnDelete').on('click', function(){
             $.ajax({
                 type:'post', 
                 url:'/deleteTransfer',
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -1349,7 +1349,7 @@ $('#btnApprove').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/approveTransfer',
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -1405,7 +1405,7 @@ $('#btnReason').on('click', function(){
                     type:'post',
                     url:'/disapproveTransfer',
                     async: false,
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
@@ -1423,7 +1423,7 @@ $('#btnReason').on('click', function(){
                             $.ajax({
                                 type:'post',
                                 url:'/logTransDisapprove',
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -1479,7 +1479,7 @@ $('.btnTransit').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/forReceiving',
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -1534,7 +1534,7 @@ $('#btnReschedule').on('click', function(){
                 $.ajax({
                     type:'post',
                     url:'/reschedTransRequest',
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
@@ -1887,7 +1887,7 @@ $("#btnProceed").unbind('click').click(function(){
                                             type:'post',
                                             url:'/transferItems',
                                             async: false,
-                                            headers: {
+                                            headers:{
                                                 'X-CSRF-TOKEN': $("#csrf").val()
                                             },
                                             data:{
@@ -1917,7 +1917,7 @@ $("#btnProceed").unbind('click').click(function(){
                                 $.ajax({
                                     type:'post',
                                     url:'/logTransSched',
-                                    headers: {
+                                    headers:{
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
@@ -1987,7 +1987,7 @@ $('.btnReceive').on('click', function(){
                 type: 'post',
                 url: '/receiveTransfer',
                 async: false,
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -2001,7 +2001,7 @@ $('.btnReceive').on('click', function(){
                                 type: 'post',
                                 url: '/receiveTransItems',
                                 async: false,
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -2031,7 +2031,7 @@ $('.btnReceive').on('click', function(){
                         $.ajax({
                             type: 'post',
                             url: '/logTransReceive',
-                            headers: {
+                            headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },
                             data:{

@@ -1,12 +1,12 @@
 $('table.userTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
 $('table.userTable').DataTable({ 
-    language: {
+    language:{
         processing: "Loading...",
         emptyTable: "No data available in table"
     },
     serverSide: true,
-    ajax: {
+    ajax:{
         url: '/users_data',
     },
     columnDefs: [
@@ -32,7 +32,7 @@ $('table.userTable').DataTable({
             }
         }
     ],
-    order:[[3, 'asc'], [1, 'asc']],
+    order: [[3, 'asc'], [1, 'asc']],
     initComplete: function(){
         return notifyDeadline();
     }
@@ -62,10 +62,10 @@ $('#btnSave').on('click', function(){
         $.ajax({
             url: "/users/validate/save",
             type: "POST",
-            headers: {
+            headers:{
                 'X-CSRF-TOKEN': $("#csrf").val()
             },
-            data: {
+            data:{
                 _token: $("#csrf").val(),
                 name: name,
                 email: email,
@@ -88,10 +88,10 @@ $('#btnSave').on('click', function(){
                             $.ajax({
                                 url: "/users/save",
                                 type: "POST",
-                                headers: {
+                                headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                                 },
-                                data: {
+                                data:{
                                     _token: $("#csrf").val(),
                                     name: name,
                                     email: email,
@@ -205,10 +205,10 @@ $('#btnUpdate').on('click', function(){
         $.ajax({
             url: "/users/validate/update",
             type: "PUT",
-            headers: {
+            headers:{
                 'X-CSRF-TOKEN': $("#csrf").val()
             },
-            data: {
+            data:{
                 _token: $("#csrf").val(),
                 id1: id1,
                 name1: name1,
@@ -233,10 +233,10 @@ $('#btnUpdate').on('click', function(){
                             $.ajax({
                                 url: "/users/update",
                                 type: "PUT",
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
-                                data: {
+                                data:{
                                     _token: $("#csrf").val(),
                                     id1: id1,
                                     name1: name1,

@@ -81,8 +81,8 @@ function generateReqNum(){
     var request_number = date+result;
 
     $.ajax({
-        type:'get',
-        url:'/assembly/generateReqNum',
+        type: 'get',
+        url: '/assembly/generateReqNum',
         async: false,
         data:{
             'request_number': request_number
@@ -155,12 +155,12 @@ $('table.assemblyTable').DataTable({
             "searchable": false
         }
     ],
-    language: {
+    language:{
         processing: "Loading...",
         emptyTable: "No data available in table"
     },
     serverSide: true,
-    ajax: {
+    ajax:{
         url: '/assembly/request_data',
     },
     columns: [
@@ -260,14 +260,14 @@ $('#btnAssemblyProceed').on('click', function(){
                 "searchable": false
             }
         ],
-        language: {
+        language:{
             emptyTable: "No data available in table",
             processing: "Loading...",
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/partsDetails',
-            data: {
+            data:{
                 item_id: $("#assembly").val()
             },
             dataType: 'json',
@@ -278,9 +278,9 @@ $('#btnAssemblyProceed').on('click', function(){
                 alert(data.responseText);
             },
         },
-        order:[[0, 'asc'],[1, 'asc']],
+        order:[],
         columns: [
-            { data: 'category' },
+            { data: 'prodcode' },
             { data: 'item' },
             { data: 'quantity' },
             { data: 'uom' },
@@ -334,10 +334,10 @@ $('#btnAssemblySave').on('click', function(){
         .then((willDelete) => {
             if(willDelete){
                 $.ajax({
-                    type:'post',
-                    url:'/assembly/saveReqNum',
+                    type: 'post',
+                    url: '/assembly/saveReqNum',
                     async: false,
-                    headers: {
+                    headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
@@ -352,15 +352,14 @@ $('#btnAssemblySave').on('click', function(){
                             var form_data  = $('#tblPartsDetails').DataTable().rows().data();
                             form_data.each(function(value, index){
                                 $.ajax({
-                                    type:'post',
-                                    url:'/assembly/saveRequest',
+                                    type: 'post',
+                                    url: '/assembly/saveRequest',
                                     async: false,
-                                    headers: {
+                                    headers:{
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
                                         'request_number': $('#request_num').val(),
-                                        'category': value.category_id,
                                         'item': value.item_id,
                                         'quantity': value.quantity,
                                         'qty': qty
@@ -382,14 +381,15 @@ $('#btnAssemblySave').on('click', function(){
                                 });
                             });
                             $.ajax({
-                                type:'post',
-                                url:'/assembly/logSave',
-                                headers: {
+                                type: 'post',
+                                url: '/assembly/logSave',
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
                                     'request_number': $('#request_num').val(),
-                                    'item_desc': item_desc
+                                    'item_desc': item_desc,
+                                    'qty': qty
                                 },
                                 success: function(data){
                                     if(data == 'true'){
@@ -432,12 +432,12 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
     reqnum = url.replace('?request_number=', '');
     $.ajax({
         url: '/reqModal',
-        headers: {
+        headers:{
             'X-CSRF-TOKEN': $("#csrf").val()
         },
         dataType: 'json',
         type: 'get',
-        data: {
+        data:{
             request_number: reqnum,
         },
         success: function(data){
@@ -607,20 +607,20 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         emptyTable: "No data available in table",
                         processing: "Loading...",
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: '/requestDetails',
-                        data: {
+                        data:{
                             reqnum: req_num,
                         }
                     },
                     order:[],
                     columns: [
-                        { data: 'category' },
+                        { data: 'prodcode' },
                         { data: 'item' },
                         { data: 'uom' },
                         { data: 'quantity' }
@@ -640,21 +640,21 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     paging: false,
                     ordering: false,
                     info: false,
-                    language: {
+                    language:{
                         processing: "Loading...",
                         emptyTable: "No data available in table"
                     },
                     serverSide: true,
-                    ajax: {
+                    ajax:{
                         url: rcv_url,
-                        data: {
+                        data:{
                             request_number: req_num,
                             included: included
                         }
                     },
                     order:[],
                     columns: [
-                        { data: 'category' },
+                        { data: 'prodcode' },
                         { data: 'item' },
                         { data: 'qty' },
                         { data: 'uom' },
@@ -678,20 +678,20 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         paging: false,
                         ordering: false,
                         info: false,
-                        language: {
+                        language:{
                             processing: "Loading...",
                             emptyTable: "No data available in table"
                         },
                         serverSide: true,
-                        ajax: {
+                        ajax:{
                             url: ajax_url,
-                            data: {
+                            data:{
                                 request_number: req_num,
                             }
                         },
                         order:[],
                         columns: [
-                            { data: 'category' },
+                            { data: 'prodcode' },
                             { data: 'item' },
                             { data: 'qty' },
                             { data: 'uom' },
@@ -703,8 +703,8 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
 
                 if(requestStatus == '14'){
                     $.ajax({
-                        type:'get', 
-                        url:'/getReceive', 
+                        type: 'get', 
+                        url: '/getReceive', 
                         data:{
                             'request_number': $('#request_num_details').val()
                         }, 
@@ -726,20 +726,20 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         paging: false,
                         ordering: false,
                         info: false,
-                        language: {
+                        language:{
                             processing: "Loading...",
                             emptyTable: "No data available in table"
                         },
                         serverSide: true,
-                        ajax: {
+                        ajax:{
                             url: '/asmItems',
-                            data: {
+                            data:{
                                 request_number: req_num,
                             }
                         },
                         order:[],
                         columns: [
-                            { data: 'category' },
+                            { data: 'prodcode' },
                             { data: 'item' },
                             { data: 'qty' },
                             { data: 'uom' },
@@ -921,20 +921,20 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             emptyTable: "No data available in table",
             processing: "Loading...",
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: '/requestDetails',
-            data: {
+            data:{
                 reqnum: req_num,
             }
         },
         order:[],
         columns: [
-            { data: 'category' },
+            { data: 'prodcode' },
             { data: 'item' },
             { data: 'uom' },
             { data: 'quantity' }
@@ -956,21 +956,21 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
-        language: {
+        language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
         },
         serverSide: true,
-        ajax: {
+        ajax:{
             url: rcv_url,
-            data: {
+            data:{
                 request_number: req_num,
                 included: included
             }
         },
         order:[],
         columns: [
-            { data: 'category' },
+            { data: 'prodcode' },
             { data: 'item' },
             { data: 'qty' },
             { data: 'uom' },
@@ -994,20 +994,20 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             paging: false,
             ordering: false,
             info: false,
-            language: {
+            language:{
                 processing: "Loading...",
                 emptyTable: "No data available in table"
             },
             serverSide: true,
-            ajax: {
+            ajax:{
                 url: ajax_url,
-                data: {
+                data:{
                     request_number: req_num,
                 }
             },
             order:[],
             columns: [
-                { data: 'category' },
+                { data: 'prodcode' },
                 { data: 'item' },
                 { data: 'qty' },
                 { data: 'uom' },
@@ -1019,8 +1019,8 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
 
     if(requestStatus == '14'){
         $.ajax({
-            type:'get', 
-            url:'/getReceive', 
+            type: 'get', 
+            url: '/getReceive', 
             data:{
                 'request_number': $('#request_num_details').val()
             }, 
@@ -1042,20 +1042,20 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             paging: false,
             ordering: false,
             info: false,
-            language: {
+            language:{
                 processing: "Loading...",
                 emptyTable: "No data available in table"
             },
             serverSide: true,
-            ajax: {
+            ajax:{
                 url: '/asmItems',
-                data: {
+                data:{
                     request_number: req_num,
                 }
             },
             order:[],
             columns: [
-                { data: 'category' },
+                { data: 'prodcode' },
                 { data: 'item' },
                 { data: 'qty' },
                 { data: 'uom' },
@@ -1077,9 +1077,9 @@ $('#btnDelete').on('click', function(){
     .then((willDelete) => {
         if(willDelete){
             $.ajax({
-                type:'post', 
-                url:'/deleteRequest',
-                headers: {
+                type: 'post', 
+                url: '/deleteRequest',
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -1194,10 +1194,10 @@ $('.btnReceive').on('click', function(){
     .then((willDelete) => {
         if(willDelete){
             $.ajax({
-                type:'post',
-                url:'/assembly/receiveRequest',
+                type: 'post',
+                url: '/assembly/receiveRequest',
                 async: false,
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -1210,10 +1210,10 @@ $('.btnReceive').on('click', function(){
                     if(data == 'true'){
                         for(var i=0; i < items.length; i++){
                             $.ajax({
-                                type:'post',
-                                url:'/assembly/receiveItems',
+                                type: 'post',
+                                url: '/assembly/receiveItems',
                                 async: false,
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -1241,9 +1241,9 @@ $('.btnReceive').on('click', function(){
                         $('#detailsAssembly').modal('dispose');
                         $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
-                            type:'post',
-                            url:'/assembly/logReceive',
-                            headers: {
+                            type: 'post',
+                            url: '/assembly/logReceive',
+                            headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },
                             data:{
@@ -1297,10 +1297,10 @@ $('#btnDefective').on('click', function(){
     .then((willDelete) => {
         if(willDelete){
             $.ajax({
-                type:'post',
-                url:'/assembly/defectiveRequest',
+                type: 'post',
+                url: '/assembly/defectiveRequest',
                 async: false,
-                headers: {
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -1311,10 +1311,10 @@ $('#btnDefective').on('click', function(){
                     if(data == 'true'){
                         for(var i=0; i < items.length; i++){
                             $.ajax({
-                                type:'post',
-                                url:'/assembly/defectiveItems',
+                                type: 'post',
+                                url: '/assembly/defectiveItems',
                                 async: false,
-                                headers: {
+                                headers:{
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
@@ -1342,9 +1342,9 @@ $('#btnDefective').on('click', function(){
                         $('#detailsAssembly').modal('dispose');
                         $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
-                            type:'post',
-                            url:'/assembly/logDefective',
-                            headers: {
+                            type: 'post',
+                            url: '/assembly/logDefective',
+                            headers:{
                                 'X-CSRF-TOKEN': $("#csrf").val()
                             },
                             data:{
@@ -1397,9 +1397,9 @@ $('#btnAssemble').on('click', function(){
     .then((willDelete) => {
         if(willDelete){
             $.ajax({
-                type:'post',
-                url:'/assembly/assembleRequest',
-                headers: {
+                type: 'post',
+                url: '/assembly/assembleRequest',
+                headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
@@ -1430,8 +1430,8 @@ $('#btnAssemble').on('click', function(){
 
 $('#btnPending').on('click', function(){
     $.ajax({
-        type:'get', 
-        url:'/getLink', 
+        type: 'get', 
+        url: '/getLink', 
         data:{
             'request_number': $('#request_num_details').val()
         }, 

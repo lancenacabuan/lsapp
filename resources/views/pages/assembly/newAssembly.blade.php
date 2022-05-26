@@ -44,7 +44,7 @@
                     <table id='tblPartsDetails' class="table tblPartsDetails" style="cursor: pointer; font-size: 12px; width: 100%;">
                         <thead>
                             <tr>
-                                <th>CATEGORY</th>
+                                <th>ITEM CODE</th>
                                 <th>ITEM DESCRIPTION</th>
                                 <th>QTY</th>
                                 <th>UOM</th>

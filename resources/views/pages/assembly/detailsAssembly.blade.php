@@ -54,7 +54,7 @@
                     <table id="asmItems" class="table asmItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                         <thead>
                             <tr>
-                                <th>CATEGORY</th>
+                                <th>ITEM CODE</th>
                                 <th>ITEM DESCRIPTION</th>
                                 <th>QTY</th>
                                 <th>UOM</th>
@@ -73,7 +73,7 @@
                 <table id="stockDetails" class="table stockDetails display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                     <thead>
                         <tr>
-                            <th>CATEGORY</th>
+                            <th>ITEM CODE</th>
                             <th>ITEM DESCRIPTION</th>
                             <th>UOM</th>
                             <th>REQUESTED</th>
@@ -109,7 +109,7 @@
                     <table id="prepItems" class="table prepItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                         <thead>
                             <tr>
-                                <th>CATEGORY</th>
+                                <th>ITEM CODE</th>
                                 <th>ITEM DESCRIPTION</th>
                                 <th>QTY</th>
                                 <th>UOM</th>
@@ -157,7 +157,7 @@
                     <table id="incItems" class="table incItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                         <thead>
                             <tr>
-                                <th>CATEGORY</th>
+                                <th>ITEM CODE</th>
                                 <th>ITEM DESCRIPTION</th>
                                 <th>QTY</th>
                                 <th>UOM</th>

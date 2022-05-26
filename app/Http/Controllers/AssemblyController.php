@@ -112,7 +112,7 @@ class AssemblyController extends Controller
     public function logSave(Request $request){
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "NEW ASSEMBLY STOCK REQUEST: User successfully submitted Assembly Stock Request No. $request->request_number.";
+        $userlogs->activity = "NEW ASSEMBLY STOCK REQUEST: User successfully submitted Assembly Stock Request No. $request->request_number for $request->qty-Unit/s of '$request->item_desc'.";
         $userlogs->save();
         
         return response('true');
@@ -550,11 +550,9 @@ class AssemblyController extends Controller
     }
 
     public function partsDetails(Request $request){
-        $partsDetails = Part::query()->select('categories.category','items.item','items.UOM AS uom','quantity','items.id AS item_id','items.category_id AS category_id')
+        $partsDetails = Part::query()->select('items.prodcode','items.item','items.UOM AS uom','quantity','items.id AS item_id','items.category_id AS category_id')
             ->join('items', 'items.id', 'parts.part_id')
-            ->join('categories', 'categories.id', 'items.category_id')
             ->where('parts.item_id',$request->item_id)
-            ->orderBy('category','ASC')
             ->orderBy('item','ASC')
             ->get();
         

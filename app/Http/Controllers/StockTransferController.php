@@ -78,14 +78,12 @@ class StockTransferController extends Controller
         return response()->json($list);
     }
 
-    public function settransuom(Request $request){       
-        $uom = Item::query()->select('UOM as uom')
+    public function settransuom(Request $request){
+        $data = Item::selectRaw('UOM as uom, prodcode')
             ->where('id',$request->item_id)
             ->get();
-        $uom = str_replace('[{"uom":"','',$uom);
-        $uom = str_replace('"}]','',$uom);
         
-        return response($uom);
+        return response($data);
     }
 
     public function qtystock(Request $request){       
@@ -120,13 +118,9 @@ class StockTransferController extends Controller
     }
 
     public function saveTransRequest(Request $request){
-        $items = Item::query()->select('id','category_id')
-                ->where('item',htmlspecialchars_decode($request->item))
-                ->first();
-
         $stockTransfer = new StockTransfer;
         $stockTransfer->request_number = $request->request_number;
-        $stockTransfer->item = $items->id;
+        $stockTransfer->item = $request->item;
         $stockTransfer->quantity = $request->quantity;
         $stockTransfer->served = '0';
         $stockTransfer->pending = $request->quantity;
@@ -155,8 +149,7 @@ class StockTransferController extends Controller
         while(!$request_details);
         
         do{
-            $items = StockTransfer::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
-                ->join('categories', 'categories.id', 'stock_transfer.category')
+            $items = StockTransfer::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                 ->join('items', 'items.id', 'stock_transfer.item')
                 ->where('request_number', $request->request_number)
                 ->get();
@@ -291,11 +284,10 @@ class StockTransferController extends Controller
     }
 
     public function transferDetails(Request $request){
-        $stockreq = StockTransfer::query()->select('categories.category','items.item','items.UOM AS uom','items.id AS item_id','quantity','served','pending')
-            ->join('categories', 'categories.id', 'stock_transfer.category')
+        $stockreq = StockTransfer::query()->select('items.prodcode','items.item','items.UOM AS uom','items.id AS item_id','quantity','served','pending')
             ->join('items', 'items.id', 'stock_transfer.item')
             ->where('request_number',$request->reqnum)
-            ->groupBy('category','items.item','uom','quantity','served','pending','item_id')
+            ->groupBy('prodcode','items.item','uom','quantity','served','pending','item_id')
             ->get();        
         
         return DataTables::of($stockreq)
@@ -359,33 +351,29 @@ class StockTransferController extends Controller
     }
 
     public function transItems(Request $request){
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('transferred_items.request_number', $request->request_number)
             ->where('stocks.status', '!=', 'incomplete')
             ->join('transferred_items','transferred_items.request_number','stocks.request_number')
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','request_transfer.locfrom')
-            ->groupBy('category','item','uom','serial','qty','item_id','id','location')
+            ->groupBy('prodcode','item','uom','serial','qty','item_id','id','location')
             ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+            ->sortBy('item');
 
         return DataTables::of($list)->make(true);
     }
 
     public function incTransItems(Request $request){
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('stocks.request_number', $request->request_number)
             ->where('stocks.status', 'incomplete')
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','request_transfer.locfrom')
             ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+            ->sortBy('item');
 
         return DataTables::of($list)->make(true);
     }
@@ -523,8 +511,7 @@ class StockTransferController extends Controller
         while(!$request_details);
         
         do{
-            $items = StockTransfer::query()->select('categories.category AS category','items.item AS item','items.UOM AS uom','quantity')
-                ->join('categories', 'categories.id', 'stock_transfer.category')
+            $items = StockTransfer::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                 ->join('items', 'items.id', 'stock_transfer.item')
                 ->where('request_number', $request->request_number)
                 ->get();
@@ -727,18 +714,16 @@ class StockTransferController extends Controller
             while(!$trans);
             
             do{
-                $items = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                     ->where('transferred_items.request_number', $request->request_number)
                     ->where('stocks.status', '!=', 'incomplete')
                     ->join('transferred_items','transferred_items.request_number','stocks.request_number')
                     ->join('request_transfer','request_transfer.request_number','stocks.request_number')
                     ->join('items','items.id','stocks.item_id')
-                    ->join('categories','categories.id','items.category_id')
                     ->join('locations','locations.id','request_transfer.locfrom')
-                    ->groupBy('category','item','uom','serial','qty','item_id','id','location')
+                    ->groupBy('prodcode','item','uom','serial','qty','item_id','id','location')
                     ->get()
-                    ->sortBy('item')
-                    ->sortBy('category');
+                    ->sortBy('item');
             }
             while(!$items);
             
@@ -831,12 +816,11 @@ class StockTransferController extends Controller
     }
 
     public function stocktrans(Request $request){       
-        $list = StockTransfer::select('categories.category AS category', 'items.item AS item', 'items.id AS item_id', 'stock_transfer.quantity AS qty', 'stock_transfer.served AS served', 'stock_transfer.pending AS pending', 'items.UOM AS uom')
+        $list = StockTransfer::select('items.prodcode AS prodcode', 'items.item AS item', 'items.id AS item_id', 'stock_transfer.quantity AS qty', 'stock_transfer.served AS served', 'stock_transfer.pending AS pending', 'items.UOM AS uom')
             ->where('stock_transfer.item', $request->item_id)
             ->where('stock_transfer.request_number', $request->reqnum)
             ->where('stocks.status','in')
             ->whereIn('stocks.location_id',[$request->location])
-            ->join('categories','categories.id','=','stock_transfer.category')
             ->join('items','items.id','=','stock_transfer.item')
             ->join('stocks','stocks.item_id','stock_transfer.item')
             ->join('locations','locations.id','stocks.location_id')
@@ -955,18 +939,16 @@ class StockTransferController extends Controller
             ->join('users', 'users.id', '=', 'request_transfer.prepared_by')
             ->first();
                 
-        $list3 = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('transferred_items.request_number', $request->request_number)
             ->where('stocks.status', '!=', 'incomplete')
             ->join('transferred_items','transferred_items.request_number','stocks.request_number')
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','request_transfer.locfrom')
-            ->groupBy('category','item','uom','serial','qty','item_id','id','location')
+            ->groupBy('prodcode','item','uom','serial','qty','item_id','id','location')
             ->get()
-            ->sortBy('item')
-            ->sortBy('category');
+            ->sortBy('item');
         
         if(!$list || !$list2 || !$list3){
             return redirect()->to('/stocktransfer');

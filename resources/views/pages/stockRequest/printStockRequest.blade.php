@@ -1,18 +1,25 @@
 @extends('layouts.app')
 @section('content')
-@role('approver - warehouse')
+@role('approver - warehouse') {{---ROLES---}}
 <script>
     window.location = '/';
 </script>
+@endrole
+@role('sales') {{---ROLES---}}
+@if(auth()->user()->id != $list->user_id)
+<script>
+    window.location = '/';
+</script>
+@endif
 @endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
 <div class="container-fluid">
     <button id="btnPrint" type="button" class="btn btn-primary bp" style="margin-right: 5px;">PRINT</button>
     <button id="btnSavePDF" type="button" class="btn btn-primary bp">SAVE AS PDF</button>
-    @role('admin|encoder|viewer|sales|approver - sales')
+    @role('admin|encoder|viewer|sales|approver - sales') {{---ROLES---}}
     <a href="/stockrequest?request_number={{$list->req_num}}" class="btn btn-primary float-right bp">BACK</a>
     @endrole
-    @role('assembler')
+    @role('assembler') {{---ROLES---}}
     <a href="/assembly?request_number={{$list->req_num}}" class="btn btn-primary float-right bp">BACK</a>
     @endrole
 </div>

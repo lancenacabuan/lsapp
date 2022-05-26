@@ -1479,6 +1479,27 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'qtybal' },
                         { data: 'qtymal' }
                     ],
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    },
                     orderCellsTop: true,
                     fixedHeader: true,            
                 }); 
@@ -1523,6 +1544,27 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'pending' },
                         { data: 'item_id' }
                     ],
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    },
                     orderCellsTop: true,
                     fixedHeader: true,            
                 });
@@ -1576,6 +1618,27 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'item_id' },
                         { data: 'item_id' }
                     ],
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    },
                     orderCellsTop: true,
                     fixedHeader: true,            
                 });
@@ -1603,7 +1666,28 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' }
-                    ]
+                    ],
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    }
                 });
             
                 $('table.schedItems').DataTable({
@@ -1647,7 +1731,28 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'location' },
                         { data: 'id' },
                         { data: 'id' }
-                    ]
+                    ],
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    }
                 });
             
                 $('table.schedItems1').DataTable({
@@ -1674,7 +1779,28 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'uom' },
                         { data: 'serial' },
                         { data: 'location' }
-                    ]
+                    ],
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    }
                 });
             
                 $('table.transItems').dataTable().fnDestroy();
@@ -1709,7 +1835,28 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'uom' },
                         { data: 'serial' },
                         { data: 'location' }
-                    ]
+                    ],
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    }
                 });
             
                 if(requestStatus == '3' || requestStatus == '4'){
@@ -1754,7 +1901,28 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             { data: 'location' },
                             { data: 'id' },
                             { data: 'id' }
-                        ]
+                        ],
+                        footerCallback: function(row,data,start,end,display){
+                            var api = this.api(), data;
+                            var intVal = function(i){
+                                return typeof i === 'string'?
+                                    i.replace(/[\$,]/g,'')*1:
+                                    typeof i === 'number'?
+                                        i:0;
+                            };
+                            api.columns('.sum', {page:'all'}).every(function(){
+                                var sum = this
+                                .data()
+                                .reduce(function(a,b){
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+                                sum = sum.toString();
+                                var pattern = /(-?\d+)(\d{3})/;
+                                while(pattern.test(sum))
+                                sum = sum.replace(pattern,"$1,$2");
+                                this.footer().innerHTML = sum;
+                            });
+                        }
                     });
                 }
                 else{
@@ -1800,7 +1968,28 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             { data: 'location' },
                             { data: 'id' },
                             { data: 'id' }
-                        ]
+                        ],
+                        footerCallback: function(row,data,start,end,display){
+                            var api = this.api(), data;
+                            var intVal = function(i){
+                                return typeof i === 'string'?
+                                    i.replace(/[\$,]/g,'')*1:
+                                    typeof i === 'number'?
+                                        i:0;
+                            };
+                            api.columns('.sum', {page:'all'}).every(function(){
+                                var sum = this
+                                .data()
+                                .reduce(function(a,b){
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+                                sum = sum.toString();
+                                var pattern = /(-?\d+)(\d{3})/;
+                                while(pattern.test(sum))
+                                sum = sum.replace(pattern,"$1,$2");
+                                this.footer().innerHTML = sum;
+                            });
+                        }
                     });
                 }
             
@@ -1848,7 +2037,28 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 { data: 'location' },
                                 { data: 'id' },
                                 { data: 'id' }
-                            ]
+                            ],
+                            footerCallback: function(row,data,start,end,display){
+                                var api = this.api(), data;
+                                var intVal = function(i){
+                                    return typeof i === 'string'?
+                                        i.replace(/[\$,]/g,'')*1:
+                                        typeof i === 'number'?
+                                            i:0;
+                                };
+                                api.columns('.sum', {page:'all'}).every(function(){
+                                    var sum = this
+                                    .data()
+                                    .reduce(function(a,b){
+                                        return intVal(a) + intVal(b);
+                                    }, 0);
+                                    sum = sum.toString();
+                                    var pattern = /(-?\d+)(\d{3})/;
+                                    while(pattern.test(sum))
+                                    sum = sum.replace(pattern,"$1,$2");
+                                    this.footer().innerHTML = sum;
+                                });
+                            }
                         });
                     }
                     else{
@@ -1894,7 +2104,28 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 { data: 'location' },
                                 { data: 'id' },
                                 { data: 'id' }
-                            ]
+                            ],
+                            footerCallback: function(row,data,start,end,display){
+                                var api = this.api(), data;
+                                var intVal = function(i){
+                                    return typeof i === 'string'?
+                                        i.replace(/[\$,]/g,'')*1:
+                                        typeof i === 'number'?
+                                            i:0;
+                                };
+                                api.columns('.sum', {page:'all'}).every(function(){
+                                    var sum = this
+                                    .data()
+                                    .reduce(function(a,b){
+                                        return intVal(a) + intVal(b);
+                                    }, 0);
+                                    sum = sum.toString();
+                                    var pattern = /(-?\d+)(\d{3})/;
+                                    while(pattern.test(sum))
+                                    sum = sum.replace(pattern,"$1,$2");
+                                    this.footer().innerHTML = sum;
+                                });
+                            }
                         });
                     }
                 }
@@ -1943,7 +2174,28 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             { data: 'uom' },
                             { data: 'serial' },
                             { data: 'location' }
-                        ]
+                        ],
+                        footerCallback: function(row,data,start,end,display){
+                            var api = this.api(), data;
+                            var intVal = function(i){
+                                return typeof i === 'string'?
+                                    i.replace(/[\$,]/g,'')*1:
+                                    typeof i === 'number'?
+                                        i:0;
+                            };
+                            api.columns('.sum', {page:'all'}).every(function(){
+                                var sum = this
+                                .data()
+                                .reduce(function(a,b){
+                                    return intVal(a) + intVal(b);
+                                }, 0);
+                                sum = sum.toString();
+                                var pattern = /(-?\d+)(\d{3})/;
+                                while(pattern.test(sum))
+                                sum = sum.replace(pattern,"$1,$2");
+                                this.footer().innerHTML = sum;
+                            });
+                        }
                     });
                 }
             });
@@ -2439,6 +2691,27 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'qtybal' },
             { data: 'qtymal' }
         ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        },
         orderCellsTop: true,
         fixedHeader: true,            
     }); 
@@ -2483,6 +2756,27 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'pending' },
             { data: 'item_id' }
         ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        },
         orderCellsTop: true,
         fixedHeader: true,            
     });
@@ -2536,6 +2830,27 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'item_id' },
             { data: 'item_id' }
         ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        },
         orderCellsTop: true,
         fixedHeader: true,            
     });
@@ -2563,7 +2878,28 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' }
-        ]
+        ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        }
     });
 
     $('table.schedItems').DataTable({
@@ -2607,7 +2943,28 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'location' },
             { data: 'id' },
             { data: 'id' }
-        ]
+        ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        }
     });
 
     $('table.schedItems1').DataTable({
@@ -2634,7 +2991,28 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'uom' },
             { data: 'serial' },
             { data: 'location' }
-        ]
+        ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        }
     });
 
     $('table.transItems').dataTable().fnDestroy();
@@ -2669,7 +3047,28 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'uom' },
             { data: 'serial' },
             { data: 'location' }
-        ]
+        ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        }
     });
 
     if(requestStatus == '3' || requestStatus == '4'){
@@ -2714,7 +3113,28 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 { data: 'location' },
                 { data: 'id' },
                 { data: 'id' }
-            ]
+            ],
+            footerCallback: function(row,data,start,end,display){
+                var api = this.api(), data;
+                var intVal = function(i){
+                    return typeof i === 'string'?
+                        i.replace(/[\$,]/g,'')*1:
+                        typeof i === 'number'?
+                            i:0;
+                };
+                api.columns('.sum', {page:'all'}).every(function(){
+                    var sum = this
+                    .data()
+                    .reduce(function(a,b){
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                    sum = sum.toString();
+                    var pattern = /(-?\d+)(\d{3})/;
+                    while(pattern.test(sum))
+                    sum = sum.replace(pattern,"$1,$2");
+                    this.footer().innerHTML = sum;
+                });
+            }
         });
     }
     else{
@@ -2760,7 +3180,28 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 { data: 'location' },
                 { data: 'id' },
                 { data: 'id' }
-            ]
+            ],
+            footerCallback: function(row,data,start,end,display){
+                var api = this.api(), data;
+                var intVal = function(i){
+                    return typeof i === 'string'?
+                        i.replace(/[\$,]/g,'')*1:
+                        typeof i === 'number'?
+                            i:0;
+                };
+                api.columns('.sum', {page:'all'}).every(function(){
+                    var sum = this
+                    .data()
+                    .reduce(function(a,b){
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                    sum = sum.toString();
+                    var pattern = /(-?\d+)(\d{3})/;
+                    while(pattern.test(sum))
+                    sum = sum.replace(pattern,"$1,$2");
+                    this.footer().innerHTML = sum;
+                });
+            }
         });
     }
 
@@ -2808,7 +3249,28 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     { data: 'location' },
                     { data: 'id' },
                     { data: 'id' }
-                ]
+                ],
+                footerCallback: function(row,data,start,end,display){
+                    var api = this.api(), data;
+                    var intVal = function(i){
+                        return typeof i === 'string'?
+                            i.replace(/[\$,]/g,'')*1:
+                            typeof i === 'number'?
+                                i:0;
+                    };
+                    api.columns('.sum', {page:'all'}).every(function(){
+                        var sum = this
+                        .data()
+                        .reduce(function(a,b){
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                        sum = sum.toString();
+                        var pattern = /(-?\d+)(\d{3})/;
+                        while(pattern.test(sum))
+                        sum = sum.replace(pattern,"$1,$2");
+                        this.footer().innerHTML = sum;
+                    });
+                }
             });
         }
         else{
@@ -2854,7 +3316,28 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     { data: 'location' },
                     { data: 'id' },
                     { data: 'id' }
-                ]
+                ],
+                footerCallback: function(row,data,start,end,display){
+                    var api = this.api(), data;
+                    var intVal = function(i){
+                        return typeof i === 'string'?
+                            i.replace(/[\$,]/g,'')*1:
+                            typeof i === 'number'?
+                                i:0;
+                    };
+                    api.columns('.sum', {page:'all'}).every(function(){
+                        var sum = this
+                        .data()
+                        .reduce(function(a,b){
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                        sum = sum.toString();
+                        var pattern = /(-?\d+)(\d{3})/;
+                        while(pattern.test(sum))
+                        sum = sum.replace(pattern,"$1,$2");
+                        this.footer().innerHTML = sum;
+                    });
+                }
             });
         }
     }
@@ -2903,7 +3386,28 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 { data: 'uom' },
                 { data: 'serial' },
                 { data: 'location' }
-            ]
+            ],
+            footerCallback: function(row,data,start,end,display){
+                var api = this.api(), data;
+                var intVal = function(i){
+                    return typeof i === 'string'?
+                        i.replace(/[\$,]/g,'')*1:
+                        typeof i === 'number'?
+                            i:0;
+                };
+                api.columns('.sum', {page:'all'}).every(function(){
+                    var sum = this
+                    .data()
+                    .reduce(function(a,b){
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                    sum = sum.toString();
+                    var pattern = /(-?\d+)(\d{3})/;
+                    while(pattern.test(sum))
+                    sum = sum.replace(pattern,"$1,$2");
+                    this.footer().innerHTML = sum;
+                });
+            }
         });
     }
 });

@@ -1051,6 +1051,13 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 var reason = value.reason;
                     $('#reason_details').val(reason);
 
+                    if(($("#current_role").val() == '["sales"]' || $("#current_role").val() == '["approver - sales"]') && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5')){
+                        window.location.href = '/stockrequest';
+                    }
+                    if($("#current_role").val() == '["sales"]' && $('#current_user').val() != value.user_id){
+                        window.location.href = '/stockrequest';
+                    }
+
                     if($("#current_role").val() == '["sales"]' && requestStatus == '6'){
                         $('#btnEditDetails').show();
                         $('.btnCancelDetails').show();
@@ -2003,6 +2010,13 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#reference_details').val(reference);
     var reason = value.reason;
         $('#reason_details').val(reason);
+
+        if(($("#current_role").val() == '["sales"]' || $("#current_role").val() == '["approver - sales"]') && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5')){
+            window.location.href = '/stockrequest';
+        }
+        if($("#current_role").val() == '["sales"]' && $('#current_user').val() != value.user_id){
+            window.location.href = '/stockrequest';
+        }
 
         if($("#current_role").val() == '["sales"]' && requestStatus == '6'){
             $('#btnEditDetails').show();

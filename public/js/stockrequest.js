@@ -1162,6 +1162,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#client_name_details").hide();
                         $("#location_label").hide();
                         $("#location_details").hide();
+                        $("#contact_label").hide();
+                        $("#contact_details").hide();
+                        $("#remarks_label").hide();
+                        $("#remarks_details").hide();
                         $("#reference_label").hide();
                         $("#reference_details").hide();
                     }
@@ -2111,6 +2115,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#client_name_details").hide();
             $("#location_label").hide();
             $("#location_details").hide();
+            $("#contact_label").hide();
+            $("#contact_details").hide();
+            $("#remarks_label").hide();
+            $("#remarks_details").hide();
             $("#reference_label").hide();
             $("#reference_details").hide();
         }

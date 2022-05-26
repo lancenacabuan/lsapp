@@ -41,7 +41,7 @@
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm dfchide" id="location_label" style="width: 160px;">Address / Branch</label>
                 <input class="form-control form-control-sm dfchide" id="location_details" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" readonly>
-                <label class="form-control form-control-sm dfchide soldShow" style="width: 160px;">Contact Person</label>
+                <label class="form-control form-control-sm dfchide soldShow" id="contact_label" style="width: 160px;">Contact Person</label>
                 <input class="form-control form-control-sm dfchide soldShow" id="contact_details" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" readonly>
                 <label class="form-control form-control-sm" id="warehouse_label" style="width: 160px; display: none;">TO New Location</label>
                 <select class="form-select form-control-sm" id="warehouse_details" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px; display: none;">
@@ -53,7 +53,7 @@
                 </select>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                <label class="form-control form-control-sm dfchide soldShow" style="margin-top: -38px; width: 160px;">Remarks</label>
+                <label class="form-control form-control-sm dfchide soldShow" id="remarks_label" style="margin-top: -38px; width: 160px;">Remarks</label>
                 <textarea class="form-control dfchide soldShow" id="remarks_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Optional Field" readonly></textarea>
                 <label class="form-control form-control-sm dfchide sales_details soldShow" style="margin-top: -38px; width: 160px;">Reference SO/PO No.</label>
                 <textarea class="form-control dfchide sales_details soldShow spChar" id="reference_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field" readonly></textarea>

@@ -62,14 +62,12 @@ class AssemblyController extends Controller
         return response()->json($list);
     }
 
-    public function uomAssembly(Request $request){       
-        $uom = Item::query()->select('UOM as uom')
+    public function uomAssembly(Request $request){
+        $data = Item::selectRaw('UOM as uom, prodcode')
             ->where('id',$request->item_id)
             ->get();
-        $uom = str_replace('[{"uom":"','',$uom);
-        $uom = str_replace('"}]','',$uom);
         
-        return response($uom);
+        return response($data);
     }
 
     public function saveReqNum(Request $request){
@@ -410,14 +408,27 @@ class AssemblyController extends Controller
         else{
             $item = 0;
         }
+        if(trim($request->prodcode) != ''){
+            $code = Item::query()->select()
+                ->whereRaw('LOWER(prodcode) = ?',strtolower($request->prodcode))
+                ->count();
+        }
+        else{
+            $code = 0;
+        }
         if($item != 0){
             $data = array('result' => 'duplicate');
+            return response()->json($data);
+        }
+        else if($code != 0){
+            $data = array('result' => 'dupecode');
             return response()->json($data);
         }
         else {
             $items = new Item;
             $items->created_by = auth()->user()->id;
             $items->item = ucwords($request->item);
+            $items->prodcode = $request->prodcode;
             $items->category_id = '58';
             $items->UOM = 'Unit';
             $items->assemble = 'YES';
@@ -436,13 +447,9 @@ class AssemblyController extends Controller
     }
 
     public function saveParts(Request $request){
-        $items = Item::query()->select('id','category_id')
-                ->where('item',htmlspecialchars_decode($request->item))
-                ->first();
-
         $parts = new Part;
         $parts->item_id = $request->item_id;
-        $parts->part_id = $items->id;
+        $parts->part_id = $request->part_id;
         $parts->quantity = $request->quantity;
         $sql = $parts->save();
 
@@ -468,11 +475,9 @@ class AssemblyController extends Controller
     }
 
     public function itemDetails(Request $request){
-        $itemDetails = Part::query()->select('categories.category','items.item','items.UOM AS uom','quantity')
+        $itemDetails = Part::query()->select('items.prodcode','items.item','items.UOM AS uom','quantity')
             ->join('items', 'items.id', 'parts.part_id')
-            ->join('categories', 'categories.id', 'items.category_id')
             ->where('parts.item_id',$request->item_id)
-            ->orderBy('category','ASC')
             ->orderBy('item','ASC')
             ->get();
         
@@ -488,8 +493,21 @@ class AssemblyController extends Controller
         else{
             $item = 0;
         }
+        if(strtoupper($request->item_code) != strtoupper($request->item_code_original)){
+            $code = Item::query()->select()
+                ->whereRaw('LOWER(prodcode) = ?',strtolower($request->item_code))
+                ->count();
+        }
+        else{
+            $code = 0;
+        }
         if($item != 0){
             $result = 'duplicate';
+            return response($result);
+        }
+        else if($code != 0){
+            $result = 'dupecode';
+            return response($result);
         }
         else {
             $item_name = ucwords($request->item_name);
@@ -497,6 +515,7 @@ class AssemblyController extends Controller
             $items = Item::find($request->item_id);
             $items->created_by = auth()->user()->id;
             $items->item = $item_name;
+            $items->prodcode = $request->item_code;
             $items->category_id = '58';
             $sql = $items->save();
             $id = $items->id;
@@ -506,15 +525,28 @@ class AssemblyController extends Controller
             }
             else {
                 $result = 'true';
+
+                if($item_name != $request->item_name_original){
+                    $item_desc = "[Item Description: FROM '$request->item_name_original' TO '$item_name']";
+                }
+                else{
+                    $item_desc = NULL;
+                }
+                if($request->item_code != $request->item_code_original){
+                    $item_code = "[Item Code: FROM '$request->item_code_original' TO '$request->item_code']";
+                }
+                else{
+                    $item_code = NULL;
+                }
                 
                 $userlogs = new UserLogs;
                 $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "ASSEMBLED ITEM UPDATED: User successfully updated Assembled Item Description FROM '$request->item_name_original' TO '$item_name' with ItemID#$id.";
+                $userlogs->activity = "ASSEMBLED ITEM UPDATED: User successfully updated details of '$request->item_name_original' with the following CHANGES: $item_desc $item_code.";
                 $userlogs->save();
             }
-        }
 
-        return response($result);
+            return response($result);
+        }
     }
 
     public function partsDetails(Request $request){

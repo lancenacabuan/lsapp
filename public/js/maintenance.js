@@ -1047,8 +1047,9 @@ $('#btnUpdateLocation').on('click', function(){
 setInterval(checkCreateItem, 0);
 function checkCreateItem(){
     var item_description = $.trim($('#aic_item_description').val());
+    var item_code = $('#aic_item_code').val();
     if($('#createItem').is(':visible')){
-        if(item_description){
+        if(item_description && item_code){
             $('#partsDetails').show();
         }
         else{
@@ -1057,12 +1058,35 @@ function checkCreateItem(){
     }
 }
 
+$(document).on('keyup', '#aic_item_code', function(){
+    var aic_item_code = $('#aic_item_code').val().toUpperCase();
+    $('#aic_item_code').val(aic_item_code);
+});
+
+$(document).on('keypress', '#aic_item_code', function(e){
+    var k;
+    document.all ? k = e.keyCode : k = e.which;
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 45 || (k >= 48 && k <= 57));
+});
+
+$(document).on('keyup', '#aim_item_code_details', function(){
+    var aim_item_code_details = $('#aim_item_code_details').val().toUpperCase();
+    $('#aim_item_code_details').val(aim_item_code_details);
+});
+
+$(document).on('keypress', '#aim_item_code_details', function(e){
+    var k;
+    document.all ? k = e.keyCode : k = e.which;
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 45 || (k >= 48 && k <= 57));
+});
+
 $(".btnCreateItem").on('click', function(){
     $('#createItem').modal({
         backdrop: 'static',
         keyboard: false
     });
     $('#aic_item_description').val('');
+    $('#aic_item_code').val('');
     $("#categoryAssembly").val('');
     $("#itemAssembly").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
     $("#qtyAssembly").val('');
@@ -1117,7 +1141,8 @@ $('#itemAssembly').on('change', function(){
             'item_id': item_id,
         }, 
         success: function(data){
-            $('#uomAssembly').val(data);
+            $('#prodcodeAssembly').val(data[0].prodcode);
+            $('#uomAssembly').val(data[0].uom);
         },
         error: function(data){
             if(data.status == 401){
@@ -1131,9 +1156,11 @@ $('#itemAssembly').on('change', function(){
 $(".add-row").on('click', function(){
     var category = $("#categoryAssembly option:selected").text();
     var item = $("#itemAssembly option:selected").text();
-    let qty = $("#qtyAssembly").val();
+    let item_id = $("#itemAssembly").val();
+    var prodcode = $("#prodcodeAssembly").val();
     var uom = $("#uomAssembly").val();
-    var markup = "<tr><td>" + category + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
+    let qty = $("#qtyAssembly").val();
+    var markup = "<tr><td class='d-none'>" + item_id + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
     var ctr = 'false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
         swal('REQUIRED','Please select an item!','error');
@@ -1144,13 +1171,14 @@ $(".add-row").on('click', function(){
         var count = table.rows.length;
         for(i = 1; i < count; i++){
             var objCells = table.rows.item(i).cells;
-            if(item==objCells.item(1).innerHTML){
-                objCells.item(2).innerHTML = parseInt(objCells.item(2).innerHTML) + parseInt(qty);
+            if(item==objCells.item(2).innerHTML){
+                objCells.item(3).innerHTML = parseInt(objCells.item(3).innerHTML) + parseInt(qty);
                 ctr = 'true';
                 category = $("#categoryAssembly").val('');
                 item = $("#itemAssembly").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
-                qty = $("#qtyAssembly").val('');
+                prodcode = $("#prodcodeAssembly").val('');
                 uom = $('#uomAssembly').val('');
+                qty = $("#qtyAssembly").val('');
                 return false;
             }
             else {
@@ -1161,8 +1189,9 @@ $(".add-row").on('click', function(){
         { $("#tblCreateItem tbody").append(markup); }
         category = $("#categoryAssembly").val('');
         item = $("#itemAssembly").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
-        qty = $("#qtyAssembly").val('');
+        prodcode = $("#prodcodeAssembly").val('');
         uom = $('#uomAssembly').val('');
+        qty = $("#qtyAssembly").val('');
         $('#tblCreateItem').show();
         $('#divCreateItem').toggle();
         $('#btnClose').show();
@@ -1189,6 +1218,7 @@ $("#tblCreateItem").on('click', '.delete-row', function(){
 
 $('#btnSave').on('click', function(){
     var item_description = $.trim($('#aic_item_description').val());
+    var item_code = $('#aic_item_code').val();
     swal({
         title: "CREATE NEW ASSEMBLED ITEM?",
         text: "You are about to CREATE a new Assembled Item!",
@@ -1205,7 +1235,8 @@ $('#btnSave').on('click', function(){
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
-                    item: item_description
+                    item: item_description,
+                    prodcode: item_code
                 },
                 success: function(data){
                     if(data.result == 'true'){
@@ -1221,9 +1252,8 @@ $('#btnSave').on('click', function(){
                                 },
                                 data:{
                                     item_id: data.id,
-                                    category: value[0],
-                                    item: value[1],
-                                    quantity: value[2]
+                                    part_id: value[0],
+                                    quantity: value[3]
                                 },
                                 success: function(data){
                                     if(data == 'true'){
@@ -1274,6 +1304,10 @@ $('#btnSave').on('click', function(){
                         swal("DUPLICATE ITEM", "Item Description already exists!", "error");
                         return false;
                     }
+                    else if(data.result == 'dupecode'){
+                        swal("DUPLICATE CODE", "Item Code already exists!", "error");
+                        return false;
+                    }
                     else{
                         $('#newStockRequest').hide();
                         swal("SUBMIT FAILED", "CREATE ITEM", "error");
@@ -1296,7 +1330,9 @@ function runCompare(){
     if($('#detailsAssemblyItem').is(':visible')){
         var item_current = $.trim($('#aim_item_name_details').val());
         var item_original = $('#aim_item_name_details_original').val();
-        if(!item_current || (item_current.toUpperCase() == item_original.toUpperCase())){
+        var code_current = $('#aim_item_code_details').val();
+        var code_original = $('#aim_item_code_details_original').val();
+        if((!item_current || !code_current) || (item_current.toUpperCase() == item_original.toUpperCase() && code_current == code_original)){
             $('#btnUpdate').hide();
         }
         else{
@@ -1317,6 +1353,9 @@ $('#assemblyitemTable tbody').on('click', 'tr', function(){
     var item_name = decodeHtml(data.item);
     $('#aim_item_name_details').val(item_name);
     $('#aim_item_name_details_original').val(item_name);
+    var prodcode = data.prodcode;
+    $('#aim_item_code_details').val(prodcode);
+    $('#aim_item_code_details_original').val(prodcode);
     
     $('.modal-body').html();
     $('#detailsAssemblyItem').modal('show');
@@ -1345,9 +1384,9 @@ $('#assemblyitemTable tbody').on('click', 'tr', function(){
                 alert(data.responseText);
             },
         },
-        order:[[0, 'asc'],[1, 'asc']],
+        order:[],
         columns: [
-            { data: 'category' },
+            { data: 'prodcode' },
             { data: 'item' },
             { data: 'quantity' },
             { data: 'uom' }
@@ -1361,6 +1400,8 @@ $('#btnUpdate').on('click', function(){
     var item_id = $('#aim_item_id').val();
     var item_name_original = $('#aim_item_name_details_original').val();
     var item_name = $.trim($('#aim_item_name_details').val());
+    var item_code_original = $('#aim_item_code_details_original').val();
+    var item_code = $.trim($('#aim_item_code_details').val());
     swal({
         title: "UPDATE ASSEMBLED ITEM?",
         text: "You are about to UPDATE this Assembled Item!",
@@ -1378,7 +1419,9 @@ $('#btnUpdate').on('click', function(){
                 data: {
                     item_id: item_id,
                     item_name_original: item_name_original,
-                    item_name: item_name
+                    item_name: item_name,
+                    item_code_original: item_code_original,
+                    item_code: item_code,
                 },
                 success: function(data){
                     if(data == 'true'){
@@ -1388,6 +1431,10 @@ $('#btnUpdate').on('click', function(){
                     }
                     else if(data == 'duplicate'){
                         swal("DUPLICATE ITEM", "Item Description already exists!", "error");
+                        return false;
+                    }
+                    else if(data == 'dupecode'){
+                        swal("DUPLICATE CODE", "Item Code already exists!", "error");
                         return false;
                     }
                     else{

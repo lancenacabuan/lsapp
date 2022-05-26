@@ -9,9 +9,12 @@
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <input type="hidden" name="aim_item_id" id="aim_item_id">
             <input type="hidden" name="aim_item_name_details_original" id="aim_item_name_details_original">
+            <input type="hidden" name="aim_item_code_details_original" id="aim_item_code_details_original">
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Item Description</label>
-                <input class="form-control form-control-sm" style="width: 730px; margin-right: 10px;" name="aim_item_name_details" id="aim_item_name_details" maxlength="255" placeholder="Please enter assembled item description to proceed" required></textarea>
+                <label class="form-control form-control-sm" style="width: 120px;">Item Description</label>
+                <input class="form-control form-control-sm" style="width: 600px; margin-right: 10px;" name="aim_item_name_details" id="aim_item_name_details" maxlength="255" placeholder="Please enter assembled item description to proceed" required>
+                <label class="form-control form-control-sm" style="width: 90px;">Item Code</label>
+                <input class="form-control form-control-sm" style="width: 220px;" name="aim_item_code_details" id="aim_item_code_details" maxlength="100" placeholder="Please enter item code" required>
             </div>
         </div>
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
@@ -21,7 +24,7 @@
             <table id='tblItemDetails' class="table tblItemDetails" style="cursor: pointer; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
-                        <th>CATEGORY</th>
+                        <th>ITEM CODE</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>QTY</th>
                         <th>UOM</th>

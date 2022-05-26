@@ -8,8 +8,10 @@
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Item Description</label>
-                <input class="form-control form-control-sm" style="width: 730px; margin-right: 10px;" name="aic_item_description" id="aic_item_description" maxlength="255" placeholder="Please enter assembled item description to proceed" required></textarea>
+                <label class="form-control form-control-sm" style="width: 120px;">Item Description</label>
+                <input class="form-control form-control-sm" style="width: 600px; margin-right: 10px;" name="aic_item_description" id="aic_item_description" maxlength="255" placeholder="Please enter assembled item description to proceed" required>
+                <label class="form-control form-control-sm" style="width: 90px;">Item Code</label>
+                <input class="form-control form-control-sm" style="width: 220px;" name="aic_item_code" id="aic_item_code" maxlength="100" placeholder="Please enter item code" required>
             </div>
         </div>
         <div id="partsDetails" style="display: none;">
@@ -28,6 +30,7 @@
                         <select class="form-control form-select" id="itemAssembly" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 10px;">
                             <option value="" selected disabled>Select Item</option>
                         </select>
+                        <input class="d-none" id="prodcodeAssembly" type="hidden"/>
                         <input class="form-control" id="uomAssembly" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>
                         <input class="form-control" id="qtyAssembly" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty" onkeyup="if(value<0) value=0;">
                         <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 75%; margin-left: 10px; margin-top: -1px;">
@@ -37,7 +40,8 @@
                     <table id='tblCreateItem' class="table tblCreateItem" style="cursor: pointer; font-size: 12px; display: none;">
                         <thead>
                             <tr>
-                                <th>CATEGORY</th>
+                                <th class="d-none">ITEM ID</th>
+                                <th>ITEM CODE</th>
                                 <th>ITEM DESCRIPTION</th>
                                 <th>QTY</th>
                                 <th>UOM</th>

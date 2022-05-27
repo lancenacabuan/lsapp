@@ -66,6 +66,9 @@
                 <td colspan="9" height="20">&nbsp;</td>
             </tr>
             <tr height="20">
+                @php
+                    $total = 0;
+                @endphp
                 <td colspan="9" height="20">
                     <table id="stockTransTable" class="table stockTransTable display" style="margin-top: 10px;">
                         <thead>
@@ -76,16 +79,33 @@
                                 <th>UOM</th>
                                 <th>SERIAL</th>
                             </tr>
+                        </thead>
+                        <tbody>
                             @foreach($list3 as $x)
+                            @php
+                                if($x['uom'] == 'Meter'){
+                                    $total+=1;
+                                }
+                                else{
+                                    $total+=$x['qty'];
+                                }
+                            @endphp
                             <tr>
-                                <td>{{$x->prodcode}}</td>
-                                <td>{{$x->item}}</td>
-                                <td>{{$x->qty}}</td>
-                                <td>{{$x->uom}}</td>
-                                <td>{{strtoupper($x->serial)}}</td>
+                                <td>{{$x['prodcode']}}</td>
+                                <td>{{$x['item']}}</td>
+                                <td>{{$x['qty']}}</td>
+                                <td>{{$x['uom']}}</td>
+                                <td>{{strtoupper($x['serial'])}}</td>
                             </tr>
                             @endforeach
-                        </thead>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th>{{$total}}</th>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
                     </table> 
                 </td>
             </tr>

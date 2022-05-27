@@ -14,7 +14,8 @@
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Requested By: {{$details['requested_by']}}
         @if($details['reqtype'] == 'ASSEMBLY')
-        <br><br>Assembled Item Name: {{$details['item_desc']}}<br>
+        <br><br>Assembled Item Code: {{$details['item_code']}}<br>
+        Assembled Item Name: {{$details['item_desc']}}<br>
         Quantity: {{$details['qty']}}-Unit/s
         @endif
         @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'DEMO UNIT')

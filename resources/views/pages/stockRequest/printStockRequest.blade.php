@@ -12,6 +12,13 @@
 </script>
 @endif
 @endrole
+@role('sales|approver - sales') {{---ROLES---}}
+@if($list->req_type_id == '1' || $list->req_type_id == '4' || $list->req_type_id == '5')
+<script>
+    window.location = '/';
+</script>
+@endif
+@endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
 <div class="container-fluid">
     <button id="btnPrint" type="button" class="btn btn-primary bp" style="margin-right: 5px;">PRINT</button>
@@ -59,6 +66,8 @@
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Client Name:</td>
                 <td colspan="2" class="tdHide">{{$list->client_name}}</td>
+                <td colspan="2" style="font-weight: bold; display: none;" class="tdAssembly">Assembled Item Code:</td>
+                <td colspan="2" style="display: none;" class="tdAssembly">{{$list1[0]->item_code ?? 'N/A'}}</td>
             </tr>
             <tr height="20">
                 <td colspan="2" style="font-weight: bold;">Requested By:</td>
@@ -69,7 +78,7 @@
                 <td colspan="2" style="font-weight: bold; display: none;" class="tdShow">Assembly Request No.:</td>
                 <td colspan="2" style="display: none;" class="tdShow">{{$list->assembly_reqnum}}</td>
                 <td colspan="2" style="font-weight: bold; display: none;" class="tdAssembly">Assembled Item Name:</td>
-                <td colspan="2" style="display: none;" class="tdAssembly" id="ellipsis">{{$list1->item_desc ?? 'N/A'}}</td>
+                <td colspan="2" style="display: none;" class="tdAssembly" id="ellipsis">{{$list1[0]->item_desc ?? 'N/A'}}</td>
             </tr>
             <tr height="20">
                 <td colspan="2" style="font-weight: bold;">Date Prepared:</td>

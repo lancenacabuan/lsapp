@@ -37,7 +37,7 @@
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->uom}}</td>
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x->serial)}}</td>
             </tr>
-            @endforeach 
+            @endforeach
         </table>
         <br><br>
         Kindly login to your {{$details['role']}} account if you wish to view or download this request by clicking on the link below.<br>

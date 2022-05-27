@@ -27,7 +27,7 @@
                     <option value="6">MALABON</option>
                     {{-- @foreach($locations as $location)
                         <option value="{{$location->id}}">{{$location->location}}</option>
-                    @endforeach --}}
+                    @endforeach--}}
                 </select>
                 <label class="form-control form-control-sm" style="width: 200px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
@@ -42,7 +42,7 @@
                     <option value="4">A4</option>
                     {{-- @foreach($locations as $location)
                         <option value="{{$location->id}}">{{$location->location}}</option>
-                    @endforeach --}}
+                    @endforeach--}}
                 </select>
                 <label class="form-control form-control-sm" style="width: 200px;">Requested By</label>
                 <input class="form-control form-control-sm" id="reqby_details" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">

@@ -53,7 +53,7 @@
                     <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['uom']}}</td>
                     <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x['Warranty_Name'])}}</td>
                 </tr>
-                @endforeach 
+                @endforeach
             </tbody>
             <tfoot style="font-weight: bold;">
                 <tr>
@@ -89,7 +89,7 @@
                     <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['quantity']}}</td>
                     <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['uom']}}</td>
                 </tr>
-                @endforeach 
+                @endforeach
             </tbody>
             <tfoot style="font-weight: bold;">
                 <tr>

@@ -26,6 +26,10 @@
         <br><br>
         <strong>{{$details['verb']}} ITEMS</strong>
         <br>
+        @php
+            $total = 0;
+            $sum = 0;
+        @endphp
         @if($details['req_type_id'] == 2 || ($details['req_type_id'] == 3 && $details['status_id'] == 10))
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
@@ -38,16 +42,33 @@
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">WARRANTY TYPE</th>
                 </tr>
             </thead>
-            @foreach($details['items'] as $x)
-            <tr>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['prodcode']}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$x['item']}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['qty']}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['uom']}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x['serial'])}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x['Warranty_Name'])}}</td>
-            </tr>
-            @endforeach 
+            <tbody>
+                @foreach($details['items'] as $x)
+                @php
+                    if($x['uom'] == 'Meter'){
+                        $total+=1;
+                    }
+                    else{
+                        $total+=$x['qty'];
+                    }
+                @endphp
+                <tr>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['prodcode']}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$x['item']}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['qty']}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['uom']}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x['serial'])}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x['Warranty_Name'])}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+            <tfoot style="font-weight: bold;">
+                <tr>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; text-align: right;" colspan="2">TOTAL ITEM COUNT:</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$total}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;" colspan="3"></td>
+                </tr>
+            </tfoot>
         </table>
         @else
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
@@ -60,15 +81,32 @@
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">SERIAL</th>
                 </tr>
             </thead>
-            @foreach($details['items'] as $x)
-            <tr>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['prodcode']}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$x['item']}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['qty']}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['uom']}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x['serial'])}}</td>
-            </tr>
-            @endforeach 
+            <tbody>
+                @foreach($details['items'] as $x)
+                @php
+                    if($x['uom'] == 'Meter'){
+                        $total+=1;
+                    }
+                    else{
+                        $total+=$x['qty'];
+                    }
+                @endphp
+                <tr>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['prodcode']}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$x['item']}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['qty']}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x['uom']}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x['serial'])}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+            <tfoot style="font-weight: bold;">
+                <tr>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; text-align: right;" colspan="2">TOTAL ITEM COUNT:</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$total}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;" colspan="2"></td>
+                </tr>
+            </tfoot>
         </table>
         @endif
         <br><br>
@@ -84,14 +122,31 @@
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">UOM</th>
                 </tr>
             </thead>
-            @foreach($details['penditems'] as $i)
-            <tr>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$i->prodcode}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$i->item}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$i->pending}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$i->uom}}</td>
-            </tr>
-            @endforeach 
+            <tbody>
+                @foreach($details['penditems'] as $i)
+                @php
+                    if($i['uom'] == 'Meter'){
+                        $sum+=1;
+                    }
+                    else{
+                        $sum+=$i['pending'];
+                    }
+                @endphp
+                <tr>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$i->prodcode}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$i->item}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$i->pending}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$i->uom}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+            <tfoot style="font-weight: bold;">
+                <tr>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; text-align: right;" colspan="2">TOTAL ITEM COUNT:</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$sum}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;" colspan="1"></td>
+                </tr>
+            </tfoot>
         </table>
         <br><br>
         @endif

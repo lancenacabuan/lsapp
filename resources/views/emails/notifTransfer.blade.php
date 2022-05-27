@@ -30,7 +30,7 @@
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->quantity}}</td>
                 <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->uom}}</td>
             </tr>
-            @endforeach 
+            @endforeach
         </table>
         <br><br>
         Kindly login to your {{$details['role']}} account to process this request by clicking on the link below.<br>

@@ -57,7 +57,7 @@
             </tbody>
             <tfoot style="font-weight: bold;">
                 <tr>
-                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; text-align: right;" colspan="2">TOTAL:</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; text-align: right;" colspan="2">TOTAL ITEM COUNT:</td>
                     <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$total}}</td>
                     <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;" colspan="2"></td>
                 </tr>
@@ -93,7 +93,7 @@
             </tbody>
             <tfoot style="font-weight: bold;">
                 <tr>
-                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; text-align: right;" colspan="2">TOTAL:</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; text-align: right;" colspan="2">TOTAL ITEM COUNT:</td>
                     <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$total}}</td>
                     <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;" colspan="1"></td>
                 </tr>

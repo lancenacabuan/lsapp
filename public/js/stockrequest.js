@@ -1401,21 +1401,20 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     }
                     if(value.user_id == $('#current_user').val() && $("#current_role").val() == '["sales"]'){
                         $("#sd2").show();
-                        $("#sd1").hide();
+                        $("#sd1").remove();
                     }
                     else{
                         $("#btnDelete").hide();
                         $("#sd1").show();
-                        $("#sd2").hide();
-                    }
-                    if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > 7){
-                        $("#sd1").show();
-                        $("#sd2").hide();
+                        $("#sd2").remove();
                     }
                     if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24'){
                         var targetStockDetails = [6,7,8,9,10];
                         var targetStockDetails1 = [5];
-                        var targetStockDetails2 = [6];
+                        var targetStockDetails2 = [5,6];
+                        if(requestStatus == '6' && $("#current_role").val() == '["sales"]' && $('#current_user').val() == value.user_id){
+                            targetStockDetails2 = [6];
+                        }
                     }
                     else{
                         var targetStockDetails = [4,5,6,7,8,9,10,11,12];
@@ -2613,21 +2612,20 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         }
         if(value.user_id == $('#current_user').val() && $("#current_role").val() == '["sales"]'){
             $("#sd2").show();
-            $("#sd1").hide();
+            $("#sd1").remove();
         }
         else{
             $("#btnDelete").hide();
             $("#sd1").show();
-            $("#sd2").hide();
-        }
-        if(requestStatus == '1'|| requestStatus == '2'|| requestStatus == '3' || requestStatus == '4' || requestStatus == '5' || requestStatus > 7){
-            $("#sd1").show();
-            $("#sd2").hide();
+            $("#sd2").remove();
         }
         if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24'){
             var targetStockDetails = [6,7,8,9,10];
             var targetStockDetails1 = [5];
-            var targetStockDetails2 = [6];
+            var targetStockDetails2 = [5,6];
+            if(requestStatus == '6' && $("#current_role").val() == '["sales"]' && $('#current_user').val() == value.user_id){
+                targetStockDetails2 = [6];
+            }
         }
         else{
             var targetStockDetails = [4,5,6,7,8,9,10,11,12];

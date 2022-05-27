@@ -137,7 +137,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="2" style="text-align: right;">TOTAL:</th>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                                 <th>{{$total}}</th>
                                 <th colspan="3"></th>
                             </tr>
@@ -175,7 +175,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="2" style="text-align: right;">TOTAL:</th>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                                 <th>{{$total}}</th>
                                 <th colspan="2"></th>
                             </tr>

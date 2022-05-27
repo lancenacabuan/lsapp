@@ -138,7 +138,7 @@
                 </thead>
                 <tfoot style="font-size: 14px;">
                     <tr>
-                        <th colspan="2" style="text-align: right;">TOTAL:</th>
+                        <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                         <th></th>
                         <th colspan="3"></th>
                     </tr>
@@ -181,7 +181,7 @@
                 </thead>
                 <tfoot style="font-size: 14px;">
                     <tr>
-                        <th colspan="3" style="text-align: right;">TOTAL:</th>
+                        <th colspan="3" style="text-align: right;">TOTAL ITEM COUNT:</th>
                         <th></th>
                         <th colspan="2"></th>
                     </tr>
@@ -203,7 +203,7 @@
                 </thead>
                 <tfoot style="font-size: 14px;">
                     <tr>
-                        <th colspan="3" style="text-align: right;">TOTAL:</th>
+                        <th colspan="3" style="text-align: right;">TOTAL ITEM COUNT:</th>
                         <th></th>
                         <th colspan="3"></th>
                     </tr>
@@ -232,7 +232,7 @@
                 </thead>
                 <tfoot style="font-size: 14px;">
                     <tr>
-                        <th colspan="3" style="text-align: right;">TOTAL:</th>
+                        <th colspan="3" style="text-align: right;">TOTAL ITEM COUNT:</th>
                         <th></th>
                         <th colspan="9"></th>
                     </tr>
@@ -298,7 +298,7 @@
                 </thead>
                 <tfoot style="font-size: 14px;">
                     <tr>
-                        <th colspan="2" style="text-align: right;">TOTAL:</th>
+                        <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                         <th></th>
                         <th colspan="2"></th>
                     </tr>
@@ -337,7 +337,7 @@
                 </thead>
                 <tfoot style="font-size: 14px;">
                     <tr>
-                        <th colspan="2" style="text-align: right;">TOTAL:</th>
+                        <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                         <th></th>
                         <th colspan="5"></th>
                     </tr>
@@ -358,7 +358,7 @@
                 </thead>
                 <tfoot style="font-size: 14px;">
                     <tr>
-                        <th colspan="2" style="text-align: right;">TOTAL:</th>
+                        <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                         <th></th>
                         <th colspan="3"></th>
                     </tr>
@@ -414,7 +414,7 @@
                 </thead>
                 <tfoot style="font-size: 14px;">
                     <tr>
-                        <th colspan="2" style="text-align: right;">TOTAL:</th>
+                        <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                         <th></th>
                         <th colspan="3"></th>
                     </tr>
@@ -437,7 +437,7 @@
                 </thead>
                 <tfoot style="font-size: 14px;">
                     <tr>
-                        <th colspan="2" style="text-align: right;">TOTAL:</th>
+                        <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                         <th></th>
                         <th colspan="5"></th>
                     </tr>
@@ -514,7 +514,7 @@
                 </thead>
                 <tfoot style="font-size: 14px;">
                     <tr>
-                        <th colspan="2" style="text-align: right;">TOTAL:</th>
+                        <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                         <th></th>
                         <th colspan="5"></th>
                     </tr>

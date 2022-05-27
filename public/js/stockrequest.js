@@ -3534,7 +3534,7 @@ $(document).on('click', '.btndelItem', function(){
         data:{
             req_num: $('#request_num_details').val(),
             item_id: data.item_id,
-            item: data.item,
+            item: decodeHtml(data.item),
             uom: data.uom,
             quantity: data.quantity
         },

@@ -282,7 +282,7 @@ class StockRequestController extends Controller
                     ->get()
                     ->toArray();
                 foreach($items as $key => $value){
-                    if($value['warranty'] == '0'){
+                    if($value['warranty'] == '0' || $value['warranty'] == ''){
                         $items[$key]['Warranty_Name'] = 'NO WARRANTY';
                     }
                     else{
@@ -429,6 +429,7 @@ class StockRequestController extends Controller
         $stockreq = StockRequest::query()->select('items.item','items.prodcode AS prodcode','items.UOM AS uom','items.id AS item_id','quantity','served','pending')
             ->join('items', 'items.id', 'stock_request.item')
             ->where('request_number',$request->reqnum)
+            ->orderBy('item','ASC')
             ->get();        
         
         return DataTables::of($stockreq)
@@ -797,10 +798,11 @@ class StockRequestController extends Controller
                 $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
+                    ->orderBy('item','ASC')
                     ->get()
                     ->toArray();
                 foreach($items as $key => $value){
-                    if($value['warranty'] == '0'){
+                    if($value['warranty'] == '0' || $value['warranty'] == ''){
                         $items[$key]['Warranty_Name'] = 'NO WARRANTY';
                     }
                     else{
@@ -815,6 +817,7 @@ class StockRequestController extends Controller
                 $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
+                    ->orderBy('item','ASC')
                     ->get();
             }
             while(!$items);
@@ -1015,11 +1018,11 @@ class StockRequestController extends Controller
                 ->whereIn('stocks.status', ['out'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('locations','locations.id','stocks.location_id')
+                ->orderBy('item','ASC')
                 ->get()
-                ->sortBy('item')
                 ->toArray();
             foreach($items as $key => $value){
-                if($value['warranty_id'] == '0'){
+                if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
                     $items[$key]['Warranty_Name'] = 'NO WARRANTY';
                 }
                 else{
@@ -1486,11 +1489,11 @@ class StockRequestController extends Controller
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->join('locations','locations.id','stocks.location_id')
+                        ->orderBy('item','ASC')
                         ->get()
-                        ->sortBy('item')
                         ->toArray();
                     foreach($items as $key => $value){
-                        if($value['warranty_id'] == '0'){
+                        if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
                             $items[$key]['Warranty_Name'] = 'NO WARRANTY';
                         }
                         else{
@@ -1507,8 +1510,8 @@ class StockRequestController extends Controller
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->join('locations','locations.id','stocks.location_id')
-                        ->get()
-                        ->sortBy('item');
+                        ->orderBy('item','ASC')
+                        ->get();
                 }
                 while(!$items);
             }
@@ -1649,11 +1652,11 @@ class StockRequestController extends Controller
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->join('locations','locations.id','stocks.location_id')
+                        ->orderBy('item','ASC')
                         ->get()
-                        ->sortBy('item')
                         ->toArray();
                     foreach($items as $key => $value){
-                        if($value['warranty_id'] == '0'){
+                        if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
                             $items[$key]['Warranty_Name'] = 'NO WARRANTY';
                         }
                         else{
@@ -1670,8 +1673,8 @@ class StockRequestController extends Controller
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->join('locations','locations.id','stocks.location_id')
-                        ->get()
-                        ->sortBy('item');
+                        ->orderBy('item','ASC')
+                        ->get();
                 }
                 while(!$items);
             }
@@ -1937,11 +1940,11 @@ class StockRequestController extends Controller
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('locations','locations.id','stocks.location_id')
+                ->orderBy('item','ASC')
                 ->get()
-                ->sortBy('item')
                 ->toArray();
             foreach($list3 as $key => $value){
-                if($value['warranty_id'] == '0'){
+                if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
                     $list3[$key]['Warranty_Name'] = 'NO WARRANTY';
                 }
                 else{
@@ -1955,8 +1958,8 @@ class StockRequestController extends Controller
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('locations','locations.id','stocks.location_id')
-                ->get()
-                ->sortBy('item');
+                ->orderBy('item','ASC')
+                ->get();
         }
         
         if(!$list3){
@@ -1995,7 +1998,7 @@ class StockRequestController extends Controller
                         ->get()
                         ->toArray();
                     foreach($items as $keys => $values){
-                        if($values['warranty'] == '0'){
+                        if($values['warranty'] == '0' || $values['warranty'] == ''){
                             $items[$keys]['Warranty_Name'] = 'NO WARRANTY';
                         }
                         else{
@@ -2091,7 +2094,7 @@ class StockRequestController extends Controller
                         ->get()
                         ->toArray();
                     foreach($items as $keys => $values){
-                        if($values['warranty'] == '0'){
+                        if($values['warranty'] == '0' || $values['warranty'] == ''){
                             $items[$keys]['Warranty_Name'] = 'NO WARRANTY';
                         }
                         else{
@@ -2187,7 +2190,7 @@ class StockRequestController extends Controller
                         ->get()
                         ->toArray();
                     foreach($items as $keys => $values){
-                        if($values['warranty'] == '0'){
+                        if($values['warranty'] == '0' || $values['warranty'] == ''){
                             $items[$keys]['Warranty_Name'] = 'NO WARRANTY';
                         }
                         else{

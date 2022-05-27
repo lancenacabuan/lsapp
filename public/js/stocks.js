@@ -16,17 +16,18 @@ function category(){
             ajax: 'category_data',
             columns: [
                 { data: 'Category' },
-                { data: 'Defective' },
-                { data: 'Demo' },
-                { data: 'Assembly' },
-                { data: 'A1' },
-                { data: 'A2' },
-                { data: 'A3' },
-                { data: 'A4' },
-                { data: 'Balintawak' },
-                { data: 'Malabon' },
-                { data: 'Total_stocks' }
+                { data: 'Defective', width: '8%' },
+                { data: 'Demo', width: '8%' },
+                { data: 'Assembly', width: '8%' },
+                { data: 'A1', width: '8%' },
+                { data: 'A2', width: '8%' },
+                { data: 'A3', width: '8%' },
+                { data: 'A4', width: '8%' },
+                { data: 'Balintawak', width: '8%' },
+                { data: 'Malabon', width: '8%' },
+                { data: 'Total_stocks', width: '8%' }
             ],
+            order: [],
             initComplete: function(){
                 return notifyDeadline();
             }
@@ -65,19 +66,20 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
                 }
             },
             columns: [
-                { data: 'Item' },
-                { data: 'ProdCode' },
-                { data: 'Defective' },
-                { data: 'Demo' },
-                { data: 'Assembly' },
-                { data: 'A1' },
-                { data: 'A2' },
-                { data: 'A3' },
-                { data: 'A4' },
-                { data: 'Balintawak' },
-                { data: 'Malabon' },
-                { data: 'Total_stocks' }
+                { data: 'ProdCode', width: '10%' },
+                { data: 'Item', width: '10%' },
+                { data: 'Defective', width: '8%', width: '8%' },
+                { data: 'Demo', width: '8%' },
+                { data: 'Assembly', width: '8%' },
+                { data: 'A1', width: '8%' },
+                { data: 'A2', width: '8%' },
+                { data: 'A3', width: '8%' },
+                { data: 'A4', width: '8%' },
+                { data: 'Balintawak', width: '8%' },
+                { data: 'Malabon', width: '8%' },
+                { data: 'Total_stocks', width: '8%' }
             ],
+            order: [],
             initComplete: function(){
                 return notifyDeadline();
             }
@@ -105,19 +107,20 @@ $('#btnBack').on('click', function(){
                 }
             },
             columns: [
-                { data: 'Item' },
-                { data: 'ProdCode' },
-                { data: 'Defective' },
-                { data: 'Demo' },
-                { data: 'Assembly' },
-                { data: 'A1' },
-                { data: 'A2' },
-                { data: 'A3' },
-                { data: 'A4' },
-                { data: 'Balintawak' },
-                { data: 'Malabon' },
-                { data: 'Total_stocks' }
+                { data: 'ProdCode', width: '10%' },
+                { data: 'Item', width: '10%' },
+                { data: 'Defective', width: '8%' },
+                { data: 'Demo', width: '8%' },
+                { data: 'Assembly', width: '8%' },
+                { data: 'A1', width: '8%' },
+                { data: 'A2', width: '8%' },
+                { data: 'A3', width: '8%' },
+                { data: 'A4', width: '8%' },
+                { data: 'Balintawak', width: '8%' },
+                { data: 'Malabon', width: '8%' },
+                { data: 'Total_stocks', width: '8%' }
             ],
+            order: [],
             initComplete: function(){
                 return notifyDeadline();
             }
@@ -155,6 +158,8 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 { data: 'addDate' },
                 { data: 'modDate' },
                 { data: 'name' },
+                { data: 'qty' },
+                { data: 'UOM' },
                 { data: 'serial' },
                 {
                     data: 'location',
@@ -189,6 +194,9 @@ $(document).on('click', '#ItemSerialTable tbody tr', function(){
     }
     var trdata = ItemSerialTable.row(this).data();
     if(trdata.status == 'defectives' || trdata.status == 'FOR RECEIVING'){
+        return false;
+    }
+    if(trdata.UOM == 'Pc' || trdata.UOM == 'Meter'){
         return false;
     }
     $('#x_id').val(trdata.stock_id);

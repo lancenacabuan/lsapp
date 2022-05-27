@@ -11,10 +11,10 @@
             <input type="hidden" name="aim_item_name_details_original" id="aim_item_name_details_original">
             <input type="hidden" name="aim_item_code_details_original" id="aim_item_code_details_original">
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 120px;">Item Description</label>
-                <input class="form-control form-control-sm" style="width: 600px; margin-right: 10px;" name="aim_item_name_details" id="aim_item_name_details" maxlength="255" placeholder="Please enter assembled item description to proceed" required>
                 <label class="form-control form-control-sm" style="width: 90px;">Item Code</label>
-                <input class="form-control form-control-sm" style="width: 220px;" name="aim_item_code_details" id="aim_item_code_details" maxlength="100" placeholder="Please enter item code" required>
+                <input class="form-control form-control-sm" style="width: 220px; margin-right: 10px;" name="aim_item_code_details" id="aim_item_code_details" maxlength="100" placeholder="Please enter item code" required>
+                <label class="form-control form-control-sm" style="width: 120px;">Item Description</label>
+                <input class="form-control form-control-sm" style="width: 600px;" name="aim_item_name_details" id="aim_item_name_details" maxlength="255" placeholder="Please enter assembled item description to proceed" required>
             </div>
         </div>
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">

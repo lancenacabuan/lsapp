@@ -34,8 +34,8 @@
         <table id="ItemTable" class="table-hover table ItemTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
-                    <th>ITEM DESCRIPTION</th>
                     <th>ITEM CODE</th>
+                    <th>ITEM DESCRIPTION</th>
                     <th>DEFECTIVE</th>
                     <th>DEMO</th>
                     <th>ASSEMBLY</th>
@@ -58,6 +58,8 @@
                     <th>DATE ADDED</th>
                     <th>DATE MODIFIED</th>
                     <th>RESPONSIBLE USER</th>
+                    <th>QTY</th>
+                    <th>UOM</th>
                     <th>SERIAL</th>
                     <th>LOCATION</th>
                     <th>RACK NO.</th>

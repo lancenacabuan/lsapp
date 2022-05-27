@@ -13,21 +13,10 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
         ajax:{
             url: '/fm_items',
         },
-        columnDefs: [
-        {
-            "targets": [0,1,3,4],
-            "visible": false,
-            "searchable": false
-        }],
         columns: [
-            { data: 'id' },
-            { data: 'category' },
-            { data: 'item' },
-            { data: 'category_id' },
-            { data: 'UOM' },
-            { data: 'prodcode' }
+            { data: 'prodcode' },
+            { data: 'item' }
         ],
-        order: [[2, 'asc']],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -47,21 +36,10 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         ajax:{
             url: '/asm_items',
         },
-        columnDefs: [
-        {
-            "targets": [0,1,3,4],
-            "visible": false,
-            "searchable": false
-        }],
         columns: [
-            { data: 'id' },
-            { data: 'category' },
-            { data: 'item' },
-            { data: 'category_id' },
-            { data: 'UOM' },
-            { data: 'prodcode' }
+            { data: 'prodcode' },
+            { data: 'item' }
         ],
-        order: [[2, 'asc']],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -81,17 +59,9 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         ajax:{
             url: '/fm_categories',
         },
-        columnDefs: [
-        {
-            "targets": [0],
-            "visible": false,
-            "searchable": false
-        }],
         columns: [
-            { data: 'id' },
             { data: 'category' }
         ],
-        order: [[1, 'asc']],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -111,14 +81,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         ajax:{
             url: '/fm_locations',
         },
-        columnDefs: [
-        {
-            "targets": [0],
-            "visible": false,
-            "searchable": false
-        }],
         columns: [
-            { data: 'location_id' },
             { data: 'location' },
             {
                 data: 'status',
@@ -138,7 +101,6 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
                 }
             }
         ],
-        order: [[1, 'asc']],
         initComplete: function(){
             return notifyDeadline();
         }

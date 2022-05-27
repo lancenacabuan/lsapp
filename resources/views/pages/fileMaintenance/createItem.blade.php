@@ -8,10 +8,10 @@
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 120px;">Item Description</label>
-                <input class="form-control form-control-sm" style="width: 600px; margin-right: 10px;" name="aic_item_description" id="aic_item_description" maxlength="255" placeholder="Please enter assembled item description to proceed" required>
                 <label class="form-control form-control-sm" style="width: 90px;">Item Code</label>
-                <input class="form-control form-control-sm" style="width: 220px;" name="aic_item_code" id="aic_item_code" maxlength="100" placeholder="Please enter item code" required>
+                <input class="form-control form-control-sm" style="width: 220px; margin-right: 10px;" name="aic_item_code" id="aic_item_code" maxlength="100" placeholder="Please enter item code" required>
+                <label class="form-control form-control-sm" style="width: 120px;">Item Description</label>
+                <input class="form-control form-control-sm" style="width: 600px;" name="aic_item_description" id="aic_item_description" maxlength="255" placeholder="Please enter assembled item description to proceed" required>
             </div>
         </div>
         <div id="partsDetails" style="display: none;">

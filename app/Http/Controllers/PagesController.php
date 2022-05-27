@@ -26,7 +26,7 @@ class PagesController extends Controller
     }
 
     public function pull(){
-        $output = shell_exec('cd /var/www/html/lance/lsapp && git pull');
+        $output = shell_exec('cd /var/www/html/main-warehouse && git pull');
         // $output = shell_exec('whoami');
         return $output;
     }

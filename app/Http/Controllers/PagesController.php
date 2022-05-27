@@ -26,7 +26,7 @@ class PagesController extends Controller
     }
 
     public function pull(){
-        exec('git --git-dir=/var/www/html/main-warehouse/.git pull', $output);
+        $output = shell_exec('git --git-dir=/var/www/html/main-warehouse/.git pull');
         return $output;
     }
 

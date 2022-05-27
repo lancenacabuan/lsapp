@@ -91,7 +91,7 @@ class StockRequestController extends Controller
         $list = Item::query()->select('items.id','items.item')
             ->where('items.category_id',$request->category_id)
             ->groupBy('items.id')
-            ->orderBy('item','ASC')
+            ->orderBy('item', 'ASC')
             ->get();
         
         return response()->json($list);
@@ -278,7 +278,7 @@ class StockRequestController extends Controller
                 $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
-                    ->orderBy('item','ASC')
+                    ->orderBy('item', 'ASC')
                     ->get()
                     ->toArray();
                 foreach($items as $key => $value){
@@ -297,7 +297,7 @@ class StockRequestController extends Controller
                 $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
-                    ->orderBy('item','ASC')
+                    ->orderBy('item', 'ASC')
                     ->get();
             }
             while(!$items);
@@ -429,7 +429,7 @@ class StockRequestController extends Controller
         $stockreq = StockRequest::query()->select('items.item','items.prodcode AS prodcode','items.UOM AS uom','items.id AS item_id','quantity','served','pending')
             ->join('items', 'items.id', 'stock_request.item')
             ->where('request_number',$request->reqnum)
-            ->orderBy('item','ASC')
+            ->orderBy('item', 'ASC')
             ->get();        
         
         return DataTables::of($stockreq)
@@ -509,8 +509,8 @@ class StockRequestController extends Controller
             ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->join('locations','locations.id','stocks.location_id')
-            ->get()
-            ->sortBy('item');
+            ->orderBy('item', 'ASC')
+            ->get();
 
         return DataTables::of($list)->make(true);
     }
@@ -532,8 +532,8 @@ class StockRequestController extends Controller
             ->whereIn('stocks.status', ['prep','assembly'])
             ->join('items','items.id','stocks.item_id')
             ->join('locations','locations.id','stocks.location_id')
-            ->get()
-            ->sortBy('item');
+            ->orderBy('item', 'ASC')
+            ->get();
 
         return DataTables::of($list)->make(true);
     }
@@ -553,8 +553,8 @@ class StockRequestController extends Controller
             ->where('stocks.status', 'incomplete')
             ->join('items','items.id','stocks.item_id')
             ->join('locations','locations.id','stocks.location_id')
-            ->get()
-            ->sortBy('item');
+            ->orderBy('item', 'ASC')
+            ->get();
 
         return DataTables::of($list)->make(true);
     }
@@ -574,8 +574,8 @@ class StockRequestController extends Controller
             ->where('stocks.status', 'defective')
             ->join('items','items.id','stocks.item_id')
             ->join('locations','locations.id','stocks.location_id')
-            ->get()
-            ->sortBy('item');
+            ->orderBy('item', 'ASC')
+            ->get();
 
         return DataTables::of($list)->make(true);
     }
@@ -595,8 +595,8 @@ class StockRequestController extends Controller
             ->where('stocks.status', 'incdefective')
             ->join('items','items.id','stocks.item_id')
             ->join('locations','locations.id','stocks.location_id')
-            ->get()
-            ->sortBy('item');
+            ->orderBy('item', 'ASC')
+            ->get();
 
         return DataTables::of($list)->make(true);
     }
@@ -615,8 +615,8 @@ class StockRequestController extends Controller
             ->whereIn('assembly_reqnum', $include)
             ->join('items','items.id','stocks.item_id')
             ->join('locations','locations.id','stocks.location_id')
-            ->get()
-            ->sortBy('item');
+            ->orderBy('item', 'ASC')
+            ->get();
 
         return DataTables::of($list)->make(true);
     }
@@ -798,7 +798,7 @@ class StockRequestController extends Controller
                 $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
-                    ->orderBy('item','ASC')
+                    ->orderBy('item', 'ASC')
                     ->get()
                     ->toArray();
                 foreach($items as $key => $value){
@@ -817,7 +817,7 @@ class StockRequestController extends Controller
                 $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
-                    ->orderBy('item','ASC')
+                    ->orderBy('item', 'ASC')
                     ->get();
             }
             while(!$items);
@@ -1018,7 +1018,7 @@ class StockRequestController extends Controller
                 ->whereIn('stocks.status', ['out'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('locations','locations.id','stocks.location_id')
-                ->orderBy('item','ASC')
+                ->orderBy('item', 'ASC')
                 ->get()
                 ->toArray();
             foreach($items as $key => $value){
@@ -1213,8 +1213,8 @@ class StockRequestController extends Controller
             ->where('stocks.id', $request->item_id)
             ->join('items','items.id','stocks.item_id')
             ->join('locations','locations.id','stocks.location_id')
-            ->get()
-            ->sortBy('item');
+            ->orderBy('item', 'ASC')
+            ->get();
 
         return DataTables::of($list)->make(true);
     }
@@ -1489,7 +1489,7 @@ class StockRequestController extends Controller
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->join('locations','locations.id','stocks.location_id')
-                        ->orderBy('item','ASC')
+                        ->orderBy('item', 'ASC')
                         ->get()
                         ->toArray();
                     foreach($items as $key => $value){
@@ -1510,7 +1510,7 @@ class StockRequestController extends Controller
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->join('locations','locations.id','stocks.location_id')
-                        ->orderBy('item','ASC')
+                        ->orderBy('item', 'ASC')
                         ->get();
                 }
                 while(!$items);
@@ -1652,7 +1652,7 @@ class StockRequestController extends Controller
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->join('locations','locations.id','stocks.location_id')
-                        ->orderBy('item','ASC')
+                        ->orderBy('item', 'ASC')
                         ->get()
                         ->toArray();
                     foreach($items as $key => $value){
@@ -1673,7 +1673,7 @@ class StockRequestController extends Controller
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->join('locations','locations.id','stocks.location_id')
-                        ->orderBy('item','ASC')
+                        ->orderBy('item', 'ASC')
                         ->get();
                 }
                 while(!$items);
@@ -1692,6 +1692,7 @@ class StockRequestController extends Controller
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
                     ->where('pending', '>', '0')
+                    ->orderBy('item', 'ASC')
                     ->get();
             }
             while(!$penditems);
@@ -1940,7 +1941,7 @@ class StockRequestController extends Controller
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('locations','locations.id','stocks.location_id')
-                ->orderBy('item','ASC')
+                ->orderBy('item', 'ASC')
                 ->get()
                 ->toArray();
             foreach($list3 as $key => $value){
@@ -1958,7 +1959,7 @@ class StockRequestController extends Controller
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('locations','locations.id','stocks.location_id')
-                ->orderBy('item','ASC')
+                ->orderBy('item', 'ASC')
                 ->get();
         }
         
@@ -1995,6 +1996,7 @@ class StockRequestController extends Controller
                     $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
+                        ->orderBy('item', 'ASC')
                         ->get()
                         ->toArray();
                     foreach($items as $keys => $values){
@@ -2010,6 +2012,7 @@ class StockRequestController extends Controller
                     $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
+                        ->orderBy('item', 'ASC')
                         ->get();
                 }
                 $subject = '[LAST '.$difference.' DAY/S] STOCK REQUEST NO. '.$value['req_num'];
@@ -2091,6 +2094,7 @@ class StockRequestController extends Controller
                     $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
+                        ->orderBy('item', 'ASC')
                         ->get()
                         ->toArray();
                     foreach($items as $keys => $values){
@@ -2106,6 +2110,7 @@ class StockRequestController extends Controller
                     $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
+                        ->orderBy('item', 'ASC')
                         ->get();
                 }
                 $subject = '[DEADLINE TODAY] STOCK REQUEST NO. '.$value['req_num'];
@@ -2187,6 +2192,7 @@ class StockRequestController extends Controller
                     $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
+                        ->orderBy('item', 'ASC')
                         ->get()
                         ->toArray();
                     foreach($items as $keys => $values){
@@ -2202,6 +2208,7 @@ class StockRequestController extends Controller
                     $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
+                        ->orderBy('item', 'ASC')
                         ->get();
                 }
                 $subject = '[OVERDUE] STOCK REQUEST NO. '.$value['req_num'];

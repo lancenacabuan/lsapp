@@ -19,6 +19,9 @@
         <br><br>
         <strong>TRANSFERRED ITEMS</strong>
         <br>
+        @php
+            $total = 0;
+        @endphp
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>
@@ -29,15 +32,32 @@
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">SERIAL</th>
                 </tr>
             </thead>
-            @foreach($details['items'] as $x)
-            <tr>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->prodcode}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$x->item}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->qty}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->uom}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x->serial)}}</td>
-            </tr>
-            @endforeach
+            <tbody>
+                @foreach($details['items'] as $x)
+                @php
+                    if($x['uom'] == 'Meter'){
+                        $total+=1;
+                    }
+                    else{
+                        $total+=$x['qty'];
+                    }
+                @endphp
+                <tr>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->prodcode}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$x->item}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->qty}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->uom}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{strtoupper($x->serial)}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+            <tfoot style="font-weight: bold;">
+                <tr>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; text-align: right;" colspan="2">TOTAL ITEM COUNT:</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$total}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;" colspan="2"></td>
+                </tr>
+            </tfoot>
         </table>
         <br><br>
         Kindly login to your {{$details['role']}} account if you wish to view or download this request by clicking on the link below.<br>

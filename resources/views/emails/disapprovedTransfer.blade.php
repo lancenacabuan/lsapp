@@ -16,6 +16,9 @@
         <br><br>
         <strong>REQUESTED ITEMS</strong>
         <br>
+        @php
+            $total = 0;
+        @endphp
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>
@@ -25,14 +28,31 @@
                     <th style="border: 1px solid black; border-collapse: collapse; padding: 5px;">UOM</th>
                 </tr>
             </thead>
-            @foreach($details['items'] as $x)
-            <tr>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->prodcode}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$x->item}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->quantity}}</td>
-                <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->uom}}</td>
-            </tr>
-            @endforeach
+            <tbody>
+                @foreach($details['items'] as $x)
+                @php
+                    if($x['uom'] == 'Meter'){
+                        $total+=1;
+                    }
+                    else{
+                        $total+=$x['quantity'];
+                    }
+                @endphp
+                <tr>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->prodcode}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; width: 300px;">{{$x->item}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->quantity}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$x->uom}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+            <tfoot style="font-weight: bold;">
+                <tr>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px; text-align: right;" colspan="2">TOTAL ITEM COUNT:</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;">{{$total}}</td>
+                    <td style="border: 1px solid black; border-collapse: collapse; padding: 5px;" colspan="1"></td>
+                </tr>
+            </tfoot>
         </table>
         <br><br>
         Kindly login to your {{$details['role']}} account if you wish to view this request for deletion by clicking on the link below.<br>

@@ -17,6 +17,7 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
             { data: 'prodcode' },
             { data: 'item' }
         ],
+        order: [],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -40,6 +41,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
             { data: 'prodcode' },
             { data: 'item' }
         ],
+        order: [],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -62,6 +64,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         columns: [
             { data: 'category' }
         ],
+        order: [],
         initComplete: function(){
             return notifyDeadline();
         }
@@ -101,6 +104,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
                 }
             }
         ],
+        order: [],
         initComplete: function(){
             return notifyDeadline();
         }

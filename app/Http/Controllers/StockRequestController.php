@@ -278,6 +278,7 @@ class StockRequestController extends Controller
                 $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
+                    ->orderBy('item','ASC')
                     ->get()
                     ->toArray();
                 foreach($items as $key => $value){
@@ -296,6 +297,7 @@ class StockRequestController extends Controller
                 $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                     ->join('items', 'items.id', 'stock_request.item')
                     ->where('request_number', $request->request_number)
+                    ->orderBy('item','ASC')
                     ->get();
             }
             while(!$items);

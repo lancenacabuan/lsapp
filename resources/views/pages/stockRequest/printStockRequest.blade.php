@@ -100,7 +100,7 @@
             </tr>
             <tr height="20">
                 @php
-                $total = 0;
+                    $total = 0;
                 @endphp
                 <td colspan="9" height="20">
                     @if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10))
@@ -124,7 +124,6 @@
                                 else{
                                     $total+=$x['qty'];
                                 }
-                            @endphp
                             @endphp
                             <tr>
                                 <td>{{$x['prodcode']}}</td>

@@ -66,15 +66,15 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
                 }
             },
             columns: [
-                { data: 'ProdCode', width: '10%' },
-                { data: 'Item', width: '10%' },
+                { data: 'ProdCode', width: '15%' },
+                { data: 'Item' },
                 { data: 'Defective', width: '8%', width: '8%' },
                 { data: 'Demo', width: '8%' },
                 { data: 'Assembly', width: '8%' },
-                { data: 'A1', width: '8%' },
-                { data: 'A2', width: '8%' },
-                { data: 'A3', width: '8%' },
-                { data: 'A4', width: '8%' },
+                { data: 'A1', width: '5%' },
+                { data: 'A2', width: '5%' },
+                { data: 'A3', width: '5%' },
+                { data: 'A4', width: '5%' },
                 { data: 'Balintawak', width: '8%' },
                 { data: 'Malabon', width: '8%' },
                 { data: 'Total_stocks', width: '8%' }
@@ -107,15 +107,15 @@ $('#btnBack').on('click', function(){
                 }
             },
             columns: [
-                { data: 'ProdCode', width: '10%' },
-                { data: 'Item', width: '10%' },
+                { data: 'ProdCode', width: '15%' },
+                { data: 'Item' },
                 { data: 'Defective', width: '8%' },
                 { data: 'Demo', width: '8%' },
                 { data: 'Assembly', width: '8%' },
-                { data: 'A1', width: '8%' },
-                { data: 'A2', width: '8%' },
-                { data: 'A3', width: '8%' },
-                { data: 'A4', width: '8%' },
+                { data: 'A1', width: '5%' },
+                { data: 'A2', width: '5%' },
+                { data: 'A3', width: '5%' },
+                { data: 'A4', width: '5%' },
                 { data: 'Balintawak', width: '8%' },
                 { data: 'Malabon', width: '8%' },
                 { data: 'Total_stocks', width: '8%' }

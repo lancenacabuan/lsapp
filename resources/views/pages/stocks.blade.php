@@ -93,4 +93,5 @@
 </div>
 @include('pages.stocks.addStock')
 @include('pages.stocks.importStock')
+@include('pages.report')
 @endsection

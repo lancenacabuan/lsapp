@@ -30,4 +30,5 @@
 </div>
 @include('pages.stockTransfer.newStockTransfer')
 @include('pages.stockTransfer.detailsStockTransfer')
+@include('pages.report')
 @endsection

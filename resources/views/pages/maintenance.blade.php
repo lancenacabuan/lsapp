@@ -102,4 +102,5 @@
 @include('pages.fileMaintenance.newLocation')
 @include('pages.fileMaintenance.detailsLocation')
 @include('pages.fileMaintenance.warranty')
+@include('pages.report')
 @endsection

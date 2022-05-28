@@ -21,4 +21,5 @@
         <input type="hidden" name="return_number" id="return_number">
     </form>
 </div>
+@include('pages.report')
 @endsection

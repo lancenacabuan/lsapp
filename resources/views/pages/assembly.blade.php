@@ -29,4 +29,5 @@
 </div>
 @include('pages.assembly.newAssembly')
 @include('pages.assembly.detailsAssembly')
+@include('pages.report')
 @endsection

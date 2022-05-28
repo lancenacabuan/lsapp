@@ -16,6 +16,8 @@
         </div>
         <i class="fa fa-user-circle fa-4x p-2" aria-hidden="true"></i>
     </div>
+    <input type="hidden" id="current_user" value="{{auth()->user()->id}}">
+    <input type="hidden" id="current_role" value="{{auth()->user()->getRoleNames()}}">
 </div>
 <script>
     window.onload = displayClock();

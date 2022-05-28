@@ -12,12 +12,16 @@ use App\Http\Controllers\FileMaintenanceController;
 
 Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
 // Route::fallback(function(){ return redirect("/"); });
-
 Route::get('/gitpull',[PagesController::class,'pull']);
 
 //Index
 Route::get('/',[PagesController::class,'index']);
 Route::get('/index_data',[PagesController::class,'index_data']);
+//
+
+//Report A Problem
+Route::get('/generateTicket',[PagesController::class,'generateTicket']);
+Route::any('/report/submit',[PagesController::class,'report_submit']);
 //
 
 //Change Password

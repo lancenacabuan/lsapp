@@ -88,6 +88,11 @@
             border-color: #0d1a80;
             color: white;
         }
+        #labelReport {
+            zoom: 120%;
+            margin-left: 2px;
+            margin-right: 10px;
+        }
         a, img, thead, .xD {
             -webkit-user-drag: none;
             -khtml-user-drag: none;
@@ -259,6 +264,20 @@
                 }
             });
         }
+        $(document).ready(function(){
+            $('#btnReport').hover(
+                function(){
+                    $('#labelReport').css({"color": "red"});
+                    $('#labelReport').removeClass('bg-danger');
+                    $('#labelReport').addClass('bg-light');
+                },
+                function(){
+                    $('#labelReport').css({"color": "white"});
+                    $('#labelReport').removeClass('bg-light');
+                    $('#labelReport').addClass('bg-danger');
+                }
+            );
+        });
     </script>
     @if(Request::is('/'))
         <script src="{{ asset('js/index.js') }}"></script>

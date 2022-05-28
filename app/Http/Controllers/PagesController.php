@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Activitylog\Models\Activity;
+use App\Models\Report;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -27,7 +28,6 @@ class PagesController extends Controller
 
     public function pull(){
         $output = shell_exec('cd /var/www/html/main-warehouse && git pull');
-        // $output = shell_exec('whoami');
         return $output;
     }
 
@@ -247,6 +247,36 @@ class PagesController extends Controller
             $userlogs->save();
         }
 
+        return response($result);
+    }
+
+    public function generateTicket(Request $request){
+        $ticketnum = Report::query()->select()->where('ticket_number',$request->ticket_number)->count();
+        if($ticketnum == 0){
+            return response('unique');
+        }
+        return response('duplicate');
+    }
+
+    public function report_submit(Request $request){    
+        $report = new Report;
+        $report->reported_by =auth()->user()->id;
+        $report->ticket_number = $request->ticket_number;
+        $report->details = ucfirst($request->details);
+        $sql = $report->save();
+    
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "USER REPORTED AN ISSUE: User successfully reported issue with Ticket Number $request->ticket_number.";
+            $userlogs->save();
+        }
+        
         return response($result);
     }
 }

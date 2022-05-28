@@ -1,3 +1,6 @@
+@php
+$reports = DB::table('reports')->whereIn('status',['pending'])->get()->count();
+@endphp
 <nav class="navbar navbar-expand-md shadow-sm" style="height: 60px; margin-top: -20px;">
     <div class="container-fluid">
         <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
@@ -53,7 +56,12 @@
             </ul>
             @endif
             <!-- Right Side Of Navbar -->
-            <button id="btnReport" type="button" class="btn btn-danger mr-2"><span class="px-2">REPORT A PROBLEM</span></button>
+            <button id="btnReport" type="button" class="btn btn-danger mr-2">
+                <span class="px-2">REPORT A PROBLEM</span>
+                @role('admin') {{---ROLES---}}
+                <span id="labelReport" class="badge rounded-pill bg-danger px-2">{{ $reports }}</span>
+                @endrole
+            </button>
             <ul class="navbar-nav mr-right">
                 <a class="nav-link" style="color: white; font-size: 16px; cursor: pointer;" onclick="$('#logout-form').submit();">
                     <b>LOGOUT</b>&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i>

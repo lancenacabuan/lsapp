@@ -56,12 +56,19 @@
                             <tr>
                                 <th>ITEM CODE</th>
                                 <th>ITEM DESCRIPTION</th>
-                                <th>QTY</th>
+                                <th class="sum">QTY</th>
                                 <th>UOM</th>
                                 <th>SERIAL</th>
                                 <th>LOCATION</th>
                             </tr>
                         </thead>
+                        <tfoot style="font-size: 14px;">
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th></th>
+                                <th colspan="3"></th>
+                            </tr>
+                        </tfoot>
                     </table>
                     <br>
                 </div>
@@ -76,9 +83,15 @@
                             <th>ITEM CODE</th>
                             <th>ITEM DESCRIPTION</th>
                             <th>UOM</th>
-                            <th>REQUESTED</th>
+                            <th class="sum">REQUESTED</th>
                         </tr>
                     </thead>
+                    <tfoot style="font-size: 14px;">
+                        <tr>
+                            <th colspan="3" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
                 <button type="button" id="btnDelete" class="btn btn-danger bp mt-4" style="display: none;">DELETE</button>
             </div>
@@ -111,13 +124,20 @@
                             <tr>
                                 <th>ITEM CODE</th>
                                 <th>ITEM DESCRIPTION</th>
-                                <th>QTY</th>
+                                <th class="sum">QTY</th>
                                 <th>UOM</th>
                                 <th>SERIAL</th>
                                 <th>LOCATION</th>
                                 <th></th>
                             </tr>
                         </thead>
+                        <tfoot style="font-size: 14px;">
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th></th>
+                                <th colspan="4"></th>
+                            </tr>
+                        </tfoot>
                     </table> 
                     <br>
                     <div class="prephide">
@@ -159,12 +179,19 @@
                             <tr>
                                 <th>ITEM CODE</th>
                                 <th>ITEM DESCRIPTION</th>
-                                <th>QTY</th>
+                                <th class="sum">QTY</th>
                                 <th>UOM</th>
                                 <th>SERIAL</th>
                                 <th>LOCATION</th>
                             </tr>
                         </thead>
+                        <tfoot style="font-size: 14px;">
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th></th>
+                                <th colspan="3"></th>
+                            </tr>
+                        </tfoot>
                     </table>
                     <br>
                     <div id="incFooter">

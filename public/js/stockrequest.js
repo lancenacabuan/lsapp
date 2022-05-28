@@ -1498,9 +1498,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             sum = sum.replace(pattern,"$1,$2");
                             this.footer().innerHTML = sum;
                         });
-                    },
-                    orderCellsTop: true,
-                    fixedHeader: true,            
+                    }            
                 }); 
                 
                 $('table.stockDetails1').dataTable().fnDestroy();    
@@ -1563,9 +1561,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             sum = sum.replace(pattern,"$1,$2");
                             this.footer().innerHTML = sum;
                         });
-                    },
-                    orderCellsTop: true,
-                    fixedHeader: true,            
+                    }
                 });
                 
                 $('table.stockDetails2').dataTable().fnDestroy();    
@@ -1637,9 +1633,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             sum = sum.replace(pattern,"$1,$2");
                             this.footer().innerHTML = sum;
                         });
-                    },
-                    orderCellsTop: true,
-                    fixedHeader: true,            
+                    }
                 });
             
                 $('table.receivedItems').DataTable({
@@ -2709,9 +2703,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 sum = sum.replace(pattern,"$1,$2");
                 this.footer().innerHTML = sum;
             });
-        },
-        orderCellsTop: true,
-        fixedHeader: true,            
+        }
     }); 
     
     $('table.stockDetails1').dataTable().fnDestroy();    
@@ -2774,9 +2766,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 sum = sum.replace(pattern,"$1,$2");
                 this.footer().innerHTML = sum;
             });
-        },
-        orderCellsTop: true,
-        fixedHeader: true,            
+        }
     });
     
     $('table.stockDetails2').dataTable().fnDestroy();    
@@ -2848,9 +2838,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 sum = sum.replace(pattern,"$1,$2");
                 this.footer().innerHTML = sum;
             });
-        },
-        orderCellsTop: true,
-        fixedHeader: true,            
+        }
     });
 
     $('table.receivedItems').DataTable({

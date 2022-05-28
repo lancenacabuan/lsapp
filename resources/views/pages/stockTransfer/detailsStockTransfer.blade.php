@@ -70,7 +70,7 @@
                         <th>ITEM CODE</th>
                         <th>ITEM DESCRIPTION</th>
                         <th>UOM</th>
-                        <th>REQUESTED</th>
+                        <th class="sum">REQUESTED</th>
                         <th>PENDING</th>
                         <th>MAIN BRANCH</th>
                         <th class="d-none"></th>
@@ -83,6 +83,13 @@
                         <th></th>
                     </tr>
                 </thead>
+                <tfoot style="font-size: 14px;">
+                    <tr>
+                        <th colspan="3" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                        <th></th>
+                        <th colspan="10"></th>
+                    </tr>
+                </tfoot>
             </table>
             @role('approver - warehouse') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp mt-4" id="btnApprove" value="APPROVE">
@@ -156,12 +163,19 @@
                     <tr>
                         <th>ITEM CODE</th>
                         <th>ITEM DESCRIPTION</th>
-                        <th>QTY</th>
+                        <th class="sum">QTY</th>
                         <th>UOM</th>
                         <th>SERIAL</th>
                         <th></th>
                     </tr>
                 </thead>
+                <tfoot style="font-size: 14px;">
+                    <tr>
+                        <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                        <th></th>
+                        <th colspan="3"></th>
+                    </tr>
+                </tfoot>
             </table>
             <br>
             <hr class="schedItemsModal transitItemsModal" style="display: none;">
@@ -206,12 +220,19 @@
                     <tr>
                         <th>ITEM CODE</th>
                         <th>ITEM DESCRIPTION</th>
-                        <th>QTY</th>
+                        <th class="sum">QTY</th>
                         <th>UOM</th>
                         <th>SERIAL</th>
                         <th></th>
                     </tr>
                 </thead>
+                <tfoot style="font-size: 14px;">
+                    <tr>
+                        <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                        <th></th>
+                        <th colspan="3"></th>
+                    </tr>
+                </tfoot>
             </table>
             <br>
             @role('admin|encoder') {{---ROLES---}}

@@ -764,8 +764,27 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                         { data: 'qtymal' },
                         { data: 'item_id' }
                     ],
-                    orderCellsTop: true,
-                    fixedHeader: true,            
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    }
                 });
                 
                 $('table.transItems').dataTable().fnDestroy();
@@ -808,7 +827,28 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                         { data: 'uom' },
                         { data: 'serial' },
                         { data: 'id' }
-                    ]
+                    ],
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    }
                 });
 
                 $('table.incItems').dataTable().fnDestroy();
@@ -851,7 +891,28 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                         { data: 'uom' },
                         { data: 'serial' },
                         { data: 'id' }
-                    ]
+                    ],
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    }
                 });
             });
         },
@@ -1053,8 +1114,27 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
             { data: 'qtymal' },
             { data: 'item_id' }
         ],
-        orderCellsTop: true,
-        fixedHeader: true,            
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        }
     });
     
     $('table.transItems').dataTable().fnDestroy();
@@ -1097,7 +1177,28 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
             { data: 'uom' },
             { data: 'serial' },
             { data: 'id' }
-        ]
+        ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        }
     });
 
     $('table.incItems').dataTable().fnDestroy();
@@ -1140,7 +1241,28 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
             { data: 'uom' },
             { data: 'serial' },
             { data: 'id' }
-        ]
+        ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        }
     });
 });
 

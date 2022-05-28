@@ -73,6 +73,21 @@
             user-select: none;
             cursor: wait;
         }
+        #btnReport {
+            zoom: 90%;
+            background: white;
+            border-color: #0d1a80;
+            color: #0d1a80;
+            height: 30px !important;
+            font-size: 12px !important;
+            font-weight: bold;
+            padding: 0px;
+        }
+        #btnReport:hover {
+            background: #d9534f;
+            border-color: #0d1a80;
+            color: white;
+        }
         a, img, thead, .xD {
             -webkit-user-drag: none;
             -khtml-user-drag: none;

@@ -53,6 +53,7 @@
             </ul>
             @endif
             <!-- Right Side Of Navbar -->
+            <button id="btnReport" type="button" class="btn btn-danger mr-2"><span class="px-2">REPORT A PROBLEM</span></button>
             <ul class="navbar-nav mr-right">
                 <a class="nav-link" style="color: white; font-size: 16px; cursor: pointer;" onclick="$('#logout-form').submit();">
                     <b>LOGOUT</b>&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i>

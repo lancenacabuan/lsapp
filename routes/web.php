@@ -22,6 +22,7 @@ Route::get('/index_data',[PagesController::class,'index_data']);
 //Report A Problem
 Route::get('/generateTicket',[PagesController::class,'generateTicket']);
 Route::any('/report/submit',[PagesController::class,'report_submit']);
+Route::any('/report/log',[PagesController::class,'report_log']);
 //
 
 //Change Password

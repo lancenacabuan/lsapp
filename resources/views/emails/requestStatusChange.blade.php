@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <p>Hello, Admin / Developer!<br>
+    <p>Hello, Admin / Developer!<br><br>
     A new LOCATION STATUS CHANGE REQUEST is waiting for your approval and implementation.<br></p>
     <strong>Location Name: {{$details['location']}}</strong><br>
     <strong>Status CHANGE FROM: {{$details['status_original']}}</strong><br>

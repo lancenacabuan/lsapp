@@ -133,8 +133,9 @@
                     $.ajax({
                         url: "/report/submit",
                         type: "POST",
+                        async: false,
                         headers:{
-                        'X-CSRF-TOKEN': $("#csrf").val()
+                            'X-CSRF-TOKEN': $("#csrf").val()
                         },
                         data:{
                             _token: $("#csrf").val(),
@@ -143,8 +144,38 @@
                         },
                         success: function(data){
                             if(data == 'true'){
-                                swal("SUBMIT SUCCESS", "Report submitted successfully!", "success");
-                                setTimeout(function(){location.reload()}, 2000);
+                                scrollReset();
+                                $('#reportModal').hide();
+                                $('#reportModal').modal('dispose');
+                                $('#loading').show(); Spinner(); Spinner.show();
+                                $.ajax({
+                                    url: "/report/log",
+                                    type: "POST",
+                                    headers:{
+                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                    },
+                                    data:{
+                                        _token: $("#csrf").val(),
+                                        ticket_number: ticket_number,
+                                        details: details
+                                    },
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            $('#loading').hide(); Spinner.hide();
+                                            swal("SUBMIT SUCCESS", "Report submitted successfully!", "success");
+                                            setTimeout(function(){location.reload()}, 2000);
+                                        }
+                                        else{
+                                            return false;
+                                        }
+                                    },
+                                    error: function(data){
+                                        if(data.status == 401){
+                                            location.reload();
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
                             }
                             else{
                                 swal("SUBMIT FAILED", "Report failed to submit!", "error");

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <p>Hello, {{$details['name']}}!<br>
+    <p>Hello, {{$details['name']}}!<br><br>
     This is to inform you that a {{$details['action']}} has been 
     <span style="color: blue;"><strong>RECEIVED</strong></span> by {{$details['receivedby']}}.<br>
     </p>

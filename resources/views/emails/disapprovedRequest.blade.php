@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <p>Hello, {{$details['name']}}!<br>
+    <p>Hello, {{$details['name']}}!<br><br>
     This is to inform you that your {{$details['action']}} has been 
     <span style="color: red;"><strong>DISAPPROVED</strong></span> by {{$details['disapprovedby']}}.<br>
     Reason for Disapproval: {{$details['reason']}}<br>

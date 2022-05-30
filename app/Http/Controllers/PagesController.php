@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Mail\emailNewUser;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Password;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Activitylog\Models\Activity;
+use App\Mail\reportProblem;
 use App\Models\Report;
 use App\Models\User;
 use App\Models\UserLogs;
@@ -270,13 +272,37 @@ class PagesController extends Controller
         }
         else {
             $result = 'true';
-
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "USER REPORTED AN ISSUE: User successfully reported issue with Ticket Number $request->ticket_number.";
-            $userlogs->save();
         }
         
         return response($result);
+    }
+
+    public function report_log(Request $request){
+        $user = array(
+            // 'c4lance@outlook.com',
+            // 'lancenacabuan@yahoo.com',
+            // 'lorenzonacabuan@gmail.com'
+            'gerard.mallari@gmail.com',
+            'jolopez@ideaserv.com.ph',
+            'lancenacabuan@outlook.com',
+            'lorenzonacabuan@gmail.com'
+        );
+        $subject = 'TICKET NUMBER: '.$request->ticket_number;
+        foreach($user as $email){
+            $details = [
+                'ticket_number' => $request->ticket_number,
+                'reportdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
+                'reported_by' => auth()->user()->name,
+                'details' => ucfirst($request->details)
+            ];
+            Mail::to($email)->send(new reportProblem($details, $subject));
+        }
+        
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "USER REPORTED AN ISSUE: User successfully reported issue with Ticket Number $request->ticket_number.";
+        $userlogs->save();
+
+        return response('true');
     }
 }

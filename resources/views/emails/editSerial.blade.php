@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <p>Hello, {{$details['name']}}!<br>
+    <p>Hello, {{$details['name']}}!<br><br>
     This is to inform you of a recent <span style="color: red;"><strong>ITEM SERIAL CHANGE</strong></span>.<br></p>
     <p>
         Date Edited: {{$details['editdate']}}<br>

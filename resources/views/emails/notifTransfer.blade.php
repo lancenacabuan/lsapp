@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <p>Hello, {{$details['name']}}!<br>
+    <p>Hello, {{$details['name']}}!<br><br>
     This is to inform you that a Stock Transfer Request {{$details['action']}}<br></p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     <strong>Status: {{$details['status']}}</strong><br>

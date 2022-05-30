@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <p>Hello, {{$details['name']}}!<br>
+    <p>Hello, {{$details['name']}}!<br><br>
     This is to inform you that a Stock Request {{$details['action']}}<br></p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     @if($details['reqtype'] == 'REPLACEMENT')

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <p>Hello, {{$details['name']}}!<br>
+    <p>Hello, {{$details['name']}}!<br><br>
     A new {{$details['action']}} is waiting for your approval.<br></p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     <p>

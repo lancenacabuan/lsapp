@@ -504,10 +504,11 @@ class StockRequestController extends Controller
         }
         $include[] = $request->request_number;
         
-        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->orderBy('item', 'ASC')
             ->get();
@@ -527,10 +528,11 @@ class StockRequestController extends Controller
         }
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.status', ['prep','assembly'])
             ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->orderBy('item', 'ASC')
             ->get();
@@ -548,10 +550,11 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->where('stocks.status', 'incomplete')
             ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->orderBy('item', 'ASC')
             ->get();
@@ -569,10 +572,11 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->where('stocks.status', 'defective')
             ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->orderBy('item', 'ASC')
             ->get();
@@ -590,10 +594,11 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('request_number', $include)
             ->where('stocks.status', 'incdefective')
             ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->orderBy('item', 'ASC')
             ->get();
@@ -611,9 +616,10 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->whereIn('assembly_reqnum', $include)
             ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
             ->orderBy('item', 'ASC')
             ->get();

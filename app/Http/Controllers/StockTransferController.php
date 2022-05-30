@@ -351,12 +351,13 @@ class StockTransferController extends Controller
     }
 
     public function transItems(Request $request){
-        $list = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('transferred_items.request_number', $request->request_number)
             ->where('stocks.status', '!=', 'incomplete')
             ->join('transferred_items','transferred_items.request_number','stocks.request_number')
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','request_transfer.locfrom')
             ->groupBy('prodcode','item','uom','serial','qty','item_id','id','location')
             ->get()
@@ -366,11 +367,12 @@ class StockTransferController extends Controller
     }
 
     public function incTransItems(Request $request){
-        $list = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
             ->where('stocks.request_number', $request->request_number)
             ->where('stocks.status', 'incomplete')
             ->join('request_transfer','request_transfer.request_number','stocks.request_number')
             ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','request_transfer.locfrom')
             ->get()
             ->sortBy('item');

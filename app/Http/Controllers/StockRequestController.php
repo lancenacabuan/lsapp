@@ -1019,11 +1019,11 @@ class StockRequestController extends Controller
         $include[] = $request->request_number;
 
         do{
-            $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+            $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['out'])
                 ->join('items','items.id','stocks.item_id')
-                ->join('locations','locations.id','stocks.location_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
                 ->orderBy('item', 'ASC')
                 ->get()
                 ->toArray();
@@ -1490,11 +1490,11 @@ class StockRequestController extends Controller
 
             if($request_details->req_type_id == 2 || ($request_details->req_type_id == 3 && $request_details->status_id == 10)){
                 do{
-                    $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+                    $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
-                        ->join('locations','locations.id','stocks.location_id')
+                        ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
                         ->orderBy('item', 'ASC')
                         ->get()
                         ->toArray();
@@ -1511,11 +1511,11 @@ class StockRequestController extends Controller
             }
             else{
                 do{
-                    $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                    $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
-                        ->join('locations','locations.id','stocks.location_id')
+                        ->groupBy('prodcode','item','uom','serial','qty','item_id')
                         ->orderBy('item', 'ASC')
                         ->get();
                 }
@@ -1653,11 +1653,11 @@ class StockRequestController extends Controller
 
             if($request_details->req_type_id == 2 || ($request_details->req_type_id == 3 && $request_details->status_id == 10)){
                 do{
-                    $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+                    $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
-                        ->join('locations','locations.id','stocks.location_id')
+                        ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
                         ->orderBy('item', 'ASC')
                         ->get()
                         ->toArray();
@@ -1674,11 +1674,11 @@ class StockRequestController extends Controller
             }
             else{
                 do{
-                    $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                    $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
-                        ->join('locations','locations.id','stocks.location_id')
+                        ->groupBy('prodcode','item','uom','serial','qty','item_id')
                         ->orderBy('item', 'ASC')
                         ->get();
                 }
@@ -1942,11 +1942,11 @@ class StockRequestController extends Controller
         $include[] = $request->request_number;
 
         if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10)){
-            $list3 = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', 'stocks.qty AS qty', 'stocks.item_id AS item_id', 'stocks.id AS id', 'locations.location AS location', 'stocks.warranty_id AS warranty_id')
+            $list3 = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
-                ->join('locations','locations.id','stocks.location_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
                 ->orderBy('item', 'ASC')
                 ->get()
                 ->toArray();
@@ -1960,11 +1960,11 @@ class StockRequestController extends Controller
             }
         }
         else{
-            $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+            $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
-                ->join('locations','locations.id','stocks.location_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')
                 ->get();
         }

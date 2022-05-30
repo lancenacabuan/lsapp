@@ -67,17 +67,6 @@ function sweet(title, text, icon, btnName, url){
     });
 }
 
-function decodeHtml(str){
-    var map = {
-        '&amp;': '&', 
-        '&lt;': '<', 
-        '&gt;': '>', 
-        '&quot;': '"', 
-        '&#039;': "'"
-    };
-    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
-}
-
 function validate_fileupload(reference_upload){
     $('.upload_label').html('Upload Image File/s less than 5MB each');
     var files_length = $("#reference_upload").get(0).files.length;

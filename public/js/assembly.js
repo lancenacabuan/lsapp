@@ -49,17 +49,6 @@ function copyAsmReqNum(){
     });
 }
 
-function decodeHtml(str){
-    var map = {
-        '&amp;': '&', 
-        '&lt;': '<', 
-        '&gt;': '>', 
-        '&quot;': '"', 
-        '&#039;': "'"
-    };
-    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
-}
-
 var generatedReqNum;
 function generateReqNum(){
     var today = new Date();

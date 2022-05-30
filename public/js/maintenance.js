@@ -334,17 +334,6 @@ $(document).on("click", ".warrantyTable tbody tr", function(){
     }
 });
 
-function decodeHtml(str){
-    var map = {
-        '&amp;': '&', 
-        '&lt;': '<', 
-        '&gt;': '>', 
-        '&quot;': '"', 
-        '&#039;': "'"
-    };
-    return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
-}
-
 $('.btnNewItem').on('click', function(){
     $('#newItem').modal({
         backdrop: 'static',

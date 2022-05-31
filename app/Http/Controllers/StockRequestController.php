@@ -643,17 +643,30 @@ class StockRequestController extends Controller
             $subject = "EDITED ITEM SERIAL: '$request->origserial' => '$request->newserial'";
             $user = User::role('admin')->where('status','ACTIVE')->get();
             foreach($user as $key){
-                $details = [
-                    'name' => ucwords($key->name),
-                    'editdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
-                    'edited_by' => auth()->user()->name,
-                    'category' => $request->category,
-                    'item' => $request->item,
-                    'serialfrom' => $request->origserial,
-                    'serialto' => $request->newserial
-                ];
-                Mail::to($key->email)->send(new editSerial($details, $subject));
+                if($key->email != auth()->user()->email){
+                    $details = [
+                        'name' => ucwords($key->name),
+                        'editdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
+                        'edited_by' => auth()->user()->name,
+                        'category' => $request->category,
+                        'item' => $request->item,
+                        'serialfrom' => $request->origserial,
+                        'serialto' => $request->newserial
+                    ];
+                    Mail::to($key->email)->send(new editSerial($details, $subject));
+                }
             }
+
+            $details = [
+                'name' => auth()->user()->name,
+                'editdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
+                'edited_by' => auth()->user()->name,
+                'category' => $request->category,
+                'item' => $request->item,
+                'serialfrom' => $request->origserial,
+                'serialto' => $request->newserial
+            ];
+            Mail::to(auth()->user()->email)->send(new editSerial($details, $subject));
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;

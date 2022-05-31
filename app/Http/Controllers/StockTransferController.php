@@ -152,6 +152,7 @@ class StockTransferController extends Controller
             $items = StockTransfer::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                 ->join('items', 'items.id', 'stock_transfer.item')
                 ->where('request_number', $request->request_number)
+                ->orderBy('item', 'ASC')
                 ->get();
         }
         while(!$items);
@@ -287,7 +288,7 @@ class StockTransferController extends Controller
         $stockreq = StockTransfer::query()->select('items.prodcode','items.item','items.UOM AS uom','items.id AS item_id','quantity','served','pending')
             ->join('items', 'items.id', 'stock_transfer.item')
             ->where('request_number',$request->reqnum)
-            ->groupBy('prodcode','items.item','uom','quantity','served','pending','item_id')
+            ->orderBy('item', 'ASC')
             ->get();        
         
         return DataTables::of($stockreq)
@@ -359,8 +360,8 @@ class StockTransferController extends Controller
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','request_transfer.locfrom')
-            ->get()
-            ->sortBy('item');
+            ->orderBy('item', 'ASC')
+            ->get();
 
         return DataTables::of($list)->make(true);
     }
@@ -373,8 +374,8 @@ class StockTransferController extends Controller
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','request_transfer.locfrom')
-            ->get()
-            ->sortBy('item');
+            ->orderBy('item', 'ASC')
+            ->get();
 
         return DataTables::of($list)->make(true);
     }
@@ -493,6 +494,7 @@ class StockTransferController extends Controller
             $items = StockTransfer::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
                 ->join('items', 'items.id', 'stock_transfer.item')
                 ->where('request_number', $request->request_number)
+                ->orderBy('item', 'ASC')
                 ->get();
         }
         while(!$items);
@@ -702,8 +704,8 @@ class StockTransferController extends Controller
                     ->join('categories','categories.id','items.category_id')
                     ->join('locations','locations.id','request_transfer.locfrom')
                     ->groupBy('category','prodcode','item','uom','serial','qty','item_id','location')
-                    ->get()
-                    ->sortBy('item');
+                    ->orderBy('item', 'ASC')
+                    ->get();
             }
             while(!$items);
             
@@ -804,6 +806,7 @@ class StockTransferController extends Controller
             ->join('items','items.id','=','stock_transfer.item')
             ->join('stocks','stocks.item_id','stock_transfer.item')
             ->join('locations','locations.id','stocks.location_id')
+            ->orderBy('item', 'ASC')
             ->limit(1)
             ->get();
 
@@ -928,8 +931,8 @@ class StockTransferController extends Controller
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','request_transfer.locfrom')
             ->groupBy('category','prodcode','item','uom','serial','qty','item_id','location')
-            ->get()
-            ->sortBy('item');
+            ->orderBy('item', 'ASC')
+            ->get();
         
         if(!$list || !$list2 || !$list3){
             return redirect()->to('/stocktransfer');

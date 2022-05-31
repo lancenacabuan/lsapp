@@ -1295,6 +1295,7 @@ class StockRequestController extends Controller
             ->join('items','items.id','=','stock_request.item')
             ->join('stocks','stocks.item_id','stock_request.item')
             ->join('locations','locations.id','stocks.location_id')
+            ->orderBy('item', 'ASC')
             ->limit(1)
             ->get();
 

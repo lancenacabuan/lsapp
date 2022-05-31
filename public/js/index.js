@@ -37,12 +37,40 @@ setInterval(function(){
 }, 10000);
 
 $(document).ready(function(){
-    $('.hoverzoom').hover(
+    $('#hover1').hover(
         function(){
-            $(this).css({"zoom": "110%"});
+            $('.zoom1').css({"zoom": "110%"});
+            $('.box1').css({"zoom": "90%"});
         },
         function(){
-            $(this).css({"zoom": "100%"});
+            $('.zoom1').css({"zoom": "100%"});
+            $('.box1').css({"zoom": "100%"});
+        }
+    );
+});
+
+$(document).ready(function(){
+    $('#hover2').hover(
+        function(){
+            $('.zoom2').css({"zoom": "110%"});
+            $('.box2').css({"zoom": "90%"});
+        },
+        function(){
+            $('.zoom2').css({"zoom": "100%"});
+            $('.box2').css({"zoom": "100%"});
+        }
+    );
+});
+
+$(document).ready(function(){
+    $('#hover3').hover(
+        function(){
+            $('.zoom3').css({"zoom": "110%"});
+            $('.box3').css({"zoom": "90%"});
+        },
+        function(){
+            $('.zoom3').css({"zoom": "100%"});
+            $('.box3').css({"zoom": "100%"});
         }
     );
 });

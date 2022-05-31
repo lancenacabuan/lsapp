@@ -9,9 +9,9 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
     <div class="row" style="text-align: center; height: 200px;">
         <div class="col-sm-2"></div>
         <div class="col-sm-2">
-            <a href="stocks" style="text-decoration: none;">
-                <img class="hoverzoom" style="height: 100px;" src="{{ asset('stocks.png') }}">
-                <div class="container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
+            <a id="hover1" href="stocks" style="text-decoration: none;">
+                <img class="zoom1" style="height: 100px;" src="{{ asset('stocks.png') }}">
+                <div class="box1 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                     {{number_format($stocks)}}   
                 </div>
                 <strong style="color: #0d1a80; font-size: 20px;">STOCKS</strong>
@@ -19,9 +19,9 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
         </div>
         <div class="col-sm-1"></div>
         <div class="col-sm-2">
-            <a href="stockrequest" style="text-decoration: none;">
-                <img class="hoverzoom" style="height: 100px;" src="{{ asset('stockrequest.png') }}">
-                <div class="container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
+            <a id="hover2" href="stockrequest" style="text-decoration: none;">
+                <img class="zoom2" style="height: 100px;" src="{{ asset('stockrequest.png') }}">
+                <div class="box2 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                     {{number_format($stockrequest)}}
                 </div>
                 <strong style="color: #0d1a80; font-size: 20px;">STOCK REQUEST</strong>
@@ -29,9 +29,9 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
         </div>
         <div class="col-sm-1"></div>
         <div class="col-sm-2">
-            <a href="stocktransfer" style="text-decoration: none;">
-                <img class="hoverzoom" style="height: 100px;" src="{{ asset('stocktransfer.png') }}">
-                <div class="container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
+            <a id="hover3" href="stocktransfer" style="text-decoration: none;">
+                <img class="zoom3" style="height: 100px;" src="{{ asset('stocktransfer.png') }}">
+                <div class="box3 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                     {{number_format($stocktransfer)}}
                 </div>
                 <strong style="color: #0d1a80; font-size: 20px;">STOCK TRANSFER</strong>

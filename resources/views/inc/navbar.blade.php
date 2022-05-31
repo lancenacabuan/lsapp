@@ -36,7 +36,7 @@
                 @endrole
             </ul>
             @endif
-            @if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) {{---ROLES---}}
+            @if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) {{---ROLES---}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}"  href="{{ url('/stockrequest') }}">HOME - STOCK REQUEST</a>

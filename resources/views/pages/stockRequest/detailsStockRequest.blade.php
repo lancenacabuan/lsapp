@@ -59,7 +59,7 @@
                 <textarea class="form-control dfchide sales_details soldShow spChar" id="reference_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field" readonly></textarea>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                @role('sales|approver - sales') {{---ROLES---}}
+                @role('sales|approver - sales|accounting') {{---ROLES---}}
                 <span style="margin-top: -52px;">
                     <button type="button" id="btnShowAttachment" class="btn btn-primary bp sales_details soldShow" style="zoom: 85%; width: 188px; margin-left: 530px;">VIEW ATTACHMENT</button>
                     <button type="button" id="btnHideAttachment" class="btn btn-primary bp" style="zoom: 85%; width: 188px; margin-left: 530px; display: none;">HIDE ATTACHMENT</button>
@@ -166,7 +166,7 @@
                 <strong>CANNOT PROCEED:</strong> Please receive first <b>defective items</b> by clicking the DEFECTIVE DETAILS button below before processing replacements.
             </div>
             @endrole
-            @role('sales|approver - sales') {{---ROLES---}}
+            @role('sales|approver - sales|accounting') {{---ROLES---}}
             <div id="sd1" style="display: none;">
             <table id="stockDetailsrequest" class="table stockDetails1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
@@ -344,7 +344,7 @@
                 </tfoot>
             </table>
             @endrole
-            @role('sales|viewer|approver - sales') {{---ROLES---}}
+            @role('sales|viewer|approver - sales|accounting') {{---ROLES---}}
             <table id="schedItems1" class="table schedItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
@@ -400,7 +400,7 @@
                 </div>
             </div>
             <br>
-            @role('sales|viewer|approver - sales') {{---ROLES---}}
+            @role('sales|viewer|approver - sales|accounting') {{---ROLES---}}
             <table id="transItems" class="table transItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>

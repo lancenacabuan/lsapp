@@ -20,7 +20,7 @@ class DefectiveController extends Controller
     }
 
     public function defective(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
         {
             return redirect('/stockrequest');
         }

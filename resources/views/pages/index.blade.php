@@ -6,7 +6,7 @@ $stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10
 $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
 @endphp
 <div class="container-fluid">
-    <div class="row" style="text-align: center;">
+    <div class="row" style="text-align: center; height: 200px;">
         <div class="col-sm-2"></div>
         <div class="col-sm-2">
             <a href="stocks" style="text-decoration: none;">

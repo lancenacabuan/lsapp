@@ -12,7 +12,7 @@
 </script>
 @endif
 @endrole
-@role('sales|approver - sales') {{---ROLES---}}
+@role('sales|approver - sales|accounting') {{---ROLES---}}
 @if($list->req_type_id == '1' || $list->req_type_id == '4' || $list->req_type_id == '5')
 <script>
     window.location = '/';
@@ -23,7 +23,7 @@
 <div class="container-fluid">
     <button id="btnPrint" type="button" class="btn btn-primary bp" style="margin-right: 5px;">PRINT</button>
     <button id="btnSavePDF" type="button" class="btn btn-primary bp">SAVE AS PDF</button>
-    @role('admin|encoder|viewer|sales|approver - sales') {{---ROLES---}}
+    @role('admin|encoder|viewer|sales|approver - sales|accounting') {{---ROLES---}}
     <a href="/stockrequest?request_number={{$list->req_num}}" class="btn btn-primary float-right bp">BACK</a>
     @endrole
     @role('assembler') {{---ROLES---}}

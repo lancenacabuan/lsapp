@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@role('sales|approver - sales|assembler') {{---ROLES---}}
+@role('sales|approver - sales|accounting|assembler') {{---ROLES---}}
 <script>
     window.location = '/';
 </script>

@@ -1325,7 +1325,7 @@ $('#btnEdit').on('click', function(){
                 $('#loading').show(); Spinner(); Spinner.show();
                 $.ajax({
                     type:'post',
-                    url: '/editTransSerial',
+                    url: '/editSerial',
                     headers:{
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },

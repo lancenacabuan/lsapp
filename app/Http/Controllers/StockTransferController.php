@@ -170,7 +170,7 @@ class StockTransferController extends Controller
         $locto = str_replace('[{"location":"','', $locto);
         $locto = str_replace('"}]','', $locto);
 
-        $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
+        $subject = '[FOR APPROVAL] STOCK TRANSFER REQUEST NO. '.$request->request_number;
         $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
         foreach($user as $key){
             $details = [
@@ -379,28 +379,6 @@ class StockTransferController extends Controller
         return DataTables::of($list)->make(true);
     }
 
-    public function editTransSerial(Request $request){
-        do{
-            $sql = Stock::where('id', $request->id)
-                ->update(['serial' => $request->newserial, 'user_id' => auth()->user()->id]);
-        }
-        while(!$sql);
-        
-        if(!$sql){
-            $result = 'false';
-        }
-        else{
-            $result = 'true';
-
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "EDITED ITEM SERIAL: User successfully edited Serial from '$request->origserial' to '$request->newserial' of Item '$request->item' with Category '$request->category'.";
-            $userlogs->save();
-        }
-
-        return response($result);
-    }
-
     public function delTransItem(Request $request){
         do{
             $reqitems = StockTransfer::where('request_number', $request->req_num)
@@ -533,7 +511,7 @@ class StockTransferController extends Controller
         $locto = str_replace('[{"location":"','', $locto);
         $locto = str_replace('"}]','', $locto);
         
-        $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
+        $subject = '[DISAPPROVED] STOCK TRANSFER REQUEST NO. '.$request->request_number;
         $details = [
             'name' => $request_details->reqby,
             'action' => 'STOCK TRANSFER REQUEST',
@@ -743,7 +721,7 @@ class StockTransferController extends Controller
             $locto = str_replace('[{"location":"','', $locto);
             $locto = str_replace('"}]','', $locto);
     
-            $subject = 'STOCK TRANSFER REQUEST NO. '.$request->request_number;
+            $subject = '[RECEIVED] STOCK TRANSFER REQUEST NO. '.$request->request_number;
             $user = User::role('admin')->where('status','ACTIVE')->get();
             foreach($user as $key){
                 if($key->email != $request_details->email){

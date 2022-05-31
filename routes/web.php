@@ -11,8 +11,8 @@ use App\Http\Controllers\DefectiveController;
 use App\Http\Controllers\FileMaintenanceController;
 
 Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
-// Route::fallback(function(){ return redirect("/"); });
 Route::get('/gitpull',[PagesController::class,'pull']);
+// Route::fallback(function(){ return redirect("/"); });
 
 //Index
 Route::get('/',[PagesController::class,'index']);
@@ -124,7 +124,6 @@ Route::get('/transModal',[StockTransferController::class,'transModal']);
 Route::get('/transferDetails',[StockTransferController::class,'transferDetails']);
 Route::get('/transItems',[StockTransferController::class,'transItems']);
 Route::get('/incTransItems',[StockTransferController::class,'incTransItems']);
-Route::any('/editTransSerial',[StockTransferController::class,'editTransSerial']);
 Route::any('/delTransItem',[StockTransferController::class,'delTransItem']);
 Route::any('/deleteTransfer',[StockTransferController::class,'deleteTransfer']);
 Route::any('/approveTransfer',[StockTransferController::class,'approveTransfer']);

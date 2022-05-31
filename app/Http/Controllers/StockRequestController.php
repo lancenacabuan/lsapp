@@ -303,7 +303,7 @@ class StockRequestController extends Controller
             while(!$items);
         }
         
-        $subject = 'STOCK REQUEST NO. '.$request->request_number;
+        $subject = '[FOR APPROVAL] STOCK REQUEST NO. '.$request->request_number;
         $user = User::role('approver - sales')->where('status','ACTIVE')->get();
         foreach($user as $key){
             $details = [
@@ -829,7 +829,7 @@ class StockRequestController extends Controller
             while(!$items);
         }
         
-        $subject = 'STOCK REQUEST NO. '.$request->request_number;
+        $subject = '[DISAPPROVED] STOCK REQUEST NO. '.$request->request_number;
         $details = [
             'name' => $request_details->reqby,
             'action' => 'STOCK REQUEST',
@@ -1038,7 +1038,7 @@ class StockRequestController extends Controller
         }
         while(!$items);
         
-        $subject = 'STOCK REQUEST NO. '.$request->request_number;
+        $subject = '[SOLD] STOCK REQUEST NO. '.$request->request_number;
         $user = User::role('admin')->where('status','ACTIVE')->get();
         foreach($user as $key){
             $details = [
@@ -1522,7 +1522,7 @@ class StockRequestController extends Controller
                 while(!$items);
             }
             
-            $subject = 'STOCK REQUEST NO. '.$request->request_number;
+            $subject = '[RECEIVED] STOCK REQUEST NO. '.$request->request_number;
             $user = User::role('admin')->where('status','ACTIVE')->get();
             foreach($user as $key){
                 $details = [
@@ -1703,7 +1703,7 @@ class StockRequestController extends Controller
             }
             while(!$penditems);
             
-            $subject = 'STOCK REQUEST NO. '.$request->request_number;
+            $subject = '[PARTIALLY RECEIVED] STOCK REQUEST NO. '.$request->request_number;
             $user = User::role('admin')->where('status','ACTIVE')->get();
             foreach($user as $key){
                 $details = [

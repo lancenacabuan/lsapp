@@ -77,6 +77,7 @@ Route::any('/editSerial',[StockRequestController::class,'editSerial']);
 Route::any('/delReqItem',[StockRequestController::class,'delReqItem']);
 Route::any('/deleteRequest',[StockRequestController::class,'deleteRequest']);
 Route::any('/approveRequest',[StockRequestController::class,'approveRequest']);
+Route::any('/logApprove',[StockRequestController::class,'logApprove']);
 Route::any('/disapproveRequest',[StockRequestController::class,'disapproveRequest']);
 Route::any('/logDisapprove',[StockRequestController::class,'logDisapprove']);
 Route::any('/reschedRequest',[StockRequestController::class,'reschedRequest']);

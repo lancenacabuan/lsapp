@@ -3592,6 +3592,7 @@ $('#btnApprove').on('click', function(){
             $.ajax({
                 type:'post',
                 url:'/approveRequest',
+                async: false,
                 headers:{
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
@@ -3600,9 +3601,36 @@ $('#btnApprove').on('click', function(){
                 },
                 success: function(data){
                     if(data == 'true'){
+                        scrollReset();
                         $('#detailsStockRequest').hide();
-                        swal("APPROVE SUCCESS", "STOCK REQUEST", "success");
-                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        $('#detailsStockRequest').modal('dispose');
+                        $('#loading').show(); Spinner(); Spinner.show();
+                        $.ajax({
+                            type:'post',
+                            url:'/logApprove',
+                            headers:{
+                                'X-CSRF-TOKEN': $("#csrf").val()
+                            },
+                            data:{
+                                'request_number': $('#request_num_details').val()
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide(); Spinner.hide();
+                                    swal("APPROVE SUCCESS", "STOCK REQUEST", "success");
+                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
                     }
                     else{
                         $('#detailsStockRequest').hide();

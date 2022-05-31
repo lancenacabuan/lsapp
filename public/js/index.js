@@ -35,3 +35,14 @@ $('.filter-input').on('keyup', function(){
 setInterval(function(){
     $('table.user_logs').DataTable().ajax.reload(null, false);
 }, 10000);
+
+$(document).ready(function(){
+    $('.hoverzoom').hover(
+        function(){
+            $(this).css({"zoom": "110%"});
+        },
+        function(){
+            $(this).css({"zoom": "100%"});
+        }
+    );
+});

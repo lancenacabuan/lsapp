@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales') && !auth()->user()->hasanyRole('approver - warehouse') && !auth()->user()->hasanyRole('assembler')) {{---ROLES---}}
+            @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales') && !auth()->user()->hasanyRole('approver - warehouse') && !auth()->user()->hasanyRole('assembler') && !auth()->user()->hasanyRole('accounting')) {{---ROLES---}}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">HOME</a>

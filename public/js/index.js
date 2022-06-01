@@ -41,10 +41,12 @@ $(document).ready(function(){
         function(){
             $('.zoom1').css({"zoom": "110%"});
             $('.box1').css({"zoom": "90%"});
+            $('.text1').css({"color": "#0d6efd"});
         },
         function(){
             $('.zoom1').css({"zoom": "100%"});
             $('.box1').css({"zoom": "100%"});
+            $('.text1').css({"color": "#0d1a80"});
         }
     );
 });
@@ -54,10 +56,12 @@ $(document).ready(function(){
         function(){
             $('.zoom2').css({"zoom": "110%"});
             $('.box2').css({"zoom": "90%"});
+            $('.text2').css({"color": "#0d6efd"});
         },
         function(){
             $('.zoom2').css({"zoom": "100%"});
             $('.box2').css({"zoom": "100%"});
+            $('.text2').css({"color": "#0d1a80"});
         }
     );
 });
@@ -67,10 +71,12 @@ $(document).ready(function(){
         function(){
             $('.zoom3').css({"zoom": "110%"});
             $('.box3').css({"zoom": "90%"});
+            $('.text3').css({"color": "#0d6efd"});
         },
         function(){
             $('.zoom3').css({"zoom": "100%"});
             $('.box3').css({"zoom": "100%"});
+            $('.text3').css({"color": "#0d1a80"});
         }
     );
 });

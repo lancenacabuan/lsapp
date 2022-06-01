@@ -523,7 +523,7 @@ class StockRequestController extends Controller
             ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
-            ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id','location')
+            ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id')
             ->orderBy('item', 'ASC')
             ->get();
 
@@ -564,7 +564,7 @@ class StockRequestController extends Controller
                 ->whereIn('stocks.status', ['prep','assembly'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
-                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id','location')
+                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id')
                 ->orderBy('item', 'ASC')
                 ->get();
     
@@ -604,7 +604,7 @@ class StockRequestController extends Controller
                 ->where('stocks.status', 'incomplete')
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
-                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id','location')
+                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id')
                 ->orderBy('item', 'ASC')
                 ->get();
     

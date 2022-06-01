@@ -1678,14 +1678,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             "targets": [7],
                             "visible": false,
                             "searchable": false
-                        },
-                        {   
-                            "render": function(data, type, row, meta){
-                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                            },
-                            "defaultContent": '',
-                            "data": null,
-                            "targets": [6]
                         }
                     ],
                     searching: false,
@@ -1711,7 +1703,17 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'uom' },
                         { data: 'serial' },
                         { data: 'location' },
-                        { data: 'id' },
+                        {
+                            data: 'id',
+                            "render": function(data, type, row, meta){
+                                if(row.uom == 'Unit'){
+                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                }
+                                else{
+                                    return '';
+                                }
+                            }
+                        },
                         { data: 'id' }
                     ],
                     footerCallback: function(row,data,start,end,display){
@@ -1848,14 +1850,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 "targets": [5,7],
                                 "visible": false,
                                 "searchable": false
-                            },
-                            {
-                                "render": function(data, type, row, meta){
-                                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                                },
-                                "defaultContent": '',
-                                "data": null,
-                                "targets": [6]
                             }
                         ],
                         searching: false,
@@ -1881,7 +1875,17 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             { data: 'uom' },
                             { data: 'serial' },
                             { data: 'location' },
-                            { data: 'id' },
+                            {
+                                data: 'id',
+                                "render": function(data, type, row, meta){
+                                    if(row.uom == 'Unit'){
+                                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                    }
+                                    else{
+                                        return '';
+                                    }
+                                }
+                            },
                             { data: 'id' }
                         ],
                         footerCallback: function(row,data,start,end,display){
@@ -1914,14 +1918,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 "targets": [5,6,7],
                                 "visible": false,
                                 "searchable": false
-                            },
-                            {
-                                "render": function(data, type, row, meta){
-                                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                                },
-                                "defaultContent": '',
-                                "data": null,
-                                "targets": [6]
                             }
                         ],
                         searching: false,
@@ -1948,7 +1944,17 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             { data: 'uom' },
                             { data: 'serial' },
                             { data: 'location' },
-                            { data: 'id' },
+                            {
+                                data: 'id',
+                                "render": function(data, type, row, meta){
+                                    if(row.uom == 'Unit'){
+                                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                    }
+                                    else{
+                                        return '';
+                                    }
+                                }
+                            },
                             { data: 'id' }
                         ],
                         footerCallback: function(row,data,start,end,display){
@@ -1984,14 +1990,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                     "targets": [5,6,7],
                                     "visible": false,
                                     "searchable": false
-                                },
-                                {
-                                    "render": function(data, type, row, meta){
-                                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                                    },
-                                    "defaultContent": '',
-                                    "data": null,
-                                    "targets": [6]
                                 }
                             ],
                             searching: false,
@@ -2017,7 +2015,17 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 { data: 'uom' },
                                 { data: 'serial' },
                                 { data: 'location' },
-                                { data: 'id' },
+                                {
+                                    data: 'id',
+                                    "render": function(data, type, row, meta){
+                                        if(row.uom == 'Unit'){
+                                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                        }
+                                        else{
+                                            return '';
+                                        }
+                                    }
+                                },
                                 { data: 'id' }
                             ],
                             footerCallback: function(row,data,start,end,display){
@@ -2051,14 +2059,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                     "targets": [5,6,7],
                                     "visible": false,
                                     "searchable": false
-                                },
-                                {
-                                    "render": function(data, type, row, meta){
-                                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                                    },
-                                    "defaultContent": '',
-                                    "data": null,
-                                    "targets": [6]
                                 }
                             ],
                             searching: false,
@@ -2084,7 +2084,17 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 { data: 'uom' },
                                 { data: 'serial' },
                                 { data: 'location' },
-                                { data: 'id' },
+                                {
+                                    data: 'id',
+                                    "render": function(data, type, row, meta){
+                                        if(row.uom == 'Unit'){
+                                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                        }
+                                        else{
+                                            return '';
+                                        }
+                                    }
+                                },
                                 { data: 'id' }
                             ],
                             footerCallback: function(row,data,start,end,display){
@@ -2883,14 +2893,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 "targets": [7],
                 "visible": false,
                 "searchable": false
-            },
-            {   
-                "render": function(data, type, row, meta){
-                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                },
-                "defaultContent": '',
-                "data": null,
-                "targets": [6]
             }
         ],
         searching: false,
@@ -2916,7 +2918,17 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'uom' },
             { data: 'serial' },
             { data: 'location' },
-            { data: 'id' },
+            {
+                data: 'id',
+                "render": function(data, type, row, meta){
+                    if(row.uom == 'Unit'){
+                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                    }
+                    else{
+                        return '';
+                    }
+                }
+            },
             { data: 'id' }
         ],
         footerCallback: function(row,data,start,end,display){
@@ -3053,14 +3065,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     "targets": [5,7],
                     "visible": false,
                     "searchable": false
-                },
-                {
-                    "render": function(data, type, row, meta){
-                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                    },
-                    "defaultContent": '',
-                    "data": null,
-                    "targets": [6]
                 }
             ],
             searching: false,
@@ -3086,7 +3090,17 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 { data: 'uom' },
                 { data: 'serial' },
                 { data: 'location' },
-                { data: 'id' },
+                {
+                    data: 'id',
+                    "render": function(data, type, row, meta){
+                        if(row.uom == 'Unit'){
+                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                        }
+                        else{
+                            return '';
+                        }
+                    }
+                },
                 { data: 'id' }
             ],
             footerCallback: function(row,data,start,end,display){
@@ -3119,14 +3133,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     "targets": [5,6,7],
                     "visible": false,
                     "searchable": false
-                },
-                {
-                    "render": function(data, type, row, meta){
-                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                    },
-                    "defaultContent": '',
-                    "data": null,
-                    "targets": [6]
                 }
             ],
             searching: false,
@@ -3153,7 +3159,17 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 { data: 'uom' },
                 { data: 'serial' },
                 { data: 'location' },
-                { data: 'id' },
+                {
+                    data: 'id',
+                    "render": function(data, type, row, meta){
+                        if(row.uom == 'Unit'){
+                            return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                        }
+                        else{
+                            return '';
+                        }
+                    }
+                },
                 { data: 'id' }
             ],
             footerCallback: function(row,data,start,end,display){
@@ -3189,14 +3205,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                         "targets": [5,6,7],
                         "visible": false,
                         "searchable": false
-                    },
-                    {
-                        "render": function(data, type, row, meta){
-                                return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                        },
-                        "defaultContent": '',
-                        "data": null,
-                        "targets": [6]
                     }
                 ],
                 searching: false,
@@ -3222,7 +3230,17 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     { data: 'uom' },
                     { data: 'serial' },
                     { data: 'location' },
-                    { data: 'id' },
+                    {
+                        data: 'id',
+                        "render": function(data, type, row, meta){
+                            if(row.uom == 'Unit'){
+                                return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                            }
+                            else{
+                                return '';
+                            }
+                        }
+                    },
                     { data: 'id' }
                 ],
                 footerCallback: function(row,data,start,end,display){
@@ -3256,14 +3274,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                         "targets": [5,6,7],
                         "visible": false,
                         "searchable": false
-                    },
-                    {
-                        "render": function(data, type, row, meta){
-                                return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                        },
-                        "defaultContent": '',
-                        "data": null,
-                        "targets": [6]
                     }
                 ],
                 searching: false,
@@ -3289,7 +3299,17 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     { data: 'uom' },
                     { data: 'serial' },
                     { data: 'location' },
-                    { data: 'id' },
+                    {
+                        data: 'id',
+                        "render": function(data, type, row, meta){
+                            if(row.uom == 'Unit'){
+                                return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                            }
+                            else{
+                                return '';
+                            }
+                        }
+                    },
                     { data: 'id' }
                 ],
                 footerCallback: function(row,data,start,end,display){

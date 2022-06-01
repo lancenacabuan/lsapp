@@ -356,7 +356,7 @@ class StockTransferController extends Controller
             ->where('request_number', $request->request_number)
             ->first()
             ->status;
-        if($status == '3' || $status == '4' || $status == '17'){
+        if($status == '3' || $status == '4'){
             $list = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, items.id AS item_id, transferred_items.stock_id AS id, locations.location AS location')
                 ->where('transferred_items.request_number', $request->request_number)
                 ->where('stocks.status', '!=', 'incomplete')
@@ -394,7 +394,7 @@ class StockTransferController extends Controller
             ->where('request_number', $request->request_number)
             ->first()
             ->status;
-        if($status == '3' || $status == '4' || $status == '17'){
+        if($status == '17'){
             $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                 ->where('stocks.request_number', $request->request_number)
                 ->where('stocks.status', 'incomplete')

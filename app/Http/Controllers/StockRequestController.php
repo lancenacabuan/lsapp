@@ -544,7 +544,7 @@ class StockRequestController extends Controller
         }
         $include[] = $request->request_number;
 
-        $status = RequestTransfer::select()
+        $status = Requests::select()
             ->where('request_number', $request->request_number)
             ->first()
             ->status;
@@ -587,7 +587,7 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $status = RequestTransfer::select()
+        $status = Requests::select()
             ->where('request_number', $request->request_number)
             ->first()
             ->status;

@@ -561,7 +561,7 @@ class StockRequestController extends Controller
             return DataTables::of($list)->make(true);
         }
         else{
-            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, 
+            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
             (CASE WHEN items.UOM != \'Unit\' THEN 0 ELSE stocks.id END) AS id, 
             locations.location AS location')
                 ->whereIn('request_number', $include)
@@ -604,7 +604,7 @@ class StockRequestController extends Controller
             return DataTables::of($list)->make(true);
         }
         else{
-            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, 
+            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
             (CASE WHEN items.UOM != \'Unit\' THEN 0 ELSE stocks.id END) AS id, 
             locations.location AS location')
                 ->whereIn('request_number', $include)

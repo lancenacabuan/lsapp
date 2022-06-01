@@ -287,7 +287,7 @@ class AssemblyController extends Controller
 
     public function logDefective(Request $request){
         do{
-            $list = Stock::select('request_number', 'category_id', 'item_id',
+            $list = Stock::select('request_number', 'item_id',
                 DB::raw
                     (
                         "SUM(CASE WHEN stocks.status = 'defective' THEN 1 ELSE 0 END) as quantity"
@@ -295,7 +295,7 @@ class AssemblyController extends Controller
                 )
                 ->where('request_number', $request->request_number)
                 ->where('status', 'defective')
-                ->groupby('request_number', 'category_id', 'item_id')
+                ->groupby('request_number', 'item_id')
                 ->get();
         }
         while(!$list);

@@ -546,7 +546,7 @@ class StockRequestController extends Controller
             ->where('request_number', $request->request_number)
             ->first()
             ->status;
-        if($status == '3' || $status == '4'){
+        if($status == '3' || $status == '4' || $status == '12'){
             $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep','assembly'])

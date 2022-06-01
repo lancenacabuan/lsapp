@@ -352,32 +352,77 @@ class StockTransferController extends Controller
     }
 
     public function transItems(Request $request){
-        $list = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, items.id AS item_id, transferred_items.stock_id AS id, locations.location AS location')
-            ->where('transferred_items.request_number', $request->request_number)
-            ->where('stocks.status', '!=', 'incomplete')
-            ->join('stocks','stocks.id','transferred_items.stock_id')
-            ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
-            ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
-            ->join('locations','locations.id','request_transfer.locfrom')
-            ->orderBy('item', 'ASC')
-            ->get();
-
-        return DataTables::of($list)->make(true);
+        $status = RequestTransfer::select()
+            ->where('request_number', $request->request_number)
+            ->first()
+            ->status;
+        if($status == '3' || $status == '4' || $status == '17'){
+            $list = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, items.id AS item_id, transferred_items.stock_id AS id, locations.location AS location')
+                ->where('transferred_items.request_number', $request->request_number)
+                ->where('stocks.status', '!=', 'incomplete')
+                ->join('stocks','stocks.id','transferred_items.stock_id')
+                ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
+                ->join('items','items.id','stocks.item_id')
+                ->join('categories','categories.id','items.category_id')
+                ->join('locations','locations.id','request_transfer.locfrom')
+                ->orderBy('item', 'ASC')
+                ->get();
+    
+            return DataTables::of($list)->make(true);
+        }
+        else{
+            $list = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, 
+            (CASE WHEN items.UOM != \'Unit\' THEN 0 ELSE transferred_items.stock_id END) AS id, 
+            locations.location AS location')
+                ->where('transferred_items.request_number', $request->request_number)
+                ->where('stocks.status', '!=', 'incomplete')
+                ->join('stocks','stocks.id','transferred_items.stock_id')
+                ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
+                ->join('items','items.id','stocks.item_id')
+                ->join('categories','categories.id','items.category_id')
+                ->join('locations','locations.id','request_transfer.locfrom')
+                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id','location')
+                ->orderBy('item', 'ASC')
+                ->get();
+    
+            return DataTables::of($list)->make(true);
+        }
     }
 
     public function incTransItems(Request $request){
-        $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
-            ->where('stocks.request_number', $request->request_number)
-            ->where('stocks.status', 'incomplete')
-            ->join('request_transfer','request_transfer.request_number','stocks.request_number')
-            ->join('items','items.id','stocks.item_id')
-            ->join('categories','categories.id','items.category_id')
-            ->join('locations','locations.id','request_transfer.locfrom')
-            ->orderBy('item', 'ASC')
-            ->get();
-
-        return DataTables::of($list)->make(true);
+        $status = RequestTransfer::select()
+            ->where('request_number', $request->request_number)
+            ->first()
+            ->status;
+        if($status == '3' || $status == '4' || $status == '17'){
+            $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+                ->where('stocks.request_number', $request->request_number)
+                ->where('stocks.status', 'incomplete')
+                ->join('request_transfer','request_transfer.request_number','stocks.request_number')
+                ->join('items','items.id','stocks.item_id')
+                ->join('categories','categories.id','items.category_id')
+                ->join('locations','locations.id','request_transfer.locfrom')
+                ->orderBy('item', 'ASC')
+                ->get();
+    
+            return DataTables::of($list)->make(true);
+        }
+        else{
+            $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
+            (CASE WHEN items.UOM != \'Unit\' THEN 0 ELSE stocks.id END) AS id, 
+            locations.location AS location')
+                ->where('stocks.request_number', $request->request_number)
+                ->where('stocks.status', 'incomplete')
+                ->join('request_transfer','request_transfer.request_number','stocks.request_number')
+                ->join('items','items.id','stocks.item_id')
+                ->join('categories','categories.id','items.category_id')
+                ->join('locations','locations.id','request_transfer.locfrom')
+                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id','location')
+                ->orderBy('item', 'ASC')
+                ->get();
+    
+            return DataTables::of($list)->make(true);
+        }
     }
 
     public function delTransItem(Request $request){

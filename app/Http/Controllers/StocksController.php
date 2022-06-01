@@ -144,21 +144,6 @@ class StocksController extends Controller
             })->make(true);
     }
 
-    public function itemserial_data(Request $request){
-        $stock = Stock::query()
-            ->select('stocks.id AS stock_id', 'category', 'item', 'qty', 'UOM', 'name', 'location', 'serial', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
-            ->join('items', 'items.id', 'item_id')
-            ->join('categories', 'categories.id', 'category_id')
-            ->join('locations', 'locations.id', 'location_id')
-            ->join('users', 'users.id', 'user_id')
-            ->where('item_id', $request->ItemId)
-            ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
-            ->orderBy('modDate', 'DESC')
-            ->get();
-        
-        return DataTables::of($stock)->make(true);
-    }
-
     public function item_data(Request $request){
         $list = Item::query()->select(
             'items.id',
@@ -249,12 +234,41 @@ class StocksController extends Controller
         ->make(true);
     }
 
-    public function stock_data(Request $request){
-        $stock = Stock::select('location_id','serial','item_id','stocks.id', 'item')
-            ->where('item_id', $request->id)
-            ->join('items', 'items.id', 'item_id')
-            ->get();
-        return DataTables::of($stock)->make(true);
+    public function itemserial_data(Request $request){
+        $UOM = Item::select()
+            ->where('id', $request->ItemId)
+            ->first()
+            ->UOM;
+
+        if($UOM == 'Unit'){
+            $stock = Stock::query()
+                ->select('stocks.id AS stock_id', 'category', 'item', 'stocks.qty', 'UOM', 'name', 'location', 'serial', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->where('item_id', $request->ItemId)
+                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
+                ->join('items', 'items.id', 'item_id')
+                ->join('categories', 'categories.id', 'category_id')
+                ->join('locations', 'locations.id', 'location_id')
+                ->join('users', 'users.id', 'user_id')
+                ->orderBy('modDate', 'DESC')
+                ->get();
+            
+            return DataTables::of($stock)->make(true);
+        }
+        else{
+            $stock = Stock::query()
+                ->select('category', 'item', DB::raw('SUM(stocks.qty) AS qty'), 'UOM', 'name', 'location', 'serial', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->where('item_id', $request->ItemId)
+                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
+                ->join('items', 'items.id', 'item_id')
+                ->join('categories', 'categories.id', 'category_id')
+                ->join('locations', 'locations.id', 'location_id')
+                ->join('users', 'users.id', 'user_id')
+                ->groupBy('category','item','qty','UOM','name','location','serial','rack','row','status','addDate','modDate')
+                ->orderBy('modDate', 'DESC')
+                ->get();
+            
+            return DataTables::of($stock)->make(true);
+        }
     }
 
     public function addStockitem(Request $request){

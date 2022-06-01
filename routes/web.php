@@ -50,7 +50,6 @@ Route::get('/itemserial_data',[StocksController::class,'itemserial_data']);
 Route::post('/stocks/import',[StocksController::class,'import']);
 Route::get('/getUOM',[StocksController::class,'getUOM']);
 Route::get('/addStockitem',[StocksController::class,'addStockitem']);
-Route::get('/stock_data',[StocksController::class,'stock_data']);
 //
 
 //Stock Requests

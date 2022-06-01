@@ -1675,7 +1675,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 $('table.schedItems').DataTable({
                     columnDefs: [
                         {
-                            "targets": [7],
+                            "targets": [5,7],
                             "visible": false,
                             "searchable": false
                         }
@@ -1702,7 +1702,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
-                        { data: 'location' },
+                        { data: 'id' },
                         {
                             data: 'id',
                             "render": function(data, type, row, meta){
@@ -1740,6 +1740,13 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 });
             
                 $('table.schedItems1').DataTable({
+                    columnDefs: [
+                        {
+                            "targets": [5],
+                            "visible": false,
+                            "searchable": false
+                        }
+                    ],
                     searching: false,
                     paging: false,
                     ordering: false,
@@ -1762,7 +1769,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
-                        { data: 'location' }
+                        { data: 'id' }
                     ],
                     footerCallback: function(row,data,start,end,display){
                         var api = this.api(), data;
@@ -1818,7 +1825,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
-                        { data: 'location' }
+                        { data: 'id' }
                     ],
                     footerCallback: function(row,data,start,end,display){
                         var api = this.api(), data;
@@ -1874,7 +1881,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             { data: 'qty' },
                             { data: 'uom' },
                             { data: 'serial' },
-                            { data: 'location' },
+                            { data: 'id' },
                             {
                                 data: 'id',
                                 "render": function(data, type, row, meta){
@@ -1943,7 +1950,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             { data: 'qty' },
                             { data: 'uom' },
                             { data: 'serial' },
-                            { data: 'location' },
+                            { data: 'id' },
                             {
                                 data: 'id',
                                 "render": function(data, type, row, meta){
@@ -2014,7 +2021,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 { data: 'qty' },
                                 { data: 'uom' },
                                 { data: 'serial' },
-                                { data: 'location' },
+                                { data: 'id' },
                                 {
                                     data: 'id',
                                     "render": function(data, type, row, meta){
@@ -2083,7 +2090,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 { data: 'qty' },
                                 { data: 'uom' },
                                 { data: 'serial' },
-                                { data: 'location' },
+                                { data: 'id' },
                                 {
                                     data: 'id',
                                     "render": function(data, type, row, meta){
@@ -2890,7 +2897,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     $('table.schedItems').DataTable({
         columnDefs: [
             {
-                "targets": [7],
+                "targets": [5,7],
                 "visible": false,
                 "searchable": false
             }
@@ -2917,7 +2924,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
-            { data: 'location' },
+            { data: 'id' },
             {
                 data: 'id',
                 "render": function(data, type, row, meta){
@@ -2955,6 +2962,13 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     });
 
     $('table.schedItems1').DataTable({
+        columnDefs: [
+            {
+                "targets": [5],
+                "visible": false,
+                "searchable": false
+            }
+        ],
         searching: false,
         paging: false,
         ordering: false,
@@ -2977,7 +2991,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
-            { data: 'location' }
+            { data: 'id' }
         ],
         footerCallback: function(row,data,start,end,display){
             var api = this.api(), data;
@@ -3033,7 +3047,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
-            { data: 'location' }
+            { data: 'id' }
         ],
         footerCallback: function(row,data,start,end,display){
             var api = this.api(), data;
@@ -3089,7 +3103,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 { data: 'qty' },
                 { data: 'uom' },
                 { data: 'serial' },
-                { data: 'location' },
+                { data: 'id' },
                 {
                     data: 'id',
                     "render": function(data, type, row, meta){
@@ -3158,7 +3172,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 { data: 'qty' },
                 { data: 'uom' },
                 { data: 'serial' },
-                { data: 'location' },
+                { data: 'id' },
                 {
                     data: 'id',
                     "render": function(data, type, row, meta){
@@ -3229,7 +3243,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     { data: 'qty' },
                     { data: 'uom' },
                     { data: 'serial' },
-                    { data: 'location' },
+                    { data: 'id' },
                     {
                         data: 'id',
                         "render": function(data, type, row, meta){
@@ -3298,7 +3312,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     { data: 'qty' },
                     { data: 'uom' },
                     { data: 'serial' },
-                    { data: 'location' },
+                    { data: 'id' },
                     {
                         data: 'id',
                         "render": function(data, type, row, meta){

@@ -480,7 +480,6 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
 
                     var ajax_url = '/schedItems';
                     var rcv_url = '/schedItems';
-                    var targetArray = [5,6];
                     var included = 'yes';
 
                     if(req_type_id == '4'){
@@ -492,7 +491,6 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         $("#btnDelete").show();
                     }
                     if(requestStatus == '2'){
-                        var targetArray = [6];
                         $('#prepItemsModal').show();
                         document.getElementById('modalheader').innerHTML = 'SCHEDULED ITEM DETAILS';
                     }
@@ -641,7 +639,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                 $('table.prepItems').DataTable({
                     columnDefs: [
                         {
-                            "targets": targetArray,
+                            "targets": [5,6],
                             "visible": false,
                             "searchable": false
                         }
@@ -669,7 +667,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
-                        { data: 'location' },
+                        { data: 'id' },
                         { data: 'id' }
                     ],
                     footerCallback: function(row,data,start,end,display){
@@ -727,7 +725,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                             { data: 'qty' },
                             { data: 'uom' },
                             { data: 'serial' },
-                            { data: 'location' }
+                            { data: 'id' }
                         ],
                         footerCallback: function(row,data,start,end,display){
                             var api = this.api(), data;
@@ -878,7 +876,6 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
 
         var ajax_url = '/schedItems';
         var rcv_url = '/schedItems';
-        var targetArray = [5,6];
         var included = 'yes';
 
         if(req_type_id == '4'){
@@ -890,7 +887,6 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $("#btnDelete").show();
         }
         if(requestStatus == '2'){
-            var targetArray = [6];
             $('#prepItemsModal').show();
             document.getElementById('modalheader').innerHTML = 'SCHEDULED ITEM DETAILS';
         }
@@ -1039,7 +1035,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
     $('table.prepItems').DataTable({
         columnDefs: [
             {
-                "targets": targetArray,
+                "targets": [5,6],
                 "visible": false,
                 "searchable": false
             }
@@ -1067,7 +1063,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
-            { data: 'location' },
+            { data: 'id' },
             { data: 'id' }
         ],
         footerCallback: function(row,data,start,end,display){
@@ -1125,7 +1121,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
                 { data: 'qty' },
                 { data: 'uom' },
                 { data: 'serial' },
-                { data: 'location' }
+                { data: 'id' }
             ],
             footerCallback: function(row,data,start,end,display){
                 var api = this.api(), data;

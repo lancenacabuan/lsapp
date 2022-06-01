@@ -3886,17 +3886,28 @@ $('.btnReceiveAssembled').on('click', function(){
     for(var i=0; i < var_qty; i++){
         var serial = document.createElement("input");
         serial.setAttribute("id", "serials"+i);
-        serial.setAttribute("class", "form-control serial");
+        serial.setAttribute("class", "form-control serialfunc");
         serial.setAttribute("placeholder", "Input Serial Number "+(parseInt(i)+1));
         serial.setAttribute("style", "width: 200px; font-size: 12px; margin: auto; margin-bottom: 10px;");
         document.getElementById("serialList").appendChild(serial);
     }
 });
 
+$(document).on('keyup', '.serialfunc', function(){
+    var serial = $(this).val().toUpperCase();
+    $(this).val(serial);
+});
+
+$(document).on('keypress', '.serialfunc', function(e){
+    var k;
+    document.all ? k = e.keyCode : k = e.which;
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+});
+
 setInterval(checkSerial, 0);
 function checkSerial(){
     if($('#inputSerialModal').is(':visible')){
-        if($('.serial').filter(function(){ return !!this.value; }).length != var_qty){
+        if($('.serialfunc').filter(function(){ return !!this.value; }).length != var_qty){
             $('#btnReceiveAssembled').prop('disabled', true);
             $('#serial_note').show();
         }

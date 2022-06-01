@@ -487,7 +487,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         $(".repshow").show();
                     }
 
-                    if(requestStatus == '1'){
+                    if(requestStatus == '1' && req_type_id != '4'){
                         $("#btnDelete").show();
                     }
                     if(requestStatus == '2'){
@@ -883,7 +883,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $(".repshow").show();
         }
 
-        if(requestStatus == '1'){
+        if(requestStatus == '1' && req_type_id != '4'){
             $("#btnDelete").show();
         }
         if(requestStatus == '2'){

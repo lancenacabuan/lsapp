@@ -783,14 +783,6 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                             "targets": [hideEdit],
                             "visible": false,
                             "searchable": false
-                        },
-                        {   
-                            "render": function(data, type, row, meta){
-                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                            },
-                            "defaultContent": '',
-                            "data": null,
-                            "targets": [5]
                         }
                     ],
                     searching: false,
@@ -815,7 +807,17 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
-                        { data: 'id' }
+                        {
+                            data: 'id',
+                            "render": function(data, type, row, meta){
+                                if(row.uom == 'Unit'){
+                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                }
+                                else{
+                                    return '';
+                                }
+                            }
+                        }
                     ],
                     footerCallback: function(row,data,start,end,display){
                         var api = this.api(), data;
@@ -847,14 +849,6 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                             "targets": [hideEdit1],
                             "visible": false,
                             "searchable": false
-                        },
-                        {
-                            "render": function(data, type, row, meta){
-                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                            },
-                            "defaultContent": '',
-                            "data": null,
-                            "targets": [5]
                         }
                     ],
                     searching: false,
@@ -879,7 +873,17 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                         { data: 'qty' },
                         { data: 'uom' },
                         { data: 'serial' },
-                        { data: 'id' }
+                        {
+                            data: 'id',
+                            "render": function(data, type, row, meta){
+                                if(row.uom == 'Unit'){
+                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                }
+                                else{
+                                    return '';
+                                }
+                            }
+                        }
                     ],
                     footerCallback: function(row,data,start,end,display){
                         var api = this.api(), data;
@@ -1133,14 +1137,6 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
                 "targets": [hideEdit],
                 "visible": false,
                 "searchable": false
-            },
-            {   
-                "render": function(data, type, row, meta){
-                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                },
-                "defaultContent": '',
-                "data": null,
-                "targets": [5]
             }
         ],
         searching: false,
@@ -1165,7 +1161,17 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
-            { data: 'id' }
+            {
+                data: 'id',
+                "render": function(data, type, row, meta){
+                    if(row.uom == 'Unit'){
+                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                    }
+                    else{
+                        return '';
+                    }
+                }
+            }
         ],
         footerCallback: function(row,data,start,end,display){
             var api = this.api(), data;
@@ -1197,14 +1203,6 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
                 "targets": [hideEdit1],
                 "visible": false,
                 "searchable": false
-            },
-            {
-                "render": function(data, type, row, meta){
-                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
-                },
-                "defaultContent": '',
-                "data": null,
-                "targets": [5]
             }
         ],
         searching: false,
@@ -1229,7 +1227,17 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
             { data: 'qty' },
             { data: 'uom' },
             { data: 'serial' },
-            { data: 'id' }
+            {
+                data: 'id',
+                "render": function(data, type, row, meta){
+                    if(row.uom == 'Unit'){
+                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                    }
+                    else{
+                        return '';
+                    }
+                }
+            }
         ],
         footerCallback: function(row,data,start,end,display){
             var api = this.api(), data;

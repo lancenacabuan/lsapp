@@ -585,24 +585,13 @@ $(document).ready(function(){
     if($(location).attr('pathname')+window.location.search == '/stocks?import=success_without_errors'){
         $('#loading').hide(); Spinner.hide();
         swal("IMPORT SUCCESS", "ADD STOCKS via import file is successful without errors.", "success");
-        setTimeout(function(){location.href="/stocks"}, 2000);
     }
     else if($(location).attr('pathname')+window.location.search == '/stocks?import=success_with_errors'){
         $('#loading').hide(); Spinner.hide();
-        swal({
-            title: "IMPORT SUCCESS W/ ERRORS",
-            text: "ADD STOCKS via import file is successful with some errors.",
-            icon: "warning"
-        })
-        .then((willDelete)=>{
-            if(willDelete){
-                return true;
-            }
-        });
+        swal("IMPORT SUCCESS W/ ERRORS", "ADD STOCKS via import file is successful with some errors.", "warning");
     }
     else if($(location).attr('pathname')+window.location.search == '/stocks?import=failed'){
         $('#loading').hide(); Spinner.hide();
         swal("IMPORT FAILED", "ADD STOCKS via import file has failed.", "error");
-        setTimeout(function(){location.href="/stocks"}, 2000);
     }
 });

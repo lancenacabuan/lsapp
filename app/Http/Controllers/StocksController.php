@@ -344,6 +344,9 @@ class StocksController extends Controller
         $file = $request->file('xlsx');
         $import = new StocksImport;
         $data = Excel::toArray($import, $file);
+        if(count($data[0]) == 0){
+            return redirect()->to('/stocks?import=failed');
+        }
         $failed_rows = [];
         $row_num = 2;
         foreach($data[0] as $key => $value){ 
@@ -407,7 +410,10 @@ class StocksController extends Controller
                 $row_num++;
             }
         }
-        if(count($failed_rows) == 0){
+        if(count($failed_rows) == count($data[0])){
+            return redirect()->to('/stocks?import=failed');
+        }
+        else if(count($failed_rows) == 0){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
             $userlogs->activity = "STOCKS FILE IMPORT [NO ERRORS]: User successfully imported file data into Stocks without any errors.";

@@ -11,7 +11,7 @@
         <br><br>
         Thank you!
     </p>
-    <a href="{{ env('APP_URL') }}">{{ env('APP_URL') }}</a>
+    <a href="https://mainwh.apsoft.com.ph/">https://mainwh.apsoft.com.ph/</a>
     <br><br>
     This is a system-generated email. Please do not reply.
 </body>

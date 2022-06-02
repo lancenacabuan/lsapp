@@ -12,7 +12,7 @@
         <br><br>
         Thank you!
     </p>
-    <a href="{{ env('APP_URL') }}maintenance?tbl=location">{{ env('APP_URL') }}maintenance?tbl=location</a>
+    <a href="https://mainwh.apsoft.com.ph/maintenance?tbl=location">https://mainwh.apsoft.com.ph/maintenance?tbl=location</a>
     <br><br>
     This is a system-generated email. Please do not reply.
 </body>

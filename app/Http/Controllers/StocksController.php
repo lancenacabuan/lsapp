@@ -357,7 +357,7 @@ class StocksController extends Controller
                 ->where('location', $value['location'])
                 ->first();
             
-            if(!$value['item_description'] || !$value['location'] || !$value['qty']){
+            if(!$value['item_description'] || !$value['location'] || !$value['qty'] || $value['qty'] == 0){
                 array_push($failed_rows, '[Row: '.$row_num.' => Error: Fill Required Fields!]');
             }
             else if(!$item){
@@ -373,23 +373,50 @@ class StocksController extends Controller
                 $uom = $item[0]['UOM'];
                 $location_id = $location->id;
                 $location_name = $value['location'];
-                if($value['serial'] == '' || strtoupper($value['serial'] == 'N/A')){
+                if(!$value['serial'] || strtoupper($value['serial'] == 'N/A')){
                     $serial = 'N/A';
                 }
                 else{
                     $serial = strtoupper($value['serial']);
                 }
-
-                $add = new Stock;
-                $add->user_id = auth()->user()->id;
-                $add->item_id = $item_id;
-                $add->location_id = $location_id;
-                $add->rack = $value['rack'];
-                $add->row = $value['row'];
-                $add->qty = $value['qty'];
-                $add->serial = $value['serial'];
-                $add->status = 'in';
-                $sql = $add->save();
+                if(!$value['rack'] || strtoupper($value['rack'] == 'N/A')){
+                    $rack = 'N/A';
+                }
+                else{
+                    $rack = strtoupper($value['rack']);
+                }
+                if(!$value['row'] || strtoupper($value['row'] == 'N/A')){
+                    $row = 'N/A';
+                }
+                else{
+                    $row = strtoupper($value['row']);
+                }
+                if($value['qty'] == 1){
+                    $add = new Stock;
+                    $add->user_id = auth()->user()->id;
+                    $add->item_id = $item_id;
+                    $add->location_id = $location_id;
+                    $add->rack = $rack;
+                    $add->row = $row;
+                    $add->qty = '1';
+                    $add->serial = $serial;
+                    $add->status = 'in';
+                    $sql = $add->save();
+                }
+                else{
+                    for($i = 0; $i < $value['qty']; $i++){
+                        $add = new Stock;
+                        $add->user_id = auth()->user()->id;
+                        $add->item_id = $item_id;
+                        $add->location_id = $location_id;
+                        $add->rack = $rack;
+                        $add->row = $row;
+                        $add->qty = '1';
+                        $add->serial = $serial;
+                        $add->status = 'in';
+                        $sql = $add->save();
+                    }
+                }
                 if(!$sql){
                     array_push($failed_rows, '[Row: '.$row_num.', Error: Save Failed!]');
                 }

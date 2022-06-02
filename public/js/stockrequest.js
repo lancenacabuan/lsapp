@@ -3503,11 +3503,21 @@ $('#btnEdit').on('click', function(){
                         newserial: newserial
                     },
                     success: function(data){
-                        if(data == 'false'){
+                        if(data == 'true'){
                             $('#loading').hide(); Spinner.hide();
                             swal({
-                                title: "EDIT FAILED",
-                                text: "ITEM SERIAL",
+                                title: "EDIT SUCCESS",
+                                text: "Item Serial edited successfully!",
+                                icon: "success",
+                                timer: 2000
+                            });
+                            $(tblEdit).DataTable().ajax.reload();
+                        }
+                        else if(data == 'duplicate'){
+                            $('#loading').hide(); Spinner.hide();
+                            swal({
+                                title: "DUPLICATE SERIAL",
+                                text: "Serial already exists!",
                                 icon: "error",
                                 timer: 2000
                             });
@@ -3516,9 +3526,9 @@ $('#btnEdit').on('click', function(){
                         else{
                             $('#loading').hide(); Spinner.hide();
                             swal({
-                                title: "EDIT SUCCESS",
-                                text: "ITEM SERIAL",
-                                icon: "success",
+                                title: "EDIT FAILED",
+                                text: "Item Serial edit failed!",
+                                icon: "error",
                                 timer: 2000
                             });
                             $(tblEdit).DataTable().ajax.reload();

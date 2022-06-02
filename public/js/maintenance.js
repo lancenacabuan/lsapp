@@ -5,6 +5,9 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
     $('#itemTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
     $('table.itemTable').DataTable({
+        dom: 'Blftrip',
+        buttons: ['excel'],
+        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
         language:{
             processing: "Loading...",
             emptyTable: "No data available in table"

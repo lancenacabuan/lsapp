@@ -356,8 +356,12 @@ class StocksController extends Controller
             $location = Location::select()
                 ->where('location', $value['location'])
                 ->first();
+            $serials = Stock::query()->select()
+                ->where('serial', '!=', 'N/A')
+                ->where('serial', strtoupper($value['serial']))
+                ->count();
             
-            if(!$value['item_description'] || !$value['location'] || !$value['qty'] || $value['qty'] == 0){
+            if(!$value['item_description'] || !$value['location'] || !$value['qty']){
                 array_push($failed_rows, '[Row: '.$row_num.' => Error: Fill Required Fields!]');
             }
             else if(!$item){
@@ -365,6 +369,21 @@ class StocksController extends Controller
             }
             else if(!$location){
                 array_push($failed_rows, '[Row: '.$row_num.' => Error: Invalid Location!]');
+            }
+            else if($value['qty'] < 1){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Invalid Quantity!]');
+            }
+            else if(ctype_alnum($value['serial']) == false){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Invalid Serial!]');
+            }
+            else if($serials > 0){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Duplicate Serial!]');
+            }
+            else if($item[0]['UOM'] != 'Unit' && $value['serial']){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Serial not allowed!]');
+            }
+            else if(($item[0]['UOM'] == 'Unit' && $value['qty'] > 1) || ($value['serial'] && $value['qty'] > 1)){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Must be equal to 1-Qty!]');
             }
             else{
                 $item_id = $item[0]['id'];

@@ -287,6 +287,14 @@ class StocksController extends Controller
      
     public function store(Request $request){
         if($request->serial){
+            $serials = Stock::query()->select()
+                ->where('serial', '!=', 'N/A')
+                ->whereRaw('UPPER(serial) = ?', strtoupper($request->serial))
+                ->count();
+            if($serials > 0){
+                return response('duplicate');
+            }
+
             do{
                 $stocks = new Stock;
                 $stocks->item_id = $request->item;
@@ -300,10 +308,17 @@ class StocksController extends Controller
             }
             while(!$sql);
 
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "ADDED STOCK: User successfully added 1-$request->uom/s Stock of '$request->item_name' to $request->location_name with Serial '$request->serial'.";
-            $userlogs->save();
+            if(!$sql){
+                $result = 'false';
+            }
+            else{
+                $result = 'true';
+
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = "ADDED STOCK: User successfully added 1-$request->uom/s Stock of '$request->item_name' to $request->location_name with Serial '$request->serial'.";
+                $userlogs->save();
+            }
         }
         else if($request->qty > 0){
             for($i=0; $i < $request->qty; $i++){
@@ -320,12 +335,14 @@ class StocksController extends Controller
                 }
                 while(!$sql);
             }
+            $result = 'true';
+
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
             $userlogs->activity = "ADDED STOCK: User successfully added $request->qty-$request->uom/s Stock of '$request->item_name' to $request->location_name.";
             $userlogs->save();
         }
-        return response()->json($stocks);
+        return response($result);
     }
 
     public function update(Request $request){ 

@@ -1,5 +1,4 @@
 var CategoryTable, ItemTable, ItemSerialTable, categoryID, categoryName;
-
 function category(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
@@ -311,7 +310,7 @@ $('#btnEdit').on('click', function(){
     }
 });
 
-$('#butsave').on('click', function(){
+$('#btnSave').on('click', function(){
     var AddStockForm = $('#AddStockForm');
     var category = $('#category').val();
     var item = $('#item').val();
@@ -361,12 +360,21 @@ $('#butsave').on('click', function(){
                             item_name: item_name,
                             location_name: location_name
                         },
-                        success: function(dataResult){
-                            $('#addStock').hide();
-                            swal("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
-                                window.location.href = 'stocks';
-                            });
-                            setTimeout(function(){window.location.href = 'stocks';}, 2000);
+                        success: function(data){
+                            if(data == 'true'){
+                                $('#addStock').hide();
+                                swal("SAVE SUCCESS", "Stock added successfully!", "success");
+                                setTimeout(function(){window.location.href="/stocks"}, 2000);
+                            }
+                            else if(data == 'duplicate'){
+                                swal("DUPLICATE SERIAL", "Serial already exists!", "error");
+                                return false;
+                            }
+                            else{
+                                $('#addStock').hide();
+                                swal("SAVE FAILED", "Failed to add stock!", "error");
+                                setTimeout(function(){window.location.href="/stocks"}, 2000);
+                            }
                         },
                         error: function(data){
                             if(data.status == 401){
@@ -411,12 +419,16 @@ $('#butsave').on('click', function(){
                             item_name: item_name,
                             location_name: location_name
                         },
-                        success: function(dataResult){
+                        success: function(data){
                             $('#addStock').hide();
-                            swal("SAVED", "ITEM SUCCESSFULLY ADDED", "success").then(function(){
-                                window.location.href = 'stocks';
-                            });
-                            setTimeout(function(){window.location.href = 'stocks';}, 2000);
+                            if(data == 'true'){
+                                swal("SAVE SUCCESS", "Stock added successfully!", "success");
+                                setTimeout(function(){window.location.href="/stocks"}, 2000);
+                            }
+                            else{
+                                swal("SAVE FAILED", "Failed to add stock!", "error");
+                                setTimeout(function(){window.location.href="/stocks"}, 2000);
+                            }
                         },
                         error: function(data){
                             if(data.status == 401){

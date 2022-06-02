@@ -681,7 +681,7 @@ class StockRequestController extends Controller
     public function editSerial(Request $request){
         $serials = Stock::query()->select()
             ->where('serial', '!=', 'N/A')
-            ->where('serial', strtoupper($request->newserial))
+            ->whereRaw('UPPER(serial) = ?', strtoupper($request->newserial))
             ->count();
         if($serials > 0){
             return response('duplicate');

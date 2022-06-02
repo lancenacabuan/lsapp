@@ -77,7 +77,7 @@
                 </form>
                 <br>
                 <button type="submit" id="btnReset" class="btn btn-primary bp">RESET</button>
-                <button type="submit" id="butsave" class="btn btn-primary bp float-right">SUBMIT</button>
+                <button type="submit" id="btnSave" class="btn btn-primary bp float-right">SUBMIT</button>
             </div>
         </div>
     </div>

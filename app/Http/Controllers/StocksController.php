@@ -345,32 +345,83 @@ class StocksController extends Controller
         $import = new StocksImport;
         $data = Excel::toArray($import, $file);
         $failed_rows = [];
-        foreach($data[0] as $key => $value){
-            $row_num = 2;
-            $add = new Stock;
-            $add->user_id = auth()->user()->id;
-            $add->item_id = $value['item'];
-            $add->location_id = $value['location'];
-            $add->rack = $value['rack'];
-            $add->row = $value['row'];
-            $add->qty = $value['qty'];
-            $add->serial = $value['serial'];
-            $add->status = 'in';
-            $sql = $add->save();
-            if(!$sql){
-                array_push($failed_rows, $row_num);
+        $row_num = 2;
+        foreach($data[0] as $key => $value){ 
+            $item = Item::selectRaw('id, UOM')
+                ->where('item', $value['item_description'])
+                ->get();
+            $location = Location::select()
+                ->where('location', $value['location'])
+                ->first();
+            
+            if(!$value['item_description'] || !$value['location'] || !$value['qty']){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Fill Required Fields!]');
+            }
+            else if(!$item){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Invalid Item!]');
+            }
+            else if(!$location){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Invalid Location!]');
             }
             else{
-                // $userlogs = new UserLogs;
-                // $userlogs->user_id = auth()->user()->id;
-                // $userlogs->activity = "ADDED STOCK: User successfully added $qty-$uom/s Stock of '$item_name' to $location_name.";
-                // $userlogs->save();
+                $item_id = $item[0]['id'];
+                $item_name = $value['item_description'];
+                $qty = $value['qty'];
+                $uom = $item[0]['UOM'];
+                $location_id = $location->id;
+                $location_name = $value['location'];
+                if($value['serial'] == '' || strtoupper($value['serial'] == 'N/A')){
+                    $serial = 'N/A';
+                }
+                else{
+                    $serial = strtoupper($value['serial']);
+                }
+
+                $add = new Stock;
+                $add->user_id = auth()->user()->id;
+                $add->item_id = $item_id;
+                $add->location_id = $location_id;
+                $add->rack = $value['rack'];
+                $add->row = $value['row'];
+                $add->qty = $value['qty'];
+                $add->serial = $value['serial'];
+                $add->status = 'in';
+                $sql = $add->save();
+                if(!$sql){
+                    array_push($failed_rows, '[Row: '.$row_num.', Error: Save Failed!]');
+                }
+                else{
+                    if($serial == 'N/A'){
+                        $userlogs = new UserLogs;
+                        $userlogs->user_id = auth()->user()->id;
+                        $userlogs->activity = "ADDED STOCK: User successfully added $qty-$uom/s Stock of '$item_name' to $location_name.";
+                        $userlogs->save();
+                    }
+                    else{
+                        $userlogs = new UserLogs;
+                        $userlogs->user_id = auth()->user()->id;
+                        $userlogs->activity = "ADDED STOCK: User successfully added $qty-$uom/s Stock of '$item_name' to $location_name with Serial '$serial'.";
+                        $userlogs->save();
+                    }
+                }
+                $row_num++;
             }
         }
         if(count($failed_rows) == 0){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "STOCKS FILE IMPORT [NO ERRORS]: User successfully imported file data into Stocks without any errors.";
+            $userlogs->save();
+
             return redirect()->to('/stocks?import=success_without_errors');
         }
         else{
+            $errors = implode(', ', $failed_rows);
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "STOCKS FILE IMPORT [WITH ERRORS]: User successfully imported file data into Stocks with the following errors: $errors.";
+            $userlogs->save();
+
             return redirect()->to('/stocks?import=success_with_errors');
         }
     }

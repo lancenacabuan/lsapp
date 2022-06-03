@@ -41,7 +41,7 @@ $('table.defectiveTable').DataTable({
                 }
                 else{
                     if(row.status == 'defectives'){
-                        return "<button style='zoom: 85%;' class='btn btn-primary bp btnReturnItem' id='"+ meta.row +"'>RETURN</button>";
+                        return "<button class='btn btn-primary bp btnReturnItem' id='"+ meta.row +"'>RETURN</button>";
                     }
                     else{
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";

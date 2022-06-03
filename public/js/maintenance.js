@@ -1119,7 +1119,7 @@ $(".add-row").on('click', function(){
     var prodcode = $("#prodcodeAssembly").val();
     var uom = $("#uomAssembly").val();
     let qty = $("#qtyAssembly").val();
-    var markup = "<tr><td class='d-none'>" + item_id + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
+    var markup = "<tr><td class='d-none'>" + item_id + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 80%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
     var ctr = 'false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
         swal('REQUIRED','Please select an item!','error');

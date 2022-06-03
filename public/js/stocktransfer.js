@@ -263,7 +263,7 @@ $(".add-row").on('click', function(){
     var uom = $("#uom").val();
     var qty = parseInt($("#qty").val());
     var qtystock = parseInt($("#qtystock").val());
-    var markup = "<tr><td class='d-none'>" + item_id + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 75%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
+    var markup = "<tr><td class='d-none'>" + item_id + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 80%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
     var ctr = 'false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
         swal('REQUIRED','Please select an item!','error');
@@ -707,7 +707,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                         },
                         {   
                             "render": function(data, type, row, meta){
-                                    return '<button style="zoom: 75%;" class="btn btn-danger bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                                    return '<button style="zoom: 80%;" class="btn btn-danger bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                             },
                             "defaultContent": '',
                             "data": null,
@@ -811,7 +811,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                             data: 'id',
                             "render": function(data, type, row, meta){
                                 if(row.uom == 'Unit'){
-                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                    return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                 }
                                 else{
                                     return '';
@@ -877,7 +877,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                             data: 'id',
                             "render": function(data, type, row, meta){
                                 if(row.uom == 'Unit'){
-                                    return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                    return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                 }
                                 else{
                                     return '';
@@ -1061,7 +1061,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
             },
             {   
                 "render": function(data, type, row, meta){
-                        return '<button style="zoom: 75%;" class="btn btn-danger bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                        return '<button style="zoom: 80%;" class="btn btn-danger bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
                 },
                 "defaultContent": '',
                 "data": null,
@@ -1165,7 +1165,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
                 data: 'id',
                 "render": function(data, type, row, meta){
                     if(row.uom == 'Unit'){
-                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                        return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                     }
                     else{
                         return '';
@@ -1231,7 +1231,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
                 data: 'id',
                 "render": function(data, type, row, meta){
                     if(row.uom == 'Unit'){
-                        return '<button style="zoom: 75%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                        return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                     }
                     else{
                         return '';

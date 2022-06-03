@@ -6,7 +6,7 @@ var table = $('table.user_logs').DataTable({
     },
     serverSide: true,
     ajax:{
-        url: '/index_data',
+        url: '/index/data',
     },
     columnDefs: [
         {
@@ -34,7 +34,7 @@ $('.filter-input').on('keyup', function(){
 
 setInterval(function(){
     $('table.user_logs').DataTable().ajax.reload(null, false);
-}, 1000);
+}, 3000);
 
 $(document).ready(function(){
     $('#hover1').hover(

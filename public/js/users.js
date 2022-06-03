@@ -7,7 +7,7 @@ $('table.userTable').DataTable({
     },
     serverSide: true,
     ajax:{
-        url: '/users_data',
+        url: '/users/data',
     },
     columnDefs: [
     {

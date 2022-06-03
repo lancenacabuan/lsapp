@@ -348,7 +348,7 @@ $('#btnSave').on('click', function(){
             .then((willDelete) => {
                 if(willDelete){
                     $.ajax({
-                        url: "stocks/save",
+                        url: "/stocks/save",
                         type: "POST",
                         headers:{
                             'X-CSRF-TOKEN': $("#csrf").val()
@@ -407,7 +407,7 @@ $('#btnSave').on('click', function(){
             .then((willDelete) => {
                 if(willDelete){
                     $.ajax({
-                        url: "stocks/save",
+                        url: "/stocks/save",
                         type: "POST",
                         headers:{
                             'X-CSRF-TOKEN': $("#csrf").val()
@@ -456,7 +456,7 @@ $('#category').on('change', function(){
     var descOp = " ";
     $.ajax({
         type: 'get',
-        url: '/addStockitem',
+        url: '/getItems',
         data:{ 'category_id': id },            
         success: function(data){
             var itemcode = $.map(data, function(value, index){
@@ -485,7 +485,7 @@ $('#item').on('change', function(){
     var id = $('#item').val();
     $.ajax({
         type: 'get',
-        url: 'getUOM',
+        url: '/getUOM',
         data:{
             'id': id
         },            

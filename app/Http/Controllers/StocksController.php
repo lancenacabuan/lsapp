@@ -43,11 +43,6 @@ class StocksController extends Controller
         return view('/pages/stocks', compact('list','categories','locations','items'));
     }
 
-    public function GetLocation(){
-        $location = Location::all();
-        return response()->json($location);
-    }
-
     public function category_data(){
         $list = Category::query()->select('categories.id',
             DB::raw
@@ -271,10 +266,11 @@ class StocksController extends Controller
         }
     }
 
-    public function addStockitem(Request $request){
+    public function getItems(Request $request){
         $list = Item::query()->select('id','item')
             ->where('category_id',$request->category_id)
-            ->orderBy('item','ASC')->get();
+            ->orderBy('item','ASC')
+            ->get();
         return response()->json($list);
     }
 
@@ -285,7 +281,7 @@ class StocksController extends Controller
         return response($data);
     }
      
-    public function store(Request $request){
+    public function save(Request $request){
         if($request->serial){
             $serials = Stock::query()->select()
                 ->where('serial', '!=', 'N/A')

@@ -16,7 +16,7 @@ Route::get('/gitpull',[PagesController::class,'pull']);
 
 //Index
 Route::get('/',[PagesController::class,'index']);
-Route::get('/index_data',[PagesController::class,'index_data']);
+Route::get('/index/data',[PagesController::class,'index_data']);
 //
 
 //Report A Problem
@@ -32,7 +32,7 @@ Route::any('/password_save',[PagesController::class,'password_save']);
 
 //Users
 Route::get('/users',[PagesController::class,'users']);
-Route::get('/users_data',[PagesController::class,'users_data']);
+Route::get('/users/data',[PagesController::class,'users_data']);
 Route::any('/users/validate/save',[PagesController::class,'validate_users_save']);
 Route::any('/users/save',[PagesController::class,'users_save']);
 Route::any('/users/validate/update',[PagesController::class,'validate_users_update']);
@@ -41,15 +41,13 @@ Route::any('/users/update',[PagesController::class,'users_update']);
 
 //Stocks
 Route::get('/stocks',[StocksController::class,'stocks']);
-Route::get('/GetLocation',[StocksController::class,'GetLocation']);
-Route::any('/stocks/save',[StocksController::class,'store']);
-Route::any('/stocks/update',[StocksController::class,'update']);
 Route::get('/category_data',[StocksController::class,'category_data']);
 Route::get('/item_data',[StocksController::class,'item_data']);
 Route::get('/itemserial_data',[StocksController::class,'itemserial_data']);
-Route::post('/stocks/import',[StocksController::class,'import']);
+Route::get('/getItems',[StocksController::class,'getItems']);
 Route::get('/getUOM',[StocksController::class,'getUOM']);
-Route::get('/addStockitem',[StocksController::class,'addStockitem']);
+Route::any('/stocks/save',[StocksController::class,'save']);
+Route::post('/stocks/import',[StocksController::class,'import']);
 //
 
 //Stock Requests

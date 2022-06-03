@@ -9,6 +9,7 @@ function category(){
     $('#stocksHeader').html('WAREHOUSE STOCKS');
     $('#btnBack').hide();
     $('#backBtn').hide();
+    $('.br').hide();
     $('#loading').show(); Spinner(); Spinner.show();
     CategoryTable = 
         $('table.CategoryTable').DataTable({
@@ -55,6 +56,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('#stocksHeader').html(decodeHtml(trdata.Category));
     $('#btnBack').hide();
     $('#backBtn').show();
+    $('.br').show();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({
@@ -96,6 +98,7 @@ $('#btnBack').on('click', function(){
     $('#stocksHeader').html(categoryName);
     $('#btnBack').hide();
     $('#backBtn').show();
+    $('.br').show();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({
@@ -138,6 +141,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#stocksHeader').html(decodeHtml(trdata.Item));
     $('#btnBack').show();
     $('#backBtn').hide();
+    $('.br').show();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemSerialTable = 
         $('table.ItemSerialTable').DataTable({

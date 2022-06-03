@@ -366,7 +366,7 @@ class StocksController extends Controller
         }
         $failed_rows = [];
         $row_num = 2;
-        foreach($data[0] as $key => $value){ 
+        foreach($data[0] as $key => $value){
             $item = Item::selectRaw('id, UOM')
                 ->where('item', $value['item_description'])
                 ->get();
@@ -470,8 +470,8 @@ class StocksController extends Controller
                         $userlogs->save();
                     }
                 }
-                $row_num++;
             }
+            $row_num++;
         }
         if(count($failed_rows) == count($data[0])){
             return redirect()->to('/stocks?import=failed');

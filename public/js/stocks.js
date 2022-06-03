@@ -6,6 +6,7 @@ function category(){
     $('#CategoryTableDiv').show();
     $('#ItemTableDiv').hide();
     $('#ItemSerialTableDiv').hide();
+    $('#stocksHeader').html('WAREHOUSE STOCKS');
     $('#btnBack').hide();
     $('#backBtn').hide();
     $('#loading').show(); Spinner(); Spinner.show();
@@ -51,7 +52,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').show();
     $('#ItemSerialTableDiv').hide();
-    $('#itemCat').text(decodeHtml(trdata.Category));
+    $('#stocksHeader').html(decodeHtml(trdata.Category));
     $('#btnBack').hide();
     $('#backBtn').show();
     $('#loading').show(); Spinner(); Spinner.show();
@@ -92,7 +93,7 @@ $('#btnBack').on('click', function(){
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').show();
     $('#ItemSerialTableDiv').hide();
-    $('#itemCat').text(categoryName);
+    $('#stocksHeader').html(categoryName);
     $('#btnBack').hide();
     $('#backBtn').show();
     $('#loading').show(); Spinner(); Spinner.show();
@@ -134,7 +135,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').hide();
     $('#ItemSerialTableDiv').show();
-    $('#itemName').text(decodeHtml(trdata.Item));
+    $('#stocksHeader').html(decodeHtml(trdata.Item));
     $('#btnBack').show();
     $('#backBtn').hide();
     $('#loading').show(); Spinner(); Spinner.show();

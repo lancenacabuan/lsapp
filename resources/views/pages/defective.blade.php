@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid">
+    <br><br>
+    <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">DEFECTIVE ITEMS</div>
     <table id="defectiveTable" class="table defectiveTable table-hover display" style="zoom: 80%; cursor: pointer; width: 100%;">
         <thead style="background-color: #0d1a80; color: white; font-size: 15px;">
             <tr>
@@ -20,5 +22,10 @@
         <input type="hidden" name="return_number" id="return_number">
     </form>
 </div>
+<style>
+    #defectiveTable_length, #defectiveTable_filter{
+        margin-top: -90px;
+    }
+</style>
 @include('pages.report')
 @endsection

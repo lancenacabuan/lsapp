@@ -5,6 +5,8 @@
     <button class="btn btn-primary bp btnNewStockTransfer float-right mb-2" type="button">NEW STOCK TRANSFER</button>
     <br><br>
     @endrole
+    <br><br>
+    <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">STOCK TRANSFER REQUESTS</div>
     <table id="stocktransferTable" class="table stocktransferTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white; font-size: 15px;">
             <tr>
@@ -26,6 +28,11 @@
         </thead>
     </table>
 </div>
+<style>
+    #stocktransferTable_length, #stocktransferTable_filter{
+        margin-top: -90px;
+    }
+</style>
 @include('pages.stockTransfer.newStockTransfer')
 @include('pages.stockTransfer.detailsStockTransfer')
 @include('pages.report')

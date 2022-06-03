@@ -5,6 +5,8 @@
     <button class="btn btn-primary bp btnNewStockRequest float-right mb-2" type="button">NEW STOCK REQUEST</button>
     <br><br>
     @endrole
+    <br><br>
+    <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">STOCK REQUESTS</div>
     <table id="stockrequestTable" class="table stockrequestTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white; font-size: 15px;">                            
             <tr>
@@ -31,6 +33,11 @@
         </thead>
     </table>
 </div>
+<style>
+    #stockrequestTable_length, #stockrequestTable_filter{
+        margin-top: -90px;
+    }
+</style>
 @include('pages.stockRequest.newStockRequest')
 @include('pages.stockRequest.detailsStockRequest')
 @include('pages.report')

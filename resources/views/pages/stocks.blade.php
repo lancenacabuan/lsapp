@@ -9,6 +9,8 @@
     <button class="btn btn-primary bp float-right mb-2" type="button" id="btnImport">IMPORT</button>
     <br><br>
     @endrole
+    <br><br>
+    <div id="stocksHeader" class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">WAREHOUSE STOCKS</div>
     <div id="CategoryTableDiv">
         <table id="CategoryTable" class="table-hover table CategoryTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            
@@ -29,7 +31,6 @@
         </table>
     </div>
     <div id="ItemTableDiv" style="display: none;">
-        <h3 id="itemCat" class="text-center"></h3>
         <table id="ItemTable" class="table-hover table ItemTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
@@ -50,7 +51,6 @@
         </table>
     </div>
     <div id="ItemSerialTableDiv" style="display: none;">
-        <h3 id="itemName" class="text-center"></h3>
         <table id="ItemSerialTable" class="table-hover table ItemSerialTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
@@ -90,6 +90,17 @@
     </div>
     </div>
 </div>
+<style>
+    #CategoryTable_length, #CategoryTable_filter{
+        margin-top: -90px;
+    }
+    #ItemTable_length, #ItemTable_filter{
+        margin-top: -90px;
+    }
+    #ItemSerialTable_length, #ItemSerialTable_filter{
+        margin-top: -90px;
+    }
+</style>
 @include('pages.stocks.addStock')
 @include('pages.stocks.importStock')
 @include('pages.report')

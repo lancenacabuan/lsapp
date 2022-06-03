@@ -316,7 +316,7 @@ $('#btnAssemblySave').on('click', function(){
     else{
         swal({
             title: "SUBMIT ASSEMBLY REQUEST?",
-            text: "Please review the details of your request. Hit OK to confirm or CANCEL to edit it.",
+            text: "Please review the details of your request. Click 'OK' button to submit; otherwise, click 'Cancel' button.",
             icon: "warning",
             buttons: true,
         })

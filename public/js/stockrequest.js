@@ -533,7 +533,7 @@ $('#btnSave').on('click', function(){
     else{
         swal({
             title: "SUBMIT STOCK REQUEST?",
-            text: "Please review the details of your request. Hit OK to confirm or CANCEL to edit it.",
+            text: "Please review the details of your request. Click 'OK' button to submit; otherwise, click 'Cancel' button.",
             icon: "warning",
             buttons: true,
         })
@@ -671,7 +671,7 @@ $(document).on('click', '#btnSaveChanges', function(){
     }
     swal({
         title: "EDIT STOCK REQUEST DETAILS?",
-        text: "Please review the details of your request. Hit OK to confirm or CANCEL to edit it.",
+        text: "Please review the details of your request. Click 'OK' button to submit; otherwise, click 'Cancel' button.",
         icon: "warning",
         buttons: true,
     })
@@ -3478,7 +3478,7 @@ $('#btnEdit').on('click', function(){
     else{
         swal({
             title: "Confirm Serial: "+newserial+'?',
-            text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to recheck details.",
+            text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to review details.",
             icon: "warning",
             buttons: true,
             dangerMode: true

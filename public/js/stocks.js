@@ -246,7 +246,7 @@ $('#btnEdit').on('click', function(){
     else{
         swal({
             title: "Confirm Serial: "+newserial+'?',
-            text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to recheck details.",
+            text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to review details.",
             icon: "warning",
             buttons: true,
             dangerMode: true
@@ -336,7 +336,7 @@ $('#btnSave').on('click', function(){
         if(category && item && location_id){
             swal({
                 title: "Are you really sure all details are entered correctly?",
-                text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to recheck details.",
+                text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to review details.",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true
@@ -395,7 +395,7 @@ $('#btnSave').on('click', function(){
         if(qty > 0 && category && item && location_id){
             swal({
                 title: "Are you really sure all details are entered correctly?",
-                text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to recheck details.",
+                text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to review details.",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true

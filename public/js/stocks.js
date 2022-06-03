@@ -88,6 +88,10 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
         });
 });
 
+$('#backBtn').on('click', function(){
+    category();
+});
+
 $('#btnBack').on('click', function(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
@@ -315,6 +319,75 @@ $('#btnEdit').on('click', function(){
     }
 });
 
+$('#category').on('change', function(){
+    var id = $('#category').val();
+    var descOp = " ";
+    $.ajax({
+        type: 'get',
+        url: '/getItems',
+        data:{ 'category_id': id },            
+        success: function(data){
+            var itemcode = $.map(data, function(value, index){
+                return [value];
+            });
+            descOp+='<option value="" selected disabled>Select Item</option>';
+            itemcode.forEach(value => {
+                descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>';
+            });
+            $("#item").find('option').remove().end().append(descOp);               
+        },
+        error: function(data){
+            if(data.status == 401){
+                window.location.href = '/stocks';
+            }
+            alert(data.responseText);
+        }
+    });
+    $('#prodcodediv').hide();
+    $('#uomdiv').hide();
+    $('#qtydiv').hide();
+    $('#serialdiv').hide();
+});
+
+$('#item').on('change', function(){
+    var id = $('#item').val();
+    $.ajax({
+        type: 'get',
+        url: '/getUOM',
+        data:{
+            'id': id
+        },            
+        success: function(data){
+            if(data[0].UOM == "Unit"){
+                $('#prodcodediv').show();
+                $('#uomdiv').show();
+                $('#qtydiv').show();
+                $('#serialdiv').show();
+                $('#prodcode').val(data[0].prodcode);
+                $('#uom').val(data[0].UOM);
+                $('#qty').val('1');
+                $('#qty').prop('disabled', true);
+            }
+            else{
+                $('#prodcodediv').show();
+                $('#uomdiv').show();
+                $('#qtydiv').show();
+                $('#serialdiv').hide();
+                $('#prodcode').val(data[0].prodcode);
+                $('#uom').val(data[0].UOM);
+                $('#qty').val('0');
+                $('#qty').prop('disabled', false);
+            }
+        },
+        error: function(data){
+            if(data.status == 401){
+                window.location.href = '/stocks';
+            }
+            alert(data.responseText);
+        }
+    });
+});
+
 $('#btnSave').on('click', function(){
     var AddStockForm = $('#AddStockForm');
     var category = $('#category').val();
@@ -451,73 +524,12 @@ $('#btnSave').on('click', function(){
     }
 });
 
-$('#category').on('change', function(){
-    var id = $('#category').val();
-    var descOp = " ";
-    $.ajax({
-        type: 'get',
-        url: '/getItems',
-        data:{ 'category_id': id },            
-        success: function(data){
-            var itemcode = $.map(data, function(value, index){
-                return [value];
-            });
-            descOp+='<option value="" selected disabled>Select Item</option>';
-            itemcode.forEach(value => {
-                descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>';
-            });
-            $("#item").find('option').remove().end().append(descOp);               
-        },
-        error: function(data){
-            if(data.status == 401){
-                window.location.href = '/stocks';
-            }
-            alert(data.responseText);
-        }
-    });
+$('#btnReset').on('click', function(){
+    $('#AddStockForm').trigger('reset');
     $('#prodcodediv').hide();
     $('#uomdiv').hide();
     $('#qtydiv').hide();
     $('#serialdiv').hide();
-});
-
-$('#item').on('change', function(){
-    var id = $('#item').val();
-    $.ajax({
-        type: 'get',
-        url: '/getUOM',
-        data:{
-            'id': id
-        },            
-        success: function(data){
-            if(data[0].UOM == "Unit"){
-                $('#prodcodediv').show();
-                $('#uomdiv').show();
-                $('#qtydiv').show();
-                $('#serialdiv').show();
-                $('#prodcode').val(data[0].prodcode);
-                $('#uom').val(data[0].UOM);
-                $('#qty').val('1');
-                $('#qty').prop('disabled', true);
-            }
-            else{
-                $('#prodcodediv').show();
-                $('#uomdiv').show();
-                $('#qtydiv').show();
-                $('#serialdiv').hide();
-                $('#prodcode').val(data[0].prodcode);
-                $('#uom').val(data[0].UOM);
-                $('#qty').val('0');
-                $('#qty').prop('disabled', false);
-            }
-        },
-        error: function(data){
-            if(data.status == 401){
-                window.location.href = '/stocks';
-            }
-            alert(data.responseText);
-        }
-    });
 });
 
 $('#btnImport').on('click', function(){
@@ -594,18 +606,6 @@ $('#btnUpload').on('click', function(){
             }
         });
     }
-});
-
-$('#backBtn').on('click', function(){
-    category();
-});
-
-$('#btnReset').on('click', function(){
-    $('#AddStockForm').trigger('reset');
-    $('#prodcodediv').hide();
-    $('#uomdiv').hide();
-    $('#qtydiv').hide();
-    $('#serialdiv').hide();
 });
 
 $(document).ready(function(){

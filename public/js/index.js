@@ -34,7 +34,7 @@ $('.filter-input').on('keyup', function(){
 
 setInterval(function(){
     $('table.user_logs').DataTable().ajax.reload(null, false);
-}, 10000);
+}, 1000);
 
 $(document).ready(function(){
     $('#hover1').hover(

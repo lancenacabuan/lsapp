@@ -119,9 +119,9 @@ class PagesController extends Controller
             users.status AS user_status')
             ->join('model_has_roles', 'model_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->orderBy('user_status', 'ASC')
             ->orderBy('role_name', 'ASC')
             ->orderBy('company', 'ASC')
-            ->orderBy('user_status', 'ASC')
             ->orderBy('user_name', 'ASC')
             ->get();
         

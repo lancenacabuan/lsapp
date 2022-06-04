@@ -9,14 +9,7 @@ var table = $('table.userTable').DataTable({
     ajax:{
         url: '/users/data',
     },
-    columnDefs: [
-    {
-        "targets": [0],
-        "visible": false,
-        "searchable": false
-    }],
     columns: [
-        { data: 'user_id' },
         { data: 'user_name' },
         { data: 'user_email' },
         {
@@ -53,6 +46,12 @@ var table = $('table.userTable').DataTable({
     initComplete: function(){
         return notifyDeadline();
     }
+});
+
+$('.filter-input').on('keyup', function(){
+    table.column($(this).data('column'))
+        .search($(this).val())
+        .draw();
 });
 
 $('#btnAddUser').on('click', function(){

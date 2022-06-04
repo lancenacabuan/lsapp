@@ -36,17 +36,7 @@ var table = $('table.userTable').DataTable({
                 }
             }
         },
-        {
-            data: 'role_name',
-            "render": function(data, type, row){
-                if(row.company == 'NuServ' && row.role_name == 'sales'){
-                    return 'MERCHANT';
-                }
-                else{
-                    return (row.role_name).toUpperCase();
-                }
-            }
-        },
+        { data: 'role_name' },
         {
             data: 'user_status',
             "render": function(data, type, row){

@@ -641,7 +641,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                 if(requestStatus == '2' || requestStatus == '5'){
                     $("#processModal").show();
                     $(".schedItemsModal").show();
-                    if($("#current_role").val() == '["viewer"]'){
+                    if($("#current_role").val() == 'viewer'){
                         hideEdit = 5;
                     }
                 }
@@ -995,7 +995,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     if(requestStatus == '2' || requestStatus == '5'){
         $("#processModal").show();
         $(".schedItemsModal").show();
-        if($("#current_role").val() == '["viewer"]'){
+        if($("#current_role").val() == 'viewer'){
             hideEdit = 5;
         }
     }
@@ -1741,7 +1741,7 @@ var items = [];
 var item_count = 0;
 // $('table.transferDetails').DataTable().on('select', function(){});
 // $('.transferDetails tbody').on('click', 'tr', function(){
-//     if($("#current_role").val() == '["viewer"]'){
+//     if($("#current_role").val() == 'viewer'){
 //         return false;
 //     }
 //     var requestStatus = $('#status_id_details').val();
@@ -1787,7 +1787,7 @@ var item_count = 0;
 
 $('.table.transItems').DataTable().on('select', function(){});
 $('.transItems tbody').on('click', 'tr', function(){
-    if($("#current_role").val() == '["viewer"]'){
+    if($("#current_role").val() == 'viewer'){
         return false;
     }
     var requestStatus = $('#status_id_details').val();
@@ -1814,7 +1814,7 @@ $('.transItems tbody').on('click', 'tr', function(){
 
 $('.table.incItems').DataTable().on('select', function(){});
 $('.incItems tbody').on('click', 'tr', function(){
-    if($("#current_role").val() == '["viewer"]'){
+    if($("#current_role").val() == 'viewer'){
         return false;
     }
     var requestStatus = $('#status_id_details').val();

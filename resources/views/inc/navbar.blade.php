@@ -3,7 +3,7 @@
         $reports = DB::table('reports')->whereIn('status',['pending'])->get()->count();
     @endphp
 @endrole
-<nav class="navbar navbar-expand-md shadow-sm" style="height: 60px; margin-top: -20px;">
+<nav class="navbar navbar-expand-md shadow-sm" style="height: 60px;">
     <div class="container-fluid">
         <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">

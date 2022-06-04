@@ -31,7 +31,7 @@ $('table.defectiveTable').DataTable({
         {
             data: 'status',
             "render": function(data, type, row, meta){
-                if($("#current_role").val() == '["viewer"]'){
+                if($("#current_role").val() == 'viewer'){
                     if(row.status == 'defectives'){
                         return "<span style='color: Red; font-weight: bold;'>FOR RETURN</span>";
                     }

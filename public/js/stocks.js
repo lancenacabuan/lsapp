@@ -197,7 +197,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
 });
 
 $(document).on('click', '#ItemSerialTable tbody tr', function(){
-    if($("#current_role").val() == '["viewer"]'){
+    if($("#current_role").val() == 'viewer'){
         return false;
     }
     var trdata = ItemSerialTable.row(this).data();

@@ -1,4 +1,4 @@
-<div class="d-flex xD mb-2" title="v1.0.3.3">
+<div class="d-flex xD mb-2" title="v1.0.3.4">
     <a href="/">
         <img class="p-2 align-self-end" src="{{asset('idsi.png')}}" style="width: auto; height: 90px; line-height: 90px;">
     </a>
@@ -9,10 +9,10 @@
         <div style="text-align: right; font-size: 12px;">
             {{ Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY') }}
             <span id="datetime"></span><br>
-            <strong>{{ auth()->user()->name }}</strong>&nbsp;
-            {{ strtoupper(str_replace('"', '', auth()->user()->getRoleNames())) }}<br>
-            {{ auth()->user()->email }}<br>
-            <a style="color: black;" href="{{ url('/changepassword') }}">Change Password</a>
+            <strong>{{ auth()->user()->name }}</strong>&nbsp;({{ auth()->user()->email }})<br>
+            <strong>{{ strtoupper(str_replace('"', '', auth()->user()->getRoleNames())) }}</strong>
+            <span id="lblCompany">{{ auth()->user()->company }}</span><br>
+            <a style="color: black; text-decoration: underline;" href="{{ url('/changepassword') }}">Change Password</a>
         </div>
         <i class="fa fa-user-circle fa-4x p-2" aria-hidden="true"></i>
     </div>
@@ -26,4 +26,20 @@
         datetime.textContent = display;
         setTimeout(displayClock, 1000);
     }
+    $(function(){
+        var lblCompany = $('#lblCompany').text();
+        if(lblCompany == 'Apsoft'){
+            lblCompany = 'Apsoft, Inc.';
+        }
+        if(lblCompany == 'Ideaserv'){
+            lblCompany = 'Ideaserv Systems, Inc.';
+        }
+        if(lblCompany == 'NuServ'){
+            lblCompany = 'NuServ Solutions, Inc.';
+        }
+        if(lblCompany == 'Phillogix'){
+            lblCompany = 'Phillogix Systems, Inc.';
+        }
+        return $('#lblCompany').text(lblCompany);
+    });
 </script>

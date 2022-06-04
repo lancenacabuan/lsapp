@@ -97,13 +97,14 @@
             margin-left: 2px;
             margin-right: 10px;
         }
-        a, img, thead, .xD {
+        a, a:hover, img, thead, .xD {
             -webkit-user-drag: none;
             -khtml-user-drag: none;
             -moz-user-drag: none;
             -o-user-drag: none;
             user-select: none;
             user-drag: none;
+            text-decoration: none;
         }
         nav {
             background: #0d1a80;

@@ -6,7 +6,11 @@
     <br><br>
     @endrole
     <br><br>
-    <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">STOCK REQUESTS</div>
+    <a href="/stockrequest">
+        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
+            STOCK REQUESTS
+        </div>
+    </a>
     <table id="stockrequestTable" class="table stockrequestTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white; font-size: 15px;">                            
             <tr>

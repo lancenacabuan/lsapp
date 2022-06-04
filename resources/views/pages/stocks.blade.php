@@ -15,7 +15,11 @@
     <br><br>
     @endrole
     <br><br>
-    <div id="stocksHeader" class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">WAREHOUSE STOCKS</div>
+    <a href="/stocks">
+        <div id="stocksHeader" class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
+            WAREHOUSE STOCKS
+        </div>
+    </a>
     <div id="CategoryTableDiv">
         <table id="CategoryTable" class="table-hover table CategoryTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            

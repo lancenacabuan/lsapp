@@ -40,7 +40,11 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
         <div class="col-sm-2"></div>
     </div>
     <br><br>
-    <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">USER ACTIVITIES</div>
+    <a href="/">
+        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
+            USER ACTIVITY LOGS
+        </div>
+    </a>
     <table id="user_logs" class="table user_logs display" style="width: 100%; font-size: 12px;">
         <thead style="background-color: #0d1a80; color: white; font-size: 14px;">
             <tr class="tbsearch">

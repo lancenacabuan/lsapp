@@ -3,7 +3,11 @@
 <div class="container-fluid">
     <button class="btn btn-primary bp float-right" type="button" id="btnAddUser">ADD USER</button>
     <br><br><br><br>
-    <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">USER ACCOUNTS</div>
+    <a href="/users">
+        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
+            USER ACCOUNTS
+        </div>
+    </a>
     <table id="userTable" class="table userTable table-hover display" style="cursor: pointer; width: 100%;">
         <thead style="background-color: #0d1a80; color: white;">
             <tr>

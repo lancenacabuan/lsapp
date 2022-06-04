@@ -28,7 +28,7 @@ class PagesController extends Controller
         $this->middleware('auth');
     }
 
-    public function pull(){
+    public function gitpull(){
         $output = shell_exec('cd /var/www/html/main-warehouse && git pull');
         return $output;
     }
@@ -65,11 +65,7 @@ class PagesController extends Controller
         return $logs;
     }
 
-    public function changepassword(){
-        return view('pages/changepassword');
-    }
-
-    public function password_save(Request $request){
+    public function changepassword(Request $request){
         if(Hash::check($request->current, auth()->user()->password)){
             $users = User::find(auth()->user()->id);
             $users->password = Hash::make($request->new);

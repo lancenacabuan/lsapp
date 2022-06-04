@@ -44,5 +44,5 @@
 </style>
 @include('pages.users.addUser')
 @include('pages.users.updateUser')
-@include('pages.report')
+@include('pages.include')
 @endsection

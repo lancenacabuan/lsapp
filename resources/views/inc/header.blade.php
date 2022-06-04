@@ -1,4 +1,4 @@
-<div class="d-flex xD" title="v1.0.3.5" style="height: 95px;">
+<div class="d-flex xD" title="v1.0.3.5" style="height: 90px;">
     <a href="/">
         <img class="p-2 align-self-end" src="{{asset('idsi.png')}}" style="width: auto; height: 90px; line-height: 90px;">
     </a>
@@ -12,7 +12,7 @@
             <strong>{{ auth()->user()->name }}</strong>&nbsp;({{ auth()->user()->email }})<br>
             <span id="lblRole" style="font-weight: bold;">[{{ strtoupper(auth()->user()->getRoleNames()[0]) }}]</span>
             <span id="lblCompany">{{ auth()->user()->company }}</span><br>
-            <a style="color: black; text-decoration: underline;" href="{{ url('/changepassword') }}">Change Password</a>
+            <span id="lblChangePassword" style="color: black; text-decoration: underline; cursor: pointer;">Change Password</span>
         </div>
         <i class="fa fa-user-circle fa-4x p-2" aria-hidden="true"></i>
     </div>

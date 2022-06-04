@@ -31,5 +31,5 @@
         margin-top: -90px;
     }
 </style>
-@include('pages.report')
+@include('pages.include')
 @endsection

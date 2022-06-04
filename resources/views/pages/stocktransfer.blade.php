@@ -39,5 +39,5 @@
 </style>
 @include('pages.stockTransfer.newStockTransfer')
 @include('pages.stockTransfer.detailsStockTransfer')
-@include('pages.report')
+@include('pages.include')
 @endsection

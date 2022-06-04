@@ -44,5 +44,5 @@
 </style>
 @include('pages.stockRequest.newStockRequest')
 @include('pages.stockRequest.detailsStockRequest')
-@include('pages.report')
+@include('pages.include')
 @endsection

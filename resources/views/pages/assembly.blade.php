@@ -40,5 +40,5 @@
 </style>
 @include('pages.assembly.newAssembly')
 @include('pages.assembly.detailsAssembly')
-@include('pages.report')
+@include('pages.include')
 @endsection

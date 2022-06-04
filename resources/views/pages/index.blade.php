@@ -75,5 +75,5 @@ $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.sta
         margin-top: -90px;
     }
 </style>
-@include('pages.report')
+@include('pages.include')
 @endsection

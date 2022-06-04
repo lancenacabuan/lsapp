@@ -11,7 +11,7 @@ use App\Http\Controllers\DefectiveController;
 use App\Http\Controllers\FileMaintenanceController;
 
 Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
-Route::get('/gitpull',[PagesController::class,'pull']);
+Route::get('/gitpull',[PagesController::class,'gitpull']);
 // Route::fallback(function(){ return redirect("/"); });
 
 //Index
@@ -27,8 +27,7 @@ Route::any('/report/log',[PagesController::class,'report_log']);
 //
 
 //Change Password
-Route::get('/changepassword',[PagesController::class,'changepassword']);
-Route::any('/password_save',[PagesController::class,'password_save']);
+Route::any('/changepassword',[PagesController::class,'changepassword']);
 //
 
 //Users

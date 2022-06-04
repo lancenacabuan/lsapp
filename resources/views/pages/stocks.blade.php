@@ -81,7 +81,7 @@
     <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">EDIT ITEM SERIAL</h6>            
+            <h6 class="modal-title w-100">EDIT ITEM SERIAL</h6>
             <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
@@ -112,5 +112,5 @@
 </style>
 @include('pages.stocks.addStock')
 @include('pages.stocks.importStock')
-@include('pages.report')
+@include('pages.include')
 @endsection

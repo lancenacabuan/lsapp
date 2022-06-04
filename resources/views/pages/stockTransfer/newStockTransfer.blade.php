@@ -64,7 +64,7 @@
                         <input class="form-control" id="qty" min="0" max="" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="number" placeholder="Qty" onkeyup="if(value<0) value=0;" disabled>
                         <input class="form-control" id="qtystock" style="font-size: .85rem; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 5px;" type="text" placeholder="Stock" readonly>
                         <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 75%; margin-left: 5px; margin-top: -1px;">
-                    </div>          
+                    </div>
                 </form>
                 <div class="container-fluid"  id="#divNewStockTransfer">
                     <table id='tblNewStockTransfer' class="table tblNewStockTransfer" style="cursor: pointer; font-size: 12px; display: none;">

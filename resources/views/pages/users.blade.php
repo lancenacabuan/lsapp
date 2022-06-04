@@ -10,6 +10,7 @@
                 <th>ID</th>
                 <th>FULLNAME</th>
                 <th>EMAIL</th>
+                <th>COMPANY</th>
                 <th>USER LEVEL</th>
                 <th>STATUS</th>
             </tr>

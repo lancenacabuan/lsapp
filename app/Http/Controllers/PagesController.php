@@ -114,9 +114,13 @@ class PagesController extends Controller
     }
 
     public function users_data(){
-        $list = User::selectRaw('users.id AS user_id, users.name AS user_name, users.email AS user_email, roles.name AS role_name, users.status AS user_status')
+        $list = User::selectRaw('users.id AS user_id, users.name AS user_name, users.email AS user_email, users.company AS company, roles.name AS role_name, users.status AS user_status')
             ->join('model_has_roles', 'model_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->orderBy('role_name', 'ASC')
+            ->orderBy('company', 'ASC')
+            ->orderBy('user_status', 'ASC')
+            ->orderBy('user_name', 'ASC')
             ->get();
 
         return DataTables::of($list)->make(true);
@@ -156,6 +160,7 @@ class PagesController extends Controller
         $users->name = $name;
         $users->email = strtolower($request->email);
         $users->password = Hash::make($password);
+        $users->company = $request->company;
         $users->assignRole($request->role);
         $users->status = 'ACTIVE';
         $sql = $users->save();
@@ -205,6 +210,7 @@ class PagesController extends Controller
         $users = User::find($request->input('id1'));
         $users->name = $name1;
         $users->email = $email1;
+        $users->company = $request->company1;
         $users->removeRole($request->role2);
         $users->assignRole($request->role1);
         $users->status = $request->status1;
@@ -230,6 +236,12 @@ class PagesController extends Controller
             else{
                 $email = NULL;
             }
+            if($request->company1 != $request->company2){
+                $company = "[Company: FROM '$request->company2' TO '$request->company1']";
+            }
+            else{
+                $company = NULL;
+            }
             if($request->role1 != $request->role2){
                 $role = "[User Level: FROM '$request->role2' TO '$request->role1']";
             }
@@ -245,7 +257,7 @@ class PagesController extends Controller
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "USER UPDATED: User successfully updated details of $request->name2 with UserID#$request->id1 with the following CHANGES: $name $email $role $status.";
+            $userlogs->activity = "USER UPDATED: User successfully updated details of $request->name2 with UserID#$request->id1 with the following CHANGES: $name $email $company $role $status.";
             $userlogs->save();
         }
 

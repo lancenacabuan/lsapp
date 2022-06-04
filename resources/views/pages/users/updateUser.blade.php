@@ -10,6 +10,7 @@
             <input type="hidden" name="id1" id="id1">
             <input type="hidden" name="name2" id="name2">
             <input type="hidden" name="email2" id="email2">
+            <input type="hidden" name="company2" id="company2">
             <input type="hidden" name="role2" id="role2">
             <input type="hidden" name="status2" id="status2">
             <div class="input-group mb-3">
@@ -17,12 +18,24 @@
                     <label class="input-group-text" style="width: 100px;">Fullname</label>
                 </div>
                 <input type="text" id="name1" name="name1" style="width: 370px; border-width: thin;" placeholder="Please enter account user fullname">
-            </div> 
+            </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text" style="width: 100px;">Email</label>
                 </div>
                 <input type="email" id="email1" name="email1" style="width: 370px; border-width: thin;" placeholder="Please enter account user email">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" style="width: 100px;">Company</label>
+                </div>
+                <select id="company1" name="company1" style="width: 370px !important; color: Black !important;">
+                    <option value="" selected disabled>Select Company</option>
+                    <option value="Apsoft" style="color: Black;">Apsoft, Inc.</option>
+                    <option value="Ideaserv" style="color: Black;">Ideaserv Systems, Inc.</option>
+                    <option value="NuServ" style="color: Black;">NuServ Solutions, Inc.</option>
+                    <option value="Phillogix" style="color: Black;">Phillogix Systems, Inc.</option>
+                </select>
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">

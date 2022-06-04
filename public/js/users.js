@@ -182,8 +182,8 @@ $('#userTable tbody').on('click', 'tr', function(){
         $('#email2').val(data.user_email);
         $('#company1').val(data.company);
         $('#company2').val(data.company);
-        $('#role1').val(data.role_name);
-        $('#role2').val(data.role_name);
+        $('#role1').val(data.role);
+        $('#role2').val(data.role);
         $('#status2').val(data.user_status);
         if(data.user_status == 'ACTIVE'){
             $('#status1').prop('checked', true);

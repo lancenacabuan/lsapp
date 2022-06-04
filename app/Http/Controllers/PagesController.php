@@ -121,7 +121,7 @@ class PagesController extends Controller
     public function users_data(){
         $list = User::query()->selectRaw('users.id AS user_id, users.name AS user_name, users.email AS user_email, users.company AS company, 
             (CASE WHEN users.company = \'NuServ\' AND roles.name = \'sales\' THEN \'MERCHANT\' ELSE UPPER(roles.name) END) AS role_name, 
-            users.status AS user_status')
+            roles.name AS role, users.status AS user_status')
             ->join('model_has_roles', 'model_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
             ->orderBy('user_status', 'ASC')
@@ -129,7 +129,7 @@ class PagesController extends Controller
             ->orderBy('company', 'ASC')
             ->orderBy('user_name', 'ASC')
             ->get();
-        
+
         return DataTables::of($list)->make(true);
     }
 

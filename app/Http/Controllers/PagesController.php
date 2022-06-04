@@ -60,6 +60,11 @@ class PagesController extends Controller
         return DataTables::of($list)->make(true);
     }
 
+    public function index_reload(){
+        $logs = UserLogs::select()->count();
+        return $logs;
+    }
+
     public function changepassword(){
         return view('pages/changepassword');
     }

@@ -32,8 +32,17 @@ $('.filter-input').on('keyup', function(){
         .draw();
 });
 
+var logs;
 setInterval(function(){
-    $('table.user_logs').DataTable().ajax.reload(null, false);
+    $.ajax({
+        url: "/index/reload",
+        success: function(data){
+            if(data != logs){
+                logs = data;
+                table.ajax.reload(null, false);
+            }
+        }
+    });
 }, 3000);
 
 $(document).ready(function(){

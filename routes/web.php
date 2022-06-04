@@ -17,6 +17,7 @@ Route::get('/gitpull',[PagesController::class,'pull']);
 //Index
 Route::get('/',[PagesController::class,'index']);
 Route::get('/index/data',[PagesController::class,'index_data']);
+Route::get('/index/reload',[PagesController::class,'index_reload']);
 //
 
 //Report A Problem

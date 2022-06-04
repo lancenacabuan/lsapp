@@ -1,5 +1,5 @@
 <div class="modal fade in" id="addUser">
-    <div class="modal-dialog modal-m">
+    <div class="modal-dialog modal-m modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">ADD NEW USER</h6>

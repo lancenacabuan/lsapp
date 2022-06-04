@@ -4139,7 +4139,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
 
 $('.table.transItems').DataTable().on('select', function(){});
 $('.transItems tbody').on('click', 'tr', function(){
-    if($("#current_role").val() != '["sales"]'){
+    if($("#current_role").val() != 'sales'){
         return false;
     }
     var requestStatus = $('#status_id_details').val();

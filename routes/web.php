@@ -27,7 +27,8 @@ Route::any('/report/log',[PagesController::class,'report_log']);
 //
 
 //Change Password
-Route::any('/changepassword',[PagesController::class,'changepassword']);
+Route::get('/change/validate',[PagesController::class,'change_validate']);
+Route::any('/change/password',[PagesController::class,'change_password']);
 //
 
 //Users

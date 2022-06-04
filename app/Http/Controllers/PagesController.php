@@ -50,7 +50,9 @@ class PagesController extends Controller
     }
 
     public function index_data(){
-        $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, roles.name AS role, user_logs.activity AS activity, user_logs.created_at AS date, user_logs.id AS log_id')
+        $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
+        (CASE WHEN users.company = \'NuServ\' AND roles.name = \'sales\' THEN \'MERCHANT\' ELSE UPPER(roles.name) END) AS role, 
+        user_logs.activity AS activity, user_logs.created_at AS date')
         ->join('users', 'users.id', '=', 'user_id')
         ->join('model_has_roles', 'model_id', '=', 'users.id')
         ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
@@ -65,24 +67,31 @@ class PagesController extends Controller
         return $logs;
     }
 
-    public function changepassword(Request $request){
+    public function change_validate(Request $request){
         if(Hash::check($request->current, auth()->user()->password)){
+            $result = 'true';
+        }
+        else{
+            $result = 'false';
+        }
+
+        return response($result);
+    }
+
+    public function change_password(Request $request){
+        do{
             $users = User::find(auth()->user()->id);
             $users->password = Hash::make($request->new);
             $sql = $users->save();
-
-            if(!$sql){
-                $result = 'false';
-            }
-            else {
-                $result = 'true';
-            }
         }
-        else{
-            $result = 'error';
-        }
+        while(!$sql);
 
-        if($result == 'true'){
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
             $userlogs->activity = "CHANGE PASSWORD: User successfully changed own account password.";

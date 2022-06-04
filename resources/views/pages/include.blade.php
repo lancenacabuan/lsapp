@@ -258,47 +258,65 @@ $('#btnChangePassword').on('click', function(){
             return false;
         }
         else{
-            swal({
-                title: "CHANGE PASSWORD?",
-                text: "You are about to CHANGE your current user account password!",
-                icon: "warning",
-                buttons: true,
-            })
-            .then((willDelete) => {
-                if(willDelete){
-                    $.ajax({
-                        url: "/changepassword",
-                        type: "PUT",
-                        headers:{
-                            'X-CSRF-TOKEN': $("#csrf").val()
-                        },
-                        data:{
-                            _token: $("#csrf").val(),
-                            new: pass2,
-                            current: pass1
-                        },
-                        success: function(data){
-                            if(data == 'true'){
-                                $('.closePassword').click();
-                                swal("UPDATE SUCCESS", "User changed password successfully!", "success");
-                                return true;
+            $.ajax({
+                url: "/change/validate",
+                headers:{
+                    'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    _token: $("#csrf").val(),
+                    current: pass1
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        swal({
+                            title: "CHANGE PASSWORD?",
+                            text: "You are about to CHANGE your current user account password!",
+                            icon: "warning",
+                            buttons: true,
+                        })
+                        .then((willDelete) => {
+                            if(willDelete){
+                                $.ajax({
+                                    url: "/change/password",
+                                    headers:{
+                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                    },
+                                    data:{
+                                        _token: $("#csrf").val(),
+                                        new: pass2,
+                                    },
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            $('.closePassword').click();
+                                            swal("UPDATE SUCCESS", "User changed password successfully!", "success");
+                                            return true;
+                                        }
+                                        else{
+                                            swal("UPDATE FAILED", "User password change failed!", "error");
+                                            return true;
+                                        }
+                                    },
+                                    error: function(data){
+                                        if(data.status == 401){
+                                            window.location.href = '/';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
                             }
-                            else if(data == 'false'){
-                                swal("UPDATE FAILED", "User password change failed!", "error");
-                                return true;
-                            }
-                            else{
-                                swal('UPDATE ERROR','Incorrect Current Password!', 'error');
-                                return false;
-                            }
-                        },
-                        error: function(data){
-                            if(data.status == 401){
-                                window.location.href = '/';
-                            }
-                            alert(data.responseText);
-                        }
-                    });
+                        });
+                    }
+                    else{
+                        swal('UPDATE ERROR','Incorrect Current Password!', 'error');
+                        return false;
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/';
+                    }
+                    alert(data.responseText);
                 }
             });
         }

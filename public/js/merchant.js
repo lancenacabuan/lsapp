@@ -11,7 +11,7 @@ $(function(){
         day = '0' + day.toString();    
     minDate = year + '-' + month + '-' + day;
 
-    // $('#needdate').attr('min', minDate);
+    $('#needdate').attr('min', minDate);
     // $('#schedOn').attr('min', minDate);
     // $('#resched').attr('min', minDate);
 });
@@ -58,6 +58,7 @@ function validate_fileupload(reference_upload){
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
+        $('#btnAttach').css("width", "280px");
         return false;
     }
     else if(error_ext > 0){
@@ -65,6 +66,7 @@ function validate_fileupload(reference_upload){
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
+        $('#btnAttach').css("width", "280px");
         return false;
     }
     else if(error_mb > 0){
@@ -72,20 +74,24 @@ function validate_fileupload(reference_upload){
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
+        $('#btnAttach').css("width", "280px");
         return false;
     }
     else{
         if(files_length == 1){
             $('.upload_label').html(reference_upload.value.split("\\").pop());
             $('.disupload').show();
+            $('#btnAttach').css("width", "250px");
         }
         else if(files_length > 1){
             $('.upload_label').html('UPLOADED ('+files_length+') IMAGE FILES');
             $('.disupload').show();
+            $('#btnAttach').css("width", "250px");
         }
         else{
             $('.upload_label').html('Upload Image File/s less than 5MB each');
             $('.disupload').hide();
+            $('#btnAttach').css("width", "280px");
         }
         return true;
     }
@@ -338,6 +344,7 @@ $(document).on('click', '.disupload', function(){
     $('#reference_upload').val('');
     $('.upload_label').html('Upload Image File/s less than 5MB each');
     $('.disupload').hide();
+    $('#btnAttach').css("width", "280px");
 });
 
 $('.btnClose').on('click', function(){

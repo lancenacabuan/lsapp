@@ -346,7 +346,7 @@ $('.btnClose').on('click', function(){
 
 $('table.merchantTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
-$('table.merchantTable').DataTable({ 
+$('table.merchantTable').DataTable({
     columnDefs: [
         {
             "targets": [0],

@@ -132,7 +132,7 @@ $('#btnClose').on('click', function(){
 
 $('table.assemblyTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
-$('table.assemblyTable').DataTable({ 
+$('table.assemblyTable').DataTable({
     columnDefs: [
         {
             "targets": [0],

@@ -118,7 +118,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('.btnNewWarranty').show();
     $('#warrantyTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
-    tblWarranty = $('table.warrantyTable').DataTable({ 
+    tblWarranty = $('table.warrantyTable').DataTable({
         dom: 'rtp',
         language:{
             processing: "Loading...",

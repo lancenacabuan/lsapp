@@ -1,6 +1,6 @@
 $('table.userTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
-var table = $('table.userTable').DataTable({ 
+var table = $('table.userTable').DataTable({
     language:{
         processing: "Loading...",
         emptyTable: "No data available in table"

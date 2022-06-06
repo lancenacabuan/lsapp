@@ -461,7 +461,7 @@ $('#modalClose').on('click', function(){
 
 $('table.stocktransferTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
-$('table.stocktransferTable').DataTable({ 
+$('table.stocktransferTable').DataTable({
     columnDefs: [
         {
             "targets": [0],
@@ -698,7 +698,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                 }
 
                 $('table.transferDetails').dataTable().fnDestroy();
-                $('table.transferDetails').DataTable({ 
+                $('table.transferDetails').DataTable({
                     columnDefs: [
                         {
                             "targets": transferDetails,
@@ -1052,7 +1052,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     }
 
     $('table.transferDetails').dataTable().fnDestroy();
-    $('table.transferDetails').DataTable({ 
+    $('table.transferDetails').DataTable({
         columnDefs: [
             {
                 "targets": transferDetails,

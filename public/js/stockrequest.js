@@ -770,7 +770,7 @@ $('.btnClose').on('click', function(){
 $('table.stockrequestTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
 if($("#current_role").val() == 'sales'){
-    $('table.stockrequestTable').DataTable({ 
+    $('table.stockrequestTable').DataTable({
         columnDefs: [
             {
                 "targets": [0],
@@ -869,7 +869,7 @@ if($("#current_role").val() == 'sales'){
     });
 }
 else{
-    $('table.stockrequestTable').DataTable({ 
+    $('table.stockrequestTable').DataTable({
         columnDefs: [
             {
                 "targets": [0],
@@ -1415,7 +1415,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     }
                     
                 $('table.stockDetails').dataTable().fnDestroy();    
-                $('table.stockDetails').DataTable({ 
+                $('table.stockDetails').DataTable({
                     columnDefs: [
                         {
                             "targets": targetStockDetails,
@@ -1491,7 +1491,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 }); 
                 
                 $('table.stockDetails1').dataTable().fnDestroy();    
-                $('table.stockDetails1').DataTable({ 
+                $('table.stockDetails1').DataTable({
                     columnDefs: [
                         {
                             "targets": targetStockDetails1,
@@ -1554,7 +1554,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 });
                 
                 $('table.stockDetails2').dataTable().fnDestroy();    
-                $('table.stockDetails2').DataTable({ 
+                $('table.stockDetails2').DataTable({
                     columnDefs: [
                         {
                             "targets": targetStockDetails2,
@@ -2637,7 +2637,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         }
         
     $('table.stockDetails').dataTable().fnDestroy();    
-    $('table.stockDetails').DataTable({ 
+    $('table.stockDetails').DataTable({
         columnDefs: [
             {
                 "targets": targetStockDetails,
@@ -2713,7 +2713,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     }); 
     
     $('table.stockDetails1').dataTable().fnDestroy();    
-    $('table.stockDetails1').DataTable({ 
+    $('table.stockDetails1').DataTable({
         columnDefs: [
             {
                 "targets": targetStockDetails1,
@@ -2776,7 +2776,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     });
     
     $('table.stockDetails2').dataTable().fnDestroy();    
-    $('table.stockDetails2').DataTable({ 
+    $('table.stockDetails2').DataTable({
         columnDefs: [
             {
                 "targets": targetStockDetails2,

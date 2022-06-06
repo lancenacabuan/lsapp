@@ -1,6 +1,6 @@
 $('table.defectiveTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
-$('table.defectiveTable').DataTable({ 
+$('table.defectiveTable').DataTable({
     language:{
         processing: "Loading...",
         emptyTable: "No data available in table"

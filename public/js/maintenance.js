@@ -1,10 +1,10 @@
-var warranty, wrdata;
+var tblItem, tblAssembly, tblCategory, tblLocation, tblWarranty, wrdata;
 if($(location).attr('pathname')+window.location.search == '/maintenance'){
     $('#nav1').addClass("active-link");
     $('.btnNewItem').show();
     $('#itemTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
-    $('table.itemTable').DataTable({
+    tblItem = $('table.itemTable').DataTable({
         dom: 'Blftrip',
         buttons: ['excel'],
         aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
@@ -31,7 +31,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('.btnCreateItem').show();
     $('#assemblyitemTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
-    $('table.assemblyitemTable').DataTable({
+    tblAssembly = $('table.assemblyitemTable').DataTable({
         language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
@@ -55,7 +55,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('.btnNewCategory').show();
     $('#categoryTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
-    $('table.categoryTable').DataTable({
+    tblCategory = $('table.categoryTable').DataTable({
         language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
@@ -78,7 +78,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('.btnNewLocation').show();
     $('#locationTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
-    $('table.locationTable').DataTable({
+    tblLocation = $('table.locationTable').DataTable({
         language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
@@ -118,7 +118,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('.btnNewWarranty').show();
     $('#warrantyTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
-    warranty = $('table.warrantyTable').DataTable({ 
+    tblWarranty = $('table.warrantyTable').DataTable({ 
         dom: 'rtp',
         language:{
             processing: "Loading...",
@@ -265,7 +265,7 @@ $(document).on("click", ".warrantyTable tbody tr", function(){
         backdrop: 'static',
         keyboard: false
     });
-    wrdata = warranty.row(this).data();
+    wrdata = tblWarranty.row(this).data();
     $('#WarrantyForm').trigger('reset');
     $('.modal-title').text('UPDATE WARRANTY DETAILS');
     $('#btnSubmit').val('UPDATE');
@@ -291,65 +291,85 @@ $(document).on("click", ".warrantyTable tbody tr", function(){
 });
 
 $(document).on('click', '#btnSubmit', function(){
-    if (!$('#warranty').val() || !$('#duration').val()) {
+    if(!$('#warranty').val() || !$('#duration').val()){
         $('#WarrantyForm')[0].reportValidity();
         return false;
     }
     var inclusive = new Array();
-    $('.cb').each(function () {
+    $('.cb').each(function(){
         if(this.checked)
             inclusive.push($(this).val());
     });
-    if ($('#btnSubmit').val() == 'SUBMIT') {
-        $.ajax({
-            url: "/AddWarranty",
-            type: "POST",
-            dataType: 'json',
-            headers:{
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data:{
-                warranty: $.trim($('#warranty').val()).toUpperCase(),
-                duration: $('#duration').val(),
-                inclusive: inclusive
-            },
-            success: function(result){
-                $('#AddWarranty').modal('hide');
-                if(result == true){
-                    swal('SAVE SUCCESS', 'New Warranty has been saved successfully!', 'success');
-                    setTimeout(function(){location.reload()}, 2000);
-                }
-                else{
-                    swal('SAVE FAILED', 'New Warranty save failed!', 'error');
-                    setTimeout(function(){location.reload()}, 2000);
-                }
+    if($('#btnSubmit').val() == 'SUBMIT'){
+        swal({
+            title: "ADD NEW WARRANTY?",
+            text: "You are about to ADD this new warranty!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    url: "/AddWarranty",
+                    type: "POST",
+                    dataType: 'json',
+                    headers:{
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{
+                        warranty: $.trim($('#warranty').val()).toUpperCase(),
+                        duration: $('#duration').val(),
+                        inclusive: inclusive
+                    },
+                    success: function(result){
+                        $('#AddWarranty').modal('hide');
+                        if(result == true){
+                            swal('SAVE SUCCESS', 'New Warranty has been saved successfully!', 'success');
+                            tblWarranty.ajax.reload(null, false);
+                        }
+                        else{
+                            swal('SAVE FAILED', 'New Warranty save failed!', 'error');
+                            tblWarranty.ajax.reload(null, false);
+                        }
+                    }
+                });
             }
         });
     }
     else{
-        $.ajax({
-            url: "/UpdateWarranty",
-            type: "PUT",
-            dataType: 'json',
-            headers:{
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data:{
-                id: wrdata.id,
-                warranty: $.trim($('#warranty').val()).toUpperCase(),
-                duration: $('#duration').val(),
-                inclusive: inclusive
-            },
-            success: function(result){
-                $('#AddWarranty').modal('hide');
-                if(result == true){
-                    swal('UPDATE SUCCESS', 'Warranty details has been updated successfully!', 'success');
-                    setTimeout(function(){location.reload()}, 2000);
-                }
-                else{
-                    swal('UPDATE FAILED', 'Warranty details update failed!', 'error');
-                    setTimeout(function(){location.reload()}, 2000);
-                }
+        swal({
+            title: "UPDATE WARRANTY?",
+            text: "You are about to UPDATE this warranty!",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    url: "/UpdateWarranty",
+                    type: "PUT",
+                    dataType: 'json',
+                    headers:{
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{
+                        id: wrdata.id,
+                        warranty: $.trim($('#warranty').val()).toUpperCase(),
+                        duration: $('#duration').val(),
+                        inclusive: inclusive
+                    },
+                    success: function(result){
+                        $('#AddWarranty').modal('hide');
+                        if(result == true){
+                            swal('UPDATE SUCCESS', 'Warranty details has been updated successfully!', 'success');
+                            tblWarranty.ajax.reload(null, false);
+                        }
+                        else{
+                            swal('UPDATE FAILED', 'Warranty details update failed!', 'error');
+                            tblWarranty.ajax.reload(null, false);
+                        }
+                    }
+                });
             }
         });
     }
@@ -399,18 +419,18 @@ $('#btnSaveItem').on('click', function(){
                     },
                     success: function(data){
                         if(data.result == 'true'){
-                            $('#newItem').hide();
+                            $('#newItem').modal('hide');
                             swal("SAVE SUCCESS", "New Item has been saved successfully!", "success");
-                            setTimeout(function(){window.location.href="/maintenance"}, 2000);
+                            tblItem.ajax.reload(null, false);
                         }
                         else if(data.result == 'duplicate'){
                             swal("DUPLICATE ITEM", "Item Description already exists!", "error");
                             return false;
                         }
                         else{
-                            $('#newItem').hide();
+                            $('#newItem').modal('hide');
                             swal("SAVE FAILED", "New Item save failed!", "error");
-                            setTimeout(function(){window.location.href="/maintenance"}, 2000);
+                            tblItem.ajax.reload(null, false);
                         }
                     },
                     error: function(data){
@@ -509,18 +529,18 @@ $('#btnUpdateItem').on('click', function(){
                     },
                     success: function(data){
                         if(data.result == 'true'){
-                            $('#detailsItem').hide();
-                            swal("UPDATE SUCCESS", "Item details has been updated successfully!.", "success");
-                            setTimeout(function(){window.location.href="/maintenance"}, 2000);
+                            $('#detailsItem').modal('hide');
+                            swal("UPDATE SUCCESS", "Item details has been updated successfully!", "success");
+                            tblItem.ajax.reload(null, false);
                         }
                         else if(data.result == 'duplicate'){
                             swal("DUPLICATE ITEM", "Item Description already exists!", "error");
                             return false;
                         }
                         else{
-                            $('#detailsItem').hide();
+                            $('#detailsItem').modal('hide');
                             swal("UPDATE FAILED", "Item details update failed!", "error");
-                            setTimeout(function(){window.location.href="/maintenance"}, 2000);
+                            tblItem.ajax.reload(null, false);
                         }
                     },
                     error: function(data){
@@ -591,9 +611,9 @@ $('#btnSaveCategory').on('click', function(){
                     },
                     success: function(data){
                         if(data.result == 'true'){
-                            $('#newCategory').hide();
+                            $('#newCategory').modal('hide');
                             swal("SAVE SUCCESS", "New Category has been saved successfully!", "success");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=categories"}, 2000);
+                            tblCategory.ajax.reload(null, false);
                             $.ajax({
                                 url: "/logNewCategory",
                                 type: "POST",
@@ -625,9 +645,9 @@ $('#btnSaveCategory').on('click', function(){
                             return false;
                         }
                         else{
-                            $('#newCategory').hide();
+                            $('#newCategory').modal('hide');
                             swal("SAVE FAILED", "New Category save failed!", "error");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=categories"}, 2000);
+                            tblCategory.ajax.reload(null, false);
                         }
                     },
                     error: function(data){
@@ -699,9 +719,9 @@ $('#btnUpdateCategory').on('click', function(){
                     },
                     success: function(data){
                         if(data.result == 'true'){
-                            $('#detailsCategory').hide();
-                            swal("UPDATE SUCCESS", "Category Name has been updated successfully!.", "success");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=categories"}, 2000);
+                            $('#detailsCategory').modal('hide');
+                            swal("UPDATE SUCCESS", "Category Name has been updated successfully!", "success");
+                            tblCategory.ajax.reload(null, false);
                             $.ajax({
                                 url: "/logUpdateCategory",
                                 type: "POST",
@@ -734,9 +754,9 @@ $('#btnUpdateCategory').on('click', function(){
                             return false;
                         }
                         else{
-                            $('#detailsCategory').hide();
+                            $('#detailsCategory').modal('hide');
                             swal("UPDATE FAILED", "Category Name update failed!", "error");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=categories"}, 2000);
+                            tblCategory.ajax.reload(null, false);
                         }
                     },
                     error: function(data){
@@ -786,7 +806,7 @@ $('#btnSaveLocation').on('click', function(){
                     success: function(data){
                         if(data.result == 'true'){
                             scrollReset();
-                            $('#newLocation').hide();
+                            $('#newLocation').modal('hide');
                             $('#newLocation').modal('dispose');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
@@ -803,7 +823,7 @@ $('#btnSaveLocation').on('click', function(){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
                                         swal("REQUEST SUCCESS", "New Location has been requested successfully!", "success");
-                                        setTimeout(function(){window.location.href="/maintenance?tbl=locations"}, 2000);
+                                        tblLocation.ajax.reload(null, false);
                                     }
                                     else{
                                         return false;
@@ -822,9 +842,9 @@ $('#btnSaveLocation').on('click', function(){
                             return false;
                         }
                         else{
-                            $('#newLocation').hide();
+                            $('#newLocation').modal('hide');
                             swal("REQUEST FAILED", "New Location request failed!", "error");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=locations"}, 2000);
+                            tblLocation.ajax.reload(null, false);
                         }
                     },
                     error: function(data){
@@ -922,7 +942,7 @@ $('#btnUpdateLocation').on('click', function(){
                     success: function(data){
                         if(data.result == 'request'){
                             scrollReset();
-                            $('#detailsLocation').hide();
+                            $('#detailsLocation').modal('hide');
                             $('#detailsLocation').modal('dispose');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
@@ -941,7 +961,7 @@ $('#btnUpdateLocation').on('click', function(){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
                                         swal("REQUEST SUCCESS", "Location Status Change has been requested successfully!", "success");
-                                        setTimeout(function(){window.location.href="/maintenance?tbl=locations"}, 2000);
+                                        tblLocation.ajax.reload(null, false);
                                     }
                                     else{
                                         return false;
@@ -956,9 +976,9 @@ $('#btnUpdateLocation').on('click', function(){
                             });
                         }
                         else{
-                            $('#detailsLocation').hide();
+                            $('#detailsLocation').modal('hide');
                             swal("REQUEST FAILED", "Location Status Change request failed!", "error");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=locations"}, 2000);
+                            tblLocation.ajax.reload(null, false);
                         }
                     },
                     error: function(data){
@@ -995,18 +1015,18 @@ $('#btnUpdateLocation').on('click', function(){
                     },
                     success: function(data){
                         if(data.result == 'true'){
-                            $('#detailsLocation').hide();
+                            $('#detailsLocation').modal('hide');
                             swal("UPDATE SUCCESS", "Location Name has been updated successfully!", "success");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=locations"}, 2000);
+                            tblLocation.ajax.reload(null, false);
                         }
                         else if(data.result == 'duplicate'){
                             swal("DUPLICATE LOCATION", "Location Name already exists!", "error");
                             return false;
                         }
                         else{
-                            $('#detailsLocation').hide();
+                            $('#detailsLocation').modal('hide');
                             swal("UPDATE FAILED", "Location Name update failed!", "error");
-                            setTimeout(function(){window.location.href="/maintenance?tbl=locations"}, 2000);
+                            tblLocation.ajax.reload(null, false);
                         }
                     },
                     error: function(data){
@@ -1261,9 +1281,9 @@ $('#btnSave').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#createItem').hide();
+                                    $('#createItem').modal('hide');
                                     swal("CREATE SUCCESS", "New Assembled Item has been created successfully!", "success");
-                                    setTimeout(function(){location.reload();}, 2000);
+                                    tblAssembly.ajax.reload(null, false);
                                 }
                                 else{
                                     return false;
@@ -1286,9 +1306,9 @@ $('#btnSave').on('click', function(){
                         return false;
                     }
                     else{
-                        $('#newStockRequest').hide();
+                        $('#createItem').modal('hide');
                         swal("CREATE FAILED", "New Assembled Item create failed!", "error");
-                        setTimeout(function(){location.reload();}, 2000);
+                        tblAssembly.ajax.reload(null, false);
                     }
                 },
                 error: function(data){
@@ -1402,9 +1422,9 @@ $('#btnUpdate').on('click', function(){
                 },
                 success: function(data){
                     if(data == 'true'){
-                        $('#detailsAssemblyItem').hide();
+                        $('#detailsAssemblyItem').modal('hide');
                         swal("UPDATE SUCCESS", "Assembled Item Description has been updated successfully!", "success");
-                        setTimeout(function(){location.reload();}, 2000);
+                        tblAssembly.ajax.reload(null, false);
                     }
                     else if(data == 'duplicate'){
                         swal("DUPLICATE ITEM", "Item Description already exists!", "error");
@@ -1415,9 +1435,9 @@ $('#btnUpdate').on('click', function(){
                         return false;
                     }
                     else{
-                        $('#updateUser').hide();
+                        $('#detailsAssemblyItem').modal('hide');
                         swal("UPDATE FAILED", "Assembled Item Description update failed!", "error");
-                        setTimeout(function(){location.reload();}, 2000);
+                        tblAssembly.ajax.reload(null, false);
                     }
                 },
                 error: function(data){

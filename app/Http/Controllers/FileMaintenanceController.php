@@ -40,6 +40,10 @@ class FileMaintenanceController extends Controller
         {
             return redirect('/assembly');
         }
+        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
+        {
+            return redirect('/merchant');
+        }
         if(!auth()->user()->hasanyRole('admin')) //---ROLES---//
         {
             return redirect('/');

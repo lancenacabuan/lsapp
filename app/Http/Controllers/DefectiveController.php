@@ -32,6 +32,10 @@ class DefectiveController extends Controller
         {
             return redirect('/assembly');
         }
+        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
+        {
+            return redirect('/merchant');
+        }
         $categories = Category::select('id','category')->get()->sortBy('category');
         $items = Item::select('id','item')->get()->sortBy('item');
         return view('/pages/defective', compact('categories','items'));

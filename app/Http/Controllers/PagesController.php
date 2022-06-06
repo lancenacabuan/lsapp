@@ -46,6 +46,10 @@ class PagesController extends Controller
         {
             return redirect('/assembly');
         }
+        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
+        {
+            return redirect('/merchant');
+        }
         return view('pages/index');        
     }
 
@@ -112,6 +116,10 @@ class PagesController extends Controller
         if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
         {
             return redirect('/assembly');
+        }
+        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
+        {
+            return redirect('/merchant');
         }
         if(!auth()->user()->hasanyRole('admin')) //---ROLES---//
         {

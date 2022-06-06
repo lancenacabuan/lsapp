@@ -36,6 +36,10 @@ class StocksController extends Controller
         {
             return redirect('/assembly');
         }
+        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
+        {
+            return redirect('/merchant');
+        }
         $categories= Category::select('id','category')->get()->sortBy('category');
         $locations= Location::select('id','location')->whereNotIn('id', ['7','8','9','10'])->get()->sortBy('location');
         $items= Item::select('id','item')->get()->sortBy('item');

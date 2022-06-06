@@ -5,14 +5,14 @@
     window.location = '/';
 </script>
 @endrole
-@role('sales') {{---ROLES---}}
+@role('sales|merchant') {{---ROLES---}}
 @if(auth()->user()->id != $list->user_id)
 <script>
     window.location = '/';
 </script>
 @endif
 @endrole
-@role('sales|approver - sales|accounting') {{---ROLES---}}
+@role('sales|approver - sales|accounting|merchant') {{---ROLES---}}
 @if($list->req_type_id == '1' || $list->req_type_id == '4' || $list->req_type_id == '5')
 <script>
     window.location = '/';
@@ -28,6 +28,9 @@
     @endrole
     @role('assembler') {{---ROLES---}}
     <a href="/assembly?request_number={{$list->req_num}}" class="btn btn-primary float-right bp">BACK</a>
+    @endrole
+    @role('merchant') {{---ROLES---}}
+    <a href="/merchant?request_number={{$list->req_num}}" class="btn btn-primary float-right bp">BACK</a>
     @endrole
 </div>
 <br>

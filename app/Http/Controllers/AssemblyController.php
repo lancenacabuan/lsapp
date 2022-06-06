@@ -33,6 +33,10 @@ class AssemblyController extends Controller
         {
             return redirect('/stocktransfer');
         }
+        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
+        {
+            return redirect('/merchant');
+        }
         if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')) //---ROLES---//
         {
             return redirect('/');

@@ -25,17 +25,17 @@
                     </div>
                     <div class="form-group row" style="margin-top: -46px;">
                         <div class="form-check" style="text-align: left; margin-left: 192px;">
-                            <input type="checkbox" class="cb" id="phone" value="Phone Support"> Phone Support<br>      
-                            <input type="checkbox" class="cb" id="onsite" value="Onsite Visit"> Onsite Support<br>      
-                            <input type="checkbox" class="cb" id="software" value="Software"> Software<br>      
-                            <input type="checkbox" class="cb" id="hardware" value="Hardware"> Hardware<br>      
-                            <input type="checkbox" class="cb" id="replacement" value="Parts Replacement"> Parts Replacement<br>      
-                            <input type="checkbox" class="cb" id="su" value="Service Unit"> Service Unit<br>      
+                            <input type="checkbox" class="cb" id="phone" value=" Phone Support">Phone Support<br>      
+                            <input type="checkbox" class="cb" id="onsite" value=" Onsite Visit">Onsite Support<br>      
+                            <input type="checkbox" class="cb" id="software" value=" Software">Software<br>      
+                            <input type="checkbox" class="cb" id="hardware" value=" Hardware">Hardware<br>      
+                            <input type="checkbox" class="cb" id="replacement" value=" Parts Replacement">Parts Replacement<br>      
+                            <input type="checkbox" class="cb" id="su" value=" Service Unit">Service Unit<br>      
                         </div>
                     </div>
                 </form>
                 <hr>
-                <input type="button" id="subBtn" class="btn btn-primary bp float-right" value="SUBMIT">
+                <input type="button" id="btnSubmit" class="btn btn-primary bp float-right" value="SUBMIT">
             </div>
         </div>
     </div>

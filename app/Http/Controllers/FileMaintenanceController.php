@@ -403,22 +403,48 @@ class FileMaintenanceController extends Controller
     }
 
     public function AddWarranty(Request $request){
-        $warranty = Warranty::create([
+        $inclusive = implode(", ",$request->inclusive);
+        $sql = Warranty::create([
             'Warranty_Name' => $request->warranty,
             'Duration' => $request->duration,
-            'Inclusive' => implode(",",$request->inclusive)
+            'Inclusive' => $inclusive
         ]);
 
-        return response()->json($warranty);
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "WARRANTY ADDED: User successfully saved new Warranty '$request->warranty' with Duration '$request->duration-Month/s' and Inclusive: [$inclusive].";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 
     public function UpdateWarranty(Request $request){
-        $warranty = Warranty::where('id', $request->id)->update([
+        $inclusive = implode(", ",$request->inclusive);
+        $sql = Warranty::where('id', $request->id)->update([
             'Warranty_Name' => $request->warranty,
             'Duration' => $request->duration,
-            'Inclusive' => implode(",",$request->inclusive)
+            'Inclusive' => $inclusive
         ]);
 
-        return response()->json($warranty);
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "WARRANTY UPDATED: User successfully updated details of Warranty '$request->warranty' with Duration '$request->duration-Month/s' and Inclusive: [$inclusive].";
+            $userlogs->save();
+        }
+
+        return response($result);
     }
 }

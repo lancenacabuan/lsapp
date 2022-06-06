@@ -11,6 +11,25 @@
                 <label class="form-control form-control-sm" style="width: 160px;">Tracking Ticket Number</label>
                 <input class="form-control form-control-sm" id="ticket_number" onclick="copyTicketNum()" style="width: 308px;" type="text" readonly>
             </div>
+            <div class="form-inline mb-2">
+                <label class="form-control form-control-sm" style="width: 160px;">Issue Category</label>
+                <select class="form-control-sm form-select-sm" id="report_category" style="padding: 0.25rem 0.5rem; height: 30px !important; width: 308px;">
+                    <option value="" selected disabled>Select Category</option>
+                    <option value="Home">Home</option>
+                    <option value="Stocks">Stocks</option>
+                    <option value="Stock Request">Stock Request</option>
+                    <option value="Stock Transfer">Stock Transfer</option>
+                    <option value="Assembly">Assembly</option>
+                    <option value="Defective">Defective</option>
+                    <option value="Maintenance - Items">Maintenance - Items</option>
+                    <option value="Maintenance - Assembled Items">Maintenance - Assembled Items</option>
+                    <option value="Maintenance - Categories">Maintenance - Categories</option>
+                    <option value="Maintenance - Locations">Maintenance - Locations</option>
+                    <option value="Maintenance - Warranty">Maintenance - Warranty</option>
+                    <option value="Users">Users</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
             <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="5" name="report" id="report" maxlength="300" autocomplete="off" placeholder="Please describe the error or bug that you have encountered."></textarea>
             <span style="color: Red; font-size: 12px;">*Required Field</span><br>
             <span id='textlimit' style="font-size: 12px;"></span>
@@ -136,6 +155,7 @@ $('#btnReport').on('click', function(){
         keyboard: false
     });
     $('#reportModal').modal('show');
+    $('#report_category').val('');
     $('#report').val('');
     max = 300;
     $('#textlimit').html(max + ' characters remaining');
@@ -143,17 +163,19 @@ $('#btnReport').on('click', function(){
 });
 
 $('#btnResetReport').on('click', function(){
+    $('#report_category').val('');
     $('#report').val('');
-    $('#report').focus();
+    $('#report_category').focus();
     max = 300;
     $('#textlimit').html(max + ' characters remaining');
 });
 
 $('#btnSupport').on('click', function(){
     var ticket_number = $('#ticket_number').val();
+    var report_category = $('#report_category').val();
     var details = $.trim($('#report').val());
-    if(!details){
-        swal('REQUIRED','Please fill up required field!','error');
+    if(!details || !report_category){
+        swal('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
     else{
@@ -175,6 +197,7 @@ $('#btnSupport').on('click', function(){
                     data:{
                         _token: $("#csrf").val(),
                         ticket_number: ticket_number,
+                        report_category: report_category,
                         details: details
                     },
                     success: function(data){
@@ -192,6 +215,7 @@ $('#btnSupport').on('click', function(){
                                 data:{
                                     _token: $("#csrf").val(),
                                     ticket_number: ticket_number,
+                                    report_category: report_category,
                                     details: details
                                 },
                                 success: function(data){

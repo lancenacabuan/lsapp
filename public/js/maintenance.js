@@ -381,6 +381,7 @@ $('.btnNewItem').on('click', function(){
         keyboard: false
     });
     $('#item_category').val('');
+    $('#prodcode').val('');
     $('#item_name').val('');
     $('#item_uom').val('');
     

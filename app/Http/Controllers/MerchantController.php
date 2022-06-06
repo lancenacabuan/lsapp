@@ -104,4 +104,81 @@ class MerchantController extends Controller
         })
         ->make(true);
     }
+
+    public function saveReqNum(Request $request){
+        do{
+            $requests = new Requests;
+            $requests->request_number = $request->request_number;
+            $requests->requested_by = auth()->user()->id;
+            $requests->needdate = $request->needdate;
+            $requests->orderID = $request->orderID;
+            $requests->request_type = '6';
+            $requests->status = '6';
+            $sql = $requests->save();
+        }
+        while(!$sql);
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        return response($result);
+    }
+
+    public function uploadFile(Request $request){
+        $x = 1;
+        $reference_upload = array();
+        foreach($request->reference_upload as $upload){
+            $datetime = Carbon::now()->isoformat('YYYYMMDDHHmmss');
+            $extension = $upload->getClientOriginalExtension();
+            $filename = $datetime.'_'.$request->reqnum.'-'.$x.'.'.$extension;
+            array_push($reference_upload, $filename);
+            $x++;
+        }
+        for($i=0; $i < count($reference_upload); $i++){
+            $request->reference_upload[$i]->move(public_path('/uploads'), $reference_upload[$i]);
+        }
+
+        Requests::where('request_number', $request->reqnum)
+            ->update(['reference_upload' => $reference_upload]);
+
+        if($request->action == 'SUBMIT'){
+            return redirect()->to('/stockrequest?submit=success');
+        }
+        else if($request->action == 'EDIT'){
+            return redirect()->to('/stockrequest?edit=success');
+        }
+        else{
+            return redirect()->to('/stockrequest?sale=success');
+        }
+
+    }
+    
+    public function saveRequest(Request $request){
+        do{
+            $stockRequest = new StockRequest;
+            $stockRequest->request_number = $request->request_number;
+            $stockRequest->item = $request->item;
+            $stockRequest->quantity = $request->quantity;
+            $stockRequest->served = '0';
+            $stockRequest->pending = $request->quantity;
+            $stockRequest->warranty = $request->warranty;
+            $sql = $stockRequest->save();
+        }
+        while(!$sql);
+
+        return response('true');
+    }
+
+    public function logSave(Request $request){
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "NEW MERCHANT STOCK REQUEST: User successfully submitted Merchant Stock Request No. $request->request_number.";
+        $userlogs->save();
+        
+        return response('true');
+    }
 }

@@ -20,6 +20,7 @@
                     <option value="Stock Request">Stock Request</option>
                     <option value="Stock Transfer">Stock Transfer</option>
                     <option value="Assembly">Assembly</option>
+                    <option value="Merchant">Merchant</option>
                     <option value="Defective">Defective</option>
                     <option value="Maintenance - Items">Maintenance - Items</option>
                     <option value="Maintenance - Assembled Items">Maintenance - Assembled Items</option>

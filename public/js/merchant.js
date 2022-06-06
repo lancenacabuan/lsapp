@@ -12,8 +12,8 @@ $(function(){
     minDate = year + '-' + month + '-' + day;
 
     $('#needdate').attr('min', minDate);
-    // $('#schedOn').attr('min', minDate);
-    // $('#resched').attr('min', minDate);
+    $('#schedOn').attr('min', minDate);
+    $('#resched').attr('min', minDate);
 });
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -345,6 +345,126 @@ $(document).on('click', '.disupload', function(){
     $('.upload_label').html('Upload Image File/s less than 5MB each');
     $('.disupload').hide();
     $('#btnAttach').css("width", "280px");
+});
+
+$('#btnSave').on('click', function(){
+    var needdate = $('#needdate').val();
+    var orderID = $('#orderID').val();
+    var reference_upload = $('#reference_upload').val();
+    if(needdate < minDate){
+        swal('Minimum Date is today!','Select within date range from today onwards.','error');
+        return false;
+    }
+    else{
+        swal({
+            title: "SUBMIT MERCHANT STOCK REQUEST?",
+            text: "Please review the details of your request. Click 'OK' button to submit; otherwise, click 'Cancel' button.",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url:'/merchant/saveReqNum',
+                    async: false,
+                    headers:{
+                        'X-CSRF-TOKEN': $("#csrf").val()
+                    },
+                    data:{
+                        'request_number': $('#request_num').val(),
+                        'needdate': needdate,
+                        'orderID': orderID
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            var myTable = $('#stockRequestTable').DataTable();
+                            var form_data  = myTable.rows().data();
+                            $.each(form_data, function(key, value){
+                                $.ajax({
+                                    type:'post',
+                                    url:'/merchant/saveRequest',
+                                    async: false,
+                                    headers:{
+                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                    },
+                                    data:{
+                                        'request_number': $('#request_num').val(),
+                                        'item': value[1],
+                                        'warranty': value[2],
+                                        'quantity': value[6]
+                                    },
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            return true;
+                                        }
+                                        else{
+                                            return false;
+                                        }
+                                    },
+                                    error: function(data){
+                                        if(data.status == 401){
+                                            window.location.href = '/stockrequest';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
+                            });
+                            scrollReset();
+                            $('#newMerchRequest').modal('hide');
+                            $('#loading').show(); Spinner(); Spinner.show();
+                            $.ajax({
+                                type:'post',
+                                url:'/merchant/logSave',
+                                headers:{
+                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                },
+                                data:{
+                                    'request_number': $('#request_num').val(),
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        $('#loading').hide(); Spinner.hide();
+                                        if(reference_upload){
+                                            $('#btnUpload').click();
+                                        }
+                                        else{
+                                            swal("SUBMIT SUCCESS", "MERCHANT STOCK REQUEST", "success");
+                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                        }
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/merchant';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        else if(data == 'duplicate'){
+                            swal("INVALID ENTRY", "Order ID already exists! Please double check the Order ID and try again.", "error");
+                            return false;
+                        }
+                        else{
+                            $('#newMerchRequest').modal('hide');
+                            swal("SUBMIT FAILED", "MERCHANT STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/merchant"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/merchant';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
+    }  
 });
 
 $('.btnClose').on('click', function(){

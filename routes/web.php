@@ -175,6 +175,9 @@ Route::get('/merchant/items',[MerchantController::class,'items']);
 Route::get('/merchant/uom',[MerchantController::class,'uom']);
 Route::get('/merchant/warranty',[MerchantController::class,'warranty']);
 Route::get('/merchant/data',[MerchantController::class,'merchant_data']);
+Route::any('/merchant/saveReqNum',[MerchantController::class,'saveReqNum']);
+Route::any('/merchant/saveRequest',[MerchantController::class,'saveRequest']);
+Route::any('/merchant/logSave',[MerchantController::class,'logSave']);
 //
 
 //Defective

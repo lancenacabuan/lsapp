@@ -106,8 +106,7 @@ $('#btnSave').on('click', function(){
                     .then((willDelete) => {
                         if(willDelete){
                             scrollReset();
-                            $('#addUser').hide();
-                            $('#addUser').modal('dispose');
+                            $('#addUser').modal('hide');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 url: "/users/save",
@@ -129,7 +128,7 @@ $('#btnSave').on('click', function(){
                                         table.ajax.reload(null, false);
                                     }
                                     else{
-                                        $('#addUser').hide();
+                                        $('#loading').hide(); Spinner.hide();
                                         swal("SAVE FAILED", "New user save failed!", "error");
                                         table.ajax.reload(null, false);
                                     }
@@ -279,14 +278,12 @@ $('#btnUpdate').on('click', function(){
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#updateUser').hide();
-                                        $('#updateUser').modal('dispose');
+                                        $('#updateUser').modal('hide');
                                         swal("UPDATE SUCCESS", "User details updated successfully!", "success");
                                         table.ajax.reload(null, false);
                                     }
                                     else{
-                                        $('#updateUser').hide();
-                                        $('#updateUser').modal('dispose');
+                                        $('#updateUser').modal('hide');
                                         swal("UPDATE FAILED", "User details update failed!", "error");
                                         table.ajax.reload(null, false);
                                     }

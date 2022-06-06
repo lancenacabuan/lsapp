@@ -203,8 +203,7 @@ $('#btnSupport').on('click', function(){
                     success: function(data){
                         if(data == 'true'){
                             scrollReset();
-                            $('#reportModal').hide();
-                            $('#reportModal').modal('dispose');
+                            $('#reportModal').modal('hide');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 url: "/report/log",
@@ -222,7 +221,6 @@ $('#btnSupport').on('click', function(){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
                                         swal("SUBMIT SUCCESS", "Report submitted successfully!", "success");
-                                        setTimeout(function(){location.reload()}, 2000);
                                     }
                                     else{
                                         return false;
@@ -238,7 +236,7 @@ $('#btnSupport').on('click', function(){
                         }
                         else{
                             swal("SUBMIT FAILED", "Report failed to submit!", "error");
-                            setTimeout(function(){location.reload()}, 2000);
+                            return false;
                         }
                     },
                     error: function(data){

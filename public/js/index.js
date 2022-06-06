@@ -89,3 +89,18 @@ $(document).ready(function(){
         }
     );
 });
+
+$(document).ready(function(){
+    $('#hover4').hover(
+        function(){
+            $('.zoom4').css({"zoom": "110%"});
+            $('.box4').css({"zoom": "90%"});
+            $('.text4').css({"color": "#0d6efd"});
+        },
+        function(){
+            $('.zoom4').css({"zoom": "100%"});
+            $('.box4').css({"zoom": "100%"});
+            $('.text4').css({"color": "#0d1a80"});
+        }
+    );
+});

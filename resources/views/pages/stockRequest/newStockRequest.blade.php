@@ -137,8 +137,8 @@
                     <i class='fa fa-exclamation-triangle'></i>
                     <strong>NOTE:</strong> Please fill up all required fields to proceed.
                 </div>
-                <button type="submit" class="btnClose btnCloseCancel btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
-                <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
+                <button type="button" class="btnClose btnCloseCancel btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
+                <button type="button" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
             </div>
         </div>
     </div>

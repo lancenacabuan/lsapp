@@ -60,7 +60,7 @@
                     </div>
                 </label>
             </div>
-            <button type="submit" id="btnUpdate" class="btn btn-primary bp float-right">UPDATE</button>
+            <button type="button" id="btnUpdate" class="btn btn-primary bp float-right">UPDATE</button>
         </div>
     </div>
     </div>

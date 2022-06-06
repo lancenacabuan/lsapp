@@ -8,7 +8,7 @@
         <div class="modal-body" style="background-color: white; color: black;">
             <div class="form-inline" style="margin-left: 5px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Order ID</label>
-                <input class="form-control form-control-sm" id="orderID" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="50">
+                <input class="form-control form-control-sm spChar" id="orderID" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="50">
                 <label class="form-control form-control-sm" style="width: 160px;">Stock Request No.</label>
                 <input class="form-control form-control-sm" id="request_num" style="width: 250px; margin-right: 10px;" type="text" readonly>
             </div>
@@ -19,7 +19,7 @@
                 <input class="form-control form-control-sm"  id="reqdate" style="width: 250px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 160px;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
+                <label class="form-control form-control-sm" style="width: 160px;" onclick="$('#reference_upload').click();">Attachment Reference</label>
                 <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
                 <button class="form-control btn btn-primary bp" style="margin-right: 10px; width: 280px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
@@ -116,8 +116,8 @@
                     <i class='fa fa-exclamation-triangle'></i>
                     <strong>NOTE:</strong> Please fill up all required fields to proceed.
                 </div>
-                <button type="submit" class="btnClose btnCloseCancel btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
-                <button type="submit" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
+                <button type="button" class="btnClose btnCloseCancel btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
+                <button type="button" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
             </div>
         </div>
     </div>

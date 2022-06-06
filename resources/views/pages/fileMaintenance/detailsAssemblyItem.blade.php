@@ -35,8 +35,8 @@
             </table>
         </div>
         <div class="col-md-12 mt-4 mb-4">
-            <button type="submit" class="btn btn-primary bp" data-bs-dismiss="modal">BACK</button>
-            <button type="submit" id="btnUpdate" class="btn btn-primary float-right bp" style="display: none;">UPDATE</button>
+            <button type="button" class="btn btn-primary bp" data-bs-dismiss="modal">BACK</button>
+            <button type="button" id="btnUpdate" class="btn btn-primary float-right bp" style="display: none;">UPDATE</button>
         </div>
     </div>
     </div>

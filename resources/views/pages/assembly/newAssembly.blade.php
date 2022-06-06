@@ -28,7 +28,7 @@
                     @endforeach
                 </select>
                 <input class="form-control" id="qty" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px;" type="number" placeholder="Qty" onkeyup="if(value<0) value=0;">
-                <button type="submit" id="btnAssemblyProceed" class="btn btn-primary bp" style="zoom: 80%; margin-left: 10px; display: none;">PROCEED</button>
+                <button type="button" id="btnAssemblyProceed" class="btn btn-primary bp" style="zoom: 80%; margin-left: 10px; display: none;">PROCEED</button>
             </div>
             <div class="header_label alert alert-primary mt-4" role="alert">
                 <i class='fa fa-exclamation-triangle'></i>
@@ -57,8 +57,8 @@
                     </table>
                 </div>
                 <hr>
-                <button type="submit" id="btnAssemblyBack" class="btn btn-primary bp">BACK</button>
-                <button type="submit" id="btnAssemblySave" class="btn btn-primary float-right bp" disabled>SUBMIT</button>
+                <button type="button" id="btnAssemblyBack" class="btn btn-primary bp">BACK</button>
+                <button type="button" id="btnAssemblySave" class="btn btn-primary float-right bp" disabled>SUBMIT</button>
             </div>
         </div>
     </div>

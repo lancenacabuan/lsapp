@@ -42,7 +42,7 @@
                     @endforeach
                 </select>
             </div>
-            <button type="submit" id="btnSave" class="btn btn-primary float-right bp">SAVE</button>  
+            <button type="button" id="btnSave" class="btn btn-primary float-right bp">SAVE</button>  
         </div>
     </div>
     </div>

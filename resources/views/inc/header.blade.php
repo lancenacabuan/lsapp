@@ -44,11 +44,6 @@
         return $('#lblCompany').text(lblCompany);
     });
     $(function(){
-        if($('#current_company').val() == 'NuServ' && $('#current_role').val() == 'sales'){
-            return $('#lblRole').text('[MERCHANT]');
-        }
-    });
-    $(function(){
         $('#lblUser').show();
     });
 </script>

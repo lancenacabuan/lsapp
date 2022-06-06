@@ -51,8 +51,7 @@ class PagesController extends Controller
 
     public function index_data(){
         $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
-        (CASE WHEN users.company = \'NuServ\' AND roles.name = \'sales\' THEN \'MERCHANT\' ELSE UPPER(roles.name) END) AS role, 
-        user_logs.activity AS activity, user_logs.created_at AS date')
+        UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date')
         ->join('users', 'users.id', '=', 'user_id')
         ->join('model_has_roles', 'model_id', '=', 'users.id')
         ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
@@ -125,8 +124,7 @@ class PagesController extends Controller
 
     public function users_data(){
         $list = User::query()->selectRaw('users.id AS user_id, users.name AS user_name, users.email AS user_email, users.company AS company, 
-            (CASE WHEN users.company = \'NuServ\' AND roles.name = \'sales\' THEN \'MERCHANT\' ELSE UPPER(roles.name) END) AS role_name, 
-            roles.name AS role, users.status AS user_status')
+        UPPER(roles.name) AS role_name, roles.name AS role, users.status AS user_status')
             ->join('model_has_roles', 'model_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
             ->orderBy('user_status', 'ASC')

@@ -17,7 +17,7 @@
                 <th style="width: 150px;">DATE REQUESTED</th>
                 <th style="width: 150px;">DATE NEEDED</th>
                 <th style="width: 150px;">REQUEST NUMBER</th>
-                <th style="width: 250px;"> REQUESTED BY</th>
+                <th style="width: 250px;">REQUESTED BY</th>
                 <th style="width: 150px;">REQUEST TYPE</th>
                 <th>ITEM DESCRIPTION</th>
                 <th style="width: 150px;">QUANTITY</th>

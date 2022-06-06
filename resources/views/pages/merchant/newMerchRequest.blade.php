@@ -1,50 +1,27 @@
-<div class="modal fade in" id="newStockRequest">
+<div class="modal fade in" id="newMerchRequest">
     <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">NEW STOCK REQUEST</h6>
+            <h6 class="modal-title w-100">NEW MERCHANT STOCK REQUEST</h6>
             <button type="button" class="btn-close btn-close-white close btnClose" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <div class="form-inline" style="margin-left: 5px;">
-                <label class="form-control form-control-sm" style="width: 130px;">Request Type</label>
-                <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;">
-                    <option value="" selected disabled>Select Request Type</option>
-                    @foreach($req_types as $req_type)
-                        <option value="{{$req_type->id}}">{{strtoupper($req_type->name)}}</option>
-                    @endforeach
-                </select>
+                <label class="form-control form-control-sm" style="width: 160px;">Order ID</label>
+                <input class="form-control form-control-sm" id="orderID" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="50">
                 <label class="form-control form-control-sm" style="width: 160px;">Stock Request No.</label>
-                <input class="form-control form-control-sm" id="request_num" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <input class="form-control form-control-sm" id="request_num" style="width: 250px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 130px;">Date Needed</label>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Needed</label>
                 <input class="form-control form-control-sm"  id="needdate" style="width: 280px; margin-right: 10px;" type="date">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
-                <input class="form-control form-control-sm"  id="reqdate" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
+                <input class="form-control form-control-sm"  id="reqdate" style="width: 250px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 130px;">Client Name</label>
-                <input class="form-control form-control-sm" id="client_name" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
-                <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
-                <input class="form-control form-control-sm" id="requested_by" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
-            </div>
-            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 130px;">Address / Branch</label>
-                <input class="form-control form-control-sm" id="location" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
-                <label class="form-control form-control-sm" style="width: 160px;">Contact Person</label>
-                <input class="form-control form-control-sm" id="contact" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
-            </div>
-            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="margin-top: -38px; width: 130px;">Remarks</label>
-                <textarea class="form-control" name="remarks" id="remarks" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Optional Field" maxlength="200"></textarea>
-                <label class="form-control form-control-sm reference_field" style="margin-top: -38px; width: 160px; display: none;">Reference SO/PO No.</label>
-                <textarea class="form-control reference_field spChar" name="reference" id="reference" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field" maxlength="500"></textarea>
-            </div>
-            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm reference_field" style="margin-left: 420px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
+                <label class="form-control form-control-sm" style="width: 160px;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
                 <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
-                <button class="form-control btn btn-primary bp reference_field" style="width: 280px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
+                <button class="form-control btn btn-primary bp" style="margin-right: 10px; width: 280px; height: 30px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                     <input type="hidden" name="reqnum" id="reqnum">
@@ -52,11 +29,13 @@
                     <input id="reference_upload" name="reference_upload[]" type="file" style="zoom: 90%; display: none;" onchange="validate_fileupload(this);" multiple>
                     <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
                 </form>
+                <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
+                <input class="form-control form-control-sm" id="requested_by" style="width: 250px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <span class="reference_field" style="margin-left: 420px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple image files for upload.</span>
+                <span style="color: Red; font-size: 12px;">Use 'Ctrl + Left Click' to select multiple image files for upload.</span>
             </div>
-            <div id="warrantyDetails" style="zoom: 85%; height: 260px; margin-top: -260px; margin-left: 990px; line-height: 70%; display: none;">
+            <div id="warrantyDetails" style="zoom: 85%; height: 165px; margin-top: -165px; margin-left: 990px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">
                     <input class="form-control form-control-sm warrantyName" style="width: 300px; margin-right: 10px; font-size: 18px; border-color: white; background-color: white; font-weight: bolder; pointer-events: none;" type="text" readonly>
                 </div>
@@ -77,7 +56,7 @@
                 </div>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm reference_field" style="width: 860px; border-color: white; display: none;">&nbsp;</label>
+                <label class="form-control form-control-sm" style="width: 860px; border-color: white;">&nbsp;</label>
             </div>
             <div class="header_label alert alert-primary mt-4" role="alert">
                 <i class='fa fa-exclamation-triangle'></i>

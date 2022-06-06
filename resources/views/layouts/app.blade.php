@@ -306,20 +306,20 @@
     @if(Request::is('stocktransfer'))
         <script src="{{ asset('js/stocktransfer.js') }}"></script>
     @endif
-    @if(Request::is('users'))
-        <script src="{{ asset('js/users.js') }}"></script>
-    @endif
-    @if(Request::is('changepassword'))
-        <script src="{{ asset('js/changepassword.js') }}"></script>
-    @endif
     @if(Request::is('assembly'))
-        <script src="{{ asset('js/assembly.js') }}"></script>
+    <script src="{{ asset('js/assembly.js') }}"></script>
+    @endif
+    @if(Request::is('merchant'))
+    <script src="{{ asset('js/merchant.js') }}"></script>
     @endif
     @if(Request::is('defective'))
-        <script src="{{ asset('js/defective.js') }}"></script>
+    <script src="{{ asset('js/defective.js') }}"></script>
     @endif
     @if(Request::is('maintenance'))
-        <script src="{{ asset('js/maintenance.js') }}"></script>
+    <script src="{{ asset('js/maintenance.js') }}"></script>
+    @endif
+    @if(Request::is('users'))
+        <script src="{{ asset('js/users.js') }}"></script>
     @endif
 </body>
 </html>

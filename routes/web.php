@@ -7,6 +7,7 @@ use App\Http\Controllers\StocksController;
 use App\Http\Controllers\StockRequestController;
 use App\Http\Controllers\StockTransferController;
 use App\Http\Controllers\AssemblyController;
+use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\DefectiveController;
 use App\Http\Controllers\FileMaintenanceController;
 
@@ -166,6 +167,14 @@ Route::any('/logItem',[AssemblyController::class,'logItem']);
 Route::get('/itemDetails',[AssemblyController::class,'itemDetails']);
 Route::any('/changeItem',[AssemblyController::class,'changeItem']);
 Route::get('/partsDetails',[AssemblyController::class,'partsDetails']);
+//
+
+//Merchant
+Route::get('/merchant',[MerchantController::class,'merchant']);
+Route::get('/merchant/items',[MerchantController::class,'items']);
+Route::get('/merchant/uom',[MerchantController::class,'uom']);
+Route::get('/merchant/warranty',[MerchantController::class,'warranty']);
+Route::get('/merchant/data',[MerchantController::class,'merchant_data']);
 //
 
 //Defective

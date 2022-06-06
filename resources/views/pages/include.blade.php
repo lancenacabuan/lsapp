@@ -12,7 +12,7 @@
                 <input class="form-control form-control-sm" id="ticket_number" onclick="copyTicketNum()" style="width: 308px;" type="text" readonly>
             </div>
             <div class="form-inline mb-2">
-                <label class="form-control form-control-sm" style="width: 160px;">Issue Category</label>
+                <label class="form-control form-control-sm" style="width: 160px;">Report Category</label>
                 <select class="form-control-sm form-select-sm" id="report_category" style="padding: 0.25rem 0.5rem; height: 30px !important; width: 308px;">
                     <option value="" selected disabled>Select Category</option>
                     <option value="Home">Home</option>

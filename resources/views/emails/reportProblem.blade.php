@@ -7,6 +7,7 @@
     <p>
         Date Reported: {{$details['reportdate']}}<br>
         Reported By: {{$details['reported_by']}}<br><br>
+        Report Category: {{$details['report_category']}}<br>
         Report Details: {{$details['details']}}
         <br><br>
         Thank you!

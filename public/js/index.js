@@ -49,7 +49,7 @@ $(document).ready(function(){
     $('#hover1').hover(
         function(){
             $('.zoom1').css({"zoom": "110%"});
-            $('.box1').css({"zoom": "90%"});
+            $('.box1').css({"zoom": "82%"});
             $('.text1').css({"color": "#0d6efd"});
         },
         function(){
@@ -64,7 +64,7 @@ $(document).ready(function(){
     $('#hover2').hover(
         function(){
             $('.zoom2').css({"zoom": "110%"});
-            $('.box2').css({"zoom": "90%"});
+            $('.box2').css({"zoom": "82%"});
             $('.text2').css({"color": "#0d6efd"});
         },
         function(){
@@ -79,7 +79,7 @@ $(document).ready(function(){
     $('#hover3').hover(
         function(){
             $('.zoom3').css({"zoom": "110%"});
-            $('.box3').css({"zoom": "90%"});
+            $('.box3').css({"zoom": "82%"});
             $('.text3').css({"color": "#0d6efd"});
         },
         function(){
@@ -94,7 +94,7 @@ $(document).ready(function(){
     $('#hover4').hover(
         function(){
             $('.zoom4').css({"zoom": "110%"});
-            $('.box4').css({"zoom": "90%"});
+            $('.box4').css({"zoom": "82%"});
             $('.text4').css({"color": "#0d6efd"});
         },
         function(){

@@ -288,6 +288,7 @@ class PagesController extends Controller
         $report = new Report;
         $report->reported_by =auth()->user()->id;
         $report->ticket_number = $request->ticket_number;
+        $report->report_category = $request->report_category;
         $report->details = ucfirst($request->details);
         $sql = $report->save();
     
@@ -312,14 +313,19 @@ class PagesController extends Controller
             'lorenzonacabuan@gmail.com'
         );
         $subject = 'TICKET NUMBER: '.$request->ticket_number;
+        $sender = [
+            'email' => auth()->user()->email,
+            'name' => auth()->user()->name
+        ];
         foreach($user as $email){
             $details = [
                 'ticket_number' => $request->ticket_number,
                 'reportdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
                 'reported_by' => auth()->user()->name,
+                'report_category' => $request->report_category,
                 'details' => ucfirst($request->details)
             ];
-            Mail::to($email)->send(new reportProblem($details, $subject));
+            Mail::to($email)->send(new reportProblem($details, $subject, $sender));
         }
         
         $userlogs = new UserLogs;

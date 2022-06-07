@@ -188,11 +188,7 @@ $('#btnSupport').on('click', function(){
             if(willDelete){
                 $.ajax({
                     url: "/report/submit",
-                    type: "POST",
                     async: false,
-                    headers:{
-                        'X-CSRF-TOKEN': $("#csrf").val()
-                    },
                     data:{
                         ticket_number: ticket_number,
                         report_category: report_category,
@@ -205,10 +201,6 @@ $('#btnSupport').on('click', function(){
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 url: "/report/log",
-                                type: "POST",
-                                headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
-                                },
                                 data:{
                                     ticket_number: ticket_number,
                                     report_category: report_category,
@@ -279,9 +271,6 @@ $('#btnChangePassword').on('click', function(){
         else{
             $.ajax({
                 url: "/change/validate",
-                headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
-                },
                 data:{
                     current: pass1
                 },
@@ -297,9 +286,6 @@ $('#btnChangePassword').on('click', function(){
                             if(willDelete){
                                 $.ajax({
                                     url: "/change/password",
-                                    headers:{
-                                        'X-CSRF-TOKEN': $("#csrf").val()
-                                    },
                                     data:{
                                         new: pass2
                                     },

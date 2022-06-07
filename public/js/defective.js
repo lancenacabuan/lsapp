@@ -116,11 +116,7 @@ $(document).on('click', '.btnReturnItem', function(){
             $('#editSerialModal').hide();
             $('#editSerialModal').modal('dispose');
             $.ajax({
-                type:'post',
                 url: '/defective/return',
-                headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
-                },
                 data:{
                     return_number: $("#return_number").val(),
                     stock_id: data.stock_id,

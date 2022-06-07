@@ -1,8 +1,3 @@
-@role('admin') {{---ROLES---}}
-    @php
-        $reports = DB::table('reports')->whereIn('status',['pending'])->get()->count();
-    @endphp
-@endrole
 <nav class="navbar navbar-expand-md shadow-sm" style="height: 60px;">
     <div class="container-fluid">
         <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
@@ -37,11 +32,6 @@
             </ul>
             <button id="btnReport" type="button" class="btn btn-danger mr-2">
                 <span class="px-2">REPORT A PROBLEM</span>
-                @role('admin') {{---ROLES---}}
-                    @if($reports > 0)
-                        <span id="labelReport" class="badge rounded-pill bg-danger px-2">{{ $reports }}</span>
-                    @endif
-                @endrole
             </button>
             <ul class="navbar-nav mr-right">
                 <a class="nav-link" style="color: white; font-size: 16px; cursor: pointer;" onclick="$('#logout-form').submit();">

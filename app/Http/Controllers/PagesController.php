@@ -16,6 +16,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Activitylog\Models\Activity;
 use App\Mail\reportProblem;
+use App\Mail\replySender;
 use App\Models\Report;
 use App\Models\User;
 use App\Models\UserLogs;
@@ -333,6 +334,15 @@ class PagesController extends Controller
             ];
             Mail::to($email)->send(new reportProblem($details, $subject, $sender));
         }
+        $details = [
+            'name' => auth()->user()->name,
+            'ticket_number' => $request->ticket_number,
+            'reportdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
+            'reported_by' => auth()->user()->name,
+            'report_category' => $request->report_category,
+            'details' => ucfirst($request->details)
+        ];
+        Mail::to(auth()->user()->email)->send(new replySender($details, $subject));
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;

@@ -6,7 +6,6 @@
             <button type="button" class="btn-close btn-close-white close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
-            <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline mb-2">
                 <label class="form-control form-control-sm" style="width: 160px;">Tracking Ticket Number</label>
                 <input class="form-control form-control-sm" id="ticket_number" onclick="copyTicketNum()" style="width: 308px;" type="text" readonly>
@@ -19,8 +18,8 @@
                     <option value="Stocks">Stocks</option>
                     <option value="Stock Request">Stock Request</option>
                     <option value="Stock Transfer">Stock Transfer</option>
-                    <option value="Assembly">Assembly</option>
                     <option value="Merchant">Merchant</option>
+                    <option value="Assembly">Assembly</option>
                     <option value="Defective">Defective</option>
                     <option value="Maintenance - Items">Maintenance - Items</option>
                     <option value="Maintenance - Assembled Items">Maintenance - Assembled Items</option>
@@ -54,7 +53,6 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <form id="form_changepassword">
-                <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
                         <label class="input-group-text" style="width: 150px;">Current Password</label>
@@ -196,7 +194,6 @@ $('#btnSupport').on('click', function(){
                         'X-CSRF-TOKEN': $("#csrf").val()
                     },
                     data:{
-                        _token: $("#csrf").val(),
                         ticket_number: ticket_number,
                         report_category: report_category,
                         details: details
@@ -213,7 +210,6 @@ $('#btnSupport').on('click', function(){
                                     'X-CSRF-TOKEN': $("#csrf").val()
                                 },
                                 data:{
-                                    _token: $("#csrf").val(),
                                     ticket_number: ticket_number,
                                     report_category: report_category,
                                     details: details
@@ -287,7 +283,6 @@ $('#btnChangePassword').on('click', function(){
                     'X-CSRF-TOKEN': $("#csrf").val()
                 },
                 data:{
-                    _token: $("#csrf").val(),
                     current: pass1
                 },
                 success: function(data){
@@ -306,8 +301,7 @@ $('#btnChangePassword').on('click', function(){
                                         'X-CSRF-TOKEN': $("#csrf").val()
                                     },
                                     data:{
-                                        _token: $("#csrf").val(),
-                                        new: pass2,
+                                        new: pass2
                                     },
                                     success: function(data){
                                         if(data == 'true'){

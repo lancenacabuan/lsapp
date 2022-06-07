@@ -22,7 +22,6 @@
         </thead>
     </table>
     <form class="d-none">
-        <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
         <input type="hidden" name="return_number" id="return_number">
     </form>
 </div>

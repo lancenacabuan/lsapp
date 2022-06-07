@@ -113,7 +113,7 @@ class MerchantController extends Controller
             $requests->needdate = $request->needdate;
             $requests->orderID = $request->orderID;
             $requests->request_type = '6';
-            $requests->status = '6';
+            $requests->status = '1';
             $sql = $requests->save();
         }
         while(!$sql);

@@ -69,6 +69,8 @@
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Client Name:</td>
                 <td colspan="2" class="tdHide">{{$list->client_name}}</td>
+                <td colspan="2" style="font-weight: bold; display: none;" class="tdMerchant">Order ID:</td>
+                <td colspan="2" style="display: none;" class="tdMerchant">{{$list->orderID}}</td>
                 <td colspan="2" style="font-weight: bold; display: none;" class="tdAssembly">Assembled Item Code:</td>
                 <td colspan="2" style="display: none;" class="tdAssembly">{{$list1[0]->item_code ?? 'N/A'}}</td>
             </tr>
@@ -115,7 +117,7 @@
                     $total = 0;
                 @endphp
                 <td colspan="9" height="20">
-                    @if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10))
+                    @if($list->req_type_id == 2 || $list->req_type_id == 6 || ($list->req_type_id == 3 && $list->status_id == 10))
                     <table id="stockReqTable" class="table stockReqTable display" style="margin-top: 10px;">
                         <thead>
                             <tr>
@@ -251,8 +253,12 @@ $(document).ready(function(){
     sched = moment(sched).format('dddd, MMMM DD, YYYY');
     $('#sched').html(sched);
 
-    if($('#req_type').html() == 'SERVICE UNIT' || $('#req_type').html() == 'ASSEMBLY' || $('#req_type').html() == 'REPLACEMENT'){
+    if($('#req_type').html() == 'SERVICE UNIT' || $('#req_type').html() == 'ASSEMBLY' || $('#req_type').html() == 'REPLACEMENT' || $('#req_type').html() == 'MERCHANT'){
         $('.tdHide').html('');
+    }
+    if($('#req_type').html() == 'MERCHANT'){
+        $('.tdHide').hide();
+        $('.tdMerchant').show();
     }
     if($('#req_type').html() == 'REPLACEMENT'){
         $('.tdHide').hide();

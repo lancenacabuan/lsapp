@@ -1636,7 +1636,7 @@ class StockRequestController extends Controller
             $include = json_decode($include);
             $include[] = $request->request_number;
 
-            if($request_details->req_type_id == 2 || ($request_details->req_type_id == 3 && $request_details->status_id == 10)){
+            if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || ($request_details->req_type_id == 3 && $request_details->status_id == 10)){
                 do{
                     $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
@@ -1799,7 +1799,7 @@ class StockRequestController extends Controller
             $include = json_decode($include);
             $include[] = $request->request_number;
 
-            if($request_details->req_type_id == 2 || ($request_details->req_type_id == 3 && $request_details->status_id == 10)){
+            if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || ($request_details->req_type_id == 3 && $request_details->status_id == 10)){
                 do{
                     $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
@@ -2089,7 +2089,7 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10)){
+        if($list->req_type_id == 2 || $list->req_type_id == 6 || ($list->req_type_id == 3 && $list->status_id == 10)){
             $list3 = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])

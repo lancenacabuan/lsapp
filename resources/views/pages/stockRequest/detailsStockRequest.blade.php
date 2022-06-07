@@ -33,6 +33,8 @@
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm dfchide" id="client_name_label" style="width: 160px;">Client Name</label>
                 <input class="form-control form-control-sm dfchide" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" readonly>
+                <label class="form-control form-control-sm dfchide" id="orderID_label" style="width: 160px; display: none;">Order ID</label>
+                <input class="form-control form-control-sm dfchide spChar" id="orderID_details" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field" readonly>
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="requested_by_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" id="item_desc_label" style="width: 160px; display: none;">Assembled Item Name</label>

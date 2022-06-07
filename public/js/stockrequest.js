@@ -1027,6 +1027,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#sched').val(sched);
                     $('#sched1').val(sched);
                     $('#resched1').val(sched);
+                var orderID = value.orderID;
+                    $('#orderID_details').val(orderID);
                 var client_name = value.client_name;
                     $('#client_name_details').val(client_name);
                 var location_name = value.location;
@@ -1153,7 +1155,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(req_type_id != '2'){
                         $(".sales_details").hide();
                     }
-                    if(req_type_id == '1' || req_type_id == '5'){
+                    if(req_type_id == '1' || req_type_id == '5' || req_type_id == '6'){
                         $("#client_name_label").hide();
                         $("#client_name_details").hide();
                         $("#location_label").hide();
@@ -1164,6 +1166,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#remarks_details").hide();
                         $("#reference_label").hide();
                         $("#reference_details").hide();
+                    }
+                    if(req_type_id == '6'){
+                        $("#orderID_label").show();
+                        $("#orderID_details").show();
                     }
                     if(req_type_id == '5'){
                         $("#proceed_label").hide();
@@ -2249,6 +2255,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#sched').val(sched);
         $('#sched1').val(sched);
         $('#resched1').val(sched);
+    var orderID = value.orderID;
+        $('#orderID_details').val(orderID);
     var client_name = value.client_name;
         $('#client_name_details').val(client_name);
     var location_name = value.location;
@@ -2375,7 +2383,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(req_type_id != '2'){
             $(".sales_details").hide();
         }
-        if(req_type_id == '1' || req_type_id == '5'){
+        if(req_type_id == '1' || req_type_id == '5' || req_type_id == '6'){
             $("#client_name_label").hide();
             $("#client_name_details").hide();
             $("#location_label").hide();
@@ -2386,6 +2394,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#remarks_details").hide();
             $("#reference_label").hide();
             $("#reference_details").hide();
+        }
+        if(req_type_id == '6'){
+            $("#orderID_label").show();
+            $("#orderID_details").show();
         }
         if(req_type_id == '5'){
             $("#proceed_label").hide();
@@ -4034,7 +4046,7 @@ function checkReqType(){
         var req_type_id = $('#req_type_id_details').val();
         var status_id = $('#status_id_details').val();
 
-        if(req_type_id == '4' || req_type_id == '5'){
+        if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6'){
             var table = $('#stockDetailsrequest').DataTable();
             var count = 0;
 
@@ -4232,7 +4244,7 @@ $("#btnProceed").unbind('click').click(function(){
     var j = 0;
     var reqnum = $('#request_num_details').val();
     var req_type_id = $('#req_type_id_details').val();
-    if(req_type_id == '4' || req_type_id == '5'){
+    if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6'){
         var form_data  = $('#stockDetailsrequest').DataTable().rows().data();
         form_data.each(function(value, index){
             items.push(value.item_id);

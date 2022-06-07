@@ -469,11 +469,13 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     $('#prep_by').val(prep_by);
                     $('#prep_by1').val(prep_by);
                     $('#reprep_by').val(prep_by);
+                    $('#reprep_by1').val(prep_by);
                 var sched = value.sched;
                     sched = moment(sched).format('dddd, MMMM DD, YYYY');
                     $('#sched').val(sched);
                     $('#sched1').val(sched);
                     $('#resched').val(sched);
+                    $('#resched1').val(sched);
             
                     $('.modal-body').html();
                     $('#detailsAssembly').modal('show');
@@ -865,11 +867,13 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         $('#prep_by').val(prep_by);
         $('#prep_by1').val(prep_by);
         $('#reprep_by').val(prep_by);
+        $('#reprep_by1').val(prep_by);
     var sched = value.sched;
         sched = moment(sched).format('dddd, MMMM DD, YYYY');
         $('#sched').val(sched);
         $('#sched1').val(sched);
         $('#resched').val(sched);
+        $('#resched1').val(sched);
 
         $('.modal-body').html();
         $('#detailsAssembly').modal('show');

@@ -120,7 +120,7 @@
                     <br>
                 </div>
             </div>
-            {{-- <div id="incItemsModal" style="display: none;">
+            <div id="incItemsModal" style="display: none;">
                 <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
                     <h6 id="incmodalheader" class="modal-title w-100">INCOMPLETE ITEM DETAILS</h6>
                 </div>
@@ -146,26 +146,22 @@
                                 <th class="sum">QTY</th>
                                 <th>UOM</th>
                                 <th>SERIAL</th>
-                                <th>LOCATION</th>
                             </tr>
                         </thead>
                         <tfoot style="font-size: 14px;">
                             <tr>
                                 <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                                 <th></th>
-                                <th colspan="3"></th>
+                                <th colspan="2"></th>
                             </tr>
                         </tfoot>
                     </table>
-                    <br>
-                    <div id="incFooter">
+                    <div id="incFooter" style="display: none;">
                         <hr>
-                        <input type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" value="RECEIVE" disabled>
-                        <br>
-                        <br>
+                        <input type="button" class="btn btn-primary float-right bp btnReceive mb-4" value="RECEIVE" disabled>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
 </div>

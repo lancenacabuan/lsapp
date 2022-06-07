@@ -402,12 +402,6 @@ $('#btnSave').on('click', function(){
                                         else{
                                             return false;
                                         }
-                                    },
-                                    error: function(data){
-                                        if(data.status == 401){
-                                            window.location.href = '/stockrequest';
-                                        }
-                                        alert(data.responseText);
                                     }
                                 });
                             });
@@ -431,7 +425,7 @@ $('#btnSave').on('click', function(){
                                         }
                                         else{
                                             swal("SUBMIT SUCCESS", "MERCHANT STOCK REQUEST", "success");
-                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                            setTimeout(function(){location.href="/merchant"}, 2000);
                                         }
                                     }
                                     else{
@@ -592,10 +586,12 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                     $('#prep_by').val(prep_by);
                     $('#prep_by1').val(prep_by);
                     $('#reprep_by').val(prep_by);
+                    $('#reprep_by1').val(prep_by);
                 var sched = value.sched;
                     sched = moment(sched).format('dddd, MMMM DD, YYYY');
                     $('#sched').val(sched);
                     $('#sched1').val(sched);
+                    $('#resched').val(sched);
                     $('#resched1').val(sched);
                 var orderID = value.orderID;
                     $('#orderID_details').val(orderID);
@@ -688,6 +684,33 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                     $('#prepItemsModal').show();
                     document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                     ajax_url = '/receivedItems';
+                }
+                if(requestStatus == '15'){
+                    ajax_url = '/receivedItems';
+                    $('#prepItemsModal').show();
+                    document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                    $(".prephide").hide();
+                    $("#incItemsModal").show();
+                    $("#incFooter").hide();
+                }
+                if(requestStatus == '16'){
+                    ajax_url = '/receivedItems';
+                    $('#prepItemsModal').show();
+                    document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                    $(".prephide").hide();
+                    $("#incItemsModal").show();
+                    $(".divResched").show();
+                    $("#incFooter").hide();
+                }
+                if(requestStatus == '17'){
+                    ajax_url = '/receivedItems';
+                    $('#prepItemsModal').show();
+                    document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                    $(".prephide").hide();
+                    $("#incItemsModal").show();
+                    $('#increceive_label').show();
+                    $(".divResched").show();
+                    $("#incFooter").show();
                 }
                 
                 $('table.stockDetails').dataTable().fnDestroy();    
@@ -802,6 +825,53 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                         });
                     }
                 });
+                $('table.incItems').dataTable().fnDestroy();
+                $('table.incItems').DataTable({
+                    searching: false,
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    language:{
+                        processing: "Loading...",
+                        emptyTable: "No data available in table"
+                    },
+                    serverSide: true,
+                    ajax:{
+                        url: '/incItems',
+                        data:{
+                            request_number: req_num,
+                        }
+                    },
+                    order: [],
+                    columns: [
+                        { data: 'prodcode' },
+                        { data: 'item' },
+                        { data: 'qty' },
+                        { data: 'uom' },
+                        { data: 'serial' }
+                    ],
+                    footerCallback: function(row,data,start,end,display){
+                        var api = this.api(), data;
+                        var intVal = function(i){
+                            return typeof i === 'string'?
+                                i.replace(/[\$,]/g,'')*1:
+                                typeof i === 'number'?
+                                    i:0;
+                        };
+                        api.columns('.sum', {page:'all'}).every(function(){
+                            var sum = this
+                            .data()
+                            .reduce(function(a,b){
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                            sum = sum.toString();
+                            var pattern = /(-?\d+)(\d{3})/;
+                            while(pattern.test(sum))
+                            sum = sum.replace(pattern,"$1,$2");
+                            this.footer().innerHTML = sum;
+                        });
+                    }
+                });
             });
         },
         error: function(data){
@@ -839,10 +909,12 @@ $('#merchantTable tbody').on('click', 'tr', function(){
         $('#prep_by').val(prep_by);
         $('#prep_by1').val(prep_by);
         $('#reprep_by').val(prep_by);
+        $('#reprep_by1').val(prep_by);
     var sched = value.sched;
         sched = moment(sched).format('dddd, MMMM DD, YYYY');
         $('#sched').val(sched);
         $('#sched1').val(sched);
+        $('#resched').val(sched);
         $('#resched1').val(sched);
     var orderID = value.orderID;
         $('#orderID_details').val(orderID);
@@ -936,6 +1008,33 @@ $('#merchantTable tbody').on('click', 'tr', function(){
         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
         ajax_url = '/receivedItems';
     }
+    if(requestStatus == '15'){
+        ajax_url = '/receivedItems';
+        $('#prepItemsModal').show();
+        document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+        $(".prephide").hide();
+        $("#incItemsModal").show();
+        $("#incFooter").hide();
+    }
+    if(requestStatus == '16'){
+        ajax_url = '/receivedItems';
+        $('#prepItemsModal').show();
+        document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+        $(".prephide").hide();
+        $("#incItemsModal").show();
+        $(".divResched").show();
+        $("#incFooter").hide();
+    }
+    if(requestStatus == '17'){
+        ajax_url = '/receivedItems';
+        $('#prepItemsModal').show();
+        document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+        $(".prephide").hide();
+        $("#incItemsModal").show();
+        $('#increceive_label').show();
+        $(".divResched").show();
+        $("#incFooter").show();
+    }
     
     $('table.stockDetails').dataTable().fnDestroy();    
     $('table.stockDetails').DataTable({
@@ -1017,6 +1116,53 @@ $('#merchantTable tbody').on('click', 'tr', function(){
             data:{
                 request_number: req_num,
                 included: included
+            }
+        },
+        order: [],
+        columns: [
+            { data: 'prodcode' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' }
+        ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        }
+    });
+    $('table.incItems').dataTable().fnDestroy();
+    $('table.incItems').DataTable({
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false,
+        language:{
+            processing: "Loading...",
+            emptyTable: "No data available in table"
+        },
+        serverSide: true,
+        ajax:{
+            url: '/incItems',
+            data:{
+                request_number: req_num,
             }
         },
         order: [],
@@ -1141,6 +1287,31 @@ $('.prepItems tbody').on('click', 'tr', function(){
         return false;
     }
     var table = $('table.prepItems').DataTable();
+    var data = table.row(this).data();
+    item_count = table.data().count();
+
+    $(this).toggleClass('selected');
+    if(items.includes(data.id) == true){
+        items = items.filter(item => item !== data.id);
+    }
+    else {
+        items.push(data.id);
+    }
+    if(items.length == 0){
+        $('.btnReceive').prop('disabled', true);
+    }
+    else{
+        $('.btnReceive').prop('disabled', false);
+    }
+});
+
+$('.table.incItems').DataTable().on('select', function(){});
+$('.incItems tbody').on('click', 'tr', function(){
+    var requestStatus = $('#status_id_details').val();
+    if(requestStatus != '17'){
+        return false;
+    }
+    var table = $('table.incItems').DataTable();
     var data = table.row(this).data();
     item_count = table.data().count();
 

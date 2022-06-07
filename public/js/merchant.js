@@ -595,7 +595,14 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                     $('#resched1').val(sched);
                 var orderID = value.orderID;
                     $('#orderID_details').val(orderID);
-            
+
+                if($("#current_role").val() == 'merchant' && req_type_id != 6){
+                    window.location.href = '/merchant';
+                }
+                if($("#current_role").val() == 'merchant' && $('#current_user').val() != value.user_id){
+                    window.location.href = '/merchant';
+                }
+
                 var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
                 var reference_attachments = decodeHtml(reference_uploads).split(',');
                     for(var i=0; i < reference_attachments.length; i++){
@@ -918,6 +925,13 @@ $('#merchantTable tbody').on('click', 'tr', function(){
         $('#resched1').val(sched);
     var orderID = value.orderID;
         $('#orderID_details').val(orderID);
+
+    if($("#current_role").val() == 'merchant' && req_type_id != 6){
+        window.location.href = '/merchant';
+    }
+    if($("#current_role").val() == 'merchant' && $('#current_user').val() != value.user_id){
+        window.location.href = '/merchant';
+    }
 
     var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
     var reference_attachments = decodeHtml(reference_uploads).split(',');

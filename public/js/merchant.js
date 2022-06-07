@@ -1,4 +1,4 @@
-var minDate, maxDate, editMode;
+var minDate, maxDate;
 $(function(){
     var dtToday = new Date();
     
@@ -545,5 +545,264 @@ $('table.merchantTable').DataTable({
     order: [],
     initComplete: function(){
         return notifyDeadline();
+    }
+});
+
+$('#merchantTable tbody').on('click', 'tr', function(){
+    $('#detailsMerchRequest').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    var table = $('table.merchantTable').DataTable(); 
+    var value = table.row(this).data();
+    var requestStatus = value.status_id;
+        $('#status_id_details').val(requestStatus);
+    var req_type_id = value.req_type_id;
+        $('#req_type_id_details').val(req_type_id);
+    var req_date = value.date;
+        req_date = moment(req_date).format('dddd, MMMM DD, YYYY, h:mm A');
+        $('#reqdate_details').val(req_date);
+    var need_date = value.needdate;
+        maxDate = need_date;
+        need_date = moment(need_date).format('dddd, MMMM DD, YYYY');
+        $('#needdate_details').val(need_date);
+    var req_num = value.req_num;
+        $('#request_num_details').val(req_num);
+        $('#reqnum').val(req_num);
+    var req_by = value.req_by;
+        $('#requested_by_details').val(req_by);
+    var status = value.status;
+        $('#status_details').val(status);
+    var prep_by = value.prep_by;
+        $('#prep_by').val(prep_by);
+        $('#prep_by1').val(prep_by);
+        $('#reprep_by').val(prep_by);
+    var sched = value.sched;
+        sched = moment(sched).format('dddd, MMMM DD, YYYY');
+        $('#sched').val(sched);
+        $('#sched1').val(sched);
+        $('#resched1').val(sched);
+    var orderID = value.orderID;
+        $('#orderID_details').val(orderID);
+
+    var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
+    var reference_attachments = decodeHtml(reference_uploads).split(',');
+        for(var i=0; i < reference_attachments.length; i++){
+            var btn = document.createElement("input");
+            btn.setAttribute("id", "btnSlide"+(i+1));
+            btn.setAttribute("value", i+1);
+            btn.setAttribute("type", "button");
+            btn.setAttribute("class", "w3-button demo");
+            btn.setAttribute("onclick", "currentDiv("+(i+1)+")");
+            var img = document.createElement("img");
+            img.setAttribute("id", "reference_attachment"+i);
+            img.setAttribute("class", "mySlides");
+            var imgx = document.createElement("img");
+            imgx.setAttribute("id", "reference_hidden"+i);
+            document.getElementById("slidesBtn").appendChild(btn);
+            document.getElementById("slidesContent").appendChild(img);
+            document.getElementById("hiddenContent").appendChild(imgx);
+            var reference_attachment = reference_attachments[i].replace(/\"/g,'');
+
+            $.ajax({
+                type: 'get',
+                url: '/checkURL',
+                async: false,
+                data:{
+                    'reference': reference_attachment,
+                    'check': 'beta'
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
+                        $('#reference_attachment'+i).css({'width': '100%'});
+                    }
+                    else{
+                        $.ajax({
+                            type: 'get',
+                            url: '/checkURL',
+                            async: false,
+                            data:{
+                                'reference': reference_attachment,
+                                'check': 'live'
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
+                                    $('#reference_attachment'+i).css({'width': '100%'});
+                                }
+                                else{
+                                    $('#reference_attachment'+i).attr('src', 'NA.png').show();
+                                    $('#reference_attachment'+i).css({'width': '25%'});
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    $('#btnSlide1').click();
+    if(reference_attachments.length == 1){
+        $("#slidesCtrl").hide();
+    }
+    $('.modal-body').html();
+    $('#detailsMerchRequest').modal('show');
+
+    var stockDetailsTargets = [];
+    var included = 'yes';
+
+    if(requestStatus == 1){
+        $('#btnDelete').show();
+    }
+    if(requestStatus != 1){
+        $('#btnDelete').hide();
+        stockDetailsTargets = [4,5];
+    }
+    if(requestStatus == 2){
+        $('#prepItemsModal').show();
+        document.getElementById('modalheader').innerHTML = 'SCHEDULED ITEM DETAILS';
+    }
+    if(requestStatus == 3){
+        $('#prepItemsModal').show();
+        $('#receive_label').show();
+        $('.btnReceive').show();
+        document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
+    }
+    
+    $('table.stockDetails').dataTable().fnDestroy();    
+    $('table.stockDetails').DataTable({
+        columnDefs: [
+            {
+                "targets": stockDetailsTargets,
+                "visible": false,
+                "searchable": false
+            },
+            {   
+                "render": function(data, type, row, meta){
+                        return '<button style="zoom: 80%;" class="btn btn-danger bp btndelItem" id="'+ meta.row +'">REMOVE</button>';
+                },
+                "defaultContent": '',
+                "data": null,
+                "targets": [5]
+            }
+        ],
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false,
+        language:{
+            emptyTable: "No data available in table",
+            processing: "Loading...",
+        },
+        serverSide: true,
+        ajax:{
+            url: '/requestDetails',
+            data:{
+                reqnum: req_num,
+            }
+        },
+        order: [],
+        columns: [
+            { data: 'prodcode' },
+            { data: 'item' },
+            { data: 'uom' },
+            { data: 'quantity' },
+            { data: 'pending' },
+            { data: 'item_id' }
+        ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        }
+    });
+
+    $('table.prepItems').dataTable().fnDestroy();
+    $('table.prepItems').DataTable({
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false,
+        language:{
+            processing: "Loading...",
+            emptyTable: "No data available in table"
+        },
+        serverSide: true,
+        ajax:{
+            url: '/schedItems',
+            data:{
+                request_number: req_num,
+                included: included
+            }
+        },
+        order: [],
+        columns: [
+            { data: 'prodcode' },
+            { data: 'item' },
+            { data: 'qty' },
+            { data: 'uom' },
+            { data: 'serial' }
+        ],
+        footerCallback: function(row,data,start,end,display){
+            var api = this.api(), data;
+            var intVal = function(i){
+                return typeof i === 'string'?
+                    i.replace(/[\$,]/g,'')*1:
+                    typeof i === 'number'?
+                        i:0;
+            };
+            api.columns('.sum', {page:'all'}).every(function(){
+                var sum = this
+                .data()
+                .reduce(function(a,b){
+                    return intVal(a) + intVal(b);
+                }, 0);
+                sum = sum.toString();
+                var pattern = /(-?\d+)(\d{3})/;
+                while(pattern.test(sum))
+                sum = sum.replace(pattern,"$1,$2");
+                this.footer().innerHTML = sum;
+            });
+        }
+    });
+});
+
+$("#btnShowAttachment").on('click', function(){
+    $("#btnShowAttachment").hide();
+    $("#btnHideAttachment").show();
+    $("#attachmentModal").slideDown();
+});
+
+$("#btnHideAttachment").on('click', function(){
+    $("#btnShowAttachment").show();
+    $("#btnHideAttachment").hide();
+    $("#attachmentModal").slideUp();
+});
+
+$('.btnPrint').on('click', function(){
+    window.location.href = '/printRequest?request_number='+$('#request_num_details').val();
+});
+
+$(document).ready(function(){
+    if($(location).attr('pathname')+window.location.search == '/merchant?submit=success'){
+        $('#loading').hide(); Spinner.hide();
+        swal("SUBMIT SUCCESS", "MERCHANT STOCK REQUEST", "success");
+        setTimeout(function(){location.href="/merchant"}, 2000);
     }
 });

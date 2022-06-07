@@ -246,7 +246,6 @@ class StockRequestController extends Controller
         else{
             return redirect()->to('/stockrequest?sale=success');
         }
-
     }
     
     public function saveRequest(Request $request){

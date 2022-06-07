@@ -30,6 +30,6 @@
     }
 </style>
 @include('pages.merchant.newMerchRequest')
-{{-- @include('pages.merchant.detailsMerchRequest') --}}
+@include('pages.merchant.detailsMerchRequest')
 @include('pages.include')
 @endsection

@@ -11,10 +11,15 @@
         Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Requested By: {{$details['requested_by']}}<br><br>
+        @if($details['req_type_id'] == 6)
+        Order ID: {{$details['orderID']}}
+        @endif
+        @if($details['req_type_id'] != 6)
         Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
         Contact Person: {{$details['contact']}}<br>
         Remarks: {{$details['remarks']}}
+        @endif
         @if($details['req_type_id'] == 2 || ($details['req_type_id'] == 3 && $details['status_id'] == 10))
         <br><br>Reference SO/PO No.: {{$details['reference']}}
         @endif
@@ -30,7 +35,7 @@
             $total = 0;
             $sum = 0;
         @endphp
-        @if($details['req_type_id'] == 2 || ($details['req_type_id'] == 3 && $details['status_id'] == 10))
+        @if($details['req_type_id'] == 2 || $details['req_type_id'] == 6 || ($details['req_type_id'] == 3 && $details['status_id'] == 10))
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>

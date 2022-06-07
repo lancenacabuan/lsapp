@@ -1601,7 +1601,7 @@ class StockRequestController extends Controller
         }
         else if($total == 0){
             do{
-                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, schedule, needdate, prepdate')
+                $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, orderID, schedule, needdate, prepdate')
                     ->where('requests.request_number', $request->request_number)
                     ->join('users', 'users.id', '=', 'requests.requested_by')
                     ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -1686,6 +1686,7 @@ class StockRequestController extends Controller
                     'contact' => $request_details->contact,
                     'remarks' => $request_details->remarks,
                     'reference' => $request_details->reference,
+                    'orderID' => $request_details->orderID,
                     'prepared_by' => $prep->prepby,
                     'prepdate' => $request_details->prepdate,
                     'scheddate' => $request_details->schedule,
@@ -1700,36 +1701,38 @@ class StockRequestController extends Controller
                 Mail::to($key->email)->send(new receivedRequest($details, $subject));
             }
 
-            $user = User::role('approver - sales')->where('status','ACTIVE')->get();
-            foreach($user as $key){
-                $details = [
-                    'name' => ucwords($key->name),
-                    'action' => 'STOCK REQUEST',
-                    'verb' => 'RECEIVED',
-                    'request_number' => $request->request_number,
-                    'reqdate' => $request_details->reqdate,
-                    'requested_by' => $request_details->reqby,
-                    'needdate' => $request_details->needdate,
-                    'reqtype' => $request_details->reqtype,
-                    'client_name' => $request_details->client_name,
-                    'location' => $request_details->location,
-                    'contact' => $request_details->contact,
-                    'remarks' => $request_details->remarks,
-                    'reference' => $request_details->reference,
-                    'prepared_by' => $prep->prepby,
-                    'prepdate' => $request_details->prepdate,
-                    'scheddate' => $request_details->schedule,
-                    'receivedby' => auth()->user()->name,
-                    'role' => 'Approver - Sales',
-                    'items' => $items,
-                    'pendcount' => 0,
-                    'penditems' => NULL,
-                    'req_type_id' => $request_details->req_type_id,
-                    'status_id' => $request_details->status_id
-                ];
-                Mail::to($key->email)->send(new receivedRequest($details, $subject));
+            if($request_details->req_type_id != 6){
+                $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+                foreach($user as $key){
+                    $details = [
+                        'name' => ucwords($key->name),
+                        'action' => 'STOCK REQUEST',
+                        'verb' => 'RECEIVED',
+                        'request_number' => $request->request_number,
+                        'reqdate' => $request_details->reqdate,
+                        'requested_by' => $request_details->reqby,
+                        'needdate' => $request_details->needdate,
+                        'reqtype' => $request_details->reqtype,
+                        'client_name' => $request_details->client_name,
+                        'location' => $request_details->location,
+                        'contact' => $request_details->contact,
+                        'remarks' => $request_details->remarks,
+                        'reference' => $request_details->reference,
+                        'prepared_by' => $prep->prepby,
+                        'prepdate' => $request_details->prepdate,
+                        'scheddate' => $request_details->schedule,
+                        'receivedby' => auth()->user()->name,
+                        'role' => 'Approver - Sales',
+                        'items' => $items,
+                        'pendcount' => 0,
+                        'penditems' => NULL,
+                        'req_type_id' => $request_details->req_type_id,
+                        'status_id' => $request_details->status_id
+                    ];
+                    Mail::to($key->email)->send(new receivedRequest($details, $subject));
+                }
             }
-    
+
             $details = [
                 'name' => $request_details->reqby,
                 'action' => 'STOCK REQUEST',
@@ -1744,11 +1747,12 @@ class StockRequestController extends Controller
                 'contact' => $request_details->contact,
                 'remarks' => $request_details->remarks,
                 'reference' => $request_details->reference,
+                'orderID' => $request_details->orderID,
                 'prepared_by' => $prep->prepby,
                 'prepdate' => $request_details->prepdate,
                 'scheddate' => $request_details->schedule,
                 'receivedby' => auth()->user()->name,
-                'role' => 'Sales',
+                'role' => 'Sales/Merchant',
                 'items' => $items,
                 'pendcount' => 0,
                 'penditems' => NULL,

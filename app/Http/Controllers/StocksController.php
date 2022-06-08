@@ -241,7 +241,8 @@ class StocksController extends Controller
 
         if($UOM == 'Unit'){
             $stock = Stock::query()
-                ->select('stocks.id AS stock_id', 'category', 'item', 'stocks.qty', 'UOM', 'name', 'location', 'serial', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->select('stocks.id AS stock_id', 'category', 'item', 'stocks.qty', 'UOM', 'name', 'location', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->selectRaw('UPPER(serial) AS serial')
                 ->where('item_id', $request->ItemId)
                 ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
                 ->join('items', 'items.id', 'item_id')
@@ -255,7 +256,8 @@ class StocksController extends Controller
         }
         else{
             $stock = Stock::query()
-                ->select('category', 'item', DB::raw('SUM(stocks.qty) AS qty'), 'UOM', 'name', 'location', 'serial', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->select('category', 'item', DB::raw('SUM(stocks.qty) AS qty'), 'UOM', 'name', 'location', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->selectRaw('UPPER(serial) AS serial')
                 ->where('item_id', $request->ItemId)
                 ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
                 ->join('items', 'items.id', 'item_id')
@@ -267,6 +269,32 @@ class StocksController extends Controller
                 ->get();
             
             return DataTables::of($stock)->make(true);
+        }
+    }
+
+    public function serial_data(Request $request){
+        $count = Stock::select()
+            ->where('serial', 'like', '%'.$request->serial.'%')
+            ->count();
+        if($count != 0){
+            $stock = Stock::query()
+                ->select('stocks.id AS stock_id', 'category', 'item', 'stocks.qty', 'UOM', 'name', 'location', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->selectRaw('UPPER(serial) AS serial')
+                ->where('serial', 'like', '%'.$request->serial.'%')
+                ->where('serial', '!=', 'N/A')
+                ->where('UOM', 'Unit')
+                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
+                ->join('items', 'items.id', 'item_id')
+                ->join('categories', 'categories.id', 'category_id')
+                ->join('locations', 'locations.id', 'location_id')
+                ->join('users', 'users.id', 'user_id')
+                ->orderBy('modDate', 'DESC')
+                ->get();
+            
+            return DataTables::of($stock)->make(true);
+        }
+        else{
+            return 0;
         }
     }
 

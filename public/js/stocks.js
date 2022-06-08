@@ -1,11 +1,13 @@
-var CategoryTable, ItemTable, ItemSerialTable, categoryID, categoryName;
+var CategoryTable, ItemTable, ItemSerialTable, SerialTable, table, categoryID, categoryName;
 function category(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
     $('table.ItemSerialTable').dataTable().fnDestroy();
+    $('table.SerialTable').dataTable().fnDestroy();
     $('#CategoryTableDiv').show();
     $('#ItemTableDiv').hide();
     $('#ItemSerialTableDiv').hide();
+    $('#SerialTableDiv').hide();
     $('#stocksHeader').html('WAREHOUSE STOCKS');
     $('#btnBack').hide();
     $('#backBtn').hide();
@@ -50,9 +52,11 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
     $('table.ItemSerialTable').dataTable().fnDestroy();
+    $('table.SerialTable').dataTable().fnDestroy();
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').show();
     $('#ItemSerialTableDiv').hide();
+    $('#SerialTableDiv').hide();
     $('#stocksHeader').html(decodeHtml(trdata.Category));
     $('#btnBack').hide();
     $('#backBtn').show();
@@ -62,7 +66,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
         $('table.ItemTable').DataTable({
             serverSide: true,
             ajax:{
-                url: 'item_data',
+                url: '/item_data',
                 data:{
                     CategoryId: trdata.id
                 }
@@ -96,9 +100,11 @@ $('#btnBack').on('click', function(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
     $('table.ItemSerialTable').dataTable().fnDestroy();
+    $('table.SerialTable').dataTable().fnDestroy();
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').show();
     $('#ItemSerialTableDiv').hide();
+    $('#SerialTableDiv').hide();
     $('#stocksHeader').html(categoryName);
     $('#btnBack').hide();
     $('#backBtn').show();
@@ -108,7 +114,7 @@ $('#btnBack').on('click', function(){
         $('table.ItemTable').DataTable({
             serverSide: true,
             ajax:{
-                url: 'item_data',
+                url: '/item_data',
                 data:{
                     CategoryId: categoryID
                 }
@@ -139,9 +145,11 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
     $('table.ItemSerialTable').dataTable().fnDestroy();
+    $('table.SerialTable').dataTable().fnDestroy();
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').hide();
     $('#ItemSerialTableDiv').show();
+    $('#SerialTableDiv').hide();
     $('#stocksHeader').html(decodeHtml(trdata.Item));
     $('#btnBack').show();
     $('#backBtn').hide();
@@ -151,7 +159,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
         $('table.ItemSerialTable').DataTable({
             serverSide: true,
             ajax:{
-                url: 'itemserial_data',
+                url: '/itemserial_data',
                 data:{
                     ItemId: trdata.id
                 }
@@ -197,10 +205,111 @@ $(document).on('click', '#ItemTable tbody tr', function(){
 });
 
 $(document).on('click', '#ItemSerialTable tbody tr', function(){
+    table = ItemSerialTable;
     if($("#current_role").val() == 'viewer'){
         return false;
     }
     var trdata = ItemSerialTable.row(this).data();
+    if(trdata.status == 'defectives' || trdata.status == 'FOR RECEIVING'){
+        return false;
+    }
+    if(trdata.UOM == 'Pc' || trdata.UOM == 'Meter'){
+        return false;
+    }
+    $('#x_id').val(trdata.stock_id);
+    $('#x_category').val(decodeHtml(trdata.category));
+    $('#x_item').val(decodeHtml(trdata.item));
+    $('#y_serial').val(trdata.serial);
+    $('#x_serial').val(trdata.serial);
+
+    $('#editSerialModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    $('.modal-body').html();
+    $('#editSerialModal').modal('show');
+});
+
+$('#z_serial').on('keyup', function(){
+    if(!$('#z_serial').val()){
+        category();
+    }
+    else{
+        $.ajax({
+            url: '/serial_data',
+            data:{
+                serial: $('#z_serial').val()
+            },
+            success: function(data){
+                $('table.CategoryTable').dataTable().fnDestroy();
+                $('table.ItemTable').dataTable().fnDestroy();
+                $('table.ItemSerialTable').dataTable().fnDestroy();
+                $('table.SerialTable').dataTable().fnDestroy();
+                $('#CategoryTableDiv').hide();
+                $('#ItemTableDiv').hide();
+                $('#ItemSerialTableDiv').hide();
+                $('#SerialTableDiv').show();
+                $('#stocksHeader').html($('#z_serial').val());
+                $('#btnBack').hide();
+                $('#backBtn').hide();
+                $('.br').show();
+                SerialTable = $('table.SerialTable').DataTable({
+                    serverSide: true,
+                    ajax:{
+                        url: '/serial_data',
+                        data:{
+                            serial: $('#z_serial').val()
+                        }
+                    },
+                    columnDefs: [
+                        {
+                            "targets": [0,1],
+                            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
+                        },
+                    ],
+                    columns: [
+                        { data: 'addDate' },
+                        { data: 'modDate' },
+                        { data: 'name' },
+                        { data: 'item' },
+                        { data: 'qty' },
+                        { data: 'UOM' },
+                        { data: 'serial' },
+                        {
+                            data: 'location',
+                            "render": function(data, type, row){
+                                if(row.status == 'defectives' || row.status == 'FOR RECEIVING'){
+                                    return 'DEFECTIVE';
+                                }
+                                else if(row.status == 'demo'){
+                                    return 'DEMO';
+                                }
+                                else if(row.status == 'assembly'){
+                                    return 'ASSEMBLY';
+                                }
+                                else{
+                                    return row.location
+                                }
+                            }
+                        }
+                    ],
+                    order: [[1, 'desc']],
+                    initComplete: function(){
+                        return notifyDeadline();
+                    }
+                });
+            }
+        });
+    }
+});
+
+$(document).on('click', '#SerialTable tbody tr', function(){
+    table = SerialTable;
+    if($("#current_role").val() == 'viewer'){
+        return false;
+    }
+    var trdata = SerialTable.row(this).data();
     if(trdata.status == 'defectives' || trdata.status == 'FOR RECEIVING'){
         return false;
     }
@@ -287,7 +396,7 @@ $('#btnEdit').on('click', function(){
                                 icon: "success",
                                 timer: 2000
                             });
-                            $('table.ItemSerialTable').DataTable().ajax.reload();
+                            table.ajax.reload();
                         }
                         else if(data == 'duplicate'){
                             $('#loading').hide(); Spinner.hide();
@@ -297,7 +406,7 @@ $('#btnEdit').on('click', function(){
                                 icon: "error",
                                 timer: 2000
                             });
-                            $('table.ItemSerialTable').DataTable().ajax.reload();
+                            table.ajax.reload();
                         }
                         else{
                             $('#loading').hide(); Spinner.hide();
@@ -307,7 +416,7 @@ $('#btnEdit').on('click', function(){
                                 icon: "error",
                                 timer: 2000
                             });
-                            $('table.ItemSerialTable').DataTable().ajax.reload();
+                            table.ajax.reload();
                         }
                     },
                     error: function(data){

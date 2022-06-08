@@ -2,11 +2,17 @@
 @section('content')
 <div class="container-fluid">
     @role('viewer') {{---ROLES---}}
+    <div class="text-center" style="margin-bottom: -35px;">
+        <input class="text-control spChar" style="zoom: 90%; width: 250px;" id="z_serial" type="text" placeholder="Search Serial Number" autocomplete="off" autofocus/>
+    </div>
     <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
     <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
     <div class="br" style="display: none;"><br></div>
     @endrole
     @role('admin|encoder') {{---ROLES---}}
+    <div class="text-center" style="margin-bottom: -35px;">
+        <input class="text-control spChar" style="zoom: 90%; width: 250px;" id="z_serial" type="text" placeholder="Search Serial Number" autocomplete="off" autofocus/>
+    </div>
     <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
     <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
     <button class="btn btn-primary bp float-right mb-2" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
@@ -76,6 +82,22 @@
             </thead>
         </table>
     </div>
+    <div id="SerialTableDiv" style="display: none;">
+        <table id="SerialTable" class="table-hover table SerialTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
+            <thead style="background-color: #0d1a80; color: white;">                            
+                <tr>
+                    <th>DATE ADDED</th>
+                    <th>DATE MODIFIED</th>
+                    <th>RESPONSIBLE USER</th>
+                    <th>ITEM DESCRIPTION</th>
+                    <th>QTY</th>
+                    <th>UOM</th>
+                    <th>SERIAL</th>
+                    <th>LOCATION</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
 <div class="modal fade in" id="editSerialModal">
     <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -109,6 +131,25 @@
     #ItemSerialTable_length, #ItemSerialTable_filter{
         margin-top: -90px;
     }
+    #SerialTable_length, #SerialTable_filter{
+        margin-top: -90px;
+    }
+    .text-control {
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
 </style>
 @include('pages.stocks.addStock')
 @include('pages.stocks.importStock')

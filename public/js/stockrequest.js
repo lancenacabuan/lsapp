@@ -1145,8 +1145,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $("#slidesCtrl").hide();
                         }
                     }
-                    $('.modal-body').html();
-                    $('#detailsStockRequest').modal('show');
 
                     var ajax_url = '/schedItems';
                     var rcv_url = '/schedItems';
@@ -1419,6 +1417,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if($("#current_role").val() == 'sales'){
                         $("#proceed_label").hide();
                     }
+                
+                $('.modal-body').html();
+                $('#detailsStockRequest').modal('show');
                     
                 $('table.stockDetails').dataTable().fnDestroy();    
                 $('table.stockDetails').DataTable({
@@ -2373,8 +2374,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $("#slidesCtrl").hide();
             }
         }
-        $('.modal-body').html();
-        $('#detailsStockRequest').modal('show');
 
         var ajax_url = '/schedItems';
         var rcv_url = '/schedItems';
@@ -2647,6 +2646,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if($("#current_role").val() == 'sales'){
             $("#proceed_label").hide();
         }
+
+    $('.modal-body').html();
+    $('#detailsStockRequest').modal('show');
         
     $('table.stockDetails').dataTable().fnDestroy();    
     $('table.stockDetails').DataTable({

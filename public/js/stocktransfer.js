@@ -605,8 +605,6 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                 var hideEdit = '';
                 var hideEdit1 = '';
 
-                $('.modal-body').html();
-                $('#detailsStockTransfer').modal('show');
                 if(locfrom == 5){
                     hideCol = 12;
                 }
@@ -696,6 +694,9 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                 else{
                     var transferDetails = [4,5,6,7,8,9,10,11,12,13];
                 }
+
+                $('.modal-body').html();
+                $('#detailsStockTransfer').modal('show');
 
                 $('table.transferDetails').dataTable().fnDestroy();
                 $('table.transferDetails').DataTable({
@@ -959,8 +960,6 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     var hideEdit = '';
     var hideEdit1 = '';
 
-    $('.modal-body').html();
-    $('#detailsStockTransfer').modal('show');
     if(locfrom == 5){
         hideCol = 12;
     }
@@ -1050,6 +1049,9 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
     else{
         var transferDetails = [4,5,6,7,8,9,10,11,12,13];
     }
+
+    $('.modal-body').html();
+    $('#detailsStockTransfer').modal('show');
 
     $('table.transferDetails').dataTable().fnDestroy();
     $('table.transferDetails').DataTable({

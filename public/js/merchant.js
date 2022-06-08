@@ -663,9 +663,7 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                 if(reference_attachments.length == 1){
                     $("#slidesCtrl").hide();
                 }
-                $('.modal-body').html();
-                $('#detailsMerchRequest').modal('show');
-            
+
                 var stockDetailsTargets = [];
                 var ajax_url = '/schedItems';
                 var included = 'yes';
@@ -719,6 +717,9 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                     $(".divResched").show();
                     $("#incFooter").show();
                 }
+
+                $('.modal-body').html();
+                $('#detailsMerchRequest').modal('show');
                 
                 $('table.stockDetails').dataTable().fnDestroy();    
                 $('table.stockDetails').DataTable({
@@ -993,8 +994,6 @@ $('#merchantTable tbody').on('click', 'tr', function(){
     if(reference_attachments.length == 1){
         $("#slidesCtrl").hide();
     }
-    $('.modal-body').html();
-    $('#detailsMerchRequest').modal('show');
 
     var stockDetailsTargets = [];
     var ajax_url = '/schedItems';
@@ -1049,7 +1048,10 @@ $('#merchantTable tbody').on('click', 'tr', function(){
         $(".divResched").show();
         $("#incFooter").show();
     }
-    
+
+    $('.modal-body').html();
+    $('#detailsMerchRequest').modal('show');
+
     $('table.stockDetails').dataTable().fnDestroy();    
     $('table.stockDetails').DataTable({
         columnDefs: [

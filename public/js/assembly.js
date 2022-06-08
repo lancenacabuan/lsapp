@@ -476,9 +476,13 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     $('#sched1').val(sched);
                     $('#resched').val(sched);
                     $('#resched1').val(sched);
-            
-                    $('.modal-body').html();
-                    $('#detailsAssembly').modal('show');
+
+                    if($("#current_role").val() == 'assembler' && [1, 2, 3, 6].includes(req_type_id) == true){
+                        window.location.href = '/assembly';
+                    }
+                    if($("#current_role").val() == 'assembler' && $('#current_user').val() != value.user_id){
+                        window.location.href = '/assembly';
+                    }
 
                     var ajax_url = '/schedItems';
                     var rcv_url = '/schedItems';
@@ -589,6 +593,9 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
                         $("#incFooter").hide();
                     }
+
+                $('.modal-body').html();
+                $('#detailsAssembly').modal('show');
 
                 $('table.stockDetails').dataTable().fnDestroy();    
                 $('table.stockDetails').DataTable({
@@ -875,8 +882,12 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         $('#resched').val(sched);
         $('#resched1').val(sched);
 
-        $('.modal-body').html();
-        $('#detailsAssembly').modal('show');
+        if($("#current_role").val() == 'assembler' && [1, 2, 3, 6].includes(req_type_id) == true){
+            window.location.href = '/assembly';
+        }
+        if($("#current_role").val() == 'assembler' && $('#current_user').val() != value.user_id){
+            window.location.href = '/assembly';
+        }
 
         var ajax_url = '/schedItems';
         var rcv_url = '/schedItems';
@@ -987,6 +998,9 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
             $("#incFooter").hide();
         }
+
+    $('.modal-body').html();
+    $('#detailsAssembly').modal('show');
 
     $('table.stockDetails').dataTable().fnDestroy();    
     $('table.stockDetails').DataTable({

@@ -39,7 +39,8 @@ var table = $('table.userTable').DataTable({
                 if(row.user_status == 'INACTIVE'){
                     return '<label class="switch" style="zoom: 80%; margin-left: -20px; margin-top: -5px; margin-bottom: -10px;"><input type="checkbox" class="togBtn" id="'+ meta.row +'"><div class="slider round"><span style="font-size: 110%;" class="on">ACTIVE</span><span style="font-size: 100%;" class="off">INACTIVE</span></div></label>';
                 }
-            }
+            },
+            width: '120px'
         }
     ],
     order: [],

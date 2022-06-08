@@ -330,7 +330,7 @@ $('#category').on('change', function(){
             var itemcode = $.map(data, function(value, index){
                 return [value];
             });
-            descOp+='<option value="" selected disabled>Select Item</option>';
+            descOp+='<option value="" selected disabled>Select Item (Required)</option>';
             itemcode.forEach(value => {
                 descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>';
             });
@@ -533,6 +533,7 @@ $('#btnSave').on('click', function(){
 
 $('#btnReset').on('click', function(){
     $('#AddStockForm').trigger('reset');
+    $("#item").find('option').remove().end().append('<option value="" selected disabled>Select Item (Required)</option>');
     $('#prodcodediv').hide();
     $('#uomdiv').hide();
     $('#qtydiv').hide();

@@ -98,6 +98,7 @@ class FileMaintenanceController extends Controller
             $items->prodcode = $request->prodcode;
             $items->category_id = $request->item_category;
             $items->UOM = $request->item_uom;
+            $items->assemble = 'NO';
             $items->serialize = $request->serialize;
             $sql = $items->save();
             $id = $items->id;

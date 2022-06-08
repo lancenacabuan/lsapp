@@ -279,14 +279,14 @@ class StocksController extends Controller
     }
 
     public function getUOM(Request $request){
-        $data = Item::selectRaw('UOM, prodcode')
+        $data = Item::selectRaw('UOM, prodcode, serialize')
             ->where('id',$request->id)
             ->get();
         return response($data);
     }
      
     public function save(Request $request){
-        if($request->serial){
+        if($request->uom == 'Unit'){
             $serials = Stock::query()->select()
                 ->where('serial', '!=', 'N/A')
                 ->whereRaw('UPPER(serial) = ?', strtoupper($request->serial))
@@ -320,7 +320,7 @@ class StocksController extends Controller
                 $userlogs->save();
             }
         }
-        else if($request->qty > 0){
+        else{
             for($i=0; $i < $request->qty; $i++){
                 do{
                     $stocks = new Stock;

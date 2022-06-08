@@ -362,7 +362,14 @@ $('#item').on('change', function(){
                 $('#prodcodediv').show();
                 $('#uomdiv').show();
                 $('#qtydiv').show();
-                $('#serialdiv').show();
+                if(data[0].serialize == 'YES'){
+                    $('#serialdiv').show();
+                    $('#serial').prop('required', true);
+                }
+                else{
+                    $('#serialdiv').hide();
+                    $('#serial').prop('required', false);
+                }
                 $('#prodcode').val(data[0].prodcode);
                 $('#uom').val(data[0].UOM);
                 $('#qty').val('1');
@@ -406,11 +413,11 @@ $('#btnSave').on('click', function(){
     if(!$('#row').val()){
         row = 'N/A';
     }
-    if(!$('#serial').val()){
-        serial = 'N/A';
-    }
-    if($('#serial').is(':visible')){
-        if(category && item && location_id){
+    if(uom == 'Unit'){
+        if(($('#serial').is(':visible') && category && item && location_id && serial) || ($('#serial').is(':hidden') && category && item && location_id)){
+            if(!$('#serial').val()){
+                serial = 'N/A';
+            }
             swal({
                 title: "Are you really sure all details are entered correctly?",
                 text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to review details.",

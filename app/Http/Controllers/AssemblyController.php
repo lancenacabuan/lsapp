@@ -436,6 +436,7 @@ class AssemblyController extends Controller
             $items->category_id = '58';
             $items->UOM = 'Unit';
             $items->assemble = 'YES';
+            $items->serialize = 'YES';
             $sql = $items->save();
             $id = $items->id;
 

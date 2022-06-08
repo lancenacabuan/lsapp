@@ -32,12 +32,12 @@ var table = $('table.userTable').DataTable({
         { data: 'role_name' },
         {
             data: 'user_status',
-            "render": function(data, type, row){
+            "render": function(data, type, row, meta){
                 if(row.user_status == 'ACTIVE'){
-                    return "<span class='d-none'>"+row.user_status+"</span><span style='color: Green; font-weight: bold;'>"+row.user_status+"</span>";
+                    return '<label class="switch" style="zoom: 80%; margin-left: -20px; margin-top: -5px; margin-bottom: -10px;"><input type="checkbox" class="togBtn" id="'+ meta.row +'" checked><div class="slider round"><span style="font-size: 110%;" class="on">ACTIVE</span><span style="font-size: 100%;" class="off">INACTIVE</span></div></label>';
                 }
                 if(row.user_status == 'INACTIVE'){
-                    return "<span class='d-none'>"+row.user_status+"</span><span style='color: Red; font-weight: bold;'>"+row.user_status+"</span>";
+                    return '<label class="switch" style="zoom: 80%; margin-left: -20px; margin-top: -5px; margin-bottom: -10px;"><input type="checkbox" class="togBtn" id="'+ meta.row +'"><div class="slider round"><span style="font-size: 110%;" class="on">ACTIVE</span><span style="font-size: 100%;" class="off">INACTIVE</span></div></label>';
                 }
             }
         }
@@ -52,6 +52,28 @@ $('.filter-input').on('keyup', function(){
     table.column($(this).data('column'))
         .search($(this).val())
         .draw();
+});
+
+$(document).on('change', '.togBtn', function(){
+    var id = $(this).attr("id");
+    var data = table.row(id).data();
+    if($(this).is(':checked')){
+        var status = 'ACTIVE';
+    }
+    else{
+        var status = 'INACTIVE';   
+    }
+    $.ajax({
+        url: '/users/status',
+        data:{
+            id: data.user_id,
+            name: data.user_name, 
+            status: status
+        },
+        success: function(data){
+            setTimeout(function(){table.ajax.reload(null, false)}, 1000);
+        }
+    });
 });
 
 $('#btnAddUser').on('click', function(){
@@ -167,7 +189,7 @@ $('#btnSave').on('click', function(){
     }
 });
 
-$('#userTable tbody').on('click', 'tr', function(){
+$('#userTable tbody').on('click', 'tr td:not(:nth-child(5))', function(){
     $('#updateUser').modal({
         backdrop: 'static',
         keyboard: false
@@ -183,25 +205,12 @@ $('#userTable tbody').on('click', 'tr', function(){
         $('#company2').val(data.company);
         $('#role1').val(data.role);
         $('#role2').val(data.role);
-        $('#status2').val(data.user_status);
-        if(data.user_status == 'ACTIVE'){
-            $('#status1').prop('checked', true);
-        }
-        else{
-            $('#status1').prop('checked', false);
-        }
 
         $('.modal-body').html();
         $('#updateUser').modal('show');
 });
 
 $('#btnUpdate').on('click', function(){
-    if($('#status1').is(":checked")){
-        var status1 = 'ACTIVE';
-    }
-    else{
-        var status1 = 'INACTIVE';
-    }
     var id1 = $('#id1').val();
     var name1 = $.trim($('#name1').val());
     var name2 = $('#name2').val();
@@ -211,18 +220,13 @@ $('#btnUpdate').on('click', function(){
     var company2 = $('#company2').val();
     var role1 = $('#role1').val();
     var role2 = $('#role2').val();
-    var status2 = $('#status2').val();
 
     if(!name1 || !email1 || !company1 || !role1){
         swal('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
-    else if(name1.toUpperCase() == name2.toUpperCase() && email1.toUpperCase() == email2.toUpperCase() && company1 == company2 && role1 == role2 && status1 == status2){
+    else if(name1.toUpperCase() == name2.toUpperCase() && email1.toUpperCase() == email2.toUpperCase() && company1 == company2 && role1 == role2){
         swal("NO CHANGES FOUND", "User Details are all still the same!", "error");
-        return false;
-    }
-    else if((name1.toUpperCase() != name2.toUpperCase() || email1.toUpperCase() != email2.toUpperCase() || company1 != company2 || role1 != role2) && status1 != status2){
-        swal("UPDATE FAILED", "STATUS CHANGE is NOT allowed if the current User Details has been changed!", "error");
         return false;
     }
     else{
@@ -242,9 +246,7 @@ $('#btnUpdate').on('click', function(){
                 company1: company1,
                 company2: company2,
                 role1: role1,
-                role2: role2,
-                status1: status1,
-                status2: status2
+                role2: role2
             },
             success: function(data){
                 if(data == 'true'){
@@ -272,9 +274,7 @@ $('#btnUpdate').on('click', function(){
                                     company1: company1,
                                     company2: company2,
                                     role1: role1,
-                                    role2: role2,
-                                    status1: status1,
-                                    status2: status2
+                                    role2: role2
                                 },
                                 success: function(data){
                                     if(data == 'true'){

@@ -232,7 +232,6 @@ class PagesController extends Controller
         $users->company = $request->company1;
         $users->removeRole($request->role2);
         $users->assignRole($request->role1);
-        $users->status = $request->status1;
         $sql = $users->save();
 
         if(!$sql){
@@ -267,16 +266,47 @@ class PagesController extends Controller
             else{
                 $role = NULL;
             }
-            if($request->status1 != $request->status2){
-                $status = "[Status: FROM '$request->status2' TO '$request->status1']";
-            }
-            else{
-                $status = NULL;
-            }
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "USER UPDATED: User successfully updated details of $request->name2 with UserID#$request->id1 with the following CHANGES: $name $email $company $role $status.";
+            $userlogs->activity = "USER UPDATED: User successfully updated details of $request->name2 with UserID#$request->id1 with the following CHANGES: $name $email $company $role.";
+            $userlogs->save();
+        }
+
+        return response($result);
+    }
+
+    public function users_status(Request $request){
+        do{
+            $name = ucwords($request->name);
+            
+            $users = User::find($request->id);
+            $users->status = $request->status;
+            $sql = $users->save();
+        }
+        while(!$sql);
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        if($result == 'true'){
+            if($request->status == 'ACTIVE'){
+                $status1 = 'ACTIVE';
+                $status2 = 'INACTIVE';
+            }
+            else{
+                $status1 = 'INACTIVE';
+                $status2 = 'ACTIVE';
+            }
+            $status = "[Status: FROM '$status2' TO '$status1']";
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "USER UPDATED: User successfully updated details of $name with UserID#$request->id with the following CHANGES: $status.";
             $userlogs->save();
         }
 

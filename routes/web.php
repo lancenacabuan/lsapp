@@ -39,6 +39,7 @@ Route::any('/users/validate/save',[PagesController::class,'validate_users_save']
 Route::any('/users/save',[PagesController::class,'users_save']);
 Route::any('/users/validate/update',[PagesController::class,'validate_users_update']);
 Route::any('/users/update',[PagesController::class,'users_update']);
+Route::any('/users/status',[PagesController::class,'users_status']);
 //
 
 //Stocks

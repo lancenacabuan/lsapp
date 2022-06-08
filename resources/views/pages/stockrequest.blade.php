@@ -16,9 +16,9 @@
             <tr>
                 <th style="width: 150px;">DATE REQUESTED</th>
                 <th style="width: 150px;">DATE NEEDED</th>
-                <th>CLIENT NAME</th>
+                <th>CLIENT / REQNUM</th>
                 <th>ADDRESS / BRANCH</th>
-                <th>REFERENCE SO/PO NO.</th>
+                <th>SO/PO NO. / ORDER ID</th>
                 <th>REQUESTED BY</th>
                 <th>REQUEST TYPE</th>
                 <th style="width: 200px;">STATUS</th>

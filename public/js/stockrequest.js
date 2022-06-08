@@ -819,9 +819,29 @@ if($("#current_role").val() == 'sales'){
                     }
                 }
             },
-            { data: 'client_name' },
+            {
+                data: 'client_name',
+                "render": function(data, type, row){
+                    if(row.client_name == null && row.req_num != null){
+                        return row.req_num;
+                    }
+                    else{
+                        return row.client_name;
+                    }
+                }
+            },
             { data: 'location' },
-            { data: 'reference' },
+            {
+                data: 'reference',
+                "render": function(data, type, row){
+                    if(row.reference == null && row.orderID != null){
+                        return row.orderID;
+                    }
+                    else{
+                        return row.reference;
+                    }
+                }
+            },
             { data: 'req_by' },
             { data: 'req_type' },
             {
@@ -918,9 +938,29 @@ else{
                     }
                 }
             },
-            { data: 'client_name' },
+            {
+                data: 'client_name',
+                "render": function(data, type, row){
+                    if(row.client_name == null && row.req_num != null){
+                        return row.req_num;
+                    }
+                    else{
+                        return row.client_name;
+                    }
+                }
+            },
             { data: 'location' },
-            { data: 'reference' },
+            {
+                data: 'reference',
+                "render": function(data, type, row){
+                    if(row.reference == null && row.orderID != null){
+                        return row.orderID;
+                    }
+                    else{
+                        return row.reference;
+                    }
+                }
+            },
             { data: 'req_by' },
             { data: 'req_type' },
             {
@@ -1714,7 +1754,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             data: 'id',
                             "render": function(data, type, row, meta){
                                 if(row.uom == 'Unit'){
-                                    return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                    return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                 }
                                 else{
                                     return '';
@@ -1893,7 +1933,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 data: 'id',
                                 "render": function(data, type, row, meta){
                                     if(row.uom == 'Unit'){
-                                        return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                        return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                     }
                                     else{
                                         return '';
@@ -1962,7 +2002,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 data: 'id',
                                 "render": function(data, type, row, meta){
                                     if(row.uom == 'Unit'){
-                                        return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                        return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                     }
                                     else{
                                         return '';
@@ -2033,7 +2073,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                     data: 'id',
                                     "render": function(data, type, row, meta){
                                         if(row.uom == 'Unit'){
-                                            return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                            return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                         }
                                         else{
                                             return '';
@@ -2102,7 +2142,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                     data: 'id',
                                     "render": function(data, type, row, meta){
                                         if(row.uom == 'Unit'){
-                                            return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                            return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                         }
                                         else{
                                             return '';
@@ -2943,7 +2983,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 data: 'id',
                 "render": function(data, type, row, meta){
                     if(row.uom == 'Unit'){
-                        return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                        return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                     }
                     else{
                         return '';
@@ -3122,7 +3162,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     data: 'id',
                     "render": function(data, type, row, meta){
                         if(row.uom == 'Unit'){
-                            return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                            return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                         }
                         else{
                             return '';
@@ -3191,7 +3231,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     data: 'id',
                     "render": function(data, type, row, meta){
                         if(row.uom == 'Unit'){
-                            return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                            return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                         }
                         else{
                             return '';
@@ -3262,7 +3302,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                         data: 'id',
                         "render": function(data, type, row, meta){
                             if(row.uom == 'Unit'){
-                                return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                             }
                             else{
                                 return '';
@@ -3331,7 +3371,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                         data: 'id',
                         "render": function(data, type, row, meta){
                             if(row.uom == 'Unit'){
-                                return '<button style="zoom: 80%;" class="btn btn-primary bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
+                                return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                             }
                             else{
                                 return '';

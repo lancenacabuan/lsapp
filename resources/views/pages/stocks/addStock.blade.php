@@ -13,7 +13,7 @@
                             <label class="input-group-text" style="width: 140px;">Category</label>
                         </div>
                         <select id="category" name="category" style="width: 630px;" required>
-                                <option value="" selected disabled>Select Category</option>
+                                <option value="" selected disabled>Select Category (Required)</option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
                                 @endforeach
@@ -24,7 +24,7 @@
                             <label class="input-group-text" style="width: 140px;">Item</label>
                         </div>
                         <select id="item" name="item" style="width: 630px;" required>
-                            <option value="" selected disabled>Select Item</option>
+                            <option value="" selected disabled>Select Item (Required)</option>
                         </select>
                     </div>
                     <div class="input-group mb-3" id="prodcodediv">
@@ -38,7 +38,7 @@
                             <label class="input-group-text" style="width: 140px;">Location</label>
                         </div>
                         <select id="location" name="location" style="width: 630px;" required>
-                                <option value="" selected disabled>Select Location</option>
+                                <option value="" selected disabled>Select Location (Required)</option>
                                 @foreach($locations as $location)
                                     <option value="{{$location->id}}">{{$location->location}}</option>
                                 @endforeach
@@ -72,7 +72,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Serial</label>
                         </div>
-                        <input type="text" id="serial" name="serial" placeholder="Enter Serial (Note: Leave blank if N/A)" style="width: 630px; border-width: thin;" autocomplete="off" onkeypress="return specialChar(event)">
+                        <input type="text" id="serial" name="serial" placeholder="Enter Serial (Required)" style="width: 630px; border-width: thin;" autocomplete="off" onkeypress="return specialChar(event)">
                     </div>
                 </form>
                 <hr>

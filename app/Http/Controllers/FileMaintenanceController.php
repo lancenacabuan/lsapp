@@ -54,7 +54,7 @@ class FileMaintenanceController extends Controller
     }
 
     public function fm_items(){
-        $list = Item::select('items.id', 'items.item', 'items.prodcode', 'categories.category', 'items.category_id', 'items.UOM')
+        $list = Item::select('items.id', 'items.item', 'items.prodcode', 'categories.category', 'items.category_id', 'items.UOM', 'items.serialize')
             ->where('items.assemble', 'NO')
             ->join('categories', 'categories.id', 'category_id')
             ->orderBy('item', 'ASC')
@@ -98,6 +98,7 @@ class FileMaintenanceController extends Controller
             $items->prodcode = $request->prodcode;
             $items->category_id = $request->item_category;
             $items->UOM = $request->item_uom;
+            $items->serialize = $request->serialize;
             $sql = $items->save();
             $id = $items->id;
 
@@ -140,6 +141,7 @@ class FileMaintenanceController extends Controller
             $items->prodcode = $request->prodcode;
             $items->category_id = $request->item_category;
             $items->UOM = $request->item_uom;
+            $items->serialize = $request->serialize;
             $sql = $items->save();
             $id = $items->id;
 
@@ -173,10 +175,28 @@ class FileMaintenanceController extends Controller
                 else{
                     $item_uom = NULL;
                 }
+                if($request->item_uom == 'Unit' && ($request->serialize != $request->serialize_original)){
+                    if($request->serialize == 'YES'){
+                        $serialize = 'Required';
+                    }
+                    else{
+                        $serialize = 'Optional';
+                    }
+                    if($request->serialize_original == 'YES'){
+                        $serialize_original = 'Required';
+                    }
+                    else{
+                        $serialize_original = 'Optional';
+                    }
+                    $serial = "[Serial (Required/Optional): FROM '$serialize_original' TO '$serialize']";
+                }
+                else{
+                    $serial = NULL;
+                }
 
                 $userlogs = new UserLogs;
                 $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "ITEM UPDATED: User successfully updated details of '$request->item_name_original' with the following CHANGES: $category_name $item_desc $prodcode $item_uom.";
+                $userlogs->activity = "ITEM UPDATED: User successfully updated details of '$request->item_name_original' with the following CHANGES: $category_name $item_desc $prodcode $item_uom $serial.";
                 $userlogs->save();
             }
 

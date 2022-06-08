@@ -13,6 +13,7 @@
             <input type="hidden" name="item_name_details_original" id="item_name_details_original">
             <input type="hidden" name="prodcode_details_original" id="prodcode_details_original">
             <input type="hidden" name="item_uom_details_original" id="item_uom_details_original">
+            <input type="hidden" name="serialize_details_original" id="serialize_details_original">
             <div class="form-inline">
                 <label class="form-control form-control-sm" style="width: 168px;">Category Name</label>
                 <select class="form-control-sm form-select-sm" id="item_category_details" style="padding: 0.25rem 0.5rem; height: 30px !important; width: 600px;">
@@ -38,6 +39,16 @@
                     <option value="Pc">Pc</option>
                     <option value="Meter">Meter</option>
                 </select>
+            </div>
+            <div class="form-inline divSerial" style="margin-top: 10px; display: none;">
+                <label class="form-control form-control-sm" style="width: 178px;">Serial (Required/Optional)</label>
+                <label class="switch" style="zoom: 90%; margin-left: -10px;">
+                    <input type="checkbox" id="serialize_details" class="togBtn" value="ACTIVE">
+                    <div class="slider round">
+                        <span class="on">REQUIRED</span>
+                        <span class="off">OPTIONAL</span>
+                    </div>
+                </label>
             </div>
             <button type="button" id="btnUpdateItem" class="btn btn-primary float-right bp" style="margin-top: 10px;">UPDATE</button>
         </div>

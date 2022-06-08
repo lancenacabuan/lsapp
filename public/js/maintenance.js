@@ -387,9 +387,22 @@ $('.btnNewItem').on('click', function(){
     $('#prodcode').val('');
     $('#item_name').val('');
     $('#item_uom').val('');
+    $('.divSerial').hide();
+    $('#serialize').prop('checked', true);
     
     $('.modal-body').html();
     $('#newItem').modal('show');
+});
+
+$('#item_uom').on('change', function(){
+    if($('#item_uom').val() == 'Unit'){
+        $('.divSerial').show();
+        $('#serialize').prop('checked', true);
+    }
+    else{
+        $('.divSerial').hide();
+        $('#serialize').prop('checked', true);
+    }
 });
 
 $('#btnSaveItem').on('click', function(){
@@ -398,6 +411,15 @@ $('#btnSaveItem').on('click', function(){
     var item_name = $.trim($('#item_name').val());
     var prodcode = $.trim($('#prodcode').val());
     var item_uom = $('#item_uom').val();
+    if($('#serialize').is(":checked")){
+        var serialize = 'YES';
+    }
+    else{
+        var serialize = 'NO';
+    }
+    if(item_uom != 'Unit'){
+        serialize = 'NO';
+    }
     if(item_name != "" && prodcode != "" && $('#item_category').find('option:selected').text() != 'Select Category' && $('#item_uom').find('option:selected').text() != 'Select UOM'){
         swal({
             title: "ADD NEW ITEM?",
@@ -419,7 +441,8 @@ $('#btnSaveItem').on('click', function(){
                         item_category: item_category,
                         item_name: item_name,
                         prodcode: prodcode,
-                        item_uom: item_uom
+                        item_uom: item_uom,
+                        serialize: serialize
                     },
                     success: function(data){
                         if(data.result == 'true'){
@@ -476,9 +499,35 @@ $('#itemTable tbody').on('click', 'tr', function(){
     var item_uom = data.UOM;
         $('#item_uom_details').val(item_uom);
         $('#item_uom_details_original').val(item_uom);
+    var serialize = data.serialize;
+        $('#serialize_details_original').val(serialize);
+        if(serialize == 'YES'){
+            $('#serialize_details').prop('checked', true);
+        }
+        else{
+            $('#serialize_details').prop('checked', false);
+        }
+        if(item_uom == 'Unit'){
+            $('.divSerial').show();
+        }
+        else{
+            $('.divSerial').hide();
+            $('#serialize_details').prop('checked', true);
+        }
     
     $('.modal-body').html();
     $('#detailsItem').modal('show');
+});
+
+$('#item_uom_details').on('change', function(){
+    if($('#item_uom_details').val() == 'Unit'){
+        $('.divSerial').show();
+        $('#serialize_details').prop('checked', true);
+    }
+    else{
+        $('.divSerial').hide();
+        $('#serialize_details').prop('checked', true);
+    }
 });
 
 $('#btnUpdateItem').on('click', function(){
@@ -488,17 +537,27 @@ $('#btnUpdateItem').on('click', function(){
     var item_name_original = $('#item_name_details_original').val();
     var prodcode_original = $('#prodcode_details_original').val();
     var item_uom_original = $('#item_uom_details_original').val();
+    var serialize_original = $('#serialize_details_original').val();
     var category_name = $('#item_category_details').find('option:selected').text();
     var item_category = $('#item_category_details').val();
     var item_name = $.trim($('#item_name_details').val());
     var prodcode = $.trim($('#prodcode_details').val());
     var item_uom = $('#item_uom_details').val();
+    if($('#serialize_details').is(":checked")){
+        var serialize = 'YES';
+    }
+    else{
+        var serialize = 'NO';
+    }
+    if(item_uom != 'Unit'){
+        serialize = 'NO';
+    }
     
     if(item_name == "" || prodcode == "" || $('#item_category_details').find('option:selected').text() == 'Select Category' || $('#item_uom_details').find('option:selected').text() == 'Select UOM'){
         swal('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
-    else if(item_name_original.toUpperCase() == item_name.toUpperCase() && prodcode_original == prodcode && item_category_original == item_category && item_uom_original == item_uom){
+    else if(item_name_original.toUpperCase() == item_name.toUpperCase() && prodcode_original == prodcode && item_category_original == item_category && item_uom_original == item_uom && serialize_original == serialize){
         swal("NO CHANGES FOUND", "Item Details are still all the same!", "error");
         return false;
     }
@@ -525,11 +584,13 @@ $('#btnUpdateItem').on('click', function(){
                         item_name_original: item_name_original,
                         prodcode_original: prodcode_original,
                         item_uom_original: item_uom_original,
+                        serialize_original: serialize_original,
                         category_name: category_name,
                         item_category: item_category,
                         item_name: item_name,
                         prodcode: prodcode,
-                        item_uom: item_uom
+                        item_uom: item_uom,
+                        serialize: serialize
                     },
                     success: function(data){
                         if(data.result == 'true'){

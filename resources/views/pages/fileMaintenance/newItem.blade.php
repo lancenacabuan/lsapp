@@ -33,6 +33,16 @@
                     <option value="Meter">Meter</option>
                 </select>
             </div>
+            <div class="form-inline divSerial" style="margin-top: 10px; display: none;">
+                <label class="form-control form-control-sm" style="width: 178px;">Serial (Required/Optional)</label>
+                <label class="switch" style="zoom: 90%; margin-left: -10px;">
+                    <input type="checkbox" id="serialize" class="togBtn" value="ACTIVE" checked>
+                    <div class="slider round">
+                        <span class="on">REQUIRED</span>
+                        <span class="off">OPTIONAL</span>
+                    </div>
+                </label>
+            </div>
             <button type="button" id="btnSaveItem" class="btn btn-primary float-right bp" style="margin-top: 10px;">SUBMIT</button>
         </div>
     </div>

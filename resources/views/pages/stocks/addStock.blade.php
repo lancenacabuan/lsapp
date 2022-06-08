@@ -75,10 +75,16 @@
                         <input type="text" id="serial" name="serial" placeholder="Enter Serial (Note: Leave blank if N/A)" style="width: 630px; border-width: thin;" autocomplete="off" onkeypress="return specialChar(event)">
                     </div>
                 </form>
-                <br>
+                <hr>
                 <button type="button" id="btnReset" class="btn btn-primary bp">RESET</button>
                 <button type="button" id="btnSave" class="btn btn-primary bp float-right">SUBMIT</button>
             </div>
         </div>
     </div>
 </div>
+<style>
+    input, select{
+        color: black;
+        border-color: black;
+    }
+</style>

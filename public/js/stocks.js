@@ -272,9 +272,9 @@ $('#z_serial').on('keyup', function(){
                         { data: 'addDate' },
                         { data: 'modDate' },
                         { data: 'name' },
+                        { data: 'category' },
+                        { data: 'prodcode' },
                         { data: 'item' },
-                        { data: 'qty' },
-                        { data: 'UOM' },
                         { data: 'serial' },
                         {
                             data: 'location',

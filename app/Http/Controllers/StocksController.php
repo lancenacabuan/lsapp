@@ -278,7 +278,7 @@ class StocksController extends Controller
             ->count();
         if($count != 0){
             $stock = Stock::query()
-                ->select('stocks.id AS stock_id', 'category', 'item', 'stocks.qty', 'UOM', 'name', 'location', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->select('stocks.id AS stock_id', 'category', 'item', 'prodcode', 'stocks.qty', 'UOM', 'name', 'location', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
                 ->selectRaw('UPPER(serial) AS serial')
                 ->where('serial', 'like', '%'.$request->serial.'%')
                 ->where('serial', '!=', 'N/A')

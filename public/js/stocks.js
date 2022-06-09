@@ -35,6 +35,7 @@ function category(){
             ],
             order: [],
             initComplete: function(){
+                $('#z_serial').focus();
                 return notifyDeadline();
             }
         });

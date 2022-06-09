@@ -1,4 +1,4 @@
-var CategoryTable, ItemTable, ItemSerialTable, SerialTable, table, categoryID, categoryName;
+var categoryID, categoryName, CategoryTable, ItemTable, ItemSerialTable, SerialTable, table;
 function destroyTables(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
@@ -12,9 +12,9 @@ function category(){
     $('#ItemTableDiv').hide();
     $('#ItemSerialTableDiv').hide();
     $('#SerialTableDiv').hide();
-    $('#stocksHeader').html('WAREHOUSE STOCKS');
     $('#btnBack').hide();
     $('#backBtn').hide();
+    $('#stocksHeader').html('WAREHOUSE STOCKS');
     $('#loading').show(); Spinner(); Spinner.show();
     CategoryTable = 
         $('table.CategoryTable').DataTable({
@@ -58,9 +58,9 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('#ItemTableDiv').show();
     $('#ItemSerialTableDiv').hide();
     $('#SerialTableDiv').hide();
-    $('#stocksHeader').html(decodeHtml(trdata.Category));
     $('#btnBack').hide();
     $('#backBtn').show();
+    $('#stocksHeader').html(categoryName);
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({
@@ -102,9 +102,9 @@ $('#btnBack').on('click', function(){
     $('#ItemTableDiv').show();
     $('#ItemSerialTableDiv').hide();
     $('#SerialTableDiv').hide();
-    $('#stocksHeader').html(categoryName);
     $('#btnBack').hide();
     $('#backBtn').show();
+    $('#stocksHeader').html(categoryName);
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({
@@ -143,9 +143,9 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#ItemTableDiv').hide();
     $('#ItemSerialTableDiv').show();
     $('#SerialTableDiv').hide();
-    $('#stocksHeader').html(decodeHtml(trdata.Item));
     $('#btnBack').show();
     $('#backBtn').hide();
+    $('#stocksHeader').html(decodeHtml(trdata.Item));
     $('#loading').show(); Spinner(); Spinner.show();
     ItemSerialTable = 
         $('table.ItemSerialTable').DataTable({
@@ -242,9 +242,9 @@ $('#z_serial').on('keyup', function(){
                 $('#ItemTableDiv').hide();
                 $('#ItemSerialTableDiv').hide();
                 $('#SerialTableDiv').show();
-                $('#stocksHeader').html($('#z_serial').val());
                 $('#btnBack').hide();
                 $('#backBtn').hide();
+                $('#stocksHeader').html($('#z_serial').val());
                 SerialTable = $('table.SerialTable').DataTable({
                     serverSide: true,
                     ajax:{

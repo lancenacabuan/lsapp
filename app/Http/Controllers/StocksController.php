@@ -241,8 +241,17 @@ class StocksController extends Controller
 
         if($UOM == 'Unit'){
             $stock = Stock::query()
-                ->select('stocks.id AS stock_id', 'category', 'item', 'stocks.qty', 'UOM', 'name', 'location', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->select('stocks.id AS stock_id', 'category', 'item', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
                 ->selectRaw('UPPER(serial) AS serial')
+                ->selectRaw('
+                    (CASE
+                        WHEN stocks.status = "defectives" THEN "DEFECTIVE"
+                        WHEN stocks.status = "FOR RECEIVING" THEN "DEFECTIVE (RETURNED)"
+                        WHEN stocks.status = "demo" THEN "DEMO"
+                        WHEN stocks.status = "assembly" THEN "ASSEMBLY"
+                        ELSE location END
+                    )AS location
+                ')
                 ->where('item_id', $request->ItemId)
                 ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
                 ->join('items', 'items.id', 'item_id')
@@ -257,8 +266,17 @@ class StocksController extends Controller
         }
         else{
             $stock = Stock::query()
-                ->select('category', 'item', DB::raw('SUM(stocks.qty) AS qty'), 'UOM', 'name', 'location', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->select('category', 'item', DB::raw('SUM(stocks.qty) AS qty'), 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
                 ->selectRaw('UPPER(serial) AS serial')
+                ->selectRaw('
+                    (CASE
+                        WHEN stocks.status = "defectives" THEN "DEFECTIVE"
+                        WHEN stocks.status = "FOR RECEIVING" THEN "DEFECTIVE (RETURNED)"
+                        WHEN stocks.status = "demo" THEN "DEMO"
+                        WHEN stocks.status = "assembly" THEN "ASSEMBLY"
+                        ELSE location END
+                    )AS location
+                ')
                 ->where('item_id', $request->ItemId)
                 ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
                 ->join('items', 'items.id', 'item_id')
@@ -280,8 +298,17 @@ class StocksController extends Controller
             ->count();
         if($count != 0){
             $stock = Stock::query()
-                ->select('stocks.id AS stock_id', 'category', 'item', 'prodcode', 'stocks.qty', 'UOM', 'name', 'location', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->select('stocks.id AS stock_id', 'category', 'item', 'prodcode', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
                 ->selectRaw('UPPER(serial) AS serial')
+                ->selectRaw('
+                    (CASE
+                        WHEN stocks.status = "defectives" THEN "DEFECTIVE"
+                        WHEN stocks.status = "FOR RECEIVING" THEN "DEFECTIVE (RETURNED)"
+                        WHEN stocks.status = "demo" THEN "DEMO"
+                        WHEN stocks.status = "assembly" THEN "ASSEMBLY"
+                        ELSE location END
+                    )AS location
+                ')
                 ->where('serial', 'like', '%'.$request->serial.'%')
                 ->where('serial', '!=', 'N/A')
                 ->where('UOM', 'Unit')

@@ -170,23 +170,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 { data: 'qty' },
                 { data: 'UOM' },
                 { data: 'serial' },
-                {
-                    data: 'location',
-                    "render": function(data, type, row){
-                        if(row.status == 'defectives' || row.status == 'FOR RECEIVING'){
-                            return 'DEFECTIVE';
-                        }
-                        else if(row.status == 'demo'){
-                            return 'DEMO';
-                        }
-                        else if(row.status == 'assembly'){
-                            return 'ASSEMBLY';
-                        }
-                        else{
-                            return row.location
-                        }
-                    }
-                },
+                { data: 'location' },
                 { data: 'rack' },
                 { data: 'row' }
             ],
@@ -264,23 +248,7 @@ $('#z_serial').on('keyup', function(){
                     { data: 'prodcode' },
                     { data: 'item' },
                     { data: 'serial' },
-                    {
-                        data: 'location',
-                        "render": function(data, type, row){
-                            if(row.status == 'defectives' || row.status == 'FOR RECEIVING'){
-                                return 'DEFECTIVE';
-                            }
-                            else if(row.status == 'demo'){
-                                return 'DEMO';
-                            }
-                            else if(row.status == 'assembly'){
-                                return 'ASSEMBLY';
-                            }
-                            else{
-                                return row.location
-                            }
-                        }
-                    }
+                    { data: 'location' }
                 ],
                 order: [],
                 initComplete: function(){

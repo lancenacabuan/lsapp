@@ -777,12 +777,12 @@ if($("#current_role").val() == 'sales'){
                 "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
             },
             {
-                "targets": [5,8,9,10,11,12,13,14,15,16,18],
+                "targets": [5],
                 "visible": false,
                 "searchable": false
             },
             {
-                "targets": [17],
+                "targets": [8],
                 "visible": false,
                 "searchable": true
             }
@@ -870,17 +870,7 @@ if($("#current_role").val() == 'sales'){
                     }
                 }
             },
-            { data: 'item_id' },
-            { data: 'item_desc' },
-            { data: 'qty' },
-            { data: 'req_type_id' },
-            { data: 'status_id' },
-            { data: 'prep_by' },
-            { data: 'sched' },
-            { data: 'user_id' },
-            { data: 'reason' },
-            { data: 'req_num' },
-            { data: 'assembly_reqnum' },
+            { data: 'req_num' }
         ],
         order: [],
         initComplete: function(){
@@ -896,12 +886,7 @@ else{
                 "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
             },
             {
-                "targets": [8,9,10,11,12,13,14,15,16,18],
-                "visible": false,
-                "searchable": false
-            },
-            {
-                "targets": [17],
+                "targets": [8],
                 "visible": false,
                 "searchable": true
             }
@@ -989,17 +974,7 @@ else{
                     }
                 }
             },
-            { data: 'item_id' },
-            { data: 'item_desc' },
-            { data: 'qty' },
-            { data: 'req_type_id' },
-            { data: 'status_id' },
-            { data: 'prep_by' },
-            { data: 'sched' },
-            { data: 'user_id' },
-            { data: 'reason' },
-            { data: 'req_num' },
-            { data: 'assembly_reqnum' },
+            { data: 'req_num' }
         ],
         order: [],
         initComplete: function(){

@@ -467,11 +467,6 @@ $('table.stocktransferTable').DataTable({
         {
             "targets": [0],
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
-        },
-        {
-            "targets": [7,8,9,10,11,12,13],
-            "visible": false,
-            "searchable": false
         }
     ],
     language:{
@@ -532,14 +527,7 @@ $('table.stocktransferTable').DataTable({
                     return "<span style='color: Gray; font-weight: bold;'>"+row.status+"</span>";
                 }
             }
-        },
-        { data: 'status_id' },
-        { data: 'locfrom' },
-        { data: 'locto' },
-        { data: 'prep_by' },
-        { data: 'sched' },
-        { data: 'user_id' },
-        { data: 'reason' }
+        }
     ],
     order: [],
     initComplete: function(){

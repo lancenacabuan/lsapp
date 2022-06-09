@@ -21,13 +21,6 @@
                 <th style="width: 180px;">FROM LOCATION</th>
                 <th style="width: 180px;">TO NEW LOCATION</th>
                 <th style="width: 250px;">STATUS</th>
-                <th class="d-none">STATUS ID</th>
-                <th class="d-none">FROM LOCATION</th>
-                <th class="d-none">TO NEW LOCATION</th>
-                <th class="d-none">PREPARED BY</th>
-                <th class="d-none">SCHEDULE</th>
-                <th class="d-none">USER ID</th>
-                <th class="d-none">REASON</th>
             </tr>
         </thead>
     </table>

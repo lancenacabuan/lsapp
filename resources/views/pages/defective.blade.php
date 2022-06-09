@@ -10,14 +10,13 @@
     <table id="defectiveTable" class="table defectiveTable table-hover display" style="zoom: 80%; cursor: pointer; width: 100%;">
         <thead style="background-color: #0d1a80; color: white; font-size: 15px;">
             <tr>
-                <th>ID</th>
-                <th>DATE ADDED</th>
+                <th style="width: 150px;">DATE ADDED</th>
                 <th>ADDED BY</th>
-                <th>RETURN NUMBER</th>
+                <th style="width: 150px;">RETURN NUMBER</th>
                 <th>CATEGORY</th>
                 <th>ITEM DESCRIPTION</th>
                 <th>SERIAL NUMBER</th>
-                <th>STATUS</th>
+                <th style="width: 150px;">STATUS</th>
             </tr>
         </thead>
     </table>

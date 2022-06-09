@@ -137,11 +137,6 @@ $('table.assemblyTable').DataTable({
         {
             "targets": [0],
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
-        },
-        {
-            "targets": [8,9,10,11,12,13,14],
-            "visible": false,
-            "searchable": false
         }
     ],
     language:{
@@ -216,14 +211,7 @@ $('table.assemblyTable').DataTable({
                     return "<span style='color: Gray; font-weight: bold;'>"+row.status+"</span>";
                 }
             }
-        },
-        { data: 'req_type_id' },
-        { data: 'item_id' },
-        { data: 'status_id' },
-        { data: 'prep_by' },
-        { data: 'sched' },
-        { data: 'user_id' },
-        { data: 'assembly_reqnum' }
+        }
     ],
     order: [],
     initComplete: function(){

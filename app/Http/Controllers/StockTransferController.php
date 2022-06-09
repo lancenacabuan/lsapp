@@ -176,7 +176,10 @@ class StockTransferController extends Controller
         $locto = str_replace('"}]','', $locto);
 
         $subject = '[FOR APPROVAL] STOCK TRANSFER REQUEST NO. '.$request->request_number;
-        $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
+        $user = User::role('approver - warehouse')
+            ->where('status','ACTIVE')
+            ->where('company',auth()->user()->company)
+            ->get();
         foreach($user as $key){
             $details = [
                 'name' => ucwords($key->name),
@@ -204,31 +207,32 @@ class StockTransferController extends Controller
     public function transfer_data(){
         if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
             $list = RequestTransfer::selectRaw('DATE_FORMAT(request_transfer.created_at, "%Y-%m-%d") AS reqdate, request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
-            ->whereNotIn('request_transfer.status', ['7','8'])
-            ->join('users', 'users.id', '=', 'request_transfer.requested_by')
-            ->join('status', 'status.id', '=', 'request_transfer.status')
-            ->orderBy('reqdate', 'ASC')
-            ->orderBy('request_transfer.needdate', 'ASC')
-            ->get();
+                ->where('users.company', auth()->user()->company)
+                ->whereNotIn('request_transfer.status', ['7','8'])
+                ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+                ->join('status', 'status.id', '=', 'request_transfer.status')
+                ->orderBy('reqdate', 'ASC')
+                ->orderBy('request_transfer.needdate', 'ASC')
+                ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
             $list = RequestTransfer::selectRaw('DATE_FORMAT(request_transfer.created_at, "%Y-%m-%d") AS reqdate, request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
-            ->whereNotIn('request_transfer.status', ['7','8'])
-            ->join('users', 'users.id', '=', 'request_transfer.requested_by')
-            ->join('status', 'status.id', '=', 'request_transfer.status')
-            ->orderBy('reqdate', 'ASC')
-            ->orderBy('request_transfer.needdate', 'ASC')
-            ->get();
+                ->whereNotIn('request_transfer.status', ['7','8'])
+                ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+                ->join('status', 'status.id', '=', 'request_transfer.status')
+                ->orderBy('reqdate', 'ASC')
+                ->orderBy('request_transfer.needdate', 'ASC')
+                ->get();
         }
         else{
             $list = RequestTransfer::selectRaw('DATE_FORMAT(request_transfer.created_at, "%Y-%m-%d") AS reqdate, request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
-            ->where('request_transfer.requested_by', auth()->user()->id)
-            ->whereNotIn('request_transfer.status', ['7','8'])
-            ->join('users', 'users.id', '=', 'request_transfer.requested_by')
-            ->join('status', 'status.id', '=', 'request_transfer.status')
-            ->orderBy('reqdate', 'ASC')
-            ->orderBy('request_transfer.needdate', 'ASC')
-            ->get();
+                ->where('request_transfer.requested_by', auth()->user()->id)
+                ->whereNotIn('request_transfer.status', ['7','8'])
+                ->join('users', 'users.id', '=', 'request_transfer.requested_by')
+                ->join('status', 'status.id', '=', 'request_transfer.status')
+                ->orderBy('reqdate', 'ASC')
+                ->orderBy('request_transfer.needdate', 'ASC')
+                ->get();
         }
 
         return DataTables::of($list)
@@ -796,7 +800,10 @@ class StockTransferController extends Controller
                 }
             }
 
-            $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
+            $user = User::role('approver - warehouse')
+                ->where('status','ACTIVE')
+                ->where('company',auth()->user()->company)
+                ->get();
             foreach($user as $key){
                 if($key->email != $request_details->email){
                     $details = [

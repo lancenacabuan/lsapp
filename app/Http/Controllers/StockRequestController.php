@@ -308,7 +308,10 @@ class StockRequestController extends Controller
         }
         
         $subject = '[FOR APPROVAL] STOCK REQUEST NO. '.$request->request_number;
-        $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+        $user = User::role('approver - sales')
+            ->where('status','ACTIVE')
+            ->where('company',auth()->user()->company)
+            ->get();
         foreach($user as $key){
             $details = [
                 'name' => ucwords($key->name),

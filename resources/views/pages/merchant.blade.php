@@ -5,14 +5,17 @@
     <button class="btn btn-primary bp btnNewMerchRequest float-right mb-2" type="button">NEW MERCHANT STOCK REQUEST</button>
     <br><br>
     @endrole
-    <br><br>
-    <a href="/merchant">
-        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
-            MERCHANT STOCK REQUESTS
-        </div>
-    </a>
     <table id="merchantTable" class="table merchantTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
-        <thead style="background-color: #0d1a80; color: white; font-size: 15px;"> 
+        <thead style="background-color: #0d1a80; color: white;"> 
+            <tr>
+                <td colspan="6">
+                    <a href="/merchant">
+                        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 25px; font-weight: bold; height: 43px; line-height: 43px;">
+                            MERCHANT STOCK REQUESTS
+                        </div>
+                    </a>
+                </td>
+            </tr>
             <tr>
                 <th style="width: 150px;">DATE REQUESTED</th>
                 <th style="width: 150px;">DATE NEEDED</th>
@@ -24,11 +27,6 @@
         </thead>
     </table>
 </div>
-<style>
-    #merchantTable_length, #merchantTable_filter{
-        margin-top: -90px;
-    }
-</style>
 @include('pages.merchant.newMerchRequest')
 @include('pages.merchant.detailsMerchRequest')
 @include('pages.include')

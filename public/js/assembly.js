@@ -172,7 +172,6 @@ $('table.assemblyTable').DataTable({
             }
         },
         { data: 'req_num' },
-        { data: 'req_by' },
         { data: 'req_type' },
         {
             data: 'item_desc',

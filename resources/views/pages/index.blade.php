@@ -47,14 +47,17 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
         </div>
         <div class="col-sm-2"></div>
     </div>
-    <br><br>
-    <a href="/">
-        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
-            USER ACTIVITY LOGS
-        </div>
-    </a>
     <table id="user_logs" class="table user_logs display" style="width: 100%; font-size: 12px;">
         <thead style="background-color: #0d1a80; color: white; font-size: 14px;">
+            <tr>
+                <td colspan="4">
+                    <a href="/">
+                        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 30px; line-height: 30px;">
+                            USER ACTIVITY LOGS
+                        </div>
+                    </a>
+                </td>
+            </tr>
             <tr class="tbsearch">
                 <td>
                     <input type="text" class="form-control filter-input fl-0" data-column="0" style="border:1px solid #808080"/>
@@ -78,10 +81,5 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
         </thead>
     </table>
 </div>
-<style>
-    #user_logs_length, #user_logs_filter{
-        margin-top: -90px;
-    }
-</style>
 @include('pages.include')
 @endsection

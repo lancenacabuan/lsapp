@@ -1,14 +1,17 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid">
-    <br><br>
-    <a href="/defective">
-        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
-            DEFECTIVE ITEMS
-        </div>
-    </a>
     <table id="defectiveTable" class="table defectiveTable table-hover display" style="zoom: 80%; cursor: pointer; width: 100%;">
-        <thead style="background-color: #0d1a80; color: white; font-size: 15px;">
+        <thead style="background-color: #0d1a80; color: white;">
+            <tr>
+                <td colspan="7">
+                    <a href="/defective">
+                        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 25px; font-weight: bold; height: 43px; line-height: 43px;">
+                            DEFECTIVE ITEMS
+                        </div>
+                    </a>
+                </td>
+            </tr>
             <tr>
                 <th style="width: 150px;">DATE ADDED</th>
                 <th>ADDED BY</th>
@@ -24,10 +27,5 @@
         <input type="hidden" name="return_number" id="return_number">
     </form>
 </div>
-<style>
-    #defectiveTable_length, #defectiveTable_filter{
-        margin-top: -90px;
-    }
-</style>
 @include('pages.include')
 @endsection

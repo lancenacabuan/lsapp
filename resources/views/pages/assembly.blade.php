@@ -5,19 +5,21 @@
     <button class="btn btn-primary bp btnNewAssembly float-right mb-2" type="button">NEW ASSEMBLY</button>
     <br><br>
     @endrole
-    <br><br>
-    <a href="/assembly">
-        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
-            ASSEMBLY STOCK REQUESTS
-        </div>
-    </a>
     <table id="assemblyTable" class="table assemblyTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
-        <thead style="background-color: #0d1a80; color: white; font-size: 15px;"> 
+        <thead style="background-color: #0d1a80; color: white;"> 
+            <tr>
+                <td colspan="7">
+                    <a href="/assembly">
+                        <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 25px; font-weight: bold; height: 43px; line-height: 43px;">
+                            ASSEMBLY STOCK REQUESTS
+                        </div>
+                    </a>
+                </td>
+            </tr>
             <tr>
                 <th style="width: 150px;">DATE REQUESTED</th>
                 <th style="width: 150px;">DATE NEEDED</th>
                 <th style="width: 150px;">REQUEST NUMBER</th>
-                <th style="width: 250px;">REQUESTED BY</th>
                 <th style="width: 150px;">REQUEST TYPE</th>
                 <th>ITEM DESCRIPTION</th>
                 <th style="width: 150px;">QUANTITY</th>
@@ -26,11 +28,6 @@
         </thead>
     </table>
 </div>
-<style>
-    #assemblyTable_length, #assemblyTable_filter{
-        margin-top: -90px;
-    }
-</style>
 @include('pages.assembly.newAssembly')
 @include('pages.assembly.detailsAssembly')
 @include('pages.include')

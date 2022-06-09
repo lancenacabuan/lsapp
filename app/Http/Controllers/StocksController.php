@@ -250,6 +250,7 @@ class StocksController extends Controller
                 ->join('locations', 'locations.id', 'location_id')
                 ->join('users', 'users.id', 'user_id')
                 ->orderBy('modDate', 'DESC')
+                ->orderBy('addDate', 'ASC')
                 ->get();
             
             return DataTables::of($stock)->make(true);
@@ -266,6 +267,7 @@ class StocksController extends Controller
                 ->join('users', 'users.id', 'user_id')
                 ->groupBy('category','item','qty','UOM','name','location','serial','rack','row','status','addDate','modDate')
                 ->orderBy('modDate', 'DESC')
+                ->orderBy('addDate', 'ASC')
                 ->get();
             
             return DataTables::of($stock)->make(true);
@@ -289,6 +291,7 @@ class StocksController extends Controller
                 ->join('locations', 'locations.id', 'location_id')
                 ->join('users', 'users.id', 'user_id')
                 ->orderBy('modDate', 'DESC')
+                ->orderBy('addDate', 'ASC')
                 ->get();
             
             return DataTables::of($stock)->make(true);

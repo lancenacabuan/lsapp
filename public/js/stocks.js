@@ -1,9 +1,13 @@
 var CategoryTable, ItemTable, ItemSerialTable, SerialTable, table, categoryID, categoryName;
-function category(){
+function destroyTables(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
     $('table.ItemSerialTable').dataTable().fnDestroy();
     $('table.SerialTable').dataTable().fnDestroy();
+}
+
+function category(){
+    destroyTables();
     $('#CategoryTableDiv').show();
     $('#ItemTableDiv').hide();
     $('#ItemSerialTableDiv').hide();
@@ -11,7 +15,6 @@ function category(){
     $('#stocksHeader').html('WAREHOUSE STOCKS');
     $('#btnBack').hide();
     $('#backBtn').hide();
-    $('.br').hide();
     $('#loading').show(); Spinner(); Spinner.show();
     CategoryTable = 
         $('table.CategoryTable').DataTable({
@@ -49,10 +52,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     var trdata = CategoryTable.row(this).data();
     categoryID = trdata.id;
     categoryName = decodeHtml(trdata.Category);
-    $('table.CategoryTable').dataTable().fnDestroy();
-    $('table.ItemTable').dataTable().fnDestroy();
-    $('table.ItemSerialTable').dataTable().fnDestroy();
-    $('table.SerialTable').dataTable().fnDestroy();
+    destroyTables();
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').show();
     $('#ItemSerialTableDiv').hide();
@@ -60,7 +60,6 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('#stocksHeader').html(decodeHtml(trdata.Category));
     $('#btnBack').hide();
     $('#backBtn').show();
-    $('.br').show();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({
@@ -97,10 +96,7 @@ $('#backBtn').on('click', function(){
 });
 
 $('#btnBack').on('click', function(){
-    $('table.CategoryTable').dataTable().fnDestroy();
-    $('table.ItemTable').dataTable().fnDestroy();
-    $('table.ItemSerialTable').dataTable().fnDestroy();
-    $('table.SerialTable').dataTable().fnDestroy();
+    destroyTables();
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').show();
     $('#ItemSerialTableDiv').hide();
@@ -108,7 +104,6 @@ $('#btnBack').on('click', function(){
     $('#stocksHeader').html(categoryName);
     $('#btnBack').hide();
     $('#backBtn').show();
-    $('.br').show();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({
@@ -142,10 +137,7 @@ $('#btnBack').on('click', function(){
 
 $(document).on('click', '#ItemTable tbody tr', function(){
     var trdata = ItemTable.row(this).data();
-    $('table.CategoryTable').dataTable().fnDestroy();
-    $('table.ItemTable').dataTable().fnDestroy();
-    $('table.ItemSerialTable').dataTable().fnDestroy();
-    $('table.SerialTable').dataTable().fnDestroy();
+    destroyTables();
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').hide();
     $('#ItemSerialTableDiv').show();
@@ -153,7 +145,6 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#stocksHeader').html(decodeHtml(trdata.Item));
     $('#btnBack').show();
     $('#backBtn').hide();
-    $('.br').show();
     $('#loading').show(); Spinner(); Spinner.show();
     ItemSerialTable = 
         $('table.ItemSerialTable').DataTable({
@@ -197,7 +188,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 { data: 'rack' },
                 { data: 'row' }
             ],
-            order: [[1, 'desc']],
+            order: [],
             initComplete: function(){
                 return notifyDeadline();
             }
@@ -232,8 +223,11 @@ $(document).on('click', '#ItemSerialTable tbody tr', function(){
 });
 
 $('#z_serial').on('keyup', function(){
+    if($('#loading').is(":visible")){
+        return false;
+    }
     if(!$('#z_serial').val()){
-        category();
+        location.reload();
     }
     else{
         $.ajax({
@@ -242,10 +236,7 @@ $('#z_serial').on('keyup', function(){
                 serial: $('#z_serial').val()
             },
             success: function(data){
-                $('table.CategoryTable').dataTable().fnDestroy();
-                $('table.ItemTable').dataTable().fnDestroy();
-                $('table.ItemSerialTable').dataTable().fnDestroy();
-                $('table.SerialTable').dataTable().fnDestroy();
+                destroyTables();
                 $('#CategoryTableDiv').hide();
                 $('#ItemTableDiv').hide();
                 $('#ItemSerialTableDiv').hide();
@@ -253,7 +244,6 @@ $('#z_serial').on('keyup', function(){
                 $('#stocksHeader').html($('#z_serial').val());
                 $('#btnBack').hide();
                 $('#backBtn').hide();
-                $('.br').show();
                 SerialTable = $('table.SerialTable').DataTable({
                     serverSide: true,
                     ajax:{
@@ -294,7 +284,7 @@ $('#z_serial').on('keyup', function(){
                             }
                         }
                     ],
-                    order: [[1, 'desc']],
+                    order: [],
                     initComplete: function(){
                         return notifyDeadline();
                     }

@@ -1,26 +1,19 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid">
-    @role('viewer') {{---ROLES---}}
     <div class="text-center" style="margin-bottom: -35px;">
-        <input class="text-control spChar" style="zoom: 90%; width: 250px;" id="z_serial" type="text" placeholder="Search Serial Number" autocomplete="off" autofocus/>
+        <input class="text-control spChar" style="zoom: 90%; width: 250px;" id="z_serial" type="text" placeholder="SEARCH SERIAL NUMBER" autocomplete="off" autofocus/>
     </div>
     <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
     <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
-    <div class="br" style="display: none;"><br></div>
-    @endrole
     @role('admin|encoder') {{---ROLES---}}
-    <div class="text-center" style="margin-bottom: -35px;">
-        <input class="text-control spChar" style="zoom: 90%; width: 250px;" id="z_serial" type="text" placeholder="Search Serial Number" autocomplete="off" autofocus/>
-    </div>
-    <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
-    <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
-    <button class="btn btn-primary bp float-right mb-2" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
-    <span class="float-right" style="margin-right: 5px;">&nbsp;</span>
-    <button class="btn btn-primary bp float-right mb-2" type="button" id="btnImport">IMPORT</button>
-    <br><br>
+    <button class="btn btn-primary bp mb-2" style="float: right;" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
+    <button class="btn btn-primary bp mb-2 mr-2" style="float: right;" type="button" id="btnImport">IMPORT</button>
     @endrole
-    <br><br>
+    @role('viewer') {{---ROLES---}}
+    <button class="btn btn-primary bp float-right mb-2 d-none" type="button">&nbsp</button>
+    @endrole
+    <br><br><br><br>
     <a href="/stocks">
         <div id="stocksHeader" class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
             WAREHOUSE STOCKS

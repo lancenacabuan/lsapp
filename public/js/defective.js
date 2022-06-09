@@ -44,7 +44,7 @@ $('table.defectiveTable').DataTable({
             }
         },
     ],
-    order: [[1, 'asc'], [2, 'asc']],
+    order: [],
     initComplete: function(){
         return notifyDeadline();
     }

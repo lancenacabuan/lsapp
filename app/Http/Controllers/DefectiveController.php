@@ -48,6 +48,8 @@ class DefectiveController extends Controller
             ->join('categories', 'categories.id', 'category_id')
             ->join('users', 'users.id', 'user_id')
             ->whereIn('stocks.status', ['defectives','FOR RECEIVING'])
+            ->orderBy('defectiveDate', 'ASC')
+            ->orderBy('name', 'ASC')
             ->get();
         
         return DataTables::of($data)->make(true);

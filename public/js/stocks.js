@@ -93,6 +93,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
 });
 
 $('#backBtn').on('click', function(){
+    $('#z_serial').val('');
     category();
 });
 
@@ -227,72 +228,67 @@ $('#z_serial').on('keyup', function(){
     if($('#loading').is(":visible")){
         return false;
     }
-    if(!$('#z_serial').val()){
-        location.reload();
-    }
-    else{
-        $.ajax({
-            url: '/serial_data',
-            data:{
-                serial: $('#z_serial').val()
-            },
-            success: function(data){
-                destroyTables();
-                $('#CategoryTableDiv').hide();
-                $('#ItemTableDiv').hide();
-                $('#ItemSerialTableDiv').hide();
-                $('#SerialTableDiv').show();
-                $('#btnBack').hide();
-                $('#backBtn').hide();
-                $('#stocksHeader').html($('#z_serial').val());
-                SerialTable = $('table.SerialTable').DataTable({
-                    serverSide: true,
-                    ajax:{
-                        url: '/serial_data',
-                        data:{
-                            serial: $('#z_serial').val()
-                        }
+    $.ajax({
+        url: '/serial_data',
+        data:{
+            serial: $('#z_serial').val()
+        },
+        success: function(data){
+            destroyTables();
+            $('#CategoryTableDiv').hide();
+            $('#ItemTableDiv').hide();
+            $('#ItemSerialTableDiv').hide();
+            $('#SerialTableDiv').show();
+            $('#btnBack').hide();
+            $('#backBtn').show();
+            $('#stocksHeader').html($('#z_serial').val());
+            SerialTable = $('table.SerialTable').DataTable({
+                serverSide: true,
+                ajax:{
+                    url: '/serial_data',
+                    data:{
+                        serial: $('#z_serial').val()
+                    }
+                },
+                columnDefs: [
+                    {
+                        "targets": [0,1],
+                        "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
                     },
-                    columnDefs: [
-                        {
-                            "targets": [0,1],
-                            "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
-                        },
-                    ],
-                    columns: [
-                        { data: 'addDate' },
-                        { data: 'modDate' },
-                        { data: 'name' },
-                        { data: 'category' },
-                        { data: 'prodcode' },
-                        { data: 'item' },
-                        { data: 'serial' },
-                        {
-                            data: 'location',
-                            "render": function(data, type, row){
-                                if(row.status == 'defectives' || row.status == 'FOR RECEIVING'){
-                                    return 'DEFECTIVE';
-                                }
-                                else if(row.status == 'demo'){
-                                    return 'DEMO';
-                                }
-                                else if(row.status == 'assembly'){
-                                    return 'ASSEMBLY';
-                                }
-                                else{
-                                    return row.location
-                                }
+                ],
+                columns: [
+                    { data: 'addDate' },
+                    { data: 'modDate' },
+                    { data: 'name' },
+                    { data: 'category' },
+                    { data: 'prodcode' },
+                    { data: 'item' },
+                    { data: 'serial' },
+                    {
+                        data: 'location',
+                        "render": function(data, type, row){
+                            if(row.status == 'defectives' || row.status == 'FOR RECEIVING'){
+                                return 'DEFECTIVE';
+                            }
+                            else if(row.status == 'demo'){
+                                return 'DEMO';
+                            }
+                            else if(row.status == 'assembly'){
+                                return 'ASSEMBLY';
+                            }
+                            else{
+                                return row.location
                             }
                         }
-                    ],
-                    order: [],
-                    initComplete: function(){
-                        return notifyDeadline();
                     }
-                });
-            }
-        });
-    }
+                ],
+                order: [],
+                initComplete: function(){
+                    return notifyDeadline();
+                }
+            });
+        }
+    });
 });
 
 $(document).on('click', '#SerialTable tbody tr', function(){
@@ -320,6 +316,19 @@ $(document).on('click', '#SerialTable tbody tr', function(){
 
     $('.modal-body').html();
     $('#editSerialModal').modal('show');
+});
+
+document.querySelectorAll('input[type=search]').forEach(function(input){
+    input.addEventListener('mouseup', function(e){
+        if(input.value.length > 0){
+            setTimeout(function(){
+                if(input.value.length === 0){
+                    $('#stocksHeader').html('');
+                    $('#z_serial').keyup();
+                }
+            }, 0);
+        }
+    });
 });
 
 $('#serial').on('keyup', function(){

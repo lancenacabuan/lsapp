@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="text-center" style="margin-bottom: -35px;">
-        <input class="text-control spChar" style="zoom: 90%; width: 200px;" id="z_serial" type="text" placeholder=" SEARCH SERIAL NUMBER " autocomplete="off"/>
+        <input class="text-control spChar" style="zoom: 90%; width: 220px;" id="z_serial" type="search" placeholder="   SEARCH SERIAL NUMBER" autocomplete="off"/>
     </div>
     <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
     <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>

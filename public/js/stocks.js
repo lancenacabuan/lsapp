@@ -4,6 +4,7 @@ function destroyTables(){
     $('table.ItemTable').dataTable().fnDestroy();
     $('table.ItemSerialTable').dataTable().fnDestroy();
     $('table.SerialTable').dataTable().fnDestroy();
+    $('svg').remove();
 }
 
 function category(){

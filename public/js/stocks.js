@@ -24,14 +24,14 @@ function category(){
             columns: [
                 { data: 'Category' },
                 { data: 'Defective', width: '9%' },
-                { data: 'Demo', width: '9%' },
+                { data: 'Demo', width: '7%' },
                 { data: 'Assembly', width: '9%' },
                 { data: 'A1', width: '6%' },
                 { data: 'A2', width: '6%' },
                 { data: 'A3', width: '6%' },
                 { data: 'A4', width: '6%' },
-                { data: 'Balintawak', width: '9%' },
-                { data: 'Malabon', width: '9%' },
+                { data: 'Balintawak', width: '10%' },
+                { data: 'Malabon', width: '8%' },
                 { data: 'Total_stocks', width: '10%' }
             ],
             order: [],

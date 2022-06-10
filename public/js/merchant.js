@@ -469,12 +469,7 @@ $('.btnClose').on('click', function(){
 $('table.merchantTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
 $('table.merchantTable').DataTable({
-    columnDefs: [
-        {
-            "targets": [0],
-            "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
-        }
-    ],
+    aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
     language:{
         processing: "Loading...",
         emptyTable: "No data available in table"
@@ -483,6 +478,12 @@ $('table.merchantTable').DataTable({
     ajax:{
         url: '/merchant/data',
     },
+    columnDefs: [
+        {
+            "targets": [0],
+            "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
+        }
+    ],
     columns: [
         { data: 'reqdate' },
         {

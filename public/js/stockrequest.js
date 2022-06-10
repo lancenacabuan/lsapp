@@ -771,6 +771,15 @@ $('table.stockrequestTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
 if($("#current_role").val() == 'sales'){
     $('table.stockrequestTable').DataTable({
+        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+        language:{
+            processing: "Loading...",
+            emptyTable: "No data available in table"
+        },
+        serverSide: true,
+        ajax:{
+            url: '/request_data',
+        },
         columnDefs: [
             {
                 "targets": [0],
@@ -787,14 +796,6 @@ if($("#current_role").val() == 'sales'){
                 "searchable": true
             }
         ],
-        language:{
-            processing: "Loading...",
-            emptyTable: "No data available in table"
-        },
-        serverSide: true,
-        ajax:{
-            url: '/request_data',
-        },
         columns: [
             { data: 'reqdate' },
             {
@@ -880,6 +881,15 @@ if($("#current_role").val() == 'sales'){
 }
 else{
     $('table.stockrequestTable').DataTable({
+        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+        language:{
+            processing: "Loading...",
+            emptyTable: "No data available in table"
+        },
+        serverSide: true,
+        ajax:{
+            url: '/request_data',
+        },
         columnDefs: [
             {
                 "targets": [0],
@@ -891,14 +901,6 @@ else{
                 "searchable": true
             }
         ],
-        language:{
-            processing: "Loading...",
-            emptyTable: "No data available in table"
-        },
-        serverSide: true,
-        ajax:{
-            url: '/request_data',
-        },
         columns: [
             { data: 'reqdate' },
             {

@@ -59,6 +59,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('#categoryTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
     tblCategory = $('table.categoryTable').DataTable({
+        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
         language:{
             processing: "Loading...",
             emptyTable: "No data available in table"
@@ -82,6 +83,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('#locationTable').show();
     $('#loading').show(); Spinner(); Spinner.show();
     tblLocation = $('table.locationTable').DataTable({
+        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
         language:{
             processing: "Loading...",
             emptyTable: "No data available in table"

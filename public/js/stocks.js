@@ -19,6 +19,8 @@ function category(){
     $('#loading').show(); Spinner(); Spinner.show();
     CategoryTable = 
         $('table.CategoryTable').DataTable({
+            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+            iDisplayLength: -1,
             serverSide: true,
             ajax: 'category_data',
             columns: [
@@ -65,6 +67,8 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({
+            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+            iDisplayLength: -1,
             serverSide: true,
             ajax:{
                 url: '/item_data',
@@ -110,6 +114,8 @@ $('#btnBack').on('click', function(){
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
         $('table.ItemTable').DataTable({
+            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+            iDisplayLength: -1,
             serverSide: true,
             ajax:{
                 url: '/item_data',
@@ -151,6 +157,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#loading').show(); Spinner(); Spinner.show();
     ItemSerialTable = 
         $('table.ItemSerialTable').DataTable({
+            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
             serverSide: true,
             ajax:{
                 url: '/itemserial_data',
@@ -228,6 +235,7 @@ $('#z_serial').on('keyup', function(){
             $('#backBtn').show();
             $('#stocksHeader').html($('#z_serial').val());
             SerialTable = $('table.SerialTable').DataTable({
+                aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
                 serverSide: true,
                 ajax:{
                     url: '/serial_data',

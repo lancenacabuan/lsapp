@@ -133,12 +133,7 @@ $('#btnClose').on('click', function(){
 $('table.assemblyTable').dataTable().fnDestroy();
 $('#loading').show(); Spinner(); Spinner.show();
 $('table.assemblyTable').DataTable({
-    columnDefs: [
-        {
-            "targets": [0],
-            "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
-        }
-    ],
+    aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
     language:{
         processing: "Loading...",
         emptyTable: "No data available in table"
@@ -147,6 +142,12 @@ $('table.assemblyTable').DataTable({
     ajax:{
         url: '/assembly/request_data',
     },
+    columnDefs: [
+        {
+            "targets": [0],
+            "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
+        }
+    ],
     columns: [
         { data: 'reqdate' },
         {

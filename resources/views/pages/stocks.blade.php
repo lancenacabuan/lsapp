@@ -20,7 +20,7 @@
         </div>
     </a>
     <div id="CategoryTableDiv">
-        <table id="CategoryTable" class="table-hover table CategoryTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
+        <table id="CategoryTable" class="table-hover table CategoryTable display" style="zoom: 85%; width: 100%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
                     <th>CATEGORY</th>
@@ -39,7 +39,7 @@
         </table>
     </div>
     <div id="ItemTableDiv" style="display: none;">
-        <table id="ItemTable" class="table-hover table ItemTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
+        <table id="ItemTable" class="table-hover table ItemTable display" style="zoom: 80%; width: 100%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
                     <th>ITEM CODE</th>
@@ -59,7 +59,7 @@
         </table>
     </div>
     <div id="ItemSerialTableDiv" style="display: none;">
-        <table id="ItemSerialTable" class="table-hover table ItemSerialTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
+        <table id="ItemSerialTable" class="table-hover table ItemSerialTable display" style="zoom: 80%; width: 100%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
                     <th>DATE ADDED</th>
@@ -76,7 +76,7 @@
         </table>
     </div>
     <div id="SerialTableDiv" style="display: none;">
-        <table id="SerialTable" class="table-hover table SerialTable display" style="zoom: 80%; width: 100%; font-size: 90%; cursor: pointer;">
+        <table id="SerialTable" class="table-hover table SerialTable display" style="zoom: 80%; width: 100%; cursor: pointer;">
             <thead style="background-color: #0d1a80; color: white;">                            
                 <tr>
                     <th>DATE ADDED</th>

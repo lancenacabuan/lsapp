@@ -23,16 +23,16 @@ function category(){
             ajax: 'category_data',
             columns: [
                 { data: 'Category' },
-                { data: 'Defective', width: '8%' },
-                { data: 'Demo', width: '8%' },
-                { data: 'Assembly', width: '8%' },
-                { data: 'A1', width: '8%' },
-                { data: 'A2', width: '8%' },
-                { data: 'A3', width: '8%' },
-                { data: 'A4', width: '8%' },
-                { data: 'Balintawak', width: '8%' },
-                { data: 'Malabon', width: '8%' },
-                { data: 'Total_stocks', width: '8%' }
+                { data: 'Defective', width: '9%' },
+                { data: 'Demo', width: '9%' },
+                { data: 'Assembly', width: '9%' },
+                { data: 'A1', width: '6%' },
+                { data: 'A2', width: '6%' },
+                { data: 'A3', width: '6%' },
+                { data: 'A4', width: '6%' },
+                { data: 'Balintawak', width: '9%' },
+                { data: 'Malabon', width: '9%' },
+                { data: 'Total_stocks', width: '10%' }
             ],
             order: [],
             initComplete: function(){
@@ -75,16 +75,16 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
             columns: [
                 { data: 'ProdCode', width: '15%' },
                 { data: 'Item' },
-                { data: 'Defective', width: '8%', width: '8%' },
-                { data: 'Demo', width: '8%' },
+                { data: 'Defective', width: '8%' },
+                { data: 'Demo', width: '6%' },
                 { data: 'Assembly', width: '8%' },
                 { data: 'A1', width: '5%' },
                 { data: 'A2', width: '5%' },
                 { data: 'A3', width: '5%' },
                 { data: 'A4', width: '5%' },
-                { data: 'Balintawak', width: '8%' },
-                { data: 'Malabon', width: '8%' },
-                { data: 'Total_stocks', width: '8%' }
+                { data: 'Balintawak', width: '9%' },
+                { data: 'Malabon', width: '7%' },
+                { data: 'Total_stocks', width: '10%' }
             ],
             order: [],
             initComplete: function(){
@@ -121,15 +121,15 @@ $('#btnBack').on('click', function(){
                 { data: 'ProdCode', width: '15%' },
                 { data: 'Item' },
                 { data: 'Defective', width: '8%' },
-                { data: 'Demo', width: '8%' },
+                { data: 'Demo', width: '6%' },
                 { data: 'Assembly', width: '8%' },
                 { data: 'A1', width: '5%' },
                 { data: 'A2', width: '5%' },
                 { data: 'A3', width: '5%' },
                 { data: 'A4', width: '5%' },
-                { data: 'Balintawak', width: '8%' },
-                { data: 'Malabon', width: '8%' },
-                { data: 'Total_stocks', width: '8%' }
+                { data: 'Balintawak', width: '9%' },
+                { data: 'Malabon', width: '7%' },
+                { data: 'Total_stocks', width: '10%' }
             ],
             order: [],
             initComplete: function(){
@@ -165,15 +165,15 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 },
             ],
             columns: [
-                { data: 'addDate' },
-                { data: 'modDate' },
+                { data: 'addDate', width: '12%' },
+                { data: 'modDate', width: '12%' },
                 { data: 'name' },
-                { data: 'qty' },
-                { data: 'UOM' },
+                { data: 'qty', width: '5%' },
+                { data: 'UOM', width: '7%' },
                 { data: 'serial' },
                 { data: 'location' },
-                { data: 'rack' },
-                { data: 'row' }
+                { data: 'rack', width: '8%' },
+                { data: 'row', width: '8%' }
             ],
             order: [],
             initComplete: function(){
@@ -242,14 +242,14 @@ $('#z_serial').on('keyup', function(){
                     },
                 ],
                 columns: [
-                    { data: 'addDate' },
-                    { data: 'modDate' },
-                    { data: 'name' },
-                    { data: 'category' },
-                    { data: 'prodcode' },
+                    { data: 'addDate', width: '12%' },
+                    { data: 'modDate', width: '12%' },
+                    { data: 'name', width: '12%' },
+                    { data: 'category', width: '12%' },
+                    { data: 'prodcode', width: '14%' },
                     { data: 'item' },
-                    { data: 'serial' },
-                    { data: 'location' }
+                    { data: 'serial', width: '11%' },
+                    { data: 'location', width: '12%' }
                 ],
                 order: [],
                 initComplete: function(){

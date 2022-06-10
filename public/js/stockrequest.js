@@ -628,7 +628,7 @@ $('#btnSave').on('click', function(){
                             });
                         }
                         else if(data == 'duplicate'){
-                            swal("INVALID ENTRY", "Reference SO/PO Number already exists! Please double check the SO/PO Number and try again.", "error");
+                            swal("DUPLICATE SO/PO#", "Reference SO/PO Number already exists!", "error");
                             return false;
                         }
                         else{
@@ -5080,7 +5080,7 @@ $('#btnReference').on('click', function(){
                             });
                         }
                         else if(data == 'duplicate'){
-                            swal("INVALID ENTRY", "Reference SO/PO Number already exists! Please double check the SO/PO Number and try again.", "error");
+                            swal("DUPLICATE SO/PO#", "Reference SO/PO Number already exists!", "error");
                             return false;
                         }
                         else{

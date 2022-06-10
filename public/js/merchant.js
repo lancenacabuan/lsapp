@@ -441,7 +441,7 @@ $('#btnSave').on('click', function(){
                             });
                         }
                         else if(data == 'duplicate'){
-                            swal("INVALID ENTRY", "Order ID already exists! Please double check the Order ID and try again.", "error");
+                            swal("DUPLICATE ORDER ID", "Order ID already exists!", "error");
                             return false;
                         }
                         else{

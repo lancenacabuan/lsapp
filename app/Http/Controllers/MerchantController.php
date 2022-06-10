@@ -106,6 +106,14 @@ class MerchantController extends Controller
     }
 
     public function saveReqNum(Request $request){
+        $orderID = Requests::query()->select()
+            ->where('orderID', '!=', 'N/A')
+            ->whereRaw('UPPER(orderID) = ?', strtoupper($request->orderID))
+            ->count();
+        if($orderID > 0){
+            return response('duplicate');
+        }
+
         do{
             $requests = new Requests;
             $requests->request_number = $request->request_number;

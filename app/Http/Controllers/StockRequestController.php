@@ -2231,7 +2231,7 @@ class StockRequestController extends Controller
     }
 
     public function notify(){
-        $stockrequest = Requests::select('requests.id AS req_id', 'requests.created_at AS req_date', 'requests.request_number AS req_num', 'requests.requested_by AS user_id', 'users.name AS req_by', 'users.email AS email', 'request_type.name AS req_type', 'status.status AS status', 'users.name AS req_by', 'request_type.id AS req_type_id', 'status.id AS status_id', 'requests.schedule AS sched', 'prepared_by', 'client_name', 'location', 'contact', 'remarks', 'reference', 'needdate', 'prepdate', 'requests.item_id AS item_id', 'qty', 'assembly_reqnum', 'orderID', 'notify')
+        $stockrequest = Requests::select('requests.id AS req_id', 'requests.created_at AS req_date', 'requests.request_number AS req_num', 'requests.requested_by AS user_id', 'users.name AS req_by', 'users.email AS email', 'users.company AS company', 'request_type.name AS req_type', 'status.status AS status', 'users.name AS req_by', 'request_type.id AS req_type_id', 'status.id AS status_id', 'requests.schedule AS sched', 'prepared_by', 'client_name', 'location', 'contact', 'remarks', 'reference', 'needdate', 'prepdate', 'requests.item_id AS item_id', 'qty', 'assembly_reqnum', 'orderID', 'notify')
             ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -2252,7 +2252,7 @@ class StockRequestController extends Controller
 
             if(($difference > 0 && $difference <= 3) && !$value['notify']){
                 Requests::where('request_number', $value['req_num'])->update(['notify' => '3-Days']);
-                if($value['req_type'] == 'SALES'){
+                if($value['req_type'] == 'SALES' || $value['req_type'] == 'MERCHANT'){
                     $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
@@ -2292,6 +2292,7 @@ class StockRequestController extends Controller
                         'contact' => $value['contact'],
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
+                        'orderID' => $value['orderID'],
                         'assembly_reqnum' => $value['assembly_reqnum'],
                         'item_desc' => $item_desc[0]['item_desc'] ?? '',
                         'item_code' => $item_desc[0]['item_code'] ?? '',
@@ -2302,7 +2303,10 @@ class StockRequestController extends Controller
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
                 if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
-                    $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+                    $user = User::role('approver - sales')
+                        ->where('status','ACTIVE')
+                        ->where('company',$value['company'])
+                        ->get();
                     foreach($user as $keyx){
                         $details = [
                             'name' => ucwords($keyx->name),
@@ -2318,6 +2322,7 @@ class StockRequestController extends Controller
                             'contact' => $value['contact'],
                             'remarks' => $value['remarks'],
                             'reference' => $value['reference'],
+                            'orderID' => $value['orderID'],
                             'assembly_reqnum' => $value['assembly_reqnum'],
                             'item_desc' => $item_desc[0]['item_desc'] ?? '',
                             'item_code' => $item_desc[0]['item_code'] ?? '',
@@ -2342,6 +2347,7 @@ class StockRequestController extends Controller
                     'contact' => $value['contact'],
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
+                    'orderID' => $value['orderID'],
                     'assembly_reqnum' => $value['assembly_reqnum'],
                     'item_desc' => $item_desc[0]['item_desc'] ?? '',
                     'item_code' => $item_desc[0]['item_code'] ?? '',
@@ -2353,7 +2359,7 @@ class StockRequestController extends Controller
             }
             if($difference == 0 && ($value['notify'] == '3-Days' || !$value['notify'])){
                 Requests::where('request_number', $value['req_num'])->update(['notify' => 'Today']);
-                if($value['req_type'] == 'SALES'){
+                if($value['req_type'] == 'SALES' || $value['req_type'] == 'MERCHANT'){
                     $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
@@ -2393,6 +2399,7 @@ class StockRequestController extends Controller
                         'contact' => $value['contact'],
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
+                        'orderID' => $value['orderID'],
                         'assembly_reqnum' => $value['assembly_reqnum'],
                         'item_desc' => $item_desc[0]['item_desc'] ?? '',
                         'item_code' => $item_desc[0]['item_code'] ?? '',
@@ -2403,7 +2410,10 @@ class StockRequestController extends Controller
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
                 if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
-                    $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+                    $user = User::role('approver - sales')
+                        ->where('status','ACTIVE')
+                        ->where('company',$value['company'])
+                        ->get();
                     foreach($user as $keyx){
                         $details = [
                             'name' => ucwords($keyx->name),
@@ -2419,6 +2429,7 @@ class StockRequestController extends Controller
                             'contact' => $value['contact'],
                             'remarks' => $value['remarks'],
                             'reference' => $value['reference'],
+                            'orderID' => $value['orderID'],
                             'assembly_reqnum' => $value['assembly_reqnum'],
                             'item_desc' => $item_desc[0]['item_desc'] ?? '',
                             'item_code' => $item_desc[0]['item_code'] ?? '',
@@ -2443,6 +2454,7 @@ class StockRequestController extends Controller
                     'contact' => $value['contact'],
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
+                    'orderID' => $value['orderID'],
                     'assembly_reqnum' => $value['assembly_reqnum'],
                     'item_desc' => $item_desc[0]['item_desc'] ?? '',
                     'item_code' => $item_desc[0]['item_code'] ?? '',
@@ -2454,7 +2466,7 @@ class StockRequestController extends Controller
             }
             if($difference <= -1 && ($value['notify'] == 'Today' || !$value['notify'])){
                 Requests::where('request_number', $value['req_num'])->update(['notify' => 'Overdue']);
-                if($value['req_type'] == 'SALES'){
+                if($value['req_type'] == 'SALES' || $value['req_type'] == 'MERCHANT'){
                     $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                         ->join('items', 'items.id', 'stock_request.item')
                         ->where('request_number', $value['req_num'])
@@ -2494,6 +2506,7 @@ class StockRequestController extends Controller
                         'contact' => $value['contact'],
                         'remarks' => $value['remarks'],
                         'reference' => $value['reference'],
+                        'orderID' => $value['orderID'],
                         'assembly_reqnum' => $value['assembly_reqnum'],
                         'item_desc' => $item_desc[0]['item_desc'] ?? '',
                         'item_code' => $item_desc[0]['item_code'] ?? '',
@@ -2504,7 +2517,10 @@ class StockRequestController extends Controller
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
                 if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
-                    $user = User::role('approver - sales')->where('status','ACTIVE')->get();
+                    $user = User::role('approver - sales')
+                        ->where('status','ACTIVE')
+                        ->where('company',$value['company'])
+                        ->get();
                     foreach($user as $keyx){
                         $details = [
                             'name' => ucwords($keyx->name),
@@ -2520,6 +2536,7 @@ class StockRequestController extends Controller
                             'contact' => $value['contact'],
                             'remarks' => $value['remarks'],
                             'reference' => $value['reference'],
+                            'orderID' => $value['orderID'],
                             'assembly_reqnum' => $value['assembly_reqnum'],
                             'item_desc' => $item_desc[0]['item_desc'] ?? '',
                             'item_code' => $item_desc[0]['item_code'] ?? '',
@@ -2544,6 +2561,7 @@ class StockRequestController extends Controller
                     'contact' => $value['contact'],
                     'remarks' => $value['remarks'],
                     'reference' => $value['reference'],
+                    'orderID' => $value['orderID'],
                     'assembly_reqnum' => $value['assembly_reqnum'],
                     'item_desc' => $item_desc[0]['item_desc'] ?? '',
                     'item_code' => $item_desc[0]['item_code'] ?? '',

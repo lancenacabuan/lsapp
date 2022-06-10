@@ -13,6 +13,9 @@
         Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Requested By: {{$details['requested_by']}}
+        @if($details['reqtype'] == 'MERCHANT')
+        <br><br>Order ID: {{$details['orderID']}}
+        @endif
         @if($details['reqtype'] == 'ASSEMBLY')
         <br><br>Assembled Item Code: {{$details['item_code']}}<br>
         Assembled Item Name: {{$details['item_desc']}}<br>
@@ -33,7 +36,7 @@
         @php
             $total = 0;
         @endphp
-        @if($details['reqtype'] == 'SALES')
+        @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'MERCHANT')
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>

@@ -98,7 +98,6 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
 });
 
 $('#backBtn').on('click', function(){
-    $('#z_serial').val('');
     category();
 });
 

@@ -329,9 +329,6 @@ $('#btnEdit').on('click', function(){
     var item = $('#x_item').val();
     var origserial = $('#y_serial').val().toUpperCase();
     var newserial = $.trim($('#x_serial').val()).toUpperCase();
-    if(newserial == ''){
-        newserial = 'N/A';
-    }
     if(origserial == newserial){
         swal("NO CHANGES FOUND", "Item Serial is still the same!", "error");
         return false;
@@ -340,9 +337,12 @@ $('#btnEdit').on('click', function(){
         swal('INVALID ENTRY','Please enter only valid information!','error');
         return false;
     }
-    if(!newserial.match(/\d+/g)){
+    if(!newserial.match(/\d+/g) && newserial){
         swal("INVALID ENTRY", "Item Serial should at least contain numeric characters!", "error");
         return false;
+    }
+    if(newserial == ''){
+        newserial = 'N/A';
     }
     swal({
         title: "Confirm Serial: "+newserial+'?',
@@ -506,16 +506,16 @@ $('#btnSave').on('click', function(){
     }
     if(uom == 'Unit'){
         if(($('#serial').is(':visible') && category && item && location_id && serial) || ($('#serial').is(':hidden') && category && item && location_id)){
-            if(!$('#serial').val()){
-                serial = 'N/A';
-            }
             if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(serial) == true){
                 swal('INVALID ENTRY','Please enter only valid information!','error');
                 return false;
             }
-            if(!serial.match(/\d+/g)){
+            if(!serial.match(/\d+/g) && serial){
                 swal("INVALID ENTRY", "Item Serial should at least contain numeric characters!", "error");
                 return false;
+            }
+            if(!serial){
+                serial = 'N/A';
             }
             swal({
                 title: "Are you really sure all details are entered correctly?",

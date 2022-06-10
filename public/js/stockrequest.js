@@ -3499,9 +3499,6 @@ $('#btnEdit').on('click', function(){
     var item = $('#x_item').val();
     var origserial = $('#y_serial').val().toUpperCase();
     var newserial = $.trim($('#x_serial').val()).toUpperCase();
-    if(newserial == ''){
-        newserial = 'N/A';
-    }
     if(origserial == newserial){
         swal("NO CHANGES FOUND", "Item Serial is still the same!", "error");
         return false;
@@ -3510,9 +3507,12 @@ $('#btnEdit').on('click', function(){
         swal('INVALID ENTRY','Please enter only valid information!','error');
         return false;
     }
-    if(!newserial.match(/\d+/g)){
+    if(!newserial.match(/\d+/g) && newserial){
         swal("INVALID ENTRY", "Item Serial should at least contain numeric characters!", "error");
         return false;
+    }
+    if(newserial == ''){
+        newserial = 'N/A';
     }
     swal({
         title: "Confirm Serial: "+newserial+'?',

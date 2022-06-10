@@ -336,72 +336,78 @@ $('#btnEdit').on('click', function(){
         swal("NO CHANGES FOUND", "Item Serial is still the same!", "error");
         return false;
     }
-    else{
-        swal({
-            title: "Confirm Serial: "+newserial+'?',
-            text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to review details.",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true
-        })
-        .then((willDelete) => {
-            if(willDelete){
-                scrollReset();
-                $('#editSerialModal').hide();
-                $('#editSerialModal').modal('dispose');
-                $('#loading').show(); Spinner(); Spinner.show();
-                $.ajax({
-                    type:'post',
-                    url: '/editSerial',
-                    headers:{
-                        'X-CSRF-TOKEN': $("#csrf").val()
-                    },
-                    data:{
-                        id: id,
-                        category: category,
-                        item: item,
-                        origserial: origserial,
-                        newserial: newserial
-                    },
-                    success: function(data){
-                        if(data == 'true'){
-                            $('#loading').hide(); Spinner.hide();
-                            swal({
-                                title: "EDIT SUCCESS",
-                                text: "Item Serial edited successfully!",
-                                icon: "success",
-                                timer: 2000
-                            });
-                            table.ajax.reload();
-                        }
-                        else if(data == 'duplicate'){
-                            $('#loading').hide(); Spinner.hide();
-                            swal({
-                                title: "DUPLICATE SERIAL",
-                                text: "Serial already exists!",
-                                icon: "error",
-                                timer: 2000
-                            });
-                            table.ajax.reload();
-                        }
-                        else{
-                            $('#loading').hide(); Spinner.hide();
-                            swal({
-                                title: "EDIT FAILED",
-                                text: "Item Serial edit failed!",
-                                icon: "error",
-                                timer: 2000
-                            });
-                            table.ajax.reload();
-                        }
-                    },
-                    error: function(data){
-                        alert(data.responseText);
-                    }
-                });
-            }
-        });
+    if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(newserial) == true){
+        swal('INVALID ENTRY','Please enter only valid information!','error');
+        return false;
     }
+    if(!newserial.match(/\d+/g)){
+        swal("INVALID ENTRY", "Item Serial should at least contain numeric characters!", "error");
+        return false;
+    }
+    swal({
+        title: "Confirm Serial: "+newserial+'?',
+        text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to review details.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            scrollReset();
+            $('#editSerialModal').hide();
+            $('#editSerialModal').modal('dispose');
+            $('#loading').show(); Spinner(); Spinner.show();
+            $.ajax({
+                type:'post',
+                url: '/editSerial',
+                headers:{
+                    'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    id: id,
+                    category: category,
+                    item: item,
+                    origserial: origserial,
+                    newserial: newserial
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        $('#loading').hide(); Spinner.hide();
+                        swal({
+                            title: "EDIT SUCCESS",
+                            text: "Item Serial edited successfully!",
+                            icon: "success",
+                            timer: 2000
+                        });
+                        table.ajax.reload();
+                    }
+                    else if(data == 'duplicate'){
+                        $('#loading').hide(); Spinner.hide();
+                        swal({
+                            title: "DUPLICATE SERIAL",
+                            text: "Serial already exists!",
+                            icon: "error",
+                            timer: 2000
+                        });
+                        table.ajax.reload();
+                    }
+                    else{
+                        $('#loading').hide(); Spinner.hide();
+                        swal({
+                            title: "EDIT FAILED",
+                            text: "Item Serial edit failed!",
+                            icon: "error",
+                            timer: 2000
+                        });
+                        table.ajax.reload();
+                    }
+                },
+                error: function(data){
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
 });
 
 $('#category').on('change', function(){
@@ -502,6 +508,14 @@ $('#btnSave').on('click', function(){
         if(($('#serial').is(':visible') && category && item && location_id && serial) || ($('#serial').is(':hidden') && category && item && location_id)){
             if(!$('#serial').val()){
                 serial = 'N/A';
+            }
+            if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(serial) == true){
+                swal('INVALID ENTRY','Please enter only valid information!','error');
+                return false;
+            }
+            if(!serial.match(/\d+/g)){
+                swal("INVALID ENTRY", "Item Serial should at least contain numeric characters!", "error");
+                return false;
             }
             swal({
                 title: "Are you really sure all details are entered correctly?",

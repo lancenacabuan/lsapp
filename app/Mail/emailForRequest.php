@@ -30,8 +30,13 @@ class emailForRequest extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->subject)
+        $this->subject($this->subject)
             ->from('noreply@ideaserv.com.ph')
             ->view('emails/emailForRequest');
+            foreach($this->details['files'] as $file){
+                $this->attach($file);
+            }
+        
+        return $this;
     }
 }

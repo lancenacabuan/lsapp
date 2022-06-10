@@ -306,7 +306,19 @@ class StockRequestController extends Controller
             }
             while(!$items);
         }
-        
+
+        $attachments = [];
+        $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+        if($files != NULL){
+            $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+            foreach($files as $file){
+                $file = str_replace('"','',$file);
+                if(file_exists(public_path('uploads/'.$file))){
+                    array_push($attachments, public_path('uploads/'.$file));
+                }
+            }
+        }
+
         $subject = '[FOR APPROVAL] STOCK REQUEST NO. '.$request->request_number;
         $user = User::role('approver - sales')
             ->where('status','ACTIVE')
@@ -327,7 +339,8 @@ class StockRequestController extends Controller
                 'remarks' => $request_details->remarks,
                 'reference' => $request_details->reference,
                 'role' => 'Approver - Sales',
-                'items' => $items
+                'items' => $items,
+                'files' => $attachments
             ];
             Mail::to($key->email)->send(new emailForRequest($details, $subject));
         }

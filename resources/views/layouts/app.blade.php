@@ -260,6 +260,21 @@
         </main>
     </div>
     <script>
+        setInterval(loadFunction, 0);
+        function loadFunction(){
+            if($('#loading').is(':visible')){
+                $('html, body').css({
+                    overflow: 'hidden',
+                    height: '100%'
+                });
+            }
+            else{
+                $('html, body').css({
+                    overflow: 'auto',
+                    height: 'auto'
+                });
+            }
+        }
         function decodeHtml(str){
             var map = {
                 '&amp;': '&', 

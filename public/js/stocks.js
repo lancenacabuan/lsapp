@@ -38,7 +38,6 @@ function category(){
             ],
             order: [],
             initComplete: function(){
-                $('#z_serial').focus();
                 return notifyDeadline();
             }
         });
@@ -98,6 +97,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
 });
 
 $('#backBtn').on('click', function(){
+    $('#z_serial').val('');
     category();
 });
 

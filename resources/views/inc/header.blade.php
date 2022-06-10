@@ -16,9 +16,9 @@
         </div>
         <i class="fa fa-user-circle fa-4x p-2" aria-hidden="true"></i>
     </div>
-    <input type="hidden" id="current_user" value="{{auth()->user()->id}}">
-    <input type="hidden" id="current_company" value="{{auth()->user()->company}}">
-    <input type="hidden" id="current_role" value="{{auth()->user()->getRoleNames()[0]}}">
+    <input type="hidden" id="current_user" value="{{auth()->user()->id}}" disabled>
+    <input type="hidden" id="current_company" value="{{auth()->user()->company}}" disabled>
+    <input type="hidden" id="current_role" value="{{auth()->user()->getRoleNames()[0]}}" disabled>
 </div>
 <script>
     window.onload = displayClock();

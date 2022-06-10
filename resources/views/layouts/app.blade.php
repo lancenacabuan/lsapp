@@ -267,6 +267,7 @@
                     overflow: 'hidden',
                     height: '100%'
                 });
+                $('#current_user').focus();
             }
             else{
                 $('html, body').css({

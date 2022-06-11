@@ -2350,7 +2350,7 @@ class StockRequestController extends Controller
                         ->get();
                 }
                 $attachments = [];
-                $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+                $files = Requests::where('request_number', $value['req_num'])->first()->reference_upload;
                 if($files != NULL){
                     $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
                     foreach($files as $file){
@@ -2471,7 +2471,7 @@ class StockRequestController extends Controller
                         ->get();
                 }
                 $attachments = [];
-                $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+                $files = Requests::where('request_number', $value['req_num'])->first()->reference_upload;
                 if($files != NULL){
                     $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
                     foreach($files as $file){
@@ -2592,7 +2592,7 @@ class StockRequestController extends Controller
                         ->get();
                 }
                 $attachments = [];
-                $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+                $files = Requests::where('request_number', $value['req_num'])->first()->reference_upload;
                 if($files != NULL){
                     $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
                     foreach($files as $file){

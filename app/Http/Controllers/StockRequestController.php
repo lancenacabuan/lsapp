@@ -990,6 +990,18 @@ class StockRequestController extends Controller
             }
             while(!$items);
         }
+
+        $attachments = [];
+        $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+        if($files != NULL){
+            $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+            foreach($files as $file){
+                $file = str_replace('"','',$file);
+                if(file_exists(public_path('uploads/'.$file))){
+                    array_push($attachments, public_path('uploads/'.$file));
+                }
+            }
+        }
         
         $subject = '[DISAPPROVED] STOCK REQUEST NO. '.$request->request_number;
         $details = [
@@ -1008,7 +1020,8 @@ class StockRequestController extends Controller
             'reason' => $request_details->reason,
             'disapprovedby' => auth()->user()->name,
             'role' => 'Sales',
-            'items' => $items
+            'items' => $items,
+            'files' => $attachments
         ];
         Mail::to($request_details->email)->send(new disapprovedRequest($details, $subject));
 
@@ -1199,6 +1212,18 @@ class StockRequestController extends Controller
             }
         }
         while(!$items);
+
+        $attachments = [];
+        $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+        if($files != NULL){
+            $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+            foreach($files as $file){
+                $file = str_replace('"','',$file);
+                if(file_exists(public_path('uploads/'.$file))){
+                    array_push($attachments, public_path('uploads/'.$file));
+                }
+            }
+        }
         
         $subject = '[SOLD] STOCK REQUEST NO. '.$request->request_number;
         $user = User::role('admin')->where('status','ACTIVE')->get();
@@ -1223,6 +1248,7 @@ class StockRequestController extends Controller
                 'receivedby' => auth()->user()->name,
                 'role' => 'Admin',
                 'items' => $items,
+                'files' => $attachments,
                 'pendcount' => 0,
                 'penditems' => NULL,
                 'req_type_id' => $request_details->req_type_id,
@@ -1256,6 +1282,7 @@ class StockRequestController extends Controller
                 'receivedby' => auth()->user()->name,
                 'role' => 'Approver - Sales',
                 'items' => $items,
+                'files' => $attachments,
                 'pendcount' => 0,
                 'penditems' => NULL,
                 'req_type_id' => $request_details->req_type_id,
@@ -1286,6 +1313,7 @@ class StockRequestController extends Controller
                 'receivedby' => auth()->user()->name,
                 'role' => 'Accounting',
                 'items' => $items,
+                'files' => $attachments,
                 'pendcount' => 0,
                 'penditems' => NULL,
                 'req_type_id' => $request_details->req_type_id,
@@ -1314,6 +1342,7 @@ class StockRequestController extends Controller
             'receivedby' => auth()->user()->name,
             'role' => 'Sales',
             'items' => $items,
+            'files' => $attachments,
             'pendcount' => 0,
             'penditems' => NULL,
             'req_type_id' => $request_details->req_type_id,
@@ -1717,6 +1746,18 @@ class StockRequestController extends Controller
                 }
                 while(!$items);
             }
+
+            $attachments = [];
+            $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+            if($files != NULL){
+                $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+                foreach($files as $file){
+                    $file = str_replace('"','',$file);
+                    if(file_exists(public_path('uploads/'.$file))){
+                        array_push($attachments, public_path('uploads/'.$file));
+                    }
+                }
+            }
             
             $subject = '[RECEIVED] STOCK REQUEST NO. '.$request->request_number;
             $user = User::role('admin')->where('status','ACTIVE')->get();
@@ -1742,6 +1783,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Admin',
                     'items' => $items,
+                    'files' => $attachments,
                     'pendcount' => 0,
                     'penditems' => NULL,
                     'req_type_id' => $request_details->req_type_id,
@@ -1776,6 +1818,7 @@ class StockRequestController extends Controller
                         'receivedby' => auth()->user()->name,
                         'role' => 'Approver - Sales',
                         'items' => $items,
+                        'files' => $attachments,
                         'pendcount' => 0,
                         'penditems' => NULL,
                         'req_type_id' => $request_details->req_type_id,
@@ -1808,6 +1851,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Accounting',
                     'items' => $items,
+                    'files' => $attachments,
                     'pendcount' => 0,
                     'penditems' => NULL,
                     'req_type_id' => $request_details->req_type_id,
@@ -1837,6 +1881,7 @@ class StockRequestController extends Controller
                 'receivedby' => auth()->user()->name,
                 'role' => 'Sales/Merchant',
                 'items' => $items,
+                'files' => $attachments,
                 'pendcount' => 0,
                 'penditems' => NULL,
                 'req_type_id' => $request_details->req_type_id,
@@ -1919,6 +1964,18 @@ class StockRequestController extends Controller
                 while(!$items);
             }
 
+            $attachments = [];
+            $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+            if($files != NULL){
+                $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+                foreach($files as $file){
+                    $file = str_replace('"','',$file);
+                    if(file_exists(public_path('uploads/'.$file))){
+                        array_push($attachments, public_path('uploads/'.$file));
+                    }
+                }
+            }
+
             do{
                 $pendcount = StockRequest::query()->select()
                     ->where('request_number', $request->request_number)
@@ -1960,6 +2017,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Admin',
                     'items' => $items,
+                    'files' => $attachments,
                     'pendcount' => $pendcount,
                     'penditems' => $penditems,
                     'req_type_id' => $request_details->req_type_id,
@@ -1993,6 +2051,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Approver - Sales',
                     'items' => $items,
+                    'files' => $attachments,
                     'pendcount' => $pendcount,
                     'penditems' => $penditems,
                     'req_type_id' => $request_details->req_type_id,
@@ -2023,6 +2082,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Accounting',
                     'items' => $items,
+                    'files' => $attachments,
                     'pendcount' => $pendcount,
                     'penditems' => $penditems,
                     'req_type_id' => $request_details->req_type_id,
@@ -2051,6 +2111,7 @@ class StockRequestController extends Controller
                 'receivedby' => auth()->user()->name,
                 'role' => 'Sales',
                 'items' => $items,
+                'files' => $attachments,
                 'pendcount' => $pendcount,
                 'penditems' => $penditems,
                 'req_type_id' => $request_details->req_type_id,
@@ -2288,6 +2349,17 @@ class StockRequestController extends Controller
                         ->orderBy('item', 'ASC')
                         ->get();
                 }
+                $attachments = [];
+                $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+                if($files != NULL){
+                    $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+                    foreach($files as $file){
+                        $file = str_replace('"','',$file);
+                        if(file_exists(public_path('uploads/'.$file))){
+                            array_push($attachments, public_path('uploads/'.$file));
+                        }
+                    }
+                }
                 $subject = '[LAST '.$difference.' DAY/S] STOCK REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
                 foreach($user as $keyx){
@@ -2311,7 +2383,8 @@ class StockRequestController extends Controller
                         'item_code' => $item_desc[0]['item_code'] ?? '',
                         'qty' => $value['qty'],
                         'role' => 'Admin',
-                        'items' => $items
+                        'items' => $items,
+                        'files' => $attachments
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
@@ -2341,7 +2414,8 @@ class StockRequestController extends Controller
                             'item_code' => $item_desc[0]['item_code'] ?? '',
                             'qty' => $value['qty'],
                             'role' => 'Approver - Sales',
-                            'items' => $items
+                            'items' => $items,
+                            'files' => $attachments
                         ];
                         Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                     }
@@ -2366,7 +2440,8 @@ class StockRequestController extends Controller
                     'item_code' => $item_desc[0]['item_code'] ?? '',
                     'qty' => $value['qty'],
                     'role' => 'own user',
-                    'items' => $items
+                    'items' => $items,
+                    'files' => $attachments
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }
@@ -2395,6 +2470,17 @@ class StockRequestController extends Controller
                         ->orderBy('item', 'ASC')
                         ->get();
                 }
+                $attachments = [];
+                $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+                if($files != NULL){
+                    $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+                    foreach($files as $file){
+                        $file = str_replace('"','',$file);
+                        if(file_exists(public_path('uploads/'.$file))){
+                            array_push($attachments, public_path('uploads/'.$file));
+                        }
+                    }
+                }
                 $subject = '[DEADLINE TODAY] STOCK REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
                 foreach($user as $keyx){
@@ -2418,7 +2504,8 @@ class StockRequestController extends Controller
                         'item_code' => $item_desc[0]['item_code'] ?? '',
                         'qty' => $value['qty'],
                         'role' => 'Admin',
-                        'items' => $items
+                        'items' => $items,
+                        'files' => $attachments
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
@@ -2448,7 +2535,8 @@ class StockRequestController extends Controller
                             'item_code' => $item_desc[0]['item_code'] ?? '',
                             'qty' => $value['qty'],
                             'role' => 'Approver - Sales',
-                            'items' => $items
+                            'items' => $items,
+                            'files' => $attachments
                         ];
                         Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                     }
@@ -2473,7 +2561,8 @@ class StockRequestController extends Controller
                     'item_code' => $item_desc[0]['item_code'] ?? '',
                     'qty' => $value['qty'],
                     'role' => 'own user',
-                    'items' => $items
+                    'items' => $items,
+                    'files' => $attachments
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }
@@ -2502,6 +2591,17 @@ class StockRequestController extends Controller
                         ->orderBy('item', 'ASC')
                         ->get();
                 }
+                $attachments = [];
+                $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+                if($files != NULL){
+                    $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+                    foreach($files as $file){
+                        $file = str_replace('"','',$file);
+                        if(file_exists(public_path('uploads/'.$file))){
+                            array_push($attachments, public_path('uploads/'.$file));
+                        }
+                    }
+                }
                 $subject = '[OVERDUE] STOCK REQUEST NO. '.$value['req_num'];
                 $user = User::role('admin')->where('status','ACTIVE')->get();
                 foreach($user as $keyx){
@@ -2525,7 +2625,8 @@ class StockRequestController extends Controller
                         'item_code' => $item_desc[0]['item_code'] ?? '',
                         'qty' => $value['qty'],
                         'role' => 'Admin',
-                        'items' => $items
+                        'items' => $items,
+                        'files' => $attachments
                     ];
                     Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                 }
@@ -2555,7 +2656,8 @@ class StockRequestController extends Controller
                             'item_code' => $item_desc[0]['item_code'] ?? '',
                             'qty' => $value['qty'],
                             'role' => 'Approver - Sales',
-                            'items' => $items
+                            'items' => $items,
+                            'files' => $attachments
                         ];
                         Mail::to($keyx->email)->send(new notifRequest($details, $subject));
                     }
@@ -2580,7 +2682,8 @@ class StockRequestController extends Controller
                     'item_code' => $item_desc[0]['item_code'] ?? '',
                     'qty' => $value['qty'],
                     'role' => 'own user',
-                    'items' => $items
+                    'items' => $items,
+                    'files' => $attachments
                 ];
                 Mail::to($value['email'])->send(new notifRequest($details, $subject));
             }

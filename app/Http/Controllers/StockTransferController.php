@@ -380,7 +380,7 @@ class StockTransferController extends Controller
         }
         else{
             $list = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, 
-            (CASE WHEN items.UOM != \'Unit\' THEN 0 ELSE transferred_items.stock_id END) AS id, 
+            (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE transferred_items.stock_id END) AS id, 
             locations.location AS location')
                 ->where('transferred_items.request_number', $request->request_number)
                 ->where('stocks.status', '!=', 'incomplete')
@@ -417,7 +417,7 @@ class StockTransferController extends Controller
         }
         else{
             $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
-            (CASE WHEN items.UOM != \'Unit\' THEN 0 ELSE stocks.id END) AS id, 
+            (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id, 
             locations.location AS location')
                 ->where('stocks.request_number', $request->request_number)
                 ->where('stocks.status', 'incomplete')

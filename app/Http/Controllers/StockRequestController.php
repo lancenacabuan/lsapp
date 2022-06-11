@@ -537,8 +537,8 @@ class StockRequestController extends Controller
         }
         $include[] = $request->request_number;
         
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
-        (CASE WHEN items.UOM != \'Unit\' THEN 0 ELSE stocks.id END) AS id')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
+        (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
@@ -567,7 +567,7 @@ class StockRequestController extends Controller
             ->first()
             ->status;
         if($status == '3' || $status == '4' || $status == '12'){
-            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
+            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep','assembly'])
                 ->join('items','items.id','stocks.item_id')
@@ -578,13 +578,13 @@ class StockRequestController extends Controller
             return DataTables::of($list)->make(true);
         }
         else{
-            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
-            (CASE WHEN items.UOM != \'Unit\' THEN 0 ELSE stocks.id END) AS id')
+            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
+            (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep','assembly'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
-                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id')
+                ->groupBy('category','prodcode','item','uom','serialize','serial','qty','item_id','id')
                 ->orderBy('item', 'ASC')
                 ->get();
     
@@ -607,7 +607,7 @@ class StockRequestController extends Controller
             ->first()
             ->status;
         if($status == '17'){
-            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
+            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
                 ->whereIn('request_number', $include)
                 ->where('stocks.status', 'incomplete')
                 ->join('items','items.id','stocks.item_id')
@@ -618,13 +618,13 @@ class StockRequestController extends Controller
             return DataTables::of($list)->make(true);
         }
         else{
-            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
-            (CASE WHEN items.UOM != \'Unit\' THEN 0 ELSE stocks.id END) AS id')
+            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
+            (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id')
                 ->whereIn('request_number', $include)
                 ->where('stocks.status', 'incomplete')
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
-                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id')
+                ->groupBy('category','prodcode','item','uom','serialize','serial','qty','item_id','id')
                 ->orderBy('item', 'ASC')
                 ->get();
     
@@ -642,7 +642,7 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
             ->whereIn('request_number', $include)
             ->where('stocks.status', 'defective')
             ->join('items','items.id','stocks.item_id')
@@ -663,7 +663,7 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
             ->whereIn('request_number', $include)
             ->where('stocks.status', 'incdefective')
             ->join('items','items.id','stocks.item_id')
@@ -684,14 +684,14 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
-        (CASE WHEN items.UOM != \'Unit\' THEN 0 ELSE stocks.id END) AS id, 
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
+        (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id, 
         locations.location AS location')
             ->whereIn('assembly_reqnum', $include)
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->join('locations','locations.id','stocks.location_id')
-            ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id','location')
+            ->groupBy('category','prodcode','item','uom','serialize','serial','qty','item_id','id','location')
             ->orderBy('item', 'ASC')
             ->get();
 

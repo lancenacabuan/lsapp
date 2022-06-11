@@ -1730,7 +1730,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         {
                             data: 'id',
                             "render": function(data, type, row, meta){
-                                if(row.uom == 'Unit'){
+                                if(row.uom == 'Unit' && row.serialize == 'YES'){
                                     return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                 }
                                 else{
@@ -1909,7 +1909,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             {
                                 data: 'id',
                                 "render": function(data, type, row, meta){
-                                    if(row.uom == 'Unit'){
+                                    if(row.uom == 'Unit' && row.serialize == 'YES'){
                                         return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                     }
                                     else{
@@ -1978,7 +1978,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             {
                                 data: 'id',
                                 "render": function(data, type, row, meta){
-                                    if(row.uom == 'Unit'){
+                                    if(row.uom == 'Unit' && row.serialize == 'YES'){
                                         return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                     }
                                     else{
@@ -2049,7 +2049,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 {
                                     data: 'id',
                                     "render": function(data, type, row, meta){
-                                        if(row.uom == 'Unit'){
+                                        if(row.uom == 'Unit' && row.serialize == 'YES'){
                                             return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                         }
                                         else{
@@ -2118,7 +2118,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 {
                                     data: 'id',
                                     "render": function(data, type, row, meta){
-                                        if(row.uom == 'Unit'){
+                                        if(row.uom == 'Unit' && row.serialize == 'YES'){
                                             return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                                         }
                                         else{
@@ -2959,7 +2959,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             {
                 data: 'id',
                 "render": function(data, type, row, meta){
-                    if(row.uom == 'Unit'){
+                    if(row.uom == 'Unit' && row.serialize == 'YES'){
                         return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                     }
                     else{
@@ -3138,7 +3138,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 {
                     data: 'id',
                     "render": function(data, type, row, meta){
-                        if(row.uom == 'Unit'){
+                        if(row.uom == 'Unit' && row.serialize == 'YES'){
                             return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                         }
                         else{
@@ -3207,7 +3207,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 {
                     data: 'id',
                     "render": function(data, type, row, meta){
-                        if(row.uom == 'Unit'){
+                        if(row.uom == 'Unit' && row.serialize == 'YES'){
                             return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                         }
                         else{
@@ -3278,7 +3278,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     {
                         data: 'id',
                         "render": function(data, type, row, meta){
-                            if(row.uom == 'Unit'){
+                            if(row.uom == 'Unit' && row.serialize == 'YES'){
                                 return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                             }
                             else{
@@ -3347,7 +3347,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     {
                         data: 'id',
                         "render": function(data, type, row, meta){
-                            if(row.uom == 'Unit'){
+                            if(row.uom == 'Unit' && row.serialize == 'YES'){
                                 return '<button style="zoom: 80%;" class="btn btn-success bp btnEditSerial" id="'+ meta.row +'">EDIT SERIAL</button>';
                             }
                             else{

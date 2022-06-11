@@ -28,11 +28,14 @@
     </div>
     @endrole
     <div style="margin-top: -3px; margin-bottom: 10px; color: white; height: 20px; background-color: #0d1a80;"></div>
-    <table class="table-hover table itemTable" id="itemTable" style="width: 100%; display: none; cursor: pointer;">
+    <table class="table-hover table itemTable" id="itemTable" style="zoom: 90%; width: 100%; display: none; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white;">
             <tr>
-                <th style="width: 25%;">ITEM CODE</th>
+                <th style="width: 15%;">CATEGORY</th>
+                <th style="width: 15%;">ITEM CODE</th>
                 <th>ITEM DESCRIPTION</th>
+                <th style="width: 6%;">UOM</th>
+                <th style="width: 9%;">SERIAL (Y/N)</th>
             </tr>
         </thead>
     </table>

@@ -200,6 +200,9 @@ $(document).on('click', '#ItemSerialTable tbody tr', function(){
     if(trdata.UOM == 'Pc' || trdata.UOM == 'Meter'){
         return false;
     }
+    if(trdata.serialize == 'NO'){
+        return false;
+    }
     $('#x_id').val(trdata.stock_id);
     $('#x_category').val(decodeHtml(trdata.category));
     $('#x_item').val(decodeHtml(trdata.item));
@@ -277,6 +280,9 @@ $(document).on('click', '#SerialTable tbody tr', function(){
         return false;
     }
     if(trdata.UOM == 'Pc' || trdata.UOM == 'Meter'){
+        return false;
+    }
+    if(trdata.serialize == 'NO'){
         return false;
     }
     $('#x_id').val(trdata.stock_id);
@@ -456,15 +462,16 @@ $('#item').on('change', function(){
                 if(data[0].serialize == 'YES'){
                     $('#serialdiv').show();
                     $('#serial').prop('required', true);
+                    $('#qty').prop('disabled', true);
                 }
                 else{
                     $('#serialdiv').hide();
                     $('#serial').prop('required', false);
+                    $('#qty').prop('disabled', false);
                 }
                 $('#prodcode').val(data[0].prodcode);
                 $('#uom').val(data[0].UOM);
                 $('#qty').val('1');
-                $('#qty').prop('disabled', true);
             }
             else{
                 $('#prodcodediv').show();
@@ -473,7 +480,7 @@ $('#item').on('change', function(){
                 $('#serialdiv').hide();
                 $('#prodcode').val(data[0].prodcode);
                 $('#uom').val(data[0].UOM);
-                $('#qty').val('0');
+                $('#qty').val('1');
                 $('#qty').prop('disabled', false);
             }
         },
@@ -538,6 +545,7 @@ $('#btnSave').on('click', function(){
                             item: item,
                             location: location_id,
                             uom: uom,
+                            qty: qty,
                             serial: serial,
                             rack: rack,
                             row: row,

@@ -17,8 +17,11 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
             url: '/fm_items',
         },
         columns: [
+            { data: 'category' },
             { data: 'prodcode' },
-            { data: 'item' }
+            { data: 'item' },
+            { data: 'UOM' },
+            { data: 'serialize' }
         ],
         order: [],
         initComplete: function(){

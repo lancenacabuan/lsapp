@@ -241,7 +241,7 @@ class StocksController extends Controller
 
         if($UOM == 'Unit'){
             $stock = Stock::query()
-                ->select('stocks.id AS stock_id', 'category', 'item', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->select('stocks.id AS stock_id', 'category', 'item', 'serialize', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
                 ->selectRaw('UPPER(serial) AS serial')
                 ->selectRaw('
                     (CASE
@@ -266,7 +266,7 @@ class StocksController extends Controller
         }
         else{
             $stock = Stock::query()
-                ->select('category', 'item', DB::raw('SUM(stocks.qty) AS qty'), 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->select('category', 'item', 'serialize', DB::raw('SUM(stocks.qty) AS qty'), 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
                 ->selectRaw('UPPER(serial) AS serial')
                 ->selectRaw('
                     (CASE
@@ -283,7 +283,7 @@ class StocksController extends Controller
                 ->join('categories', 'categories.id', 'category_id')
                 ->join('locations', 'locations.id', 'location_id')
                 ->join('users', 'users.id', 'user_id')
-                ->groupBy('category','item','qty','UOM','name','location','serial','rack','row','status','addDate','modDate')
+                ->groupBy('category','item','serialize','qty','UOM','name','location','serial','rack','row','status','addDate','modDate')
                 ->orderBy('modDate', 'DESC')
                 ->orderBy('addDate', 'ASC')
                 ->get();
@@ -298,7 +298,7 @@ class StocksController extends Controller
             ->count();
         if($count != 0){
             $stock = Stock::query()
-                ->select('stocks.id AS stock_id', 'category', 'item', 'prodcode', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
+                ->select('stocks.id AS stock_id', 'category', 'item', 'serialize', 'prodcode', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
                 ->selectRaw('UPPER(serial) AS serial')
                 ->selectRaw('
                     (CASE
@@ -344,7 +344,7 @@ class StocksController extends Controller
     }
      
     public function save(Request $request){
-        if($request->uom == 'Unit'){
+        if($request->uom == 'Unit' && $request->qty == '1'){
             $serials = Stock::query()->select()
                 ->where('serial', '!=', 'N/A')
                 ->whereRaw('UPPER(serial) = ?', strtoupper($request->serial))
@@ -359,6 +359,7 @@ class StocksController extends Controller
                 $stocks->user_id =auth()->user()->id;
                 $stocks->location_id =$request->location;
                 $stocks->status = 'in';
+                $stocks->qty = '1';
                 $stocks->serial = $request->serial;
                 $stocks->rack = $request->rack;
                 $stocks->row = $request->row;
@@ -386,6 +387,7 @@ class StocksController extends Controller
                     $stocks->user_id =auth()->user()->id;
                     $stocks->location_id =$request->location;
                     $stocks->status = 'in';
+                    $stocks->qty = '1';
                     $stocks->serial = 'N/A';
                     $stocks->rack = $request->rack;
                     $stocks->row = $request->row;

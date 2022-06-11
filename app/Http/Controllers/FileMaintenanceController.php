@@ -57,6 +57,7 @@ class FileMaintenanceController extends Controller
         $list = Item::select('items.id', 'items.item', 'items.prodcode', 'categories.category', 'items.category_id', 'items.UOM', 'items.serialize')
             ->where('items.assemble', 'NO')
             ->join('categories', 'categories.id', 'category_id')
+            ->orderBy('category', 'ASC')
             ->orderBy('item', 'ASC')
             ->get();
         return DataTables::of($list)->make(true);

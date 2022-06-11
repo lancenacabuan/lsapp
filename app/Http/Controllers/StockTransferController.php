@@ -365,7 +365,7 @@ class StockTransferController extends Controller
             ->first()
             ->status;
         if($status == '3' || $status == '4'){
-            $list = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, items.id AS item_id, transferred_items.stock_id AS id, locations.location AS location')
+            $list = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, items.id AS item_id, transferred_items.stock_id AS id, locations.location AS location')
                 ->where('transferred_items.request_number', $request->request_number)
                 ->where('stocks.status', '!=', 'incomplete')
                 ->join('stocks','stocks.id','transferred_items.stock_id')
@@ -379,7 +379,7 @@ class StockTransferController extends Controller
             return DataTables::of($list)->make(true);
         }
         else{
-            $list = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, 
+            $list = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, 
             (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE transferred_items.stock_id END) AS id, 
             locations.location AS location')
                 ->where('transferred_items.request_number', $request->request_number)
@@ -389,7 +389,7 @@ class StockTransferController extends Controller
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
                 ->join('locations','locations.id','request_transfer.locfrom')
-                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id','location')
+                ->groupBy('category','prodcode','item','uom','serialize','serial','qty','item_id','id','location')
                 ->orderBy('item', 'ASC')
                 ->get();
     
@@ -403,7 +403,7 @@ class StockTransferController extends Controller
             ->first()
             ->status;
         if($status == '17'){
-            $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
+            $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id, locations.location AS location')
                 ->where('stocks.request_number', $request->request_number)
                 ->where('stocks.status', 'incomplete')
                 ->join('request_transfer','request_transfer.request_number','stocks.request_number')
@@ -416,7 +416,7 @@ class StockTransferController extends Controller
             return DataTables::of($list)->make(true);
         }
         else{
-            $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
+            $list = Stock::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
             (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id, 
             locations.location AS location')
                 ->where('stocks.request_number', $request->request_number)
@@ -425,7 +425,7 @@ class StockTransferController extends Controller
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
                 ->join('locations','locations.id','request_transfer.locfrom')
-                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id','location')
+                ->groupBy('category','prodcode','item','uom','serialize','serial','qty','item_id','id','location')
                 ->orderBy('item', 'ASC')
                 ->get();
     

@@ -36,7 +36,7 @@ $('table.defectiveTable').DataTable({
                 }
                 else{
                     if(row.status == 'defectives'){
-                        return "<button class='btn btn-primary bp btnReturnItem' id='"+ meta.row +"'>RETURN</button>";
+                        return "<button class='btn btn-success bp btnReturnItem' id='"+ meta.row +"'>RETURN</button>";
                     }
                     else{
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";

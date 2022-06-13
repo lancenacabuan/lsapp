@@ -405,40 +405,8 @@ $('#btnSave').on('click', function(){
                                     }
                                 });
                             });
-                            scrollReset();
                             $('#newMerchRequest').modal('hide');
-                            $('#loading').show(); Spinner(); Spinner.show();
-                            $.ajax({
-                                type:'post',
-                                url:'/merchant/logSave',
-                                headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
-                                },
-                                data:{
-                                    'request_number': $('#request_num').val(),
-                                },
-                                success: function(data){
-                                    if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
-                                        if(reference_upload){
-                                            $('#btnUpload').click();
-                                        }
-                                        else{
-                                            swal("SUBMIT SUCCESS", "MERCHANT STOCK REQUEST", "success");
-                                            setTimeout(function(){location.href="/merchant"}, 2000);
-                                        }
-                                    }
-                                    else{
-                                        return false;
-                                    }
-                                },
-                                error: function(data){
-                                    if(data.status == 401){
-                                        window.location.href = '/merchant';
-                                    }
-                                    alert(data.responseText);
-                                }
-                            });
+                            $('#btnUpload').click();
                         }
                         else if(data == 'duplicate'){
                             swal("DUPLICATE ORDER ID", "Order ID already exists!", "error");
@@ -537,7 +505,9 @@ $('table.merchantTable').DataTable({
     ],
     order: [],
     initComplete: function(){
-        return notifyDeadline();
+        if(($(location).attr('pathname')+window.location.search).includes('submit') == false){
+            return notifyDeadline();
+        }
     }
 });
 if($(location).attr('pathname')+window.location.search != '/merchant'){
@@ -1467,9 +1437,34 @@ $('.btnPrint').on('click', function(){
 });
 
 $(document).ready(function(){
-    if($(location).attr('pathname')+window.location.search == '/merchant?submit=success'){
-        $('#loading').hide(); Spinner.hide();
-        swal("SUBMIT SUCCESS", "MERCHANT STOCK REQUEST", "success");
-        setTimeout(function(){location.href="/merchant"}, 2000);
+    if(($(location).attr('pathname')+window.location.search).includes('submit') == true){
+        url = window.location.search;
+        reqnum = url.replace('?submit=', '');
+        $.ajax({
+            type:'post',
+            url:'/merchant/logSave',
+            headers:{
+                'X-CSRF-TOKEN': $("#csrf").val()
+            },
+            data:{
+                'request_number': reqnum
+            },
+            success: function(data){
+                if(data == 'true'){
+                    $('#loading').hide(); Spinner.hide();
+                    swal("SUBMIT SUCCESS", "MERCHANT STOCK REQUEST", "success");
+                }
+                else{
+                    $('#loading').hide(); Spinner.hide();
+                    swal("SUBMIT FAILED", "MERCHANT STOCK REQUEST", "error");
+                }
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/merchant';
+                }
+                alert(data.responseText);
+            }
+        });
     }
 });

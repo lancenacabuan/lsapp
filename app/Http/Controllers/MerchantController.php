@@ -155,7 +155,7 @@ class MerchantController extends Controller
             ->update(['reference_upload' => $reference_upload]);
 
         if($request->action == 'SUBMIT'){
-            return redirect()->to('/merchant?submit=success');
+            return redirect()->to('/merchant?submit='.$request->reqnum);
         }
     }
     
@@ -176,6 +176,10 @@ class MerchantController extends Controller
     }
 
     public function logSave(Request $request){
+        if(Requests::where('request_number', $request->request_number)->count() == 0){
+            return response('false');
+        }
+
         do{
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, orderID, needdate')
                 ->where('requests.request_number', $request->request_number)
@@ -244,7 +248,7 @@ class MerchantController extends Controller
             'action' => 'MERCHANT STOCK REQUEST',
             'request_number' => $request->request_number,
             'reqdate' => $request_details->reqdate,
-            'requested_by' => $request_details->reqby,
+            'requested_by' => auth()->user()->name,
             'needdate' => $request_details->needdate,
             'reqtype' => $request_details->reqtype,
             'orderID' => $request_details->orderID,

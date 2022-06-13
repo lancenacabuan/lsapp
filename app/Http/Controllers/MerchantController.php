@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\merchantRequest;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\Location;
@@ -175,6 +176,85 @@ class MerchantController extends Controller
     }
 
     public function logSave(Request $request){
+        do{
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, orderID, needdate')
+                ->where('requests.request_number', $request->request_number)
+                ->join('users', 'users.id', '=', 'requests.requested_by')
+                ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                ->get();
+
+                $request_details = str_replace('[','',$request_details);
+                $request_details = str_replace(']','',$request_details);
+                $request_details = json_decode($request_details);
+        }
+        while(!$request_details);
+
+        do{
+            $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
+                ->join('items', 'items.id', 'stock_request.item')
+                ->where('request_number', $request->request_number)
+                ->orderBy('item', 'ASC')
+                ->get()
+                ->toArray();
+            foreach($items as $key => $value){
+                if($value['warranty'] == '0' || $value['warranty'] == ''){
+                    $items[$key]['Warranty_Name'] = 'NO WARRANTY';
+                }
+                else{
+                    $items[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty'])->first()->Warranty_Name;
+                }
+            }
+        }
+        while(!$items);
+
+        $attachments = [];
+        $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+        if($files != NULL){
+            $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+            foreach($files as $file){
+                $file = str_replace('"','',$file);
+                if(file_exists(public_path('uploads/'.$file))){
+                    array_push($attachments, public_path('uploads/'.$file));
+                }
+            }
+        }
+        
+        $subject = '[MERCHANT] STOCK REQUEST NO. '.$request->request_number;
+        $user = User::role('accounting')->where('status','ACTIVE')->get();
+        foreach($user as $key){
+            $details = [
+                'name' => ucwords($key->name),
+                'action' => 'MERCHANT STOCK REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'orderID' => $request_details->orderID,
+                'role' => 'Accounting',
+                'receipient' => 'accounting',
+                'items' => $items,
+                'files' => $attachments
+            ];
+            Mail::to($key->email)->send(new merchantRequest($details, $subject));
+        }
+
+        $details = [
+            'name' => auth()->user()->name,
+            'action' => 'MERCHANT STOCK REQUEST',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'needdate' => $request_details->needdate,
+            'reqtype' => $request_details->reqtype,
+            'orderID' => $request_details->orderID,
+            'role' => 'Merchant',
+            'receipient' => 'merchant',
+            'items' => $items,
+            'files' => $attachments
+        ];
+        Mail::to(auth()->user()->email)->send(new merchantRequest($details, $subject));
+
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "NEW MERCHANT STOCK REQUEST: User successfully submitted Merchant Stock Request No. $request->request_number.";

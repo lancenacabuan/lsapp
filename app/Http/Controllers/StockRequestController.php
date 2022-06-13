@@ -368,7 +368,7 @@ class StockRequestController extends Controller
         }
         else if(auth()->user()->hasanyRole('accounting')){ //---ROLES---//
             $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID')
-                ->whereIn('request_type.id', ['2','3'])
+                ->whereIn('request_type.id', ['2','3','6'])
                 ->whereNotIn('requests.status', ['7','8','10','11'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -898,6 +898,18 @@ class StockRequestController extends Controller
             }
             while(!$items);
         }
+
+        $attachments = [];
+        $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+        if($files != NULL){
+            $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+            foreach($files as $file){
+                $file = str_replace('"','',$file);
+                if(file_exists(public_path('uploads/'.$file))){
+                    array_push($attachments, public_path('uploads/'.$file));
+                }
+            }
+        }
         
         $subject = '[APPROVED] STOCK REQUEST NO. '.$request->request_number;
         $user = User::role('accounting')->where('status','ACTIVE')->get();
@@ -917,10 +929,31 @@ class StockRequestController extends Controller
                 'reference' => $request_details->reference,
                 'approvedby' => auth()->user()->name,
                 'role' => 'Accounting',
-                'items' => $items
+                'items' => $items,
+                'files' => $attachments
             ];
             Mail::to($key->email)->send(new approvedRequest($details, $subject));
         }
+
+        $details = [
+            'name' => $request_details->reqby,
+            'action' => 'STOCK REQUEST',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'needdate' => $request_details->needdate,
+            'reqtype' => $request_details->reqtype,
+            'client_name' => $request_details->client_name,
+            'location' => $request_details->location,
+            'contact' => $request_details->contact,
+            'remarks' => $request_details->remarks,
+            'reference' => $request_details->reference,
+            'approvedby' => auth()->user()->name,
+            'role' => 'Sales',
+            'items' => $items,
+            'files' => $attachments
+        ];
+        Mail::to($request_details->email)->send(new approvedRequest($details, $subject));
 
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;

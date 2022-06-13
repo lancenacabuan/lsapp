@@ -1059,7 +1059,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 var reason = value.reason;
                     $('#reason_details').val(reason);
 
-                    if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '6')){
+                    if($("#current_role").val() == 'accounting' && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5')){
+                        window.location.href = '/stockrequest';
+                    }
+                    if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales') && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '6')){
                         window.location.href = '/stockrequest';
                     }
                     if($("#current_role").val() == 'sales' && $('#current_user').val() != value.user_id){
@@ -1100,7 +1103,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#action').val('');
                     }
                     
-                    if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && requestStatus == '10'))){
+                    if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && requestStatus == '10') || req_type_id == '6')){
                         var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
                         var reference_attachments = decodeHtml(reference_uploads).split(',');
                         for(var i=0; i < reference_attachments.length; i++){
@@ -1169,6 +1172,11 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
 
                     if(req_type_id != '2'){
                         $(".sales_details").hide();
+                        if(req_type_id == '6'){
+                            $("#btnShowAttachment").show();
+                            $("#btnShowAttachment").css({"margin-top": "35px", "margin-left": "0px"});
+                            $("#btnHideAttachment").css({"margin-top": "35px", "margin-left": "0px"});
+                        }
                     }
                     if(req_type_id == '1' || req_type_id == '5' || req_type_id == '6'){
                         $("#client_name_label").hide();
@@ -2288,7 +2296,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     var reason = value.reason;
         $('#reason_details').val(reason);
 
-        if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '6')){
+        if($("#current_role").val() == 'accounting' && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5')){
+            window.location.href = '/stockrequest';
+        }
+        if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales') && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '6')){
             window.location.href = '/stockrequest';
         }
         if($("#current_role").val() == 'sales' && $('#current_user').val() != value.user_id){
@@ -2329,7 +2340,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('#action').val('');
         }
 
-        if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && requestStatus == '10'))){
+        if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && requestStatus == '10') || req_type_id == '6')){
             var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
             var reference_attachments = decodeHtml(reference_uploads).split(',');
             for(var i=0; i < reference_attachments.length; i++){
@@ -2398,6 +2409,11 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
 
         if(req_type_id != '2'){
             $(".sales_details").hide();
+            if(req_type_id == '6'){
+                $("#btnShowAttachment").show();
+                $("#btnShowAttachment").css({"margin-top": "35px", "margin-left": "0px"});
+                $("#btnHideAttachment").css({"margin-top": "35px", "margin-left": "0px"});
+            }
         }
         if(req_type_id == '1' || req_type_id == '5' || req_type_id == '6'){
             $("#client_name_label").hide();

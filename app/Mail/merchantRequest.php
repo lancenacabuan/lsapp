@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class approvedRequest extends Mailable
+class merchantRequest extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,7 +32,7 @@ class approvedRequest extends Mailable
     {
         $this->subject($this->subject)
             ->from('noreply@ideaserv.com.ph')
-            ->view('emails/approvedRequest');
+            ->view('emails/merchantRequest');
             foreach($this->details['files'] as $file){
                 $this->attach($file);
             }

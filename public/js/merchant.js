@@ -1453,10 +1453,12 @@ $(document).ready(function(){
                 if(data == 'true'){
                     $('#loading').hide(); Spinner.hide();
                     swal("SUBMIT SUCCESS", "MERCHANT STOCK REQUEST", "success");
+                    setTimeout(function(){location.href="/merchant"}, 2000);
                 }
                 else{
                     $('#loading').hide(); Spinner.hide();
                     swal("SUBMIT FAILED", "MERCHANT STOCK REQUEST", "error");
+                    setTimeout(function(){location.href="/merchant"}, 2000);
                 }
             },
             error: function(data){

@@ -238,13 +238,13 @@ class StockRequestController extends Controller
             ->update(['reference_upload' => $reference_upload]);
 
         if($request->action == 'SUBMIT'){
-            return redirect()->to('/stockrequest?submit=success');
+            return redirect()->to('/stockrequest?submit='.$request->reqnum);
         }
         else if($request->action == 'EDIT'){
             return redirect()->to('/stockrequest?edit=success');
         }
         else{
-            return redirect()->to('/stockrequest?sale=success');
+            return redirect()->to('/stockrequest?sale='.$request->reqnum);
         }
     }
     
@@ -265,6 +265,10 @@ class StockRequestController extends Controller
     }
 
     public function logSave(Request $request){
+        if(Requests::where('request_number', $request->request_number)->count() == 0){
+            return response('false');
+        }
+
         do{
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, contact, remarks, reference, needdate')
                 ->where('requests.request_number', $request->request_number)
@@ -1188,9 +1192,14 @@ class StockRequestController extends Controller
     }
 
     public function logSold(Request $request){
+        if(Requests::where('request_number', $request->request_number)->count() == 0){
+            return response('false');
+        }
+
         Stock::where('request_number', $request->request_number)
             ->where('status', '=', 'demo')
             ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
+
         do{
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, schedule, needdate, prepdate')
                 ->where('requests.request_number', $request->request_number)

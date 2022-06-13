@@ -1,9 +1,12 @@
-<div class="d-flex xD" title="v1.0.3.8" style="height: 90px;">
+<div class="d-flex xD" title="v1.0.3.9" style="height: 90px;">
     <a href="/">
         <img class="p-2 align-self-end" src="{{asset('idsi.png')}}" style="width: auto; height: 90px; line-height: 90px;">
     </a>
     <a href="/" style="color: #0d1a80; font-family: Arial; font-weight: bold; font-size: 25px; line-height: 90px; margin-left: 10px; text-decoration: none;">
         MAIN WAREHOUSE STOCK MONITORING SYSTEM
+        @if(env('APP_URL') == 'https://mainwh.idsi.com.ph/')
+        <sup><sup>BETA</sup></sup>
+        @endif
     </a>
     <div id="lblUser" class="p-2 ml-auto align-self-end d-flex" style="display: none !important;">
         <div style="text-align: right; font-size: 12px;">

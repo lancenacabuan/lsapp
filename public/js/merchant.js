@@ -600,7 +600,7 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                             },
                             success: function(data){
                                 if(data.result == 'true'){
-                                    $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
+                                    $('#reference_attachment'+i).attr('src', data.returnURL).show();
                                     $('#reference_attachment'+i).css({'width': '100%'});
                                 }
                                 else{
@@ -614,7 +614,7 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                                         },
                                         success: function(data){
                                             if(data.result == 'true'){
-                                                $('#reference_attachment'+i).attr('src', (data.returnURL)+reference_attachment).show();
+                                                $('#reference_attachment'+i).attr('src', data.returnURL).show();
                                                 $('#reference_attachment'+i).css({'width': '100%'});
                                             }
                                             else{
@@ -931,7 +931,7 @@ $('#merchantTable tbody').on('click', 'tr', function(){
                 },
                 success: function(data){
                     if(data.result == 'true'){
-                        $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
+                        $('#reference_attachment'+i).attr('src', data.returnURL).show();
                         $('#reference_attachment'+i).css({'width': '100%'});
                     }
                     else{
@@ -945,7 +945,7 @@ $('#merchantTable tbody').on('click', 'tr', function(){
                             },
                             success: function(data){
                                 if(data.result == 'true'){
-                                    $('#reference_attachment'+i).attr('src', (data.returnURL)+reference_attachment).show();
+                                    $('#reference_attachment'+i).attr('src', data.returnURL).show();
                                     $('#reference_attachment'+i).css({'width': '100%'});
                                 }
                                 else{

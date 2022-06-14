@@ -60,12 +60,12 @@ class StockRequestController extends Controller
 
     public function checkURL(Request $request){
         if($request->check == 'beta'){
-            $checkURL = Http::get(env('APP_URL').'uploads/'.$request->reference);
-            $returnURL = env('APP_URL').'uploads/';
+            $returnURL = env('APP_URL_BETA').'uploads/'.$request->reference;
+            $checkURL = Http::get($returnURL);
         }
         else{
-            $checkURL = Http::get(env('APP_URL_LIVE').'uploads/'.$request->reference);
-            $returnURL = env('APP_URL_LIVE').'uploads/';
+            $returnURL = env('APP_URL_LIVE').'uploads/'.$request->reference;
+            $checkURL = Http::get($returnURL);
         }
         if($checkURL->successful()){
             $data = array('result' => 'true', 'returnURL' => $returnURL);

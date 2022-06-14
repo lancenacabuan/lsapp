@@ -1151,7 +1151,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 },
                                 success: function(data){
                                     if(data.result == 'true'){
-                                        $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
+                                        $('#reference_attachment'+i).attr('src', data.returnURL).show();
                                         $('#reference_attachment'+i).css({'width': '100%'});
                                     }
                                     else{
@@ -1165,7 +1165,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                             },
                                             success: function(data){
                                                 if(data.result == 'true'){
-                                                    $('#reference_attachment'+i).attr('src', (data.returnURL)+reference_attachment).show();
+                                                    $('#reference_attachment'+i).attr('src', data.returnURL).show();
                                                     $('#reference_attachment'+i).css({'width': '100%'});
                                                 }
                                                 else{
@@ -2388,7 +2388,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     },
                     success: function(data){
                         if(data.result == 'true'){
-                            $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
+                            $('#reference_attachment'+i).attr('src', data.returnURL).show();
                             $('#reference_attachment'+i).css({'width': '100%'});
                         }
                         else{
@@ -2402,7 +2402,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                                 },
                                 success: function(data){
                                     if(data.result == 'true'){
-                                        $('#reference_attachment'+i).attr('src', (data.returnURL)+reference_attachment).show();
+                                        $('#reference_attachment'+i).attr('src', data.returnURL).show();
                                         $('#reference_attachment'+i).css({'width': '100%'});
                                     }
                                     else{

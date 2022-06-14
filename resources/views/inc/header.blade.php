@@ -4,7 +4,7 @@
     </a>
     <a href="/" style="color: #0d1a80; font-family: Arial; font-weight: bold; font-size: 25px; line-height: 90px; margin-left: 10px; text-decoration: none;">
         MAIN WAREHOUSE STOCK MONITORING SYSTEM
-        @if(env('APP_URL') == 'https://mainwh.idsi.com.ph/')
+        @if(env('APP_URL') == 'https://mainwh.ideaservph.tech/')
         <sup><sup>BETA</sup></sup>
         @endif
     </a>

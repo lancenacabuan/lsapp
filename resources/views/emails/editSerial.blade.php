@@ -13,7 +13,7 @@
         <br><br>
         Thank you!
     </p>
-    <a href="https://mainwh.apsoft.com.ph/">https://mainwh.apsoft.com.ph/</a>
+    <a href="{{ env('APP_URL_LIVE') }}">{{ env('APP_URL_LIVE') }}</a>
     <br><br>
     This is a system-generated email. Please do not reply.
 </body>

@@ -60,17 +60,18 @@ class StockRequestController extends Controller
 
     public function checkURL(Request $request){
         if($request->check == 'beta'){
-            $checkURL = Http::get('https://mainwh.idsi.com.ph/uploads/'.$request->reference);
+            $checkURL = Http::get(env('APP_URL').'uploads/'.$request->reference);
         }
         else{
-            $checkURL = Http::get('https://mainwh.apsoft.com.ph/uploads/'.$request->reference);
+            $checkURL = Http::get(env('APP_URL_LIVE').'uploads/'.$request->reference);
         }
         if($checkURL->successful()){
-            return response('true');
+            $data = array('result' => 'true', 'live' => env('APP_URL_LIVE').'uploads/');
         }
         else{
-            return response('false');
+            $data = array('result' => 'false', 'live' => env('APP_URL_LIVE').'uploads/');
         }
+        return response()->json($data);
     }
 
     public function generatedr(Request $request){

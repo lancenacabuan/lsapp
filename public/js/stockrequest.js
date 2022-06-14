@@ -1150,7 +1150,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                     'check': 'beta'
                                 },
                                 success: function(data){
-                                    if(data == 'true'){
+                                    if(data.result == 'true'){
                                         $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
                                         $('#reference_attachment'+i).css({'width': '100%'});
                                     }
@@ -1164,8 +1164,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                                 'check': 'live'
                                             },
                                             success: function(data){
-                                                if(data == 'true'){
-                                                    $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
+                                                if(data.result == 'true'){
+                                                    $('#reference_attachment'+i).attr('src', (data.live)+reference_attachment).show();
                                                     $('#reference_attachment'+i).css({'width': '100%'});
                                                 }
                                                 else{
@@ -2387,7 +2387,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                         'check': 'beta'
                     },
                     success: function(data){
-                        if(data == 'true'){
+                        if(data.result == 'true'){
                             $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
                             $('#reference_attachment'+i).css({'width': '100%'});
                         }
@@ -2401,8 +2401,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                                     'check': 'live'
                                 },
                                 success: function(data){
-                                    if(data == 'true'){
-                                        $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
+                                    if(data.result == 'true'){
+                                        $('#reference_attachment'+i).attr('src', (data.live)+reference_attachment).show();
                                         $('#reference_attachment'+i).css({'width': '100%'});
                                     }
                                     else{

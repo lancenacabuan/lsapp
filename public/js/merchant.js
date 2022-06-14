@@ -599,7 +599,7 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                                 'check': 'beta'
                             },
                             success: function(data){
-                                if(data == 'true'){
+                                if(data.result == 'true'){
                                     $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
                                     $('#reference_attachment'+i).css({'width': '100%'});
                                 }
@@ -613,8 +613,8 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                                             'check': 'live'
                                         },
                                         success: function(data){
-                                            if(data == 'true'){
-                                                $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
+                                            if(data.result == 'true'){
+                                                $('#reference_attachment'+i).attr('src', (data.live)+reference_attachment).show();
                                                 $('#reference_attachment'+i).css({'width': '100%'});
                                             }
                                             else{
@@ -930,7 +930,7 @@ $('#merchantTable tbody').on('click', 'tr', function(){
                     'check': 'beta'
                 },
                 success: function(data){
-                    if(data == 'true'){
+                    if(data.result == 'true'){
                         $('#reference_attachment'+i).attr('src', '/uploads/'+reference_attachment).show();
                         $('#reference_attachment'+i).css({'width': '100%'});
                     }
@@ -944,8 +944,8 @@ $('#merchantTable tbody').on('click', 'tr', function(){
                                 'check': 'live'
                             },
                             success: function(data){
-                                if(data == 'true'){
-                                    $('#reference_attachment'+i).attr('src', 'https://mainwh.apsoft.com.ph/uploads/'+reference_attachment).show();
+                                if(data.result == 'true'){
+                                    $('#reference_attachment'+i).attr('src', (data.live)+reference_attachment).show();
                                     $('#reference_attachment'+i).css({'width': '100%'});
                                 }
                                 else{

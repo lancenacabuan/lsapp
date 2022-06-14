@@ -158,7 +158,7 @@
         Kindly login to your {{$details['role']}} account if you wish to view or download this request by clicking on the link below.<br>
         Thank you!
     </p>
-    <a href="https://mainwh.apsoft.com.ph/printRequest?request_number={{$details['request_number']}}">https://mainwh.apsoft.com.ph/printRequest?request_number={{$details['request_number']}}</a>
+    <a href="{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number']}}">{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number']}}</a>
     <br><br>
     This is a system-generated email. Please do not reply.
 </body>

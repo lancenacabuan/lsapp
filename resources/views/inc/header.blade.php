@@ -6,6 +6,9 @@
         MAIN WAREHOUSE STOCK MONITORING SYSTEM
         @if(env('APP_URL') == 'https://mainwh.ideaservph.tech/')
         <sup><sup>BETA</sup></sup>
+        <input type="hidden" id="current_url" value="beta" disabled>
+        @else
+        <input type="hidden" id="current_url" value="live" disabled>
         @endif
     </a>
     <div id="lblUser" class="p-2 ml-auto align-self-end d-flex" style="display: none !important;">

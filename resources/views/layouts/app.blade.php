@@ -287,13 +287,18 @@
             return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m){return map[m];});
         }
         function notifyDeadline(){
-            $.ajax({
-                type: 'get', 
-                url: '/stockrequest/notify',
-                success: function(){
-                    $('#loading').hide(); Spinner.hide();
-                }
-            });
+            if($('#current_url').val() == 'live'){
+                $.ajax({
+                    type: 'get', 
+                    url: '/stockrequest/notify',
+                    success: function(){
+                        $('#loading').hide(); Spinner.hide();
+                    }
+                });
+            }
+            else{
+                $('#loading').hide(); Spinner.hide();
+            }
         }
     </script>
     @if(Request::is('/'))

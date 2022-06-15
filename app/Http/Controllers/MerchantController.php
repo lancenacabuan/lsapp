@@ -163,9 +163,9 @@ class MerchantController extends Controller
                 $pdfcount = $pdf->getNumberOfPages();
                 $datetime = Carbon::now()->isoformat('YYYYMMDDHHmmss');
                 for($a=1; $a < $pdfcount+1; $a++){
-                    $filename = $datetime.'_'.$request->reqnum.'-'.$a.'.png';
+                    $filename = $datetime.'_'.$request->reqnum.'-'.$a.'.jpg';
                     $pdf->setPage($a)
-                        ->setOutputFormat('png')
+                        ->setOutputFormat('jpg')
                         ->saveImage(public_path('uploads/'.$filename));
                     array_push($reference_upload, $filename);
                 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DateTime;
 use Carbon\Carbon;
+use Spatie\PdfToImage\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
@@ -149,6 +150,14 @@ class MerchantController extends Controller
         }
         for($i=0; $i < count($reference_upload); $i++){
             $request->reference_upload[$i]->move(public_path('/uploads'), $reference_upload[$i]);
+            if(str_contains($reference_upload[$i], '.pdf') == true){
+                $pdf = new Pdf(public_path('/uploads'), $reference_upload[$i]);
+                for($a=0; $a < $pdf->getNumberOfPages(); $a++){
+                    $pdf->setPage($a)
+                        ->setOutputFormat('jpg')
+                        ->saveImage(public_path('/uploads'), $reference_upload[$i].'-'.$a);
+                }
+            }
         }
 
         Requests::where('request_number', $request->reqnum)

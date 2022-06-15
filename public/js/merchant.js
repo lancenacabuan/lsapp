@@ -46,7 +46,7 @@ function validate_fileupload(reference_upload){
         var file1=$("#reference_upload").get(0).files[i].name;
         var file_size = $("#reference_upload").get(0).files[i].size;
         var ext = file1.split('.').pop().toLowerCase();
-        if($.inArray(ext,['jpg','jpeg','png','gif'])===-1){
+        if($.inArray(ext,['jpg','jpeg','png','pdf'])===-1){
             error_ext++;
         }
         if(file_size > 5242880){
@@ -54,7 +54,7 @@ function validate_fileupload(reference_upload){
         }
     }
     if(error_ext > 0 && error_mb > 0){
-        swal('INVALID image file type AND EXCEEDED maximum file size (5MB)!', 'Please upload image file/s with valid file type like the following: jpeg/jpg, png, or gif; AND with file size not greater than 5MB each.', 'error');      
+        swal('INVALID file type AND EXCEEDED maximum file size (5MB)!', 'Please upload file/s with valid file type like the following: jpeg/jpg, png, or pdf; AND with file size not greater than 5MB each.', 'error');      
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
@@ -62,7 +62,7 @@ function validate_fileupload(reference_upload){
         return false;
     }
     else if(error_ext > 0){
-        swal('INVALID image file type!', 'Please upload image file/s with valid file type like the following: jpeg/jpg, png, or gif.', 'error');      
+        swal('INVALID file type!', 'Please upload file/s with valid file type like the following: jpeg/jpg, png, or pdf.', 'error');      
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
@@ -70,7 +70,7 @@ function validate_fileupload(reference_upload){
         return false;
     }
     else if(error_mb > 0){
-        swal('EXCEEDED maximum file size (5MB)!', 'Please upload valid image file/s with file size not greater than 5MB each.', 'error');      
+        swal('EXCEEDED maximum file size (5MB)!', 'Please upload valid file/s with file size not greater than 5MB each.', 'error');      
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();

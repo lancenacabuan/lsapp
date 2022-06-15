@@ -54,7 +54,7 @@
                 </form>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <span class="reference_field" style="margin-left: 420px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple PDF or Image files for upload.</span>
+                <span class="reference_field" style="margin-left: 420px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple PDF and/or Image files for upload.</span>
             </div>
             <div id="warrantyDetails" style="zoom: 85%; height: 260px; margin-top: -260px; margin-left: 990px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">

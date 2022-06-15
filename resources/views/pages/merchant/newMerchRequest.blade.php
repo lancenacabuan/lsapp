@@ -33,7 +33,7 @@
                 <input class="form-control form-control-sm" id="requested_by" style="width: 250px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <span style="color: Red; font-size: 12px;">Use 'Ctrl + Left Click' to select multiple PDF or Image files for upload.</span>
+                <span style="color: Red; font-size: 12px;">Use 'Ctrl + Left Click' to select multiple PDF and/or Image files for upload.</span>
             </div>
             <div id="warrantyDetails" style="zoom: 85%; height: 165px; margin-top: -165px; margin-left: 990px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">

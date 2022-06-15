@@ -77,7 +77,7 @@
                 <button class="form-control btn btn-primary bp reupload" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                <span class="reupload" style="margin-left: 450px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple PDF or Image files for upload.</span>
+                <span class="reupload" style="margin-left: 450px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple PDF and/or Image files for upload.</span>
             </div>
             @role('sales')
             <div class="header_label alert alert-primary mt-4" role="alert" style="display: none;">

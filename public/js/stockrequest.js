@@ -626,6 +626,7 @@ $('#btnSave').on('click', function(){
                             }
                             else{
                                 $('#newStockRequest').modal('hide');
+                                $('#loading').show(); Spinner(); Spinner.show();
                                 $('#btnUpload').click();
                             }
                         }
@@ -710,6 +711,7 @@ $(document).on('click', '#btnSaveChanges', function(){
                     $('#loading').hide(); Spinner.hide();
                     if(data == 'true'){
                         if(reference_upload){
+                            $('#loading').show(); Spinner(); Spinner.show();
                             $('#btnUpload').click();
                         }
                         else{
@@ -5088,6 +5090,7 @@ $('#btnReference').on('click', function(){
                             }
                             $('#referenceModal').modal('hide');
                             $('#detailsStockRequest').modal('hide');
+                            $('#loading').show(); Spinner(); Spinner.show();
                             $('#btnUpload').click();
                         }
                         else if(data == 'duplicate'){

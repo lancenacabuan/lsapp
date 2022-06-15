@@ -180,7 +180,6 @@ class MerchantController extends Controller
             $reference_upload = str_replace($reference_delete[$d], "", $reference_upload);
         }
 
-
         Requests::where('request_number', $request->reqnum)
             ->update(['reference_upload' => $reference_upload]);
 

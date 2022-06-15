@@ -1171,7 +1171,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                                     $('#reference_attachment'+i).css({'width': '100%'});
                                                 }
                                                 else{
-                                                    $('#reference_attachment'+i).attr('src', 'NA.png').show();
+                                                    $('#reference_attachment'+i).attr('src', 'uploads/NA.png').show();
                                                     $('#reference_attachment'+i).css({'width': '25%'});
                                                 }
                                             }
@@ -2408,7 +2408,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                                         $('#reference_attachment'+i).css({'width': '100%'});
                                     }
                                     else{
-                                        $('#reference_attachment'+i).attr('src', 'NA.png').show();
+                                        $('#reference_attachment'+i).attr('src', 'uploads/NA.png').show();
                                         $('#reference_attachment'+i).css({'width': '25%'});
                                     }
                                 }

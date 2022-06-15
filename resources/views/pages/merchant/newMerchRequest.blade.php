@@ -21,7 +21,7 @@
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;" onclick="$('#reference_upload').click();">Attachment Reference</label>
                 <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
-                <button id="btnAttach" class="form-control btn btn-primary bp" style="margin-right: 10px; width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload Image File/s less than 5MB each</span></button>
+                <button id="btnAttach" class="form-control btn btn-primary bp" style="margin-right: 10px; width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
                 <form class="d-none" id="formUpload" action="/merchant/uploadFile" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                     <input type="hidden" name="reqnum" id="reqnum">
@@ -33,7 +33,7 @@
                 <input class="form-control form-control-sm" id="requested_by" style="width: 250px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <span style="color: Red; font-size: 12px;">Use 'Ctrl + Left Click' to select multiple image files for upload.</span>
+                <span style="color: Red; font-size: 12px;">Use 'Ctrl + Left Click' to select multiple PDF or Image files for upload.</span>
             </div>
             <div id="warrantyDetails" style="zoom: 85%; height: 165px; margin-top: -165px; margin-left: 990px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">

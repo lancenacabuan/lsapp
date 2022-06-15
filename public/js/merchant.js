@@ -38,7 +38,7 @@ function copyReqNum(){
 }
 
 function validate_fileupload(reference_upload){
-    $('.upload_label').html('Upload Image File/s less than 5MB each');
+    $('.upload_label').html('Upload PDF or Image less than 5MB each');
     var files_length = $("#reference_upload").get(0).files.length;
     var error_ext = 0;
     var error_mb = 0;
@@ -89,7 +89,7 @@ function validate_fileupload(reference_upload){
             $('#btnAttach').css("width", "250px");
         }
         else{
-            $('.upload_label').html('Upload Image File/s less than 5MB each');
+            $('.upload_label').html('Upload PDF or Image less than 5MB each');
             $('.disupload').hide();
             $('#btnAttach').css("width", "280px");
         }
@@ -343,7 +343,7 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
 
 $(document).on('click', '.disupload', function(){
     $('#reference_upload').val('');
-    $('.upload_label').html('Upload Image File/s less than 5MB each');
+    $('.upload_label').html('Upload PDF or Image less than 5MB each');
     $('.disupload').hide();
     $('#btnAttach').css("width", "280px");
 });

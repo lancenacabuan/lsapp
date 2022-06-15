@@ -68,7 +68,7 @@ function sweet(title, text, icon, btnName, url){
 }
 
 function validate_fileupload(reference_upload){
-    $('.upload_label').html('Upload Image File/s less than 5MB each');
+    $('.upload_label').html('Upload PDF or Image less than 5MB each');
     var files_length = $("#reference_upload").get(0).files.length;
     var error_ext = 0;
     var error_mb = 0;
@@ -132,7 +132,7 @@ function validate_fileupload(reference_upload){
             }
         }
         else{
-            $('.upload_label').html('Upload Image File/s less than 5MB each');
+            $('.upload_label').html('Upload PDF or Image less than 5MB each');
             $('.disupload').hide();
             $('.disupload1').hide();
             $('#xbtn_upload').css("width", "100%");
@@ -310,7 +310,7 @@ $('#request_type').on('change', function(){
     var reqtype = $(this).val();
     $('#reference').val('');
     $('#reference_upload').val('');
-    $('.upload_label').html('Upload Image File/s less than 5MB each');
+    $('.upload_label').html('Upload PDF or Image less than 5MB each');
     $('.disupload').hide();
     if(reqtype == '2'){
         $('.reference_field').show();
@@ -738,13 +738,13 @@ $(document).on('click', '#btnSaveChanges', function(){
 
 $(document).on('click', '.disupload', function(){
     $('#reference_upload').val('');
-    $('.upload_label').html('Upload Image File/s less than 5MB each');
+    $('.upload_label').html('Upload PDF or Image less than 5MB each');
     $('.disupload').hide();
 });
 
 $(document).on('click', '.disupload1', function(){
     $('#reference_upload').val('');
-    $('.upload_label').html('Upload Image File/s less than 5MB each');
+    $('.upload_label').html('Upload PDF or Image less than 5MB each');
     $('.disupload1').hide();
     $('#xbtn_upload').css("width", "100%");
 });

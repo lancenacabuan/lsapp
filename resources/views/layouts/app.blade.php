@@ -250,9 +250,11 @@
             Please DO NOT interrupt or cancel this process.
         </strong>
     </div>
-    @if (!Auth::guest())
+    @if(!Auth::guest())
         @include('inc.header')
         @include('inc.navbar')
+    @else
+        @include('inc.guest')
     @endif
     <div id="app" class="container-fluid">
         <main class="py-3">

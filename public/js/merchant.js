@@ -406,6 +406,7 @@ $('#btnSave').on('click', function(){
                                 });
                             });
                             $('#newMerchRequest').modal('hide');
+                            $('#loading').show(); Spinner(); Spinner.show();
                             $('#btnUpload').click();
                         }
                         else if(data == 'duplicate'){

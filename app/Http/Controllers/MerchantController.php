@@ -148,17 +148,38 @@ class MerchantController extends Controller
             array_push($reference_upload, $filename);
             $x++;
         }
+
+        Requests::where('request_number', $request->reqnum)
+            ->update(['reference_upload' => $reference_upload]);
+
         for($i=0; $i < count($reference_upload); $i++){
             $request->reference_upload[$i]->move(public_path('/uploads'), $reference_upload[$i]);
-            if(str_contains($reference_upload[$i], '.pdf') == true){
-                $pdf = new Pdf(public_path('/uploads'), $reference_upload[$i]);
-                for($a=0; $a < $pdf->getNumberOfPages(); $a++){
+        }
+
+        $reference_delete = array();
+        for($c=0; $c < count($reference_upload); $c++){
+            if(str_contains($reference_upload[$c], '.pdf') == true){
+                $pdf = new Pdf(public_path('uploads/'.$reference_upload[$c]));
+                $pdfcount = $pdf->getNumberOfPages();
+                $datetime = Carbon::now()->isoformat('YYYYMMDDHHmmss');
+                for($a=1; $a < $pdfcount+1; $a++){
+                    $filename = $datetime.'_'.$request->reqnum.'-'.$a.'.png';
                     $pdf->setPage($a)
-                        ->setOutputFormat('jpg')
-                        ->saveImage(public_path('/uploads'), $reference_upload[$i].'-'.$a);
+                        ->setOutputFormat('png')
+                        ->saveImage(public_path('uploads/'.$filename));
+                    array_push($reference_upload, $filename);
                 }
+                unlink(public_path('uploads/'.$reference_upload[$c]));
+                array_push($reference_delete, $reference_upload[$c]);
             }
         }
+        $reference_upload = json_encode($reference_upload);
+        for($d=0; $d < count($reference_delete); $d++){
+            $reference_upload = str_replace('"'.$reference_delete[$d].'",', "", $reference_upload);
+            $reference_upload = str_replace('"'.$reference_delete[$d].'"', "", $reference_upload);
+            $reference_upload = str_replace($reference_delete[$d], "", $reference_upload);
+        }
+
 
         Requests::where('request_number', $request->reqnum)
             ->update(['reference_upload' => $reference_upload]);

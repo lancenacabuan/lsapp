@@ -154,38 +154,79 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#backBtn').hide();
     $('#stocksHeader').html(decodeHtml(trdata.Item));
     $('#loading').show(); Spinner(); Spinner.show();
-    ItemSerialTable = 
-        $('table.ItemSerialTable').DataTable({
-            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
-            serverSide: true,
-            ajax:{
-                url: '/itemserial_data',
-                data:{
-                    ItemId: trdata.id
-                }
-            },
-            columnDefs: [
-                {
-                    "targets": [0,1],
-                    "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
+    if(trdata.serialize == 'YES'){
+        ItemSerialTable = 
+            $('table.ItemSerialTable').DataTable({
+                aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+                serverSide: true,
+                ajax:{
+                    url: '/itemserial_data',
+                    data:{
+                        ItemId: trdata.id
+                    }
                 },
-            ],
-            columns: [
-                { data: 'addDate', width: '12%' },
-                { data: 'modDate', width: '12%' },
-                { data: 'name' },
-                { data: 'qty', width: '5%' },
-                { data: 'UOM', width: '7%' },
-                { data: 'serial' },
-                { data: 'location' },
-                { data: 'rack', width: '8%' },
-                { data: 'row', width: '8%' }
-            ],
-            order: [],
-            initComplete: function(){
-                return notifyDeadline();
-            }
-        });
+                columnDefs: [
+                    {
+                        "targets": [0,1],
+                        "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
+                    },
+                ],
+                columns: [
+                    { data: 'addDate', width: '12%' },
+                    { data: 'modDate', width: '12%' },
+                    { data: 'name' },
+                    { data: 'qty', width: '5%' },
+                    { data: 'UOM', width: '7%' },
+                    { data: 'serial' },
+                    { data: 'location' },
+                    { data: 'rack', width: '8%' },
+                    { data: 'row', width: '8%' }
+                ],
+                order: [],
+                initComplete: function(){
+                    return notifyDeadline();
+                }
+            });
+    }
+    else{
+        ItemSerialTable = 
+            $('table.ItemSerialTable').DataTable({
+                aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+                serverSide: true,
+                ajax:{
+                    url: '/itemserial_data',
+                    data:{
+                        ItemId: trdata.id
+                    }
+                },
+                columnDefs: [
+                    {
+                        "targets": [0,1],
+                        "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
+                    },
+                    {
+                        "targets": [5],
+                        "visible": false,
+                        "searchable": false
+                    },
+                ],
+                columns: [
+                    { data: 'addDate', width: '12%' },
+                    { data: 'modDate', width: '12%' },
+                    { data: 'name' },
+                    { data: 'qty', width: '5%' },
+                    { data: 'UOM', width: '7%' },
+                    { data: 'serial' },
+                    { data: 'location' },
+                    { data: 'rack', width: '8%' },
+                    { data: 'row', width: '8%' }
+                ],
+                order: [],
+                initComplete: function(){
+                    return notifyDeadline();
+                }
+            });
+    }
 });
 
 $(document).on('click', '#ItemSerialTable tbody tr', function(){

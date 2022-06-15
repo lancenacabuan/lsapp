@@ -148,7 +148,7 @@ class StocksController extends Controller
             'items.id',
             DB::raw
             (
-                'items.item as Item, items.prodcode as ProdCode'
+                'items.item as Item, items.prodcode as ProdCode, serialize'
             )
         )
         ->where('items.category_id', $request->CategoryId)

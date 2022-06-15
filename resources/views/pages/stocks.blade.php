@@ -1,96 +1,94 @@
 @extends('layouts.app')
 @section('content')
-<div class="container-fluid">
-    <div class="text-center" style="margin-bottom: -35px;">
-        <input class="text-control spChar" style="zoom: 90%; width: 220px;" id="z_serial" type="search" placeholder="   SEARCH SERIAL NUMBER" autocomplete="off"/>
+<div class="text-center" style="margin-bottom: -35px;">
+    <input class="text-control spChar" style="zoom: 90%; width: 220px;" id="z_serial" type="search" placeholder="   SEARCH SERIAL NUMBER" autocomplete="off"/>
+</div>
+<button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
+<button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
+@role('admin|encoder') {{---ROLES---}}
+<button class="btn btn-primary bp mb-2" style="float: right;" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
+<button class="btn btn-primary bp mb-2 mr-2" style="float: right;" type="button" id="btnImport">IMPORT</button>
+@endrole
+@role('viewer') {{---ROLES---}}
+<button class="btn btn-primary bp float-right mb-2 d-none" type="button">&nbsp</button>
+@endrole
+<br><br><br><br>
+<a href="/stocks">
+    <div id="stocksHeader" class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
+        WAREHOUSE STOCKS
     </div>
-    <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
-    <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
-    @role('admin|encoder') {{---ROLES---}}
-    <button class="btn btn-primary bp mb-2" style="float: right;" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
-    <button class="btn btn-primary bp mb-2 mr-2" style="float: right;" type="button" id="btnImport">IMPORT</button>
-    @endrole
-    @role('viewer') {{---ROLES---}}
-    <button class="btn btn-primary bp float-right mb-2 d-none" type="button">&nbsp</button>
-    @endrole
-    <br><br><br><br>
-    <a href="/stocks">
-        <div id="stocksHeader" class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
-            WAREHOUSE STOCKS
-        </div>
-    </a>
-    <div id="CategoryTableDiv">
-        <table id="CategoryTable" class="table-hover table CategoryTable display" style="zoom: 85%; width: 100%; cursor: pointer;">
-            <thead style="background-color: #0d1a80; color: white;">                            
-                <tr>
-                    <th>CATEGORY</th>
-                    <th>DEFECTIVE</th>
-                    <th>DEMO</th>
-                    <th>ASSEMBLY</th>
-                    <th>A1</th>
-                    <th>A2</th>
-                    <th>A3</th>
-                    <th>A4</th>
-                    <th>BALINTAWAK</th> 
-                    <th>MALABON</th>
-                    <th>TOTAL STOCKS</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div id="ItemTableDiv" style="display: none;">
-        <table id="ItemTable" class="table-hover table ItemTable display" style="zoom: 80%; width: 100%; cursor: pointer;">
-            <thead style="background-color: #0d1a80; color: white;">                            
-                <tr>
-                    <th>ITEM CODE</th>
-                    <th>ITEM DESCRIPTION</th>
-                    <th>DEFECTIVE</th>
-                    <th>DEMO</th>
-                    <th>ASSEMBLY</th>
-                    <th>A1</th>
-                    <th>A2</th>
-                    <th>A3</th>
-                    <th>A4</th>
-                    <th>BALINTAWAK</th> 
-                    <th>MALABON</th>
-                    <th>TOTAL STOCKS</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div id="ItemSerialTableDiv" style="display: none;">
-        <table id="ItemSerialTable" class="table-hover table ItemSerialTable display" style="zoom: 80%; width: 100%; cursor: pointer;">
-            <thead style="background-color: #0d1a80; color: white;">                            
-                <tr>
-                    <th>DATE ADDED</th>
-                    <th>DATE MODIFIED</th>
-                    <th>RESPONSIBLE USER</th>
-                    <th>QTY</th>
-                    <th>UOM</th>
-                    <th>SERIAL</th>
-                    <th>LOCATION</th>
-                    <th>RACK NO.</th>
-                    <th>ROW NO.</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div id="SerialTableDiv" style="display: none;">
-        <table id="SerialTable" class="table-hover table SerialTable display" style="zoom: 80%; width: 100%; cursor: pointer;">
-            <thead style="background-color: #0d1a80; color: white;">                            
-                <tr>
-                    <th>DATE ADDED</th>
-                    <th>DATE MODIFIED</th>
-                    <th>RESPONSIBLE USER</th>
-                    <th>CATEGORY</th>
-                    <th>ITEM CODE</th>
-                    <th>ITEM DESCRIPTION</th>
-                    <th>SERIAL</th>
-                    <th>LOCATION</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
+</a>
+<div id="CategoryTableDiv">
+    <table id="CategoryTable" class="table-hover table CategoryTable display" style="zoom: 85%; width: 100%; cursor: pointer;">
+        <thead style="background-color: #0d1a80; color: white;">                            
+            <tr>
+                <th>CATEGORY</th>
+                <th>DEFECTIVE</th>
+                <th>DEMO</th>
+                <th>ASSEMBLY</th>
+                <th>A1</th>
+                <th>A2</th>
+                <th>A3</th>
+                <th>A4</th>
+                <th>BALINTAWAK</th> 
+                <th>MALABON</th>
+                <th>TOTAL STOCKS</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div id="ItemTableDiv" style="display: none;">
+    <table id="ItemTable" class="table-hover table ItemTable display" style="zoom: 80%; width: 100%; cursor: pointer;">
+        <thead style="background-color: #0d1a80; color: white;">                            
+            <tr>
+                <th>ITEM CODE</th>
+                <th>ITEM DESCRIPTION</th>
+                <th>DEFECTIVE</th>
+                <th>DEMO</th>
+                <th>ASSEMBLY</th>
+                <th>A1</th>
+                <th>A2</th>
+                <th>A3</th>
+                <th>A4</th>
+                <th>BALINTAWAK</th> 
+                <th>MALABON</th>
+                <th>TOTAL STOCKS</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div id="ItemSerialTableDiv" style="display: none;">
+    <table id="ItemSerialTable" class="table-hover table ItemSerialTable display" style="zoom: 80%; width: 100%; cursor: pointer;">
+        <thead style="background-color: #0d1a80; color: white;">                            
+            <tr>
+                <th>DATE ADDED</th>
+                <th>DATE MODIFIED</th>
+                <th>RESPONSIBLE USER</th>
+                <th>QTY</th>
+                <th>UOM</th>
+                <th>SERIAL</th>
+                <th>LOCATION</th>
+                <th>RACK NO.</th>
+                <th>ROW NO.</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div id="SerialTableDiv" style="display: none;">
+    <table id="SerialTable" class="table-hover table SerialTable display" style="zoom: 80%; width: 100%; cursor: pointer;">
+        <thead style="background-color: #0d1a80; color: white;">                            
+            <tr>
+                <th>DATE ADDED</th>
+                <th>DATE MODIFIED</th>
+                <th>RESPONSIBLE USER</th>
+                <th>CATEGORY</th>
+                <th>ITEM CODE</th>
+                <th>ITEM DESCRIPTION</th>
+                <th>SERIAL</th>
+                <th>LOCATION</th>
+            </tr>
+        </thead>
+    </table>
 </div>
 <div class="modal fade in" id="editSerialModal">
     <div class="modal-dialog modal-dialog-centered modal-sm">

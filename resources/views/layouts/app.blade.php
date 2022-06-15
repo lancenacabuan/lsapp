@@ -255,7 +255,7 @@
         @include('inc.navbar')
     @endif
     <div id="app" class="container-fluid">
-        <main class="py-4">
+        <main class="py-3">
             @yield('content')
         </main>
     </div>

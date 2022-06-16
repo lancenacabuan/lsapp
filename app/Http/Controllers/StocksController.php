@@ -321,8 +321,8 @@ class StocksController extends Controller
                 ->join('users', 'users.id', 'user_id')
                 ->orderBy('modDate', 'DESC')
                 ->orderBy('addDate', 'ASC')
+                ->orderBy('name', 'ASC')
                 ->orderBy('item', 'ASC')
-
                 ->get();
             
             return DataTables::of($stock)->make(true);

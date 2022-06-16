@@ -116,8 +116,8 @@
             margin-right: 2px;
         }
         .nav-item>a:hover {
-            background-color: white;
-            color:#0d6efd !important;
+            background-color: #0d6efd;
+            color:white !important;
             border:0px;
         }
         .active {

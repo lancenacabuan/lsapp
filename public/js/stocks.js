@@ -172,8 +172,8 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                     },
                 ],
                 columns: [
-                    { data: 'addDate', width: '12%' },
-                    { data: 'modDate', width: '12%' },
+                    { data: 'addDate', width: '14%' },
+                    { data: 'modDate', width: '14%' },
                     { data: 'name' },
                     { data: 'qty', width: '5%' },
                     { data: 'UOM', width: '7%' },
@@ -211,8 +211,8 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                     },
                 ],
                 columns: [
-                    { data: 'addDate', width: '12%' },
-                    { data: 'modDate', width: '12%' },
+                    { data: 'addDate', width: '14%' },
+                    { data: 'modDate', width: '14%' },
                     { data: 'name' },
                     { data: 'qty', width: '5%' },
                     { data: 'UOM', width: '7%' },
@@ -293,8 +293,8 @@ $('#z_serial').on('keyup', function(){
                     },
                 ],
                 columns: [
-                    { data: 'addDate', width: '12%' },
-                    { data: 'modDate', width: '12%' },
+                    { data: 'addDate', width: '14%' },
+                    { data: 'modDate', width: '14%' },
                     { data: 'name', width: '12%' },
                     { data: 'category', width: '12%' },
                     { data: 'prodcode', width: '14%' },

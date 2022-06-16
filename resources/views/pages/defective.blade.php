@@ -12,13 +12,13 @@
             </td>
         </tr>
         <tr>
-            <th style="width: 150px;">DATE ADDED</th>
+            <th style="width: 12%;">DATE ADDED</th>
             <th>ADDED BY</th>
-            <th style="width: 150px;">RETURN NUMBER</th>
+            <th style="width: 11%;">RETURN NUMBER</th>
             <th>CATEGORY</th>
             <th>ITEM DESCRIPTION</th>
-            <th>SERIAL NUMBER</th>
-            <th style="width: 150px;">STATUS</th>
+            <th style="width: 14%;">SERIAL NUMBER</th>
+            <th style="width: 10%;">STATUS</th>
         </tr>
     </thead>
 </table>

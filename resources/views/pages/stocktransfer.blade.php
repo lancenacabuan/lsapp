@@ -16,13 +16,13 @@
             </td>
         </tr>
         <tr>
-            <th style="width: 150px;">DATE REQUESTED</th>
-            <th style="width: 150px;">DATE NEEDED</th>
-            <th style="width: 150px;">REQUEST NUMBER</th>
+            <th>DATE REQUESTED</th>
+            <th>DATE NEEDED</th>
+            <th>REQUEST NUMBER</th>
             <th>REQUESTED BY</th>
-            <th style="width: 180px;">FROM LOCATION</th>
-            <th style="width: 180px;">TO NEW LOCATION</th>
-            <th style="width: 250px;">STATUS</th>
+            <th>FROM LOCATION</th>
+            <th>TO NEW LOCATION</th>
+            <th>STATUS</th>
         </tr>
     </thead>
 </table>

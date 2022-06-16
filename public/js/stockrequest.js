@@ -3539,6 +3539,10 @@ $('#btnEdit').on('click', function(){
         swal("NO CHANGES FOUND", "Item Serial is still the same!", "error");
         return false;
     }
+    if(!newserial || newserial == ''){
+        swal("SERIAL REQUIRED", "Item Serial field cannot be left blank!", "error");
+        return false;
+    }
     if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(newserial) == true){
         swal('INVALID ENTRY','Please enter only valid information!','error');
         return false;
@@ -3546,9 +3550,6 @@ $('#btnEdit').on('click', function(){
     if(!newserial.match(/\d+/g) && newserial){
         swal("INVALID ENTRY", "Item Serial should at least contain numeric characters!", "error");
         return false;
-    }
-    if(newserial == ''){
-        newserial = 'N/A';
     }
     swal({
         title: "Confirm Serial: "+newserial+'?',

@@ -16,12 +16,12 @@
             </td>
         </tr>
         <tr>
-            <th style="width: 150px;">DATE REQUESTED</th>
-            <th style="width: 150px;">DATE NEEDED</th>
-            <th style="width: 150px;">REQUEST NUMBER</th>
-            <th style="width: 250px;">REQUESTED BY</th>
-            <th style="width: 150px;">ORDER ID</th>
-            <th style="width: 200px;">STATUS</th>
+            <th style="width: 16%;">DATE REQUESTED</th>
+            <th style="width: 16%;">DATE NEEDED</th>
+            <th style="width: 14%">REQUEST NUMBER</th>
+            <th>REQUESTED BY</th>
+            <th style="width: 14%">ORDER ID</th>
+            <th style="width: 18%">STATUS</th>
         </tr>
     </thead>
 </table>

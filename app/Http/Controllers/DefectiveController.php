@@ -50,6 +50,8 @@ class DefectiveController extends Controller
             ->whereIn('stocks.status', ['defectives','FOR RECEIVING'])
             ->orderBy('defectiveDate', 'ASC')
             ->orderBy('name', 'ASC')
+            ->orderBy('category', 'ASC')
+            ->orderBy('item', 'ASC')
             ->get();
         
         return DataTables::of($data)->make(true);

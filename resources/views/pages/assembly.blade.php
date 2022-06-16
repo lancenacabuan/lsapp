@@ -16,13 +16,13 @@
             </td>
         </tr>
         <tr>
-            <th style="width: 150px;">DATE REQUESTED</th>
-            <th style="width: 150px;">DATE NEEDED</th>
-            <th style="width: 150px;">REQUEST NUMBER</th>
-            <th style="width: 150px;">REQUEST TYPE</th>
+            <th style="width: 14%;">DATE REQUESTED</th>
+            <th style="width: 14%;">DATE NEEDED</th>
+            <th style="width: 12%;">REQUEST NUMBER</th>
+            <th style="width: 10%;">REQUEST TYPE</th>
             <th>ITEM DESCRIPTION</th>
-            <th style="width: 150px;">QUANTITY</th>
-            <th style="width: 200px;">STATUS</th>
+            <th style="width: 8%;">QUANTITY</th>
+            <th style="width: 18%;">STATUS</th>
         </tr>
     </thead>
 </table>

@@ -81,8 +81,6 @@
                 <th>DATE ADDED</th>
                 <th>DATE MODIFIED</th>
                 <th>RESPONSIBLE USER</th>
-                <th>CATEGORY</th>
-                <th>ITEM CODE</th>
                 <th>ITEM DESCRIPTION</th>
                 <th>SERIAL</th>
                 <th>LOCATION</th>

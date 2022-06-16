@@ -295,12 +295,10 @@ $('#z_serial').on('keyup', function(){
                 columns: [
                     { data: 'addDate', width: '14%' },
                     { data: 'modDate', width: '14%' },
-                    { data: 'name', width: '12%' },
-                    { data: 'category', width: '12%' },
-                    { data: 'prodcode', width: '14%' },
+                    { data: 'name', width: '14%' },
                     { data: 'item' },
-                    { data: 'serial', width: '11%' },
-                    { data: 'location', width: '12%' }
+                    { data: 'serial', width: '14%' },
+                    { data: 'location', width: '14%' }
                 ],
                 order: [],
                 initComplete: function(){

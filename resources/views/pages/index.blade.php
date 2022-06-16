@@ -46,8 +46,8 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
     </div>
     <div class="col-sm-2"></div>
 </div>
-<table id="user_logs" class="table user_logs display" style="width: 100%; font-size: 12px;">
-    <thead style="background-color: #0d1a80; color: white; font-size: 14px;">
+<table id="user_logs" class="table user_logs display" style="width: 100%;">
+    <thead style="background-color: #0d1a80; color: white;">
         <tr>
             <td colspan="4">
                 <a href="/">

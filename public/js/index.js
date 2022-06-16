@@ -16,8 +16,8 @@ var table = $('table.user_logs').DataTable({
     ],
     columns: [
         { data: 'date', width: '15%' },
-        { data: 'username', width: '15%' },
-        { data: 'role', width: '15%' },
+        { data: 'username', width: '17%' },
+        { data: 'role', width: '16%' },
         { data: 'activity' }
     ],
     order: [],

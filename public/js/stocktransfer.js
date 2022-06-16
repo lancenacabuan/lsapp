@@ -479,7 +479,7 @@ $('table.stocktransferTable').DataTable({
         }
     ],
     columns: [
-        { data: 'reqdate', width: '12%' },
+        { data: 'reqdate' },
         {
             data: 'needdate',
             "render": function(data, type, row){
@@ -500,12 +500,12 @@ $('table.stocktransferTable').DataTable({
                         return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
                     }
                 }
-            }, width: '12%'
+            }
         },
-        { data: 'req_num', width: '12%' },
+        { data: 'req_num' },
         { data: 'req_by' },
-        { data: 'location_from', width: '14%' },
-        { data: 'location_to', width: '14%' },
+        { data: 'location_from' },
+        { data: 'location_to' },
         {
             data: 'status',
             "render": function(data, type, row){
@@ -527,7 +527,7 @@ $('table.stocktransferTable').DataTable({
                 else{
                     return "<span style='color: Gray; font-weight: bold;'>"+row.status+"</span>";
                 }
-            }, width: '18%'
+            }
         }
     ],
     order: [],

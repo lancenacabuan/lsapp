@@ -16,14 +16,14 @@
             </td>
         </tr>
         <tr>
-            <th style="width: 150px;">DATE REQUESTED</th>
-            <th style="width: 150px;">DATE NEEDED</th>
+            <th style="width: 11%;">DATE REQUESTED</th>
+            <th style="width: 11%;">DATE NEEDED</th>
             <th>CLIENT / REQNUM</th>
             <th>ADDRESS / BRANCH</th>
             <th>SO/PO NO. / ORDER ID</th>
             <th>REQUESTED BY</th>
             <th>REQUEST TYPE</th>
-            <th style="width: 200px;">STATUS</th>
+            <th style="width: 15%;">STATUS</th>
             <th class="d-none">REQUEST NUMBER</th>
         </tr>
     </thead>

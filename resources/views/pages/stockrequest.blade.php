@@ -20,9 +20,9 @@
             <th style="width: 11%;">DATE NEEDED</th>
             <th>CLIENT / REQNUM</th>
             <th>ADDRESS / BRANCH</th>
-            <th>SO/PO NO. / ORDER ID</th>
+            <th style="width: 12%;">SO/PO NO. / ORDER ID</th>
             <th>REQUESTED BY</th>
-            <th>REQUEST TYPE</th>
+            <th style="width: 9%;">REQUEST TYPE</th>
             <th style="width: 15%;">STATUS</th>
             <th class="d-none">REQUEST NUMBER</th>
         </tr>

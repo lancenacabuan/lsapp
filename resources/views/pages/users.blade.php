@@ -35,7 +35,7 @@
             <th>EMAIL</th>
             <th>COMPANY</th>
             <th>USER LEVEL</th>
-            <th>STATUS</th>
+            <th style="width: 120px;">STATUS</th>
         </tr>
     </thead>
 </table>

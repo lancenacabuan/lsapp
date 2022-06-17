@@ -34,7 +34,7 @@
                 <span class="px-2">REPORT A PROBLEM</span>
             </button>
             <ul class="navbar-nav mr-right">
-                <a class="nav-link" style="color: white; font-size: 16px; cursor: pointer;" onclick="$('#logout-form').submit();">
+                <a class="nav-link out" style="color: white; font-size: 16px; cursor: pointer;" onclick="$('#logout-form').submit();">
                     <b>LOGOUT</b>&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i>
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

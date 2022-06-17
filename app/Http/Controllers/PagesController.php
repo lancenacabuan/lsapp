@@ -56,12 +56,13 @@ class PagesController extends Controller
 
     public function index_data(){
         $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
-        UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date')
-        ->join('users', 'users.id', '=', 'user_id')
-        ->join('model_has_roles', 'model_id', '=', 'users.id')
-        ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
-        ->orderBy('user_logs.id', 'DESC')
-        ->get();
+        UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date, 
+        DATE_FORMAT(user_logs.created_at, "%b. %d, %Y, %h:%i %p") AS datetime')
+            ->join('users', 'users.id', '=', 'user_id')
+            ->join('model_has_roles', 'model_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->orderBy('user_logs.id', 'DESC')
+            ->get();
 
         return DataTables::of($list)->make(true);
     }

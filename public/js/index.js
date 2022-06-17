@@ -10,10 +10,16 @@ var table = $('table.user_logs').DataTable({
     columnDefs: [
         {
             "targets": [0],
+            "visible": false,
+            "searchable": true
+        },
+        {
+            "targets": [1],
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
         },
     ],
     columns: [
+        { data: 'datetime' },
         { data: 'date' },
         { data: 'username' },
         { data: 'role' },
@@ -26,9 +32,19 @@ var table = $('table.user_logs').DataTable({
 });
 
 $('.filter-input').on('keyup', function(){
-    table.column($(this).data('column'))
-        .search($(this).val())
-        .draw();
+    table.column($(this).data('column')).search($(this).val()).draw();
+});
+
+document.querySelectorAll('input[type=search]').forEach(function(input){
+    input.addEventListener('mouseup', function(e){
+        if(input.value.length > 0){
+            setTimeout(function(){
+                if(input.value.length === 0){
+                    $('.filter-input').keyup();
+                }
+            }, 0);
+        }
+    });
 });
 
 var logs;
@@ -42,7 +58,7 @@ setInterval(function(){
             }
         }
     });
-}, 3000);
+}, 1000);
 
 $(document).ready(function(){
     $('#hover1').hover(

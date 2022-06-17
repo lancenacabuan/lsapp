@@ -681,8 +681,7 @@ $(document).on('click', '#btnSaveChanges', function(){
     .then((willDelete) => {
         if(willDelete){
             scrollReset();
-            $('#detailsStockRequest').hide();
-            $('#detailsStockRequest').modal('dispose');
+            $('#detailsStockRequest').modal('hide');
             $('#loading').show(); Spinner(); Spinner.show();
             $.ajax({
                 type:'post',
@@ -3560,8 +3559,7 @@ $('#btnEdit').on('click', function(){
     .then((willDelete) => {
         if(willDelete){
             scrollReset();
-            $('#editSerialModal').hide();
-            $('#editSerialModal').modal('dispose');
+            $('#editSerialModal').modal('hide');
             $('#loading').show(); Spinner(); Spinner.show();
             $.ajax({
                 type:'post',
@@ -3719,8 +3717,7 @@ $('#btnApprove').on('click', function(){
                 success: function(data){
                     if(data == 'true'){
                         scrollReset();
-                        $('#detailsStockRequest').hide();
-                        $('#detailsStockRequest').modal('dispose');
+                        $('#detailsStockRequest').modal('hide');
                         $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
                             type:'post',
@@ -3803,10 +3800,8 @@ $('#btnReason').on('click', function(){
                     success: function(data){
                         if(data == 'true'){
                             scrollReset();
-                            $('#reasonModal').hide();
-                            $('#reasonModal').modal('dispose');
-                            $('#detailsStockRequest').hide();
-                            $('#detailsStockRequest').modal('dispose');
+                            $('#reasonModal').modal('hide');
+                            $('#detailsStockRequest').modal('hide');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 type:'post',
@@ -4869,8 +4864,7 @@ $('.btnReceive').on('click', function(){
                             });
                         }
                         scrollReset();
-                        $('#detailsStockRequest').hide();
-                        $('#detailsStockRequest').modal('dispose');
+                        $('#detailsStockRequest').modal('hide');
                         $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
                             type: 'post',
@@ -4975,8 +4969,7 @@ $('#btnReceiveDfc').on('click', function(){
                             });
                         }
                         scrollReset();
-                        $('#detailsStockRequest').hide();
-                        $('#detailsStockRequest').modal('dispose');
+                        $('#detailsStockRequest').modal('hide');
                         $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
                             type: 'post',
@@ -5169,8 +5162,7 @@ $('#btnReturn').on('click', function(){
                             });
                         }
                         scrollReset();
-                        $('#detailsStockRequest').hide();
-                        $('#detailsStockRequest').modal('dispose');
+                        $('#detailsStockRequest').modal('hide');
                         $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
                             type:'post',

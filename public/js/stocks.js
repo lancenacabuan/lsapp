@@ -400,8 +400,7 @@ $('#btnEdit').on('click', function(){
     .then((willDelete) => {
         if(willDelete){
             scrollReset();
-            $('#editSerialModal').hide();
-            $('#editSerialModal').modal('dispose');
+            $('#editSerialModal').modal('hide');
             $('#loading').show(); Spinner(); Spinner.show();
             $.ajax({
                 type:'post',

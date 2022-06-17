@@ -107,8 +107,6 @@ $(document).on('click', '.btnReturnItem', function(){
     })
     .then((willDelete) => {
         if(willDelete){
-            $('#editSerialModal').hide();
-            $('#editSerialModal').modal('dispose');
             $.ajax({
                 url: '/defective/return',
                 data:{

@@ -400,8 +400,7 @@ $('#btnSave').on('click', function(){
                                 });
                             });
                             scrollReset();
-                            $('#newStockTransfer').hide();
-                            $('#newStockTransfer').modal('dispose');
+                            $('#newStockTransfer').modal('hide');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 type:'post',
@@ -1327,8 +1326,7 @@ $('#btnEdit').on('click', function(){
     .then((willDelete) => {
         if(willDelete){
             scrollReset();
-            $('#editSerialModal').hide();
-            $('#editSerialModal').modal('dispose');
+            $('#editSerialModal').modal('hide');
             $('#loading').show(); Spinner(); Spinner.show();
             $.ajax({
                 type:'post',
@@ -1542,10 +1540,8 @@ $('#btnReason').on('click', function(){
                     success: function(data){
                         if(data == 'true'){
                             scrollReset();
-                            $('#reasonModal').hide();
-                            $('#reasonModal').modal('dispose');
-                            $('#detailsStockTransfer').hide();
-                            $('#detailsStockTransfer').modal('dispose');
+                            $('#reasonModal').modal('hide');
+                            $('#detailsStockTransfer').modal('hide');
                             $('#loading').show(); Spinner(); Spinner.show();
                             $.ajax({
                                 type:'post',
@@ -2152,8 +2148,7 @@ $('.btnReceive').on('click', function(){
                             });
                         }
                         scrollReset();
-                        $('#detailsStockTransfer').hide();
-                        $('#detailsStockTransfer').modal('dispose');
+                        $('#detailsStockTransfer').modal('hide');
                         $('#loading').show(); Spinner(); Spinner.show();
                         $.ajax({
                             type: 'post',

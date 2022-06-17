@@ -14,7 +14,7 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
             <div class="box1 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                 {{number_format($stocks)}}   
             </div>
-            <strong class="text1" style="color: #0d1a80; font-size: 20px;">STOCKS</strong>
+            <strong class="text1" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">STOCKS</strong>
         </a>
     </div>
     <div class="col-sm-2">
@@ -23,7 +23,7 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
             <div class="box2 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                 {{number_format($stockrequest)}}
             </div>
-            <strong class="text2" style="color: #0d1a80; font-size: 20px;">STOCK REQUEST</strong>
+            <strong class="text2" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">STOCK REQUEST</strong>
         </a>
     </div>
     <div class="col-sm-2">
@@ -32,7 +32,7 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
             <div class="box3 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                 {{number_format($stocktransfer)}}
             </div>
-            <strong class="text3" style="color: #0d1a80; font-size: 20px;">STOCK TRANSFER</strong>
+            <strong class="text3" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">STOCK TRANSFER</strong>
         </a>
     </div>
     <div class="col-sm-2">
@@ -41,7 +41,7 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
             <div class="box4 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                 {{number_format($defective)}}
             </div>
-            <strong class="text4" style="color: #0d1a80; font-size: 20px;">DEFECTIVE</strong>
+            <strong class="text4" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">DEFECTIVE</strong>
         </a>
     </div>
     <div class="col-sm-2"></div>

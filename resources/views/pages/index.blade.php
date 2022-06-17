@@ -72,9 +72,9 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
             </td>
         </tr>
         <tr>
-            <th>DATE & TIME</th>
-            <th>FULLNAME</th>
-            <th>USER LEVEL</th>
+            <th style="width: 15%;">DATE & TIME</th>
+            <th style="width: 17%;">FULLNAME</th>
+            <th style="width: 15%;">USER LEVEL</th>
             <th>ACTIVITY</th>
         </tr>
     </thead>

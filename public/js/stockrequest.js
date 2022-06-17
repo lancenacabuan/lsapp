@@ -772,7 +772,6 @@ $('.btnClose').on('click', function(){
 });
 
 $('table.stockrequestTable').dataTable().fnDestroy();
-$('#loading').show(); Spinner(); Spinner.show();
 if($("#current_role").val() == 'sales'){
     $('table.stockrequestTable').DataTable({
         aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],

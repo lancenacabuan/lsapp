@@ -1,5 +1,4 @@
 $('table.defectiveTable').dataTable().fnDestroy();
-$('#loading').show(); Spinner(); Spinner.show();
 $('table.defectiveTable').DataTable({
     aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
     language:{

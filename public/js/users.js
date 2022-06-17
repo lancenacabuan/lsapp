@@ -1,5 +1,4 @@
 $('table.userTable').dataTable().fnDestroy();
-$('#loading').show(); Spinner(); Spinner.show();
 var table = $('table.userTable').DataTable({
     aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
     language:{

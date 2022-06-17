@@ -1,4 +1,3 @@
-$('#loading').show(); Spinner(); Spinner.show();
 var table = $('table.user_logs').DataTable({
     language:{
         processing: "Loading...",
@@ -15,9 +14,9 @@ var table = $('table.user_logs').DataTable({
         },
     ],
     columns: [
-        { data: 'date', width: '15%' },
-        { data: 'username', width: '17%' },
-        { data: 'role', width: '15%' },
+        { data: 'date' },
+        { data: 'username' },
+        { data: 'role' },
         { data: 'activity' }
     ],
     order: [],

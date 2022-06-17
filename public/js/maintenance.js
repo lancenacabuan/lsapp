@@ -3,7 +3,6 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
     $('#nav1').addClass("active-link");
     $('.btnNewItem').show();
     $('#itemTable').show();
-    $('#loading').show(); Spinner(); Spinner.show();
     tblItem = $('table.itemTable').DataTable({
         dom: 'Blftrip',
         buttons: ['excel'],
@@ -33,7 +32,6 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('#nav2').addClass("active-link");
     $('.btnCreateItem').show();
     $('#assemblyitemTable').show();
-    $('#loading').show(); Spinner(); Spinner.show();
     tblAssembly = $('table.assemblyitemTable').DataTable({
         dom: 'Blftrip',
         buttons: ['excel'],
@@ -60,7 +58,6 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('#nav3').addClass("active-link");
     $('.btnNewCategory').show();
     $('#categoryTable').show();
-    $('#loading').show(); Spinner(); Spinner.show();
     tblCategory = $('table.categoryTable').DataTable({
         aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
         language:{
@@ -84,7 +81,6 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('#nav4').addClass("active-link");
     $('.btnNewLocation').show();
     $('#locationTable').show();
-    $('#loading').show(); Spinner(); Spinner.show();
     tblLocation = $('table.locationTable').DataTable({
         aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
         language:{
@@ -125,7 +121,6 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('#nav5').addClass("active-link");
     $('.btnNewWarranty').show();
     $('#warrantyTable').show();
-    $('#loading').show(); Spinner(); Spinner.show();
     tblWarranty = $('table.warrantyTable').DataTable({
         dom: 'rtp',
         language:{

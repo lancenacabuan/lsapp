@@ -251,16 +251,11 @@
         </strong>
     </div>
     @if(!Auth::guest())
-        @include('inc.header')
-        @include('inc.navbar')
-    @else
-        @include('inc.guest')
+    @include('inc.header')
+    @include('inc.navbar')
+    @if(!Request::is('stocks'))
+        <script>$('#loading').show(); Spinner(); Spinner.show();</script>
     @endif
-    <div id="app" class="container-fluid">
-        <main class="py-3">
-            @yield('content')
-        </main>
-    </div>
     <script>
         setInterval(loadFunction, 0);
         function loadFunction(){
@@ -303,6 +298,14 @@
             }
         }
     </script>
+    @else
+    @include('inc.guest')
+    @endif
+    <div id="app" class="container-fluid">
+        <main class="py-3">
+            @yield('content')
+        </main>
+    </div>
     @if(Request::is('/'))
         <script src="{{ asset('js/index.js') }}"></script>
     @endif

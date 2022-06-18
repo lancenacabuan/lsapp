@@ -41,12 +41,12 @@
                 </select>
             </div>
             <div class="form-inline divSerial" style="margin-top: 10px; display: none;">
-                <label class="form-control form-control-sm" style="width: 178px;">Serial (Required/Optional)</label>
-                <label class="switch" style="zoom: 90%; margin-left: -10px;">
+                <label class="form-control form-control-sm" style="width: 178px;">Has Serial? (YES/NO)</label>
+                <label class="switch" style="height: 30px; width: 100px; margin-left: -10px;">
                     <input type="checkbox" id="serialize_details" class="togBtn" value="ACTIVE">
-                    <div class="slider round">
-                        <span class="on">REQUIRED</span>
-                        <span class="off">OPTIONAL</span>
+                    <div class="slider round" style="zoom: 90%;">
+                        <span class="on" style="zoom: 175%;">YES</span>
+                        <span class="off" style="zoom: 175%;">NO</span>
                     </div>
                 </label>
             </div>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="text-center" style="margin-bottom: -35px;">
-    <input class="text-control spChar" style="zoom: 90%; width: 220px;" id="z_serial" type="search" placeholder="   SEARCH SERIAL NUMBER" autocomplete="off"/>
+    <input class="text-center text-control spChar" style="zoom: 90%; width: 300px;" id="z_serial" type="search" placeholder="SEARCH SERIAL NUMBER" autocomplete="off"/>
 </div>
 <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
 <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>

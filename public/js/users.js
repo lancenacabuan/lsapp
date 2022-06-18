@@ -49,9 +49,19 @@ var table = $('table.userTable').DataTable({
 });
 
 $('.filter-input').on('keyup', function(){
-    table.column($(this).data('column'))
-        .search($(this).val())
-        .draw();
+    table.column($(this).data('column')).search($(this).val()).draw();
+});
+
+document.querySelectorAll('input[type=search]').forEach(function(input){
+    input.addEventListener('mouseup', function(e){
+        if(input.value.length > 0){
+            setTimeout(function(){
+                if(input.value.length === 0){
+                    $('.filter-input').keyup();
+                }
+            }, 0);
+        }
+    });
 });
 
 $(document).on('change', '.togBtn', function(){

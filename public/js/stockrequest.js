@@ -793,12 +793,12 @@ if($("#current_role").val() == 'sales'){
                 "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
             },
             {
-                "targets": [5],
+                "targets": [7],
                 "visible": false,
                 "searchable": false
             },
             {
-                "targets": [8],
+                "targets": [10],
                 "visible": false,
                 "searchable": true
             }
@@ -918,7 +918,7 @@ else{
                 "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
             },
             {
-                "targets": [8],
+                "targets": [10],
                 "visible": false,
                 "searchable": true
             }

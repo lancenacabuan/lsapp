@@ -42,15 +42,13 @@ class LoginController extends Controller
     protected function authenticated(){
         if(auth()->user()->status == 'INACTIVE'){
             Auth::logout();
-            return redirect('/login');
+            return redirect('/login?user=inactive');
         }
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = 'LOG-IN: User successfully logged in!';
         $userlogs->save();
-
-        // return redirect('/');
     }
 
     protected function logout(){

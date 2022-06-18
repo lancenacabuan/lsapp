@@ -10,7 +10,8 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
     <div class="col-sm-2"></div>
     <div class="col-sm-2">
         <a id="hover1" href="stocks" style="text-decoration: none;">
-            <img class="zoom1" style="height: 100px;" src="{{ asset('index-stocks.png') }}">
+            <img class="zoomout1" style="height: 100px;" src="{{ asset('index-stocks.png') }}">
+            <img class="zoomin1" style="height: 110px; display: none;" src="{{ asset('index-stocks-hover.png') }}">
             <div class="box1 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                 {{number_format($stocks)}}   
             </div>
@@ -19,7 +20,8 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
     </div>
     <div class="col-sm-2">
         <a id="hover2" href="stockrequest" style="text-decoration: none;">
-            <img class="zoom2" style="height: 100px;" src="{{ asset('index-stockrequest.png') }}">
+            <img class="zoomout2" style="height: 100px;" src="{{ asset('index-stockrequest.png') }}">
+            <img class="zoomin2" style="height: 110px; display: none;" src="{{ asset('index-stockrequest-hover.png') }}">
             <div class="box2 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                 {{number_format($stockrequest)}}
             </div>
@@ -28,7 +30,8 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
     </div>
     <div class="col-sm-2">
         <a id="hover3" href="stocktransfer" style="text-decoration: none;">
-            <img class="zoom3" style="height: 100px;" src="{{ asset('index-stocktransfer.png') }}">
+            <img class="zoomout3" style="height: 100px;" src="{{ asset('index-stocktransfer.png') }}">
+            <img class="zoomin3" style="height: 110px; display: none;" src="{{ asset('index-stocktransfer-hover.png') }}">
             <div class="box3 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                 {{number_format($stocktransfer)}}
             </div>
@@ -37,7 +40,8 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
     </div>
     <div class="col-sm-2">
         <a id="hover4" href="defective" style="text-decoration: none;">
-            <img class="zoom4" style="height: 100px;" src="{{ asset('index-defective.png') }}">
+            <img class="zoomout4" style="height: 100px;" src="{{ asset('index-defective.png') }}">
+            <img class="zoomin4" style="height: 110px; display: none;" src="{{ asset('index-defective-hover.png') }}">
             <div class="box4 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
                 {{number_format($defective)}}
             </div>

@@ -143,11 +143,18 @@ $('table.assemblyTable').DataTable({
     },
     columnDefs: [
         {
-            "targets": [0],
+            "targets": [0,1],
+            "visible": false,
+            "searchable": true
+        },
+        {
+            "targets": [2],
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
         }
     ],
     columns: [
+        { data: 'reqdatetime' },
+        { data: 'needdatetime' },
         { data: 'reqdate' },
         {
             data: 'needdate',

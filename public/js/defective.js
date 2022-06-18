@@ -12,10 +12,16 @@ $('table.defectiveTable').DataTable({
     columnDefs: [
         {
             "targets": [0],
+            "visible": false,
+            "searchable": true
+        },
+        {
+            "targets": [1],
             "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
         }
     ],
     columns: [
+        { data: 'defectiveDatetime' },
         { data: 'defectiveDate' },
         { data: 'name' },
         { data: 'return_number' },

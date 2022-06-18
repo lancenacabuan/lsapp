@@ -61,6 +61,8 @@
     <table id="ItemSerialTable" class="table-hover table ItemSerialTable display" style="zoom: 90%; width: 100%; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white;">                            
             <tr>
+                <th class="d-none">DATE ADDED</th>
+                <th class="d-none">DATE MODIFIED</th>
                 <th>DATE ADDED</th>
                 <th>DATE MODIFIED</th>
                 <th>RESPONSIBLE USER</th>
@@ -78,6 +80,8 @@
     <table id="SerialTable" class="table-hover table SerialTable display" style="zoom: 90%; width: 100%; cursor: pointer;">
         <thead style="background-color: #0d1a80; color: white;">                            
             <tr>
+                <th class="d-none">DATE ADDED</th>
+                <th class="d-none">DATE MODIFIED</th>
                 <th>DATE ADDED</th>
                 <th>DATE MODIFIED</th>
                 <th>RESPONSIBLE USER</th>

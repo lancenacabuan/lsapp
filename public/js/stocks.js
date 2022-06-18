@@ -168,10 +168,17 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 columnDefs: [
                     {
                         "targets": [0,1],
+                        "visible": false,
+                        "searchable": true
+                    },
+                    {
+                        "targets": [2,3],
                         "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
                     },
                 ],
                 columns: [
+                    { data: 'addDatetime' },
+                    { data: 'modDatetime' },
                     { data: 'addDate', width: '14%' },
                     { data: 'modDate', width: '14%' },
                     { data: 'name' },
@@ -202,15 +209,22 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 columnDefs: [
                     {
                         "targets": [0,1],
+                        "visible": false,
+                        "searchable": true
+                    },
+                    {
+                        "targets": [2,3],
                         "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
                     },
                     {
-                        "targets": [5],
+                        "targets": [7],
                         "visible": false,
                         "searchable": false
                     },
                 ],
                 columns: [
+                    { data: 'addDatetime' },
+                    { data: 'modDatetime' },
                     { data: 'addDate', width: '14%' },
                     { data: 'modDate', width: '14%' },
                     { data: 'name' },
@@ -289,10 +303,17 @@ $('#z_serial').on('keyup', function(){
                 columnDefs: [
                     {
                         "targets": [0,1],
+                        "visible": false,
+                        "searchable": true
+                    },
+                    {
+                        "targets": [2,3],
                         "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
                     },
                 ],
                 columns: [
+                    { data: 'addDatetime' },
+                    { data: 'modDatetime' },
                     { data: 'addDate', width: '14%' },
                     { data: 'modDate', width: '14%' },
                     { data: 'name', width: '14%' },

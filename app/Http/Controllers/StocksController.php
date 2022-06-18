@@ -242,7 +242,7 @@ class StocksController extends Controller
         if($UOM == 'Unit'){
             $stock = Stock::query()
                 ->select('stocks.id AS stock_id', 'category', 'item', 'serialize', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
-                ->selectRaw('UPPER(serial) AS serial')
+                ->selectRaw('DATE_FORMAT(stocks.created_at, "%b. %d, %Y, %h:%i %p") AS addDatetime, DATE_FORMAT(stocks.updated_at, "%b. %d, %Y, %h:%i %p") AS modDatetime, UPPER(serial) AS serial')
                 ->selectRaw('
                     (CASE
                         WHEN stocks.status = "defectives" THEN "DEFECTIVE"
@@ -268,7 +268,7 @@ class StocksController extends Controller
         else{
             $stock = Stock::query()
                 ->select('category', 'item', 'serialize', DB::raw('SUM(stocks.qty) AS qty'), 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
-                ->selectRaw('UPPER(serial) AS serial')
+                ->selectRaw('DATE_FORMAT(stocks.created_at, "%b. %d, %Y, %h:%i %p") AS addDatetime, DATE_FORMAT(stocks.updated_at, "%b. %d, %Y, %h:%i %p") AS modDatetime, UPPER(serial) AS serial')
                 ->selectRaw('
                     (CASE
                         WHEN stocks.status = "defectives" THEN "DEFECTIVE"
@@ -301,7 +301,7 @@ class StocksController extends Controller
         if($count != 0){
             $stock = Stock::query()
                 ->select('stocks.id AS stock_id', 'category', 'item', 'serialize', 'prodcode', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
-                ->selectRaw('UPPER(serial) AS serial')
+                ->selectRaw('DATE_FORMAT(stocks.created_at, "%b. %d, %Y, %h:%i %p") AS addDatetime, DATE_FORMAT(stocks.updated_at, "%b. %d, %Y, %h:%i %p") AS modDatetime, UPPER(serial) AS serial')
                 ->selectRaw('
                     (CASE
                         WHEN stocks.status = "defectives" THEN "DEFECTIVE"

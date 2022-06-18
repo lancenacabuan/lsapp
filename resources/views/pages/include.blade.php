@@ -27,8 +27,12 @@
                     <option value="Maintenance - Locations">Maintenance - Locations</option>
                     <option value="Maintenance - Warranty">Maintenance - Warranty</option>
                     <option value="Users">Users</option>
-                    <option value="Others">Others</option>
+                    <option value="Others...">Others...</option>
                 </select>
+            </div>
+            <div class="specify form-inline mb-2" style="display: none;">
+                <label class="form-control form-control-sm" style="width: 160px;">Others (Please specify):</label>
+                <input class="form-control form-control-sm" id="specify" style="width: 308px;" type="text" placeholder="Required Field">
             </div>
             <textarea style="margin-bottom: 8px; font-size: 14px; resize: none;" class="form-control" rows="5" name="report" id="report" maxlength="300" autocomplete="off" placeholder="Please describe the error or bug that you have encountered."></textarea>
             <span style="color: Red; font-size: 12px;">*Required Field</span><br>
@@ -154,6 +158,8 @@ $('#btnReport').on('click', function(){
         keyboard: false
     });
     $('#reportModal').modal('show');
+    $('.specify').hide();
+    $('#specify').val('');
     $('#report_category').val('');
     $('#report').val('');
     max = 300;
@@ -162,6 +168,8 @@ $('#btnReport').on('click', function(){
 });
 
 $('#btnResetReport').on('click', function(){
+    $('.specify').hide();
+    $('#specify').val('');
     $('#report_category').val('');
     $('#report').val('');
     $('#report_category').focus();
@@ -169,75 +177,88 @@ $('#btnResetReport').on('click', function(){
     $('#textlimit').html(max + ' characters remaining');
 });
 
+$('#report_category').on('change', function(){
+    if($('#report_category').val() == 'Others...'){
+        $('.specify').show();
+        $('#specify').val('');
+    }
+    else{
+        $('.specify').hide();
+        $('#specify').val('');
+    }
+});
+
 $('#btnSupport').on('click', function(){
     var ticket_number = $('#ticket_number').val();
     var report_category = $('#report_category').val();
     var details = $.trim($('#report').val());
-    if(!details || !report_category){
+    var specify = $.trim($('#specify').val());
+    if(specify){
+        report_category = specify;
+    }
+    if(($('.specify').is(':hidden') && (!details || !report_category)) || ($('.specify').is(':visible') && (!details || !report_category || !specify))){
         swal('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
-    else{
-        swal({
-            title: "SUBMIT REPORT?",
-            text: "You are about to REPORT a suggested feature, issue, error, or bug to the technical support team!",
-            icon: "warning",
-            buttons: true,
-        })
-        .then((willDelete) => {
-            if(willDelete){
-                $.ajax({
-                    url: "/report/submit",
-                    async: false,
-                    data:{
-                        ticket_number: ticket_number,
-                        report_category: report_category,
-                        details: details
-                    },
-                    success: function(data){
-                        if(data == 'true'){
-                            scrollReset();
-                            $('#reportModal').modal('hide');
-                            $('#loading').show(); Spinner(); Spinner.show();
-                            $.ajax({
-                                url: "/report/log",
-                                data:{
-                                    ticket_number: ticket_number,
-                                    report_category: report_category,
-                                    details: details
-                                },
-                                success: function(data){
-                                    if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
-                                        swal("SUBMIT SUCCESS", "Report submitted successfully!", "success");
-                                    }
-                                    else{
-                                        return false;
-                                    }
-                                },
-                                error: function(data){
-                                    if(data.status == 401){
-                                        location.reload();
-                                    }
-                                    alert(data.responseText);
+    swal({
+        title: "SUBMIT REPORT?",
+        text: "You are about to REPORT a suggested feature, issue, error, or bug to the technical support team!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                url: "/report/submit",
+                async: false,
+                data:{
+                    ticket_number: ticket_number,
+                    report_category: report_category,
+                    details: details
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        scrollReset();
+                        $('#reportModal').modal('hide');
+                        $('#loading').show(); Spinner(); Spinner.show();
+                        $.ajax({
+                            url: "/report/log",
+                            data:{
+                                ticket_number: ticket_number,
+                                report_category: report_category,
+                                details: details
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide(); Spinner.hide();
+                                    swal("SUBMIT SUCCESS", "Report submitted successfully!", "success");
                                 }
-                            });
-                        }
-                        else{
-                            swal("SUBMIT FAILED", "Report failed to submit!", "error");
-                            return false;
-                        }
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            location.reload();
-                        }
-                        alert(data.responseText);
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    location.reload();
+                                }
+                                alert(data.responseText);
+                            }
+                        });
                     }
-                });
-            }
-        });
-    }
+                    else{
+                        swal("SUBMIT FAILED", "Report failed to submit!", "error");
+                        return false;
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        location.reload();
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
 });
 
 $('#lblChangePassword').on('click', function(){

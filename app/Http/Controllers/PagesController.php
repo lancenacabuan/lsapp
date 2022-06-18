@@ -326,7 +326,7 @@ class PagesController extends Controller
         $report = new Report;
         $report->reported_by =auth()->user()->id;
         $report->ticket_number = $request->ticket_number;
-        $report->report_category = $request->report_category;
+        $report->report_category = ucwords($request->report_category);
         $report->details = ucfirst($request->details);
         $sql = $report->save();
     
@@ -341,36 +341,30 @@ class PagesController extends Controller
     }
 
     public function report_log(Request $request){
-        $user = array(
-            // 'c4lance@outlook.com',
-            // 'lancenacabuan@yahoo.com',
-            // 'lorenzonacabuan@gmail.com'
-            'gerard.mallari@gmail.com',
-            'jolopez@ideaserv.com.ph',
-            'lancenacabuan@outlook.com',
-            'lorenzonacabuan@gmail.com'
-        );
         $subject = 'TICKET NUMBER: '.$request->ticket_number;
+        $email = auth()->user()->email;
+        if(str_contains($email, '@yahoo')){
+            $email = 'noreply@ideaserv.com.ph';
+        }
         $sender = [
-            'email' => auth()->user()->email,
+            'email' => $email,
             'name' => auth()->user()->name
         ];
-        foreach($user as $email){
-            $details = [
-                'ticket_number' => $request->ticket_number,
-                'reportdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
-                'reported_by' => auth()->user()->name,
-                'report_category' => $request->report_category,
-                'details' => ucfirst($request->details)
-            ];
-            Mail::to($email)->send(new reportProblem($details, $subject, $sender));
-        }
+        $details = [
+            'ticket_number' => $request->ticket_number,
+            'reportdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
+            'reported_by' => auth()->user()->name,
+            'report_category' => ucwords($request->report_category),
+            'details' => ucfirst($request->details)
+        ];
+        Mail::to(explode(',',env('MAIL_TO_DEV')))->send(new reportProblem($details, $subject, $sender));
+
         $details = [
             'name' => auth()->user()->name,
             'ticket_number' => $request->ticket_number,
             'reportdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
             'reported_by' => auth()->user()->name,
-            'report_category' => $request->report_category,
+            'report_category' => ucwords($request->report_category),
             'details' => ucfirst($request->details)
         ];
         Mail::to(auth()->user()->email)->send(new replySender($details, $subject));

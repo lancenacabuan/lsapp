@@ -311,24 +311,13 @@ class FileMaintenanceController extends Controller
     }
 
     public function logNewLocation(Request $request){
-        $user = array(
-            // 'c4lance@outlook.com',
-            // 'lancenacabuan@yahoo.com',
-            // 'lorenzonacabuan@gmail.com'
-            'gerard.mallari@gmail.com',
-            'jolopez@ideaserv.com.ph',
-            'lancenacabuan@outlook.com',
-            'lorenzonacabuan@gmail.com'
-        );
         $subject = 'NEW LOCATION REQUEST: '.$request->location;
-        foreach($user as $email){
-            $details = [
-                'location' => $request->location,
-                'reqdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
-                'requested_by' => auth()->user()->name
-            ];
-            Mail::to($email)->send(new requestLocation($details, $subject));
-        }
+        $details = [
+            'location' => $request->location,
+            'reqdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
+            'requested_by' => auth()->user()->name
+        ];
+        Mail::to(explode(',',env('MAIL_TO_DEV')))->send(new requestLocation($details, $subject));
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
@@ -394,26 +383,15 @@ class FileMaintenanceController extends Controller
     }
 
     public function requestStatusChange(Request $request){
-        $user = array(
-            // 'c4lance@outlook.com',
-            // 'lancenacabuan@yahoo.com',
-            // 'lorenzonacabuan@gmail.com'
-            'gerard.mallari@gmail.com',
-            'jolopez@ideaserv.com.ph',
-            'lancenacabuan@outlook.com',
-            'lorenzonacabuan@gmail.com'
-        );
         $subject = 'LOCATION STATUS CHANGE REQUEST: '.$request->location;
-        foreach($user as $email){
-            $details = [
-                'location' => $request->location,
-                'reqdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
-                'requested_by' => auth()->user()->name,
-                'status_original' => $request->status_original, 
-                'status' => $request->status
-            ];
-            Mail::to($email)->send(new requestStatusChange($details, $subject));
-        }
+        $details = [
+            'location' => $request->location,
+            'reqdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
+            'requested_by' => auth()->user()->name,
+            'status_original' => $request->status_original,
+            'status' => $request->status
+        ];
+        Mail::to(explode(',',env('MAIL_TO_DEV')))->send(new requestStatusChange($details, $subject));
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;

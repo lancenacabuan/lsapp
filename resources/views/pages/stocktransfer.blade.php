@@ -7,7 +7,7 @@
 <table id="stocktransferTable" class="table stocktransferTable table-hover display" style="width: 100%; zoom: 80%; cursor: pointer;">
     <thead style="background-color: #0d1a80; color: white;">
         <tr>
-            <td colspan="7">
+            <td colspan="9">
                 <a href="/stocktransfer">
                     <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 25px; font-weight: bold; height: 43px; line-height: 43px;">
                         STOCK TRANSFER REQUESTS
@@ -16,6 +16,8 @@
             </td>
         </tr>
         <tr>
+            <th class="d-none">DATE REQUESTED</th>
+            <th class="d-none">DATE NEEDED</th>
             <th style="width: 12%;">DATE REQUESTED</th>
             <th style="width: 12%;">DATE NEEDED</th>
             <th style="width: 12%;">REQUEST NUMBER</th>

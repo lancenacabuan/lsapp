@@ -206,7 +206,7 @@ class StockTransferController extends Controller
 
     public function transfer_data(){
         if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
-            $list = RequestTransfer::selectRaw('DATE_FORMAT(request_transfer.created_at, "%Y-%m-%d") AS reqdate, request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
+            $list = RequestTransfer::selectRaw('DATE_FORMAT(request_transfer.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(request_transfer.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(request_transfer.created_at, "%Y-%m-%d") AS reqdate, request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
                 ->where('users.company', auth()->user()->company)
                 ->whereNotIn('request_transfer.status', ['7','8'])
                 ->join('users', 'users.id', '=', 'request_transfer.requested_by')
@@ -216,7 +216,7 @@ class StockTransferController extends Controller
                 ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
-            $list = RequestTransfer::selectRaw('DATE_FORMAT(request_transfer.created_at, "%Y-%m-%d") AS reqdate, request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
+            $list = RequestTransfer::selectRaw('DATE_FORMAT(request_transfer.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(request_transfer.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(request_transfer.created_at, "%Y-%m-%d") AS reqdate, request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
                 ->whereNotIn('request_transfer.status', ['7','8'])
                 ->join('users', 'users.id', '=', 'request_transfer.requested_by')
                 ->join('status', 'status.id', '=', 'request_transfer.status')
@@ -225,7 +225,7 @@ class StockTransferController extends Controller
                 ->get();
         }
         else{
-            $list = RequestTransfer::selectRaw('DATE_FORMAT(request_transfer.created_at, "%Y-%m-%d") AS reqdate, request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
+            $list = RequestTransfer::selectRaw('DATE_FORMAT(request_transfer.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(request_transfer.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(request_transfer.created_at, "%Y-%m-%d") AS reqdate, request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, reason, needdate, locfrom, locto')
                 ->where('request_transfer.requested_by', auth()->user()->id)
                 ->whereNotIn('request_transfer.status', ['7','8'])
                 ->join('users', 'users.id', '=', 'request_transfer.requested_by')

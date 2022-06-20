@@ -67,8 +67,7 @@ class PagesController extends Controller
             $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
             UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date, 
             DATE_FORMAT(user_logs.created_at, "%b. %d, %Y, %h:%i %p") AS datetime')
-                ->where('users.company', auth()->user()->company)
-                ->whereRaw('roles.name = "sales" OR (roles.name = "approver - sales" AND users.id="'.auth()->user()->id.'")')
+                ->whereRaw('(roles.name = "sales" AND users.company = "'.auth()->user()->company.'") OR (roles.name = "approver - sales" AND users.id="'.auth()->user()->id.'")')
                 ->join('users', 'users.id', '=', 'user_id')
                 ->join('model_has_roles', 'model_id', '=', 'users.id')
                 ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
@@ -80,8 +79,7 @@ class PagesController extends Controller
             $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
             UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date, 
             DATE_FORMAT(user_logs.created_at, "%b. %d, %Y, %h:%i %p") AS datetime')
-                ->where('users.company', auth()->user()->company)
-                ->whereRaw('roles.name = "admin" OR roles.name = "encoder" OR (roles.name = "approver - warehouse" AND users.id="'.auth()->user()->id.'")')
+                ->whereRaw('((roles.name = "admin" OR roles.name = "encoder") AND users.company = "'.auth()->user()->company.'") OR (roles.name = "approver - warehouse" AND users.id="'.auth()->user()->id.'")')
                 ->join('users', 'users.id', '=', 'user_id')
                 ->join('model_has_roles', 'model_id', '=', 'users.id')
                 ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')

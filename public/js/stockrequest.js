@@ -887,6 +887,9 @@ if($("#current_role").val() == 'sales'){
             if(($(location).attr('pathname')+window.location.search).includes('submit') == true){
                 return false;
             }
+            else if(($(location).attr('pathname')+window.location.search).includes('status') == true){
+                return false;
+            }
             else if(($(location).attr('pathname')+window.location.search).includes('sale') == true){
                 return false;
             }
@@ -1005,6 +1008,9 @@ else{
         order: [],
         initComplete: function(){
             if(($(location).attr('pathname')+window.location.search).includes('submit') == true){
+                return false;
+            }
+            else if(($(location).attr('pathname')+window.location.search).includes('status') == true){
                 return false;
             }
             else if(($(location).attr('pathname')+window.location.search).includes('sale') == true){
@@ -5308,6 +5314,7 @@ $(document).ready(function(){
     if(($(location).attr('pathname')+window.location.search).includes('submit') == true){
         url = window.location.search;
         reqnum = url.replace('?submit=', '');
+        status = 6;
         $.ajax({
             type:'post',
             url:'/logSave',
@@ -5315,7 +5322,8 @@ $(document).ready(function(){
                 'X-CSRF-TOKEN': $("#csrf").val()
             },
             data:{
-                'request_number': reqnum
+                'request_number': reqnum,
+                'status': status
             },
             success: function(data){
                 if(data == 'true'){
@@ -5341,6 +5349,40 @@ $(document).ready(function(){
         $('#loading').hide(); Spinner.hide();
         swal("EDIT SUCCESS", "STOCK REQUEST", "success");
         setTimeout(function(){location.href="/stockrequest"}, 2000);
+    }
+    else if(($(location).attr('pathname')+window.location.search).includes('status') == true){
+        url = window.location.search;
+        reqnum = url.replace('?status=7&edit=', '');
+        status = 7;
+        $.ajax({
+            type:'post',
+            url:'/logSave',
+            headers:{
+                'X-CSRF-TOKEN': $("#csrf").val()
+            },
+            data:{
+                'request_number': reqnum,
+                'status': status
+            },
+            success: function(data){
+                if(data == 'true'){
+                    $('#loading').hide(); Spinner.hide();
+                    swal("EDIT SUCCESS", "STOCK REQUEST", "success");
+                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                }
+                else{
+                    $('#loading').hide(); Spinner.hide();
+                    swal("EDIT FAILED", "STOCK REQUEST", "error");
+                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                }
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/stockrequest';
+                }
+                alert(data.responseText);
+            }
+        });
     }
     else if(($(location).attr('pathname')+window.location.search).includes('sale') == true){
         url = window.location.search;

@@ -273,7 +273,17 @@ class StockRequestController extends Controller
             return redirect()->to('/stockrequest?submit='.$request->reqnum);
         }
         else if($request->action == 'EDIT'){
-            return redirect()->to('/stockrequest?edit=success');
+            $status = Requests::where('request_number', $request->reqnum)
+                ->first()
+                ->status;
+            if($status == 7){
+                Requests::where('request_number', $request->reqnum)
+                    ->update(['status' => 6]);
+                return redirect()->to('/stockrequest?status=7&edit='.$request->reqnum);
+            }
+            else{
+                return redirect()->to('/stockrequest?edit=success');
+            }
         }
         else{
             return redirect()->to('/stockrequest?sale='.$request->reqnum);
@@ -381,10 +391,12 @@ class StockRequestController extends Controller
             Mail::to($key->email)->send(new emailForRequest($details, $subject));
         }
 
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "NEW STOCK REQUEST: User successfully submitted Stock Request No. $request->request_number.";
-        $userlogs->save();
+        if($request->status == 6){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "NEW STOCK REQUEST: User successfully submitted Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
         
         return response('true');
     }

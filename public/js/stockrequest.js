@@ -5314,7 +5314,6 @@ $(document).ready(function(){
     if(($(location).attr('pathname')+window.location.search).includes('submit') == true){
         url = window.location.search;
         reqnum = url.replace('?submit=', '');
-        status = 6;
         $.ajax({
             type:'post',
             url:'/logSave',
@@ -5322,8 +5321,7 @@ $(document).ready(function(){
                 'X-CSRF-TOKEN': $("#csrf").val()
             },
             data:{
-                'request_number': reqnum,
-                'status': status
+                'request_number': reqnum
             },
             success: function(data){
                 if(data == 'true'){
@@ -5353,7 +5351,7 @@ $(document).ready(function(){
     else if(($(location).attr('pathname')+window.location.search).includes('status') == true){
         url = window.location.search;
         reqnum = url.replace('?status=7&edit=', '');
-        status = 7;
+        reqstatus = 7;
         $.ajax({
             type:'post',
             url:'/logSave',
@@ -5362,7 +5360,7 @@ $(document).ready(function(){
             },
             data:{
                 'request_number': reqnum,
-                'status': status
+                'reqstatus': reqstatus
             },
             success: function(data){
                 if(data == 'true'){

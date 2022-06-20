@@ -391,7 +391,7 @@ class StockRequestController extends Controller
             Mail::to($key->email)->send(new emailForRequest($details, $subject));
         }
 
-        if($request->status == 6){
+        if($request->reqstatus != 7){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
             $userlogs->activity = "NEW STOCK REQUEST: User successfully submitted Stock Request No. $request->request_number.";

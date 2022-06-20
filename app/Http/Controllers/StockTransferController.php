@@ -854,7 +854,7 @@ class StockTransferController extends Controller
     }
 
     public function stocktrans(Request $request){       
-        $list = StockTransfer::select('items.prodcode AS prodcode', 'items.item AS item', 'items.id AS item_id', 'stock_transfer.quantity AS qty', 'stock_transfer.served AS served', 'stock_transfer.pending AS pending', 'items.UOM AS uom')
+        $list = StockTransfer::select('items.prodcode AS prodcode', 'items.item AS item', 'items.serialize AS serialize', 'items.id AS item_id', 'stock_transfer.quantity AS qty', 'stock_transfer.served AS served', 'stock_transfer.pending AS pending', 'items.UOM AS uom')
             ->where('stock_transfer.item', $request->item_id)
             ->where('stock_transfer.request_number', $request->reqnum)
             ->where('stocks.status','in')
@@ -898,31 +898,73 @@ class StockTransferController extends Controller
     }
 
     public function transferItems(Request $request){
-        $transfer = new Transfer;
-        $transfer->request_number = $request->request_number;
-        $transfer->stock_id = $request->stock_id;
-        $sql = $transfer->save();
-
-        if(!$sql){
-            $result = 'false';
-        }
-        else{
-            $result = 'true';
-        }
-        if($result == 'true'){
+        if($request->serialize == 'NO'){
             do{
-                $sql = Stock::where('id',$request->stock_id)
-                    ->update(['request_number' => $request->request_number, 'status' => 'trans', 'user_id' => auth()->user()->id, 'location_id' => $request->locto]);
+                $sql = Stock::where('item_id', $request->item_id)
+                        ->where('location_id', $request->locfrom)
+                        ->where('status', 'in')
+                        ->limit($request->qty)
+                        ->update(['request_number' => $request->request_number, 'return_number' => 'temp', 'status' => 'trans', 'user_id' => auth()->user()->id, 'location_id' => $request->locto]);
             }
             while(!$sql);
-            
-            StockTransfer::where('request_number', $request->request_number)
-                ->where('item',$request->item_id)
-                ->increment('served', $request->qty);
 
-            StockTransfer::where('request_number', $request->request_number)
-                ->where('item',$request->item_id)
-                ->decrement('pending', $request->qty);
+            if(!$sql){
+                $result = 'false';
+            }
+            else{
+                $result = 'true';
+                
+                $list = Stock::select()
+                    ->where('request_number', $request->request_number)
+                    ->where('return_number', 'temp')
+                    ->get();
+
+                foreach($list as $value){
+                    $transfer = new Transfer;
+                    $transfer->request_number = $value->request_number;
+                    $transfer->stock_id = $value->id;
+                    $sql = $transfer->save();
+
+                    Stock::where('id', $value->id)
+                        ->update(['return_number' => '']);
+                }
+
+                StockTransfer::where('request_number', $request->request_number)
+                    ->where('item',$request->item_id)
+                    ->increment('served', $request->qty);
+    
+                StockTransfer::where('request_number', $request->request_number)
+                    ->where('item',$request->item_id)
+                    ->decrement('pending', $request->qty);
+            }
+        }
+        else{
+            $transfer = new Transfer;
+            $transfer->request_number = $request->request_number;
+            $transfer->stock_id = $request->stock_id;
+            $sql = $transfer->save();
+    
+            if(!$sql){
+                $result = 'false';
+            }
+            else{
+                $result = 'true';
+            }
+            if($result == 'true'){
+                do{
+                    $sql = Stock::where('id',$request->stock_id)
+                        ->update(['request_number' => $request->request_number, 'status' => 'trans', 'user_id' => auth()->user()->id, 'location_id' => $request->locto]);
+                }
+                while(!$sql);
+                
+                StockTransfer::where('request_number', $request->request_number)
+                    ->where('item',$request->item_id)
+                    ->increment('served', $request->qty);
+    
+                StockTransfer::where('request_number', $request->request_number)
+                    ->where('item',$request->item_id)
+                    ->decrement('pending', $request->qty);
+            }
         }
         
         return response($result);

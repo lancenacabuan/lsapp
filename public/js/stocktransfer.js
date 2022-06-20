@@ -1842,6 +1842,7 @@ $('.incItems tbody').on('click', 'tr', function(){
 
 $("#btnProceed").unbind('click').click(function(){
     var j = 0;
+    var u = 0;
     var reqnum = $('#request_num_details').val();
     var form_data  = $('#transferDetails').DataTable().rows().data();
     form_data.each(function(value, index){
@@ -1880,11 +1881,15 @@ $("#btnProceed").unbind('click').click(function(){
                     else{
                         var l = value.pending;
                     }
-                    for(var k=0; k < l; k++){
+                    if(value.serialize == 'NO'){
                         var id = document.createElement("input");
                         id.setAttribute("id", "item_id"+j);
                         id.setAttribute("type", "hidden");
                         id.setAttribute("value", value.item_id);
+                        var serialize = document.createElement("input");
+                        serialize.setAttribute("id", "serialize"+j);
+                        serialize.setAttribute("type", "hidden");
+                        serialize.setAttribute("value", value.serialize);
                         var x = document.createElement("input");
                         x.setAttribute("id", "prodcode"+j);
                         x.setAttribute("type", "text");
@@ -1901,58 +1906,109 @@ $("#btnProceed").unbind('click').click(function(){
                         qty.setAttribute("type", "number");
                         qty.setAttribute("class", "form-control");
                         qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
-                        qty.setAttribute("value", '1');
+                        qty.setAttribute("value", l);
+                        qty.setAttribute("min", 1);
+                        qty.setAttribute("max", l);
+                        qty.setAttribute("onkeyup", "if(value<1) value=1; if(value>"+l+") value="+l+";");
                         var uom = document.createElement("input");
                         uom.setAttribute("id", "uom"+j);
                         uom.setAttribute("type", "text");
                         uom.setAttribute("class", "form-control");
-                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                        uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px; margin-right: 300px;");
                         uom.setAttribute("value", value.uom);
-                        var serial = document.createElement("select");
-                        serial.setAttribute("id", "serial"+j);
-                        serial.setAttribute("class", "form-control serials");
-                        serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px; margin-right: 400px;");
                         document.getElementById("reqContents").appendChild(id);
+                        document.getElementById("reqContents").appendChild(serialize);
                         document.getElementById("reqContents").appendChild(x);
                         document.getElementById("reqContents").appendChild(y);
                         document.getElementById("reqContents").appendChild(qty);
                         document.getElementById("reqContents").appendChild(uom);
-                        document.getElementById("reqContents").appendChild(serial);
                         $("#item"+j).html(value.item);
                         $("#prodcode"+j).prop('readonly', true);
                         $("#item"+j).prop('readonly', true);
-                        $("#qty"+j).prop('readonly', true);
                         $("#uom"+j).prop('readonly', true);
-                        $("#serial"+j).append("<option value='' selected>Select Serial</option>");
-                        let vid = "#serial"+j;
-                        $.ajax({
-                            type:'get',
-                            url:'/settransserials',
-                            data:{
-                                'item_id': value.item_id,
-                                'location': $('#locfrom_details').val()
-                            }, 
-                            success: function(d){
-                                var s = $.map(d, function(v){
-                                    return [v];
-                                });
-            
-                                s.forEach(v => {
-                                    $(vid).append($('<option>', {
-                                        value: v.id,
-                                        text: v.serial
-                                    }));
-                                });
-                                $(vid).chosen();
-                            },
-                            error: function(data){
-                                if(data.status == 401){
-                                    window.location.href = '/stocktransfer';
-                                }
-                                alert(data.responseText);
-                            }
-                        });
                         j++;
+                        u++;
+                    }
+                    else{
+                        for(var k=0; k < l; k++){
+                            var id = document.createElement("input");
+                            id.setAttribute("id", "item_id"+j);
+                            id.setAttribute("type", "hidden");
+                            id.setAttribute("value", value.item_id);
+                            var serialize = document.createElement("input");
+                            serialize.setAttribute("id", "serialize"+j);
+                            serialize.setAttribute("type", "hidden");
+                            serialize.setAttribute("value", value.serialize);
+                            var x = document.createElement("input");
+                            x.setAttribute("id", "prodcode"+j);
+                            x.setAttribute("type", "text");
+                            x.setAttribute("class", "form-control");
+                            x.setAttribute("style", "width: 250px; font-size: 12px; margin-bottom: 10px;");
+                            x.setAttribute("value", value.prodcode);
+                            var y = document.createElement("textarea");
+                            y.setAttribute("id", "item"+j);
+                            y.setAttribute("class", "form-control");
+                            y.setAttribute("rows", "4");
+                            y.setAttribute("style", "width: 250px; font-size: 12px; margin-left: 10px; margin-top: 52px; margin-bottom: 10px; resize: none;");
+                            var qty = document.createElement("input");
+                            qty.setAttribute("id", "qty"+j);
+                            qty.setAttribute("type", "number");
+                            qty.setAttribute("class", "form-control");
+                            qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            qty.setAttribute("value", '1');
+                            var uom = document.createElement("input");
+                            uom.setAttribute("id", "uom"+j);
+                            uom.setAttribute("type", "text");
+                            uom.setAttribute("class", "form-control");
+                            uom.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
+                            uom.setAttribute("value", value.uom);
+                            var serial = document.createElement("select");
+                            serial.setAttribute("id", "serial"+j);
+                            serial.setAttribute("class", "form-control serials");
+                            serial.setAttribute("style", "width: 200px; font-size: 12px; margin-left: 10px; margin-bottom: 10px; margin-right: 400px;");
+                            document.getElementById("reqContents").appendChild(id);
+                            document.getElementById("reqContents").appendChild(serialize);
+                            document.getElementById("reqContents").appendChild(x);
+                            document.getElementById("reqContents").appendChild(y);
+                            document.getElementById("reqContents").appendChild(qty);
+                            document.getElementById("reqContents").appendChild(uom);
+                            document.getElementById("reqContents").appendChild(serial);
+                            $("#item"+j).html(value.item);
+                            $("#prodcode"+j).prop('readonly', true);
+                            $("#item"+j).prop('readonly', true);
+                            $("#qty"+j).prop('readonly', true);
+                            $("#uom"+j).prop('readonly', true);
+                            $("#serial"+j).append("<option value='' selected>Select Serial</option>");
+                            let vid = "#serial"+j;
+                            $.ajax({
+                                type:'get',
+                                url:'/settransserials',
+                                data:{
+                                    'item_id': value.item_id,
+                                    'location': $('#locfrom_details').val()
+                                }, 
+                                success: function(d){
+                                    var s = $.map(d, function(v){
+                                        return [v];
+                                    });
+                
+                                    s.forEach(v => {
+                                        $(vid).append($('<option>', {
+                                            value: v.id,
+                                            text: v.serial
+                                        }));
+                                    });
+                                    $(vid).chosen();
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stocktransfer';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                            j++;
+                        }
                     }
                 });
                 $('.serials').on('change', function(){
@@ -1980,7 +2036,7 @@ $("#btnProceed").unbind('click').click(function(){
                 }
                 setInterval(checkSerials, 0);
                 function checkSerials(){
-                    if($('.serials').filter(function(){ return !!this.value; }).length != j){
+                    if($('.serials').filter(function(){ return !!this.value; }).length != j-u){
                         $('#btnSubmit').prop('disabled', true);
                         $('#schedwarning').show();
                     }
@@ -2022,9 +2078,11 @@ $("#btnProceed").unbind('click').click(function(){
                                             },
                                             data:{
                                                 'request_number': reqnum,
+                                                'serialize': $('#serialize'+n).val(),
                                                 'stock_id': $('#serial'+n).val(),
                                                 'item_id': $('#item_id'+n).val(),
                                                 'qty': $('#qty'+n).val(),
+                                                'locfrom': $('#locfrom_details').val(),
                                                 'locto': $('#locto_details').val(),
                                             },
                                             success: function(data){

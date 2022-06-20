@@ -26,19 +26,19 @@ class StocksController extends Controller
     public function stocks(){
         if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
         {
-            return redirect('/stockrequest');
+            return redirect('/');
         }
         if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
         {
-            return redirect('/stocktransfer');
+            return redirect('/');
         }
         if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
         {
-            return redirect('/assembly');
+            return redirect('/');
         }
         if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
         {
-            return redirect('/merchant');
+            return redirect('/');
         }
         $categories= Category::select('id','category')->get()->sortBy('category');
         $locations= Location::select('id','location')->whereNotIn('id', ['7','8','9','10'])->get()->sortBy('location');

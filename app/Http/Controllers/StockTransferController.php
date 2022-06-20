@@ -30,15 +30,15 @@ class StockTransferController extends Controller
     public function stocktransfer(){
         if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
         {
-            return redirect('/stockrequest');
+            return redirect('/');
         }
         if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
         {
-            return redirect('/assembly');
+            return redirect('/');
         }
         if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
         {
-            return redirect('/merchant');
+            return redirect('/');
         }
         $locations = Location::select('id','location')->whereNotIn('id',['7','8'])->get();
 

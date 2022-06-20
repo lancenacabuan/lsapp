@@ -22,19 +22,19 @@ class DefectiveController extends Controller
     public function defective(){
         if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
         {
-            return redirect('/stockrequest');
+            return redirect('/');
         }
         if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
         {
-            return redirect('/stocktransfer');
+            return redirect('/');
         }
         if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
         {
-            return redirect('/assembly');
+            return redirect('/');
         }
         if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
         {
-            return redirect('/merchant');
+            return redirect('/');
         }
         $categories = Category::select('id','category')->get()->sortBy('category');
         $items = Item::select('id','item')->get()->sortBy('item');

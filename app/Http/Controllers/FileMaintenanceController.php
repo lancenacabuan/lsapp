@@ -28,22 +28,6 @@ class FileMaintenanceController extends Controller
     }
 
     public function maintenance(Request $request){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
-        {
-            return redirect('/stockrequest');
-        }
-        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
-        {
-            return redirect('/stocktransfer');
-        }
-        if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
-        {
-            return redirect('/assembly');
-        }
-        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
-        {
-            return redirect('/merchant');
-        }
         if(!auth()->user()->hasanyRole('admin')) //---ROLES---//
         {
             return redirect('/');

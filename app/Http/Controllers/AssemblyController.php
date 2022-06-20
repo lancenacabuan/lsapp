@@ -25,19 +25,7 @@ class AssemblyController extends Controller
     }
 
     public function assembly(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
-        {
-            return redirect('/stockrequest');
-        }
-        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
-        {
-            return redirect('/stocktransfer');
-        }
-        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
-        {
-            return redirect('/merchant');
-        }
-        if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')) //---ROLES---//
+        if(!auth()->user()->hasanyRole('assembler')) //---ROLES---//
         {
             return redirect('/');
         }

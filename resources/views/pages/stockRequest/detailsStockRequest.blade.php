@@ -72,12 +72,12 @@
             <div class="form-inline" style="margin-left: 35px;;">
                 <label class="form-control form-control-sm" name="reason_label" id="reason_label" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>
                 <textarea class="form-control" name="reason_details" id="reason_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="4" readonly></textarea>
-                <label class="form-control form-control-sm reupload" style="margin-left: 450px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
-                <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
-                <button class="form-control btn btn-primary bp reupload" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
+                <label id="lblReupload" class="form-control form-control-sm reupload classReupload" style="margin-left: 450px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
+                <button class="form-control btn btn-danger disupload classReupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
+                <button class="form-control btn btn-primary bp reupload classReupload" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                <span class="reupload" style="margin-left: 450px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple PDF and/or Image files for upload.</span>
+                <span class="reupload classReupload" style="margin-left: 450px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple PDF and/or Image files for upload.</span>
             </div>
             @role('sales')
             <div class="header_label alert alert-primary mt-4" role="alert" style="display: none;">
@@ -99,7 +99,7 @@
             <h6 class="modal-title w-100">ATTACHMENT SO/PO</h6>
         </div>
         <div class="modal-body text-center">
-            <button type="button" id="btnRemoveAttachment" class="btn btn-danger" style="zoom: 85%; font-weight: bold; display: none;">REMOVE ATTACHMENTS</button>
+            <button type="button" id="btnRemoveAttachment" class="btn btn-danger mb-4" style="zoom: 85%; font-weight: bold; display: none;">REMOVE ATTACHMENTS</button>
             <div id="slidesCtrl" class="w3-center">
                 <div class="w3-section">
                   <button class="w3-button w3-light-grey" onclick="plusDivs(-1)">❮ Prev</button>

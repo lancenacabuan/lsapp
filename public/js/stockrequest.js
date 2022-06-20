@@ -1101,7 +1101,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         window.location.href = '/stockrequest';
                     }
 
-                    if($("#current_role").val() == 'sales' && requestStatus == '6'){
+                    if($("#current_role").val() == 'sales' && (requestStatus == '6' || requestStatus == '7')){
                         $('#btnEditDetails').show();
                         $('.btnCancelDetails').show();
                         
@@ -1116,7 +1116,11 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $('#contact').val(contact);
                             $('#remarks').val(remarks);
                             $('#reference').val(reference);
-                
+
+                            if(requestStatus == '7'){
+                                $('#lblReupload').css({"margin-left": "0px"});
+                                $('.classReupload').css({"margin-top": "-56px"});
+                            }
                             $('#needdate_details').attr('type', 'date');
                             $('#needdate_details').val(value.needdate);
                             $('#needdate_details').prop('readonly', false);
@@ -2338,7 +2342,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             window.location.href = '/stockrequest';
         }
 
-        if($("#current_role").val() == 'sales' && requestStatus == '6'){
+        if($("#current_role").val() == 'sales' && (requestStatus == '6' || requestStatus == '7')){
             $('#btnEditDetails').show();
             $('.btnCancelDetails').show();
             
@@ -2353,7 +2357,11 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $('#contact').val(contact);
                 $('#remarks').val(remarks);
                 $('#reference').val(reference);
-    
+
+                if(requestStatus == '7'){
+                    $('#lblReupload').css({"margin-left": "0px"});
+                    $('.classReupload').css({"margin-top": "-56px"});
+                }
                 $('#needdate_details').attr('type', 'date');
                 $('#needdate_details').val(value.needdate);
                 $('#needdate_details').prop('readonly', false);

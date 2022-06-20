@@ -1907,9 +1907,9 @@ $("#btnProceed").unbind('click').click(function(){
                         qty.setAttribute("class", "form-control");
                         qty.setAttribute("style", "width: 100px; font-size: 12px; margin-left: 10px; margin-bottom: 10px;");
                         qty.setAttribute("value", l);
-                        qty.setAttribute("min", 1);
+                        qty.setAttribute("min", l);
                         qty.setAttribute("max", l);
-                        qty.setAttribute("onkeyup", "if(value<1) value=1; if(value>"+l+") value="+l+";");
+                        qty.setAttribute("onkeyup", "if(value<"+l+") value="+l+"; if(value>"+l+") value="+l+";");
                         var uom = document.createElement("input");
                         uom.setAttribute("id", "uom"+j);
                         uom.setAttribute("type", "text");
@@ -1925,6 +1925,7 @@ $("#btnProceed").unbind('click').click(function(){
                         $("#item"+j).html(value.item);
                         $("#prodcode"+j).prop('readonly', true);
                         $("#item"+j).prop('readonly', true);
+                        $("#qty"+j).prop('readonly', true);
                         $("#uom"+j).prop('readonly', true);
                         j++;
                         u++;

@@ -365,6 +365,13 @@ class StockRequestController extends Controller
             }
         }
 
+        if($request->reqstatus != 7){
+            $action = 'A new STOCK REQUEST';
+        }
+        else{
+            $action = 'A revised STOCK REQUEST';
+        }
+
         $subject = '[FOR APPROVAL] STOCK REQUEST NO. '.$request->request_number;
         $user = User::role('approver - sales')
             ->where('status','ACTIVE')
@@ -373,7 +380,7 @@ class StockRequestController extends Controller
         foreach($user as $key){
             $details = [
                 'name' => ucwords($key->name),
-                'action' => 'STOCK REQUEST',
+                'action' => $action,
                 'request_number' => $request->request_number,
                 'reqdate' => $request_details->reqdate,
                 'requested_by' => auth()->user()->name,

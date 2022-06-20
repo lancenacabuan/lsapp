@@ -2,33 +2,47 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                @if(!auth()->user()->hasanyRole('sales') && !auth()->user()->hasanyRole('approver - sales') && !auth()->user()->hasanyRole('accounting') && !auth()->user()->hasanyRole('approver - warehouse') && !auth()->user()->hasanyRole('assembler') && !auth()->user()->hasanyRole('merchant')) {{---ROLES---}}
-                    <li class="nav-item">
-                    <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">HOME</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link n {{ Request::is('stocks') ? 'active' : '' }}" href="{{ url('/stocks') }}">STOCKS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}" href="{{ url('/stockrequest') }}">STOCK REQUEST</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
-                    </li>
-                    @role('admin|encoder|viewer') {{---ROLES---}}
-                    <li class="nav-item">
-                        <a class="nav-link n {{ Request::is('defective') ? 'active' : '' }}" href="{{ url('/defective') }}">DEFECTIVE</a>
-                    </li>
-                    @endrole
-                    @role('admin') {{---ROLES---}}
-                    <li class="nav-item">
-                        <a class="nav-link n {{ Request::is('maintenance*') ? 'active' : '' }}" href="{{ url('/maintenance') }}">MAINTENANCE</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link n {{ Request::is('users') ? 'active' : '' }}" href="{{ url('/users') }}">USERS</a>
-                    </li>
-                    @endrole
-                @endif
+                <li class="nav-item">
+                <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">HOME</a>
+                </li>
+                @role('admin|encoder|viewer') {{---ROLES---}}
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('stocks') ? 'active' : '' }}" href="{{ url('/stocks') }}">STOCKS</a>
+                </li>
+                @endrole
+                @role('admin|encoder|viewer|sales|approver - sales|accounting') {{---ROLES---}}
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}" href="{{ url('/stockrequest') }}">STOCK REQUEST</a>
+                </li>
+                @endrole
+                @role('admin|encoder|viewer|approver - warehouse') {{---ROLES---}}
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
+                </li>
+                @endrole
+                @role('admin|encoder|viewer')
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('defective') ? 'active' : '' }}" href="{{ url('/defective') }}">DEFECTIVE</a>
+                </li>
+                @endrole
+                @role('merchant')
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('merchant') ? 'active' : '' }}" href="{{ url('/merchant') }}">MERCHANT</a>
+                </li>
+                @endrole
+                @role('assembler')
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('assembly') ? 'active' : '' }}" href="{{ url('/assembly') }}">ASSEMBLY</a>
+                </li>
+                @endrole
+                @role('admin') {{---ROLES---}}
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('maintenance*') ? 'active' : '' }}" href="{{ url('/maintenance') }}">MAINTENANCE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link n {{ Request::is('users') ? 'active' : '' }}" href="{{ url('/users') }}">USERS</a>
+                </li>
+                @endrole
             </ul>
             <button id="btnReport" type="button" class="btn btn-danger mr-2">
                 <span class="px-2">REPORT A PROBLEM</span>

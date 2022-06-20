@@ -35,34 +35,71 @@ class PagesController extends Controller
     }
 
     public function index(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
-        {
-            return redirect('/stockrequest');
-        }
-        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
-        {
-            return redirect('/stocktransfer');
-        }
-        if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
-        {
-            return redirect('/assembly');
-        }
-        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
-        {
-            return redirect('/merchant');
-        }
         return view('pages/index');        
     }
 
     public function index_data(){
-        $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
-        UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date, 
-        DATE_FORMAT(user_logs.created_at, "%b. %d, %Y, %h:%i %p") AS datetime')
-            ->join('users', 'users.id', '=', 'user_id')
-            ->join('model_has_roles', 'model_id', '=', 'users.id')
-            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
-            ->orderBy('user_logs.id', 'DESC')
-            ->get();
+        if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')) //---ROLES---//
+        {
+            $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
+            UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date, 
+            DATE_FORMAT(user_logs.created_at, "%b. %d, %Y, %h:%i %p") AS datetime')
+                ->join('users', 'users.id', '=', 'user_id')
+                ->join('model_has_roles', 'model_id', '=', 'users.id')
+                ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->orderBy('user_logs.id', 'DESC')
+                ->get();
+        }
+        else if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('merchant') || auth()->user()->hasanyRole('assembler')) //---ROLES---//
+        {
+            $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
+            UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date, 
+            DATE_FORMAT(user_logs.created_at, "%b. %d, %Y, %h:%i %p") AS datetime')
+                ->where('user_logs.user_id', auth()->user()->id)
+                ->join('users', 'users.id', '=', 'user_id')
+                ->join('model_has_roles', 'model_id', '=', 'users.id')
+                ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->orderBy('user_logs.id', 'DESC')
+                ->get();
+        }
+        else if(auth()->user()->hasanyRole('approver - sales')) //---ROLES---//
+        {
+            $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
+            UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date, 
+            DATE_FORMAT(user_logs.created_at, "%b. %d, %Y, %h:%i %p") AS datetime')
+                ->where('users.company', auth()->user()->company)
+                ->whereRaw('roles.name = "sales" OR (roles.name = "approver - sales" AND users.id="'.auth()->user()->id.'")')
+                ->join('users', 'users.id', '=', 'user_id')
+                ->join('model_has_roles', 'model_id', '=', 'users.id')
+                ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->orderBy('user_logs.id', 'DESC')
+                ->get();
+        }
+        else if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
+        {
+            $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
+            UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date, 
+            DATE_FORMAT(user_logs.created_at, "%b. %d, %Y, %h:%i %p") AS datetime')
+                ->where('users.company', auth()->user()->company)
+                ->whereRaw('roles.name = "admin" OR roles.name = "encoder" OR (roles.name = "approver - warehouse" AND users.id="'.auth()->user()->id.'")')
+                ->join('users', 'users.id', '=', 'user_id')
+                ->join('model_has_roles', 'model_id', '=', 'users.id')
+                ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->orderBy('user_logs.id', 'DESC')
+                ->get();
+        }
+        else if(auth()->user()->hasanyRole('accounting')) //---ROLES---//
+        {
+            $list = UserLogs::selectRaw('users.id AS user_id, users.name AS username, users.email AS email, 
+            UPPER(roles.name) AS role, user_logs.activity AS activity, user_logs.created_at AS date, 
+            DATE_FORMAT(user_logs.created_at, "%b. %d, %Y, %h:%i %p") AS datetime')
+                ->whereRaw('roles.name = "sales" OR (roles.name = "accounting" AND users.id="'.auth()->user()->id.'")')
+                ->join('users', 'users.id', '=', 'user_id')
+                ->join('model_has_roles', 'model_id', '=', 'users.id')
+                ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->orderBy('user_logs.id', 'DESC')
+                ->get();
+        }
 
         return DataTables::of($list)->make(true);
     }
@@ -107,22 +144,6 @@ class PagesController extends Controller
     }
 
     public function users(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
-        {
-            return redirect('/stockrequest');
-        }
-        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
-        {
-            return redirect('/stocktransfer');
-        }
-        if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
-        {
-            return redirect('/assembly');
-        }
-        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
-        {
-            return redirect('/merchant');
-        }
         if(!auth()->user()->hasanyRole('admin')) //---ROLES---//
         {
             return redirect('/');

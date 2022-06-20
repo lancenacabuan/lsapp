@@ -6,6 +6,7 @@ $stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10
 $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
 $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->count();
 @endphp
+@role('admin|encoder|viewer') {{---ROLES---}}
 <div class="row" style="text-align: center; height: 200px;">
     <div class="col-sm-2"></div>
     <div class="col-sm-2">
@@ -50,6 +51,7 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
     </div>
     <div class="col-sm-2"></div>
 </div>
+@endrole
 <table id="user_logs" class="table user_logs display" style="width: 100%;">
     <thead style="background-color: #0d1a80; color: white;">
         <tr>

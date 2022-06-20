@@ -1,3 +1,8 @@
+var targets = [0];
+if($('#current_role').val() == 'sales' || $('#current_role').val() == 'merchant' || $('#current_role').val() == 'assembler') //---ROLES---//
+{
+    targets = [0,2,3];
+}
 var table = $('table.user_logs').DataTable({
     language:{
         processing: "Loading...",
@@ -9,7 +14,7 @@ var table = $('table.user_logs').DataTable({
     },
     columnDefs: [
         {
-            "targets": [0],
+            "targets": targets,
             "visible": false,
             "searchable": true
         },

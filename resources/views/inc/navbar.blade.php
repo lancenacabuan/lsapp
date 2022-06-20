@@ -20,17 +20,17 @@
                     <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
                 </li>
                 @endrole
-                @role('admin|encoder|viewer')
+                @role('admin|encoder|viewer') {{---ROLES---}}
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('defective') ? 'active' : '' }}" href="{{ url('/defective') }}">DEFECTIVE</a>
                 </li>
                 @endrole
-                @role('merchant')
+                @role('merchant') {{---ROLES---}}
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('merchant') ? 'active' : '' }}" href="{{ url('/merchant') }}">MERCHANT</a>
                 </li>
                 @endrole
-                @role('assembler')
+                @role('assembler') {{---ROLES---}}
                 <li class="nav-item">
                     <a class="nav-link n {{ Request::is('assembly') ? 'active' : '' }}" href="{{ url('/assembly') }}">ASSEMBLY</a>
                 </li>

@@ -119,7 +119,7 @@
             color: #0d6efd !important;
         }
         .out:hover {
-            color: #d9534f !important;
+            background-color: #d9534f !important;
         }
         .nav-item>a:hover {
             background-color: #0d6efd;

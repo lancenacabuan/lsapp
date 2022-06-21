@@ -333,26 +333,29 @@ class StocksController extends Controller
     }
 
     public function minstocks_data(Request $request){
-        $list = Item::query()->select(
-            'items.id',
-            DB::raw
-            (
-                'items.item as Item, items.prodcode as ProdCode, categories.category as Category, items.minimum as Minimum_stocks'
-            )
-        )
-        ->join('categories', 'categories.id', 'items.category_id')
-        ->orderBy('Category', 'ASC')
-        ->orderBy('Item', 'ASC')
-        ->get();
-        return DataTables::of($list)
-            ->addColumn('Current_stocks', function(Item $Item){
-                $Current_stocks = Stock::query()
-                    ->where('item_id', $Item->id)
-                    ->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly'])
-                    ->count();
-                return $Current_stocks;
-            })
-        ->make(true);
+        $stocks = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
+                DB::raw("SUM(CASE 
+                    WHEN stocks.status = 'in' THEN 1
+                    WHEN stocks.status = 'defectives' THEN 1
+                    WHEN stocks.status = 'FOR RECEIVING' THEN 1
+                    WHEN stocks.status = 'demo' THEN 1
+                    WHEN stocks.status = 'assembly' THEN 1
+                    ELSE 0 END
+                ) as Current_stocks"))
+            ->join('categories', 'categories.id', 'items.category_id')
+            ->join('stocks', 'stocks.item_id', 'items.id')
+            ->groupBy('items.id','Item','ProdCode','Category')
+            ->orderBy('Category', 'ASC')
+            ->orderBy('Item', 'ASC')
+            ->get();
+        
+        foreach($stocks as $stock){
+            if($stock->Current_stocks <= $stock->Minimum_stocks){
+                $list[]=$stock;
+            }
+        }
+
+        return DataTables::of($list)->make(true);
     }
 
     public function getItems(Request $request){

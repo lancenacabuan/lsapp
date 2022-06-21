@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Activitylog\Models\Activity;
+use App\Models\Stock;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Location;
@@ -102,6 +103,13 @@ class FileMaintenanceController extends Controller
         }
         else {
             $result = 'true';
+
+            $stocks = new Stock;
+            $stocks->item_id = $id;
+            $stocks->user_id = auth()->user()->id;
+            $stocks->status = 'default';
+            $stocks->qty = '1';
+            $stocks->save();
 
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;

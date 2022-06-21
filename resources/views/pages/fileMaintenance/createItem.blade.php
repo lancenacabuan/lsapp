@@ -7,11 +7,13 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
-            <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 90px;">Item Code</label>
-                <input class="form-control form-control-sm" style="width: 220px; margin-right: 10px;" name="aic_item_code" id="aic_item_code" maxlength="100" placeholder="Please enter item code" required>
+            <div class="form-inline" style="margin-left: 5px;">
+                <label class="form-control form-control-sm" style="width: 85px;">Item Code</label>
+                <input class="form-control form-control-sm" style="width: 200px; margin-right: 10px;" name="aic_item_code" id="aic_item_code" maxlength="100" placeholder="Please enter item code" required>
                 <label class="form-control form-control-sm" style="width: 120px;">Item Description</label>
-                <input class="form-control form-control-sm" style="width: 600px;" name="aic_item_description" id="aic_item_description" maxlength="255" placeholder="Please enter assembled item description to proceed" required>
+                <input class="form-control form-control-sm" style="width: 470px; margin-right: 10px;" name="aic_item_description" id="aic_item_description" maxlength="255" placeholder="Please enter assembled item description to proceed" required>
+                <label class="form-control form-control-sm" style="width: 110px;">Minimum Stock</label>
+                <input class="form-control form-control-sm" style="width: 80px; margin-right: 10px;" name="aic_minimum" id="aic_minimum" type="number" min="1" placeholder="Qty" onkeyup="if(value<1) value=1;" required>
             </div>
         </div>
         <div id="partsDetails" style="display: none;">

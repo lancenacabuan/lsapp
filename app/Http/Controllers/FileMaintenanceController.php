@@ -48,7 +48,7 @@ class FileMaintenanceController extends Controller
     }
 
     public function asm_items(){
-        $list = Item::select('items.id', 'items.item', 'items.prodcode', 'categories.category', 'items.category_id', 'items.UOM')
+        $list = Item::select('items.id', 'items.item', 'items.prodcode', 'categories.category', 'items.category_id', 'items.UOM AS uom', 'items.minimum' )
             ->where('items.assemble', 'YES')
             ->join('categories', 'categories.id', 'category_id')
             ->orderBy('item', 'ASC')

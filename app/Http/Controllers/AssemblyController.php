@@ -421,7 +421,8 @@ class AssemblyController extends Controller
             $items->created_by = auth()->user()->id;
             $items->item = ucwords($request->item);
             $items->prodcode = $request->prodcode;
-            $items->category_id = '58';
+            $items->category_id = '0';
+            $items->minimum = $request->minimum;
             $items->UOM = 'Unit';
             $items->assemble = 'YES';
             $items->serialize = 'YES';
@@ -509,7 +510,8 @@ class AssemblyController extends Controller
             $items->created_by = auth()->user()->id;
             $items->item = $item_name;
             $items->prodcode = $request->item_code;
-            $items->category_id = '58';
+            $items->category_id = '0';
+            $items->minimum = $request->minimum;
             $sql = $items->save();
             $id = $items->id;
 
@@ -531,10 +533,16 @@ class AssemblyController extends Controller
                 else{
                     $item_code = NULL;
                 }
+                if($request->minimum != $request->minimum_original){
+                    $minimum = "[Minimum Stock: FROM '$request->minimum_original' TO '$request->minimum']";
+                }
+                else{
+                    $minimum = NULL;
+                }
                 
                 $userlogs = new UserLogs;
                 $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "ASSEMBLED ITEM UPDATED: User successfully updated details of '$request->item_name_original' with the following CHANGES: $item_desc $item_code.";
+                $userlogs->activity = "ASSEMBLED ITEM UPDATED: User successfully updated details of '$request->item_name_original' with the following CHANGES: $item_desc $item_code $minimum.";
                 $userlogs->save();
             }
 

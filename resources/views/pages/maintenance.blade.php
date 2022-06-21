@@ -44,6 +44,7 @@
         <tr>
             <th style="width: 25%;">ITEM CODE</th>
             <th>ITEM DESCRIPTION</th>
+            <th style="width: 10%;">MIN. STOCK</th>
         </tr>
     </thead>
 </table>

@@ -47,7 +47,8 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         },
         columns: [
             { data: 'prodcode' },
-            { data: 'item' }
+            { data: 'item' },
+            { data: 'minimum' }
         ],
         order: [],
         initComplete: function(){
@@ -1122,8 +1123,9 @@ setInterval(checkCreateItem, 0);
 function checkCreateItem(){
     var item_description = $.trim($('#aic_item_description').val());
     var item_code = $('#aic_item_code').val();
+    var minimum = $('#aic_minimum').val();
     if($('#createItem').is(':visible')){
-        if(item_description && item_code){
+        if(item_description && item_code && minimum){
             $('#partsDetails').show();
         }
         else{
@@ -1161,6 +1163,7 @@ $(".btnCreateItem").on('click', function(){
     });
     $('#aic_item_description').val('');
     $('#aic_item_code').val('');
+    $('#aic_minimum').val('');
     $("#categoryAssembly").val('');
     $("#itemAssembly").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();
     $("#qtyAssembly").val('');
@@ -1293,6 +1296,7 @@ $("#tblCreateItem").on('click', '.delete-row', function(){
 $('#btnSave').on('click', function(){
     var item_description = $.trim($('#aic_item_description').val());
     var item_code = $('#aic_item_code').val();
+    var minimum = $('#aic_minimum').val();
     swal({
         title: "CREATE NEW ASSEMBLED ITEM?",
         text: "You are about to CREATE a new Assembled Item!",
@@ -1310,7 +1314,8 @@ $('#btnSave').on('click', function(){
                 },
                 data:{
                     item: item_description,
-                    prodcode: item_code
+                    prodcode: item_code,
+                    minimum: minimum
                 },
                 success: function(data){
                     if(data.result == 'true'){
@@ -1406,7 +1411,9 @@ function runCompare(){
         var item_original = $('#aim_item_name_details_original').val();
         var code_current = $('#aim_item_code_details').val();
         var code_original = $('#aim_item_code_details_original').val();
-        if((!item_current || !code_current) || (item_current.toUpperCase() == item_original.toUpperCase() && code_current == code_original)){
+        var minimum_current = $('#aim_minimum_details').val();
+        var minimum_original = $('#aim_minimum_details_original').val();
+        if((!item_current || !code_current || !minimum_current) || (item_current.toUpperCase() == item_original.toUpperCase() && code_current == code_original && minimum_current == minimum_original)){
             $('#btnUpdate').hide();
         }
         else{
@@ -1430,6 +1437,9 @@ $('#assemblyitemTable tbody').on('click', 'tr', function(){
     var prodcode = data.prodcode;
     $('#aim_item_code_details').val(prodcode);
     $('#aim_item_code_details_original').val(prodcode);
+    var minimum = data.minimum;
+    $('#aim_minimum_details').val(minimum);
+    $('#aim_minimum_details_original').val(minimum);
     
     $('.modal-body').html();
     $('#detailsAssemblyItem').modal('show');
@@ -1476,6 +1486,8 @@ $('#btnUpdate').on('click', function(){
     var item_name = $.trim($('#aim_item_name_details').val());
     var item_code_original = $('#aim_item_code_details_original').val();
     var item_code = $.trim($('#aim_item_code_details').val());
+    var minimum_original = $('#aim_minimum_details_original').val();
+    var minimum = $.trim($('#aim_minimum_details').val());
     swal({
         title: "UPDATE ASSEMBLED ITEM?",
         text: "You are about to UPDATE this Assembled Item!",
@@ -1496,6 +1508,8 @@ $('#btnUpdate').on('click', function(){
                     item_name: item_name,
                     item_code_original: item_code_original,
                     item_code: item_code,
+                    minimum_original: minimum_original,
+                    minimum: minimum
                 },
                 success: function(data){
                     if(data == 'true'){

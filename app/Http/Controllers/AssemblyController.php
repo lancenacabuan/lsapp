@@ -434,6 +434,13 @@ class AssemblyController extends Controller
             }
             else {
                 $result = 'true';
+
+                $stocks = new Stock;
+                $stocks->item_id = $id;
+                $stocks->user_id = auth()->user()->id;
+                $stocks->status = 'default';
+                $stocks->qty = '1';
+                $stocks->save();
             }
             $data = array('result' => $result, 'id' => $id);
             return response()->json($data);

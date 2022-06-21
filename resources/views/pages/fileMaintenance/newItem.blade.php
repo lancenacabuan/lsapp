@@ -25,6 +25,10 @@
                 <input class="form-control form-control-sm" id="item_name" style="width: 600px;" type="text" maxlength="255" placeholder="Please enter item description">
             </div>
             <div class="form-inline" style="margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 168px;">Minimum Stock</label>
+                <input class="form-control form-control-sm" id="minimum" style="width: 600px;" type="number" min="1" placeholder="Please enter minimum stock" onkeyup="if(value<1) value=1;">
+            </div>
+            <div class="form-inline" style="margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 168px;">Unit of Measure (UOM)</label>
                 <select class="form-control-sm form-select-sm" id="item_uom" style="padding: 0.25rem 0.5rem; height: 30px !important; width: 600px;">
                     <option value="" selected disabled>Select UOM</option>

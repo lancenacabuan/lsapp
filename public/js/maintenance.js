@@ -19,7 +19,8 @@ if($(location).attr('pathname')+window.location.search == '/maintenance'){
             { data: 'category' },
             { data: 'prodcode' },
             { data: 'item' },
-            { data: 'UOM' },
+            { data: 'minimum' },
+            { data: 'uom' },
             { data: 'serialize' }
         ],
         order: [],
@@ -386,6 +387,7 @@ $('.btnNewItem').on('click', function(){
     $('#item_category').val('');
     $('#prodcode').val('');
     $('#item_name').val('');
+    $('#minimum').val('');
     $('#item_uom').val('');
     $('.divSerial').hide();
     $('#serialize').prop('checked', true);
@@ -410,6 +412,7 @@ $('#btnSaveItem').on('click', function(){
     var item_category = $('#item_category').val();
     var item_name = $.trim($('#item_name').val());
     var prodcode = $.trim($('#prodcode').val());
+    var minimum = $('#minimum').val();
     var item_uom = $('#item_uom').val();
     if($('#serialize').is(":checked")){
         var serialize = 'YES';
@@ -420,60 +423,63 @@ $('#btnSaveItem').on('click', function(){
     if(item_uom != 'Unit'){
         serialize = 'NO';
     }
-    if(item_name != "" && prodcode != "" && $('#item_category').find('option:selected').text() != 'Select Category' && $('#item_uom').find('option:selected').text() != 'Select UOM'){
-        swal({
-            title: "ADD NEW ITEM?",
-            text: "You are about to ADD this new item!",
-            icon: "warning",
-            buttons: true,
-        })
-        .then((willDelete) => {
-            if(willDelete){
-                $.ajax({
-                    url: "/saveItem",
-                    type: "POST",
-                    headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
-                    },
-                    data:{
-                        _token: $("#csrf").val(),
-                        category_name: category_name,
-                        item_category: item_category,
-                        item_name: item_name,
-                        prodcode: prodcode,
-                        item_uom: item_uom,
-                        serialize: serialize
-                    },
-                    success: function(data){
-                        if(data.result == 'true'){
-                            $('#newItem').modal('hide');
-                            swal("SAVE SUCCESS", "New Item has been saved successfully!", "success");
-                            tblItem.ajax.reload(null, false);
-                        }
-                        else if(data.result == 'duplicate'){
-                            swal("DUPLICATE ITEM", "Item Description already exists!", "error");
-                            return false;
-                        }
-                        else{
-                            $('#newItem').modal('hide');
-                            swal("SAVE FAILED", "New Item save failed!", "error");
-                            tblItem.ajax.reload(null, false);
-                        }
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            window.location.href = '/maintenance';
-                        }
-                        alert(data.responseText);
-                    }
-                });
-            }
-        });
-    }
-    else{
+    if(!item_category || !item_name || !prodcode || !minimum || !item_uom ){
         swal('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
+    swal({
+        title: "ADD NEW ITEM?",
+        text: "You are about to ADD this new item!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                url: "/saveItem",
+                type: "POST",
+                headers:{
+                'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    _token: $("#csrf").val(),
+                    category_name: category_name,
+                    item_category: item_category,
+                    item_name: item_name,
+                    prodcode: prodcode,
+                    minimum: minimum,
+                    item_uom: item_uom,
+                    serialize: serialize
+                },
+                success: function(data){
+                    if(data.result == 'true'){
+                        $('#newItem').modal('hide');
+                        swal("SAVE SUCCESS", "New Item has been saved successfully!", "success");
+                        tblItem.ajax.reload(null, false);
+                    }
+                    else if(data.result == 'duplicate'){
+                        swal("DUPLICATE ITEM", "Item Description already exists!", "error");
+                        return false;
+                    }
+                    else if(data.result == 'duplicatecode'){
+                        swal("DUPLICATE ITEM CODE", "Item Code already exists!", "error");
+                        return false;
+                    }
+                    else{
+                        $('#newItem').modal('hide');
+                        swal("SAVE FAILED", "New Item save failed!", "error");
+                        tblItem.ajax.reload(null, false);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/maintenance';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
 });
 
 $('#itemTable tbody').on('click', 'tr', function(){
@@ -496,7 +502,10 @@ $('#itemTable tbody').on('click', 'tr', function(){
     var prodcode = data.prodcode;
         $('#prodcode_details').val(prodcode);
         $('#prodcode_details_original').val(prodcode);
-    var item_uom = data.UOM;
+    var minimum = data.minimum;
+        $('#minimum_details').val(minimum);
+        $('#minimum_details_original').val(minimum);
+    var item_uom = data.uom;
         $('#item_uom_details').val(item_uom);
         $('#item_uom_details_original').val(item_uom);
     var serialize = data.serialize;
@@ -536,12 +545,14 @@ $('#btnUpdateItem').on('click', function(){
     var item_category_original = $('#item_category_details_original').val();
     var item_name_original = $('#item_name_details_original').val();
     var prodcode_original = $('#prodcode_details_original').val();
+    var minimum_original = $('#minimum_details_original').val();
     var item_uom_original = $('#item_uom_details_original').val();
     var serialize_original = $('#serialize_details_original').val();
     var category_name = $('#item_category_details').find('option:selected').text();
     var item_category = $('#item_category_details').val();
     var item_name = $.trim($('#item_name_details').val());
     var prodcode = $.trim($('#prodcode_details').val());
+    var minimum = $('#minimum_details').val();
     var item_uom = $('#item_uom_details').val();
     if($('#serialize_details').is(":checked")){
         var serialize = 'YES';
@@ -552,72 +563,75 @@ $('#btnUpdateItem').on('click', function(){
     if(item_uom != 'Unit'){
         serialize = 'NO';
     }
-    
-    if(item_name == "" || prodcode == "" || $('#item_category_details').find('option:selected').text() == 'Select Category' || $('#item_uom_details').find('option:selected').text() == 'Select UOM'){
+    if(!item_category || !item_name || !prodcode || !minimum || !item_uom ){
         swal('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
-    else if(item_name_original.toUpperCase() == item_name.toUpperCase() && prodcode_original == prodcode && item_category_original == item_category && item_uom_original == item_uom && serialize_original == serialize){
+    if(item_name_original.toUpperCase() == item_name.toUpperCase() && prodcode_original == prodcode && item_category_original == item_category && minimum_original == minimum && item_uom_original == item_uom && serialize_original == serialize){
         swal("NO CHANGES FOUND", "Item Details are still all the same!", "error");
         return false;
     }
-    else{
-        swal({
-            title: "UPDATE ITEM?",
-            text: "You are about to UPDATE this item!",
-            icon: "warning",
-            buttons: true,
-        })
-        .then((willDelete) => {
-            if(willDelete){
-                $.ajax({
-                    url: "/updateItem",
-                    type: "PUT",
-                    headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
-                    },
-                    data:{
-                        _token: $("#csrf").val(),
-                        item_id: item_id,
-                        category_name_original: category_name_original,
-                        item_category_original: item_category_original,
-                        item_name_original: item_name_original,
-                        prodcode_original: prodcode_original,
-                        item_uom_original: item_uom_original,
-                        serialize_original: serialize_original,
-                        category_name: category_name,
-                        item_category: item_category,
-                        item_name: item_name,
-                        prodcode: prodcode,
-                        item_uom: item_uom,
-                        serialize: serialize
-                    },
-                    success: function(data){
-                        if(data.result == 'true'){
-                            $('#detailsItem').modal('hide');
-                            swal("UPDATE SUCCESS", "Item details has been updated successfully!", "success");
-                            tblItem.ajax.reload(null, false);
-                        }
-                        else if(data.result == 'duplicate'){
-                            swal("DUPLICATE ITEM", "Item Description already exists!", "error");
-                            return false;
-                        }
-                        else{
-                            $('#detailsItem').modal('hide');
-                            swal("UPDATE FAILED", "Item details update failed!", "error");
-                            tblItem.ajax.reload(null, false);
-                        }
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            window.location.href = '/maintenance';
-                        }
-                        alert(data.responseText);
+    swal({
+        title: "UPDATE ITEM?",
+        text: "You are about to UPDATE this item!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                url: "/updateItem",
+                type: "PUT",
+                headers:{
+                'X-CSRF-TOKEN': $("#csrf").val()
+                },
+                data:{
+                    _token: $("#csrf").val(),
+                    item_id: item_id,
+                    category_name_original: category_name_original,
+                    item_category_original: item_category_original,
+                    item_name_original: item_name_original,
+                    prodcode_original: prodcode_original,
+                    minimum_original: minimum_original,
+                    item_uom_original: item_uom_original,
+                    serialize_original: serialize_original,
+                    category_name: category_name,
+                    item_category: item_category,
+                    item_name: item_name,
+                    prodcode: prodcode,
+                    minimum: minimum,
+                    item_uom: item_uom,
+                    serialize: serialize
+                },
+                success: function(data){
+                    if(data.result == 'true'){
+                        $('#detailsItem').modal('hide');
+                        swal("UPDATE SUCCESS", "Item details has been updated successfully!", "success");
+                        tblItem.ajax.reload(null, false);
                     }
-                });
-            }
-        });
-    }
+                    else if(data.result == 'duplicate'){
+                        swal("DUPLICATE ITEM", "Item Description already exists!", "error");
+                        return false;
+                    }
+                    else if(data.result == 'duplicatecode'){
+                        swal("DUPLICATE ITEM CODE", "Item Code already exists!", "error");
+                        return false;
+                    }
+                    else{
+                        $('#detailsItem').modal('hide');
+                        swal("UPDATE FAILED", "Item details update failed!", "error");
+                        tblItem.ajax.reload(null, false);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/maintenance';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
 });
 
 $(document).on('keyup', '#prodcode', function(){

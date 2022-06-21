@@ -33,6 +33,7 @@
             <th style="width: 15%;">CATEGORY</th>
             <th style="width: 15%;">ITEM CODE</th>
             <th>ITEM DESCRIPTION</th>
+            <th style="width: 6%;">MIN.</th>
             <th style="width: 6%;">UOM</th>
             <th style="width: 9%;">SERIAL (Y/N)</th>
         </tr>

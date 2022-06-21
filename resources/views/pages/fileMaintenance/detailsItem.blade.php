@@ -12,6 +12,7 @@
             <input type="hidden" name="item_category_details_original" id="item_category_details_original">
             <input type="hidden" name="item_name_details_original" id="item_name_details_original">
             <input type="hidden" name="prodcode_details_original" id="prodcode_details_original">
+            <input type="hidden" name="minimum_details_original" id="minimum_details_original">
             <input type="hidden" name="item_uom_details_original" id="item_uom_details_original">
             <input type="hidden" name="serialize_details_original" id="serialize_details_original">
             <div class="form-inline">
@@ -30,6 +31,10 @@
             <div class="form-inline" style="margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 168px;">Item Description</label>
                 <input class="form-control form-control-sm" id="item_name_details" style="width: 600px;" type="text" maxlength="255" placeholder="Please enter item description">
+            </div>
+            <div class="form-inline" style="margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 168px;">Minimum Stock</label>
+                <input class="form-control form-control-sm" id="minimum_details" style="width: 600px;" type="number" min="1" placeholder="Please enter minimum stock" onkeyup="if(value<1) value=1;">
             </div>
             <div class="form-inline" style="margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 168px;">Unit of Measure (UOM)</label>

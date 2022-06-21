@@ -38,7 +38,7 @@ class FileMaintenanceController extends Controller
     }
 
     public function fm_items(){
-        $list = Item::select('items.id', 'items.item', 'items.prodcode', 'categories.category', 'items.category_id', 'items.UOM', 'items.serialize')
+        $list = Item::select('items.id', 'items.item', 'items.prodcode', 'categories.category', 'items.category_id', 'items.UOM AS uom', 'items.serialize', 'items.minimum')
             ->where('items.assemble', 'NO')
             ->join('categories', 'categories.id', 'category_id')
             ->orderBy('category', 'ASC')
@@ -74,35 +74,43 @@ class FileMaintenanceController extends Controller
             $data = array('result' => 'duplicate');
             return response()->json($data);
         }
-        else {
-            $item_name = ucwords($request->item_name);
 
-            $items = new Item;
-            $items->created_by = auth()->user()->id;
-            $items->item = $item_name;
-            $items->prodcode = $request->prodcode;
-            $items->category_id = $request->item_category;
-            $items->UOM = $request->item_uom;
-            $items->assemble = 'NO';
-            $items->serialize = $request->serialize;
-            $sql = $items->save();
-            $id = $items->id;
-
-            if(!$sql){
-                $result = 'false';
-            }
-            else {
-                $result = 'true';
-
-                $userlogs = new UserLogs;
-                $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "ITEM ADDED: User successfully saved new Item '$item_name' with ItemID#$id under Category '$request->category_name'.";
-                $userlogs->save();
-            }
-
-            $data = array('result' => $result);
+        $itemcode = Item::query()->select()
+            ->whereRaw('UPPER(prodcode) = ?',strtoupper($request->prodcode))
+            ->count();
+        if($itemcode != 0){
+            $data = array('result' => 'duplicatecode');
             return response()->json($data);
         }
+
+        $item_name = ucwords($request->item_name);
+
+        $items = new Item;
+        $items->created_by = auth()->user()->id;
+        $items->item = $item_name;
+        $items->prodcode = $request->prodcode;
+        $items->category_id = $request->item_category;
+        $items->minimum = $request->minimum;
+        $items->UOM = $request->item_uom;
+        $items->assemble = 'NO';
+        $items->serialize = $request->serialize;
+        $sql = $items->save();
+        $id = $items->id;
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "ITEM ADDED: User successfully saved new Item '$item_name' with ItemID#$id under Category '$request->category_name'.";
+            $userlogs->save();
+        }
+
+        $data = array('result' => $result);
+        return response()->json($data);
     }
 
     public function updateItem(Request $request){       
@@ -118,77 +126,96 @@ class FileMaintenanceController extends Controller
             $data = array('result' => 'duplicate');
             return response()->json($data);
         }
-        else {
-            $item_name = ucwords($request->item_name);
 
-            $items = Item::find($request->input('item_id'));
-            $items->created_by = auth()->user()->id;
-            $items->item = $item_name;
-            $items->prodcode = $request->prodcode;
-            $items->category_id = $request->item_category;
-            $items->UOM = $request->item_uom;
-            $items->serialize = $request->serialize;
-            $sql = $items->save();
-            $id = $items->id;
-
-            if(!$sql){
-                $result = 'false';
-            }
-            else {
-                $result = 'true';
-                
-                if($request->item_category != $request->item_category_original){
-                    $category_name = "[Category Name: FROM '$request->category_name_original' TO '$request->category_name']";
-                }
-                else{
-                    $category_name = NULL;
-                }
-                if(strtoupper($request->item_name) != strtoupper($request->item_name_original)){
-                    $item_desc = "[Item Description: FROM '$request->item_name_original' TO '$item_name']";
-                }
-                else{
-                    $item_desc = NULL;
-                }
-                if($request->prodcode != $request->prodcode_original){
-                    $prodcode = "[Item Code: FROM '$request->prodcode_original' TO '$request->prodcode']";
-                }
-                else{
-                    $prodcode = NULL;
-                }
-                if($request->item_uom != $request->item_uom_original){
-                    $item_uom = "[Unit of Measure (UOM): FROM '$request->item_uom_original' TO '$request->item_uom']";
-                }
-                else{
-                    $item_uom = NULL;
-                }
-                if($request->item_uom == 'Unit' && ($request->serialize != $request->serialize_original)){
-                    if($request->serialize == 'YES'){
-                        $serialize = 'Required';
-                    }
-                    else{
-                        $serialize = 'Optional';
-                    }
-                    if($request->serialize_original == 'YES'){
-                        $serialize_original = 'Required';
-                    }
-                    else{
-                        $serialize_original = 'Optional';
-                    }
-                    $serial = "[Serial (Required/Optional): FROM '$serialize_original' TO '$serialize']";
-                }
-                else{
-                    $serial = NULL;
-                }
-
-                $userlogs = new UserLogs;
-                $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "ITEM UPDATED: User successfully updated details of '$request->item_name_original' with the following CHANGES: $category_name $item_desc $prodcode $item_uom $serial.";
-                $userlogs->save();
-            }
-
-            $data = array('result' => $result);
+        if(strtoupper($request->prodcode) != strtoupper($request->prodcode_original)){
+            $itemcode = Item::query()->select()
+                ->whereRaw('UPPER(prodcode) = ?',strtoupper($request->prodcode))
+                ->count();
+        }
+        else{
+            $itemcode = 0;
+        }
+        if($itemcode != 0){
+            $data = array('result' => 'duplicatecode');
             return response()->json($data);
         }
+
+        $item_name = ucwords($request->item_name);
+
+        $items = Item::find($request->input('item_id'));
+        $items->created_by = auth()->user()->id;
+        $items->item = $item_name;
+        $items->prodcode = $request->prodcode;
+        $items->category_id = $request->item_category;
+        $items->minimum = $request->minimum;
+        $items->UOM = $request->item_uom;
+        $items->serialize = $request->serialize;
+        $sql = $items->save();
+        $id = $items->id;
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+            
+            if($request->item_category != $request->item_category_original){
+                $category_name = "[Category Name: FROM '$request->category_name_original' TO '$request->category_name']";
+            }
+            else{
+                $category_name = NULL;
+            }
+            if(strtoupper($request->item_name) != strtoupper($request->item_name_original)){
+                $item_desc = "[Item Description: FROM '$request->item_name_original' TO '$item_name']";
+            }
+            else{
+                $item_desc = NULL;
+            }
+            if($request->prodcode != $request->prodcode_original){
+                $prodcode = "[Item Code: FROM '$request->prodcode_original' TO '$request->prodcode']";
+            }
+            else{
+                $prodcode = NULL;
+            }
+            if($request->minimum != $request->minimum_original){
+                $minimum = "[Minimum Stock: FROM '$request->minimum_original' TO '$request->minimum']";
+            }
+            else{
+                $minimum = NULL;
+            }
+            if($request->item_uom != $request->item_uom_original){
+                $item_uom = "[Unit of Measure (UOM): FROM '$request->item_uom_original' TO '$request->item_uom']";
+            }
+            else{
+                $item_uom = NULL;
+            }
+            if($request->item_uom == 'Unit' && ($request->serialize != $request->serialize_original)){
+                if($request->serialize == 'YES'){
+                    $serialize = 'Required';
+                }
+                else{
+                    $serialize = 'Optional';
+                }
+                if($request->serialize_original == 'YES'){
+                    $serialize_original = 'Required';
+                }
+                else{
+                    $serialize_original = 'Optional';
+                }
+                $serial = "[Serial (Required/Optional): FROM '$serialize_original' TO '$serialize']";
+            }
+            else{
+                $serial = NULL;
+            }
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "ITEM UPDATED: User successfully updated details of '$request->item_name_original' with the following CHANGES: $category_name $item_desc $prodcode $minimum $item_uom $serial.";
+            $userlogs->save();
+        }
+
+        $data = array('result' => $result);
+        return response()->json($data);
     }
 
     public function saveCategory(Request $request){

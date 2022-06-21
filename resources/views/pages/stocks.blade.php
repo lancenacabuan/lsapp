@@ -3,6 +3,8 @@
 <div class="text-center" style="margin-bottom: -35px;">
     <input class="text-center text-control spChar" style="zoom: 90%; width: 300px;" id="z_serial" type="search" placeholder="SEARCH SERIAL NUMBER" autocomplete="off"/>
 </div>
+<button class="btn btn-primary bp mr-1" id="btnGenerate" type="button">GENERATE REPORT</button>
+<button class="btn btn-primary bp mr-1" id="btnDownload" type="button" style="display: none;">DOWNLOAD REPORT</button>
 <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
 <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
 @role('admin|encoder') {{---ROLES---}}
@@ -92,6 +94,19 @@
         </thead>
     </table>
 </div>
+<div id="MinStocksTableDiv" style="display: none;">
+    <table id="MinStocksTable" class="table-hover table MinStocksTable display" style="width: 100%; cursor: pointer;">
+        <thead style="background-color: #0d1a80; color: white; zoom: 85%;">                            
+            <tr>
+                <th>CATEGORY</th>
+                <th>ITEM CODE</th>
+                <th>ITEM DESCRIPTION</th>
+                <th>CURRENT STOCKS</th>
+                <th>MINIMUM STOCKS</th>
+            </tr>
+        </thead>
+    </table>
+</div>
 <div class="modal fade in" id="editSerialModal">
     <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
@@ -126,6 +141,12 @@
     }
     #SerialTable_length, #SerialTable_filter{
         margin-top: -90px;
+    }
+    #MinStocksTable_length, #MinStocksTable_filter{
+        margin-top: -90px;
+    }
+    .dt-buttons{
+        display: none;
     }
     .text-control {
         width: 100%;

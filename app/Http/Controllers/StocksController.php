@@ -332,6 +332,29 @@ class StocksController extends Controller
         }
     }
 
+    public function minstocks_data(Request $request){
+        $list = Item::query()->select(
+            'items.id',
+            DB::raw
+            (
+                'items.item as Item, items.prodcode as ProdCode, categories.category as Category, items.minimum as Minimum_stocks'
+            )
+        )
+        ->join('categories', 'categories.id', 'items.category_id')
+        ->orderBy('Category', 'ASC')
+        ->orderBy('Item', 'ASC')
+        ->get();
+        return DataTables::of($list)
+            ->addColumn('Current_stocks', function(Item $Item){
+                $Current_stocks = Stock::query()
+                    ->where('item_id', $Item->id)
+                    ->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly'])
+                    ->count();
+                return $Current_stocks;
+            })
+        ->make(true);
+    }
+
     public function getItems(Request $request){
         $list = Item::query()->select('id','item')
             ->where('category_id',$request->category_id)

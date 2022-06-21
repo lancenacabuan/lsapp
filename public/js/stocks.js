@@ -1,18 +1,23 @@
-var categoryID, categoryName, CategoryTable, ItemTable, ItemSerialTable, SerialTable, table;
+var categoryID, categoryName, 
+CategoryTable, ItemTable, ItemSerialTable, SerialTable, MinStocksTable, table;
 function destroyTables(){
     $('table.CategoryTable').dataTable().fnDestroy();
     $('table.ItemTable').dataTable().fnDestroy();
     $('table.ItemSerialTable').dataTable().fnDestroy();
     $('table.SerialTable').dataTable().fnDestroy();
+    $('table.MinStocksTable').dataTable().fnDestroy();
     $('svg').remove();
 }
 
 function category(){
     destroyTables();
+    $('#btnGenerate').show();
+    $('#btnDownload').hide();
     $('#CategoryTableDiv').show();
     $('#ItemTableDiv').hide();
     $('#ItemSerialTableDiv').hide();
     $('#SerialTableDiv').hide();
+    $('#MinStocksTableDiv').hide();
     $('#btnBack').hide();
     $('#backBtn').hide();
     $('#stocksHeader').html('WAREHOUSE STOCKS');
@@ -56,10 +61,13 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     categoryID = trdata.id;
     categoryName = decodeHtml(trdata.Category);
     destroyTables();
+    $('#btnGenerate').show();
+    $('#btnDownload').hide();
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').show();
     $('#ItemSerialTableDiv').hide();
     $('#SerialTableDiv').hide();
+    $('#MinStocksTableDiv').hide();
     $('#btnBack').hide();
     $('#backBtn').show();
     $('#stocksHeader').html(categoryName);
@@ -103,10 +111,13 @@ $('#backBtn').on('click', function(){
 
 $('#btnBack').on('click', function(){
     destroyTables();
+    $('#btnGenerate').show();
+    $('#btnDownload').hide();
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').show();
     $('#ItemSerialTableDiv').hide();
     $('#SerialTableDiv').hide();
+    $('#MinStocksTableDiv').hide();
     $('#btnBack').hide();
     $('#backBtn').show();
     $('#stocksHeader').html(categoryName);
@@ -146,10 +157,13 @@ $('#btnBack').on('click', function(){
 $(document).on('click', '#ItemTable tbody tr', function(){
     var trdata = ItemTable.row(this).data();
     destroyTables();
+    $('#btnGenerate').show();
+    $('#btnDownload').hide();
     $('#CategoryTableDiv').hide();
     $('#ItemTableDiv').hide();
     $('#ItemSerialTableDiv').show();
     $('#SerialTableDiv').hide();
+    $('#MinStocksTableDiv').hide();
     $('#btnBack').show();
     $('#backBtn').hide();
     $('#stocksHeader').html(decodeHtml(trdata.Item));
@@ -284,10 +298,13 @@ $('#z_serial').on('keyup', function(){
         },
         success: function(data){
             destroyTables();
+            $('#btnGenerate').show();
+            $('#btnDownload').hide();
             $('#CategoryTableDiv').hide();
             $('#ItemTableDiv').hide();
             $('#ItemSerialTableDiv').hide();
             $('#SerialTableDiv').show();
+            $('#MinStocksTableDiv').hide();
             $('#btnBack').hide();
             $('#backBtn').show();
             $('#stocksHeader').html($('#z_serial').val());
@@ -371,6 +388,47 @@ document.querySelectorAll('input[type=search]').forEach(function(input){
             }, 0);
         }
     });
+});
+
+$('#btnGenerate').on('click', function(){
+    destroyTables();
+    $('#btnGenerate').hide();
+    $('#btnDownload').show();
+    $('#CategoryTableDiv').hide();
+    $('#ItemTableDiv').hide();
+    $('#ItemSerialTableDiv').hide();
+    $('#SerialTableDiv').hide();
+    $('#MinStocksTableDiv').show();
+    $('#btnBack').hide();
+    $('#backBtn').show();
+    $('#stocksHeader').html('BELOW MINIMUM STOCKS');
+    $('#loading').show(); Spinner(); Spinner.show();
+    MinStocksTable = 
+        $('table.MinStocksTable').DataTable({
+            dom: 'Blftrip',
+            buttons: ['excel'],
+            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+            iDisplayLength: -1,
+            serverSide: true,
+            ajax:{
+                url: '/minstocks_data',
+            },
+            columns: [
+                { data: 'Category', width: '15%' },
+                { data: 'ProdCode', width: '15%' },
+                { data: 'Item' },
+                { data: 'Current_stocks', width: '12%' },
+                { data: 'Minimum_stocks', width: '12%' }
+            ],
+            order: [],
+            initComplete: function(){
+                return notifyDeadline();
+            }
+        });
+});
+
+$('#btnDownload').on('click', function(){
+    $('.buttons-excel').click();
 });
 
 $('#serial').on('keyup', function(){

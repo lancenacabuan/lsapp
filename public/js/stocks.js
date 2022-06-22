@@ -41,6 +41,12 @@ function category(){
                 { data: 'Malabon', width: '8%' },
                 { data: 'Total_stocks', width: '10%' }
             ],
+            fnRowCallback: function(nRow, aData) {
+                if(aData.RowColor == 'RED') {
+                    $('td', nRow).css('color', 'red');
+                    $('td', nRow).css('font-weight', 'bold');
+                }
+            },
             order: [],
             initComplete: function(){
                 return notifyDeadline();
@@ -97,6 +103,12 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
                 { data: 'Malabon', width: '7%' },
                 { data: 'Total_stocks', width: '10%' }
             ],
+            fnRowCallback: function(nRow, aData) {
+                if(aData.RowColor == 'RED') {
+                    $('td', nRow).css('color', 'red');
+                    $('td', nRow).css('font-weight', 'bold');
+                }
+            },
             order: [],
             initComplete: function(){
                 return notifyDeadline();
@@ -147,6 +159,12 @@ $('#btnBack').on('click', function(){
                 { data: 'Malabon', width: '7%' },
                 { data: 'Total_stocks', width: '10%' }
             ],
+            fnRowCallback: function(nRow, aData) {
+                if(aData.RowColor == 'RED') {
+                    $('td', nRow).css('color', 'red');
+                    $('td', nRow).css('font-weight', 'bold');
+                }
+            },
             order: [],
             initComplete: function(){
                 return notifyDeadline();

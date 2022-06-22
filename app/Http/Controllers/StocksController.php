@@ -68,7 +68,29 @@ class StocksController extends Controller
             ->join('stocks', 'stocks.item_id', 'items.id')
             ->groupBy('categories.id','Category')
             ->orderBy('Category', 'ASC')
-            ->get();
+            ->get()
+            ->toArray();
+        
+            foreach($list as $key => $value){
+                $items = Item::query()->select('items.id',
+                    DB::raw
+                    ("
+                        minimum as Minimum_stocks,
+                        SUM(CASE WHEN stocks.status = 'in' OR stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' OR stocks.status = 'demo' OR stocks.status = 'assembly' THEN 1 ELSE 0 END) as Total_stocks
+                    ")
+                )
+                ->where('items.category_id', $value['id'])
+                ->join('stocks', 'stocks.item_id', 'items.id')
+                ->groupBy('items.id')
+                ->orderBy('Item', 'ASC')
+                ->get()
+                ->toArray();
+                foreach($items as $itemkey => $itemvalue){
+                    if($itemvalue['Total_stocks'] <= $itemvalue['Minimum_stocks']){
+                        $list[$key]['RowColor'] = 'RED';
+                    }
+                }
+            }
 
         return DataTables::of($list)
             // ->addColumn('Defective', function(Category $Category){
@@ -164,7 +186,7 @@ class StocksController extends Controller
         $list = Item::query()->select('items.id',
                 DB::raw
                 ("
-                    items.item as Item, items.prodcode as ProdCode, serialize,
+                    items.item as Item, items.prodcode as ProdCode, serialize, minimum as Minimum_stocks,
                     SUM(CASE WHEN stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' THEN 1 ELSE 0 END) as Defective,
                     SUM(CASE WHEN stocks.status = 'demo' THEN 1 ELSE 0 END) as Demo,
                     SUM(CASE WHEN stocks.status = 'assembly' THEN 1 ELSE 0 END) as Assembly,
@@ -181,7 +203,17 @@ class StocksController extends Controller
             ->join('stocks', 'stocks.item_id', 'items.id')
             ->groupBy('items.id','Item','ProdCode','serialize')
             ->orderBy('Item', 'ASC')
-            ->get();
+            ->get()
+            ->toArray();
+        
+        foreach($list as $key => $value){
+            if($value['Total_stocks'] <= $value['Minimum_stocks']){
+                $list[$key]['RowColor'] = 'RED';
+            }
+            else{
+                $list[$key]['RowColor'] = 'BLACK';
+            }
+        }
 
         return DataTables::of($list)
             // ->addColumn('Defective', function(Item $Item){

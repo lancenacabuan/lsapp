@@ -48,12 +48,9 @@
                 <span class="px-2">REPORT A PROBLEM</span>
             </button>
             <ul class="navbar-nav mr-right">
-                <a class="nav-link out" style="height: 60px; line-height: 44px; color: white; font-size: 16px; cursor: pointer;" onclick="$('#logout-form').submit();">
-                    <b>LOGOUT</b>&nbsp;&nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i>
+                <a href="{{ url('/logout') }}" class="nav-link out" style="height: 60px; line-height: 44px; color: white; font-size: 16px;">
+                    <b>LOGOUT</b><i class="fa fa-sign-out ml-2" aria-hidden="true"></i>
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
             </ul>
         </div>
     </div>

@@ -132,3 +132,20 @@ $(document).ready(function(){
         }
     );
 });
+
+$(document).ready(function(){
+    $('#hover5').hover(
+        function(){
+            $('.zoomout5').hide();
+            $('.zoomin5').show();
+            $('.box5').css({"zoom": "82%", "background-color": "#0d6efd"});
+            $('.text5').css({"color": "#0d6efd"});
+        },
+        function(){
+            $('.zoomout5').show();
+            $('.zoomin5').hide();
+            $('.box5').css({"zoom": "100%", "background-color": "#0d1a80"});
+            $('.text5').css({"color": "#0d1a80"});
+        }
+    );
+});

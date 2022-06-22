@@ -18,6 +18,7 @@ use Spatie\Activitylog\Models\Activity;
 use App\Mail\reportProblem;
 use App\Mail\replySender;
 use App\Models\Report;
+use App\Models\Item;
 use App\Models\User;
 use App\Models\UserLogs;
 use Yajra\Datatables\Datatables;
@@ -35,7 +36,29 @@ class PagesController extends Controller
     }
 
     public function index(){
-        return view('pages/index');        
+        $stocks = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
+                DB::raw("SUM(CASE 
+                    WHEN stocks.status = 'in' THEN 1
+                    WHEN stocks.status = 'defectives' THEN 1
+                    WHEN stocks.status = 'FOR RECEIVING' THEN 1
+                    WHEN stocks.status = 'demo' THEN 1
+                    WHEN stocks.status = 'assembly' THEN 1
+                    ELSE 0 END
+                ) as Current_stocks"))
+            ->join('categories', 'categories.id', 'items.category_id')
+            ->join('stocks', 'stocks.item_id', 'items.id')
+            ->groupBy('items.id','Item','ProdCode','Category')
+            ->orderBy('Category', 'ASC')
+            ->orderBy('Item', 'ASC')
+            ->get();
+        
+        foreach($stocks as $stock){
+            if($stock->Current_stocks <= $stock->Minimum_stocks){
+                $list[]=$stock;
+            }
+        }
+
+        return view('pages/index', compact('list'));
     }
 
     public function index_data(){

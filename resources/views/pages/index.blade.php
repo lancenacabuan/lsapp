@@ -11,33 +11,33 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
 <div class="row" style="text-align: center; height: 200px;">
     <div class="col-sm-1"></div>
     <div class="col-sm-2">
-        <a id="hover1" href="stocks" style="text-decoration: none;">
-            <img class="zoomout1" style="height: 100px;" src="{{ asset('index-stocks.png') }}">
-            <img class="zoomin1" style="height: 110px; display: none;" src="{{ asset('index-stocks-hover.png') }}">
+        <a id="hover1" href="stockrequest" style="text-decoration: none;">
+            <img class="zoomout1" style="height: 100px;" src="{{ asset('index-stockrequest.png') }}">
+            <img class="zoomin1" style="height: 110px; display: none;" src="{{ asset('index-stockrequest-hover.png') }}">
             <div class="box1 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
-                {{number_format($stocks)}}   
+                {{number_format($stockrequest)}}
             </div>
-            <strong class="text1" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">STOCKS</strong>
+            <strong class="text1" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">STOCK REQUEST</strong>
         </a>
     </div>
     <div class="col-sm-2">
         <a id="hover2" href="stocks" style="text-decoration: none;">
-            <img class="zoomout2" style="height: 100px;" src="{{ asset('index-below-min.png') }}">
-            <img class="zoomin2" style="height: 110px; display: none;" src="{{ asset('index-below-min-hover.png') }}">
+            <img class="zoomout2" style="height: 100px;" src="{{ asset('index-stocks.png') }}">
+            <img class="zoomin2" style="height: 110px; display: none;" src="{{ asset('index-stocks-hover.png') }}">
             <div class="box2 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
-                {{number_format($belowmin)}}   
+                {{number_format($stocks)}}   
             </div>
-            <strong class="text2" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">BELOW MIN</strong>
+            <strong class="text2" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">STOCKS</strong>
         </a>
     </div>
     <div class="col-sm-2">
-        <a id="hover3" href="stockrequest" style="text-decoration: none;">
-            <img class="zoomout3" style="height: 100px;" src="{{ asset('index-stockrequest.png') }}">
-            <img class="zoomin3" style="height: 110px; display: none;" src="{{ asset('index-stockrequest-hover.png') }}">
+        <a id="hover3" href="stocks?min=below" style="text-decoration: none;">
+            <img class="zoomout3" style="height: 100px;" src="{{ asset('index-below-min.png') }}">
+            <img class="zoomin3" style="height: 110px; display: none;" src="{{ asset('index-below-min-hover.png') }}">
             <div class="box3 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
-                {{number_format($stockrequest)}}
+                {{number_format($belowmin)}}   
             </div>
-            <strong class="text3" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">STOCK REQUEST</strong>
+            <strong class="text3" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">BELOW MIN</strong>
         </a>
     </div>
     <div class="col-sm-2">

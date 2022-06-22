@@ -872,4 +872,7 @@ $(document).ready(function(){
         $('#loading').hide(); Spinner.hide();
         swal("IMPORT FAILED", "ADD STOCKS via import file has failed.", "error");
     }
+    else if($(location).attr('pathname')+window.location.search == '/stocks?min=below'){
+        $('#btnGenerate').click();
+    }
 });

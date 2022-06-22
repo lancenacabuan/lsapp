@@ -6,9 +6,6 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @if(!Auth::guest())
-    <meta http-equiv="refresh" content="3600; url={{ url('/logout') }}">
-    @endif
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -306,6 +303,24 @@
                 $('#loading').hide(); Spinner.hide();
             }
         }
+        function idleLogout(){
+            var timer;
+            window.onload = resetTimer;
+            window.onmousemove = resetTimer;
+            window.onmousedown = resetTimer;
+            window.onclick = resetTimer;
+            window.onkeydown = resetTimer;
+
+            function autoLogout() {
+                window.location.href = '/logout';
+            }
+
+            function resetTimer() {
+                clearTimeout(timer);
+                timer = setTimeout(autoLogout, 600000);
+            }
+        }
+        idleLogout();
     </script>
     @else
     @include('inc.guest')

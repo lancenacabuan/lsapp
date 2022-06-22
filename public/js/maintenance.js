@@ -1121,10 +1121,10 @@ $('#btnUpdateLocation').on('click', function(){
 
 setInterval(checkCreateItem, 0);
 function checkCreateItem(){
-    var item_description = $.trim($('#aic_item_description').val());
-    var item_code = $('#aic_item_code').val();
-    var minimum = $('#aic_minimum').val();
     if($('#createItem').is(':visible')){
+        var item_description = $.trim($('#aic_item_description').val());
+        var item_code = $('#aic_item_code').val();
+        var minimum = $('#aic_minimum').val();
         if(item_description && item_code && minimum){
             $('#partsDetails').show();
         }

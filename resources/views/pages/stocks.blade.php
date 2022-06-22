@@ -3,7 +3,7 @@
 <div class="text-center" style="margin-bottom: -35px;">
     <input class="text-center text-control spChar" style="zoom: 90%; width: 300px;" id="z_serial" type="search" placeholder="SEARCH SERIAL NUMBER" autocomplete="off"/>
 </div>
-<button class="btn btn-primary bp mr-1" id="btnGenerate" type="button">GENERATE REPORT</button>
+<button class="btn btn-primary bp mr-1" id="btnGenerate" type="button">BELOW MINIMUM STOCKS</button>
 <button class="btn btn-primary bp mr-1" id="btnDownload" type="button" style="display: none;">DOWNLOAD REPORT</button>
 <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
 <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>

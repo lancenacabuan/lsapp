@@ -9,8 +9,12 @@ function destroyTables(){
     $('svg').remove();
 }
 
-function category(){
+$(document).ready(function(){
     destroyTables();
+    $('#prodcodediv').hide();
+    $('#uomdiv').hide();
+    $('#qtydiv').hide();
+    $('#serialdiv').hide();
     $('#btnGenerate').show();
     $('#btnDownload').hide();
     $('#CategoryTableDiv').show();
@@ -52,14 +56,6 @@ function category(){
                 return notifyDeadline();
             }
         });
-}
-
-$(document).ready(function(){   
-    category();
-    $('#prodcodediv').hide();
-    $('#uomdiv').hide();
-    $('#qtydiv').hide();
-    $('#serialdiv').hide();
 });
 
 $(document).on('click', '#CategoryTable tbody tr', function(){
@@ -117,8 +113,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
 });
 
 $('#backBtn').on('click', function(){
-    $('#z_serial').val('');
-    category();
+    window.location.href = '/stocks';
 });
 
 $('#btnBack').on('click', function(){

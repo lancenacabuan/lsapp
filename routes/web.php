@@ -13,7 +13,7 @@ use App\Http\Controllers\FileMaintenanceController;
 
 Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
 Route::get('/gitpull',[PagesController::class,'gitpull']);
-// Route::fallback(function(){ return redirect("/"); });
+Route::get('/logout',[LoginController::class,'logout']);
 
 //Index
 Route::get('/',[PagesController::class,'index']);

@@ -6,6 +6,9 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if(!Auth::guest())
+    <meta http-equiv="refresh" content="3600; url={{ url('/logout') }}">
+    @endif
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 

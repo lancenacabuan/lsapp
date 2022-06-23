@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Activitylog\Models\Activity;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ItemsImport;
 use App\Models\Stock;
 use App\Models\Item;
 use App\Models\Category;
@@ -65,6 +67,104 @@ class FileMaintenanceController extends Controller
     public function fm_locations(){
         $list = Location::select('id AS location_id', 'location', 'status')->orderBy('location', 'ASC')->get();
         return DataTables::of($list)->make(true);
+    }
+
+    public function import(Request $request){
+        $file = $request->file('xlsx');
+        $import = new ItemsImport;
+        $data = Excel::toArray($import, $file);
+        if(count($data[0]) == 0){
+            return redirect()->to('/maintenance?import=failed');
+        }
+        $failed_rows = [];
+        $row_num = 2;
+        foreach($data[0] as $key => $value){
+            $category = Category::select('id','category')
+                ->where('category', $value['category_name'])
+                ->get();
+            $item = Item::query()->select()
+                ->whereRaw('LOWER(item) = ?', strtlower($value['item_description']))
+                ->count();
+            $itemcode = Item::query()->select()
+                ->where('prodcode', strtoupper($value['item_code']))
+                ->count();
+            if(!$value['category_name'] || !$value['item_code'] || !$value['item_description'] || !$value['min_stock'] || !$value['uom'] || !$value['has_serial?(y/n)']){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Fill Required Fields!]');
+            }
+            else if(!$category){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Invalid Category!]');
+            }
+            else if($value['min_stock'] < 1){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Invalid Quantity!]');
+            }
+            else if($item > 0){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Duplicate Item Description!]');
+            }
+            else if($itemcode > 0){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Duplicate Item Code!]');
+            }
+            else if($value['uom'] != 'Unit' && $value['has_serial?(y/n)'] == 'Y'){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Serial not allowed!]');
+            }
+            else{
+                if($value['has_serial?(y/n)'] == 'Y'){
+                    $hasSerial = 'YES';
+                }
+                else{
+                    $hasSerial = 'NO';
+                }
+                $item_name = ucwords($value['item_description']);
+
+                $items = new Item;
+                $items->created_by = auth()->user()->id;
+                $items->item = $item_name;
+                $items->prodcode = strtoupper($value['item_code']);
+                $items->category_id = $category['id'];
+                $items->minimum = $value['min_stock'];
+                $items->UOM = $value['uom'];
+                $items->assemble = 'NO';
+                $items->serialize = $hasSerial;
+                $sql = $items->save();
+                $id = $items->id;
+                if(!$sql){
+                    array_push($failed_rows, '[Row: '.$row_num.', Error: Save Failed!]');
+                }
+                else{
+                    $stocks = new Stock;
+                    $stocks->item_id = $id;
+                    $stocks->user_id = auth()->user()->id;
+                    $stocks->status = 'default';
+                    $stocks->qty = '1';
+                    $stocks->save();
+
+                    $userlogs = new UserLogs;
+                    $userlogs->user_id = auth()->user()->id;
+                    $userlogs->activity = "ITEM ADDED: User successfully saved new Item '$item_name' with ItemID#$id under Category '$value->category_name'.";
+                    $userlogs->save();
+                }
+            }
+            $row_num++;
+        }
+        if(count($failed_rows) == count($data[0])){
+            return redirect()->to('/maintenance?import=failed');
+        }
+        else if(count($failed_rows) == 0){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "ITEMS FILE IMPORT [NO ERRORS]: User successfully imported file data into Items without any errors.";
+            $userlogs->save();
+
+            return redirect()->to('/maintenance?import=success_without_errors');
+        }
+        else{
+            $errors = implode(', ', $failed_rows);
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "STOCKS FILE IMPORT [WITH ERRORS]: User successfully imported file data into Items with the following errors: $errors.";
+            $userlogs->save();
+
+            return redirect()->to('/maintenance?import=success_with_errors');
+        }
     }
 
     public function saveItem(Request $request){

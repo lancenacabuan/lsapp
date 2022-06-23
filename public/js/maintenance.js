@@ -1,5 +1,10 @@
 var tblItem, tblAssembly, tblCategory, tblLocation, tblWarranty, wrdata;
-if($(location).attr('pathname')+window.location.search == '/maintenance'){
+if(
+    $(location).attr('pathname')+window.location.search == '/maintenance' || 
+    $(location).attr('pathname')+window.location.search == '/maintenance?import=success_without_errors' || 
+    $(location).attr('pathname')+window.location.search == '/maintenance?import=success_with_errors' || 
+    $(location).attr('pathname')+window.location.search == '/maintenance?import=failed'
+    ){
     $('#nav1').addClass("active-link");
     $('.btnImport').show();
     $('.btnNewItem').show();
@@ -1619,4 +1624,19 @@ $('#btnUpdate').on('click', function(){
             });
         }
     });
+});
+
+$(document).ready(function(){
+    if($(location).attr('pathname')+window.location.search == '/maintenance?import=success_without_errors'){
+        $('#loading').hide(); Spinner.hide();
+        swal("IMPORT SUCCESS", "ADD ITEMS via import file is successful without errors.", "success");
+    }
+    else if($(location).attr('pathname')+window.location.search == '/maintenance?import=success_with_errors'){
+        $('#loading').hide(); Spinner.hide();
+        swal("IMPORT SUCCESS W/ ERRORS", "ADD ITEMS via import file is successful with some errors.", "warning");
+    }
+    else if($(location).attr('pathname')+window.location.search == '/maintenance?import=failed'){
+        $('#loading').hide(); Spinner.hide();
+        swal("IMPORT FAILED", "ADD ITEMS via import file has failed.", "error");
+    }
 });

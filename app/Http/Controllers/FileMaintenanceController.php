@@ -83,12 +83,12 @@ class FileMaintenanceController extends Controller
                 ->where('category', $value['category_name'])
                 ->get();
             $item = Item::query()->select()
-                ->whereRaw('LOWER(item) = ?', strtlower($value['item_description']))
+                ->whereRaw('LOWER(item) = ?', strtolower($value['item_description']))
                 ->count();
             $itemcode = Item::query()->select()
                 ->where('prodcode', strtoupper($value['item_code']))
                 ->count();
-            if(!$value['category_name'] || !$value['item_code'] || !$value['item_description'] || !$value['min_stock'] || !$value['uom'] || !$value['has_serial?(y/n)']){
+            if(!$value['category_name'] || !$value['item_code'] || !$value['item_description'] || !$value['min_stock'] || !$value['uom'] || !$value['serial_y_n']){
                 array_push($failed_rows, '[Row: '.$row_num.' => Error: Fill Required Fields!]');
             }
             else if(!$category){
@@ -103,23 +103,24 @@ class FileMaintenanceController extends Controller
             else if($itemcode > 0){
                 array_push($failed_rows, '[Row: '.$row_num.' => Error: Duplicate Item Code!]');
             }
-            else if($value['uom'] != 'Unit' && $value['has_serial?(y/n)'] == 'Y'){
+            else if($value['uom'] != 'Unit' && $value['serial_y_n'] == 'Y'){
                 array_push($failed_rows, '[Row: '.$row_num.' => Error: Serial not allowed!]');
             }
             else{
-                if($value['has_serial?(y/n)'] == 'Y'){
+                if($value['serial_y_n'] == 'Y'){
                     $hasSerial = 'YES';
                 }
                 else{
                     $hasSerial = 'NO';
                 }
                 $item_name = ucwords($value['item_description']);
+                $category_name = $category[0]['category'];
 
                 $items = new Item;
                 $items->created_by = auth()->user()->id;
                 $items->item = $item_name;
                 $items->prodcode = strtoupper($value['item_code']);
-                $items->category_id = $category['id'];
+                $items->category_id = $category[0]['id'];
                 $items->minimum = $value['min_stock'];
                 $items->UOM = $value['uom'];
                 $items->assemble = 'NO';
@@ -139,7 +140,7 @@ class FileMaintenanceController extends Controller
 
                     $userlogs = new UserLogs;
                     $userlogs->user_id = auth()->user()->id;
-                    $userlogs->activity = "ITEM ADDED: User successfully saved new Item '$item_name' with ItemID#$id under Category '$value->category_name'.";
+                    $userlogs->activity = "ITEM ADDED: User successfully saved new Item '$item_name' with ItemID#$id under Category '$category_name'.";
                     $userlogs->save();
                 }
             }
@@ -160,7 +161,7 @@ class FileMaintenanceController extends Controller
             $errors = implode(', ', $failed_rows);
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "STOCKS FILE IMPORT [WITH ERRORS]: User successfully imported file data into Items with the following errors: $errors.";
+            $userlogs->activity = "ITEMS FILE IMPORT [WITH ERRORS]: User successfully imported file data into Items with the following errors: $errors.";
             $userlogs->save();
 
             return redirect()->to('/maintenance?import=success_with_errors');

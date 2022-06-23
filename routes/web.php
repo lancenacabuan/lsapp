@@ -197,6 +197,7 @@ Route::get('/fm_items',[FileMaintenanceController::class,'fm_items']);
 Route::get('/asm_items',[FileMaintenanceController::class,'asm_items']);
 Route::get('/fm_categories',[FileMaintenanceController::class,'fm_categories']);
 Route::get('/fm_locations',[FileMaintenanceController::class,'fm_locations']);
+Route::any('/items/import',[FileMaintenanceController::class,'import']);
 Route::any('/saveItem',[FileMaintenanceController::class,'saveItem']);
 Route::any('/updateItem',[FileMaintenanceController::class,'updateItem']);
 Route::any('/saveCategory',[FileMaintenanceController::class,'saveCategory']);

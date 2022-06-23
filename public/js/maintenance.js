@@ -1,6 +1,7 @@
 var tblItem, tblAssembly, tblCategory, tblLocation, tblWarranty, wrdata;
 if($(location).attr('pathname')+window.location.search == '/maintenance'){
     $('#nav1').addClass("active-link");
+    $('.btnImport').show();
     $('.btnNewItem').show();
     $('#itemTable').show();
     tblItem = $('table.itemTable').DataTable({
@@ -61,6 +62,8 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
     $('.btnNewCategory').show();
     $('#categoryTable').show();
     tblCategory = $('table.categoryTable').DataTable({
+        dom: 'Blftrip',
+        buttons: ['excel'],
         aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
         language:{
             processing: "Loading...",
@@ -252,6 +255,82 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
 else{
     window.location.href = '/maintenance';
 }
+
+$('.btnImport').on('click', function(){
+    $('#importItem').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    $('.modal-body').html();
+    $('#importItem').modal('show');
+});
+
+$('#btnDetach').on('click', function(){
+    $('#xlsx').val('');
+});
+
+function validate_xlsx(xlsx){
+    var files_length = $("#xlsx").get(0).files.length;
+    var error_ext = 0;
+    var error_mb = 0;
+    if(files_length > 1){
+        swal('EXCEEDED allowed number of file upload!', 'Please upload only ONE (1) valid EXCEL file.', 'error');      
+        $('#xlsx').val('');
+        $('#xlsx').focus();
+        return false;
+    }
+    for(var i = 0; i < files_length; ++i) {
+        var file1=$("#xlsx").get(0).files[i].name;
+        var file_size = $("#xlsx").get(0).files[i].size;
+        var ext = file1.split('.').pop().toLowerCase();
+        if($.inArray(ext,['xls','xlsx'])===-1){
+            error_ext++;
+        }
+        if(file_size > (5242880 * 2)){
+            error_mb++;
+        }
+    }
+    if(error_ext > 0 && error_mb > 0){
+        swal('INVALID file type AND EXCEEDED maximum file size (10MB)!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx; AND with file size not greater than 10MB.', 'error');      
+        $('#xlsx').val('');
+        $('#xlsx').focus();
+        return false;
+    }
+    else if(error_ext > 0){
+        swal('INVALID file type!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx.', 'error');      
+        $('#xlsx').val('');
+        $('#xlsx').focus();
+        return false;
+    }
+    else if(error_mb > 0){
+        swal('EXCEEDED maximum file size (10MB)!', 'Please upload a valid EXCEL file with file size not greater than 10MB.', 'error');      
+        $('#xlsx').val('');
+        $('#xlsx').focus();
+        return false;
+    }
+    return true;
+}
+
+$('#btnUpload').on('click', function(){
+    if($('#xlsx')[0].files.length === 0){
+        $('#btnSubmitImport').click();
+    }
+    else{
+        swal({
+            title: "UPLOAD FILE IMPORT?",
+            text: "Click 'OK' button to ADD ITEMS via uploading import file; otherwise, click 'Cancel' button to select a different file.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $('#btnSubmitImport').click();
+            }
+        });
+    }
+});
 
 $(document).on('click', '.btnNewWarranty', function(){
     $('#AddWarranty').modal({

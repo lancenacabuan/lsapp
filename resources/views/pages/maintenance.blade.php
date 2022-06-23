@@ -19,6 +19,7 @@
 </ul>
 @role('admin') {{---ROLES---}}
 <div style="float: right; margin-top: -45px;">
+    <button class="btn btn-primary bp btnImport mr-1" type="button" style="display: none;">IMPORT</button>
     <button class="btn btn-primary bp btnNewItem" type="button" style="display: none;">NEW ITEM</button>
     <button class="btn btn-primary bp btnCreateItem" type="button" style="display: none;">CREATE ASSEMBLED ITEM</button>
     <button class="btn btn-primary bp btnNewCategory" type="button" style="display: none;">NEW CATEGORY</button>
@@ -96,6 +97,7 @@
         zoom: 125%;
     }
 </style>
+@include('pages.fileMaintenance.importItem')
 @include('pages.fileMaintenance.newItem')
 @include('pages.fileMaintenance.detailsItem')
 @include('pages.fileMaintenance.createItem')

@@ -52,12 +52,14 @@ class LoginController extends Controller
     }
 
     protected function logout(){
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = 'LOG-OUT: User successfully logged out!';
-        $userlogs->save();
-
-        Auth::logout();
+        if(!Auth::guest()){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = 'LOG-OUT: User successfully logged out!';
+            $userlogs->save();
+    
+            Auth::logout();
+        }
         
         return redirect('/login');
     }

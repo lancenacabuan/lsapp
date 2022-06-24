@@ -1507,6 +1507,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     paging: false,
                     ordering: false,
                     info: false,
+                    autoWidth: false,
                     language:{
                         emptyTable: "No data available in table",
                         processing: "Loading...",
@@ -2748,6 +2749,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         paging: false,
         ordering: false,
         info: false,
+        autoWidth: false,
         language:{
             emptyTable: "No data available in table",
             processing: "Loading...",

@@ -4161,6 +4161,7 @@ function checkReqType(){
     }
 }
 
+var exceed = [];
 var items = [];
 var item_count = 0;
 $('table.stockDetails').DataTable().on('select', function(){});
@@ -4177,6 +4178,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
     }
     var table = $('table.stockDetails').DataTable();
     var data = table.row(this).data();
+    item_count = table.data().count();
     var pend = data.pending;
     var stock = data.qtystock;
     var item_id = data.item_id;
@@ -4228,9 +4230,13 @@ $('.stockDetails tbody').on('click', 'tr', function(){
         $(this).toggleClass('selected');
         if(items.includes(item_id) == true){
             items = items.filter(item => item !== item_id);
+            exceed = exceed.filter(item => item !== item_id);
         }
         else {
             items.push(item_id);
+            if(stock < pend){
+                exceed.push(item_id);
+            }
         }
     }
     if(items.length == 0){
@@ -4333,6 +4339,9 @@ $('.incItems tbody').on('click', 'tr', function(){
 });
 
 $("#btnProceed").unbind('click').click(function(){
+    if(exceed.length != 0 || items.length < item_count){
+        swal('NOTICE: PARTIAL', 'Stock Request will be prepared partially!', 'warning')
+    }
     var j = 0;
     var reqnum = $('#request_num_details').val();
     var req_type_id = $('#req_type_id_details').val();

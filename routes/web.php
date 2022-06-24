@@ -52,7 +52,8 @@ Route::get('/minstocks_data',[StocksController::class,'minstocks_data']);
 Route::get('/getItems',[StocksController::class,'getItems']);
 Route::get('/getUOM',[StocksController::class,'getUOM']);
 Route::any('/stocks/save',[StocksController::class,'save']);
-Route::post('/stocks/import',[StocksController::class,'import']);
+Route::any('/stocks/import',[StocksController::class,'import']);
+Route::get('/stocks/add',[StocksController::class,'add']);
 //
 
 //Stock Requests

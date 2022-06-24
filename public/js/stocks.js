@@ -562,7 +562,7 @@ $('#category').on('change', function(){
             itemcode.forEach(value => {
                 descOp+='<option value="'+value.id+'">'+value.item.toUpperCase()+'</option>';
             });
-            $("#item").find('option').remove().end().append(descOp);               
+            $("#item").find('option').remove().end().append(descOp);
         },
         error: function(data){
             if(data.status == 401){
@@ -869,5 +869,35 @@ $(document).ready(function(){
     }
     else if($(location).attr('pathname')+window.location.search == '/stocks?min=below'){
         $('#btnGenerate').click();
+    }
+    else if(($(location).attr('pathname')+window.location.search).includes('item') == true){
+        url = window.location.search;
+        item_id = url.replace('?item=', '');
+        $.ajax({
+            url: '/stocks/add',
+            data:{
+                'item_id': item_id
+            },
+            success: function(data){
+                if(data == 'false'){
+                    window.location.href="/stocks";
+                }
+                else{
+                    $('#category').val(data);
+                    $('#category').change();
+                    setTimeout(function(){
+                        $('#item').val(item_id);
+                        $('#item').change();
+                        $('#btnAddStock').click();
+                    }, 500);
+                }
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/stocks';
+                }
+                alert(data.responseText);
+            }
+        });
     }
 });

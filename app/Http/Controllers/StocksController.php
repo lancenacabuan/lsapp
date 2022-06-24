@@ -509,6 +509,19 @@ class StocksController extends Controller
         return response()->json($stocks);
     }
 
+    public function add(Request $request){
+        if(is_numeric($request->item_id) != 1){
+            return 'false';
+        }
+        if(Item::where('id', $request->item_id)->count() != 0){
+            $return = Item::where('id', $request->item_id)->first()->category_id;
+        }
+        else{
+            $return = 'false';
+        }
+        return $return;
+    }
+
     public function import(Request $request){
         $file = $request->file('xlsx');
         $import = new StocksImport;

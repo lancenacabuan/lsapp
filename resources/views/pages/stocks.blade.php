@@ -8,7 +8,7 @@
 <button class="btn btn-primary bp" id="backBtn" type="button" style="display: none;">BACK</button>
 <button class="btn btn-primary bp" id="btnBack" type="button" style="display: none;">BACK</button>
 @role('admin|encoder') {{---ROLES---}}
-<button class="btn btn-primary bp mb-2" style="float: right;" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
+<button class="btn btn-primary bp mb-2" id="btnAddStock" style="float: right;" type="button" data-target="#addStock" data-toggle="modal" data-backdrop="static" data-keyboard="false">ADD STOCK</button>
 <button class="btn btn-primary bp mb-2 mr-2" style="float: right;" type="button" id="btnImport">IMPORT</button>
 @endrole
 @role('viewer') {{---ROLES---}}

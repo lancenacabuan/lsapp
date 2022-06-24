@@ -4190,7 +4190,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
         if(bal != 0 && mal != 0){
             sweet(
                 'Item out of stock!',
-                'Request Stock Transfer from Balintawak and/or Malabon.',
+                'Request Stock Transfer from Balintawak and/or Malabon?',
                 'warning',
                 'Go to Stock Transfer',
                 '/stocktransfer'
@@ -4199,7 +4199,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
         else if(bal != 0 && mal == 0){
             sweet(
                 'Item out of stock!',
-                'Request Stock Transfer from Balintawak.',
+                'Request Stock Transfer from Balintawak?',
                 'warning',
                 'Go to Stock Transfer',
                 '/stocktransfer'
@@ -4208,14 +4208,20 @@ $('.stockDetails tbody').on('click', 'tr', function(){
         else if(bal == 0 && mal != 0){
             sweet(
                 'Item out of stock!',
-                'Request Stock Transfer from Malabon.',
+                'Request Stock Transfer from Malabon?',
                 'warning',
                 'Go to Stock Transfer',
                 '/stocktransfer'
             );
         }
         else{
-            swal('Item out of stock!','','error');
+            sweet(
+                'Item out of stock!',
+                'Add Stocks to Warehouse?',
+                'warning',
+                'Go to Stocks',
+                '/stocks?item='+item_id
+            );
         }
     }
     else{

@@ -11,9 +11,9 @@
 
     <link href="//fonts.gstatic.com" rel="dns-prefetch">
     <link href="css/font-lato.css" rel='stylesheet' type='text/css'>
-    <link href="{{asset('idsi.ico')}}" rel="icon" type="image/x-icon" />
-    <link href="{{asset('idsi.ico')}}" rel="shortcut icon" type="image/x-icon" />
-    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="{{asset('idsi.ico')}}" rel="icon" type="image/x-icon"/>
+    <link href="{{asset('idsi.ico')}}" rel="shortcut icon" type="image/x-icon"/>
+    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -21,7 +21,8 @@
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet">
     <link href="css/sweetalert.min.css" rel="stylesheet">
-    <link href="css/chosen.css" rel="stylesheet" type="text/css" />
+    <link href="css/chosen.css" rel="stylesheet" type="text/css"/>
+    <link href="css/animate-outline.css" rel="stylesheet" type="text/css"/>
 
     <script src="js/inc/jquery.min.js"></script>
     <script src="js/inc/jquery-3.5.1.js"></script>

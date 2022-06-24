@@ -1,0 +1,45 @@
+.f-outline{
+    position:relative;
+}
+.forminput{
+    background-color:white;
+}
+.formlabel{
+    position:absolute;
+    left:0.2rem;
+    top:0.5rem;
+    padding:0 0.5rem;
+    color:black;
+    cursor:text;
+    transition: top 200ms ease-in,
+        left 200ms ease-in,
+        font-size 200ms ease-in;
+}
+.forminput:focus{
+    background-color:white;
+    border-color: #0d1a80;
+    border-width: 2px;
+    box-shadow: none !important;
+}
+.forminput:hover{
+    background-color:white;
+    border-color: #0d1a80;
+    border-width: 2px;
+    box-shadow: none !important;
+}
+.forminput:focus ~ .form-label,
+.forminput:not(:placeholder-shown).forminput:not(:focus)
+~.formlabel{
+    top:-0.8rem;
+    font-size:0.8rem;
+    left:0.4rem;
+    background-color:white;
+    color: #0d1a80;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+}
+input[data-autocompleted] {
+    background-color: transparent !important;
+}

@@ -3,9 +3,15 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
+            <br>
+            <div class="card" style="border-color: #0d1a80;">
+                <div style="height: 30px; background-color: #0d1a80; border-color: gray;" class="card-header text-center">
+                    <center style="margin-top: -35px;">
+                        <div style="height: 65px; width: 65px; background-color: #0d1a80;" class="border border-dark rounded-circle">
+                            <i style="font-size: 55px; color: ghostwhite;" class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                    </center>
+                </div>
                 <div class="card-body">
                     <form method="POST" action="/login">
                         @csrf
@@ -33,7 +39,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <div class="form-check">
+                                <div class="form-check" style="zoom: 90%;">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}

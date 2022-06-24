@@ -6,9 +6,7 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
-
     <link href="//fonts.gstatic.com" rel="dns-prefetch">
     <link href="css/font-lato.css" rel='stylesheet' type='text/css'>
     <link href="{{asset('idsi.ico')}}" rel="icon" type="image/x-icon"/>
@@ -23,45 +21,9 @@
     <link href="css/sweetalert.min.css" rel="stylesheet">
     <link href="css/chosen.css" rel="stylesheet" type="text/css"/>
     <link href="css/animate-outline.css" rel="stylesheet" type="text/css"/>
-
     <script src="js/inc/jquery.min.js"></script>
     <script src="js/inc/jquery-3.5.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="js/inc/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="js/inc/sweetalert.min.js"></script>
-    <script src="js/inc/moment.js"></script>
-    <script src="js/inc/datetime.js"></script>
-    <script src="js/inc/chosen.jquery.js"></script>
     <script src="js/inc/loading-spinner.js"></script>
-    <script>
-        function scrollReset(){
-            $('html, body').animate({scrollTop:0}, 10);
-        }
-        $(document).on('keyup', '#x_serial', function(){
-            var serial = $('#x_serial').val().toUpperCase();
-            $('#x_serial').val(serial);
-        });
-        $(document).on('keypress', '#x_serial', function(e){
-            var k;
-            document.all ? k = e.keyCode : k = e.which;
-            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
-        });
-        $(document).on('keyup', '.spChar', function(){
-            var uppr = $(this).val().toUpperCase();
-            $(this).val(uppr);
-        });
-        $(document).on('keypress', '.spChar', function(e){
-            var k;
-            document.all ? k = e.keyCode : k = e.which;
-            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8  || k == 13 || (k >= 48 && k <= 57));
-        });
-    </script>
     <style>
         #loading {
             display: none;
@@ -92,11 +54,6 @@
             background: #d9534f;
             border-color: #0d1a80;
             color: white;
-        }
-        #labelReport {
-            zoom: 120%;
-            margin-left: 2px;
-            margin-right: 10px;
         }
         a, a:hover, img, thead, .xD {
             -webkit-user-drag: none;
@@ -263,6 +220,26 @@
     @if(!Request::is('stocks'))
         <script>$('#loading').show(); Spinner(); Spinner.show();</script>
     @endif
+    @else
+    @include('inc.guest')
+    @endif
+    <div id="app" class="container-fluid">
+        <main class="py-3">
+            @yield('content')
+        </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="js/inc/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.1/html2pdf.bundle.min.js" integrity="sha512-vDKWohFHe2vkVWXHp3tKvIxxXg0pJxeid5eo+UjdjME3DBFBn2F8yWOE0XmiFcFbXxrEOR1JriWEno5Ckpn15A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/inc/sweetalert.min.js"></script>
+    <script src="js/inc/moment.js"></script>
+    <script src="js/inc/datetime.js"></script>
+    <script src="js/inc/chosen.jquery.js"></script>
     <script>
         setInterval(loadFunction, 0);
         function loadFunction(){
@@ -322,15 +299,28 @@
             }
         }
         idleLogout();
+        function scrollReset(){
+            $('html, body').animate({scrollTop:0}, 10);
+        }
+        $(document).on('keyup', '#x_serial', function(){
+            var serial = $('#x_serial').val().toUpperCase();
+            $('#x_serial').val(serial);
+        });
+        $(document).on('keypress', '#x_serial', function(e){
+            var k;
+            document.all ? k = e.keyCode : k = e.which;
+            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+        });
+        $(document).on('keyup', '.spChar', function(){
+            var uppr = $(this).val().toUpperCase();
+            $(this).val(uppr);
+        });
+        $(document).on('keypress', '.spChar', function(e){
+            var k;
+            document.all ? k = e.keyCode : k = e.which;
+            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8  || k == 13 || (k >= 48 && k <= 57));
+        });
     </script>
-    @else
-    @include('inc.guest')
-    @endif
-    <div id="app" class="container-fluid">
-        <main class="py-3">
-            @yield('content')
-        </main>
-    </div>
     @if(Request::is('/'))
         <script src="{{ asset('js/index.js') }}"></script>
     @endif

@@ -6,7 +6,8 @@
     <strong>Tracking Ticket Number: {{$details['ticket_number']}}</strong><br>
     <p>
         Date Reported: {{$details['reportdate']}}<br>
-        Reported By: {{$details['reported_by']}}<br><br>
+        Reported By: {{$details['reported_by']}}<br>
+        Contact Email: {{$details['email']}}<br><br>
         Report Category: {{$details['report_category']}}<br>
         Report Details: {{$details['details']}}
         <br><br>

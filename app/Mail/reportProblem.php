@@ -17,11 +17,10 @@ class reportProblem extends Mailable
      *
      * @return void
      */
-    public function __construct($details, $subject, $sender)
+    public function __construct($details, $subject)
     {
         $this->details = $details;
         $this->subject = $subject;
-        $this->sender = $sender;
     }
 
     /**
@@ -32,7 +31,7 @@ class reportProblem extends Mailable
     public function build()
     {
         return $this->subject($this->subject)
-            ->from($this->sender['email'], $this->sender['name'])
+            ->from('noreply@ideaserv.com.ph')
             ->view('emails/reportProblem');
     }
 }

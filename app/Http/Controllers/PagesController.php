@@ -384,22 +384,15 @@ class PagesController extends Controller
 
     public function report_log(Request $request){
         $subject = 'TICKET NUMBER: '.$request->ticket_number;
-        $email = auth()->user()->email;
-        if(str_contains($email, '@yahoo')){
-            $email = 'noreply@ideaserv.com.ph';
-        }
-        $sender = [
-            'email' => $email,
-            'name' => auth()->user()->name
-        ];
         $details = [
             'ticket_number' => $request->ticket_number,
             'reportdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
             'reported_by' => auth()->user()->name,
+            'email' => auth()->user()->email,
             'report_category' => ucwords($request->report_category),
             'details' => ucfirst($request->details)
         ];
-        Mail::to(explode(',',env('MAIL_TO_DEV')))->send(new reportProblem($details, $subject, $sender));
+        Mail::to(explode(',',env('MAIL_TO_DEV')))->send(new reportProblem($details, $subject));
 
         $details = [
             'name' => auth()->user()->name,

@@ -3,6 +3,8 @@
 }
 .forminput{
     background-color: white;
+    font-size: 13px !important;
+    font-family: Arial, Helvetica, sans-serif !important;
 }
 .formlabel{
     position: absolute;

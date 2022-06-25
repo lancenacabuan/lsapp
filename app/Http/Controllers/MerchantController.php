@@ -241,10 +241,14 @@ class MerchantController extends Controller
         }
         
         $subject = '[MERCHANT] STOCK REQUEST NO. '.$request->request_number;
-        $user = User::role('accounting')->where('status','ACTIVE')->get();
-        foreach($user as $key){
+        $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
+        foreach($emails as $email){
+            $sendTo[] = $email['email'];
+        }
+        // $user = User::role('accounting')->where('status','ACTIVE')->get();
+        // foreach($user as $key){
             $details = [
-                'name' => ucwords($key->name),
+                'name' => 'ACCOUNTING',
                 'action' => 'MERCHANT STOCK REQUEST',
                 'request_number' => $request->request_number,
                 'reqdate' => $request_details->reqdate,
@@ -257,9 +261,8 @@ class MerchantController extends Controller
                 'items' => $items,
                 'files' => $attachments
             ];
-            Mail::to($key->email)->send(new merchantRequest($details, $subject));
-        }
-
+            Mail::to($sendTo)->send(new merchantRequest($details, $subject));
+        // }
         $details = [
             'name' => auth()->user()->name,
             'action' => 'MERCHANT STOCK REQUEST',

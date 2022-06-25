@@ -176,13 +176,21 @@ class StockTransferController extends Controller
         $locto = str_replace('"}]','', $locto);
 
         $subject = '[FOR APPROVAL] STOCK TRANSFER REQUEST NO. '.$request->request_number;
-        $user = User::role('approver - warehouse')
+        $emails = User::role('approver - warehouse')
             ->where('status','ACTIVE')
             ->where('company',auth()->user()->company)
-            ->get();
-        foreach($user as $key){
+            ->get('email')
+            ->toArray();
+        foreach($emails as $email){
+            $sendTo[] = $email['email'];
+        }
+        // $user = User::role('approver - warehouse')
+        //     ->where('status','ACTIVE')
+        //     ->where('company',auth()->user()->company)
+        //     ->get();
+        // foreach($user as $key){
             $details = [
-                'name' => ucwords($key->name),
+                'name' => 'APPROVER - WAREHOUSE',
                 'action' => 'STOCK TRANSFER REQUEST',
                 'request_number' => $request->request_number,
                 'reqdate' => $request_details->reqdate,
@@ -193,8 +201,8 @@ class StockTransferController extends Controller
                 'role' => 'Approver - Warehouse',
                 'items' => $items
             ];
-            Mail::to($key->email)->send(new emailForTransfer($details, $subject));
-        }
+            Mail::to($sendTo)->send(new emailForTransfer($details, $subject));
+        // }
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
@@ -777,11 +785,19 @@ class StockTransferController extends Controller
             $locto = str_replace('"}]','', $locto);
     
             $subject = '[RECEIVED] STOCK TRANSFER REQUEST NO. '.$request->request_number;
-            $user = User::role('admin')->where('status','ACTIVE')->get();
-            foreach($user as $key){
-                if($key->email != $request_details->email){
+            $emails = User::role('admin')
+                ->where('status','ACTIVE')
+                ->whereNot('email',$request_details->email)
+                ->get('email')
+                ->toArray();
+            foreach($emails as $email){
+                $sendTo[] = $email['email'];
+            }
+            // $user = User::role('admin')->where('status','ACTIVE')->get();
+            // foreach($user as $key){
+            //     if($key->email != $request_details->email){
                     $details = [
-                        'name' => ucwords($key->name),
+                        'name' => 'ADMIN',
                         'action' => 'STOCK TRANSFER REQUEST',
                         'request_number' => $request->request_number,
                         'reqdate' => $request_details->reqdate,
@@ -796,18 +812,25 @@ class StockTransferController extends Controller
                         'role' => 'Admin',
                         'items' => $items
                     ];
-                    Mail::to($key->email)->send(new receivedTransfer($details, $subject));
-                }
-            }
-
-            $user = User::role('approver - warehouse')
+                    Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
+            //     }
+            // }
+            $emails = User::role('approver - warehouse')
                 ->where('status','ACTIVE')
                 ->where('company',auth()->user()->company)
-                ->get();
-            foreach($user as $key){
-                if($key->email != $request_details->email){
+                ->get('email')
+                ->toArray();
+            foreach($emails as $email){
+                $sendTo[] = $email['email'];
+            }
+            // $user = User::role('approver - warehouse')
+            //     ->where('status','ACTIVE')
+            //     ->where('company',auth()->user()->company)
+            //     ->get();
+            // foreach($user as $key){
+            //     if($key->email != $request_details->email){
                     $details = [
-                        'name' => ucwords($key->name),
+                        'name' => 'APPROVER - WAREHOUSE',
                         'action' => 'STOCK TRANSFER REQUEST',
                         'request_number' => $request->request_number,
                         'reqdate' => $request_details->reqdate,
@@ -822,10 +845,9 @@ class StockTransferController extends Controller
                         'role' => 'Approver - Warehouse',
                         'items' => $items
                     ];
-                    Mail::to($key->email)->send(new receivedTransfer($details, $subject));
-                }
-            }
-    
+                    Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
+            //     }
+            // }
             $details = [
                 'name' => $request_details->reqby,
                 'action' => 'STOCK TRANSFER REQUEST',

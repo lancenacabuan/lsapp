@@ -7,8 +7,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link href="//fonts.gstatic.com" rel="dns-prefetch">
-    <link href="css/font-lato.css" rel='stylesheet' type='text/css'>
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
     <link href="{{asset('idsi.ico')}}" rel="icon" type="image/x-icon"/>
     <link href="{{asset('idsi.ico')}}" rel="shortcut icon" type="image/x-icon"/>
     <link href="css/jquery-ui.css" rel="stylesheet" type="text/css"/>

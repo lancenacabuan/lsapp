@@ -17,6 +17,7 @@ Route::get('/logout',[LoginController::class,'logout']);
 
 //Index
 Route::get('/',[PagesController::class,'index']);
+Route::get('/logs',[PagesController::class,'logs']);
 Route::get('/index/data',[PagesController::class,'index_data']);
 Route::get('/index/reload',[PagesController::class,'index_reload']);
 //

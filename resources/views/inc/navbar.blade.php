@@ -36,7 +36,7 @@
             @endrole
             @role('sales|approver - sales|accounting|merchant|assembler|approver - warehouse') {{---ROLES---}}
             <li class="nav-item">
-                <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">USER ACTIVITIES</a>
+                <a class="nav-link n {{ Request::is('logs') ? 'active' : '' }}"  href="{{ url('/logs') }}">USER ACTIVITIES</a>
             </li>
             @endrole
             @role('admin') {{---ROLES---}}

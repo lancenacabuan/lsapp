@@ -381,7 +381,7 @@
             return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8  || k == 13 || (k >= 48 && k <= 57));
         });
     </script>
-    @if(Request::is('/'))
+    @if(Request::is('/') || Request::is('logs'))
         <script src="{{ asset('js/index.js') }}"></script>
     @endif
     @if(Request::is('stocks'))

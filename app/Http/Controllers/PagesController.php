@@ -36,6 +36,52 @@ class PagesController extends Controller
     }
 
     public function index(){
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
+        {
+            return redirect('/stockrequest');
+        }
+        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
+        {
+            return redirect('/stocktransfer');
+        }
+        if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
+        {
+            return redirect('/assembly');
+        }
+        if(auth()->user()->hasanyRole('merchant')) //---ROLES---//
+        {
+            return redirect('/merchant');
+        }
+        $stocks = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
+                DB::raw("SUM(CASE 
+                    WHEN stocks.status = 'in' THEN 1
+                    WHEN stocks.status = 'defectives' THEN 1
+                    WHEN stocks.status = 'FOR RECEIVING' THEN 1
+                    WHEN stocks.status = 'demo' THEN 1
+                    WHEN stocks.status = 'assembly' THEN 1
+                    ELSE 0 END
+                ) as Current_stocks"))
+            ->join('categories', 'categories.id', 'items.category_id')
+            ->join('stocks', 'stocks.item_id', 'items.id')
+            ->groupBy('items.id','Item','ProdCode','Category')
+            ->orderBy('Category', 'ASC')
+            ->orderBy('Item', 'ASC')
+            ->get();
+        
+        foreach($stocks as $stock){
+            if($stock->Current_stocks <= $stock->Minimum_stocks){
+                $list[]=$stock;
+            }
+        }
+
+        return view('pages/index', compact('list'));
+    }
+
+    public function logs(){
+        if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')) //---ROLES---//
+        {
+            return redirect('/');
+        }
         $stocks = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
                 DB::raw("SUM(CASE 
                     WHEN stocks.status = 'in' THEN 1

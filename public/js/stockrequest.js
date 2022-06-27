@@ -3571,7 +3571,7 @@ $('#btnEdit').on('click', function(){
         swal("SERIAL REQUIRED", "Item Serial field cannot be left blank!", "error");
         return false;
     }
-    if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(newserial) == true){
+    if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(newserial) == true || newserial.length < 5){
         swal('INVALID ENTRY','Please enter only valid information!','error');
         return false;
     }

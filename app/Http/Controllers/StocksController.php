@@ -555,6 +555,9 @@ class StocksController extends Controller
             else if($value['qty'] < 1){
                 array_push($failed_rows, '[Row: '.$row_num.' => Error: Invalid Quantity!]');
             }
+            else if(strlen($value['serial']) < 5){
+                array_push($failed_rows, '[Row: '.$row_num.' => Error: Invalid Serial!]');
+            }
             else if(ctype_alnum($value['serial']) == false){
                 array_push($failed_rows, '[Row: '.$row_num.' => Error: Invalid Serial!]');
             }

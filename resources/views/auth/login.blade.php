@@ -4,8 +4,8 @@
     <div class="row justify-content-center">
         <div class="col-md-4">
             <br>
-            <div class="card" style="border-color: #0d1a80;">
-                <div style="height: 30px; background-color: #0d1a80; border-color: gray;" class="card-header text-center">
+            <div class="card">
+                <div style="height: 30px;" class="card-header">
                     <i class="fa fa-user-circle fa-4x rounded-circle" style="margin-top: -30px; background-color: ghostwhite; color: #0d1a80; border: none;" aria-hidden="true"></i>
                 </div>
                 <div class="card-body">

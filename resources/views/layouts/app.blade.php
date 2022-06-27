@@ -72,6 +72,16 @@
             margin-left: 2px;
             margin-right: 2px;
         }
+        .card{
+            border-color: #0d1a80;
+        }
+        .card-header{
+            background-color: #0d1a80;
+            border-color: #0d1a80;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
         #lblChangePassword:hover {
             color: #0d6efd !important;
         }

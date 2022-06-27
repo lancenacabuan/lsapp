@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand-md shadow-sm" style="height: 60px;">
     <div class="collapse navbar-collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-            <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">HOME</a>
-            </li>
             @role('admin|encoder|viewer') {{---ROLES---}}
+            <li class="nav-item">
+                <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">HOME</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link n {{ Request::is('stocks') ? 'active' : '' }}" href="{{ url('/stocks') }}">STOCKS</a>
             </li>
@@ -32,6 +32,11 @@
             @role('assembler') {{---ROLES---}}
             <li class="nav-item">
                 <a class="nav-link n {{ Request::is('assembly') ? 'active' : '' }}" href="{{ url('/assembly') }}">ASSEMBLY</a>
+            </li>
+            @endrole
+            @role('sales|approver - sales|accounting|merchant|assembler|approver - warehouse') {{---ROLES---}}
+            <li class="nav-item">
+                <a class="nav-link n {{ Request::is('/') ? 'active' : '' }}"  href="{{ url('/') }}">USER ACTIVITIES</a>
             </li>
             @endrole
             @role('admin') {{---ROLES---}}

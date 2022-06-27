@@ -3,8 +3,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-4">
-            <br>
-            <div class="card">
+            <div class="card mt-3">
                 <div style="height: 30px;" class="card-header">
                     <i class="fa fa-user-circle fa-4x rounded-circle" style="margin-top: -30px; background-color: ghostwhite; color: #0d1a80; border: none;" aria-hidden="true"></i>
                 </div>

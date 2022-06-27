@@ -6,11 +6,7 @@
             <br>
             <div class="card" style="border-color: #0d1a80;">
                 <div style="height: 30px; background-color: #0d1a80; border-color: gray;" class="card-header text-center">
-                    <center style="margin-top: -35px;">
-                        <div style="height: 65px; width: 65px; background-color: #0d1a80;" class="border border-dark rounded-circle">
-                            <i style="font-size: 55px; color: ghostwhite;" class="fa fa-user" aria-hidden="true"></i>
-                        </div>
-                    </center>
+                    <i class="fa fa-user-circle fa-4x rounded-circle" style="margin-top: -30px; background-color: ghostwhite; color: #0d1a80; border: none;" aria-hidden="true"></i>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="/login">

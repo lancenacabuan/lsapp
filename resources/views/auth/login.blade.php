@@ -4,8 +4,8 @@
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="card mt-3">
-                <div style="height: 30px;" class="card-header">
-                    <i class="fa fa-user-circle fa-4x rounded-circle" style="margin-top: -30px; background-color: ghostwhite; color: #0d1a80; border: none;" aria-hidden="true"></i>
+                <div style="height: 28px;" class="card-header">
+                    <i class="fa fa-user-circle fa-4x rounded-circle" style="padding: 1px; margin-top: -30px; background-color: ghostwhite; color: #0d1a80;" aria-hidden="true"></i>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="/login">
@@ -45,10 +45,10 @@
                         <div class="row mb-0">
                             <div class="col-md-12">
                                 <button id="btnLogin" type="submit" class="btn btn-primary btnLogin bp">
-                                    {{ __('LOGIN') }}
+                                    {{ __('LOGIN') }}<i class="fa fa-sign-in ml-2" aria-hidden="true"></i>
                                 </button>
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}" style="font-weight: bold;">
+                                    <a class="btn btn-link ml-2" href="{{ route('password.request') }}" style="font-weight: bold;">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif

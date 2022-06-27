@@ -67,7 +67,12 @@ $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->coun
     <thead style="background-color: #0d1a80; color: white;">
         <tr>
             <td colspan="5">
+                @role('admin|encoder|viewer') {{---ROLES---}}
                 <a href="/">
+                @endrole
+                @role('sales|approver - sales|accounting|merchant|assembler|approver - warehouse') {{---ROLES---}}
+                <a href="/logs">
+                @endrole
                     <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 30px; line-height: 30px;">
                         USER ACTIVITY LOGS
                     </div>

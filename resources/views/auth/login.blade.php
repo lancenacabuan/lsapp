@@ -13,7 +13,7 @@
                         <div class="mb-3">
                             <div class="f-outline">
                                 <input id="email" type="email" class="forminput form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder=" " autofocus>
-                                <label for="email" class="formlabel form-label text-md-end">{{ __('E-Mail Address') }}</label>
+                                <label for="email" class="formlabel form-label">{{ __('E-Mail Address') }}</label>
                             </div>
                             @error('email')
                                 <span role="alert" style="zoom: 80%; color: red;">
@@ -24,7 +24,7 @@
                         <div class="mb-3">
                             <div class="f-outline">
                                 <input id="password" type="password" class="forminput form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder=" ">
-                                <label for="password" class="formlabel form-label text-md-end">{{ __('Password') }}</label>
+                                <label for="password" class="formlabel form-label">{{ __('Password') }}</label>
                             </div>
                             @error('password')
                                 <span role="alert" style="zoom: 80%; color: red;">

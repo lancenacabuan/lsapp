@@ -19,11 +19,62 @@
     <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet">
     <link href="css/sweetalert.min.css" rel="stylesheet">
     <link href="css/chosen.css" rel="stylesheet" type="text/css"/>
-    <link href="css/animate-outline.css" rel="stylesheet" type="text/css"/>
     <script src="js/inc/jquery.min.js"></script>
     <script src="js/inc/jquery-3.5.1.js"></script>
     <script src="js/inc/loading-spinner.js"></script>
     <style>
+        .f-outline{
+            position: relative;
+        }
+        .fi{
+            background-color: white !important;
+        }
+        .forminput{
+            background-color: white;
+            font-size: 13px !important;
+            font-family: Arial, Helvetica, sans-serif !important;
+        }
+        .formlabel{
+            font-size: 13px;
+            font-family: Arial, Helvetica, sans-serif !important;
+            position: absolute;
+            left: 0.2rem;
+            top: 0.5rem;
+            padding: 0 0.5rem;
+            color: black;
+            cursor: text;
+            transition: top 200ms ease-in,
+                left 200ms ease-in,
+                font-size 200ms ease-in;
+        }
+        .forminput:focus{
+            background-color: white;
+            border-color: #0d1a80;
+            border-width: 2px;
+            box-shadow: none !important;
+        }
+        .forminput:hover{
+            background-color: white;
+            border-color: #0d1a80;
+            border-width: 2px;
+            box-shadow: none !important;
+        }
+        .forminput:focus ~ .form-label,
+        .forminput:not(:placeholder-shown).forminput:not(:focus)
+        ~.formlabel{
+            top: -0.8rem;
+            font-size: 0.8rem;
+            left: 0.4rem;
+            background-color: white;
+            color: #0d1a80;
+        }
+        input:-webkit-autofill,
+        input:-webkit-autofill:focus {
+            transition: background-color 600000s 0s, color 600000s 0s;
+        }
+        input[data-autocompleted] {
+            background-color: transparent !important;
+        }
         #loading {
             display: none;
             position: fixed;

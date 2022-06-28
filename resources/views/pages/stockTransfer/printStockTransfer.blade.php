@@ -22,7 +22,7 @@
         <table id="tblPrint" cellspacing="0" cellpadding="0" style="width: 100%;">
             <col span="9" />
             <tr height="20">
-                <td style="text-align: center; font-size: 18px;" colspan="9" height="20"><strong>STOCK TRANSFER REQUEST DELIVERY RECEIPT</strong></td>
+                <td style="text-align: center; font-size: 18px;" colspan="9" height="20"><strong>STOCK TRANSFER RECEIPT</strong></td>
             </tr>
             <tr height="20">
                 <td colspan="9">&nbsp;</td>
@@ -31,7 +31,7 @@
                 <td colspan="2" height="20" style="font-weight: bold;">Date Requested:</td>
                 <td colspan="2" id="req_date">{{$list->req_date}}</td>
                 <td>&nbsp;</td>
-                <td colspan="2" style="font-weight: bold;">Stock Transfer Request No.:</td>
+                <td colspan="2" style="font-weight: bold;">Stock Transfer Receipt No.:</td>
                 <td colspan="2">{{$list->req_num}}</td>
             </tr>
             <tr height="20">

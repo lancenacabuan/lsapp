@@ -44,14 +44,14 @@
         <table id="tblPrint" cellspacing="0" cellpadding="0" style="width: 100%;">
             <col span="9" />
             <tr height="20">
-                <td style="text-align: center; font-size: 18px;" colspan="9" height="20"><strong>STOCK REQUEST DELIVERY RECEIPT</strong></td>
+                <td style="text-align: center; font-size: 18px;" colspan="9" height="20"><strong>DELIVERY RECEIPT</strong></td>
             </tr>
             <tr height="20">
                 <td colspan="9">&nbsp;</td>
             </tr>
             @if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10))
             <tr height="20">
-                <td colspan="1" style="font-weight: bold; width: 200px;">Stock Request No.:</td>
+                <td colspan="1" style="font-weight: bold; width: 200px;">Delivery Receipt No.:</td>
                 <td colspan="8">{{$list->req_num}}</td>
             </tr>
             <tr height="20">

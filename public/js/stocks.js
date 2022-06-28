@@ -498,7 +498,7 @@ $('#btnEdit').on('click', function(){
                 type:'post',
                 url: '/editSerial',
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     id: id,
@@ -668,7 +668,7 @@ $('#btnSave').on('click', function(){
                         url: "/stocks/save",
                         type: "POST",
                         headers:{
-                            'X-CSRF-TOKEN': $("#csrf").val()
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         data:{
                             _token: $("#csrf").val(),
@@ -728,7 +728,7 @@ $('#btnSave').on('click', function(){
                         url: "/stocks/save",
                         type: "POST",
                         headers:{
-                            'X-CSRF-TOKEN': $("#csrf").val()
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         data:{
                             _token: $("#csrf").val(),

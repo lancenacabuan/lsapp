@@ -321,7 +321,7 @@ $('#btnAssemblySave').on('click', function(){
                     url: '/assembly/saveReqNum',
                     async: false,
                     headers:{
-                        'X-CSRF-TOKEN': $("#csrf").val()
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data:{
                         'request_number': $('#request_num').val(),
@@ -339,7 +339,7 @@ $('#btnAssemblySave').on('click', function(){
                                     url: '/assembly/saveRequest',
                                     async: false,
                                     headers:{
-                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     data:{
                                         'request_number': $('#request_num').val(),
@@ -367,7 +367,7 @@ $('#btnAssemblySave').on('click', function(){
                                 type: 'post',
                                 url: '/assembly/logSave',
                                 headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     'request_number': $('#request_num').val(),
@@ -416,7 +416,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
     $.ajax({
         url: '/reqModal',
         headers:{
-            'X-CSRF-TOKEN': $("#csrf").val()
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: 'json',
         type: 'get',
@@ -1243,7 +1243,7 @@ $('#btnDelete').on('click', function(){
                 type: 'post', 
                 url: '/deleteRequest',
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val()
@@ -1361,7 +1361,7 @@ $('.btnReceive').on('click', function(){
                 url: '/assembly/receiveRequest',
                 async: false,
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
@@ -1377,7 +1377,7 @@ $('.btnReceive').on('click', function(){
                                 url: '/assembly/receiveItems',
                                 async: false,
                                 headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     'status': $('#status_id_details').val(),
@@ -1406,7 +1406,7 @@ $('.btnReceive').on('click', function(){
                             type: 'post',
                             url: '/assembly/logReceive',
                             headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             data:{
                                 'request_number': $('#request_num_details').val(),
@@ -1463,7 +1463,7 @@ $('#btnDefective').on('click', function(){
                 url: '/assembly/defectiveRequest',
                 async: false,
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
@@ -1477,7 +1477,7 @@ $('#btnDefective').on('click', function(){
                                 url: '/assembly/defectiveItems',
                                 async: false,
                                 headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     'generatedReqNum': generatedReqNum,
@@ -1506,7 +1506,7 @@ $('#btnDefective').on('click', function(){
                             type: 'post',
                             url: '/assembly/logDefective',
                             headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             data:{
                                 'request_number': $('#request_num_details').val(),
@@ -1561,7 +1561,7 @@ $('#btnAssemble').on('click', function(){
                 type: 'post',
                 url: '/assembly/assembleRequest',
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val()

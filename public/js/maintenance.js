@@ -524,7 +524,7 @@ $('#btnSaveItem').on('click', function(){
                 url: "/saveItem",
                 type: "POST",
                 headers:{
-                'X-CSRF-TOKEN': $("#csrf").val()
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     _token: $("#csrf").val(),
@@ -668,7 +668,7 @@ $('#btnUpdateItem').on('click', function(){
                 url: "/updateItem",
                 type: "PUT",
                 headers:{
-                'X-CSRF-TOKEN': $("#csrf").val()
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     _token: $("#csrf").val(),
@@ -767,7 +767,7 @@ $('#btnSaveCategory').on('click', function(){
                     url: "/saveCategory",
                     type: "POST",
                     headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data:{
                         _token: $("#csrf").val(),
@@ -782,7 +782,7 @@ $('#btnSaveCategory').on('click', function(){
                                 url: "/logNewCategory",
                                 type: "POST",
                                 headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     id: data.id,
@@ -873,7 +873,7 @@ $('#btnUpdateCategory').on('click', function(){
                     url: "/updateCategory",
                     type: "PUT",
                     headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data:{
                         _token: $("#csrf").val(),
@@ -890,7 +890,7 @@ $('#btnUpdateCategory').on('click', function(){
                                 url: "/logUpdateCategory",
                                 type: "POST",
                                 headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     category_id: data.category_id,
@@ -961,7 +961,7 @@ $('#btnSaveLocation').on('click', function(){
                     url: "/saveLocation",
                     type: "POST",
                     headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data:{
                         _token: $("#csrf").val(),
@@ -976,7 +976,7 @@ $('#btnSaveLocation').on('click', function(){
                                 url: "/logNewLocation",
                                 type: "POST",
                                 headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     id: data.id,
@@ -1093,7 +1093,7 @@ $('#btnUpdateLocation').on('click', function(){
                     url: "/updateLocation",
                     type: "PUT",
                     headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data:{
                         _token: $("#csrf").val(),
@@ -1111,7 +1111,7 @@ $('#btnUpdateLocation').on('click', function(){
                                 url: "/requestStatusChange",
                                 type: "POST",
                                 headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     id: data.id,
@@ -1167,7 +1167,7 @@ $('#btnUpdateLocation').on('click', function(){
                     url: "/updateLocation",
                     type: "PUT",
                     headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data:{
                         _token: $("#csrf").val(),
@@ -1394,7 +1394,7 @@ $('#btnSave').on('click', function(){
                 url:'/createItem',
                 async: false,
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     item: item_description,
@@ -1411,7 +1411,7 @@ $('#btnSave').on('click', function(){
                                 url:'/saveParts',
                                 async: false,
                                 headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     item_id: data.id,
@@ -1439,7 +1439,7 @@ $('#btnSave').on('click', function(){
                             url:'/logItem',
                             async: false,
                             headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             data:{
                                 item_id: data.id,
@@ -1584,7 +1584,7 @@ $('#btnUpdate').on('click', function(){
                 type:'post',
                 url:'/changeItem',
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     item_id: item_id,

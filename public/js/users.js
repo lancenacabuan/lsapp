@@ -118,7 +118,7 @@ $('#btnSave').on('click', function(){
             url: "/users/validate/save",
             type: "POST",
             headers:{
-                'X-CSRF-TOKEN': $("#csrf").val()
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data:{
                 _token: $("#csrf").val(),
@@ -144,7 +144,7 @@ $('#btnSave').on('click', function(){
                                 url: "/users/save",
                                 type: "POST",
                                 headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     _token: $("#csrf").val(),
@@ -244,7 +244,7 @@ $('#btnUpdate').on('click', function(){
             url: "/users/validate/update",
             type: "PUT",
             headers:{
-                'X-CSRF-TOKEN': $("#csrf").val()
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data:{
                 _token: $("#csrf").val(),
@@ -272,7 +272,7 @@ $('#btnUpdate').on('click', function(){
                                 url: "/users/update",
                                 type: "PUT",
                                 headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     _token: $("#csrf").val(),

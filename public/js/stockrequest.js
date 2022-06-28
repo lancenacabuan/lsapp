@@ -544,7 +544,7 @@ $('#btnSave').on('click', function(){
                     url:'/saveReqNum',
                     async: false,
                     headers:{
-                        'X-CSRF-TOKEN': $("#csrf").val()
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data:{
                         'request_number': $('#request_num').val(),
@@ -566,7 +566,7 @@ $('#btnSave').on('click', function(){
                                     url:'/saveRequest',
                                     async: false,
                                     headers:{
-                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     data:{
                                         'request_number': $('#request_num').val(),
@@ -599,7 +599,7 @@ $('#btnSave').on('click', function(){
                                     type:'post',
                                     url:'/logSave',
                                     headers:{
-                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     data:{
                                         'request_number': $('#request_num').val()
@@ -688,7 +688,7 @@ $(document).on('click', '#btnSaveChanges', function(){
                 url:'/editRequest',
                 async: false,
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
@@ -1029,7 +1029,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
     $.ajax({
         url: '/reqModal',
         headers:{
-            'X-CSRF-TOKEN': $("#csrf").val()
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         dataType: 'json',
         type: 'get',
@@ -3595,7 +3595,7 @@ $('#btnEdit').on('click', function(){
                 type:'post',
                 url: '/editSerial',
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     id: id,
@@ -3651,7 +3651,7 @@ $(document).on('click', '.btndelItem', function(){
         type:'post',
         url: '/delReqItem',
         headers:{
-            'X-CSRF-TOKEN': $("#csrf").val()
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data:{
             req_num: $('#request_num_details').val(),
@@ -3697,7 +3697,7 @@ $('#btnDelete').on('click', function(){
                 type:'post', 
                 url:'/deleteRequest',
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val()
@@ -3739,7 +3739,7 @@ $('#btnApprove').on('click', function(){
                 url:'/approveRequest',
                 async: false,
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val()
@@ -3753,7 +3753,7 @@ $('#btnApprove').on('click', function(){
                             type:'post',
                             url:'/logApprove',
                             headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             data:{
                                 'request_number': $('#request_num_details').val()
@@ -3821,7 +3821,7 @@ $('#btnReason').on('click', function(){
                     url:'/disapproveRequest',
                     async: false,
                     headers:{
-                        'X-CSRF-TOKEN': $("#csrf").val()
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data:{
                         'request_number': $('#request_num_details').val(),
@@ -3837,7 +3837,7 @@ $('#btnReason').on('click', function(){
                                 type:'post',
                                 url:'/logDisapprove',
                                 headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     'request_number': $('#request_num_details').val(),
@@ -3893,7 +3893,7 @@ $('.btnTransit').on('click', function(){
                 type:'post',
                 url:'/inTransit',
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
@@ -3950,7 +3950,7 @@ $('#btnReschedule').on('click', function(){
                     type:'post',
                     url:'/reschedRequest',
                     headers:{
-                        'X-CSRF-TOKEN': $("#csrf").val()
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data:{
                         'request_number': $('#request_num_details').val(),
@@ -4040,7 +4040,7 @@ $('#btnReceiveAssembled').on('click', function(){
                 url:'/assembly/receiveAssembled',
                 async: false,
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val()
@@ -4053,7 +4053,7 @@ $('#btnReceiveAssembled').on('click', function(){
                                 url:'/assembly/addAssembled',
                                 async: false,
                                 headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     'request_number': $('#request_num_details').val(),
@@ -4095,7 +4095,7 @@ $('#btnReceiveAssembled').on('click', function(){
                 type:'post',
                 url:'/assembly/logAssembled',
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
@@ -4557,7 +4557,7 @@ $("#btnProceed").unbind('click').click(function(){
                                             url:'/prepareItems',
                                             async: false,
                                             headers:{
-                                                'X-CSRF-TOKEN': $("#csrf").val()
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                             },
                                             data:{
                                                 'request_number': reqnum,
@@ -4588,7 +4588,7 @@ $("#btnProceed").unbind('click').click(function(){
                                     type:'post',
                                     url:'/logSched',
                                     headers:{
-                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     data:{
                                         'request_number': reqnum,
@@ -4870,7 +4870,7 @@ $('.btnReceive').on('click', function(){
                 url: '/receiveRequest',
                 async: false,
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
@@ -4885,7 +4885,7 @@ $('.btnReceive').on('click', function(){
                                 url: '/receiveItems',
                                 async: false,
                                 headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     'request_type': $('#req_type_id_details').val(),
@@ -4915,7 +4915,7 @@ $('.btnReceive').on('click', function(){
                             type: 'post',
                             url: '/logReceive',
                             headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             data:{
                                 'request_number': $('#request_num_details').val(),
@@ -4978,7 +4978,7 @@ $('#btnReceiveDfc').on('click', function(){
                 url: '/receiveDefective',
                 async: false,
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
@@ -4992,7 +4992,7 @@ $('#btnReceiveDfc').on('click', function(){
                                 url: '/receiveDfcItems',
                                 async: false,
                                 headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     'id': items[i]
@@ -5020,7 +5020,7 @@ $('#btnReceiveDfc').on('click', function(){
                             type: 'post',
                             url: '/logReceiveDfc',
                             headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             data:{
                                 'request_number': $('#request_num_details').val(),
@@ -5089,7 +5089,7 @@ $('#btnReference').on('click', function(){
                     url:'/saleRequest',
                     async: false,
                     headers:{
-                        'X-CSRF-TOKEN': $("#csrf").val()
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data:{
                         'request_number': $('#request_num_details').val(),
@@ -5104,7 +5104,7 @@ $('#btnReference').on('click', function(){
                                     url: '/sellItems',
                                     async: false,
                                     headers:{
-                                        'X-CSRF-TOKEN': $("#csrf").val()
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     data:{
                                         'id': $('#stock_idx'+i).val(),
@@ -5171,7 +5171,7 @@ $('#btnReturn').on('click', function(){
                 type:'post',
                 url:'/returnRequest',
                 headers:{
-                    'X-CSRF-TOKEN': $("#csrf").val()
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
@@ -5185,7 +5185,7 @@ $('#btnReturn').on('click', function(){
                                 url: '/returnItems',
                                 async: false,
                                 headers:{
-                                    'X-CSRF-TOKEN': $("#csrf").val()
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
                                     'id': items[i]
@@ -5213,7 +5213,7 @@ $('#btnReturn').on('click', function(){
                             type:'post',
                             url:'/logReturn',
                             headers:{
-                                'X-CSRF-TOKEN': $("#csrf").val()
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             data:{
                                 'request_number': $('#request_num_details').val()
@@ -5335,7 +5335,7 @@ $(document).ready(function(){
             type:'post',
             url:'/logSave',
             headers:{
-                'X-CSRF-TOKEN': $("#csrf").val()
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data:{
                 'request_number': reqnum
@@ -5373,7 +5373,7 @@ $(document).ready(function(){
             type:'post',
             url:'/logSave',
             headers:{
-                'X-CSRF-TOKEN': $("#csrf").val()
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data:{
                 'request_number': reqnum,
@@ -5406,7 +5406,7 @@ $(document).ready(function(){
             type:'post',
             url:'/logSold',
             headers:{
-                'X-CSRF-TOKEN': $("#csrf").val()
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data:{
                 'request_number': reqnum

@@ -49,6 +49,36 @@
             <tr height="20">
                 <td colspan="9">&nbsp;</td>
             </tr>
+            @if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10))
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;">Stock Request No.:</td>
+                <td colspan="7">{{$list->req_num}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;">Date Scheduled:</td>
+                <td colspan="7" id="sched">{{$list->sched}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;" class="tdHide">Client Name:</td>
+                <td colspan="7" class="tdHide">{{$list->client_name}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;" class="tdHide">Address / Branch:</td>
+                <td colspan="7" class="tdHide">{{$list->location}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;" class="tdHide">Contact Person:</td>
+                <td colspan="7" class="tdHide">{{$list->contact}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;" class="tdHide">Remarks:</td>
+                <td colspan="7" class="tdHide">{{$list->remarks}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;" class="tdHide">Reference SO/PO No.:</td>
+                <td colspan="7" class="tdHide">{{$list->reference}}</td>
+            </tr>
+            @else
             <tr height="20">
                 <td colspan="2" style="font-weight: bold;">Request Type:</td>
                 <td colspan="2" id="req_type">{{$list->req_type}}</td>
@@ -109,6 +139,7 @@
                 <td colspan="9">&nbsp;</td>
                 @endif
             </tr>
+            @endif
             <tr height="20">
                 <td colspan="9">&nbsp;</td>
             </tr>

@@ -11,14 +11,14 @@
         <input type="hidden" id="current_url" value="live" disabled>
         @endif
     </a>
-    <div id="lblUser" class="p-2 ml-auto align-self-end d-flex" style="display: none !important;">
+    <div id="lblUser" class="p-2 ml-auto align-self-end d-flex" style="color: #0d1a80; display: none !important;">
         <div style="text-align: right; font-size: 12px;">
             {{ Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY') }}
             <span id="datetime"></span><br>
             <strong>{{ auth()->user()->name }}</strong>&nbsp;({{ auth()->user()->email }})<br>
             <span id="lblRole" style="font-weight: bold;">[{{ strtoupper(auth()->user()->getRoleNames()[0]) }}]</span>
             <span id="lblCompany">{{ auth()->user()->company }}</span><br>
-            <span id="lblChangePassword" style="color: black; text-decoration: underline; cursor: pointer;">Change Password</span>
+            <span id="lblChangePassword" style="text-decoration: underline; cursor: pointer;">Change Password</span>
         </div>
         <i class="fa fa-user-circle fa-4x p-2" aria-hidden="true"></i>
     </div>

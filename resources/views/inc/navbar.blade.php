@@ -11,12 +11,12 @@
             @endrole
             @role('admin|encoder|viewer|sales|approver - sales|accounting') {{---ROLES---}}
             <li class="nav-item">
-                <a class="nav-link n {{ Request::is('stockrequest') ? 'active' : '' }}" href="{{ url('/stockrequest') }}">STOCK REQUEST</a>
+                <a class="nav-link n {{ Request::is('stockrequest') || Request::is('printRequest') ? 'active' : '' }}" href="{{ url('/stockrequest') }}">STOCK REQUEST</a>
             </li>
             @endrole
             @role('admin|encoder|viewer|approver - warehouse') {{---ROLES---}}
             <li class="nav-item">
-                <a class="nav-link n {{ Request::is('stocktransfer') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
+                <a class="nav-link n {{ Request::is('stocktransfer') || Request::is('printTransferRequest') ? 'active' : '' }}" href="{{ url('/stocktransfer') }}">STOCK TRANSFER</a>
             </li>
             @endrole
             @role('admin|encoder|viewer') {{---ROLES---}}
@@ -26,12 +26,12 @@
             @endrole
             @role('merchant') {{---ROLES---}}
             <li class="nav-item">
-                <a class="nav-link n {{ Request::is('merchant') ? 'active' : '' }}" href="{{ url('/merchant') }}">MERCHANT</a>
+                <a class="nav-link n {{ Request::is('merchant') || Request::is('printRequest') ? 'active' : '' }}" href="{{ url('/merchant') }}">MERCHANT</a>
             </li>
             @endrole
             @role('assembler') {{---ROLES---}}
             <li class="nav-item">
-                <a class="nav-link n {{ Request::is('assembly') ? 'active' : '' }}" href="{{ url('/assembly') }}">ASSEMBLY</a>
+                <a class="nav-link n {{ Request::is('assembly') || Request::is('printRequest') ? 'active' : '' }}" href="{{ url('/assembly') }}">ASSEMBLY</a>
             </li>
             @endrole
             @role('sales|approver - sales|accounting|merchant|assembler|approver - warehouse') {{---ROLES---}}

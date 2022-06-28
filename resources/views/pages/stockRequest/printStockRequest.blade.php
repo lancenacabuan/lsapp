@@ -51,32 +51,32 @@
             </tr>
             @if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10))
             <tr height="20">
-                <td colspan="2" style="font-weight: bold;">Stock Request No.:</td>
-                <td colspan="7">{{$list->req_num}}</td>
+                <td colspan="1" style="font-weight: bold; width: 200px;">Stock Request No.:</td>
+                <td colspan="8">{{$list->req_num}}</td>
             </tr>
             <tr height="20">
-                <td colspan="2" style="font-weight: bold;">Date Scheduled:</td>
-                <td colspan="7" id="sched">{{$list->sched}}</td>
+                <td colspan="1" style="font-weight: bold;">Date Scheduled:</td>
+                <td colspan="8" id="sched">{{$list->sched}}</td>
             </tr>
             <tr height="20">
-                <td colspan="2" style="font-weight: bold;" class="tdHide">Client Name:</td>
-                <td colspan="7" class="tdHide">{{$list->client_name}}</td>
+                <td colspan="1" style="font-weight: bold;" class="tdHide">Client Name:</td>
+                <td colspan="8" class="tdHide">{{$list->client_name}}</td>
             </tr>
             <tr height="20">
-                <td colspan="2" style="font-weight: bold;" class="tdHide">Address / Branch:</td>
-                <td colspan="7" class="tdHide">{{$list->location}}</td>
+                <td colspan="1" style="font-weight: bold;" class="tdHide">Address / Branch:</td>
+                <td colspan="8" class="tdHide">{{$list->location}}</td>
             </tr>
             <tr height="20">
-                <td colspan="2" style="font-weight: bold;" class="tdHide">Contact Person:</td>
-                <td colspan="7" class="tdHide">{{$list->contact}}</td>
+                <td colspan="1" style="font-weight: bold;" class="tdHide">Contact Person:</td>
+                <td colspan="8" class="tdHide">{{$list->contact}}</td>
             </tr>
             <tr height="20">
-                <td colspan="2" style="font-weight: bold;" class="tdHide">Remarks:</td>
-                <td colspan="7" class="tdHide">{{$list->remarks}}</td>
+                <td colspan="1" style="font-weight: bold;" class="tdHide">Remarks:</td>
+                <td colspan="8" class="tdHide">{{$list->remarks}}</td>
             </tr>
             <tr height="20">
-                <td colspan="2" style="font-weight: bold;" class="tdHide">Reference SO/PO No.:</td>
-                <td colspan="7" class="tdHide">{{$list->reference}}</td>
+                <td colspan="1" style="font-weight: bold;" class="tdHide">Reference SO/PO No.:</td>
+                <td colspan="8" class="tdHide">{{$list->reference}}</td>
             </tr>
             @else
             <tr height="20">

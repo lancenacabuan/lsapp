@@ -70,13 +70,13 @@
             color: #0d1a80;
         }
         input:-webkit-autofill,
-        input:-webkit-autofill:focus {
+        input:-webkit-autofill:focus{
             transition: background-color 600000s 0s, color 600000s 0s;
         }
-        input[data-autocompleted] {
+        input[data-autocompleted]{
             background-color: transparent !important;
         }
-        #loading {
+        #loading{
             display: none;
             position: fixed;
             top: 0;
@@ -91,7 +91,7 @@
             user-select: none;
             cursor: wait;
         }
-        #btnReport {
+        #btnReport{
             zoom: 90%;
             background: white;
             border-color: #0d1a80;
@@ -101,12 +101,12 @@
             font-weight: bold;
             padding: 0px;
         }
-        #btnReport:hover {
+        #btnReport:hover{
             background: #d9534f;
             border-color: #0d1a80;
             color: white;
         }
-        a, a:hover, img, thead, .xD {
+        a, a:hover, img, thead, .xD{
             -webkit-user-drag: none;
             -khtml-user-drag: none;
             -moz-user-drag: none;
@@ -115,10 +115,10 @@
             user-drag: none;
             text-decoration: none;
         }
-        nav {
+        nav{
             background: #0d1a80;
         }
-        .n {
+        .n{
             color: white !important;
             font-weight: bold;
             margin-left: 2px;
@@ -134,28 +134,28 @@
             font-weight: bold;
             text-align: center;
         }
-        #lblChangePassword:hover {
+        #lblChangePassword:hover{
             color: #0d6efd !important;
         }
-        .out:hover {
+        .out:hover{
             background-color: #d9534f !important;
         }
-        .nav-item>a:hover {
+        .nav-item>a:hover{
             background-color: #0d6efd;
             color:white !important;
             border:0px;
         }
-        .active {
+        .active{
             background-color: white;
             color: #0d1a80 !important;
         }
-        .bp {
+        .bp{
             font-weight: bold;
             background-color: #0d1a80;
             border-color: #0d1a80;
             color: white;
         }
-        .close {
+        .close{
             zoom: 80%;
             color: white;
             opacity: 100%;
@@ -167,21 +167,21 @@
         .swal-text{
             zoom: 120% !important;
         }
-        .chosen-container-single .chosen-single {
+        .chosen-container-single .chosen-single{
             margin-top: -12px !important;
             margin-left: 10px !important;
             height: 30px !important;
             border-radius: 3px !important;
             border: 1px solid #CCCCCC !important;
         }
-        .chosen-container-single .chosen-single span {
+        .chosen-container-single .chosen-single span{
             padding-top: 2px !important;
         }
-        .chosen-container-single .chosen-single div b {
+        .chosen-container-single .chosen-single div b{
             margin-top: 2px !important;
         }
         .chosen-container-active .chosen-single,
-        .chosen-container-active.chosen-with-drop .chosen-single {
+        .chosen-container-active.chosen-with-drop .chosen-single{
             border-color: #ccc !important;
             border-color: rgba(82, 168, 236, .8) !important;
             outline: 0 !important;
@@ -189,17 +189,17 @@
             -moz-box-shadow: 0 0 8px rgba(82, 168, 236, .6) !important;
             box-shadow: 0 0 8px rgba(82, 168, 236, .6) !important;
         }
-        .switch {
+        .switch{
             position: relative;
             display: inline-block;
             width: 110px;
             height: 34px;
             user-select: none;
         }
-        .switch input {
+        .switch input{
             display: none;
         }
-        .slider {
+        .slider{
             position: absolute;
             cursor: pointer;
             top: 0;
@@ -210,7 +210,7 @@
             -webkit-transition: .4s;
             transition: .4s;
         }
-        .slider:before {
+        .slider:before{
             position: absolute;
             content: "";
             height: 26px;
@@ -221,18 +221,18 @@
             -webkit-transition: .4s;
             transition: .4s;
         }
-        input:checked + .slider {
+        input:checked + .slider{
             background-color: #2ab934;
         }
         input:focus + .slider {
             box-shadow: 0 0 1px #2196F3;
         }
-        input:checked + .slider:before {
+        input:checked + .slider:before{
             -webkit-transform: translateX(75px);
             -ms-transform: translateX(75px);
             transform: translateX(75px);
         }
-        .on {
+        .on{
             display: none;
             color: white;
             position: absolute;
@@ -242,7 +242,7 @@
             font-size: 13px;
             font-weight: bold;
         }
-        .off {
+        .off{
             color: white;
             position: absolute;
             transform: translate(-50%,-50%);
@@ -251,16 +251,16 @@
             font-size: 13px;
             font-weight: bold;
         }
-        input:checked+ .slider .on {
+        input:checked + .slider .on{
             display: block;
         }
-        input:checked + .slider .off {
+        input:checked + .slider .off{
             display: none;
         }
-        .slider.round {
+        .slider.round{
             border-radius: 34px;
         }
-        .slider.round:before {
+        .slider.round:before{
             border-radius: 50%;
         }
     </style>
@@ -268,7 +268,7 @@
 <body>
     <div id="loading" style="color: #0d1a80; line-height: 60vh;">
         <strong style="font-size: 40px;">
-            Please Wait...
+            PLEASE WAIT...
         </strong>
         <br>
         <strong style="font-size: 22px;">

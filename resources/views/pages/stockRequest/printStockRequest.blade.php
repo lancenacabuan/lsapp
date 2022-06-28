@@ -5,7 +5,7 @@
     window.location = '/';
 </script>
 @endrole
-@role('sales|merchant') {{---ROLES---}}
+@role('sales|merchant|assembler') {{---ROLES---}}
 @if(auth()->user()->id != $list->user_id)
 <script>
     window.location = '/';

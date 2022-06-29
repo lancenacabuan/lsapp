@@ -8,7 +8,7 @@
     <thead style="background-color: #0d1a80; color: white;"> 
         <tr>
             <td colspan="8">
-                <a href="/merchant">
+                <a href="/merchant" title="Reload">
                     <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 25px; font-weight: bold; height: 43px; line-height: 43px;">
                         MERCHANT STOCK REQUESTS
                     </div>

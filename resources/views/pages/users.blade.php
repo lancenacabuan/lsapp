@@ -6,7 +6,7 @@
     <thead style="background-color: #0d1a80; color: white;">
         <tr>
             <td colspan="5">
-                <a href="/users">
+                <a href="/users" title="Reload">
                     <div class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 30px; line-height: 30px;">
                         USER ACCOUNTS
                     </div>

@@ -72,6 +72,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('#MinStocksTableDiv').hide();
     $('#btnBack').hide();
     $('#backBtn').show();
+    $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html(categoryName);
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
@@ -110,6 +111,9 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
                 return notifyDeadline();
             }
         });
+    $('#stocksURL').on('click', function(){
+        ItemTable.ajax.reload();
+    });
 });
 
 $('#backBtn').on('click', function(){
@@ -127,6 +131,7 @@ $('#btnBack').on('click', function(){
     $('#MinStocksTableDiv').hide();
     $('#btnBack').hide();
     $('#backBtn').show();
+    $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html(categoryName);
     $('#loading').show(); Spinner(); Spinner.show();
     ItemTable = 
@@ -165,6 +170,9 @@ $('#btnBack').on('click', function(){
                 return notifyDeadline();
             }
         });
+    $('#stocksURL').on('click', function(){
+        ItemTable.ajax.reload();
+    });
 });
 
 $(document).on('click', '#ItemTable tbody tr', function(){
@@ -179,6 +187,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#MinStocksTableDiv').hide();
     $('#btnBack').show();
     $('#backBtn').hide();
+    $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html(decodeHtml(trdata.Item));
     $('#loading').show(); Spinner(); Spinner.show();
     if(trdata.serialize == 'YES'){
@@ -268,6 +277,9 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 }
             });
     }
+    $('#stocksURL').on('click', function(){
+        ItemSerialTable.ajax.reload();
+    });
 });
 
 $(document).on('click', '#ItemSerialTable tbody tr', function(){
@@ -320,6 +332,7 @@ $('#z_serial').on('keyup', function(){
             $('#MinStocksTableDiv').hide();
             $('#btnBack').hide();
             $('#backBtn').show();
+            $('#stocksURL').attr('href', '#');
             $('#stocksHeader').html($('#z_serial').val());
             SerialTable = $('table.SerialTable').DataTable({
                 aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
@@ -357,6 +370,9 @@ $('#z_serial').on('keyup', function(){
                 }
             });
         }
+    });
+    $('#stocksURL').on('click', function(){
+        SerialTable.ajax.reload();
     });
 });
 
@@ -414,6 +430,7 @@ $('#btnGenerate').on('click', function(){
     $('#MinStocksTableDiv').show();
     $('#btnBack').hide();
     $('#backBtn').show();
+    $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html('BELOW MINIMUM STOCKS');
     $('#loading').show(); Spinner(); Spinner.show();
     MinStocksTable = 
@@ -450,6 +467,9 @@ $('#btnGenerate').on('click', function(){
                 return notifyDeadline();
             }
         });
+    $('#stocksURL').on('click', function(){
+        MinStocksTable.ajax.reload();
+    });
 });
 
 $('#btnDownload').on('click', function(){

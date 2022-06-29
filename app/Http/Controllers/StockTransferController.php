@@ -203,7 +203,7 @@ class StockTransferController extends Controller
             ];
             Mail::to($sendTo)->send(new emailForTransfer($details, $subject));
         // }
-        
+        unset($sendTo);
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "NEW STOCK TRANSFER REQUEST: User successfully submitted Stock Transfer Request No. $request->request_number.";
@@ -815,6 +815,7 @@ class StockTransferController extends Controller
                     Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
             //     }
             // }
+            unset($sendTo);
             $emails = User::role('approver - warehouse')
                 ->where('status','ACTIVE')
                 ->where('company',auth()->user()->company)
@@ -848,6 +849,7 @@ class StockTransferController extends Controller
                     Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
             //     }
             // }
+            unset($sendTo);
             $details = [
                 'name' => $request_details->reqby,
                 'action' => 'STOCK TRANSFER REQUEST',

@@ -263,6 +263,7 @@ class MerchantController extends Controller
             ];
             Mail::to($sendTo)->send(new merchantRequest($details, $subject));
         // }
+        unset($sendTo);
         $details = [
             'name' => auth()->user()->name,
             'action' => 'MERCHANT STOCK REQUEST',

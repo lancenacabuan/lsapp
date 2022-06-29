@@ -785,7 +785,7 @@ class StockRequestController extends Controller
             $subject = "EDITED ITEM SERIAL: '$request->origserial' => '$request->newserial'";
             $emails = User::role('admin')
                 ->where('status','ACTIVE')
-                ->whereNot('email',auth()->user()->email)
+                ->where('email','!=',auth()->user()->email)
                 ->get('email')
                 ->toArray();
             foreach($emails as $email){
@@ -2903,7 +2903,7 @@ class StockRequestController extends Controller
                 $subject = '[LAST '.$difference.' DAY/S] STOCK TRANSFER REQUEST NO. '.$value['req_num'];
                 $emails = User::role('admin')
                     ->where('status','ACTIVE')
-                    ->whereNot('email',$value['email'])
+                    ->where('email','!=',$value['email'])
                     ->get('email')
                     ->toArray();
                 foreach($emails as $email){
@@ -2984,7 +2984,7 @@ class StockRequestController extends Controller
                 $subject = '[DEADLINE TODAY] STOCK TRANSFER REQUEST NO. '.$value['req_num'];
                 $emails = User::role('admin')
                     ->where('status','ACTIVE')
-                    ->whereNot('email',$value['email'])
+                    ->where('email','!=',$value['email'])
                     ->get('email')
                     ->toArray();
                 foreach($emails as $email){
@@ -3065,7 +3065,7 @@ class StockRequestController extends Controller
                 $subject = '[OVERDUE] STOCK TRANSFER REQUEST NO. '.$value['req_num'];
                 $emails = User::role('admin')
                     ->where('status','ACTIVE')
-                    ->whereNot('email',$value['email'])
+                    ->where('email','!=',$value['email'])
                     ->get('email')
                     ->toArray();
                 foreach($emails as $email){

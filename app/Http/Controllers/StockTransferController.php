@@ -787,7 +787,7 @@ class StockTransferController extends Controller
             $subject = '[RECEIVED] STOCK TRANSFER REQUEST NO. '.$request->request_number;
             $emails = User::role('admin')
                 ->where('status','ACTIVE')
-                ->whereNot('email',$request_details->email)
+                ->where('email','!=',$request_details->email)
                 ->get('email')
                 ->toArray();
             foreach($emails as $email){

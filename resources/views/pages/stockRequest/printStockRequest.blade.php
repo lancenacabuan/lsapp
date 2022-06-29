@@ -34,9 +34,10 @@
     @endrole
 </div>
 <br>
-<div class="container-fluid">
+<center>
+<div style="width: 850px;">
     <div id="printPage" class="panel-body table-responsive" style="font-size: 12px; width: 100%;">
-        <div style="height: 70px; line-height: 70px; font-weight: bold; color: #0d1a80; font-family: Arial; font-size: 22px;">
+        <div style="text-align: left; height: 70px; line-height: 70px; font-weight: bold; color: #0d1a80; font-family: Arial; font-size: 22px;">
             <img src="/idsi.png" class="mr-2" style="height: 70px; width: auto;">
             IDEASERV SYSTEMS INC.
         </div>
@@ -220,6 +221,7 @@
         </table>
     </div>
 </div>
+</center>
 <script>
 document.addEventListener("contextmenu", function(e){
     e.preventDefault();

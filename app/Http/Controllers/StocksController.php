@@ -395,7 +395,7 @@ class StocksController extends Controller
     }
 
     public function minstocks_data(Request $request){
-        $stocks = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
+        $stocks = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'items.UOM as uom', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
                 DB::raw("SUM(CASE 
                     WHEN stocks.status = 'in' THEN 1
                     WHEN stocks.status = 'defectives' THEN 1
@@ -406,7 +406,7 @@ class StocksController extends Controller
                 ) as Current_stocks"))
             ->join('categories', 'categories.id', 'items.category_id')
             ->join('stocks', 'stocks.item_id', 'items.id')
-            ->groupBy('items.id','Item','ProdCode','Category')
+            ->groupBy('items.id','Item','ProdCode','uom','Category')
             ->orderBy('Category', 'ASC')
             ->orderBy('Item', 'ASC')
             ->get();

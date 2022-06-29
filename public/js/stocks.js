@@ -430,8 +430,20 @@ $('#btnGenerate').on('click', function(){
                 { data: 'Category', width: '15%' },
                 { data: 'ProdCode', width: '15%' },
                 { data: 'Item' },
-                { data: 'Current_stocks', width: '12%' },
-                { data: 'Minimum_stocks', width: '12%' }
+                {
+                    data: 'Current_stocks',
+                    "render": function(data, type, row){
+                        return row.Current_stocks+'-'+row.uom+'/s'
+                    }, 
+                    width: '12%' 
+                },
+                {
+                    data: 'Minimum_stocks',
+                    "render": function(data, type, row){
+                        return row.Minimum_stocks+'-'+row.uom+'/s'
+                    }, 
+                    width: '12%' 
+                }
             ],
             order: [],
             initComplete: function(){

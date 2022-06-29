@@ -1497,10 +1497,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             "searchable": false
                         },
                         {
-                            render: function(data,type,full,meta){
+                            "render": function(data, type, full, meta){
                                 return "<div style='color: red;'>"+data+"</div>";
                             },
-                            targets: [11,12]
+                            "targets": [11,12]
                         }
                     ],
                     searching: false,
@@ -2739,10 +2739,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 "searchable": false
             },
             {
-                render: function(data,type,full,meta){
+                "render": function(data, type, full, meta){
                     return "<div style='color: red;'>"+data+"</div>";
                 },
-                targets: [11,12]
+                "targets": [11,12]
             }
         ],
         searching: false,

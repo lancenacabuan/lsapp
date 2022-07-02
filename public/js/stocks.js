@@ -1,4 +1,4 @@
-var categoryID, categoryName, 
+var categoryID, categoryName, itemID, itemName, serialID, 
 CategoryTable, ItemTable, ItemSerialTable, SerialTable, MinStocksTable, table;
 function destroyTables(){
     $('table.CategoryTable').dataTable().fnDestroy();
@@ -83,7 +83,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
             ajax:{
                 url: '/item_data',
                 data:{
-                    CategoryId: trdata.id
+                    CategoryId: categoryID
                 }
             },
             columns: [
@@ -177,6 +177,8 @@ $('#btnBack').on('click', function(){
 
 $(document).on('click', '#ItemTable tbody tr', function(){
     var trdata = ItemTable.row(this).data();
+    itemID = trdata.id;
+    itemName = decodeHtml(trdata.Item);
     destroyTables();
     $('#btnGenerate').show();
     $('#btnDownload').hide();
@@ -188,7 +190,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#btnBack').show();
     $('#backBtn').hide();
     $('#stocksURL').attr('href', '#');
-    $('#stocksHeader').html(decodeHtml(trdata.Item));
+    $('#stocksHeader').html(itemName);
     $('#loading').show(); Spinner(); Spinner.show();
     if(trdata.serialize == 'YES'){
         ItemSerialTable = 
@@ -198,7 +200,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 ajax:{
                     url: '/itemserial_data',
                     data:{
-                        ItemId: trdata.id
+                        ItemId: itemID
                     }
                 },
                 columnDefs: [
@@ -239,7 +241,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
                 ajax:{
                     url: '/itemserial_data',
                     data:{
-                        ItemId: trdata.id
+                        ItemId: itemID
                     }
                 },
                 columnDefs: [
@@ -316,10 +318,11 @@ $('#z_serial').on('keyup', function(){
     if($('#loading').is(":visible")){
         return false;
     }
+    serialID = $('#z_serial').val().toUpperCase();
     $.ajax({
         url: '/serial_data',
         data:{
-            serial: $('#z_serial').val()
+            serial: serialID
         },
         success: function(data){
             destroyTables();
@@ -471,6 +474,74 @@ $('#btnGenerate').on('click', function(){
         MinStocksTable.ajax.reload();
     });
 });
+
+var row_count;
+setInterval(function(){
+    if($('#CategoryTableDiv').is(':visible')){
+        $.ajax({
+            url: "/category_data/reload",
+            success: function(data){
+                if(data != row_count){
+                    row_count = data;
+                    CategoryTable.ajax.reload(null, false);
+                }
+            }
+        });
+    }
+    if($('#ItemTableDiv').is(':visible')){
+        $.ajax({
+            url: "/item_data/reload",
+            data:{
+                id: categoryID
+            },
+            success: function(data){
+                if(data != row_count){
+                    row_count = data;
+                    ItemTable.ajax.reload(null, false);
+                }
+            }
+        });
+    }
+    if($('#ItemSerialTableDiv').is(':visible')){
+        $.ajax({
+            url: "/itemserial_data/reload",
+            data:{
+                id: itemID
+            },
+            success: function(data){
+                if(data != row_count){
+                    row_count = data;
+                    ItemSerialTable.ajax.reload(null, false);
+                }
+            }
+        });
+    }
+    if($('#SerialTableDiv').is(':visible')){
+        $.ajax({
+            url: "/serial_data/reload",
+            data:{
+                serial: serialID
+            },
+            success: function(data){
+                if(data != row_count){
+                    row_count = data;
+                    SerialTable.ajax.reload(null, false);
+                }
+            }
+        });
+    }
+    if($('#MinStocksTableDiv').is(':visible')){
+        $.ajax({
+            url: "/minstocks_data/reload",
+            success: function(data){
+                if(data != row_count){
+                    row_count = data;
+                    MinStocksTable.ajax.reload(null, false);
+                }
+            }
+        });
+    }
+}, 1000);
 
 $('#btnDownload').on('click', function(){
     $('.buttons-excel').click();

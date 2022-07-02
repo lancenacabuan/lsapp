@@ -488,31 +488,8 @@ class StockRequestController extends Controller
     }
 
     public function reload(){
-        if(auth()->user()->hasanyRole('approver - sales')){ //---ROLES---//
-            $count = Requests::select()
-                ->where('users.company', auth()->user()->company)
-                ->whereIn('request_type.id', ['2','3'])
-                ->whereNotIn('requests.status', ['7','8','10','11'])
-                ->count();
-        }
-        else if(auth()->user()->hasanyRole('accounting')){ //---ROLES---//
-            $count = Requests::select()
-                ->whereIn('request_type.id', ['2','3','6'])
-                ->whereNotIn('requests.status', ['7','8','10','11'])
-                ->count();
-        }
-        else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
-            $count = Requests::select()
-                ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
-                ->count();
-        }
-        else{
-            $count = Requests::select()
-                ->where('requests.requested_by', auth()->user()->id)
-                ->whereNotIn('requests.status', ['8','10','11','14','19'])
-                ->count();
-        }
-        return $count;
+        $data_update = Requests::latest('updated_at')->first()->updated_at;
+        return $data_update;
     }
 
     public function reqModal(Request $request){

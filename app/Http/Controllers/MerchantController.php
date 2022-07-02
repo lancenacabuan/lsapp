@@ -96,12 +96,8 @@ class MerchantController extends Controller
     }
 
     public function reload(){
-        $count = Requests::select()
-            ->where('requests.requested_by', auth()->user()->id)
-            ->whereIn('requests.request_type', ['6'])
-            ->whereNotIn('requests.status', ['7','8'])
-            ->count();
-        return $count;
+        $data_update = Requests::latest('updated_at')->first()->updated_at;
+        return $data_update;
     }
 
     public function saveReqNum(Request $request){

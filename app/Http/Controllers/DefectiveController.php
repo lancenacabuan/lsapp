@@ -59,10 +59,8 @@ class DefectiveController extends Controller
     }
 
     public function reload(){
-        $count = Stock::select()
-            ->whereIn('stocks.status', ['defectives','FOR RECEIVING'])
-            ->count();
-        return $count;
+        $data_update = Stock::latest('updated_at')->first()->updated_at;
+        return $data_update;
     }
 
     public function generateReturnNum(Request $request){

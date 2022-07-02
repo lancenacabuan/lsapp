@@ -278,24 +278,8 @@ class StockTransferController extends Controller
     }
 
     public function reload(){
-        if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
-            $count = RequestTransfer::select()
-                ->where('users.company', auth()->user()->company)
-                ->whereNotIn('request_transfer.status', ['7','8'])
-                ->count();
-        }
-        else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
-            $count = RequestTransfer::select()
-                ->whereNotIn('request_transfer.status', ['7','8'])
-                ->count();
-        }
-        else{
-            $count = RequestTransfer::select()
-                ->where('request_transfer.requested_by', auth()->user()->id)
-                ->whereNotIn('request_transfer.status', ['7','8'])
-                ->count();
-        }
-        return $count;
+        $data_update = RequestTransfer::latest('updated_at')->first()->updated_at;
+        return $data_update;
     }
 
     public function transModal(Request $request){

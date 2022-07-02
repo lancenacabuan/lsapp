@@ -148,12 +148,8 @@ class AssemblyController extends Controller
     }
 
     public function reload(){
-        $count = Requests::select()
-            ->where('requests.requested_by', auth()->user()->id)
-            ->whereIn('requests.request_type', ['4','5'])
-            ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
-            ->count();
-        return $count;
+        $data_update = Requests::latest('updated_at')->first()->updated_at;
+        return $data_update;
     }
 
     public function receiveRequest(Request $request){

@@ -460,7 +460,7 @@ $('#modalClose').on('click', function(){
 });
 
 $('table.stocktransferTable').dataTable().fnDestroy();
-$('table.stocktransferTable').DataTable({
+var stocktransferTable = $('table.stocktransferTable').DataTable({
     aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
     language:{
         processing: "Loading...",
@@ -540,6 +540,19 @@ $('table.stocktransferTable').DataTable({
         return notifyDeadline();
     }
 });
+
+var row_count
+setInterval(function(){
+    $.ajax({
+        url: "/stocktransfer/reload",
+        success: function(data){
+            if(data != row_count){
+                row_count = data;
+                stocktransferTable.ajax.reload(null, false);
+            }
+        }
+    });
+}, 1000);
 
 if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
     url = window.location.search;

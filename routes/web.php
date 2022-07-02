@@ -36,6 +36,7 @@ Route::any('/change/password',[PagesController::class,'change_password']);
 //Users
 Route::get('/users',[PagesController::class,'users']);
 Route::get('/users/data',[PagesController::class,'users_data']);
+Route::get('/users/reload',[PagesController::class,'users_reload']);
 Route::any('/users/validate/save',[PagesController::class,'validate_users_save']);
 Route::any('/users/save',[PagesController::class,'users_save']);
 Route::any('/users/validate/update',[PagesController::class,'validate_users_update']);
@@ -59,6 +60,7 @@ Route::get('/stocks/add',[StocksController::class,'add']);
 
 //Stock Requests
 Route::get('/stockrequest',[StockRequestController::class,'stockrequest']);
+Route::get('/stockrequest/reload',[StockRequestController::class,'reload']);
 Route::get('/generatedr',[StockRequestController::class,'generatedr']);
 Route::get('/getInclusive',[StockRequestController::class,'getInclusive']);
 Route::get('/itemsreq',[StockRequestController::class,'itemsreq']);
@@ -116,6 +118,7 @@ Route::any('/stockrequest/notify',[StockRequestController::class,'notify']);
 
 //Stock Transfer
 Route::get('/stocktransfer',[StockTransferController::class,'stocktransfer']);
+Route::get('/stocktransfer/reload',[StockTransferController::class,'reload']);
 Route::get('/generateReqNum',[StockTransferController::class,'generateReqNum']);
 Route::get('/setcategory',[StockTransferController::class,'setcategory']);
 Route::get('/setitems',[StockTransferController::class,'setitems']);
@@ -149,6 +152,7 @@ Route::any('/stocktransfer/notify',[StockTransferController::class,'notify']);
 
 //Assembly
 Route::get('/assembly',[AssemblyController::class,'assembly']);
+Route::get('/assembly/reload',[AssemblyController::class,'reload']);
 Route::get('/assembly/generateReqNum',[AssemblyController::class,'generateReqNum']);
 Route::get('/itemsAssembly',[AssemblyController::class,'itemsAssembly']);
 Route::get('/uomAssembly',[AssemblyController::class,'uomAssembly']);
@@ -176,6 +180,7 @@ Route::get('/partsDetails',[AssemblyController::class,'partsDetails']);
 
 //Merchant
 Route::get('/merchant',[MerchantController::class,'merchant']);
+Route::get('/merchant/reload',[MerchantController::class,'reload']);
 Route::get('/merchant/items',[MerchantController::class,'items']);
 Route::get('/merchant/uom',[MerchantController::class,'uom']);
 Route::get('/merchant/warranty',[MerchantController::class,'warranty']);
@@ -188,6 +193,7 @@ Route::any('/merchant/logSave',[MerchantController::class,'logSave']);
 
 //Defective
 Route::get('/defective',[DefectiveController::class,'defective']);
+Route::get('/defective/reload',[DefectiveController::class,'reload']);
 Route::get('/defective/data',[DefectiveController::class,'defective_data']);
 Route::any('/defective/return',[DefectiveController::class,'defective_return']);
 Route::any('/generateReturnNum',[DefectiveController::class,'generateReturnNum']);

@@ -1,5 +1,5 @@
 $('table.defectiveTable').dataTable().fnDestroy();
-$('table.defectiveTable').DataTable({
+var defectiveTable = $('table.defectiveTable').DataTable({
     aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
     language:{
         processing: "Loading...",
@@ -55,6 +55,19 @@ $('table.defectiveTable').DataTable({
         return notifyDeadline();
     }
 });
+
+var row_count
+setInterval(function(){
+    $.ajax({
+        url: "/defective/reload",
+        success: function(data){
+            if(data != row_count){
+                row_count = data;
+                defectiveTable.ajax.reload(null, false);
+            }
+        }
+    });
+}, 1000);
 
 function generateReturnNum(){
     var today = new Date();

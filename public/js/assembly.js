@@ -131,7 +131,7 @@ $('#btnClose').on('click', function(){
 });
 
 $('table.assemblyTable').dataTable().fnDestroy();
-$('table.assemblyTable').DataTable({
+var assemblyTable = $('table.assemblyTable').DataTable({
     aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
     language:{
         processing: "Loading...",
@@ -224,6 +224,19 @@ $('table.assemblyTable').DataTable({
         return notifyDeadline();
     }
 });
+
+var row_count
+setInterval(function(){
+    $.ajax({
+        url: "/assembly/reload",
+        success: function(data){
+            if(data != row_count){
+                row_count = data;
+                assemblyTable.ajax.reload(null, false);
+            }
+        }
+    });
+}, 1000);
 
 $('#btnAssemblyProceed').on('click', function(){
     $('#btnAssemblyProceed').hide();

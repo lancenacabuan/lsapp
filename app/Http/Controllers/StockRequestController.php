@@ -487,6 +487,34 @@ class StockRequestController extends Controller
         ->make(true);
     }
 
+    public function reload(){
+        if(auth()->user()->hasanyRole('approver - sales')){ //---ROLES---//
+            $count = Requests::select()
+                ->where('users.company', auth()->user()->company)
+                ->whereIn('request_type.id', ['2','3'])
+                ->whereNotIn('requests.status', ['7','8','10','11'])
+                ->count();
+        }
+        else if(auth()->user()->hasanyRole('accounting')){ //---ROLES---//
+            $count = Requests::select()
+                ->whereIn('request_type.id', ['2','3','6'])
+                ->whereNotIn('requests.status', ['7','8','10','11'])
+                ->count();
+        }
+        else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
+            $count = Requests::select()
+                ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
+                ->count();
+        }
+        else{
+            $count = Requests::select()
+                ->where('requests.requested_by', auth()->user()->id)
+                ->whereNotIn('requests.status', ['8','10','11','14','19'])
+                ->count();
+        }
+        return $count;
+    }
+
     public function reqModal(Request $request){
         $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID')
             ->where('requests.request_number', $request->request_number)

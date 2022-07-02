@@ -234,6 +234,11 @@ class PagesController extends Controller
         return DataTables::of($list)->make(true);
     }
 
+    public function users_reload(){
+        $count = User::select()->count();
+        return $count;
+    }
+
     public function validate_users_save(Request $request){
         $email = User::query()->select()
             ->where('email',$request->email)

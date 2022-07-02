@@ -64,6 +64,19 @@ document.querySelectorAll('input[type=search]').forEach(function(input){
     });
 });
 
+var row_count
+setInterval(function(){
+    $.ajax({
+        url: "/users/reload",
+        success: function(data){
+            if(data != row_count){
+                row_count = data;
+                table.ajax.reload(null, false);
+            }
+        }
+    });
+}, 1000);
+
 $(document).on('change', '.togBtn', function(){
     var id = $(this).attr("id");
     var data = table.row(id).data();

@@ -147,6 +147,15 @@ class AssemblyController extends Controller
         ->make(true);
     }
 
+    public function reload(){
+        $count = Requests::select()
+            ->where('requests.requested_by', auth()->user()->id)
+            ->whereIn('requests.request_type', ['4','5'])
+            ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
+            ->count();
+        return $count;
+    }
+
     public function receiveRequest(Request $request){
         if($request->inc == 'true'){
             if($request->request_type == '4'){

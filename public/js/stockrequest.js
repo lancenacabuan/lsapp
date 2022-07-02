@@ -772,7 +772,7 @@ $('.btnClose').on('click', function(){
 
 $('table.stockrequestTable').dataTable().fnDestroy();
 if($("#current_role").val() == 'sales'){
-    $('table.stockrequestTable').DataTable({
+    var stockrequestTable = $('table.stockrequestTable').DataTable({
         aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
         language:{
             processing: "Loading...",
@@ -900,7 +900,7 @@ if($("#current_role").val() == 'sales'){
     });
 }
 else{
-    $('table.stockrequestTable').DataTable({
+    var stockrequestTable = $('table.stockrequestTable').DataTable({
         aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
         language:{
             processing: "Loading...",
@@ -1022,6 +1022,19 @@ else{
         }
     });
 }
+
+var row_count
+setInterval(function(){
+    $.ajax({
+        url: "/stockrequest/reload",
+        success: function(data){
+            if(data != row_count){
+                row_count = data;
+                stockrequestTable.ajax.reload(null, false);
+            }
+        }
+    });
+}, 1000);
 
 if($(location).attr('pathname')+window.location.search != '/stockrequest'){
     url = window.location.search;

@@ -277,6 +277,27 @@ class StockTransferController extends Controller
         ->make(true);
     }
 
+    public function reload(){
+        if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
+            $count = RequestTransfer::select()
+                ->where('users.company', auth()->user()->company)
+                ->whereNotIn('request_transfer.status', ['7','8'])
+                ->count();
+        }
+        else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
+            $count = RequestTransfer::select()
+                ->whereNotIn('request_transfer.status', ['7','8'])
+                ->count();
+        }
+        else{
+            $count = RequestTransfer::select()
+                ->where('request_transfer.requested_by', auth()->user()->id)
+                ->whereNotIn('request_transfer.status', ['7','8'])
+                ->count();
+        }
+        return $count;
+    }
+
     public function transModal(Request $request){
         $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, status.status AS status, users.name AS req_by, status.id AS status_id, request_transfer.schedule AS sched, locations.location AS location, prepared_by, reason, needdate, locfrom, locto')
             ->where('request_transfer.request_number', $request->request_number)

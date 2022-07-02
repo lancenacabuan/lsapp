@@ -52,13 +52,13 @@ document.querySelectorAll('input[type=search]').forEach(function(input){
     });
 });
 
-var logs;
+var row_count
 setInterval(function(){
     $.ajax({
         url: "/index/reload",
         success: function(data){
-            if(data != logs){
-                logs = data;
+            if(data != row_count){
+                row_count = data;
                 table.ajax.reload(null, false);
             }
         }

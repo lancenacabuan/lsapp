@@ -58,6 +58,13 @@ class DefectiveController extends Controller
         return DataTables::of($data)->make(true);
     }
 
+    public function reload(){
+        $count = Stock::select()
+            ->whereIn('stocks.status', ['defectives','FOR RECEIVING'])
+            ->count();
+        return $count;
+    }
+
     public function generateReturnNum(Request $request){
         $reqnum = Defective::query()->select()->where('return_number',$request->return_number)->count();
         if($reqnum == 0){

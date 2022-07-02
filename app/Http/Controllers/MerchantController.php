@@ -95,6 +95,15 @@ class MerchantController extends Controller
         ->make(true);
     }
 
+    public function reload(){
+        $count = Requests::select()
+            ->where('requests.requested_by', auth()->user()->id)
+            ->whereIn('requests.request_type', ['6'])
+            ->whereNotIn('requests.status', ['7','8'])
+            ->count();
+        return $count;
+    }
+
     public function saveReqNum(Request $request){
         $orderID = Requests::query()->select()
             ->where('orderID', '!=', 'N/A')

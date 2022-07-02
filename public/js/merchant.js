@@ -436,7 +436,7 @@ $('.btnClose').on('click', function(){
 });
 
 $('table.merchantTable').dataTable().fnDestroy();
-$('table.merchantTable').DataTable({
+var merchantTable = $('table.merchantTable').DataTable({
     aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
     language:{
         processing: "Loading...",
@@ -517,6 +517,20 @@ $('table.merchantTable').DataTable({
         }
     }
 });
+
+var row_count
+setInterval(function(){
+    $.ajax({
+        url: "/merchant/reload",
+        success: function(data){
+            if(data != row_count){
+                row_count = data;
+                merchantTable.ajax.reload(null, false);
+            }
+        }
+    });
+}, 1000);
+
 if($(location).attr('pathname')+window.location.search != '/merchant'){
     url = window.location.search;
     reqnum = url.replace('?request_number=', '');

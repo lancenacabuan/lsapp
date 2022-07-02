@@ -47,7 +47,7 @@ class StocksController extends Controller
         return view('/pages/stocks', compact('list','categories','locations','items'));
     }
 
-    public function reload(Request $request){
+    public function reload(){
         $data_update = Stock::latest('updated_at')->first()->updated_at;
         return $data_update;
     }

@@ -235,8 +235,8 @@ class PagesController extends Controller
     }
 
     public function users_reload(){
-        $count = User::select()->count();
-        return $count;
+        $data_update = User::latest('updated_at')->first()->updated_at;
+        return $data_update;
     }
 
     public function validate_users_save(Request $request){

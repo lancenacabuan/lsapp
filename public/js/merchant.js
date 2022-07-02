@@ -518,13 +518,13 @@ var merchantTable = $('table.merchantTable').DataTable({
     }
 });
 
-var row_count;
+var data_update;
 setInterval(function(){
     $.ajax({
         url: "/merchant/reload",
         success: function(data){
-            if(data != row_count){
-                row_count = data;
+            if(data != data_update){
+                data_update = data;
                 merchantTable.ajax.reload(null, false);
             }
         }

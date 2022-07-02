@@ -35,13 +35,13 @@ if(
         }
     });
 
-    var row_count;
+    var data_update;
     setInterval(function(){
         $.ajax({
             url: "/fm_items/reload",
             success: function(data){
-                if(data != row_count){
-                    row_count = data;
+                if(data != data_update){
+                    data_update = data;
                     tblItem.ajax.reload(null, false);
                 }
             }
@@ -75,13 +75,13 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         }
     });
 
-    var row_count;
+    var data_update;
     setInterval(function(){
         $.ajax({
             url: "/asm_items/reload",
             success: function(data){
-                if(data != row_count){
-                    row_count = data;
+                if(data != data_update){
+                    data_update = data;
                     tblAssembly.ajax.reload(null, false);
                 }
             }
@@ -113,13 +113,13 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         }
     });
 
-    var row_count;
+    var data_update;
     setInterval(function(){
         $.ajax({
             url: "/fm_categories/reload",
             success: function(data){
-                if(data != row_count){
-                    row_count = data;
+                if(data != data_update){
+                    data_update = data;
                     tblCategory.ajax.reload(null, false);
                 }
             }
@@ -166,13 +166,13 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         }
     });
 
-    var row_count;
+    var data_update;
     setInterval(function(){
         $.ajax({
             url: "/fm_locations/reload",
             success: function(data){
-                if(data != row_count){
-                    row_count = data;
+                if(data != data_update){
+                    data_update = data;
                     tblLocation.ajax.reload(null, false);
                 }
             }
@@ -309,13 +309,13 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
         ]
     });
 
-    var row_count;
+    var data_update;
     setInterval(function(){
         $.ajax({
             url: "/fm_warranty/reload",
             success: function(data){
-                if(data != row_count){
-                    row_count = data;
+                if(data != data_update){
+                    data_update = data;
                     tblWarranty.ajax.reload(null, false);
                 }
             }

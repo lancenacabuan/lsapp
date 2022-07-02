@@ -1023,13 +1023,13 @@ else{
     });
 }
 
-var row_count;
+var data_update;
 setInterval(function(){
     $.ajax({
         url: "/stockrequest/reload",
         success: function(data){
-            if(data != row_count){
-                row_count = data;
+            if(data != data_update){
+                data_update = data;
                 stockrequestTable.ajax.reload(null, false);
             }
         }

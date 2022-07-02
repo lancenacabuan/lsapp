@@ -225,13 +225,13 @@ var assemblyTable = $('table.assemblyTable').DataTable({
     }
 });
 
-var row_count;
+var data_update;
 setInterval(function(){
     $.ajax({
         url: "/assembly/reload",
         success: function(data){
-            if(data != row_count){
-                row_count = data;
+            if(data != data_update){
+                data_update = data;
                 assemblyTable.ajax.reload(null, false);
             }
         }

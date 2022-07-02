@@ -475,14 +475,14 @@ $('#btnGenerate').on('click', function(){
     });
 });
 
-var row_count;
+var data_update;
 setInterval(function(){
     if($('#CategoryTableDiv').is(':visible')){
         $.ajax({
             url: "/category_data/reload",
             success: function(data){
-                if(data != row_count){
-                    row_count = data;
+                if(data != data_update){
+                    data_update = data;
                     CategoryTable.ajax.reload(null, false);
                 }
             }
@@ -495,8 +495,8 @@ setInterval(function(){
                 id: categoryID
             },
             success: function(data){
-                if(data != row_count){
-                    row_count = data;
+                if(data != data_update){
+                    data_update = data;
                     ItemTable.ajax.reload(null, false);
                 }
             }
@@ -509,8 +509,8 @@ setInterval(function(){
                 id: itemID
             },
             success: function(data){
-                if(data != row_count){
-                    row_count = data;
+                if(data != data_update){
+                    data_update = data;
                     ItemSerialTable.ajax.reload(null, false);
                 }
             }
@@ -523,8 +523,8 @@ setInterval(function(){
                 serial: serialID
             },
             success: function(data){
-                if(data != row_count){
-                    row_count = data;
+                if(data != data_update){
+                    data_update = data;
                     SerialTable.ajax.reload(null, false);
                 }
             }
@@ -534,8 +534,8 @@ setInterval(function(){
         $.ajax({
             url: "/minstocks_data/reload",
             success: function(data){
-                if(data != row_count){
-                    row_count = data;
+                if(data != data_update){
+                    data_update = data;
                     MinStocksTable.ajax.reload(null, false);
                 }
             }

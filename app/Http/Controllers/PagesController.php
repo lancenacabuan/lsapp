@@ -285,6 +285,16 @@ class PagesController extends Controller
         else {
             $result = 'true';
 
+            $list = User::query()->selectRaw('users.id AS user_id, roles.id AS role_id')
+                ->where('users.id', '=', $id)
+                ->join('model_has_roles', 'model_id', '=', 'users.id')
+                ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                ->get();
+
+            foreach($list as $user){
+                User::where('id', $user->user_id)->update(['userlevel' => $user->role_id]);
+            }
+
             Password::broker()->sendResetLink(['email'=>strtolower($request->email)]);
     
             $userlogs = new UserLogs;
@@ -356,6 +366,15 @@ class PagesController extends Controller
             }
             if($request->role1 != $request->role2){
                 $role = "[User Level: FROM '$request->role2' TO '$request->role1']";
+                $list = User::query()->selectRaw('users.id AS user_id, roles.id AS role_id')
+                    ->where('users.id', '=', $request->id1)
+                    ->join('model_has_roles', 'model_id', '=', 'users.id')
+                    ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+                    ->get();
+
+                foreach($list as $user){
+                    User::where('id', $user->user_id)->update(['userlevel' => $user->role_id]);
+                }
             }
             else{
                 $role = NULL;

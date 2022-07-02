@@ -47,6 +47,11 @@ class StocksController extends Controller
         return view('/pages/stocks', compact('list','categories','locations','items'));
     }
 
+    public function reload(Request $request){
+        $data_update = Stock::latest('updated_at')->first()->updated_at;
+        return $data_update;
+    }
+
     public function category_data(){
         $list = Category::query()->select('categories.id',
                 DB::raw
@@ -95,54 +100,6 @@ class StocksController extends Controller
         return DataTables::of($list)->make(true);
     }
 
-    public function category_data_reload(){
-        $list = Category::query()->select('categories.id',
-                DB::raw
-                ("
-                    categories.category as Category,
-                    SUM(CASE WHEN stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' THEN 1 ELSE 0 END) as Defective,
-                    SUM(CASE WHEN stocks.status = 'demo' THEN 1 ELSE 0 END) as Demo,
-                    SUM(CASE WHEN stocks.status = 'assembly' THEN 1 ELSE 0 END) as Assembly,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '1' THEN 1 ELSE 0 END) as A1,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '2' THEN 1 ELSE 0 END) as A2,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '3' THEN 1 ELSE 0 END) as A3,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '4' THEN 1 ELSE 0 END) as A4,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '5' THEN 1 ELSE 0 END) as Balintawak,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '6' THEN 1 ELSE 0 END) as Malabon,
-                    SUM(CASE WHEN stocks.status = 'in' OR stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' OR stocks.status = 'demo' OR stocks.status = 'assembly' THEN 1 ELSE 0 END) as Total_stocks
-                ")
-            )
-            ->join('items', 'items.category_id', 'categories.id')
-            ->join('stocks', 'stocks.item_id', 'items.id')
-            ->groupBy('categories.id','Category')
-            ->orderBy('Category', 'ASC')
-            ->get()
-            ->toArray();
-        
-        foreach($list as $key => $value){
-            $items = Item::query()->select('items.id',
-                DB::raw
-                ("
-                    minimum as Minimum_stocks,
-                    SUM(CASE WHEN stocks.status = 'in' OR stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' OR stocks.status = 'demo' OR stocks.status = 'assembly' THEN 1 ELSE 0 END) as Total_stocks
-                ")
-            )
-            ->where('items.category_id', $value['id'])
-            ->join('stocks', 'stocks.item_id', 'items.id')
-            ->groupBy('items.id')
-            ->orderBy('Item', 'ASC')
-            ->get()
-            ->toArray();
-            foreach($items as $itemkey => $itemvalue){
-                if($itemvalue['Total_stocks'] <= $itemvalue['Minimum_stocks']){
-                    $list[$key]['RowColor'] = 'RED';
-                }
-            }
-        }
-
-        return count($list);
-    }
-
     public function item_data(Request $request){
         $list = Item::query()->select('items.id',
                 DB::raw
@@ -177,42 +134,6 @@ class StocksController extends Controller
         }
 
         return DataTables::of($list)->make(true);
-    }
-
-    public function item_data_reload(Request $request){
-        $list = Item::query()->select('items.id',
-                DB::raw
-                ("
-                    items.item as Item, items.prodcode as ProdCode, serialize, minimum as Minimum_stocks,
-                    SUM(CASE WHEN stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' THEN 1 ELSE 0 END) as Defective,
-                    SUM(CASE WHEN stocks.status = 'demo' THEN 1 ELSE 0 END) as Demo,
-                    SUM(CASE WHEN stocks.status = 'assembly' THEN 1 ELSE 0 END) as Assembly,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '1' THEN 1 ELSE 0 END) as A1,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '2' THEN 1 ELSE 0 END) as A2,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '3' THEN 1 ELSE 0 END) as A3,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '4' THEN 1 ELSE 0 END) as A4,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '5' THEN 1 ELSE 0 END) as Balintawak,
-                    SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '6' THEN 1 ELSE 0 END) as Malabon,
-                    SUM(CASE WHEN stocks.status = 'in' OR stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' OR stocks.status = 'demo' OR stocks.status = 'assembly' THEN 1 ELSE 0 END) as Total_stocks
-                ")
-            )
-            ->where('items.category_id', $request->id)
-            ->join('stocks', 'stocks.item_id', 'items.id')
-            ->groupBy('items.id','Item','ProdCode','serialize')
-            ->orderBy('Item', 'ASC')
-            ->get()
-            ->toArray();
-        
-        foreach($list as $key => $value){
-            if($value['Total_stocks'] <= $value['Minimum_stocks']){
-                $list[$key]['RowColor'] = 'RED';
-            }
-            else{
-                $list[$key]['RowColor'] = 'BLACK';
-            }
-        }
-
-        return count($list);
     }
 
     public function itemserial_data(Request $request){
@@ -276,67 +197,6 @@ class StocksController extends Controller
         }
     }
 
-    public function itemserial_data_reload(Request $request){
-        $UOM = Item::select()
-            ->where('id', $request->id)
-            ->first()
-            ->UOM;
-
-        if($UOM == 'Unit'){
-            $stock = Stock::query()
-                ->select('stocks.id AS stock_id', 'category', 'item', 'serialize', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
-                ->selectRaw('DATE_FORMAT(stocks.created_at, "%b. %d, %Y, %h:%i %p") AS addDatetime, DATE_FORMAT(stocks.updated_at, "%b. %d, %Y, %h:%i %p") AS modDatetime, UPPER(serial) AS serial')
-                ->selectRaw('
-                    (CASE
-                        WHEN stocks.status = "defectives" THEN "DEFECTIVE"
-                        WHEN stocks.status = "FOR RECEIVING" THEN "DEFECTIVE (RETURNED)"
-                        WHEN stocks.status = "demo" THEN "DEMO"
-                        WHEN stocks.status = "assembly" THEN "ASSEMBLY"
-                        ELSE location END
-                    )AS location
-                ')
-                ->where('item_id', $request->id)
-                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
-                ->join('items', 'items.id', 'item_id')
-                ->join('categories', 'categories.id', 'category_id')
-                ->join('locations', 'locations.id', 'location_id')
-                ->join('users', 'users.id', 'user_id')
-                ->orderBy('modDate', 'DESC')
-                ->orderBy('addDate', 'ASC')
-                ->orderBy('name', 'ASC')
-                ->get();
-            
-            return count($stock);
-        }
-        else{
-            $stock = Stock::query()
-                ->select('category', 'item', 'serialize', DB::raw('SUM(stocks.qty) AS qty'), 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
-                ->selectRaw('DATE_FORMAT(stocks.created_at, "%b. %d, %Y, %h:%i %p") AS addDatetime, DATE_FORMAT(stocks.updated_at, "%b. %d, %Y, %h:%i %p") AS modDatetime, UPPER(serial) AS serial')
-                ->selectRaw('
-                    (CASE
-                        WHEN stocks.status = "defectives" THEN "DEFECTIVE"
-                        WHEN stocks.status = "FOR RECEIVING" THEN "DEFECTIVE (RETURNED)"
-                        WHEN stocks.status = "demo" THEN "DEMO"
-                        WHEN stocks.status = "assembly" THEN "ASSEMBLY"
-                        ELSE location END
-                    )AS location
-                ')
-                ->where('item_id', $request->id)
-                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
-                ->join('items', 'items.id', 'item_id')
-                ->join('categories', 'categories.id', 'category_id')
-                ->join('locations', 'locations.id', 'location_id')
-                ->join('users', 'users.id', 'user_id')
-                ->groupBy('category','item','serialize','qty','UOM','name','location','serial','rack','row','status','addDate','modDate')
-                ->orderBy('modDate', 'DESC')
-                ->orderBy('addDate', 'ASC')
-                ->orderBy('name', 'ASC')
-                ->get();
-            
-            return count($stock);
-        }
-    }
-
     public function serial_data(Request $request){
         $count = Stock::select()
             ->where('serial', 'like', '%'.$request->serial.'%')
@@ -375,44 +235,6 @@ class StocksController extends Controller
         }
     }
 
-    public function serial_data_reload(Request $request){
-        $count = Stock::select()
-            ->where('serial', 'like', '%'.$request->serial.'%')
-            ->count();
-        if($count != 0){
-            $stock = Stock::query()
-                ->select('stocks.id AS stock_id', 'category', 'item', 'serialize', 'prodcode', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
-                ->selectRaw('DATE_FORMAT(stocks.created_at, "%b. %d, %Y, %h:%i %p") AS addDatetime, DATE_FORMAT(stocks.updated_at, "%b. %d, %Y, %h:%i %p") AS modDatetime, UPPER(serial) AS serial')
-                ->selectRaw('
-                    (CASE
-                        WHEN stocks.status = "defectives" THEN "DEFECTIVE"
-                        WHEN stocks.status = "FOR RECEIVING" THEN "DEFECTIVE (RETURNED)"
-                        WHEN stocks.status = "demo" THEN "DEMO"
-                        WHEN stocks.status = "assembly" THEN "ASSEMBLY"
-                        ELSE location END
-                    )AS location
-                ')
-                ->where('serial', 'like', '%'.$request->serial.'%')
-                ->where('serial', '!=', 'N/A')
-                ->where('UOM', 'Unit')
-                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
-                ->join('items', 'items.id', 'item_id')
-                ->join('categories', 'categories.id', 'category_id')
-                ->join('locations', 'locations.id', 'location_id')
-                ->join('users', 'users.id', 'user_id')
-                ->orderBy('modDate', 'DESC')
-                ->orderBy('addDate', 'ASC')
-                ->orderBy('name', 'ASC')
-                ->orderBy('item', 'ASC')
-                ->get();
-            
-            return count($stock);
-        }
-        else{
-            return 0;
-        }
-    }
-
     public function minstocks_data(Request $request){
         $stocks = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'items.UOM as uom', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
                 DB::raw("SUM(CASE 
@@ -437,32 +259,6 @@ class StocksController extends Controller
         }
 
         return DataTables::of($list)->make(true);
-    }
-
-    public function minstocks_data_reload(Request $request){
-        $stocks = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'items.UOM as uom', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
-                DB::raw("SUM(CASE 
-                    WHEN stocks.status = 'in' THEN 1
-                    WHEN stocks.status = 'defectives' THEN 1
-                    WHEN stocks.status = 'FOR RECEIVING' THEN 1
-                    WHEN stocks.status = 'demo' THEN 1
-                    WHEN stocks.status = 'assembly' THEN 1
-                    ELSE 0 END
-                ) as Current_stocks"))
-            ->join('categories', 'categories.id', 'items.category_id')
-            ->join('stocks', 'stocks.item_id', 'items.id')
-            ->groupBy('items.id','Item','ProdCode','uom','Category')
-            ->orderBy('Category', 'ASC')
-            ->orderBy('Item', 'ASC')
-            ->get();
-        
-        foreach($stocks as $stock){
-            if($stock->Current_stocks <= $stock->Minimum_stocks){
-                $list[]=$stock;
-            }
-        }
-
-        return count($list);
     }
 
     public function getItems(Request $request){

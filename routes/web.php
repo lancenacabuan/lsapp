@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Middleware\RoleMiddleware;
 use App\Http\Controllers\Auth\LoginController;
@@ -46,16 +47,12 @@ Route::any('/users/status',[PagesController::class,'users_status']);
 
 //Stocks
 Route::get('/stocks',[StocksController::class,'stocks']);
+Route::get('/stocks/reload',[StocksController::class,'reload']);
 Route::get('/category_data',[StocksController::class,'category_data']);
 Route::get('/item_data',[StocksController::class,'item_data']);
 Route::get('/itemserial_data',[StocksController::class,'itemserial_data']);
 Route::get('/serial_data',[StocksController::class,'serial_data']);
 Route::get('/minstocks_data',[StocksController::class,'minstocks_data']);
-Route::get('/category_data/reload',[StocksController::class,'category_data_reload']);
-Route::get('/item_data/reload',[StocksController::class,'item_data_reload']);
-Route::get('/itemserial_data/reload',[StocksController::class,'itemserial_data_reload']);
-Route::get('/serial_data/reload',[StocksController::class,'serial_data_reload']);
-Route::get('/minstocks_data/reload',[StocksController::class,'minstocks_data_reload']);
 Route::get('/getItems',[StocksController::class,'getItems']);
 Route::get('/getUOM',[StocksController::class,'getUOM']);
 Route::any('/stocks/save',[StocksController::class,'save']);

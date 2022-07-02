@@ -477,70 +477,29 @@ $('#btnGenerate').on('click', function(){
 
 var data_update;
 setInterval(function(){
-    if($('#CategoryTableDiv').is(':visible')){
-        $.ajax({
-            url: "/category_data/reload",
-            success: function(data){
-                if(data != data_update){
-                    data_update = data;
+    $.ajax({
+        url: "/stocks/reload",
+        success: function(data){
+            if(data != data_update){
+                data_update = data;
+                if($('#CategoryTableDiv').is(':visible')){
                     CategoryTable.ajax.reload(null, false);
                 }
-            }
-        });
-    }
-    if($('#ItemTableDiv').is(':visible')){
-        $.ajax({
-            url: "/item_data/reload",
-            data:{
-                id: categoryID
-            },
-            success: function(data){
-                if(data != data_update){
-                    data_update = data;
+                if($('#ItemTableDiv').is(':visible')){
                     ItemTable.ajax.reload(null, false);
                 }
-            }
-        });
-    }
-    if($('#ItemSerialTableDiv').is(':visible')){
-        $.ajax({
-            url: "/itemserial_data/reload",
-            data:{
-                id: itemID
-            },
-            success: function(data){
-                if(data != data_update){
-                    data_update = data;
+                if($('#ItemSerialTableDiv').is(':visible')){
                     ItemSerialTable.ajax.reload(null, false);
                 }
-            }
-        });
-    }
-    if($('#SerialTableDiv').is(':visible')){
-        $.ajax({
-            url: "/serial_data/reload",
-            data:{
-                serial: serialID
-            },
-            success: function(data){
-                if(data != data_update){
-                    data_update = data;
+                if($('#SerialTableDiv').is(':visible')){
                     SerialTable.ajax.reload(null, false);
                 }
-            }
-        });
-    }
-    if($('#MinStocksTableDiv').is(':visible')){
-        $.ajax({
-            url: "/minstocks_data/reload",
-            success: function(data){
-                if(data != data_update){
-                    data_update = data;
+                if($('#MinStocksTableDiv').is(':visible')){
                     MinStocksTable.ajax.reload(null, false);
                 }
             }
-        });
-    }
+        }
+    });
 }, 1000);
 
 $('#btnDownload').on('click', function(){

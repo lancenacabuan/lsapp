@@ -1023,7 +1023,7 @@ else{
     });
 }
 
-var row_count
+var row_count;
 setInterval(function(){
     $.ajax({
         url: "/stockrequest/reload",

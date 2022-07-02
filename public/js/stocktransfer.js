@@ -541,7 +541,7 @@ var stocktransferTable = $('table.stocktransferTable').DataTable({
     }
 });
 
-var row_count
+var row_count;
 setInterval(function(){
     $.ajax({
         url: "/stocktransfer/reload",

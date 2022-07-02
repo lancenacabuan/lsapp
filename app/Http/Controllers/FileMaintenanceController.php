@@ -69,6 +69,35 @@ class FileMaintenanceController extends Controller
         return DataTables::of($list)->make(true);
     }
 
+    public function fm_items_reload(){
+        $count = Item::select()
+            ->where('items.assemble', 'NO')
+            ->count();
+        return $count;
+    }
+
+    public function asm_items_reload(){
+        $count = Item::select()
+            ->where('items.assemble', 'YES')
+            ->count();
+        return $count;
+    }
+
+    public function fm_categories_reload(){
+        $count = Category::select()->count();
+        return $count;
+    }
+
+    public function fm_locations_reload(){
+        $count = Location::select()->count();
+        return $count;
+    }
+
+    public function fm_warranty_reload(){
+        $count = Warranty::select()->count();
+        return $count;
+    }
+
     public function import(Request $request){
         $file = $request->file('xlsx');
         $import = new ItemsImport;

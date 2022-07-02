@@ -354,7 +354,7 @@
 
             function resetTimer() {
                 clearTimeout(timer);
-                timer = setTimeout(autoLogout, 600000);
+                timer = setTimeout(autoLogout, 3600000);
             }
         }
         idleLogout();

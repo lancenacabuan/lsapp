@@ -64,7 +64,7 @@ document.querySelectorAll('input[type=search]').forEach(function(input){
     });
 });
 
-var row_count
+var row_count;
 setInterval(function(){
     $.ajax({
         url: "/users/reload",

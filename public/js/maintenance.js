@@ -34,6 +34,19 @@ if(
             return notifyDeadline();
         }
     });
+
+    var row_count;
+    setInterval(function(){
+        $.ajax({
+            url: "/fm_items/reload",
+            success: function(data){
+                if(data != row_count){
+                    row_count = data;
+                    tblItem.ajax.reload(null, false);
+                }
+            }
+        });
+    }, 1000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=assembleditems'){
     $('#nav2').addClass("active-link");
@@ -61,6 +74,19 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
             return notifyDeadline();
         }
     });
+
+    var row_count;
+    setInterval(function(){
+        $.ajax({
+            url: "/asm_items/reload",
+            success: function(data){
+                if(data != row_count){
+                    row_count = data;
+                    tblAssembly.ajax.reload(null, false);
+                }
+            }
+        });
+    }, 1000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=categories'){
     $('#nav3').addClass("active-link");
@@ -86,6 +112,19 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
             return notifyDeadline();
         }
     });
+
+    var row_count;
+    setInterval(function(){
+        $.ajax({
+            url: "/fm_categories/reload",
+            success: function(data){
+                if(data != row_count){
+                    row_count = data;
+                    tblCategory.ajax.reload(null, false);
+                }
+            }
+        });
+    }, 1000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=locations'){
     $('#nav4').addClass("active-link");
@@ -126,6 +165,19 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
             return notifyDeadline();
         }
     });
+
+    var row_count;
+    setInterval(function(){
+        $.ajax({
+            url: "/fm_locations/reload",
+            success: function(data){
+                if(data != row_count){
+                    row_count = data;
+                    tblLocation.ajax.reload(null, false);
+                }
+            }
+        });
+    }, 1000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=warranty'){
     $('#nav5').addClass("active-link");
@@ -256,6 +308,19 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
             
         ]
     });
+
+    var row_count;
+    setInterval(function(){
+        $.ajax({
+            url: "/fm_warranty/reload",
+            success: function(data){
+                if(data != row_count){
+                    row_count = data;
+                    tblWarranty.ajax.reload(null, false);
+                }
+            }
+        });
+    }, 1000);
 }
 else{
     window.location.href = '/maintenance';

@@ -183,7 +183,7 @@ var assemblyTable = $('table.assemblyTable').DataTable({
         {
             data: 'item_desc',
             "render": function(data, type, row){
-                if(row.item_id != '235'){
+                if(row.item_id != '0'){
                     return row.item_desc;
                 }
                 else{
@@ -225,7 +225,7 @@ var assemblyTable = $('table.assemblyTable').DataTable({
     }
 });
 
-var row_count
+var row_count;
 setInterval(function(){
     $.ajax({
         url: "/assembly/reload",

@@ -1371,7 +1371,7 @@ class StockRequestController extends Controller
                 'receivedby' => auth()->user()->name,
                 'role' => 'Admin',
                 'items' => $items,
-                'files' => $attachments,
+                'files' => NULL,
                 'pendcount' => 0,
                 'penditems' => NULL,
                 'req_type_id' => $request_details->req_type_id,
@@ -1942,7 +1942,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Admin',
                     'items' => $items,
-                    'files' => $attachments,
+                    'files' => NULL,
                     'pendcount' => 0,
                     'penditems' => NULL,
                     'req_type_id' => $request_details->req_type_id,
@@ -2192,7 +2192,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Admin',
                     'items' => $items,
-                    'files' => $attachments,
+                    'files' => NULL,
                     'pendcount' => $pendcount,
                     'penditems' => $penditems,
                     'req_type_id' => $request_details->req_type_id,
@@ -2588,7 +2588,7 @@ class StockRequestController extends Controller
                         'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items,
-                        'files' => $attachments
+                        'files' => NULL
                     ];
                     Mail::to($sendTo)->send(new notifRequest($details, $subject));
                 // }
@@ -2723,7 +2723,7 @@ class StockRequestController extends Controller
                         'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items,
-                        'files' => $attachments
+                        'files' => NULL
                     ];
                     Mail::to($sendTo)->send(new notifRequest($details, $subject));
                 // }
@@ -2858,7 +2858,7 @@ class StockRequestController extends Controller
                         'qty' => $value['qty'],
                         'role' => 'Admin',
                         'items' => $items,
-                        'files' => $attachments
+                        'files' => NULL
                     ];
                     Mail::to($sendTo)->send(new notifRequest($details, $subject));
                 // }

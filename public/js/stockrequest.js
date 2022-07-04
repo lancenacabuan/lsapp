@@ -50,19 +50,26 @@ function copyAsmReqNum(){
     });
 }
 
-function sweet(title, text, icon, btnName, url){
+function sweet(title, text, icon, btnName1, btnName2, url1, url2){
     swal(title, text, icon, {
         buttons:{
             cancel: 'Cancel',
-            catch:{
-            text: btnName,
-            value: 'button',
+            catch1:{
+                text: btnName1,
+                value: 'button1'
+            },
+            catch2:{
+                text: btnName2,
+                value: 'button2'
             }
         },
     })
     .then((value) => {
-        if(value == 'button'){
-            window.location.href = url;
+        if(value == 'button1'){
+            window.location.href = url1;
+        }
+        if(value == 'button2'){
+            window.location.href = url2;
         }
     });
 }
@@ -4157,7 +4164,6 @@ function checkReqType(){
             }
             $("#proceed_label").hide();
             $("#btnProceed").prop('disabled', false);
-            $("#stockDetailsrequest *").prop('disabled', true);
             table.column(4).visible(false);
             var form_data  = $('#stockDetailsrequest').DataTable().rows().data();
             form_data.each(function(value, index){
@@ -4185,6 +4191,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
     if($("#current_role").val() == 'viewer'){
         return false;
     }
+    var req_type_id = $('#req_type_id_details').val();
     var requestStatus = $('#status_id_details').val();
     if((requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7) && requestStatus != '24'){
         return false;
@@ -4192,6 +4199,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
     var table = $('table.stockDetails').DataTable();
     var data = table.row(this).data();
     item_count = table.data().count();
+    var requested = data.quantity;
     var pend = data.pending;
     var stock = data.qtystock;
     var item_id = data.item_id;
@@ -4205,28 +4213,34 @@ $('.stockDetails tbody').on('click', 'tr', function(){
         if(bal != 0 && mal != 0){
             sweet(
                 'Item out of stock!',
-                'Request Stock Transfer from Balintawak and/or Malabon?',
+                'Request Stock Transfer from Balintawak and/or Malabon? OR Add Stocks to Warehouse?',
                 'warning',
-                'Go to Stock Transfer',
-                '/stocktransfer'
+                'Transfer Stocks',
+                'Add Stocks',
+                '/stocktransfer',
+                '/stocks?item='+item_id
             );
         }
         else if(bal != 0 && mal == 0){
             sweet(
                 'Item out of stock!',
-                'Request Stock Transfer from Balintawak?',
+                'Request Stock Transfer from Balintawak? OR Add Stocks to Warehouse?',
                 'warning',
-                'Go to Stock Transfer',
-                '/stocktransfer'
+                'Transfer Stocks',
+                'Add Stocks',
+                '/stocktransfer',
+                '/stocks?item='+item_id
             );
         }
         else if(bal == 0 && mal != 0){
             sweet(
                 'Item out of stock!',
-                'Request Stock Transfer from Malabon?',
+                'Request Stock Transfer from Malabon? OR Add Stocks to Warehouse?',
                 'warning',
-                'Go to Stock Transfer',
-                '/stocktransfer'
+                'Transfer Stocks',
+                'Add Stocks',
+                '/stocktransfer',
+                '/stocks?item='+item_id
             );
         }
         else{
@@ -4234,12 +4248,64 @@ $('.stockDetails tbody').on('click', 'tr', function(){
                 'Item out of stock!',
                 'Add Stocks to Warehouse?',
                 'warning',
-                'Go to Stocks',
+                'Transfer Stocks',
+                'Add Stocks',
+                '/stocktransfer',
+                '/stocks?item='+item_id
+            );
+        }
+    }
+    else if(stock < requested && req_type_id > 3){
+        if(bal >= requested && mal >= requested){
+            sweet(
+                'Insufficient stock!',
+                'Request Stock Transfer from Balintawak and/or Malabon? OR Add Stocks to Warehouse?',
+                'warning',
+                'Transfer Stocks',
+                'Add Stocks',
+                '/stocktransfer',
+                '/stocks?item='+item_id
+            );
+        }
+        else if(bal >= requested){
+            sweet(
+                'Insufficient stock!',
+                'Request Stock Transfer from Balintawak? OR Add Stocks to Warehouse?',
+                'warning',
+                'Transfer Stocks',
+                'Add Stocks',
+                '/stocktransfer',
+                '/stocks?item='+item_id
+            );
+        }
+        else if(mal >= requested){
+            sweet(
+                'Insufficient stock!',
+                'Request Stock Transfer from Malabon? OR Add Stocks to Warehouse?',
+                'warning',
+                'Transfer Stocks',
+                'Add Stocks',
+                '/stocktransfer',
+                '/stocks?item='+item_id
+            );
+        }
+        else{
+            sweet(
+                'Insufficient stock!',
+                'Add Stocks to Warehouse?',
+                'warning',
+                'Transfer Stocks',
+                'Add Stocks',
+                '/stocktransfer',
                 '/stocks?item='+item_id
             );
         }
     }
     else{
+        if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6'){
+            swal('Sufficient stocks!','','success');
+            return false;
+        }
         $(this).toggleClass('selected');
         if(items.includes(item_id) == true){
             items = items.filter(item => item !== item_id);

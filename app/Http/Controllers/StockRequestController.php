@@ -2486,7 +2486,7 @@ class StockRequestController extends Controller
                 ->get();
         }
 
-        if($list->req_type_id == 3 && ($list->status_id == 9 || $list->status_id == 10 || $list->status_id == 11)){
+        if($list->req_type_id == 3 && ($list->status_id == 9 || $list->status_id == 11)){
             unset($list3);
             $list3 = Transfer::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id')
                 ->where('transferred_items.request_number', $request->request_number)

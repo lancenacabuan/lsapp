@@ -4418,12 +4418,12 @@ $('.incItems tbody').on('click', 'tr', function(){
 });
 
 $("#btnProceed").unbind('click').click(function(){
-    if(exceed.length != 0 || items.length < item_count){
-        swal('NOTICE: PARTIAL', 'Stock Request will be prepared partially!', 'warning')
-    }
     var j = 0;
     var reqnum = $('#request_num_details').val();
     var req_type_id = $('#req_type_id_details').val();
+    if((exceed.length != 0 || items.length < item_count) &&  req_type_id < 4){
+        swal('NOTICE: PARTIAL', 'Stock Request will be prepared partially!', 'warning')
+    }
     if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6'){
         var form_data  = $('#stockDetailsrequest').DataTable().rows().data();
         form_data.each(function(value, index){

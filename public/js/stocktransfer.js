@@ -1789,10 +1789,12 @@ $('.transferDetails tbody').on('click', 'tr', function(){
     if($('#locfrom_details').val() == 5){
         var stock = bal;
         var location_id = 5;
+        var location_name = 'Balintawak';
     }
     if($('#locfrom_details').val() == 6){
         var stock = mal;
         var location_id = 6;
+        var location_name = 'Malabon';
     }
 
     if(pend == 0){
@@ -1801,7 +1803,7 @@ $('.transferDetails tbody').on('click', 'tr', function(){
     else if(stock == 0){
         sweet(
             'Item out of stock!',
-            'Add Stocks to Warehouse?',
+            'Add Stocks to '+location_name+'?',
             'warning',
             'Add Stocks',
             '/stocks?item_id='+item_id+'&location_id='+location_id
@@ -1810,7 +1812,7 @@ $('.transferDetails tbody').on('click', 'tr', function(){
     else if(stock < requested){
         sweet(
             'Insufficient stock!',
-            'Add Stocks to Warehouse?',
+            'Add Stocks to '+location_name+'?',
             'warning',
             'Add Stocks',
             '/stocks?item_id='+item_id+'&location_id='+location_id

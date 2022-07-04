@@ -26,6 +26,7 @@ use App\Models\Stock;
 use App\Models\StockRequest;
 use App\Models\StockTransfer;
 use App\Models\Requests;
+use App\Models\Transfer;
 use App\Models\RequestTransfer;
 use App\Models\User;
 use App\Models\UserLogs;
@@ -1771,6 +1772,12 @@ class StockRequestController extends Controller
                         ->update(['status' => 'demo', 'user_id' => auth()->user()->id]);
                 }
                 while(!$sql);
+                if(Transfer::where('stock_id', $request->id)->where('request_number', $request->request_number)->count() == 0){
+                    $transfer = new Transfer;
+                    $transfer->request_number = $request->request_number;
+                    $transfer->stock_id = $request->id;
+                    $transfer->save();
+                }
             }
             else{
                 do{
@@ -1790,6 +1797,20 @@ class StockRequestController extends Controller
                 Stock::where('request_number', $request->request_number)
                     ->where('status', '=', 'received')
                     ->update(['status' => 'demo', 'user_id' => auth()->user()->id]);
+
+                $demos = Stock::select('id')
+                    ->where('request_number', $request->request_number)
+                    ->where('status', 'demo')
+                    ->get();
+                
+                foreach($demos as $demo){
+                    if(Transfer::where('stock_id', $demo->id)->where('request_number', $request->request_number)->count() == 0){
+                        $transfer = new Transfer;
+                        $transfer->request_number = $request->request_number;
+                        $transfer->stock_id = $demo->id;
+                        $transfer->save();
+                    }
+                }
             }
             else{
                 Stock::where('request_number', $request->request_number)
@@ -2459,6 +2480,17 @@ class StockRequestController extends Controller
             $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
+                ->join('items','items.id','stocks.item_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
+
+        if($list->req_type_id == 3 && ($list->status_id == 9 || $list->status_id == 10 || $list->status_id == 11)){
+            unset($list3);
+            $list3 = Transfer::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id')
+                ->where('transferred_items.request_number', $request->request_number)
+                ->join('stocks','stocks.id','transferred_items.stock_id')
                 ->join('items','items.id','stocks.item_id')
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')

@@ -1393,6 +1393,7 @@ $('.btnReceive').on('click', function(){
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 },
                                 data:{
+                                    'request_number': $('#request_num_details').val(),
                                     'status': $('#status_id_details').val(),
                                     'id': items[i]
                                 },

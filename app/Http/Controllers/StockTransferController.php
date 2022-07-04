@@ -949,13 +949,15 @@ class StockTransferController extends Controller
                     ->get();
 
                 foreach($list as $value){
-                    $transfer = new Transfer;
-                    $transfer->request_number = $value->request_number;
-                    $transfer->stock_id = $value->id;
-                    $sql = $transfer->save();
-
-                    Stock::where('id', $value->id)
-                        ->update(['return_number' => '']);
+                    if(Transfer::where('stock_id', $value->id)->where('request_number', $value->request_number)->count() == 0){
+                        $transfer = new Transfer;
+                        $transfer->request_number = $value->request_number;
+                        $transfer->stock_id = $value->id;
+                        $sql = $transfer->save();
+    
+                        Stock::where('id', $value->id)
+                            ->update(['return_number' => '']);
+                    }
                 }
 
                 StockTransfer::where('request_number', $request->request_number)
@@ -968,17 +970,23 @@ class StockTransferController extends Controller
             }
         }
         else{
-            $transfer = new Transfer;
-            $transfer->request_number = $request->request_number;
-            $transfer->stock_id = $request->stock_id;
-            $sql = $transfer->save();
-    
-            if(!$sql){
-                $result = 'false';
+            if(Transfer::where('stock_id', $request->stock_id)->where('request_number', $request->request_number)->count() == 0){
+                $transfer = new Transfer;
+                $transfer->request_number = $request->request_number;
+                $transfer->stock_id = $request->stock_id;
+                $sql = $transfer->save();
+
+                if(!$sql){
+                    $result = 'false';
+                }
+                else{
+                    $result = 'true';
+                }
             }
             else{
-                $result = 'true';
+                $result = 'false';
             }
+    
             if($result == 'true'){
                 do{
                     $sql = Stock::where('id',$request->stock_id)

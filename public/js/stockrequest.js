@@ -51,27 +51,45 @@ function copyAsmReqNum(){
 }
 
 function sweet(title, text, icon, btnName1, btnName2, url1, url2){
-    swal(title, text, icon, {
-        buttons:{
-            cancel: 'Cancel',
-            catch1:{
-                text: btnName1,
-                value: 'button1'
+    if(!btnName2 && !url2){
+        swal(title, text, icon, {
+            buttons:{
+                cancel: 'Cancel',
+                catch1:{
+                    text: btnName1,
+                    value: 'button1'
+                }
             },
-            catch2:{
-                text: btnName2,
-                value: 'button2'
+        })
+        .then((value) => {
+            if(value == 'button1'){
+                window.location.href = url1;
             }
-        },
-    })
-    .then((value) => {
-        if(value == 'button1'){
-            window.location.href = url1;
-        }
-        if(value == 'button2'){
-            window.location.href = url2;
-        }
-    });
+        });
+    }
+    else{
+        swal(title, text, icon, {
+            buttons:{
+                cancel: 'Cancel',
+                catch1:{
+                    text: btnName1,
+                    value: 'button1'
+                },
+                catch2:{
+                    text: btnName2,
+                    value: 'button2'
+                }
+            },
+        })
+        .then((value) => {
+            if(value == 'button1'){
+                window.location.href = url1;
+            }
+            if(value == 'button2'){
+                window.location.href = url2;
+            }
+        });
+    }
 }
 
 function validate_fileupload(reference_upload){
@@ -4248,10 +4266,10 @@ $('.stockDetails tbody').on('click', 'tr', function(){
                 'Item out of stock!',
                 'Add Stocks to Warehouse?',
                 'warning',
-                'Transfer Stocks',
                 'Add Stocks',
-                '/stocktransfer',
-                '/stocks?item='+item_id
+                '',
+                '/stocks?item='+item_id,
+                ''
             );
         }
     }
@@ -4294,10 +4312,10 @@ $('.stockDetails tbody').on('click', 'tr', function(){
                 'Insufficient stock!',
                 'Add Stocks to Warehouse?',
                 'warning',
-                'Transfer Stocks',
                 'Add Stocks',
-                '/stocktransfer',
-                '/stocks?item='+item_id
+                '',
+                '/stocks?item='+item_id,
+                ''
             );
         }
     }

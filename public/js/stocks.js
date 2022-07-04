@@ -932,6 +932,39 @@ $(document).ready(function(){
     else if($(location).attr('pathname')+window.location.search == '/stocks?min=below'){
         $('#btnGenerate').click();
     }
+    else if(($(location).attr('pathname')+window.location.search).includes('item_id') == true && 
+    ($(location).attr('pathname')+window.location.search).includes('location_id') == true){
+        var url = new URL(window.location.href);
+        var item_id = url.searchParams.get("item_id");
+        var location_id = url.searchParams.get("location_id");
+        $.ajax({
+            url: '/stocks/add',
+            data:{
+                'item_id': item_id
+            },
+            success: function(data){
+                if(data == 'false'){
+                    window.location.href="/stocks";
+                }
+                else{
+                    $('#location').val(location_id);
+                    $('#category').val(data);
+                    $('#category').change();
+                    setTimeout(function(){
+                        $('#item').val(item_id);
+                        $('#item').change();
+                        $('#btnAddStock').click();
+                    }, 500);
+                }
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/stocks';
+                }
+                alert(data.responseText);
+            }
+        });
+    }
     else if(($(location).attr('pathname')+window.location.search).includes('item') == true){
         url = window.location.search;
         item_id = url.replace('?item=', '');

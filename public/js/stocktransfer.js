@@ -37,6 +37,23 @@ function copyReqNum(){
     });
 }
 
+function sweet(title, text, icon, btnName, url){
+    swal(title, text, icon, {
+        buttons:{
+            cancel: 'Cancel',
+            catch:{
+                text: btnName,
+                value: 'button'
+            }
+        },
+    })
+    .then((value) => {
+        if(value == 'button'){
+            window.location.href = url;
+        }
+    });
+}
+
 function generateReqNum(){
     var today = new Date();
     var month = today.getMonth()+1;
@@ -1721,7 +1738,6 @@ function checkReqType(){
             $("#warning").show();
             $("#proceed_label").hide();
             $("#btnProceed").prop('disabled', false);
-            $("#transferDetails *").prop('disabled', true);
             table.column(4).visible(false);
             var form_data  = $('#transferDetails').DataTable().rows().data();
             if(locfrom == '5'){
@@ -1753,51 +1769,71 @@ function checkReqType(){
 
 var items = [];
 var item_count = 0;
-// $('table.transferDetails').DataTable().on('select', function(){});
-// $('.transferDetails tbody').on('click', 'tr', function(){
-//     if($("#current_role").val() == 'viewer'){
-//         return false;
-//     }
-//     var requestStatus = $('#status_id_details').val();
-//     if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus >= 8){
-//         return false;
-//     }
-//     var table = $('table.transferDetails').DataTable();
-//     var data = table.row(this).data();
-//     var pend = data.pending;
-//     var item_id = data.item_id;
-//     var bal = data.qtybal;
-//     var mal = data.qtymal;
+$('table.transferDetails').DataTable().on('select', function(){});
+$('.transferDetails tbody').on('click', 'tr', function(){
+    if($("#current_role").val() == 'viewer'){
+        return false;
+    }
+    var requestStatus = $('#status_id_details').val();
+    if(requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus >= 8){
+        return false;
+    }
+    var table = $('table.transferDetails').DataTable();
+    var data = table.row(this).data();
+    var requested = data.quantity;
+    var pend = data.pending;
+    var item_id = data.item_id;
+    var bal = data.qtybal;
+    var mal = data.qtymal;
 
-//     if($('#locfrom_details').val() == 5){
-//         var stock = bal;
-//     }
-//     if($('#locfrom_details').val() == 6){
-//         var stock = mal;
-//     }
+    if($('#locfrom_details').val() == 5){
+        var stock = bal;
+        var location_id = 5;
+    }
+    if($('#locfrom_details').val() == 6){
+        var stock = mal;
+        var location_id = 6;
+    }
 
-//     if(pend == 0){
-//         swal('Item is fullfiled!','','success');
-//     }
-//     else if(stock == 0){
-//         swal('Item out of stock!','','error');
-//     }
-//     else{
-//         $(this).toggleClass('selected');
-//         if(items.includes(item_id) == true){
-//             items = items.filter(item => item !== item_id);
-//         }
-//         else {
-//             items.push(item_id);
-//         }
-//     }
-//     if(items.length == 0){
-//         $('#btnProceed').prop('disabled', true);
-//     }
-//     else{
-//         $('#btnProceed').prop('disabled', false);
-//     }
-// });
+    if(pend == 0){
+        swal('Item is fullfiled!','','success');
+    }
+    else if(stock == 0){
+        sweet(
+            'Item out of stock!',
+            'Add Stocks to Warehouse?',
+            'warning',
+            'Add Stocks',
+            '/stocks?item_id='+item_id+'&location_id='+location_id
+        );
+    }
+    else if(stock < requested){
+        sweet(
+            'Insufficient stock!',
+            'Add Stocks to Warehouse?',
+            'warning',
+            'Add Stocks',
+            '/stocks?item_id='+item_id+'&location_id='+location_id
+        );
+    }
+    else{
+        swal('Sufficient stocks!','','success');
+        return false;
+        $(this).toggleClass('selected');
+        if(items.includes(item_id) == true){
+            items = items.filter(item => item !== item_id);
+        }
+        else {
+            items.push(item_id);
+        }
+    }
+    if(items.length == 0){
+        $('#btnProceed').prop('disabled', true);
+    }
+    else{
+        $('#btnProceed').prop('disabled', false);
+    }
+});
 
 $('.table.transItems').DataTable().on('select', function(){});
 $('.transItems tbody').on('click', 'tr', function(){

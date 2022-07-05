@@ -20,7 +20,7 @@
         Contact Person: {{$details['contact']}}<br>
         Remarks: {{$details['remarks']}}
         @endif
-        @if($details['req_type_id'] == 2 || ($details['req_type_id'] == 3 && $details['status_id'] == 10))
+        @if($details['req_type_id'] == 2 || ($details['req_type_id'] == 3 && ($details['status_id'] == 10 && $details['status_id'] == 27)))
         <br><br>Reference SO/PO No.: {{$details['reference']}}
         @endif
         <br><br>
@@ -34,8 +34,14 @@
         @php
             $total = 0;
             $sum = 0;
+            if($details['status_id'] == 9){
+                $concat = '&demo=received';
+            }
+            else{
+                $concat = NULL;
+            }
         @endphp
-        @if($details['req_type_id'] == 2 || $details['req_type_id'] == 6 || ($details['req_type_id'] == 3 && $details['status_id'] == 10))
+        @if($details['req_type_id'] == 2 || $details['req_type_id'] == 6 || ($details['req_type_id'] == 3 && ($details['status_id'] == 10 && $details['status_id'] == 27)))
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>
@@ -158,7 +164,7 @@
         Kindly login to your {{$details['role']}} account if you wish to view or download this request by clicking on the link below.<br>
         Thank you!
     </p>
-    <a href="{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number']}}">{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number']}}</a>
+    <a href="{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number'].$concat}}">{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number'].$concat}}</a>
     <br><br>
     This is a system-generated email. Please do not reply.
 </body>

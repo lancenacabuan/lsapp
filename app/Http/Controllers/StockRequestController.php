@@ -2386,7 +2386,7 @@ class StockRequestController extends Controller
     public function receiveRetItems(Request $request){
         do{
             $sql = Stock::where('id', $request->id)
-                ->update(['status' => 'retreceived', 'user_id' => auth()->user()->id]);
+                ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
         }
         while(!$sql);
         
@@ -2394,14 +2394,6 @@ class StockRequestController extends Controller
     }
 
     public function logReceiveRet(Request $request){
-        Stock::where('request_number', $request->request_number)
-            ->where('status', '=', 'return')
-            ->update(['status' => 'increturn', 'user_id' => auth()->user()->id]);
-        
-        Stock::where('request_number', $request->request_number)
-            ->where('status', '=', 'retreceived')
-            ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
-
         if($request->inc == 'true'){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;

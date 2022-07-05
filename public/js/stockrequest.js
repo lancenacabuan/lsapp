@@ -1414,6 +1414,13 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#retreceive_label').show();
                         $(".btnReceiveReturned").show();
                     }
+                    if(requestStatus == '25'){
+                        var ajax_url = '/retItems';
+                        $("#incItemsModal").show();
+                        document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE RETURNED ITEM DETAILS';
+                        $('#retreceive_label').show();
+                        $(".btnReceiveReturned").show();
+                    }
                     if(requestStatus == '15'){
                         var ajax_url = '/incItems';
                         $("#receivedItemsModal").show();
@@ -2660,6 +2667,13 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             var ajax_url = '/retItems';
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'RETURNED ITEM DETAILS';
+            $('#retreceive_label').show();
+            $(".btnReceiveReturned").show();
+        }
+        if(requestStatus == '25'){
+            var ajax_url = '/retItems';
+            $("#incItemsModal").show();
+            document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE RETURNED ITEM DETAILS';
             $('#retreceive_label').show();
             $(".btnReceiveReturned").show();
         }
@@ -4409,7 +4423,7 @@ $('.transItems tbody').on('click', 'tr', function(){
 $('.table.incItems').DataTable().on('select', function(){});
 $('.incItems tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
-    if((requestStatus == '11' || requestStatus == '18' || requestStatus == '21') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){
+    if((requestStatus == '11' || requestStatus == '25' || requestStatus == '18' || requestStatus == '21') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){
         var table = $('table.incItems').DataTable();
         var data = table.row(this).data();
         item_count = table.data().count();

@@ -3,7 +3,7 @@
 @php
 $stocks = DB::table('stocks')->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly'])->get()->count();
 $belowmin = count($list);
-$stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10','11','14','19'])->get()->count();
+$stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10','14','19','26'])->get()->count();
 $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
 $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->count();
 @endphp

@@ -422,7 +422,7 @@ class StockRequestController extends Controller
             $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID')
                 ->where('users.company', auth()->user()->company)
                 ->whereIn('request_type.id', ['2','3'])
-                ->whereNotIn('requests.status', ['7','8','10','11'])
+                ->whereNotIn('requests.status', ['7','8','10','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->join('status', 'status.id', '=', 'requests.status')
@@ -433,7 +433,7 @@ class StockRequestController extends Controller
         else if(auth()->user()->hasanyRole('accounting')){ //---ROLES---//
             $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID')
                 ->whereIn('request_type.id', ['2','3','6'])
-                ->whereNotIn('requests.status', ['7','8','10','11'])
+                ->whereNotIn('requests.status', ['7','8','10','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->join('status', 'status.id', '=', 'requests.status')
@@ -443,7 +443,7 @@ class StockRequestController extends Controller
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
             $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID')
-                ->whereNotIn('requests.status', ['7','8','10','11','14','19'])
+                ->whereNotIn('requests.status', ['7','8','10','14','19','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->join('status', 'status.id', '=', 'requests.status')
@@ -454,7 +454,7 @@ class StockRequestController extends Controller
         else{
             $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID')
                 ->where('requests.requested_by', auth()->user()->id)
-                ->whereNotIn('requests.status', ['8','10','11','14','19'])
+                ->whereNotIn('requests.status', ['8','10','14','19','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->join('status', 'status.id', '=', 'requests.status')
@@ -691,6 +691,46 @@ class StockRequestController extends Controller
             (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id')
                 ->whereIn('request_number', $include)
                 ->where('stocks.status', 'incomplete')
+                ->join('items','items.id','stocks.item_id')
+                ->join('categories','categories.id','items.category_id')
+                ->groupBy('category','prodcode','item','uom','serialize','serial','qty','item_id','id')
+                ->orderBy('item', 'ASC')
+                ->get();
+    
+            return DataTables::of($list)->make(true);
+        }
+    }
+
+    public function retItems(Request $request){
+        $include = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $include = str_replace("{\"request_number\":","",$include);
+        $include = str_replace("}","",$include);
+        $include = json_decode($include);
+        $include[] = $request->request_number;
+
+        $status = Requests::select()
+            ->where('request_number', $request->request_number)
+            ->first()
+            ->status;
+        if($status == '17'){
+            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
+                ->whereIn('request_number', $include)
+                ->where('stocks.status', 'return')
+                ->join('items','items.id','stocks.item_id')
+                ->join('categories','categories.id','items.category_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+    
+            return DataTables::of($list)->make(true);
+        }
+        else{
+            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
+            (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id')
+                ->whereIn('request_number', $include)
+                ->where('stocks.status', 'return')
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
                 ->groupBy('category','prodcode','item','uom','serialize','serial','qty','item_id','id')
@@ -1519,7 +1559,7 @@ class StockRequestController extends Controller
         do{
             $sql = Stock::where('id', $request->id)
                 ->whereIn('status', ['demo'])
-                ->update(['status' => 'in', 'request_number' => '', 'warranty_id' => '', 'user_id' => auth()->user()->id]);
+                ->update(['status' => 'return', 'warranty_id' => '', 'user_id' => auth()->user()->id]);
         }
         while(!$sql);
         
@@ -2311,6 +2351,67 @@ class StockRequestController extends Controller
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
             $userlogs->activity = "RECEIVED PARTIAL STOCK REQUEST: User successfully received partial requested items of Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response('true');
+    }
+
+    public function receiveReturned(Request $request){
+        if($request->inc == 'true'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '25']);
+            }
+            while(!$sql);
+        }
+        else{
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '26']);
+            }
+            while(!$sql);
+        }
+                
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+        }
+
+        return response($result);
+    }
+
+    public function receiveRetItems(Request $request){
+        do{
+            $sql = Stock::where('id', $request->id)
+                ->update(['status' => 'retreceived', 'user_id' => auth()->user()->id]);
+        }
+        while(!$sql);
+        
+        return response('true');
+    }
+
+    public function logReceiveRet(Request $request){
+        Stock::where('request_number', $request->request_number)
+            ->where('status', '=', 'return')
+            ->update(['status' => 'increturn', 'user_id' => auth()->user()->id]);
+        
+        Stock::where('request_number', $request->request_number)
+            ->where('status', '=', 'retreceived')
+            ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
+
+        if($request->inc == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED INCOMPLETE RETURNED ITEMS: User successfully received incomplete returned items of Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        else{
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED COMPLETE RETURNED ITEMS: User successfully received complete returned items of Stock Request No. $request->request_number.";
             $userlogs->save();
         }
 

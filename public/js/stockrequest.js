@@ -885,16 +885,16 @@ if($("#current_role").val() == 'sales'){
                     if(row.status_id == '6'){
                         return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                     }
-                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24'){
+                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25'){
                         return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
                         return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13' || row.status_id == '17'){
+                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20'){
+                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26'){
                         return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '10'){
@@ -1008,16 +1008,16 @@ else{
                     if(row.status_id == '6'){
                         return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                     }
-                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24'){
+                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25'){
                         return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
                         return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '13' || row.status_id == '17'){
+                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20'){
+                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26'){
                         return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '10'){
@@ -1406,6 +1406,13 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#btnSale").hide();
                         $("#btnReturn").hide();
                         document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
+                    }
+                    if(requestStatus == '11'){
+                        var ajax_url = '/retItems';
+                        $("#incItemsModal").show();
+                        document.getElementById('incmodalheader').innerHTML = 'RETURNED ITEM DETAILS';
+                        $('#retreceive_label').show();
+                        $(".btnReceiveReturned").show();
                     }
                     if(requestStatus == '15'){
                         var ajax_url = '/incItems';
@@ -2648,6 +2655,13 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#btnSale").hide();
             $("#btnReturn").hide();
             document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
+        }
+        if(requestStatus == '11'){
+            var ajax_url = '/retItems';
+            $("#incItemsModal").show();
+            document.getElementById('incmodalheader').innerHTML = 'RETURNED ITEM DETAILS';
+            $('#retreceive_label').show();
+            $(".btnReceiveReturned").show();
         }
         if(requestStatus == '15'){
             var ajax_url = '/incItems';
@@ -4395,7 +4409,7 @@ $('.transItems tbody').on('click', 'tr', function(){
 $('.table.incItems').DataTable().on('select', function(){});
 $('.incItems tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
-    if((requestStatus == '18' || requestStatus == '21') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){
+    if((requestStatus == '11' || requestStatus == '18' || requestStatus == '21') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){
         var table = $('table.incItems').DataTable();
         var data = table.row(this).data();
         item_count = table.data().count();
@@ -4408,9 +4422,11 @@ $('.incItems tbody').on('click', 'tr', function(){
             items.push(data.id);
         }
         if(items.length == 0){
+            $('.btnReceiveReturned').prop('disabled', true);
             $('#btnReceiveDfc').prop('disabled', true);
         }
         else{
+            $('.btnReceiveReturned').prop('disabled', false);
             $('#btnReceiveDfc').prop('disabled', false);
         }
     }
@@ -5042,6 +5058,109 @@ $('.btnReceive').on('click', function(){
                     else{
                         $('#detailsStockRequest').hide();
                         swal("RECEIVE FAILED", "STOCK REQUEST", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
+});
+
+$('.btnReceiveReturned').on('click', function(){
+    var inc = 'false';
+    var inctype = 'COMPLETE';
+    if(items.length < item_count){
+        inc = 'true';
+        inctype = 'INCOMPLETE';
+    }
+    swal({
+        title: "RECEIVE "+inctype+" RETURNED ITEMS?",
+        text: "You are about to RECEIVE these RETURNED ITEMS!",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => {
+        if(willDelete){
+            $.ajax({
+                type: 'post',
+                url: '/receiveReturned',
+                async: false,
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'inc': inc
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        for(var i=0; i < items.length; i++){
+                            $.ajax({
+                                type: 'post',
+                                url: '/receiveRetItems',
+                                async: false,
+                                headers:{
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data:{
+                                    'id': items[i]
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        return true;
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        scrollReset();
+                        $('#detailsStockRequest').modal('hide');
+                        $('#loading').show(); Spinner(); Spinner.show();
+                        $.ajax({
+                            type: 'post',
+                            url: '/logReceiveRet',
+                            headers:{
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data:{
+                                'request_number': $('#request_num_details').val(),
+                                'inc': inc
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide(); Spinner.hide();
+                                    swal("RECEIVED "+inctype, "RETURNED ITEMS", "success");
+                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    }
+                    else{
+                        $('#detailsStockRequest').hide();
+                        swal("RECEIVE FAILED", "RETURNED ITEMS", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },

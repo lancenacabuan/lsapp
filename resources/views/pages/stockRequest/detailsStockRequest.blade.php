@@ -483,6 +483,10 @@
             </div>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
+            <div id="retreceive_label" class="alert alert-primary" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+            </div>
             <div class="form-inline divResched" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>
                 <input class="form-control form-control-sm" id="reprep_by1" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
@@ -526,6 +530,7 @@
             @role('admin|encoder') {{---ROLES---}}
             <div id="incFooter">
             <hr>
+            <button type="button" class="btn btn-primary float-right bp btnReceiveReturned" style="display: none;" disabled>RECEIVE</button>
             <input type="button" class="btn btn-primary float-right bp" id="btnReschedule" style="display: none;" value="RESCHEDULE">
             <input type="button" class="btn btn-primary float-right bp btnTransit" style="display: none;" value="FOR RECEIVING">
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="btnReceiveDfc" style="display: none;" value="RECEIVE DEFECTIVE" disabled>

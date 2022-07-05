@@ -891,7 +891,7 @@ if($("#current_role").val() == 'sales'){
                     else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
                         return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17'){
+                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26'){
@@ -1014,7 +1014,7 @@ else{
                     else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
                         return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17'){
+                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26'){

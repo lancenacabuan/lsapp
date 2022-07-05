@@ -133,7 +133,7 @@
                 <td colspan="2" class="tdHide">{{$list->remarks}}</td>
             </tr>
             <tr height="20">
-                @if($list->req_type_id == 2 || ($list->req_type_id == 3 && $list->status_id == 10))
+                @if($list->req_type_id == 2 || ($list->req_type_id == 3 && ($list->status_id == 10 || $list->status_id >= 27)))
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Reference SO/PO No.:</td>
                 <td colspan="7" class="tdHide">{{$list->reference}}</td>
                 @else

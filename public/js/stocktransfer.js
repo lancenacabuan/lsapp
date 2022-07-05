@@ -1,4 +1,4 @@
-var minDate, maxDate;
+var minDate, maxDate, j, u;
 $(function(){
     var dtToday = new Date();
     
@@ -1892,8 +1892,8 @@ $('.incItems tbody').on('click', 'tr', function(){
 });
 
 $("#btnProceed").unbind('click').click(function(){
-    var j = 0;
-    var u = 0;
+    j = 0;
+    u = 0;
     var reqnum = $('#request_num_details').val();
     var form_data  = $('#transferDetails').DataTable().rows().data();
     form_data.each(function(value, index){

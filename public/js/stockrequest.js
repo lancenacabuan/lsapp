@@ -885,7 +885,7 @@ if($("#current_role").val() == 'sales'){
                     if(row.status_id == '6'){
                         return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                     }
-                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25'){
+                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28'){
                         return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
@@ -894,7 +894,7 @@ if($("#current_role").val() == 'sales'){
                     else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26'){
+                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26' || row.status_id == '29'){
                         return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '10'){
@@ -1008,7 +1008,7 @@ else{
                     if(row.status_id == '6'){
                         return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                     }
-                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25'){
+                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28'){
                         return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
@@ -1017,7 +1017,7 @@ else{
                     else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26'){
+                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26' || row.status_id == '29'){
                         return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '10'){
@@ -1398,7 +1398,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             document.getElementById('modalheader').innerHTML = 'REPLACEMENT ITEM DETAILS';
                         }
                     }
-                    if(requestStatus == '10' || requestStatus == '27'){
+                    if(requestStatus == '10' || requestStatus == '27' || requestStatus == '29'){
                         var rcv_url = 'receivedItems';
                         $("#transitItemsModal").show();
                         $(".soldShow").show();
@@ -1406,6 +1406,27 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#btnSale").hide();
                         $("#btnReturn").hide();
                         document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
+                        if(requestStatus == '27'){
+                            var ajax_url = '/retItems';
+                            $("#incItemsModal").show();
+                            document.getElementById('incmodalheader').innerHTML = 'RETURNED ITEM DETAILS';
+                            $('#retreceive_label').show();
+                            $(".btnReceiveReturned").show();
+                        }
+                    }
+                    if(requestStatus == '28'){
+                        var rcv_url = 'receivedItems';
+                        $("#transitItemsModal").show();
+                        $(".soldShow").show();
+                        $(".btnReceive").hide();
+                        $("#btnSale").hide();
+                        $("#btnReturn").hide();
+                        document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
+                        var ajax_url = '/retItems';
+                        $("#incItemsModal").show();
+                        document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE RETURNED ITEM DETAILS';
+                        $('#retreceive_label').show();
+                        $(".btnReceiveReturned").show();
                     }
                     if(requestStatus == '11'){
                         var ajax_url = '/retItems';
@@ -2654,7 +2675,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 document.getElementById('modalheader').innerHTML = 'REPLACEMENT ITEM DETAILS';
             }
         }
-        if(requestStatus == '10' || requestStatus == '27'){
+        if(requestStatus == '10' || requestStatus == '27' || requestStatus == '29'){
             var rcv_url = 'receivedItems';
             $("#transitItemsModal").show();
             $(".soldShow").show();
@@ -2662,6 +2683,27 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#btnSale").hide();
             $("#btnReturn").hide();
             document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
+            if(requestStatus == '27'){
+                var ajax_url = '/retItems';
+                $("#incItemsModal").show();
+                document.getElementById('incmodalheader').innerHTML = 'RETURNED ITEM DETAILS';
+                $('#retreceive_label').show();
+                $(".btnReceiveReturned").show();
+            }
+        }
+        if(requestStatus == '28'){
+            var rcv_url = 'receivedItems';
+            $("#transitItemsModal").show();
+            $(".soldShow").show();
+            $(".btnReceive").hide();
+            $("#btnSale").hide();
+            $("#btnReturn").hide();
+            document.getElementById('modalheader').innerHTML = 'SOLD ITEM DETAILS';
+            var ajax_url = '/retItems';
+            $("#incItemsModal").show();
+            document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE RETURNED ITEM DETAILS';
+            $('#retreceive_label').show();
+            $(".btnReceiveReturned").show();
         }
         if(requestStatus == '11'){
             var ajax_url = '/retItems';
@@ -4423,7 +4465,7 @@ $('.transItems tbody').on('click', 'tr', function(){
 $('.table.incItems').DataTable().on('select', function(){});
 $('.incItems tbody').on('click', 'tr', function(){
     var requestStatus = $('#status_id_details').val();
-    if((requestStatus == '11' || requestStatus == '25' || requestStatus == '18' || requestStatus == '21') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){
+    if((requestStatus == '11' || requestStatus == '25' || requestStatus == '27' || requestStatus == '28' || requestStatus == '18' || requestStatus == '21') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){
         var table = $('table.incItems').DataTable();
         var data = table.row(this).data();
         item_count = table.data().count();
@@ -5110,6 +5152,7 @@ $('.btnReceiveReturned').on('click', function(){
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
+                    'status_id': $('#status_id_details').val(),
                     'inc': inc
                 },
                 success: function(data){

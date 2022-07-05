@@ -4343,7 +4343,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
             );
         }
     }
-    else if(stock < requested && req_type_id > 3){
+    else if(stock < requested && items.includes(item_id) == false){
         if(bal >= requested && mal >= requested){
             sweet(
                 'Insufficient stock!',
@@ -4387,6 +4387,19 @@ $('.stockDetails tbody').on('click', 'tr', function(){
                 '/stocks?item='+item_id,
                 ''
             );
+        }
+        if(req_type_id < 4){
+            $(this).toggleClass('selected');
+            if(items.includes(item_id) == true){
+                items = items.filter(item => item !== item_id);
+                exceed = exceed.filter(item => item !== item_id);
+            }
+            else {
+                items.push(item_id);
+                if(stock < pend){
+                    exceed.push(item_id);
+                }
+            }
         }
     }
     else{

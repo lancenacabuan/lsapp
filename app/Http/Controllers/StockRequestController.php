@@ -1312,11 +1312,17 @@ class StockRequestController extends Controller
         if(Requests::where('request_number', $request->request_number)->count() == 0){
             return response('false');
         }
-
         Stock::where('request_number', $request->request_number)
             ->where('status', '=', 'demo')
-            ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
-
+            ->update(['status' => 'return', 'user_id' => auth()->user()->id]);
+        
+        $returns = Stock::where('request_number', $request->request_number)
+            ->where('status', '=', 'return')
+            ->count();
+        if($returns != 0){
+            $sql = Requests::where('request_number', $request->request_number)
+                ->update(['status' => '27']);
+        }
         do{
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, schedule, needdate, prepdate')
                 ->where('requests.request_number', $request->request_number)
@@ -2551,7 +2557,7 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        if($list->req_type_id == 2 || $list->req_type_id == 6 || ($list->req_type_id == 3 && $list->status_id == 10)){
+        if($list->req_type_id == 2 || $list->req_type_id == 6 || ($list->req_type_id == 3 && ($list->status_id == 10 || $list->status_id == 27))){
             $list3 = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
@@ -2579,7 +2585,7 @@ class StockRequestController extends Controller
                 ->get();
         }
 
-        if($list->req_type_id == 3 && ($list->status_id == 9 || $list->status_id == 11)){
+        if($list->req_type_id == 3 && ($list->status_id == 9 || $list->status_id == 11 || $list->status_id == 25 || $list->status_id == 26)){
             unset($list3);
             $list3 = Transfer::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id')
                 ->where('transferred_items.request_number', $request->request_number)

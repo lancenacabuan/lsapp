@@ -1,4 +1,4 @@
-var minDate, maxDate, editMode;
+var minDate, maxDate, editMode, j;
 $(function(){
     var dtToday = new Date();
     
@@ -1183,7 +1183,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#action').val('');
                     }
                     
-                    if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && requestStatus == '10') || req_type_id == '6')){
+                    if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus == '27')) || req_type_id == '6')){
                         var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
                         var reference_attachments = decodeHtml(reference_uploads).split(',');
                         for(var i=0; i < reference_attachments.length; i++){
@@ -1398,7 +1398,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             document.getElementById('modalheader').innerHTML = 'REPLACEMENT ITEM DETAILS';
                         }
                     }
-                    if(requestStatus == '10'){
+                    if(requestStatus == '10' || requestStatus == '27'){
                         var rcv_url = 'receivedItems';
                         $("#transitItemsModal").show();
                         $(".soldShow").show();
@@ -2439,7 +2439,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('#action').val('');
         }
 
-        if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && requestStatus == '10') || req_type_id == '6')){
+        if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus == '27')) || req_type_id == '6')){
             var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
             var reference_attachments = decodeHtml(reference_uploads).split(',');
             for(var i=0; i < reference_attachments.length; i++){
@@ -2654,7 +2654,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 document.getElementById('modalheader').innerHTML = 'REPLACEMENT ITEM DETAILS';
             }
         }
-        if(requestStatus == '10'){
+        if(requestStatus == '10' || requestStatus == '27'){
             var rcv_url = 'receivedItems';
             $("#transitItemsModal").show();
             $(".soldShow").show();
@@ -4466,7 +4466,7 @@ $('.incItems tbody').on('click', 'tr', function(){
 });
 
 $("#btnProceed").unbind('click').click(function(){
-    var j = 0;
+    j = 0;
     var reqnum = $('#request_num_details').val();
     var req_type_id = $('#req_type_id_details').val();
     if((exceed.length != 0 || items.length < item_count) &&  req_type_id < 4){
@@ -4770,7 +4770,7 @@ $('#btnBack').on('click', function(){
 });
 
 $("#btnSale").unbind('click').click(function(){
-    var j = 0;
+    j = 0;
     var reqnum = $('#request_num_details').val();
     $("#transItems *").prop('disabled', true);
     $("#demoreceive_label").hide();

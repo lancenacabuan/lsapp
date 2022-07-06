@@ -276,7 +276,7 @@
                 <input class="form-control form-control-sm" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Scheduled</label>
                 <input class="form-control form-control-sm" id="schedOn" style="width: 280px;" type="date">
             </div>
             <div class="form-inline" style="margin-left: 35px;" id="reqContents"></div>
@@ -327,7 +327,7 @@
                 <input class="form-control form-control-sm" id="prep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Scheduled</label>
                 <input class="form-control form-control-sm" id="sched" style="width: 280px;" type="text" readonly>
             </div>
             <br>
@@ -405,7 +405,7 @@
                     <input class="form-control form-control-sm" id="prep_by1" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
                 </div>
                 <div class="form-inline" style="margin-left: 35px;">
-                    <label class="form-control form-control-sm" style="width: 160px;">Scheduled On</label>
+                    <label class="form-control form-control-sm" style="width: 160px;">Date Scheduled</label>
                     <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
                 </div>
             </div>
@@ -500,7 +500,7 @@
                 <input class="form-control form-control-sm" id="reprep_by1" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
             </div>
             <div class="form-inline divResched" style="margin-left: 35px; display: none;">
-                <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Rescheduled</label>
                 <input class="form-control form-control-sm" id="resched" style="width: 280px;" type="date">
             </div>
             @endrole
@@ -509,7 +509,7 @@
                 <input class="form-control form-control-sm" id="reprep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
             </div>
             <div class="form-inline divResched1" style="margin-left: 35px; display: none;">
-                <label class="form-control form-control-sm" style="width: 160px;">Rescheduled On</label>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Rescheduled</label>
                 <input class="form-control form-control-sm" id="resched1" style="width: 280px;" type="text" readonly>
             </div>
             <br>

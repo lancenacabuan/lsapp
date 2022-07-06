@@ -2099,7 +2099,7 @@ $("#btnProceed").unbind('click').click(function(){
                 }
                 $("#btnSubmit").unbind('click').click(function(){
                     if(!$("#schedOn").val()){
-                        swal('Scheduled On is required!','Select within date range from today up to Date Needed.','error');
+                        swal('Date Scheduled is required!','Select within date range from today up to Date Needed.','error');
                         return false;
                     }
                     else if($("#schedOn").val() < minDate){

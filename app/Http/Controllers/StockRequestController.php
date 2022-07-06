@@ -486,12 +486,8 @@ class StockRequestController extends Controller
         }
 
         $subject = '[FIXED ASSET] STOCK REQUEST NO. '.$request->request_number;
-        $emails = User::role('admin')->where('status','ACTIVE')->get('email')->toArray();
-        foreach($emails as $email){
-            $sendTo[] = $email['email'];
-        }
         $details = [
-            'name' => 'ADMIN',
+            'name' => auth()->user()->name,
             'request_number' => $request->request_number,
             'reqtype' => $request_details->reqtype,
             'reqdate' => $request_details->reqdate,
@@ -503,8 +499,7 @@ class StockRequestController extends Controller
             'items' => $items,
             'files' => $attachments
         ];
-        Mail::to($sendTo)->send(new emailForRequest($details, $subject));
-        unset($sendTo);
+        Mail::to(auth()->user()->email)->send(new emailForRequest($details, $subject));
         $details = [
             'name' => $request_details->asset_reqby,
             'request_number' => $request->request_number,
@@ -519,7 +514,6 @@ class StockRequestController extends Controller
             'files' => $attachments
         ];
         Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
-        unset($sendTo);
         $details = [
             'name' => $request_details->asset_apvby,
             'request_number' => $request->request_number,

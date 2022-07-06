@@ -223,7 +223,7 @@ $(".btnNewStockRequest").on('click', function(){
 
 setInterval(runFunction, 0);
 function runFunction(){
-    if($('#newStockRequest').is(':visible')){
+    if($('#newStockRequest').is(':visible') && $("#current_role").val() == 'sales'){
         var needdate = $('#needdate').val();
         var request_type = $('#request_type').val();
         var client_name = $.trim($('#client_name').val());
@@ -251,6 +251,22 @@ function runFunction(){
                 $('#requestDetails').hide();
                 $('.header_label').show();
             }
+        }
+    }
+    if($('#newStockRequest').is(':visible') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){
+        var needdate = $('#needdate').val();
+        var asset_reqby = $.trim($('#asset_reqby').val());
+        var asset_apvby = $.trim($('#asset_apvby').val());
+        var asset_reqby_email = $.trim($('#asset_reqby_email').val());
+        var asset_apvby_email = $.trim($('#asset_apvby_email').val());
+        var reference_upload = $('#reference_upload').val();
+        if(needdate && asset_reqby && asset_apvby && asset_reqby_email && asset_apvby_email && reference_upload){
+            $('#requestDetails').show();
+            $('.header_label').hide();
+        }
+        else{
+            $('#requestDetails').hide();
+            $('.header_label').show();
         }
     }
     if($('#detailsStockRequest').is(':visible') && $("#current_role").val() == 'sales' && $("#status_details").val() == 'FOR APPROVAL' && editMode == true){
@@ -482,7 +498,7 @@ $(".add-row").on('click', function(){
         swal('REQUIRED','Please fill up all required item details!','error');
         return false;
     }
-    else if(request_type == '3' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "")){
+    else if(request_type != '2' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "")){
         swal('REQUIRED','Please fill up all required item details!','error');
         return false;
     }
@@ -543,19 +559,147 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
 });
 
 $('#btnSave').on('click', function(){
-    var needdate = $('#needdate').val();
-    var request_type = $('#request_type').val();
-    var client_name = $.trim($('#client_name').val());
-    var location_name = $.trim($('#location').val());
-    var contact = $.trim($('#contact').val());
-    var remarks = $.trim($('#remarks').val());
-    var reference = ($.trim($('#reference').val()).toUpperCase().split("\n")).join(', ');
-    var reference_upload = $('#reference_upload').val();
-    if(needdate < minDate){
-        swal('Minimum Date is today!','Select within date range from today onwards.','error');
-        return false;
+    if($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder'){
+        var needdate = $('#needdate').val();
+        var request_type = $('#request_type_details').val();
+        var asset_reqby = $.trim($('#asset_reqby').val());
+        var asset_apvby = $.trim($('#asset_apvby').val());
+        var asset_reqby_email = $.trim($('#asset_reqby_email').val());
+        var asset_apvby_email = $.trim($('#asset_apvby_email').val());
+        var reference = ($.trim($('#reference').val()).toUpperCase().split("\n")).join(', ');
+        var reference_upload = $('#reference_upload').val();
+        if(needdate < minDate){
+            swal('Minimum Date is today!','Select within date range from today onwards.','error');
+            return false;
+        }
+        swal({
+            title: "SUBMIT STOCK REQUEST?",
+            text: "Please review the details of your request. Click 'OK' button to submit; otherwise, click 'Cancel' button.",
+            icon: "warning",
+            buttons: true,
+        })
+        .then((willDelete) => {
+            if(willDelete){
+                $.ajax({
+                    type:'post',
+                    url:'/saveReqNum',
+                    async: false,
+                    headers:{
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{
+                        'request_number': $('#request_num').val(),
+                        'needdate': needdate,
+                        'request_type': request_type,
+                        'asset_reqby': asset_reqby,
+                        'asset_apvby': asset_apvby,
+                        'asset_reqby_email': asset_reqby_email,
+                        'asset_apvby_email': asset_apvby_email,
+                        'reference': reference
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            var myTable = $('#stockRequestTable').DataTable();
+                            var form_data  = myTable.rows().data();
+                            $.each(form_data, function(key, value){
+                                $.ajax({
+                                    type:'post',
+                                    url:'/saveRequest',
+                                    async: false,
+                                    headers:{
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    data:{
+                                        'request_number': $('#request_num').val(),
+                                        'category': value[0],
+                                        'item': value[1],
+                                        'warranty': value[2],
+                                        'quantity': value[6]
+                                    },
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            return true;
+                                        }
+                                        else{
+                                            return false;
+                                        }
+                                    },
+                                    error: function(data){
+                                        if(data.status == 401){
+                                            window.location.href = '/stockrequest';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
+                            });
+                            if(!reference_upload){
+                                scrollReset();
+                                $('#newStockRequest').modal('hide');
+                                $('#loading').show(); Spinner(); Spinner.show();
+                                $.ajax({
+                                    type:'post',
+                                    url:'/logSave',
+                                    headers:{
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    data:{
+                                        'request_number': $('#request_num').val()
+                                    },
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            $('#loading').hide(); Spinner.hide();
+                                            swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
+                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                        }
+                                        else{
+                                            $('#loading').hide(); Spinner.hide();
+                                            swal("SUBMIT FAILED", "STOCK REQUEST", "error");
+                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                        }
+                                    },
+                                    error: function(data){
+                                        if(data.status == 401){
+                                            window.location.href = '/stockrequest';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
+                            }
+                            else{
+                                $('#newStockRequest').modal('hide');
+                                $('#loading').show(); Spinner(); Spinner.show();
+                                $('#btnUpload').click();
+                            }
+                        }
+                        else{
+                            $('#newStockRequest').hide();
+                            swal("SUBMIT FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
     }
     else{
+        var needdate = $('#needdate').val();
+        var request_type = $('#request_type').val();
+        var client_name = $.trim($('#client_name').val());
+        var location_name = $.trim($('#location').val());
+        var contact = $.trim($('#contact').val());
+        var remarks = $.trim($('#remarks').val());
+        var reference = ($.trim($('#reference').val()).toUpperCase().split("\n")).join(', ');
+        var reference_upload = $('#reference_upload').val();
+        if(needdate < minDate){
+            swal('Minimum Date is today!','Select within date range from today onwards.','error');
+            return false;
+        }
         swal({
             title: "SUBMIT STOCK REQUEST?",
             text: "Please review the details of your request. Click 'OK' button to submit; otherwise, click 'Cancel' button.",
@@ -674,7 +818,7 @@ $('#btnSave').on('click', function(){
                 });
             }
         });
-    }  
+    }
 });
 
 $(document).on('click', '#btnSaveChanges', function(){

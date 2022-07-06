@@ -13,7 +13,7 @@
 @endif
 @endrole
 @role('sales|approver - sales|accounting|merchant') {{---ROLES---}}
-@if($list->req_type_id == '1' || $list->req_type_id == '4' || $list->req_type_id == '5')
+@if($list->req_type_id == '1' || $list->req_type_id == '4' || $list->req_type_id == '5' || $list->req_type_id == '7')
 <script>
     window.location = '/';
 </script>

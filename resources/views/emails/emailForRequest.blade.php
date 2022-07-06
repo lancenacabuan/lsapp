@@ -2,17 +2,26 @@
 <html>
 <body>
     <p>Hello, {{$details['name']}}!<br><br>
+    @if($details['reqtype'] == 'FIXED ASSET')
+    A new Fixed Asset Stock Request has been submitted by Admin - {{$details['submitted_by']}}.<br></p>
+    @else
     {{$details['action']}} is waiting for your approval.<br></p>
+    @endif
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     <p>
         Request Type: {{$details['reqtype']}}<br>
         Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
+        @if($details['reqtype'] == 'FIXED ASSET')
+        Requested By: {{$details['requested_by']}}<br>
+        Approved By: {{$details['approved_by']}}<br><br>
+        @else
         Requested By: {{$details['requested_by']}}<br><br>
         Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
         Contact Person: {{$details['contact']}}<br>
         Remarks: {{$details['remarks']}}
+        @endif
         @if($details['reqtype'] == 'SALES')
         <br><br>Reference SO/PO No.: {{$details['reference']}}
         @endif

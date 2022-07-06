@@ -6,6 +6,47 @@
             <button type="button" class="btn-close btn-close-white close btnClose" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
+            @role('admin|encoder')
+            <div class="form-inline" style="margin-left: 5px;">
+                <label class="form-control form-control-sm" style="width: 165px;">Request Type</label>
+                <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;" disabled>
+                    <option value="7" selected disabled>FIXED ASSET</option>
+                </select>
+                <label class="form-control form-control-sm" style="width: 165px;">Stock Request No.</label>
+                <input class="form-control form-control-sm" id="request_num" style="width: 280px; margin-right: 10px;" type="text" readonly>
+            </div>
+            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 165px;">Date Needed</label>
+                <input class="form-control form-control-sm"  id="needdate" style="width: 280px; margin-right: 10px;" type="date">
+                <label class="form-control form-control-sm" style="width: 165px;">Date Requested</label>
+                <input class="form-control form-control-sm"  id="reqdate" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
+            </div>
+            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 165px;">Requested By</label>
+                <input class="form-control form-control-sm" id="asset_reqby" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
+                <label class="form-control form-control-sm" style="width: 165px;">Approved By</label>
+                <input class="form-control form-control-sm" id="asset_apvby" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
+            </div>
+            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 165px;">Requester Email Address</label>
+                <input class="form-control form-control-sm" id="asset_reqby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+                <label class="form-control form-control-sm" style="width: 165px;">Approver Email Address</label>
+                <input class="form-control form-control-sm" id="asset_apvby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+            </div>
+            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="margin-left: 455px; width: 165px;" onclick="$('#reference_upload').click();">Attach Request Form</label>
+                <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
+                <button class="form-control btn btn-primary bp" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
+                <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+                    <input type="hidden" name="reqnum" id="reqnum">
+                    <input type="hidden" name="action" id="action" value="SUBMIT">
+                    <input id="reference_upload" name="reference_upload[]" type="file" style="zoom: 90%; display: none;" onchange="validate_fileupload(this);" multiple>
+                    <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
+                </form>
+            </div>
+            @endrole
+            @role('sales')
             <div class="form-inline" style="margin-left: 5px;">
                 <label class="form-control form-control-sm" style="width: 130px;">Request Type</label>
                 <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;">
@@ -79,6 +120,7 @@
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm reference_field" style="width: 860px; border-color: white; display: none;">&nbsp;</label>
             </div>
+            @endrole
             <div class="header_label alert alert-primary mt-4" role="alert">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please fill up all required fields to proceed.

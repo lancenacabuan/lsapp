@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@role('sales') {{---ROLES---}}
+@role('admin|encoder|sales') {{---ROLES---}}
 <button class="btn btn-primary bp btnNewStockRequest float-right mb-2" type="button">NEW STOCK REQUEST</button>
 <br><br>
 @endrole

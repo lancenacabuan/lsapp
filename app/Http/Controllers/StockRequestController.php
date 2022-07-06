@@ -1330,10 +1330,19 @@ class StockRequestController extends Controller
         }
         else {
             $result = 'true';
-
+            switch($request->request_type){
+                case 1: $reqtype = 'Service Unit'; break;
+                case 2: $reqtype = 'Sales'; break;
+                case 3: $reqtype = 'Demo Unit'; break;
+                case 4: $reqtype = 'Replacement'; break;
+                case 5: $reqtype = 'Assembly'; break;
+                case 6: $reqtype = 'Merchant'; break;
+                case 7: $reqtype = 'Fixed Asset'; break;
+                default: $reqtype = NULL;
+            }
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = $sched." STOCK REQUEST: User successfully rescheduled on $request->resched Stock Request No. $request->request_number.";
+            $userlogs->activity = $sched." STOCK REQUEST: User successfully rescheduled on $request->resched $reqtype Stock Request No. $request->request_number.";
             $userlogs->save();
         }
         
@@ -1822,7 +1831,7 @@ class StockRequestController extends Controller
     }
 
     public function logSched(Request $request){
-        if($request->req_type_id == '4' || $request->req_type_id == '5'){
+        if($request->req_type_id == '4' || $request->req_type_id == '5' || $request->req_type_id == '7'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
                     ->update(['status' => '3']);
@@ -1859,10 +1868,28 @@ class StockRequestController extends Controller
             Requests::where('request_number', $request->request_number)
                 ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->schedOn, 'prepdate' => date('Y-m-d')]);
 
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = $sched." STOCK REQUEST: User successfully scheduled on $request->schedOn Stock Request No. $request->request_number.";
-            $userlogs->save();
+            if($request->req_type_id == '7'){
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = "PREPARED FOR RECEIVING STOCK REQUEST: User successfully prepared on $request->schedOn Fixed Asset Stock Request No. $request->request_number.";
+                $userlogs->save();
+            }
+            else{
+                switch($request->req_type_id){
+                    case 1: $reqtype = 'Service Unit'; break;
+                    case 2: $reqtype = 'Sales'; break;
+                    case 3: $reqtype = 'Demo Unit'; break;
+                    case 4: $reqtype = 'Replacement'; break;
+                    case 5: $reqtype = 'Assembly'; break;
+                    case 6: $reqtype = 'Merchant'; break;
+                    case 7: $reqtype = 'Fixed Asset'; break;
+                    default: $reqtype = NULL;
+                }
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = $sched." STOCK REQUEST: User successfully scheduled on $request->schedOn $reqtype Stock Request No. $request->request_number.";
+                $userlogs->save();
+            }
         }
 
         return response($result);

@@ -4879,17 +4879,15 @@ $("#btnProceed").unbind('click').click(function(){
                         });
                     });
                 }
-                if(req_type_id == '2' || req_type_id == '3' || req_type_id == '4' || req_type_id == '5' || req_type_id == '6'){
-                    setInterval(checkSerials, 0);
-                    function checkSerials(){
-                        if($('.serials').filter(function(){ return !!this.value; }).length != j){
-                            $('#btnSubmit').prop('disabled', true);
-                            $('#schedwarning').show();
-                        }
-                        else{
-                            $('#btnSubmit').prop('disabled', false);
-                            $('#schedwarning').hide();
-                        }
+                setInterval(checkSerials, 0);
+                function checkSerials(){
+                    if($('.serials').filter(function(){ return !!this.value; }).length != j){
+                        $('#btnSubmit').prop('disabled', true);
+                        $('#schedwarning').show();
+                    }
+                    else{
+                        $('#btnSubmit').prop('disabled', false);
+                        $('#schedwarning').hide();
                     }
                 }
                 $("#btnSubmit").unbind('click').click(function(){

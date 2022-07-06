@@ -272,12 +272,13 @@
         </div>
         <div class="modal-body">
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
-                <input class="form-control form-control-sm" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
+                <label class="form-control form-control-sm" id="schedBy_label" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
+                <input class="form-control form-control-sm" id="schedBy" style="width: 280px; margin-bottom: 10px;" type="text" value="{{auth()->user()->name}}" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Date Scheduled</label>
+                <label class="form-control form-control-sm" id="schedOn_label" style="width: 160px;">Date Scheduled</label>
                 <input class="form-control form-control-sm" id="schedOn" style="width: 280px;" type="date">
+                <input class="form-control form-control-sm" id="schedOn_text" style="width: 280px; display: none;" type="text">
             </div>
             <div class="form-inline" style="margin-left: 35px;" id="reqContents"></div>
             <div id="schedwarning" class="alert alert-warning mt-4" role="alert" style="display: none;">

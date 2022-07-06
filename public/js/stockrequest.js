@@ -4410,7 +4410,7 @@ function checkReqType(){
         var req_type_id = $('#req_type_id_details').val();
         var status_id = $('#status_id_details').val();
 
-        if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6'){
+        if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6' || req_type_id == '7'){
             var table = $('#stockDetailsrequest').DataTable();
             var count = 0;
 
@@ -4558,7 +4558,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
                 ''
             );
         }
-        if(req_type_id < 4){
+        if(req_type_id < 4 && req_type_id != 7){
             $(this).toggleClass('selected');
             if(items.includes(item_id) == true){
                 items = items.filter(item => item !== item_id);
@@ -4573,7 +4573,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
         }
     }
     else{
-        if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6'){
+        if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6' || req_type_id == '7'){
             swal('Sufficient stocks!','','success');
             return false;
         }
@@ -4690,6 +4690,7 @@ $('.incItems tbody').on('click', 'tr', function(){
     }
 });
 
+var txtSchedule = 'SCHEDULE';
 $("#btnProceed").unbind('click').click(function(){
     j = 0;
     var reqnum = $('#request_num_details').val();
@@ -4697,11 +4698,22 @@ $("#btnProceed").unbind('click').click(function(){
     if((exceed.length != 0 || items.length < item_count) &&  req_type_id < 4){
         swal('NOTICE: PARTIAL', 'Stock Request will be prepared partially!', 'warning')
     }
-    if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6'){
+    if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6' || req_type_id == '7'){
         var form_data  = $('#stockDetailsrequest').DataTable().rows().data();
         form_data.each(function(value, index){
             items.push(value.item_id);
         });
+    }
+    if(req_type_id == '7'){
+        $('#schedBy_label').html('Prepared By');
+        $('#schedOn_label').html('Date Prepared');
+        $('#schedOn').attr('type', 'hidden');
+        $('#schedOn').val(minDate);
+        $('#schedOn_text').css({"display": "block"});
+        $('#schedOn_text').val(moment(minDate).format('dddd, MMMM DD, YYYY'));
+        $("#schedOn_text").prop('readonly', true);
+        $('#btnSubmit').val('PREPARE');
+        txtSchedule = 'PREPARE';
     }
     $("#stockDetailsrequest *").prop('disabled', true);
     $("#proceed_label").hide();
@@ -4895,8 +4907,8 @@ $("#btnProceed").unbind('click').click(function(){
                     // }
                     else{
                         swal({
-                            title: "SCHEDULE STOCK REQUEST?",
-                            text: "You are about to SCHEDULE this STOCK REQUEST!",
+                            title: txtSchedule+" STOCK REQUEST?",
+                            text: "You are about to "+txtSchedule+" this STOCK REQUEST!",
                             icon: "warning",
                             buttons: true,
                         })
@@ -4950,12 +4962,12 @@ $("#btnProceed").unbind('click').click(function(){
                                     success: function(data){
                                         if(data == 'true'){
                                             $('#detailsStockRequest').hide();
-                                            swal("SCHEDULED SUCCESS", "STOCK REQUEST", "success");
+                                            swal(txtSchedule+"D SUCCESS", "STOCK REQUEST", "success");
                                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                                         }
                                         else{
                                             $('#detailsStockRequest').hide();
-                                            swal("SCHEDULED FAILED", "STOCK REQUEST", "error");
+                                            swal(txtSchedule+"D FAILED", "STOCK REQUEST", "error");
                                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                                         }
                                     },

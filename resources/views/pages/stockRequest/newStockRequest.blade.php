@@ -10,7 +10,7 @@
             <div class="form-inline" style="margin-left: 5px;">
                 <label class="form-control form-control-sm" style="width: 165px;">Request Type</label>
                 <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;" disabled>
-                    <option value="7" selected disabled>FIXED ASSET</option>
+                    <option value="7" selected>FIXED ASSET</option>
                 </select>
                 <label class="form-control form-control-sm" style="width: 165px;">Stock Request No.</label>
                 <input class="form-control form-control-sm" id="request_num" style="width: 280px; margin-right: 10px;" type="text" readonly>

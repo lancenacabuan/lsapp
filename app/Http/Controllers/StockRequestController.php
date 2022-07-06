@@ -116,21 +116,48 @@ class StockRequestController extends Controller
     }
 
     public function saveReqNum(Request $request){
-        do{
-            $requests = new Requests;
-            $requests->request_number = $request->request_number;
-            $requests->requested_by = auth()->user()->id;
-            $requests->needdate = $request->needdate;
-            $requests->request_type = $request->request_type;
-            $requests->status = '6';
-            $requests->client_name = ucwords($request->client_name);
-            $requests->location = ucwords($request->location);
-            $requests->contact = ucwords($request->contact);
-            $requests->remarks = ucfirst($request->remarks);
-            $requests->reference = strtoupper($request->reference);
-            $sql = $requests->save();
+        if($request->request_type == '7'){
+            if((!filter_var($request->asset_reqby_email, FILTER_VALIDATE_EMAIL)) && (!filter_var($request->asset_apvby_email, FILTER_VALIDATE_EMAIL))){
+                return ('xemail');
+            }
+            if(!filter_var($request->asset_reqby_email, FILTER_VALIDATE_EMAIL)){
+                return ('xemail1');
+            }
+            if(!filter_var($request->asset_apvby_email, FILTER_VALIDATE_EMAIL)){
+                return ('xemail2');
+            }
+            do{
+                $requests = new Requests;
+                $requests->request_number = $request->request_number;
+                $requests->requested_by = auth()->user()->id;
+                $requests->needdate = $request->needdate;
+                $requests->request_type = $request->request_type;
+                $requests->status = '1';
+                $requests->asset_reqby = ucwords($request->asset_reqby);
+                $requests->asset_apvby = ucwords($request->asset_apvby);
+                $requests->asset_reqby_email = strtolower($request->asset_reqby_email);
+                $requests->asset_apvby_email = strtolower($request->asset_apvby_email);
+                $sql = $requests->save();
+            }
+            while(!$sql);
         }
-        while(!$sql);
+        else{
+            do{
+                $requests = new Requests;
+                $requests->request_number = $request->request_number;
+                $requests->requested_by = auth()->user()->id;
+                $requests->needdate = $request->needdate;
+                $requests->request_type = $request->request_type;
+                $requests->status = '6';
+                $requests->client_name = ucwords($request->client_name);
+                $requests->location = ucwords($request->location);
+                $requests->contact = ucwords($request->contact);
+                $requests->remarks = ucfirst($request->remarks);
+                $requests->reference = strtoupper($request->reference);
+                $sql = $requests->save();
+            }
+            while(!$sql);
+        }
 
         if(!$sql){
             $result = 'false';

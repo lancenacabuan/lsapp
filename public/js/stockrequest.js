@@ -561,12 +561,11 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
 $('#btnSave').on('click', function(){
     if($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder'){
         var needdate = $('#needdate').val();
-        var request_type = $('#request_type_details').val();
+        var request_type = $('#request_type').val();
         var asset_reqby = $.trim($('#asset_reqby').val());
         var asset_apvby = $.trim($('#asset_apvby').val());
         var asset_reqby_email = $.trim($('#asset_reqby_email').val());
         var asset_apvby_email = $.trim($('#asset_apvby_email').val());
-        var reference = ($.trim($('#reference').val()).toUpperCase().split("\n")).join(', ');
         var reference_upload = $('#reference_upload').val();
         if(needdate < minDate){
             swal('Minimum Date is today!','Select within date range from today onwards.','error');
@@ -594,8 +593,7 @@ $('#btnSave').on('click', function(){
                         'asset_reqby': asset_reqby,
                         'asset_apvby': asset_apvby,
                         'asset_reqby_email': asset_reqby_email,
-                        'asset_apvby_email': asset_apvby_email,
-                        'reference': reference
+                        'asset_apvby_email': asset_apvby_email
                     },
                     success: function(data){
                         if(data == 'true'){
@@ -670,6 +668,14 @@ $('#btnSave').on('click', function(){
                                 $('#loading').show(); Spinner(); Spinner.show();
                                 $('#btnUpload').click();
                             }
+                        }
+                        else if(data == 'xemail1'){
+                            swal("INVALID REQUESTER EMAIL", "Enter a valid email address!", "error");
+                            return false;
+                        }
+                        else if(data == 'xemail2'){
+                            swal("INVALID APPROVER EMAIL", "Enter a valid email address!", "error");
+                            return false;
                         }
                         else{
                             $('#newStockRequest').hide();
@@ -798,10 +804,6 @@ $('#btnSave').on('click', function(){
                                 $('#loading').show(); Spinner(); Spinner.show();
                                 $('#btnUpload').click();
                             }
-                        }
-                        else if(data == 'duplicate'){
-                            swal("DUPLICATE SO/PO#", "Reference SO/PO Number already exists!", "error");
-                            return false;
                         }
                         else{
                             $('#newStockRequest').hide();

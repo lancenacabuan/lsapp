@@ -300,6 +300,9 @@ class StockRequestController extends Controller
         if($request->action == 'SUBMIT'){
             return redirect()->to('/stockrequest?submit='.$request->reqnum);
         }
+        else if($request->action == 'ASSET'){
+            return redirect()->to('/stockrequest?asset='.$request->reqnum);
+        }
         else if($request->action == 'EDIT'){
             $status = Requests::where('request_number', $request->reqnum)
                 ->first()
@@ -440,6 +443,99 @@ class StockRequestController extends Controller
             $userlogs->activity = "NEW STOCK REQUEST: User successfully submitted Stock Request No. $request->request_number.";
             $userlogs->save();
         }
+        
+        return response('true');
+    }
+
+    public function asset_logSave(Request $request){
+        if(Requests::where('request_number', $request->request_number)->count() == 0){
+            return response('false');
+        }
+
+        do{
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, needdate, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email')
+                ->where('requests.request_number', $request->request_number)
+                ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                ->get();
+
+                $request_details = str_replace('[','',$request_details);
+                $request_details = str_replace(']','',$request_details);
+                $request_details = json_decode($request_details);
+        }
+        while(!$request_details);
+
+        do{
+            $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
+                ->join('items', 'items.id', 'stock_request.item')
+                ->where('request_number', $request->request_number)
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
+        while(!$items);
+
+        $attachments = [];
+        $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+        if($files != NULL){
+            $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+            foreach($files as $file){
+                $file = str_replace('"','',$file);
+                if(file_exists(public_path('uploads/'.$file))){
+                    array_push($attachments, public_path('uploads/'.$file));
+                }
+            }
+        }
+
+        $subject = '[FIXED ASSET] STOCK REQUEST NO. '.$request->request_number;
+        $emails = User::role('admin')->where('status','ACTIVE')->get('email')->toArray();
+        foreach($emails as $email){
+            $sendTo[] = $email['email'];
+        }
+        $details = [
+            'name' => 'ADMIN',
+            'request_number' => $request->request_number,
+            'reqtype' => $request_details->reqtype,
+            'reqdate' => $request_details->reqdate,
+            'needdate' => $request_details->needdate,
+            'requested_by' => $request_details->asset_reqby,
+            'approved_by' => $request_details->asset_apvby,
+            'role' => 'Admin',
+            'items' => $items,
+            'files' => $attachments
+        ];
+        Mail::to($sendTo)->send(new emailForRequest($details, $subject));
+        unset($sendTo);
+        $details = [
+            'name' => $request_details->asset_reqby,
+            'request_number' => $request->request_number,
+            'reqtype' => $request_details->reqtype,
+            'reqdate' => $request_details->reqdate,
+            'needdate' => $request_details->needdate,
+            'requested_by' => $request_details->asset_reqby,
+            'approved_by' => $request_details->asset_apvby,
+            'role' => 'Admin',
+            'items' => $items,
+            'files' => $attachments
+        ];
+        Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
+        unset($sendTo);
+        $details = [
+            'name' => $request_details->asset_apvby,
+            'request_number' => $request->request_number,
+            'reqtype' => $request_details->reqtype,
+            'reqdate' => $request_details->reqdate,
+            'needdate' => $request_details->needdate,
+            'requested_by' => $request_details->asset_reqby,
+            'approved_by' => $request_details->asset_apvby,
+            'role' => 'Admin',
+            'items' => $items,
+            'files' => $attachments
+        ];
+        Mail::to($request_details->asset_apvby_email)->send(new emailForRequest($details, $subject));
+        
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "NEW FIXED ASSET STOCK REQUEST: User successfully submitted Fixed Asset Stock Request No. $request->request_number.";
+        $userlogs->save();
         
         return response('true');
     }

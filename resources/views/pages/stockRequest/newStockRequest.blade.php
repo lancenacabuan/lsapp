@@ -40,7 +40,7 @@
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                     <input type="hidden" name="reqnum" id="reqnum">
-                    <input type="hidden" name="action" id="action" value="SUBMIT">
+                    <input type="hidden" name="action" id="action" value="ASSET">
                     <input id="reference_upload" name="reference_upload[]" type="file" style="zoom: 90%; display: none;" onchange="validate_fileupload(this);" multiple>
                     <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
                 </form>

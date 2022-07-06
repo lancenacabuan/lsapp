@@ -636,7 +636,7 @@ $('#btnSave').on('click', function(){
                                 $('#loading').show(); Spinner(); Spinner.show();
                                 $.ajax({
                                     type:'post',
-                                    url:'/logSave',
+                                    url:'/asset/logSave',
                                     headers:{
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
@@ -646,12 +646,12 @@ $('#btnSave').on('click', function(){
                                     success: function(data){
                                         if(data == 'true'){
                                             $('#loading').hide(); Spinner.hide();
-                                            swal("SUBMIT SUCCESS", "STOCK REQUEST", "success");
+                                            swal("SUBMIT SUCCESS", "FIXED ASSET STOCK REQUEST", "success");
                                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                                         }
                                         else{
                                             $('#loading').hide(); Spinner.hide();
-                                            swal("SUBMIT FAILED", "STOCK REQUEST", "error");
+                                            swal("SUBMIT FAILED", "FIXED ASSET STOCK REQUEST", "error");
                                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                                         }
                                     },
@@ -669,6 +669,10 @@ $('#btnSave').on('click', function(){
                                 $('#btnUpload').click();
                             }
                         }
+                        else if(data == 'xemail'){
+                            swal("INVALID REQUESTER AND APPROVER EMAIL ADDRESSES", "Enter valid email addresses!", "error");
+                            return false;
+                        }
                         else if(data == 'xemail1'){
                             swal("INVALID REQUESTER EMAIL", "Enter a valid email address!", "error");
                             return false;
@@ -679,7 +683,7 @@ $('#btnSave').on('click', function(){
                         }
                         else{
                             $('#newStockRequest').hide();
-                            swal("SUBMIT FAILED", "STOCK REQUEST", "error");
+                            swal("SUBMIT FAILED", "FIXED ASSET STOCK REQUEST", "error");
                             setTimeout(function(){location.href="/stockrequest"}, 2000);
                         }
                     },
@@ -5782,6 +5786,38 @@ $(document).ready(function(){
                 else{
                     $('#loading').hide(); Spinner.hide();
                     swal("SUBMIT FAILED", "STOCK REQUEST", "error");
+                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                }
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.href = '/stockrequest';
+                }
+                alert(data.responseText);
+            }
+        });
+    }
+    if(($(location).attr('pathname')+window.location.search).includes('asset') == true){
+        var url = new URL(window.location.href);
+        var reqnum = url.searchParams.get("asset");
+        $.ajax({
+            type:'post',
+            url:'/asset/logSave',
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{
+                'request_number': reqnum
+            },
+            success: function(data){
+                if(data == 'true'){
+                    $('#loading').hide(); Spinner.hide();
+                    swal("SUBMIT SUCCESS", "FIXED ASSET STOCK REQUEST", "success");
+                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                }
+                else{
+                    $('#loading').hide(); Spinner.hide();
+                    swal("SUBMIT FAILED", "FIXED ASSET STOCK REQUEST", "error");
                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                 }
             },

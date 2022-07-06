@@ -13,8 +13,8 @@
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
                 <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm dfcshow" style="width: 160px; display: none;">Assembly Request No.</label>
-                <input class="form-control form-control-sm dfcshow" id="asm_request_num_details" onclick="copyAsmReqNum()" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
+                <label class="form-control form-control-sm dfcshow assethide" style="width: 160px; display: none;">Assembly Request No.</label>
+                <input class="form-control form-control-sm dfcshow assethide" id="asm_request_num_details" onclick="copyAsmReqNum()" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Request Type</label>
@@ -27,20 +27,22 @@
                 <input class="form-control form-control-sm"  id="needdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" id="qty_label" style="width: 60px; display: none;">Qty</label>
-                <input class="form-control form-control-sm" id="qty_details" style="width: 100px; display: none;" type="number" readonly>
+                <label class="form-control form-control-sm assethide" id="qty_label" style="width: 60px; display: none;">Qty</label>
+                <input class="form-control form-control-sm assethide" id="qty_details" style="width: 100px; display: none;" type="number" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
-                <label class="form-control form-control-sm dfchide" id="client_name_label" style="width: 160px;">Client Name</label>
-                <input class="form-control form-control-sm dfchide" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" readonly>
-                <label class="form-control form-control-sm dfchide" id="orderID_label" style="width: 160px; display: none;">Order ID</label>
-                <input class="form-control form-control-sm dfchide spChar" id="orderID_details" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field" readonly>
+                <label class="form-control form-control-sm dfchide assethide" id="client_name_label" style="width: 160px;">Client Name</label>
+                <input class="form-control form-control-sm dfchide assethide" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" readonly>
+                <label class="form-control form-control-sm dfchide assethide" id="orderID_label" style="width: 160px; display: none;">Order ID</label>
+                <input class="form-control form-control-sm dfchide assethide spChar" id="orderID_details" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field" readonly>
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="requested_by_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm" id="item_desc_label" style="width: 160px; display: none;">Assembled Item Name</label>
-                <input class="form-control form-control-sm" id="item_desc_details" style="width: 450px; margin-right: 10px; display: none;" type="text" readonly>
+                <label class="form-control form-control-sm assetshow" style="width: 160px; display: none;">Approved By</label>
+                <input class="form-control form-control-sm assetshow" id="approved_by_details" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
+                <label class="form-control form-control-sm assethide" id="item_desc_label" style="width: 160px; display: none;">Assembled Item Name</label>
+                <input class="form-control form-control-sm assethide" id="item_desc_details" style="width: 450px; margin-right: 10px; display: none;" type="text" readonly>
             </div>
-            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
+            <div class="form-inline assethide" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm dfchide" id="location_label" style="width: 160px;">Address / Branch</label>
                 <input class="form-control form-control-sm dfchide" id="location_details" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" readonly>
                 <label class="form-control form-control-sm dfchide soldShow" id="contact_label" style="width: 160px;">Contact Person</label>
@@ -54,13 +56,19 @@
                     <option value="4">A4</option>
                 </select>
             </div>
-            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
+            <div class="form-inline assethide" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm dfchide soldShow" id="remarks_label" style="margin-top: -38px; width: 160px;">Remarks</label>
                 <textarea class="form-control dfchide soldShow" id="remarks_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Optional Field" readonly></textarea>
                 <label class="form-control form-control-sm dfchide sales_details soldShow" style="margin-top: -38px; width: 160px;">Reference SO/PO No.</label>
                 <textarea class="form-control dfchide sales_details soldShow spChar" id="reference_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field" readonly></textarea>
             </div>
-            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
+            <div class="form-inline assetshow" style="margin-left: 35px; margin-top: 10px; display: none;">
+                @role('admin|encoder|viewer') {{---ROLES---}}
+                <button type="button" id="btnShowAttachment" class="btn btn-primary bp" style="zoom: 85%; width: 188px; margin-left: 530px;">VIEW ATTACHMENT</button>
+                <button type="button" id="btnHideAttachment" class="btn btn-primary bp" style="zoom: 85%; width: 188px; margin-left: 530px; display: none;">HIDE ATTACHMENT</button>
+                @endrole
+            </div>
+            <div class="form-inline assethide" style="margin-left: 35px; margin-top: 10px;">
                 @role('sales|approver - sales|accounting') {{---ROLES---}}
                 <span style="margin-top: -52px;">
                     <button type="button" id="btnShowAttachment" class="btn btn-primary bp sales_details soldShow" style="zoom: 85%; width: 188px; margin-left: 530px;">VIEW ATTACHMENT</button>
@@ -69,14 +77,14 @@
                 @endrole
                 <span id="warehouse_note" style="color: Red; font-size: 12px; display: none;">Please select location to store the Assembled Item/s.</span>
             </div>
-            <div class="form-inline" style="margin-left: 35px;;">
+            <div class="form-inline assethide" style="margin-left: 35px;;">
                 <label class="form-control form-control-sm" name="reason_label" id="reason_label" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>
                 <textarea class="form-control" name="reason_details" id="reason_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="4" readonly></textarea>
                 <label id="lblReupload" class="form-control form-control-sm reupload classReupload" style="margin-left: 450px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
                 <button class="form-control btn btn-danger disupload classReupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
                 <button class="form-control btn btn-primary bp reupload classReupload" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
             </div>
-            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
+            <div class="form-inline assethide" style="margin-left: 35px; margin-top: 10px;">
                 <span class="reupload classReupload" style="margin-left: 450px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple PDF and/or Image files for upload.</span>
             </div>
             @role('sales')

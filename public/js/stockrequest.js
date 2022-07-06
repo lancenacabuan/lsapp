@@ -1339,7 +1339,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#action').val('');
                     }
                     
-                    if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus >= 27)) || req_type_id == '6')){
+                    if((($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus >= 27)) || req_type_id == '6')) || 
+                    ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder' || $("#current_role").val() == 'viewer') && req_type_id == '7'){
                         var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
                         var reference_attachments = decodeHtml(reference_uploads).split(',');
                         for(var i=0; i < reference_attachments.length; i++){
@@ -1406,6 +1407,12 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     var rcv_url = '/schedItems';
                     var included = 'yes';
 
+                    if(req_type_id == '7'){
+                        $(".assethide").hide();
+                        $(".assetshow").show();
+                        $('#requested_by_details').val(value.asset_reqby);
+                        $('#approved_by_details').val(value.asset_apvby);
+                    }
                     if(req_type_id != '2'){
                         $(".sales_details").hide();
                         if(req_type_id == '6'){
@@ -2616,7 +2623,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('#action').val('');
         }
 
-        if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus >= 27)) || req_type_id == '6')){
+        if((($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus >= 27)) || req_type_id == '6')) || 
+        ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder' || $("#current_role").val() == 'viewer') && req_type_id == '7'){
             var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
             var reference_attachments = decodeHtml(reference_uploads).split(',');
             for(var i=0; i < reference_attachments.length; i++){
@@ -2683,6 +2691,12 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         var rcv_url = '/schedItems';
         var included = 'yes';
 
+        if(req_type_id == '7'){
+            $(".assethide").hide();
+            $(".assetshow").show();
+            $('#requested_by_details').val(value.asset_reqby);
+            $('#approved_by_details').val(value.asset_apvby);
+        }
         if(req_type_id != '2'){
             $(".sales_details").hide();
             if(req_type_id == '6'){

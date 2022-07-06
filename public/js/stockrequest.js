@@ -1062,6 +1062,9 @@ if($("#current_role").val() == 'sales'){
             if(($(location).attr('pathname')+window.location.search).includes('submit') == true){
                 return false;
             }
+            else if(($(location).attr('pathname')+window.location.search).includes('asset') == true){
+                return false;
+            }
             else if(($(location).attr('pathname')+window.location.search).includes('status') == true){
                 return false;
             }
@@ -1183,6 +1186,9 @@ else{
         order: [],
         initComplete: function(){
             if(($(location).attr('pathname')+window.location.search).includes('submit') == true){
+                return false;
+            }
+            else if(($(location).attr('pathname')+window.location.search).includes('asset') == true){
                 return false;
             }
             else if(($(location).attr('pathname')+window.location.search).includes('status') == true){

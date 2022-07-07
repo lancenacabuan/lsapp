@@ -165,6 +165,9 @@
         .swal2-content{
             zoom: 120% !important;
         }
+        .swal2-actions{
+            zoom: 120% !important;
+        }
         .chosen-container-single .chosen-single{
             margin-top: -12px !important;
             margin-left: 10px !important;

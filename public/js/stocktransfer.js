@@ -38,17 +38,18 @@ function copyReqNum(){
 }
 
 function sweet(title, text, icon, btnName, url){
-    Swal.fire(title, text, icon, {
-        buttons:{
-            cancel: 'Cancel',
-            catch:{
-                text: btnName,
-                value: 'button'
-            }
-        },
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: icon,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: btnName,
+        allowOutsideClick: false
     })
-    .then((value) => {
-        if(value == 'button'){
+    .then((result) => {
+        if(result.isConfirmed){
             window.location.href = url;
         }
     });

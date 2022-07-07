@@ -52,40 +52,38 @@ function copyAsmReqNum(){
 
 function sweet(title, text, icon, btnName1, btnName2, url1, url2){
     if(!btnName2 && !url2){
-        Swal.fire(title, text, icon, {
-            buttons:{
-                cancel: 'Cancel',
-                catch1:{
-                    text: btnName1,
-                    value: 'button1'
-                }
-            },
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: btnName1,
+            allowOutsideClick: false
         })
-        .then((value) => {
-            if(value == 'button1'){
+        .then((result) => {
+            if(result.isConfirmed){
                 window.location.href = url1;
             }
         });
     }
     else{
-        Swal.fire(title, text, icon, {
-            buttons:{
-                cancel: 'Cancel',
-                catch1:{
-                    text: btnName1,
-                    value: 'button1'
-                },
-                catch2:{
-                    text: btnName2,
-                    value: 'button2'
-                }
-            },
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: btnName1,
+            denyButtonText: btnName2,
+            allowOutsideClick: false
         })
-        .then((value) => {
-            if(value == 'button1'){
+        .then((result) => {
+            if(result.isConfirmed){
                 window.location.href = url1;
             }
-            if(value == 'button2'){
+            else if(result.isDenied){
                 window.location.href = url2;
             }
         });

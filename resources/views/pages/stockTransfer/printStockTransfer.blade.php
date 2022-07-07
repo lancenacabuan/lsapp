@@ -200,14 +200,18 @@ $(document).on('click', '#btnPrint', function(){
 });
 
 $(document).on('click', '#btnSavePDF', function(){
-    swal({
+    Swal.fire({
         title: "SAVE AS PDF?",
         text: "You are about to SAVE this Stock Request as PDF!",
         icon: "warning",
-        buttons: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             var content = document.getElementById('printPage');
             var options = {
                 margin:       0.5,

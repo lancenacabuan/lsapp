@@ -28,7 +28,7 @@ function copyReqNum(){
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(copyText.value);
-    swal({
+    Swal.fire({
         title: copyText.value,
         text: "Copied to Clipboard!",
         icon: "success",
@@ -41,7 +41,7 @@ function copyAsmReqNum(){
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(copyText.value);
-    swal({
+    Swal.fire({
         title: copyText.value,
         text: "Copied to Clipboard!",
         icon: "success",
@@ -317,18 +317,22 @@ $('#btnAssemblySave').on('click', function(){
     var item_desc = $("#assembly option:selected").text();
     var qty = $('#qty').val();
     if(needdate < minDate){
-        swal('Minimum Date is today!','Select within date range from today onwards.','error');
+        Swal.fire('Minimum Date is today!','Select within date range from today onwards.','error');
         return false;
     }
     else{
-        swal({
+        Swal.fire({
             title: "SUBMIT ASSEMBLY REQUEST?",
-            text: "Please review the details of your request. Click 'OK' button to submit; otherwise, click 'Cancel' button.",
+            text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
             icon: "warning",
-            buttons: true,
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $.ajax({
                     type: 'post',
                     url: '/assembly/saveReqNum',
@@ -390,7 +394,7 @@ $('#btnAssemblySave').on('click', function(){
                                 success: function(data){
                                     if(data == 'true'){
                                         $('#newAssembly').hide();
-                                        swal("SUBMIT SUCCESS", "ASSEMBLY REQUEST", "success");
+                                        Swal.fire("SUBMIT SUCCESS", "ASSEMBLY REQUEST", "success");
                                         setTimeout(function(){location.reload()}, 2000);
                                     }
                                     else{
@@ -407,7 +411,7 @@ $('#btnAssemblySave').on('click', function(){
                         }
                         else{
                             $('#newAssembly').hide();
-                            swal("SUBMIT FAILED", "ASSEMBLY REQUEST", "error");
+                            Swal.fire("SUBMIT FAILED", "ASSEMBLY REQUEST", "error");
                             setTimeout(function(){location.reload()}, 2000);
                         }
                     },
@@ -1243,15 +1247,18 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
 });
 
 $('#btnDelete').on('click', function(){
-    swal({
+    Swal.fire({
         title: "DELETE ASSEMBLY STOCK REQUEST?",
         text: "You are about to DELETE your ASSEMBLY STOCK REQUEST!\n This will be permanently deleted from the system.",
         icon: "warning",
-        buttons: true,
-        dangerMode: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 type: 'post', 
                 url: '/deleteRequest',
@@ -1264,12 +1271,12 @@ $('#btnDelete').on('click', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsAssembly').hide();
-                        swal("DELETE SUCCESS", "ASSEMBLY REQUEST", "success");
+                        Swal.fire("DELETE SUCCESS", "ASSEMBLY REQUEST", "success");
                         setTimeout(function(){location.href="/assembly"}, 2000);
                     }
                     else{
                         $('#detailsAssembly').hide();
-                        swal("DELETE FAILED", "ASSEMBLY REQUEST", "error");
+                        Swal.fire("DELETE FAILED", "ASSEMBLY REQUEST", "error");
                         setTimeout(function(){location.href="/assembly"}, 2000);
                     }
                 },
@@ -1361,14 +1368,18 @@ $('.btnReceive').on('click', function(){
         inc = 'true';
         inctype = 'INCOMPLETE';
     }
-    swal({
+    Swal.fire({
         title: "RECEIVE "+inctype+" ASSEMBLY PARTS?",
         text: "You are about to RECEIVE these ASSEMBLY PARTS!",
         icon: "warning",
-        buttons: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 type: 'post',
                 url: '/assembly/receiveRequest',
@@ -1430,7 +1441,7 @@ $('.btnReceive').on('click', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide(); Spinner.hide();
-                                    swal("RECEIVED "+inctype, "ASSEMBLY REQUEST", "success");
+                                    Swal.fire("RECEIVED "+inctype, "ASSEMBLY REQUEST", "success");
                                     setTimeout(function(){location.href="/assembly"}, 2000);
                                 }
                                 else{
@@ -1447,7 +1458,7 @@ $('.btnReceive').on('click', function(){
                     }
                     else{
                         $('#detailsAssembly').hide();
-                        swal("RECEIVE FAILED", "ASSEMBLY REQUEST", "error");
+                        Swal.fire("RECEIVE FAILED", "ASSEMBLY REQUEST", "error");
                         setTimeout(function(){location.href="/assembly"}, 2000);
                     }
                 },
@@ -1464,14 +1475,18 @@ $('.btnReceive').on('click', function(){
 
 $('#btnDefective').on('click', function(){
     generateReqNum();
-    swal({
+    Swal.fire({
         title: "REQUEST REPLACEMENTS?",
         text: "You are about to REQUEST REPLACEMENTS for these DEFECTIVE ASSEMBLY PARTS!",
         icon: "warning",
-        buttons: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 type: 'post',
                 url: '/assembly/defectiveRequest',
@@ -1529,7 +1544,7 @@ $('#btnDefective').on('click', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide(); Spinner.hide();
-                                    swal("REQUEST SUCCESS", "ASSEMBLY REQUEST", "success");
+                                    Swal.fire("REQUEST SUCCESS", "ASSEMBLY REQUEST", "success");
                                     setTimeout(function(){location.href="/assembly"}, 2000);
                                 }
                                 else{
@@ -1546,7 +1561,7 @@ $('#btnDefective').on('click', function(){
                     }
                     else{
                         $('#detailsAssembly').hide();
-                        swal("REQUEST FAILED", "ASSEMBLY REQUEST", "error");
+                        Swal.fire("REQUEST FAILED", "ASSEMBLY REQUEST", "error");
                         setTimeout(function(){location.href="/assembly"}, 2000);
                     }
                 },
@@ -1563,14 +1578,18 @@ $('#btnDefective').on('click', function(){
 
 $('#btnAssemble').on('click', function(){
     var item_desc_details = decodeHtml($('#item_desc_details').val());
-    swal({
+    Swal.fire({
         title: "ASSEMBLE: "+item_desc_details+"?",
         text: "You are about to ASSEMBLE this Assembly Stock Request!",
         icon: "warning",
-        buttons: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 type: 'post',
                 url: '/assembly/assembleRequest',
@@ -1583,12 +1602,12 @@ $('#btnAssemble').on('click', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsAssembly').hide();
-                        swal("ASSEMBLE SUCCESS", "ASSEMBLY REQUEST", "success");
+                        Swal.fire("ASSEMBLE SUCCESS", "ASSEMBLY REQUEST", "success");
                         setTimeout(function(){location.href="/assembly"}, 2000);
                     }
                     else{
                         $('#detailsAssembly').hide();
-                        swal("ASSEMBLE FAILED", "ASSEMBLY REQUEST", "error");
+                        Swal.fire("ASSEMBLE FAILED", "ASSEMBLY REQUEST", "error");
                         setTimeout(function(){location.href="/assembly"}, 2000);
                     }
                 },

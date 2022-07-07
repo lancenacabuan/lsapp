@@ -117,15 +117,18 @@ $(document).on('click', '.btnReturnItem', function(){
     var id = $(this).attr("id");
     var data = $('table.defectiveTable').DataTable().row(id).data();
 
-    swal({
+    Swal.fire({
         title: "RETURN DEFECTIVE ITEM w/ SERIAL: "+data.serial,
         text: "You are about to RETURN this DEFECTIVE ITEM. Continue?",
         icon: "warning",
-        buttons: true,
-        dangerMode: true
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 url: '/defective/return',
                 data:{
@@ -139,7 +142,7 @@ $(document).on('click', '.btnReturnItem', function(){
                 },
                 success: function(data){
                     if(data == 'false'){
-                        swal({
+                        Swal.fire({
                             title: "RETURN FAILED",
                             text: "Failed to return Defective Item!",
                             icon: "error",
@@ -148,7 +151,7 @@ $(document).on('click', '.btnReturnItem', function(){
                         $('table.defectiveTable').DataTable().ajax.reload();
                     }
                     else{
-                        swal({
+                        Swal.fire({
                             title: "RETURN SUCCESS",
                             text: "Successfully returned Defective Item!",
                             icon: "success",

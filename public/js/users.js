@@ -123,7 +123,7 @@ $('#btnSave').on('click', function(){
     var role = $('#role').val();
 
     if(!name || !email || !company || !role){
-        swal('REQUIRED','Please fill up all required fields!','error');
+        Swal.fire('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
     else{
@@ -142,14 +142,18 @@ $('#btnSave').on('click', function(){
             },
             success: function(data){
                 if(data.result == 'true'){
-                    swal({
+                    Swal.fire({
                         title: "ADD NEW USER?",
                         text: "You are about to ADD a new user!",
                         icon: "warning",
-                        buttons: true,
+                        showCancelButton: true,
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: 'Confirm',
+                        allowOutsideClick: false
                     })
-                    .then((willDelete) => {
-                        if(willDelete){
+                    .then((result) => {
+                        if(result.isConfirmed){
                             scrollReset();
                             $('#addUser').modal('hide');
                             $('#loading').show(); Spinner(); Spinner.show();
@@ -169,12 +173,12 @@ $('#btnSave').on('click', function(){
                                 success: function(data){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
-                                        swal("SAVE SUCCESS", "New user saved successfully!", "success");
+                                        Swal.fire("SAVE SUCCESS", "New user saved successfully!", "success");
                                         table.ajax.reload(null, false);
                                     }
                                     else{
                                         $('#loading').hide(); Spinner.hide();
-                                        swal("SAVE FAILED", "New user save failed!", "error");
+                                        Swal.fire("SAVE FAILED", "New user save failed!", "error");
                                         table.ajax.reload(null, false);
                                     }
                                 },
@@ -189,16 +193,16 @@ $('#btnSave').on('click', function(){
                     });
                 }
                 else if(data.result == 'invalid'){
-                    swal("INVALID EMAIL", "Enter a valid email address!", "error");
+                    Swal.fire("INVALID EMAIL", "Enter a valid email address!", "error");
                     return false;
                 }
                 else if(data.result == 'duplicate'){
-                    swal("DUPLICATE EMAIL", "Email address already exists!", "error");
+                    Swal.fire("DUPLICATE EMAIL", "Email address already exists!", "error");
                     return false;
                 }
                 else{
                     $('#addUser').hide();
-                    swal("SAVE FAILED", "USER ACCOUNT", "error");
+                    Swal.fire("SAVE FAILED", "USER ACCOUNT", "error");
                     setTimeout(function(){window.location.href="/users"}, 2000);
                 }
             },
@@ -245,11 +249,11 @@ $('#btnUpdate').on('click', function(){
     var role2 = $('#role2').val();
 
     if(!name1 || !email1 || !company1 || !role1){
-        swal('REQUIRED','Please fill up all required fields!','error');
+        Swal.fire('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
     else if(name1.toUpperCase() == name2.toUpperCase() && email1.toUpperCase() == email2.toUpperCase() && company1 == company2 && role1 == role2){
-        swal("NO CHANGES FOUND", "User Details are all still the same!", "error");
+        Swal.fire("NO CHANGES FOUND", "User Details are all still the same!", "error");
         return false;
     }
     else{
@@ -273,14 +277,18 @@ $('#btnUpdate').on('click', function(){
             },
             success: function(data){
                 if(data == 'true'){
-                    swal({
-                        title: "UPDATE USER?",
+                    Swal.fire({
+                        title: "UPDATE USER DETAILS?",
                         text: "You are about to UPDATE this user!",
                         icon: "warning",
-                        buttons: true,
+                        showCancelButton: true,
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: 'Confirm',
+                        allowOutsideClick: false
                     })
-                    .then((willDelete) => {
-                        if(willDelete){
+                    .then((result) => {
+                        if(result.isConfirmed){
                             $.ajax({
                                 url: "/users/update",
                                 type: "PUT",
@@ -302,12 +310,12 @@ $('#btnUpdate').on('click', function(){
                                 success: function(data){
                                     if(data == 'true'){
                                         $('#updateUser').modal('hide');
-                                        swal("UPDATE SUCCESS", "User details updated successfully!", "success");
+                                        Swal.fire("UPDATE SUCCESS", "User details updated successfully!", "success");
                                         table.ajax.reload(null, false);
                                     }
                                     else{
                                         $('#updateUser').modal('hide');
-                                        swal("UPDATE FAILED", "User details update failed!", "error");
+                                        Swal.fire("UPDATE FAILED", "User details update failed!", "error");
                                         table.ajax.reload(null, false);
                                     }
                                 },
@@ -322,14 +330,14 @@ $('#btnUpdate').on('click', function(){
                     });
                 }
                 else if(data == 'invalid'){
-                    swal("INVALID EMAIL", "Enter a valid email address!", "error");
+                    Swal.fire("INVALID EMAIL", "Enter a valid email address!", "error");
                 }
                 else if(data == 'duplicate'){
-                    swal("DUPLICATE EMAIL", "Email address already exists!", "error");
+                    Swal.fire("DUPLICATE EMAIL", "Email address already exists!", "error");
                 }
                 else{
                     $('#updateUser').hide();
-                    swal("UPDATE FAILED", "USER ACCOUNT", "error");
+                    Swal.fire("UPDATE FAILED", "USER ACCOUNT", "error");
                     setTimeout(function(){window.location.href="/users"}, 2000);
                 }
             },

@@ -29,7 +29,7 @@ function copyReqNum(){
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(copyText.value);
-    swal({
+    Swal.fire({
         title: copyText.value,
         text: "Copied to Clipboard!",
         icon: "success",
@@ -54,7 +54,7 @@ function validate_fileupload(reference_upload){
         }
     }
     if(error_ext > 0 && error_mb > 0){
-        swal('INVALID file type AND EXCEEDED maximum file size (5MB)!', 'Please upload file/s with valid file type like the following: pdf, png, jpg or jpeg; AND with file size not greater than 5MB each.', 'error');
+        Swal.fire('INVALID file type AND EXCEEDED maximum file size (5MB)!', 'Please upload file/s with valid file type like the following: pdf, png, jpg or jpeg; AND with file size not greater than 5MB each.', 'error');
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
@@ -62,7 +62,7 @@ function validate_fileupload(reference_upload){
         return false;
     }
     else if(error_ext > 0){
-        swal('INVALID file type!', 'Please upload file/s with valid file type like the following: pdf, png, jpg or jpeg.', 'error');
+        Swal.fire('INVALID file type!', 'Please upload file/s with valid file type like the following: pdf, png, jpg or jpeg.', 'error');
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
@@ -70,7 +70,7 @@ function validate_fileupload(reference_upload){
         return false;
     }
     else if(error_mb > 0){
-        swal('EXCEEDED maximum file size (5MB)!', 'Please upload valid file/s with file size not greater than 5MB each.', 'error');
+        Swal.fire('EXCEEDED maximum file size (5MB)!', 'Please upload valid file/s with file size not greater than 5MB each.', 'error');
         $('#reference_upload').val('');
         $('#reference_upload').focus();
         $('.disupload').hide();
@@ -282,7 +282,7 @@ $(".add-row").on('click', function(){
     var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>" + warranty_id + "</td><td style='display: none;'>" + category + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td>" + warranty + "</td><td><button type='button' style='zoom: 80%;' class='delete-row btn btn-danger bp'>REMOVE</button></td></tr>";
     var ctr = 'false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "" || warranty == "Select Warranty Type"){
-        swal('REQUIRED','Please fill up all required item details!','error');
+        Swal.fire('REQUIRED','Please fill up all required item details!','error');
         return false;
     }
     else{
@@ -353,18 +353,22 @@ $('#btnSave').on('click', function(){
     var orderID = $('#orderID').val();
     var reference_upload = $('#reference_upload').val();
     if(needdate < minDate){
-        swal('Minimum Date is today!','Select within date range from today onwards.','error');
+        Swal.fire('Minimum Date is today!','Select within date range from today onwards.','error');
         return false;
     }
     else{
-        swal({
+        Swal.fire({
             title: "SUBMIT MERCHANT STOCK REQUEST?",
-            text: "Please review the details of your request. Click 'OK' button to submit; otherwise, click 'Cancel' button.",
+            text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
             icon: "warning",
-            buttons: true,
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $.ajax({
                     type:'post',
                     url:'/merchant/saveReqNum',
@@ -410,12 +414,12 @@ $('#btnSave').on('click', function(){
                             $('#btnUpload').click();
                         }
                         else if(data == 'duplicate'){
-                            swal("DUPLICATE ORDER ID", "Order ID already exists!", "error");
+                            Swal.fire("DUPLICATE ORDER ID", "Order ID already exists!", "error");
                             return false;
                         }
                         else{
                             $('#newMerchRequest').modal('hide');
-                            swal("SUBMIT FAILED", "MERCHANT STOCK REQUEST", "error");
+                            Swal.fire("SUBMIT FAILED", "MERCHANT STOCK REQUEST", "error");
                             setTimeout(function(){location.href="/merchant"}, 2000);
                         }
                     },
@@ -1221,13 +1225,13 @@ $(document).on('click', '.btndelItem', function(){
         success: function(data){
             if(data.result == 'false'){
                 $('#detailsMerchRequest').modal('hide');
-                swal("DELETE FAILED", "MERCHANT STOCK REQUEST", "error");
+                Swal.fire("DELETE FAILED", "MERCHANT STOCK REQUEST", "error");
                 setTimeout(function(){window.location.reload()}, 2000);
             }
             else{
                 if(data.count == 0){
                     $('#detailsMerchRequest').modal('hide');
-                    swal("DELETE SUCCESS", "MERCHANT STOCK REQUEST", "success");
+                    Swal.fire("DELETE SUCCESS", "MERCHANT STOCK REQUEST", "success");
                     setTimeout(function(){window.location.reload()}, 2000);
                 }
                 else{
@@ -1242,15 +1246,18 @@ $(document).on('click', '.btndelItem', function(){
 });
 
 $('#btnDelete').on('click', function(){
-    swal({
+    Swal.fire({
         title: "DELETE MERCHANT STOCK REQUEST?",
         text: "You are about to DELETE your MERCHANT STOCK REQUEST!\n This will be permanently deleted from the system.",
         icon: "warning",
-        buttons: true,
-        dangerMode: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 type: 'post',
                 url: '/deleteRequest',
@@ -1263,12 +1270,12 @@ $('#btnDelete').on('click', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsMerchRequest').modal('hide');
-                        swal("DELETE SUCCESS", "MERCHANT STOCK REQUEST", "success");
+                        Swal.fire("DELETE SUCCESS", "MERCHANT STOCK REQUEST", "success");
                         setTimeout(function(){location.href="/merchant"}, 2000);
                     }
                     else{
                         $('#detailsMerchRequest').modal('hide');
-                        swal("DELETE FAILED", "MERCHANT STOCK REQUEST", "error");
+                        Swal.fire("DELETE FAILED", "MERCHANT STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/merchant"}, 2000);
                     }
                 },
@@ -1340,14 +1347,18 @@ $('.btnReceive').on('click', function(){
     if(items.length < item_count){
         inc = 'true';
     }
-    swal({
+    Swal.fire({
         title: "RECEIVE MERCHANT STOCK REQUEST?",
         text: "You are about to RECEIVE this Merchant Stock Request!",
         icon: "warning",
-        buttons: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 type: 'post',
                 url: '/receiveRequest',
@@ -1410,7 +1421,7 @@ $('.btnReceive').on('click', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide(); Spinner.hide();
-                                    swal("RECEIVE SUCCESS", "MERCHANT STOCK REQUEST", "success");
+                                    Swal.fire("RECEIVE SUCCESS", "MERCHANT STOCK REQUEST", "success");
                                     setTimeout(function(){location.href="/merchant"}, 2000);
                                 }
                                 else{
@@ -1427,7 +1438,7 @@ $('.btnReceive').on('click', function(){
                     }
                     else{
                         $('#detailsMerchRequest').modal('hide');
-                        swal("RECEIVE FAILED", "MERCHANT STOCK REQUEST", "error");
+                        Swal.fire("RECEIVE FAILED", "MERCHANT STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/merchant"}, 2000);
                     }
                 },
@@ -1474,12 +1485,12 @@ $(document).ready(function(){
             success: function(data){
                 if(data == 'true'){
                     $('#loading').hide(); Spinner.hide();
-                    swal("SUBMIT SUCCESS", "MERCHANT STOCK REQUEST", "success");
+                    Swal.fire("SUBMIT SUCCESS", "MERCHANT STOCK REQUEST", "success");
                     setTimeout(function(){location.href="/merchant"}, 2000);
                 }
                 else{
                     $('#loading').hide(); Spinner.hide();
-                    swal("SUBMIT FAILED", "MERCHANT STOCK REQUEST", "error");
+                    Swal.fire("SUBMIT FAILED", "MERCHANT STOCK REQUEST", "error");
                     setTimeout(function(){location.href="/merchant"}, 2000);
                 }
             },

@@ -101,7 +101,7 @@ function copyTicketNum(){
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(copyText.value);
-    swal({
+    Swal.fire({
         title: copyText.value,
         text: "Copied to Clipboard!",
         icon: "success",
@@ -197,17 +197,21 @@ $('#btnSupport').on('click', function(){
         report_category = specify;
     }
     if(($('.specify').is(':hidden') && (!details || !report_category)) || ($('.specify').is(':visible') && (!details || !report_category || !specify))){
-        swal('REQUIRED','Please fill up all required fields!','error');
+        Swal.fire('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
-    swal({
+    Swal.fire({
         title: "SUBMIT REPORT?",
         text: "You are about to REPORT a suggested feature, issue, error, or bug to the technical support team!",
         icon: "warning",
-        buttons: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 url: "/report/submit",
                 async: false,
@@ -231,7 +235,7 @@ $('#btnSupport').on('click', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide(); Spinner.hide();
-                                    swal("SUBMIT SUCCESS", "Report submitted successfully!", "success");
+                                    Swal.fire("SUBMIT SUCCESS", "Report submitted successfully!", "success");
                                 }
                                 else{
                                     return false;
@@ -246,7 +250,7 @@ $('#btnSupport').on('click', function(){
                         });
                     }
                     else{
-                        swal("SUBMIT FAILED", "Report failed to submit!", "error");
+                        Swal.fire("SUBMIT FAILED", "Report failed to submit!", "error");
                         return false;
                     }
                 },
@@ -286,7 +290,7 @@ $('#btnChangePassword').on('click', function(){
     }
     else{
         if(pass2 != pass3){
-            swal('UPDATE ERROR','Confirm Password must be the same as New Password!','error');
+            Swal.fire('UPDATE ERROR','Confirm Password must be the same as New Password!','error');
             return false;
         }
         else{
@@ -297,14 +301,18 @@ $('#btnChangePassword').on('click', function(){
                 },
                 success: function(data){
                     if(data == 'true'){
-                        swal({
+                        Swal.fire({
                             title: "CHANGE PASSWORD?",
                             text: "You are about to CHANGE your current user account password!",
                             icon: "warning",
-                            buttons: true,
+                            showCancelButton: true,
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'Confirm',
+                            allowOutsideClick: false
                         })
-                        .then((willDelete) => {
-                            if(willDelete){
+                        .then((result) => {
+                            if(result.isConfirmed){
                                 $.ajax({
                                     url: "/change/password",
                                     data:{
@@ -313,11 +321,11 @@ $('#btnChangePassword').on('click', function(){
                                     success: function(data){
                                         if(data == 'true'){
                                             $('.closePassword').click();
-                                            swal("UPDATE SUCCESS", "User changed password successfully!", "success");
+                                            Swal.fire("UPDATE SUCCESS", "User changed password successfully!", "success");
                                             return true;
                                         }
                                         else{
-                                            swal("UPDATE FAILED", "User password change failed!", "error");
+                                            Swal.fire("UPDATE FAILED", "User password change failed!", "error");
                                             return true;
                                         }
                                     },
@@ -332,7 +340,7 @@ $('#btnChangePassword').on('click', function(){
                         });
                     }
                     else{
-                        swal('UPDATE ERROR','Incorrect Current Password!', 'error');
+                        Swal.fire('UPDATE ERROR','Incorrect Current Password!', 'error');
                         return false;
                     }
                 },

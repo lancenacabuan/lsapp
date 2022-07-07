@@ -345,7 +345,7 @@ function validate_xlsx(xlsx){
     var error_ext = 0;
     var error_mb = 0;
     if(files_length > 1){
-        swal('EXCEEDED allowed number of file upload!', 'Please upload only ONE (1) valid EXCEL file.', 'error');      
+        Swal.fire('EXCEEDED allowed number of file upload!', 'Please upload only ONE (1) valid EXCEL file.', 'error');      
         $('#xlsx').val('');
         $('#xlsx').focus();
         return false;
@@ -362,19 +362,19 @@ function validate_xlsx(xlsx){
         }
     }
     if(error_ext > 0 && error_mb > 0){
-        swal('INVALID file type AND EXCEEDED maximum file size (10MB)!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx; AND with file size not greater than 10MB.', 'error');      
+        Swal.fire('INVALID file type AND EXCEEDED maximum file size (10MB)!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx; AND with file size not greater than 10MB.', 'error');      
         $('#xlsx').val('');
         $('#xlsx').focus();
         return false;
     }
     else if(error_ext > 0){
-        swal('INVALID file type!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx.', 'error');      
+        Swal.fire('INVALID file type!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx.', 'error');      
         $('#xlsx').val('');
         $('#xlsx').focus();
         return false;
     }
     else if(error_mb > 0){
-        swal('EXCEEDED maximum file size (10MB)!', 'Please upload a valid EXCEL file with file size not greater than 10MB.', 'error');      
+        Swal.fire('EXCEEDED maximum file size (10MB)!', 'Please upload a valid EXCEL file with file size not greater than 10MB.', 'error');      
         $('#xlsx').val('');
         $('#xlsx').focus();
         return false;
@@ -387,15 +387,18 @@ $('#btnUpload').on('click', function(){
         $('#btnSubmitImport').click();
     }
     else{
-        swal({
+        Swal.fire({
             title: "UPLOAD FILE IMPORT?",
-            text: "Click 'OK' button to ADD ITEMS via uploading import file; otherwise, click 'Cancel' button to select a different file.",
+            text: "Click 'Confirm' button to ADD ITEMS via uploading import file; otherwise, click 'Cancel' button to select a different file.",
             icon: "warning",
-            buttons: true,
-            dangerMode: true
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $('#btnSubmitImport').click();
             }
         });
@@ -455,14 +458,18 @@ $(document).on('click', '#btnSubmit', function(){
             inclusive.push($(this).val());
     });
     if($('#btnSubmit').val() == 'SUBMIT'){
-        swal({
+        Swal.fire({
             title: "ADD NEW WARRANTY?",
             text: "You are about to ADD this new warranty!",
             icon: "warning",
-            buttons: true,
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $.ajax({
                     url: "/AddWarranty",
                     type: "POST",
@@ -478,11 +485,11 @@ $(document).on('click', '#btnSubmit', function(){
                     success: function(result){
                         $('#AddWarranty').modal('hide');
                         if(result == true){
-                            swal('SAVE SUCCESS', 'New Warranty has been saved successfully!', 'success');
+                            Swal.fire('SAVE SUCCESS', 'New Warranty has been saved successfully!', 'success');
                             tblWarranty.ajax.reload(null, false);
                         }
                         else{
-                            swal('SAVE FAILED', 'New Warranty save failed!', 'error');
+                            Swal.fire('SAVE FAILED', 'New Warranty save failed!', 'error');
                             tblWarranty.ajax.reload(null, false);
                         }
                     }
@@ -491,14 +498,18 @@ $(document).on('click', '#btnSubmit', function(){
         });
     }
     else{
-        swal({
+        Swal.fire({
             title: "UPDATE WARRANTY?",
             text: "You are about to UPDATE this warranty!",
             icon: "warning",
-            buttons: true,
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $.ajax({
                     url: "/UpdateWarranty",
                     type: "PUT",
@@ -515,11 +526,11 @@ $(document).on('click', '#btnSubmit', function(){
                     success: function(result){
                         $('#AddWarranty').modal('hide');
                         if(result == true){
-                            swal('UPDATE SUCCESS', 'Warranty details has been updated successfully!', 'success');
+                            Swal.fire('UPDATE SUCCESS', 'Warranty details has been updated successfully!', 'success');
                             tblWarranty.ajax.reload(null, false);
                         }
                         else{
-                            swal('UPDATE FAILED', 'Warranty details update failed!', 'error');
+                            Swal.fire('UPDATE FAILED', 'Warranty details update failed!', 'error');
                             tblWarranty.ajax.reload(null, false);
                         }
                     }
@@ -574,17 +585,21 @@ $('#btnSaveItem').on('click', function(){
         serialize = 'NO';
     }
     if(!item_category || !item_name || !prodcode || !minimum || !item_uom ){
-        swal('REQUIRED','Please fill up all required fields!','error');
+        Swal.fire('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
-    swal({
+    Swal.fire({
         title: "ADD NEW ITEM?",
         text: "You are about to ADD this new item!",
         icon: "warning",
-        buttons: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 url: "/saveItem",
                 type: "POST",
@@ -604,20 +619,20 @@ $('#btnSaveItem').on('click', function(){
                 success: function(data){
                     if(data.result == 'true'){
                         $('#newItem').modal('hide');
-                        swal("SAVE SUCCESS", "New Item has been saved successfully!", "success");
+                        Swal.fire("SAVE SUCCESS", "New Item has been saved successfully!", "success");
                         tblItem.ajax.reload(null, false);
                     }
                     else if(data.result == 'duplicate'){
-                        swal("DUPLICATE ITEM", "Item Description already exists!", "error");
+                        Swal.fire("DUPLICATE ITEM", "Item Description already exists!", "error");
                         return false;
                     }
                     else if(data.result == 'duplicatecode'){
-                        swal("DUPLICATE ITEM CODE", "Item Code already exists!", "error");
+                        Swal.fire("DUPLICATE ITEM CODE", "Item Code already exists!", "error");
                         return false;
                     }
                     else{
                         $('#newItem').modal('hide');
-                        swal("SAVE FAILED", "New Item save failed!", "error");
+                        Swal.fire("SAVE FAILED", "New Item save failed!", "error");
                         tblItem.ajax.reload(null, false);
                     }
                 },
@@ -714,21 +729,25 @@ $('#btnUpdateItem').on('click', function(){
         serialize = 'NO';
     }
     if(!item_category || !item_name || !prodcode || !minimum || !item_uom ){
-        swal('REQUIRED','Please fill up all required fields!','error');
+        Swal.fire('REQUIRED','Please fill up all required fields!','error');
         return false;
     }
     if(item_name_original.toUpperCase() == item_name.toUpperCase() && prodcode_original == prodcode && item_category_original == item_category && minimum_original == minimum && item_uom_original == item_uom && serialize_original == serialize){
-        swal("NO CHANGES FOUND", "Item Details are still all the same!", "error");
+        Swal.fire("NO CHANGES FOUND", "Item Details are still all the same!", "error");
         return false;
     }
-    swal({
+    Swal.fire({
         title: "UPDATE ITEM?",
         text: "You are about to UPDATE this item!",
         icon: "warning",
-        buttons: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 url: "/updateItem",
                 type: "PUT",
@@ -756,20 +775,20 @@ $('#btnUpdateItem').on('click', function(){
                 success: function(data){
                     if(data.result == 'true'){
                         $('#detailsItem').modal('hide');
-                        swal("UPDATE SUCCESS", "Item details has been updated successfully!", "success");
+                        Swal.fire("UPDATE SUCCESS", "Item details has been updated successfully!", "success");
                         tblItem.ajax.reload(null, false);
                     }
                     else if(data.result == 'duplicate'){
-                        swal("DUPLICATE ITEM", "Item Description already exists!", "error");
+                        Swal.fire("DUPLICATE ITEM", "Item Description already exists!", "error");
                         return false;
                     }
                     else if(data.result == 'duplicatecode'){
-                        swal("DUPLICATE ITEM CODE", "Item Code already exists!", "error");
+                        Swal.fire("DUPLICATE ITEM CODE", "Item Code already exists!", "error");
                         return false;
                     }
                     else{
                         $('#detailsItem').modal('hide');
-                        swal("UPDATE FAILED", "Item details update failed!", "error");
+                        Swal.fire("UPDATE FAILED", "Item details update failed!", "error");
                         tblItem.ajax.reload(null, false);
                     }
                 },
@@ -820,14 +839,18 @@ $('.btnNewCategory').on('click', function(){
 $('#btnSaveCategory').on('click', function(){
     var category = $.trim($('#category').val());
     if(category != ""){
-        swal({
+        Swal.fire({
             title: "ADD NEW CATEGORY?",
             text: "You are about to ADD this new category!",
             icon: "warning",
-            buttons: true,
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $.ajax({
                     url: "/saveCategory",
                     type: "POST",
@@ -841,7 +864,7 @@ $('#btnSaveCategory').on('click', function(){
                     success: function(data){
                         if(data.result == 'true'){
                             $('#newCategory').modal('hide');
-                            swal("SAVE SUCCESS", "New Category has been saved successfully!", "success");
+                            Swal.fire("SAVE SUCCESS", "New Category has been saved successfully!", "success");
                             tblCategory.ajax.reload(null, false);
                             $.ajax({
                                 url: "/logNewCategory",
@@ -870,12 +893,12 @@ $('#btnSaveCategory').on('click', function(){
                             });
                         }
                         else if(data.result == 'duplicate'){
-                            swal("DUPLICATE CATEGORY", "Category Name already exists!", "error");
+                            Swal.fire("DUPLICATE CATEGORY", "Category Name already exists!", "error");
                             return false;
                         }
                         else{
                             $('#newCategory').modal('hide');
-                            swal("SAVE FAILED", "New Category save failed!", "error");
+                            Swal.fire("SAVE FAILED", "New Category save failed!", "error");
                             tblCategory.ajax.reload(null, false);
                         }
                     },
@@ -890,7 +913,7 @@ $('#btnSaveCategory').on('click', function(){
         });
     }
     else{
-        swal('REQUIRED','Category Name field is required!','error');
+        Swal.fire('REQUIRED','Category Name field is required!','error');
         return false;
     }
 });
@@ -918,22 +941,26 @@ $('#btnUpdateCategory').on('click', function(){
     var category_details = $.trim($('#category_details').val().toUpperCase());
     
     if(category_details == ""){
-        swal('REQUIRED','Category Name field is required!','error');
+        Swal.fire('REQUIRED','Category Name field is required!','error');
         return false;
     }
     else if(category_original == category_details){
-        swal("NO CHANGES FOUND", "Category Name is still the same!", "error");
+        Swal.fire("NO CHANGES FOUND", "Category Name is still the same!", "error");
         return false;
     }
     else{
-        swal({
+        Swal.fire({
             title: "UPDATE CATEGORY?",
             text: "You are about to UPDATE this category!",
             icon: "warning",
-            buttons: true,
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $.ajax({
                     url: "/updateCategory",
                     type: "PUT",
@@ -949,7 +976,7 @@ $('#btnUpdateCategory').on('click', function(){
                     success: function(data){
                         if(data.result == 'true'){
                             $('#detailsCategory').modal('hide');
-                            swal("UPDATE SUCCESS", "Category Name has been updated successfully!", "success");
+                            Swal.fire("UPDATE SUCCESS", "Category Name has been updated successfully!", "success");
                             tblCategory.ajax.reload(null, false);
                             $.ajax({
                                 url: "/logUpdateCategory",
@@ -979,12 +1006,12 @@ $('#btnUpdateCategory').on('click', function(){
                             });
                         }
                         else if(data.result == 'duplicate'){
-                            swal("DUPLICATE CATEGORY", "Category Name already exists!", "error");
+                            Swal.fire("DUPLICATE CATEGORY", "Category Name already exists!", "error");
                             return false;
                         }
                         else{
                             $('#detailsCategory').modal('hide');
-                            swal("UPDATE FAILED", "Category Name update failed!", "error");
+                            Swal.fire("UPDATE FAILED", "Category Name update failed!", "error");
                             tblCategory.ajax.reload(null, false);
                         }
                     },
@@ -1014,14 +1041,18 @@ $(".btnNewLocation").on('click', function(){
 $('#btnSaveLocation').on('click', function(){
     var location_name = $.trim($('#location').val());
     if(location_name != ""){
-        swal({
+        Swal.fire({
             title: "REQUEST NEW LOCATION?",
             text: "You are about to REQUEST a new location!",
             icon: "warning",
-            buttons: true,
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $.ajax({
                     url: "/saveLocation",
                     type: "POST",
@@ -1050,7 +1081,7 @@ $('#btnSaveLocation').on('click', function(){
                                 success: function(data){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
-                                        swal("REQUEST SUCCESS", "New Location has been requested successfully!", "success");
+                                        Swal.fire("REQUEST SUCCESS", "New Location has been requested successfully!", "success");
                                         tblLocation.ajax.reload(null, false);
                                     }
                                     else{
@@ -1066,12 +1097,12 @@ $('#btnSaveLocation').on('click', function(){
                             });
                         }
                         else if(data.result == 'duplicate'){
-                            swal("DUPLICATE LOCATION", "Location Name already exists!", "error");
+                            Swal.fire("DUPLICATE LOCATION", "Location Name already exists!", "error");
                             return false;
                         }
                         else{
                             $('#newLocation').modal('hide');
-                            swal("REQUEST FAILED", "New Location request failed!", "error");
+                            Swal.fire("REQUEST FAILED", "New Location request failed!", "error");
                             tblLocation.ajax.reload(null, false);
                         }
                     },
@@ -1086,7 +1117,7 @@ $('#btnSaveLocation').on('click', function(){
         });
     }
     else{
-        swal('REQUIRED','Location Name field is required!','error');
+        Swal.fire('REQUIRED','Location Name field is required!','error');
         return false;
     }
 });
@@ -1134,26 +1165,30 @@ $('#btnUpdateLocation').on('click', function(){
     var status_original = $('#status_original').val();
 
     if(location_details == ""){
-        swal('REQUIRED','Location Name field is required!','error');
+        Swal.fire('REQUIRED','Location Name field is required!','error');
         return false;
     }
     if(location_original == location_details && status_original == status){
-        swal("NO CHANGES FOUND", "Location Details are all still the same!", "error");
+        Swal.fire("NO CHANGES FOUND", "Location Details are all still the same!", "error");
         return false;
     }
     if(location_original != location_details && status_original != status){
-        swal("UPDATE FAILED", "STATUS CHANGE REQUEST is NOT allowed if the current Location Name has been changed!", "error");
+        Swal.fire("UPDATE FAILED", "STATUS CHANGE REQUEST is NOT allowed if the current Location Name has been changed!", "error");
         return false;
     }
     if(location_original == location_details && status != status_original){
-        swal({
+        Swal.fire({
             title: "REQUEST STATUS CHANGE?",
             text: "You are about to request a STATUS CHANGE to this location!",
             icon: "warning",
-            buttons: true,
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $.ajax({
                     url: "/updateLocation",
                     type: "PUT",
@@ -1187,7 +1222,7 @@ $('#btnUpdateLocation').on('click', function(){
                                 success: function(data){
                                     if(data == 'true'){
                                         $('#loading').hide(); Spinner.hide();
-                                        swal("REQUEST SUCCESS", "Location Status Change has been requested successfully!", "success");
+                                        Swal.fire("REQUEST SUCCESS", "Location Status Change has been requested successfully!", "success");
                                         tblLocation.ajax.reload(null, false);
                                     }
                                     else{
@@ -1204,7 +1239,7 @@ $('#btnUpdateLocation').on('click', function(){
                         }
                         else{
                             $('#detailsLocation').modal('hide');
-                            swal("REQUEST FAILED", "Location Status Change request failed!", "error");
+                            Swal.fire("REQUEST FAILED", "Location Status Change request failed!", "error");
                             tblLocation.ajax.reload(null, false);
                         }
                     },
@@ -1220,14 +1255,18 @@ $('#btnUpdateLocation').on('click', function(){
 
     }
     else{
-        swal({
+        Swal.fire({
             title: "UPDATE LOCATION NAME?",
             text: "You are about to UPDATE this location!",
             icon: "warning",
-            buttons: true,
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $.ajax({
                     url: "/updateLocation",
                     type: "PUT",
@@ -1243,16 +1282,16 @@ $('#btnUpdateLocation').on('click', function(){
                     success: function(data){
                         if(data.result == 'true'){
                             $('#detailsLocation').modal('hide');
-                            swal("UPDATE SUCCESS", "Location Name has been updated successfully!", "success");
+                            Swal.fire("UPDATE SUCCESS", "Location Name has been updated successfully!", "success");
                             tblLocation.ajax.reload(null, false);
                         }
                         else if(data.result == 'duplicate'){
-                            swal("DUPLICATE LOCATION", "Location Name already exists!", "error");
+                            Swal.fire("DUPLICATE LOCATION", "Location Name already exists!", "error");
                             return false;
                         }
                         else{
                             $('#detailsLocation').modal('hide');
-                            swal("UPDATE FAILED", "Location Name update failed!", "error");
+                            Swal.fire("UPDATE FAILED", "Location Name update failed!", "error");
                             tblLocation.ajax.reload(null, false);
                         }
                     },
@@ -1389,7 +1428,7 @@ $(".add-row").on('click', function(){
     var markup = "<tr><td class='d-none'>" + item_id + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td> <button type='button' style='zoom: 80%;' class='delete-row btn btn-danger bp'>REMOVE</button> </td></tr>";
     var ctr = 'false';
     if(category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == ""){
-        swal('REQUIRED','Please select an item!','error');
+        Swal.fire('REQUIRED','Please select an item!','error');
         return false;
     }
     else{
@@ -1446,14 +1485,18 @@ $('#btnSave').on('click', function(){
     var item_description = $.trim($('#aic_item_description').val());
     var item_code = $('#aic_item_code').val();
     var minimum = $('#aic_minimum').val();
-    swal({
+    Swal.fire({
         title: "CREATE NEW ASSEMBLED ITEM?",
         text: "You are about to CREATE a new Assembled Item!",
         icon: "warning",
-        buttons: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 type:'post',
                 url:'/createItem',
@@ -1513,7 +1556,7 @@ $('#btnSave').on('click', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#createItem').modal('hide');
-                                    swal("CREATE SUCCESS", "New Assembled Item has been created successfully!", "success");
+                                    Swal.fire("CREATE SUCCESS", "New Assembled Item has been created successfully!", "success");
                                     tblAssembly.ajax.reload(null, false);
                                 }
                                 else{
@@ -1529,16 +1572,16 @@ $('#btnSave').on('click', function(){
                         });
                     }
                     else if(data.result == 'duplicate'){
-                        swal("DUPLICATE ITEM", "Item Description already exists!", "error");
+                        Swal.fire("DUPLICATE ITEM", "Item Description already exists!", "error");
                         return false;
                     }
                     else if(data.result == 'dupecode'){
-                        swal("DUPLICATE CODE", "Item Code already exists!", "error");
+                        Swal.fire("DUPLICATE CODE", "Item Code already exists!", "error");
                         return false;
                     }
                     else{
                         $('#createItem').modal('hide');
-                        swal("CREATE FAILED", "New Assembled Item create failed!", "error");
+                        Swal.fire("CREATE FAILED", "New Assembled Item create failed!", "error");
                         tblAssembly.ajax.reload(null, false);
                     }
                 },
@@ -1637,14 +1680,18 @@ $('#btnUpdate').on('click', function(){
     var item_code = $.trim($('#aim_item_code_details').val());
     var minimum_original = $('#aim_minimum_details_original').val();
     var minimum = $.trim($('#aim_minimum_details').val());
-    swal({
+    Swal.fire({
         title: "UPDATE ASSEMBLED ITEM?",
         text: "You are about to UPDATE this Assembled Item!",
         icon: "warning",
-        buttons: true,
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             $.ajax({
                 type:'post',
                 url:'/changeItem',
@@ -1663,20 +1710,20 @@ $('#btnUpdate').on('click', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#detailsAssemblyItem').modal('hide');
-                        swal("UPDATE SUCCESS", "Assembled Item Description has been updated successfully!", "success");
+                        Swal.fire("UPDATE SUCCESS", "Assembled Item Description has been updated successfully!", "success");
                         tblAssembly.ajax.reload(null, false);
                     }
                     else if(data == 'duplicate'){
-                        swal("DUPLICATE ITEM", "Item Description already exists!", "error");
+                        Swal.fire("DUPLICATE ITEM", "Item Description already exists!", "error");
                         return false;
                     }
                     else if(data == 'dupecode'){
-                        swal("DUPLICATE CODE", "Item Code already exists!", "error");
+                        Swal.fire("DUPLICATE CODE", "Item Code already exists!", "error");
                         return false;
                     }
                     else{
                         $('#detailsAssemblyItem').modal('hide');
-                        swal("UPDATE FAILED", "Assembled Item Description update failed!", "error");
+                        Swal.fire("UPDATE FAILED", "Assembled Item Description update failed!", "error");
                         tblAssembly.ajax.reload(null, false);
                     }
                 },
@@ -1694,14 +1741,14 @@ $('#btnUpdate').on('click', function(){
 $(document).ready(function(){
     if($(location).attr('pathname')+window.location.search == '/maintenance?import=success_without_errors'){
         $('#loading').hide(); Spinner.hide();
-        swal("IMPORT SUCCESS", "ADD ITEMS via import file is successful without errors.", "success");
+        Swal.fire("IMPORT SUCCESS", "ADD ITEMS via import file is successful without errors.", "success");
     }
     else if($(location).attr('pathname')+window.location.search == '/maintenance?import=success_with_errors'){
         $('#loading').hide(); Spinner.hide();
-        swal("IMPORT SUCCESS W/ ERRORS", "ADD ITEMS via import file is successful with some errors.", "warning");
+        Swal.fire("IMPORT SUCCESS W/ ERRORS", "ADD ITEMS via import file is successful with some errors.", "warning");
     }
     else if($(location).attr('pathname')+window.location.search == '/maintenance?import=failed'){
         $('#loading').hide(); Spinner.hide();
-        swal("IMPORT FAILED", "ADD ITEMS via import file has failed.", "error");
+        Swal.fire("IMPORT FAILED", "ADD ITEMS via import file has failed.", "error");
     }
 });

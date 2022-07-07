@@ -529,30 +529,33 @@ $('#btnEdit').on('click', function(){
     var origserial = $('#y_serial').val().toUpperCase();
     var newserial = $.trim($('#x_serial').val()).toUpperCase();
     if(origserial == newserial){
-        swal("NO CHANGES FOUND", "Item Serial is still the same!", "error");
+        Swal.fire("NO CHANGES FOUND", "Item Serial is still the same!", "error");
         return false;
     }
     if(!newserial || newserial == ''){
-        swal("SERIAL REQUIRED", "Item Serial field cannot be left blank!", "error");
+        Swal.fire("SERIAL REQUIRED", "Item Serial field cannot be left blank!", "error");
         return false;
     }
     if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(newserial) == true || newserial.length < 5){
-        swal('INVALID ENTRY','Please enter only valid information!','error');
+        Swal.fire('INVALID ENTRY','Please enter only valid information!','error');
         return false;
     }
     if(!newserial.match(/\d+/g) && newserial){
-        swal("INVALID ENTRY", "Item Serial should at least contain numeric characters!", "error");
+        Swal.fire("INVALID ENTRY", "Item Serial should at least contain numeric characters!", "error");
         return false;
     }
-    swal({
+    Swal.fire({
         title: "Confirm Serial: "+newserial+'?',
-        text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to review details.",
+        text: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
         icon: "warning",
-        buttons: true,
-        dangerMode: true
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
     })
-    .then((willDelete) => {
-        if(willDelete){
+    .then((result) => {
+        if(result.isConfirmed){
             scrollReset();
             $('#editSerialModal').modal('hide');
             $('#loading').show(); Spinner(); Spinner.show();
@@ -572,7 +575,7 @@ $('#btnEdit').on('click', function(){
                 success: function(data){
                     if(data == 'true'){
                         $('#loading').hide(); Spinner.hide();
-                        swal({
+                        Swal.fire({
                             title: "EDIT SUCCESS",
                             text: "Item Serial edited successfully!",
                             icon: "success",
@@ -582,7 +585,7 @@ $('#btnEdit').on('click', function(){
                     }
                     else if(data == 'duplicate'){
                         $('#loading').hide(); Spinner.hide();
-                        swal({
+                        Swal.fire({
                             title: "DUPLICATE SERIAL",
                             text: "Serial already exists!",
                             icon: "error",
@@ -592,7 +595,7 @@ $('#btnEdit').on('click', function(){
                     }
                     else{
                         $('#loading').hide(); Spinner.hide();
-                        swal({
+                        Swal.fire({
                             title: "EDIT FAILED",
                             text: "Item Serial edit failed!",
                             icon: "error",
@@ -707,25 +710,28 @@ $('#btnSave').on('click', function(){
     if(uom == 'Unit'){
         if(($('#serial').is(':visible') && category && item && location_id && serial) || ($('#serial').is(':hidden') && category && item && location_id)){
             if(['N/A', 'N /A', 'N/ A', 'N / A', 'NA', 'N A', 'NONE', 'N O N E'].includes(serial) == true || serial.length < 5){
-                swal('INVALID ENTRY','Please enter only valid information!','error');
+                Swal.fire('INVALID ENTRY','Please enter only valid information!','error');
                 return false;
             }
             if(!serial.match(/\d+/g) && serial){
-                swal("INVALID ENTRY", "Item Serial should at least contain numeric characters!", "error");
+                Swal.fire("INVALID ENTRY", "Item Serial should at least contain numeric characters!", "error");
                 return false;
             }
             if(!serial){
                 serial = 'N/A';
             }
-            swal({
+            Swal.fire({
                 title: "Are you really sure all details are entered correctly?",
-                text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to review details.",
+                text: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
                 icon: "warning",
-                buttons: true,
-                dangerMode: true
+                showCancelButton: true,
+                cancelButtonColor: '#3085d6',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Confirm',
+                allowOutsideClick: false
             })
-            .then((willDelete) => {
-                if(willDelete){
+            .then((result) => {
+                if(result.isConfirmed){
                     $.ajax({
                         url: "/stocks/save",
                         type: "POST",
@@ -748,16 +754,16 @@ $('#btnSave').on('click', function(){
                         success: function(data){
                             if(data == 'true'){
                                 $('#addStock').hide();
-                                swal("SAVE SUCCESS", "Stock added successfully!", "success");
+                                Swal.fire("SAVE SUCCESS", "Stock added successfully!", "success");
                                 setTimeout(function(){window.location.href="/stocks"}, 2000);
                             }
                             else if(data == 'duplicate'){
-                                swal("DUPLICATE SERIAL", "Serial already exists!", "error");
+                                Swal.fire("DUPLICATE SERIAL", "Serial already exists!", "error");
                                 return false;
                             }
                             else{
                                 $('#addStock').hide();
-                                swal("SAVE FAILED", "Failed to add stock!", "error");
+                                Swal.fire("SAVE FAILED", "Failed to add stock!", "error");
                                 setTimeout(function(){window.location.href="/stocks"}, 2000);
                             }
                         },
@@ -777,15 +783,18 @@ $('#btnSave').on('click', function(){
     }
     else{
         if(qty > 0 && category && item && location_id){
-            swal({
+            Swal.fire({
                 title: "Are you really sure all details are entered correctly?",
-                text: "Click 'OK' button to submit; otherwise, click 'Cancel' button to review details.",
+                text: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
                 icon: "warning",
-                buttons: true,
-                dangerMode: true
+                showCancelButton: true,
+                cancelButtonColor: '#3085d6',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Confirm',
+                allowOutsideClick: false
             })
-            .then((willDelete) => {
-                if(willDelete){
+            .then((result) => {
+                if(result.isConfirmed){
                     $.ajax({
                         url: "/stocks/save",
                         type: "POST",
@@ -807,11 +816,11 @@ $('#btnSave').on('click', function(){
                         success: function(data){
                             $('#addStock').hide();
                             if(data == 'true'){
-                                swal("SAVE SUCCESS", "Stock added successfully!", "success");
+                                Swal.fire("SAVE SUCCESS", "Stock added successfully!", "success");
                                 setTimeout(function(){window.location.href="/stocks"}, 2000);
                             }
                             else{
-                                swal("SAVE FAILED", "Failed to add stock!", "error");
+                                Swal.fire("SAVE FAILED", "Failed to add stock!", "error");
                                 setTimeout(function(){window.location.href="/stocks"}, 2000);
                             }
                         },
@@ -859,7 +868,7 @@ function validate_xlsx(xlsx){
     var error_ext = 0;
     var error_mb = 0;
     if(files_length > 1){
-        swal('EXCEEDED allowed number of file upload!', 'Please upload only ONE (1) valid EXCEL file.', 'error');      
+        Swal.fire('EXCEEDED allowed number of file upload!', 'Please upload only ONE (1) valid EXCEL file.', 'error');      
         $('#xlsx').val('');
         $('#xlsx').focus();
         return false;
@@ -876,19 +885,19 @@ function validate_xlsx(xlsx){
         }
     }
     if(error_ext > 0 && error_mb > 0){
-        swal('INVALID file type AND EXCEEDED maximum file size (10MB)!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx; AND with file size not greater than 10MB.', 'error');      
+        Swal.fire('INVALID file type AND EXCEEDED maximum file size (10MB)!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx; AND with file size not greater than 10MB.', 'error');      
         $('#xlsx').val('');
         $('#xlsx').focus();
         return false;
     }
     else if(error_ext > 0){
-        swal('INVALID file type!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx.', 'error');      
+        Swal.fire('INVALID file type!', 'Please upload an EXCEL file with valid file type like the following: xls or xlsx.', 'error');      
         $('#xlsx').val('');
         $('#xlsx').focus();
         return false;
     }
     else if(error_mb > 0){
-        swal('EXCEEDED maximum file size (10MB)!', 'Please upload a valid EXCEL file with file size not greater than 10MB.', 'error');      
+        Swal.fire('EXCEEDED maximum file size (10MB)!', 'Please upload a valid EXCEL file with file size not greater than 10MB.', 'error');      
         $('#xlsx').val('');
         $('#xlsx').focus();
         return false;
@@ -901,15 +910,18 @@ $('#btnUpload').on('click', function(){
         $('#btnSubmit').click();
     }
     else{
-        swal({
+        Swal.fire({
             title: "UPLOAD FILE IMPORT?",
-            text: "Click 'OK' button to ADD STOCKS via uploading import file; otherwise, click 'Cancel' button to select a different file.",
+            text: "Click 'Confirm' button to ADD STOCKS via uploading import file; otherwise, click 'Cancel' button to select a different file.",
             icon: "warning",
-            buttons: true,
-            dangerMode: true
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
         })
-        .then((willDelete) => {
-            if(willDelete){
+        .then((result) => {
+            if(result.isConfirmed){
                 $('#btnSubmit').click();
             }
         });
@@ -919,15 +931,15 @@ $('#btnUpload').on('click', function(){
 $(document).ready(function(){
     if($(location).attr('pathname')+window.location.search == '/stocks?import=success_without_errors'){
         $('#loading').hide(); Spinner.hide();
-        swal("IMPORT SUCCESS", "ADD STOCKS via import file is successful without errors.", "success");
+        Swal.fire("IMPORT SUCCESS", "ADD STOCKS via import file is successful without errors.", "success");
     }
     else if($(location).attr('pathname')+window.location.search == '/stocks?import=success_with_errors'){
         $('#loading').hide(); Spinner.hide();
-        swal("IMPORT SUCCESS W/ ERRORS", "ADD STOCKS via import file is successful with some errors.", "warning");
+        Swal.fire("IMPORT SUCCESS W/ ERRORS", "ADD STOCKS via import file is successful with some errors.", "warning");
     }
     else if($(location).attr('pathname')+window.location.search == '/stocks?import=failed'){
         $('#loading').hide(); Spinner.hide();
-        swal("IMPORT FAILED", "ADD STOCKS via import file has failed.", "error");
+        Swal.fire("IMPORT FAILED", "ADD STOCKS via import file has failed.", "error");
     }
     else if($(location).attr('pathname')+window.location.search == '/stocks?min=below'){
         $('#btnGenerate').click();

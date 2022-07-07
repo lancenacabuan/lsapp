@@ -1412,6 +1412,12 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $(".assetshow").show();
                         $('#requested_by_details').val(value.asset_reqby);
                         $('#approved_by_details').val(value.asset_apvby);
+                        if(requestStatus == '3'){
+                            $('#prep_by1_label').html('Prepared By');
+                            $('#sched1_label').html('Date Prepared');
+                            $('#receive_label').show();
+                            $('.btnReceive').show();
+                        }
                     }
                     if(req_type_id != '2'){
                         $(".sales_details").hide();
@@ -2698,6 +2704,12 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $(".assetshow").show();
             $('#requested_by_details').val(value.asset_reqby);
             $('#approved_by_details').val(value.asset_apvby);
+            if(requestStatus == '3'){
+                $('#prep_by1_label').html('Prepared By');
+                $('#sched1_label').html('Date Prepared');
+                $('#receive_label').show();
+                $('.btnReceive').show();
+            }
         }
         if(req_type_id != '2'){
             $(".sales_details").hide();

@@ -400,13 +400,19 @@
                 <strong>NOTE:</strong> Please select table rows to confirm items <b>FOR SALE or FOR RETURN</b> then click the corresponding button below.
             </div>
             @endrole
+            @role('admin|encoder') {{---ROLES---}}
+            <div id="receive_label" class="alert alert-primary" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+            </div>
+            @endrole
             <div class="prephide">
                 <div class="form-inline" style="margin-left: 35px;">
-                    <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
+                    <label class="form-control form-control-sm" id="prep_by1_label" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                     <input class="form-control form-control-sm" id="prep_by1" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
                 </div>
                 <div class="form-inline" style="margin-left: 35px;">
-                    <label class="form-control form-control-sm" style="width: 160px;">Date Scheduled</label>
+                    <label class="form-control form-control-sm" id="sched1_label" style="width: 160px;">Date Scheduled</label>
                     <input class="form-control form-control-sm" id="sched1" style="width: 280px;" type="text" readonly>
                 </div>
             </div>
@@ -465,6 +471,7 @@
             <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;" disabled>RETURN</button>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
+            <button type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" disabled>RECEIVE</button>
             <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp" style="display: none;" disabled>RECEIVE ASSEMBLED</button>
             <span class="float-right" style="width: 10px;">&nbsp;</span>
             <button type="button" id="btnHideDetails" class="btn btn-primary float-right bp" style="display: none;">HIDE DETAILS</button>

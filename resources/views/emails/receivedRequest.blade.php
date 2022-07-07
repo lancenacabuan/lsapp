@@ -4,7 +4,7 @@
     @if($details['reqtype'] == 'FIXED ASSET')
     <p>Hello, {{$details['name']}}!<br><br>
     This is to inform you that a Fixed Asset Stock Request has been 
-    <span style="color: blue;"><strong>RECEIVED</strong></span> by {{$details['requested_by']}} via Admin - {{$details['receivedby']}}.<br>
+    <span style="color: blue;"><strong>RECEIVED</strong></span> by {{$details['requested_by']}} via Admin - {{$details['received_by']}}.<br>
     </p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     <p>

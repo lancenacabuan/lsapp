@@ -4650,7 +4650,7 @@ $('.transItems tbody').on('click', 'tr', function(){
 });
 
 $('.table.transItems1').DataTable().on('select', function(){});
-$('.transItems1 tbody').on('click', 'tr', function(){
+$('.transItems1 tbody').on('click', 'tr td:not(:nth-child(6))', function(){
     var req_type_id = $('#req_type_id_details').val();
     if(($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder') && req_type_id == '7'){
         var requestStatus = $('#status_id_details').val();
@@ -4659,12 +4659,13 @@ $('.transItems1 tbody').on('click', 'tr', function(){
             var data = table.row(this).data();
             item_count = table.data().count();
             
-            $(this).toggleClass('selected');
             if(items.includes(data.id) == true){
                 items = items.filter(item => item !== data.id);
+                $(this).parent().removeClass('selected');
             }
             else {
                 items.push(data.id);
+                $(this).parent().addClass('selected');
             }
             if(items.length == 0){
                 $('.btnReceive').prop('disabled', true);
@@ -4672,7 +4673,6 @@ $('.transItems1 tbody').on('click', 'tr', function(){
             else{
                 $('.btnReceive').prop('disabled', false);
             }
-            alert(items);
         }
     }
 });

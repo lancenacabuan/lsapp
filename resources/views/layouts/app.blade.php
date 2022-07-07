@@ -159,11 +159,10 @@
             color: white;
             opacity: 100%;
         }
-        .swal-modal{
+        .swal2-container{
             zoom: 80% !important;
-            width: 420px !important;
         }
-        .swal-text{
+        .swal2-content{
             zoom: 120% !important;
         }
         .chosen-container-single .chosen-single{

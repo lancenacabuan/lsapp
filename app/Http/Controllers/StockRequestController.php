@@ -729,7 +729,7 @@ class StockRequestController extends Controller
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
         (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id')
             ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+            ->whereIn('stocks.status', ['out','demo','asset','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id')
@@ -2786,7 +2786,7 @@ class StockRequestController extends Controller
     }
 
     public function printRequest(Request $request){
-        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS req_date, requests.request_number AS req_num, requests.requested_by AS user_id, users.name AS req_by, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, needdate, prepdate, requests.item_id AS item_id, qty, assembly_reqnum, orderID')
+        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS req_date, requests.request_number AS req_num, requests.requested_by AS user_id, users.name AS req_by, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, needdate, prepdate, requests.item_id AS item_id, qty, assembly_reqnum, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email')
             ->where('request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')

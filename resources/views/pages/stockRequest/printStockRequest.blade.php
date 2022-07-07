@@ -45,7 +45,11 @@
         <table id="tblPrint" cellspacing="0" cellpadding="0" style="width: 100%;">
             <col span="9" />
             <tr height="20">
+                @if($list->req_type_id == 7)
+                <td style="text-align: center; font-size: 18px;" colspan="9" height="20"><strong>TRANSMITTAL RECEIPT</strong></td>
+                @else
                 <td style="text-align: center; font-size: 18px;" colspan="9" height="20"><strong>DELIVERY RECEIPT</strong></td>
+                @endif
             </tr>
             <tr height="20">
                 <td colspan="9">&nbsp;</td>
@@ -78,6 +82,42 @@
             <tr height="20">
                 <td colspan="1" style="font-weight: bold;" class="tdHide">Reference SO/PO No.:</td>
                 <td colspan="8" class="tdHide">{{$list->reference}}</td>
+            </tr>
+            @elseif($list->req_type_id == 7)
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;">Request Type:</td>
+                <td colspan="2">{{$list->req_type}}</td>
+                <td>&nbsp;</td>
+                <td colspan="2" style="font-weight: bold;">Transmittal Receipt No.:</td>
+                <td colspan="2">{{$list->req_num}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;">Requested By:</td>
+                <td colspan="2">{{$list->asset_reqby}}</td>
+                <td>&nbsp;</td>
+                <td colspan="2" style="font-weight: bold;">Date Requested:</td>
+                <td colspan="2" id="format_date1">{{$list->req_date}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;">Approved By:</td>
+                <td colspan="2">{{$list->asset_apvby}}</td>
+                <td>&nbsp;</td>
+                <td colspan="2" style="font-weight: bold;">Date Needed:</td>
+                <td colspan="2" id="format_date2">{{$list->needdate}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;">Submitted By:</td>
+                <td colspan="2">{{$list->req_by}}</td>
+                <td>&nbsp;</td>
+                <td colspan="2" style="font-weight: bold;">Date Prepared:</td>
+                <td colspan="2" id="format_date3">{{$list->prepdate}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" style="font-weight: bold;">Prepared By:</td>
+                <td colspan="2">{{$list2->prepby}}</td>
+                <td>&nbsp;</td>
+                <td colspan="2" style="font-weight: bold;">Date Scheduled:</td>
+                <td colspan="2" id="format_date4">{{$list->sched}}</td>
             </tr>
             @else
             <tr height="20">
@@ -229,6 +269,10 @@ document.addEventListener("contextmenu", function(e){
 
 $(document).ready(function(){
     $('#loading').hide(); Spinner.hide();
+    for(var i = 1; i <= 4; i++){
+        $('#format_date'+i).html(moment($('.format_date'+i).html()).format('dddd, MMMM DD, YYYY'));
+    }
+
     var req_date = $('#req_date').html();
     req_date = moment(req_date).format('dddd, MMMM DD, YYYY');
     $('#req_date').html(req_date);

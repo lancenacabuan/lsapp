@@ -107,10 +107,14 @@
         </table>
         @endif
         <br><br>
+        @if($details['role'] != '')
         Kindly login to your {{$details['role']}} account to process this request by clicking on the link below.<br>
+        @endif
         Thank you!
     </p>
+    @if($details['role'] != '')
     <a href="{{ env('APP_URL_LIVE') }}stockrequest?request_number={{$details['request_number']}}">{{ env('APP_URL_LIVE') }}stockrequest?request_number={{$details['request_number']}}</a>
+    @endif
     <br><br>
     This is a system-generated email. Please do not reply.
 </body>

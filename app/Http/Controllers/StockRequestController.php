@@ -1953,7 +1953,7 @@ class StockRequestController extends Controller
         if($request->status == '3' || $request->status == '4'){
             do{
                 $sql = Stock::where('id', $request->id)
-                    ->whereNotIn('status', ['out','demo','assembly','assembled'])
+                    ->whereNotIn('status', ['out','asset','demo','assembly','assembled'])
                     ->update(['status' => 'received', 'user_id' => auth()->user()->id]);
             }
             while(!$sql);
@@ -2024,7 +2024,7 @@ class StockRequestController extends Controller
             }
 
             Stock::where('request_number', $request->request_number)
-                ->whereNotIn('status', ['out','demo','assembly','assembled'])
+                ->whereNotIn('status', ['out','asset','demo','assembly','assembled'])
                 ->update(['status' => 'incomplete', 'user_id' => auth()->user()->id]);
         }
         $total = StockRequest::where('request_number', $request->request_number)->sum('pending');

@@ -387,7 +387,8 @@
         <script src="{{ asset('js/stocks.js') }}"></script>
     @endif
     @if(Request::is('stockrequest'))
-        <script src="{{ asset('js/stockrequest.js') }}"></script>
+        <script src="{{ asset('js/stockrequest_1.js') }}"></script>
+        <script src="{{ asset('js/stockrequest_2.js') }}"></script>
     @endif
     @if(Request::is('stocktransfer'))
         <script src="{{ asset('js/stocktransfer.js') }}"></script>

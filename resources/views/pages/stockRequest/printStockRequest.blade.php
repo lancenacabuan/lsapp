@@ -270,7 +270,7 @@ document.addEventListener("contextmenu", function(e){
 $(document).ready(function(){
     $('#loading').hide(); Spinner.hide();
     for(var i = 1; i <= 4; i++){
-        $('#format_date'+i).html(moment($('.format_date'+i).html()).format('dddd, MMMM DD, YYYY'));
+        $('#format_date'+i).html(moment($('#format_date'+i).html()).format('dddd, MMMM DD, YYYY'));
     }
 
     var req_date = $('#req_date').html();

@@ -2162,6 +2162,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 });
             
                 if(requestStatus == '3' || requestStatus == '4'){
+                    $('table.transItems1').dataTable().fnDestroy();
                     $('table.transItems1').DataTable({
                         columnDefs: [
                             {
@@ -2230,6 +2231,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     });
                 }
                 else{
+                    $('table.transItems1').dataTable().fnDestroy();
                     $('table.transItems1').DataTable({
                         columnDefs: [
                             {
@@ -3446,6 +3448,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     });
 
     if(requestStatus == '3' || requestStatus == '4'){
+        $('table.transItems1').dataTable().fnDestroy();
         $('table.transItems1').DataTable({
             columnDefs: [
                 {
@@ -3514,6 +3517,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         });
     }
     else{
+        $('table.transItems1').dataTable().fnDestroy();
         $('table.transItems1').DataTable({
             columnDefs: [
                 {
@@ -4641,6 +4645,34 @@ $('.transItems tbody').on('click', 'tr', function(){
         else{
             $('#btnSale').prop('disabled', false);
             $('#btnReturn').prop('disabled', false);
+        }
+    }
+});
+
+$('.table.transItems1').DataTable().on('select', function(){});
+$('.transItems1 tbody').on('click', 'tr', function(){
+    var req_type_id = $('#req_type_id_details').val();
+    if(($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder') && req_type_id == '7'){
+        var requestStatus = $('#status_id_details').val();
+        if(requestStatus == '3' || requestStatus == '4'){
+            var table = $('table.transItems1').DataTable();
+            var data = table.row(this).data();
+            item_count = table.data().count();
+            
+            $(this).toggleClass('selected');
+            if(items.includes(data.id) == true){
+                items = items.filter(item => item !== data.id);
+            }
+            else {
+                items.push(data.id);
+            }
+            if(items.length == 0){
+                $('.btnReceive').prop('disabled', true);
+            }
+            else{
+                $('.btnReceive').prop('disabled', false);
+            }
+            alert(items);
         }
     }
 });

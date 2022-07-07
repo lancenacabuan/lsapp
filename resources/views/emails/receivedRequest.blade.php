@@ -70,7 +70,7 @@
         Thank you!
     </p>
     @if($details['role'] != '')
-    <a href="{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number'].$concat}}">{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number'].$concat}}</a>
+    <a href="{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number']}}">{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number']}}</a>
     @endif
     <br><br>
     This is a system-generated email. Please do not reply.

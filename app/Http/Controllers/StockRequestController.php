@@ -2077,7 +2077,7 @@ class StockRequestController extends Controller
                 do{
                     $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
-                        ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+                        ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
                         ->orderBy('item', 'ASC')
@@ -2098,7 +2098,7 @@ class StockRequestController extends Controller
                 do{
                     $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                         ->whereIn('request_number', $include)
-                        ->whereIn('stocks.status', ['out','demo','assembly','assembled'])
+                        ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->groupBy('prodcode','item','uom','serial','qty','item_id')
                         ->orderBy('item', 'ASC')
@@ -2823,7 +2823,7 @@ class StockRequestController extends Controller
         if($list->req_type_id == 2 || $list->req_type_id == 6 || ($list->req_type_id == 3 && ($list->status_id == 10 || $list->status_id >= 27))){
             $list3 = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                 ->whereIn('request_number', $include)
-                ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
+                ->whereIn('stocks.status', ['prep','assembly','out','asset','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
                 ->orderBy('item', 'ASC')
@@ -2841,7 +2841,7 @@ class StockRequestController extends Controller
         else{
             $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
-                ->whereIn('stocks.status', ['prep','assembly','out','demo','assembled'])
+                ->whereIn('stocks.status', ['prep','assembly','out','asset','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')

@@ -106,11 +106,11 @@
             </tfoot>
         </table>
         @endif
-        <br><br>
         @if($details['role'] != '')
+        <br><br>
         Kindly login to your {{$details['role']}} account to process this request by clicking on the link below.<br>
-        @endif
         Thank you!
+        @endif
     </p>
     @if($details['role'] != '')
     <a href="{{ env('APP_URL_LIVE') }}stockrequest?request_number={{$details['request_number']}}">{{ env('APP_URL_LIVE') }}stockrequest?request_number={{$details['request_number']}}</a>

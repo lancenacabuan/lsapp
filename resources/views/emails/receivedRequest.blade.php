@@ -15,10 +15,10 @@
         Date Scheduled: {{Carbon\Carbon::parse($details['scheddate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Date Received: {{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}<br><br>
         Requested By: {{$details['requested_by']}}<br>
-        Approved By: {{$details['requested_by']}}<br>
-        Submitted By: {{$details['requested_by']}}<br>
-        Prepared By: {{$details['requested_by']}}<br>
-        Received By: {{$details['requested_by']}}
+        Approved By: {{$details['approved_by']}}<br>
+        Submitted By: {{$details['submitted_by']}}<br>
+        Prepared By: {{$details['prepared_by']}}<br>
+        Received By: {{$details['received_by']}}
         <br><br>
         <strong>RECEIVED ITEMS</strong>
         <br>
@@ -63,11 +63,11 @@
                 </tr>
             </tfoot>
         </table>
-        <br><br>
         @if($details['role'] != '')
+        <br><br>
         Kindly login to your {{$details['role']}} account if you wish to view or download this request by clicking on the link below.<br>
-        @endif
         Thank you!
+        @endif
     </p>
     @if($details['role'] != '')
     <a href="{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number']}}">{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number']}}</a>

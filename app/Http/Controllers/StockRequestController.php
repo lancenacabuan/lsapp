@@ -412,30 +412,24 @@ class StockRequestController extends Controller
         foreach($emails as $email){
             $sendTo[] = $email['email'];
         }
-        // $user = User::role('approver - sales')
-        //     ->where('status','ACTIVE')
-        //     ->where('company',auth()->user()->company)
-        //     ->get();
-        // foreach($user as $key){
-            $details = [
-                'name' => 'APPROVER - SALES',
-                'action' => $action,
-                'request_number' => $request->request_number,
-                'reqdate' => $request_details->reqdate,
-                'requested_by' => auth()->user()->name,
-                'needdate' => $request_details->needdate,
-                'reqtype' => $request_details->reqtype,
-                'client_name' => $request_details->client_name,
-                'location' => $request_details->location,
-                'contact' => $request_details->contact,
-                'remarks' => $request_details->remarks,
-                'reference' => $request_details->reference,
-                'role' => 'Approver - Sales',
-                'items' => $items,
-                'files' => $attachments
-            ];
-            Mail::to($sendTo)->send(new emailForRequest($details, $subject));
-        // }
+        $details = [
+            'name' => 'APPROVER - SALES',
+            'action' => $action,
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => auth()->user()->name,
+            'needdate' => $request_details->needdate,
+            'reqtype' => $request_details->reqtype,
+            'client_name' => $request_details->client_name,
+            'location' => $request_details->location,
+            'contact' => $request_details->contact,
+            'remarks' => $request_details->remarks,
+            'reference' => $request_details->reference,
+            'role' => 'Approver - Sales',
+            'items' => $items,
+            'files' => $attachments
+        ];
+        Mail::to($sendTo)->send(new emailForRequest($details, $subject));
         unset($sendTo);
         if($request->reqstatus != 7){
             $userlogs = new UserLogs;
@@ -957,21 +951,16 @@ class StockRequestController extends Controller
             foreach($emails as $email){
                 $sendTo[] = $email['email'];
             }
-            // $user = User::role('admin')->where('status','ACTIVE')->get();
-            // foreach($user as $key){
-            //     if($key->email != auth()->user()->email){
-                    $details = [
-                        'name' => 'ADMIN',
-                        'editdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
-                        'edited_by' => auth()->user()->name,
-                        'category' => $request->category,
-                        'item' => $request->item,
-                        'serialfrom' => $request->origserial,
-                        'serialto' => $request->newserial
-                    ];
-                    Mail::to($sendTo)->send(new editSerial($details, $subject));
-            //     }
-            // }
+            $details = [
+                'name' => 'ADMIN',
+                'editdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
+                'edited_by' => auth()->user()->name,
+                'category' => $request->category,
+                'item' => $request->item,
+                'serialfrom' => $request->origserial,
+                'serialto' => $request->newserial
+            ];
+            Mail::to($sendTo)->send(new editSerial($details, $subject));
             unset($sendTo);
             $details = [
                 'name' => auth()->user()->name,
@@ -1153,28 +1142,25 @@ class StockRequestController extends Controller
         foreach($emails as $email){
             $sendTo[] = $email['email'];
         }
-        // $user = User::role('accounting')->where('status','ACTIVE')->get();
-        // foreach($user as $key){
-            $details = [
-                'name' => 'ACCOUNTING',
-                'action' => 'STOCK REQUEST',
-                'request_number' => $request->request_number,
-                'reqdate' => $request_details->reqdate,
-                'requested_by' => $request_details->reqby,
-                'needdate' => $request_details->needdate,
-                'reqtype' => $request_details->reqtype,
-                'client_name' => $request_details->client_name,
-                'location' => $request_details->location,
-                'contact' => $request_details->contact,
-                'remarks' => $request_details->remarks,
-                'reference' => $request_details->reference,
-                'approvedby' => auth()->user()->name,
-                'role' => 'Accounting',
-                'items' => $items,
-                'files' => $attachments
-            ];
-            Mail::to($sendTo)->send(new approvedRequest($details, $subject));
-        // }
+        $details = [
+            'name' => 'ACCOUNTING',
+            'action' => 'STOCK REQUEST',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'needdate' => $request_details->needdate,
+            'reqtype' => $request_details->reqtype,
+            'client_name' => $request_details->client_name,
+            'location' => $request_details->location,
+            'contact' => $request_details->contact,
+            'remarks' => $request_details->remarks,
+            'reference' => $request_details->reference,
+            'approvedby' => auth()->user()->name,
+            'role' => 'Accounting',
+            'items' => $items,
+            'files' => $attachments
+        ];
+        Mail::to($sendTo)->send(new approvedRequest($details, $subject));
         unset($sendTo);
         $details = [
             'name' => $request_details->reqby,
@@ -1524,36 +1510,33 @@ class StockRequestController extends Controller
         foreach($emails as $email){
             $sendTo[] = $email['email'];
         }
-        // $user = User::role('admin')->where('status','ACTIVE')->get();
-        // foreach($user as $key){
-            $details = [
-                'name' => 'ADMIN',
-                'action' => 'STOCK REQUEST',
-                'verb' => 'SOLD',
-                'request_number' => $request->request_number,
-                'reqdate' => $request_details->reqdate,
-                'requested_by' => $request_details->reqby,
-                'needdate' => $request_details->needdate,
-                'reqtype' => $request_details->reqtype,
-                'client_name' => $request_details->client_name,
-                'location' => $request_details->location,
-                'contact' => $request_details->contact,
-                'remarks' => $request_details->remarks,
-                'reference' => $request_details->reference,
-                'prepared_by' => $prep->prepby,
-                'prepdate' => $request_details->prepdate,
-                'scheddate' => $request_details->schedule,
-                'receivedby' => auth()->user()->name,
-                'role' => 'Admin',
-                'items' => $items,
-                'files' => array(),
-                'pendcount' => 0,
-                'penditems' => NULL,
-                'req_type_id' => $request_details->req_type_id,
-                'status_id' => $request_details->status_id
-            ];
-            Mail::to($sendTo)->send(new receivedRequest($details, $subject));
-        // }
+        $details = [
+            'name' => 'ADMIN',
+            'action' => 'STOCK REQUEST',
+            'verb' => 'SOLD',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'needdate' => $request_details->needdate,
+            'reqtype' => $request_details->reqtype,
+            'client_name' => $request_details->client_name,
+            'location' => $request_details->location,
+            'contact' => $request_details->contact,
+            'remarks' => $request_details->remarks,
+            'reference' => $request_details->reference,
+            'prepared_by' => $prep->prepby,
+            'prepdate' => $request_details->prepdate,
+            'scheddate' => $request_details->schedule,
+            'receivedby' => auth()->user()->name,
+            'role' => 'Admin',
+            'items' => $items,
+            'files' => array(),
+            'pendcount' => 0,
+            'penditems' => NULL,
+            'req_type_id' => $request_details->req_type_id,
+            'status_id' => $request_details->status_id
+        ];
+        Mail::to($sendTo)->send(new receivedRequest($details, $subject));
         unset($sendTo);
         $emails = User::role('approver - sales')
             ->where('status','ACTIVE')
@@ -1563,74 +1546,65 @@ class StockRequestController extends Controller
         foreach($emails as $email){
             $sendTo[] = $email['email'];
         }
-        // $user = User::role('approver - sales')
-        //     ->where('status','ACTIVE')
-        //     ->where('company',auth()->user()->company)
-        //     ->get();
-        // foreach($user as $key){
-            $details = [
-                'name' => 'APPROVER - SALES',
-                'action' => 'STOCK REQUEST',
-                'verb' => 'SOLD',
-                'request_number' => $request->request_number,
-                'reqdate' => $request_details->reqdate,
-                'requested_by' => $request_details->reqby,
-                'needdate' => $request_details->needdate,
-                'reqtype' => $request_details->reqtype,
-                'client_name' => $request_details->client_name,
-                'location' => $request_details->location,
-                'contact' => $request_details->contact,
-                'remarks' => $request_details->remarks,
-                'reference' => $request_details->reference,
-                'prepared_by' => $prep->prepby,
-                'prepdate' => $request_details->prepdate,
-                'scheddate' => $request_details->schedule,
-                'receivedby' => auth()->user()->name,
-                'role' => 'Approver - Sales',
-                'items' => $items,
-                'files' => $attachments,
-                'pendcount' => 0,
-                'penditems' => NULL,
-                'req_type_id' => $request_details->req_type_id,
-                'status_id' => $request_details->status_id
-            ];
-            Mail::to($sendTo)->send(new receivedRequest($details, $subject));
-        // }
+        $details = [
+            'name' => 'APPROVER - SALES',
+            'action' => 'STOCK REQUEST',
+            'verb' => 'SOLD',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'needdate' => $request_details->needdate,
+            'reqtype' => $request_details->reqtype,
+            'client_name' => $request_details->client_name,
+            'location' => $request_details->location,
+            'contact' => $request_details->contact,
+            'remarks' => $request_details->remarks,
+            'reference' => $request_details->reference,
+            'prepared_by' => $prep->prepby,
+            'prepdate' => $request_details->prepdate,
+            'scheddate' => $request_details->schedule,
+            'receivedby' => auth()->user()->name,
+            'role' => 'Approver - Sales',
+            'items' => $items,
+            'files' => $attachments,
+            'pendcount' => 0,
+            'penditems' => NULL,
+            'req_type_id' => $request_details->req_type_id,
+            'status_id' => $request_details->status_id
+        ];
+        Mail::to($sendTo)->send(new receivedRequest($details, $subject));
         unset($sendTo);
         $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
         foreach($emails as $email){
             $sendTo[] = $email['email'];
         }
-        // $user = User::role('accounting')->where('status','ACTIVE')->get();
-        // foreach($user as $key){
-            $details = [
-                'name' => 'ACCOUNTING',
-                'action' => 'STOCK REQUEST',
-                'verb' => 'SOLD',
-                'request_number' => $request->request_number,
-                'reqdate' => $request_details->reqdate,
-                'requested_by' => $request_details->reqby,
-                'needdate' => $request_details->needdate,
-                'reqtype' => $request_details->reqtype,
-                'client_name' => $request_details->client_name,
-                'location' => $request_details->location,
-                'contact' => $request_details->contact,
-                'remarks' => $request_details->remarks,
-                'reference' => $request_details->reference,
-                'prepared_by' => $prep->prepby,
-                'prepdate' => $request_details->prepdate,
-                'scheddate' => $request_details->schedule,
-                'receivedby' => auth()->user()->name,
-                'role' => 'Accounting',
-                'items' => $items,
-                'files' => $attachments,
-                'pendcount' => 0,
-                'penditems' => NULL,
-                'req_type_id' => $request_details->req_type_id,
-                'status_id' => $request_details->status_id
-            ];
-            Mail::to($sendTo)->send(new receivedRequest($details, $subject));
-        // }
+        $details = [
+            'name' => 'ACCOUNTING',
+            'action' => 'STOCK REQUEST',
+            'verb' => 'SOLD',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'needdate' => $request_details->needdate,
+            'reqtype' => $request_details->reqtype,
+            'client_name' => $request_details->client_name,
+            'location' => $request_details->location,
+            'contact' => $request_details->contact,
+            'remarks' => $request_details->remarks,
+            'reference' => $request_details->reference,
+            'prepared_by' => $prep->prepby,
+            'prepdate' => $request_details->prepdate,
+            'scheddate' => $request_details->schedule,
+            'receivedby' => auth()->user()->name,
+            'role' => 'Accounting',
+            'items' => $items,
+            'files' => $attachments,
+            'pendcount' => 0,
+            'penditems' => NULL,
+            'req_type_id' => $request_details->req_type_id,
+            'status_id' => $request_details->status_id
+        ];
+        Mail::to($sendTo)->send(new receivedRequest($details, $subject));
         unset($sendTo);
         $details = [
             'name' => auth()->user()->name,
@@ -2209,37 +2183,34 @@ class StockRequestController extends Controller
                 foreach($emails as $email){
                     $sendTo[] = $email['email'];
                 }
-                // $user = User::role('admin')->where('status','ACTIVE')->get();
-                // foreach($user as $key){
-                    $details = [
-                        'name' => 'ADMIN',
-                        'action' => 'STOCK REQUEST',
-                        'verb' => 'RECEIVED',
-                        'request_number' => $request->request_number,
-                        'reqdate' => $request_details->reqdate,
-                        'requested_by' => $request_details->reqby,
-                        'needdate' => $request_details->needdate,
-                        'reqtype' => $request_details->reqtype,
-                        'client_name' => $request_details->client_name,
-                        'location' => $request_details->location,
-                        'contact' => $request_details->contact,
-                        'remarks' => $request_details->remarks,
-                        'reference' => $request_details->reference,
-                        'orderID' => $request_details->orderID,
-                        'prepared_by' => $prep->prepby,
-                        'prepdate' => $request_details->prepdate,
-                        'scheddate' => $request_details->schedule,
-                        'receivedby' => auth()->user()->name,
-                        'role' => 'Admin',
-                        'items' => $items,
-                        'files' => array(),
-                        'pendcount' => 0,
-                        'penditems' => NULL,
-                        'req_type_id' => $request_details->req_type_id,
-                        'status_id' => $request_details->status_id
-                    ];
-                    Mail::to($sendTo)->send(new receivedRequest($details, $subject));
-                // }
+                $details = [
+                    'name' => 'ADMIN',
+                    'action' => 'STOCK REQUEST',
+                    'verb' => 'RECEIVED',
+                    'request_number' => $request->request_number,
+                    'reqdate' => $request_details->reqdate,
+                    'requested_by' => $request_details->reqby,
+                    'needdate' => $request_details->needdate,
+                    'reqtype' => $request_details->reqtype,
+                    'client_name' => $request_details->client_name,
+                    'location' => $request_details->location,
+                    'contact' => $request_details->contact,
+                    'remarks' => $request_details->remarks,
+                    'reference' => $request_details->reference,
+                    'orderID' => $request_details->orderID,
+                    'prepared_by' => $prep->prepby,
+                    'prepdate' => $request_details->prepdate,
+                    'scheddate' => $request_details->schedule,
+                    'receivedby' => auth()->user()->name,
+                    'role' => 'Admin',
+                    'items' => $items,
+                    'files' => array(),
+                    'pendcount' => 0,
+                    'penditems' => NULL,
+                    'req_type_id' => $request_details->req_type_id,
+                    'status_id' => $request_details->status_id
+                ];
+                Mail::to($sendTo)->send(new receivedRequest($details, $subject));
                 unset($sendTo);
                 if($request_details->req_type_id != 6){
                     $emails = User::role('approver - sales')
@@ -2250,49 +2221,8 @@ class StockRequestController extends Controller
                     foreach($emails as $email){
                         $sendTo[] = $email['email'];
                     }
-                    // $user = User::role('approver - sales')
-                    //     ->where('status','ACTIVE')
-                    //     ->where('company',auth()->user()->company)
-                    //     ->get();
-                    // foreach($user as $key){
-                        $details = [
-                            'name' => 'APPROVER - SALES',
-                            'action' => 'STOCK REQUEST',
-                            'verb' => 'RECEIVED',
-                            'request_number' => $request->request_number,
-                            'reqdate' => $request_details->reqdate,
-                            'requested_by' => $request_details->reqby,
-                            'needdate' => $request_details->needdate,
-                            'reqtype' => $request_details->reqtype,
-                            'client_name' => $request_details->client_name,
-                            'location' => $request_details->location,
-                            'contact' => $request_details->contact,
-                            'remarks' => $request_details->remarks,
-                            'reference' => $request_details->reference,
-                            'prepared_by' => $prep->prepby,
-                            'prepdate' => $request_details->prepdate,
-                            'scheddate' => $request_details->schedule,
-                            'receivedby' => auth()->user()->name,
-                            'role' => 'Approver - Sales',
-                            'items' => $items,
-                            'files' => $attachments,
-                            'pendcount' => 0,
-                            'penditems' => NULL,
-                            'req_type_id' => $request_details->req_type_id,
-                            'status_id' => $request_details->status_id
-                        ];
-                        Mail::to($sendTo)->send(new receivedRequest($details, $subject));
-                    // }
-                }
-                unset($sendTo);
-                $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
-                foreach($emails as $email){
-                    $sendTo[] = $email['email'];
-                }
-                // $user = User::role('accounting')->where('status','ACTIVE')->get();
-                // foreach($user as $key){
                     $details = [
-                        'name' => 'ACCOUNTING',
+                        'name' => 'APPROVER - SALES',
                         'action' => 'STOCK REQUEST',
                         'verb' => 'RECEIVED',
                         'request_number' => $request->request_number,
@@ -2305,12 +2235,11 @@ class StockRequestController extends Controller
                         'contact' => $request_details->contact,
                         'remarks' => $request_details->remarks,
                         'reference' => $request_details->reference,
-                        'orderID' => $request_details->orderID,
                         'prepared_by' => $prep->prepby,
                         'prepdate' => $request_details->prepdate,
                         'scheddate' => $request_details->schedule,
                         'receivedby' => auth()->user()->name,
-                        'role' => 'Accounting',
+                        'role' => 'Approver - Sales',
                         'items' => $items,
                         'files' => $attachments,
                         'pendcount' => 0,
@@ -2319,7 +2248,40 @@ class StockRequestController extends Controller
                         'status_id' => $request_details->status_id
                     ];
                     Mail::to($sendTo)->send(new receivedRequest($details, $subject));
-                // }
+                }
+                unset($sendTo);
+                $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
+                foreach($emails as $email){
+                    $sendTo[] = $email['email'];
+                }
+                $details = [
+                    'name' => 'ACCOUNTING',
+                    'action' => 'STOCK REQUEST',
+                    'verb' => 'RECEIVED',
+                    'request_number' => $request->request_number,
+                    'reqdate' => $request_details->reqdate,
+                    'requested_by' => $request_details->reqby,
+                    'needdate' => $request_details->needdate,
+                    'reqtype' => $request_details->reqtype,
+                    'client_name' => $request_details->client_name,
+                    'location' => $request_details->location,
+                    'contact' => $request_details->contact,
+                    'remarks' => $request_details->remarks,
+                    'reference' => $request_details->reference,
+                    'orderID' => $request_details->orderID,
+                    'prepared_by' => $prep->prepby,
+                    'prepdate' => $request_details->prepdate,
+                    'scheddate' => $request_details->schedule,
+                    'receivedby' => auth()->user()->name,
+                    'role' => 'Accounting',
+                    'items' => $items,
+                    'files' => $attachments,
+                    'pendcount' => 0,
+                    'penditems' => NULL,
+                    'req_type_id' => $request_details->req_type_id,
+                    'status_id' => $request_details->status_id
+                ];
+                Mail::to($sendTo)->send(new receivedRequest($details, $subject));
                 unset($sendTo);
                 $details = [
                     'name' => auth()->user()->name,
@@ -2461,36 +2423,33 @@ class StockRequestController extends Controller
             foreach($emails as $email){
                 $sendTo[] = $email['email'];
             }
-            // $user = User::role('admin')->where('status','ACTIVE')->get();
-            // foreach($user as $key){
-                $details = [
-                    'name' => 'ADMIN',
-                    'action' => 'STOCK REQUEST',
-                    'verb' => 'PARTIALLY RECEIVED',
-                    'request_number' => $request->request_number,
-                    'reqdate' => $request_details->reqdate,
-                    'requested_by' => $request_details->reqby,
-                    'needdate' => $request_details->needdate,
-                    'reqtype' => $request_details->reqtype,
-                    'client_name' => $request_details->client_name,
-                    'location' => $request_details->location,
-                    'contact' => $request_details->contact,
-                    'remarks' => $request_details->remarks,
-                    'reference' => $request_details->reference,
-                    'prepared_by' => $prep->prepby,
-                    'prepdate' => $request_details->prepdate,
-                    'scheddate' => $request_details->schedule,
-                    'receivedby' => auth()->user()->name,
-                    'role' => 'Admin',
-                    'items' => $items,
-                    'files' => array(),
-                    'pendcount' => $pendcount,
-                    'penditems' => $penditems,
-                    'req_type_id' => $request_details->req_type_id,
-                    'status_id' => $request_details->status_id
-                ];
-                Mail::to($sendTo)->send(new receivedRequest($details, $subject));
-            // }
+            $details = [
+                'name' => 'ADMIN',
+                'action' => 'STOCK REQUEST',
+                'verb' => 'PARTIALLY RECEIVED',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'client_name' => $request_details->client_name,
+                'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
+                'reference' => $request_details->reference,
+                'prepared_by' => $prep->prepby,
+                'prepdate' => $request_details->prepdate,
+                'scheddate' => $request_details->schedule,
+                'receivedby' => auth()->user()->name,
+                'role' => 'Admin',
+                'items' => $items,
+                'files' => array(),
+                'pendcount' => $pendcount,
+                'penditems' => $penditems,
+                'req_type_id' => $request_details->req_type_id,
+                'status_id' => $request_details->status_id
+            ];
+            Mail::to($sendTo)->send(new receivedRequest($details, $subject));
             unset($sendTo);
             if($request_details->req_type_id != 6){
                 $emails = User::role('approver - sales')
@@ -2501,49 +2460,8 @@ class StockRequestController extends Controller
                 foreach($emails as $email){
                     $sendTo[] = $email['email'];
                 }
-                // $user = User::role('approver - sales')
-                //         ->where('status','ACTIVE')
-                //         ->where('company',auth()->user()->company)
-                //         ->get();
-                // foreach($user as $key){
-                    $details = [
-                        'name' => 'APPROVER - SALES',
-                        'action' => 'STOCK REQUEST',
-                        'verb' => 'PARTIALLY RECEIVED',
-                        'request_number' => $request->request_number,
-                        'reqdate' => $request_details->reqdate,
-                        'requested_by' => $request_details->reqby,
-                        'needdate' => $request_details->needdate,
-                        'reqtype' => $request_details->reqtype,
-                        'client_name' => $request_details->client_name,
-                        'location' => $request_details->location,
-                        'contact' => $request_details->contact,
-                        'remarks' => $request_details->remarks,
-                        'reference' => $request_details->reference,
-                        'prepared_by' => $prep->prepby,
-                        'prepdate' => $request_details->prepdate,
-                        'scheddate' => $request_details->schedule,
-                        'receivedby' => auth()->user()->name,
-                        'role' => 'Approver - Sales',
-                        'items' => $items,
-                        'files' => $attachments,
-                        'pendcount' => $pendcount,
-                        'penditems' => $penditems,
-                        'req_type_id' => $request_details->req_type_id,
-                        'status_id' => $request_details->status_id
-                    ];
-                    Mail::to($sendTo)->send(new receivedRequest($details, $subject));
-                // }
-            }
-            unset($sendTo);
-            $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
-            foreach($emails as $email){
-                $sendTo[] = $email['email'];
-            }
-            // $user = User::role('accounting')->where('status','ACTIVE')->get();
-            // foreach($user as $key){
                 $details = [
-                    'name' => 'ACCOUNTING',
+                    'name' => 'APPROVER - SALES',
                     'action' => 'STOCK REQUEST',
                     'verb' => 'PARTIALLY RECEIVED',
                     'request_number' => $request->request_number,
@@ -2560,7 +2478,7 @@ class StockRequestController extends Controller
                     'prepdate' => $request_details->prepdate,
                     'scheddate' => $request_details->schedule,
                     'receivedby' => auth()->user()->name,
-                    'role' => 'Accounting',
+                    'role' => 'Approver - Sales',
                     'items' => $items,
                     'files' => $attachments,
                     'pendcount' => $pendcount,
@@ -2569,7 +2487,39 @@ class StockRequestController extends Controller
                     'status_id' => $request_details->status_id
                 ];
                 Mail::to($sendTo)->send(new receivedRequest($details, $subject));
-            // }
+            }
+            unset($sendTo);
+            $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
+            foreach($emails as $email){
+                $sendTo[] = $email['email'];
+            }
+            $details = [
+                'name' => 'ACCOUNTING',
+                'action' => 'STOCK REQUEST',
+                'verb' => 'PARTIALLY RECEIVED',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'client_name' => $request_details->client_name,
+                'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
+                'reference' => $request_details->reference,
+                'prepared_by' => $prep->prepby,
+                'prepdate' => $request_details->prepdate,
+                'scheddate' => $request_details->schedule,
+                'receivedby' => auth()->user()->name,
+                'role' => 'Accounting',
+                'items' => $items,
+                'files' => $attachments,
+                'pendcount' => $pendcount,
+                'penditems' => $penditems,
+                'req_type_id' => $request_details->req_type_id,
+                'status_id' => $request_details->status_id
+            ];
+            Mail::to($sendTo)->send(new receivedRequest($details, $subject));
             unset($sendTo);
             $details = [
                 'name' => auth()->user()->name,
@@ -2927,10 +2877,42 @@ class StockRequestController extends Controller
                 foreach($emails as $email){
                     $sendTo[] = $email['email'];
                 }
-                // $user = User::role('admin')->where('status','ACTIVE')->get();
-                // foreach($user as $keyx){
+                $details = [
+                    'name' => 'ADMIN',
+                    'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'request_number' => $value['req_num'],
+                    'reqdate' => $value['req_date'],
+                    'requested_by' => $value['req_by'],
+                    'needdate' => $value['needdate'],
+                    'reqtype' => $value['req_type'],
+                    'status' => $value['status'],
+                    'client_name' => $value['client_name'],
+                    'location' => $value['location'],
+                    'contact' => $value['contact'],
+                    'remarks' => $value['remarks'],
+                    'reference' => $value['reference'],
+                    'orderID' => $value['orderID'],
+                    'assembly_reqnum' => $value['assembly_reqnum'],
+                    'item_desc' => $item_desc[0]['item_desc'] ?? '',
+                    'item_code' => $item_desc[0]['item_code'] ?? '',
+                    'qty' => $value['qty'],
+                    'role' => 'Admin',
+                    'items' => $items,
+                    'files' => array()
+                ];
+                Mail::to($sendTo)->send(new notifRequest($details, $subject));
+                unset($sendTo);
+                if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
+                    $emails = User::role('approver - sales')
+                        ->where('status','ACTIVE')
+                        ->where('company',$value['company'])
+                        ->get('email')
+                        ->toArray();
+                    foreach($emails as $email){
+                        $sendTo[] = $email['email'];
+                    }
                     $details = [
-                        'name' => 'ADMIN',
+                        'name' => 'APPROVER - SALES',
                         'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                         'request_number' => $value['req_num'],
                         'reqdate' => $value['req_date'],
@@ -2948,52 +2930,11 @@ class StockRequestController extends Controller
                         'item_desc' => $item_desc[0]['item_desc'] ?? '',
                         'item_code' => $item_desc[0]['item_code'] ?? '',
                         'qty' => $value['qty'],
-                        'role' => 'Admin',
+                        'role' => 'Approver - Sales',
                         'items' => $items,
-                        'files' => array()
+                        'files' => $attachments
                     ];
                     Mail::to($sendTo)->send(new notifRequest($details, $subject));
-                // }
-                unset($sendTo);
-                if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
-                    $emails = User::role('approver - sales')
-                        ->where('status','ACTIVE')
-                        ->where('company',$value['company'])
-                        ->get('email')
-                        ->toArray();
-                    foreach($emails as $email){
-                        $sendTo[] = $email['email'];
-                    }
-                    // $user = User::role('approver - sales')
-                    //     ->where('status','ACTIVE')
-                    //     ->where('company',$value['company'])
-                    //     ->get();
-                    // foreach($user as $keyx){
-                        $details = [
-                            'name' => 'APPROVER - SALES',
-                            'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                            'request_number' => $value['req_num'],
-                            'reqdate' => $value['req_date'],
-                            'requested_by' => $value['req_by'],
-                            'needdate' => $value['needdate'],
-                            'reqtype' => $value['req_type'],
-                            'status' => $value['status'],
-                            'client_name' => $value['client_name'],
-                            'location' => $value['location'],
-                            'contact' => $value['contact'],
-                            'remarks' => $value['remarks'],
-                            'reference' => $value['reference'],
-                            'orderID' => $value['orderID'],
-                            'assembly_reqnum' => $value['assembly_reqnum'],
-                            'item_desc' => $item_desc[0]['item_desc'] ?? '',
-                            'item_code' => $item_desc[0]['item_code'] ?? '',
-                            'qty' => $value['qty'],
-                            'role' => 'Approver - Sales',
-                            'items' => $items,
-                            'files' => $attachments
-                        ];
-                        Mail::to($sendTo)->send(new notifRequest($details, $subject));
-                    // }
                 }
                 unset($sendTo);
                 $details = [
@@ -3062,10 +3003,42 @@ class StockRequestController extends Controller
                 foreach($emails as $email){
                     $sendTo[] = $email['email'];
                 }
-                // $user = User::role('admin')->where('status','ACTIVE')->get();
-                // foreach($user as $keyx){
+                $details = [
+                    'name' => 'ADMIN',
+                    'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'request_number' => $value['req_num'],
+                    'reqdate' => $value['req_date'],
+                    'requested_by' => $value['req_by'],
+                    'needdate' => $value['needdate'],
+                    'reqtype' => $value['req_type'],
+                    'status' => $value['status'],
+                    'client_name' => $value['client_name'],
+                    'location' => $value['location'],
+                    'contact' => $value['contact'],
+                    'remarks' => $value['remarks'],
+                    'reference' => $value['reference'],
+                    'orderID' => $value['orderID'],
+                    'assembly_reqnum' => $value['assembly_reqnum'],
+                    'item_desc' => $item_desc[0]['item_desc'] ?? '',
+                    'item_code' => $item_desc[0]['item_code'] ?? '',
+                    'qty' => $value['qty'],
+                    'role' => 'Admin',
+                    'items' => $items,
+                    'files' => array()
+                ];
+                Mail::to($sendTo)->send(new notifRequest($details, $subject));
+                unset($sendTo);
+                if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
+                    $emails = User::role('approver - sales')
+                        ->where('status','ACTIVE')
+                        ->where('company',$value['company'])
+                        ->get('email')
+                        ->toArray();
+                    foreach($emails as $email){
+                        $sendTo[] = $email['email'];
+                    }
                     $details = [
-                        'name' => 'ADMIN',
+                        'name' => 'APPROVER - SALES',
                         'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                         'request_number' => $value['req_num'],
                         'reqdate' => $value['req_date'],
@@ -3083,52 +3056,11 @@ class StockRequestController extends Controller
                         'item_desc' => $item_desc[0]['item_desc'] ?? '',
                         'item_code' => $item_desc[0]['item_code'] ?? '',
                         'qty' => $value['qty'],
-                        'role' => 'Admin',
+                        'role' => 'Approver - Sales',
                         'items' => $items,
-                        'files' => array()
+                        'files' => $attachments
                     ];
                     Mail::to($sendTo)->send(new notifRequest($details, $subject));
-                // }
-                unset($sendTo);
-                if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
-                    $emails = User::role('approver - sales')
-                        ->where('status','ACTIVE')
-                        ->where('company',$value['company'])
-                        ->get('email')
-                        ->toArray();
-                    foreach($emails as $email){
-                        $sendTo[] = $email['email'];
-                    }
-                    // $user = User::role('approver - sales')
-                    //     ->where('status','ACTIVE')
-                    //     ->where('company',$value['company'])
-                    //     ->get();
-                    // foreach($user as $keyx){
-                        $details = [
-                            'name' => 'APPROVER - SALES',
-                            'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                            'request_number' => $value['req_num'],
-                            'reqdate' => $value['req_date'],
-                            'requested_by' => $value['req_by'],
-                            'needdate' => $value['needdate'],
-                            'reqtype' => $value['req_type'],
-                            'status' => $value['status'],
-                            'client_name' => $value['client_name'],
-                            'location' => $value['location'],
-                            'contact' => $value['contact'],
-                            'remarks' => $value['remarks'],
-                            'reference' => $value['reference'],
-                            'orderID' => $value['orderID'],
-                            'assembly_reqnum' => $value['assembly_reqnum'],
-                            'item_desc' => $item_desc[0]['item_desc'] ?? '',
-                            'item_code' => $item_desc[0]['item_code'] ?? '',
-                            'qty' => $value['qty'],
-                            'role' => 'Approver - Sales',
-                            'items' => $items,
-                            'files' => $attachments
-                        ];
-                        Mail::to($sendTo)->send(new notifRequest($details, $subject));
-                    // }
                 }
                 unset($sendTo);
                 $details = [
@@ -3197,10 +3129,42 @@ class StockRequestController extends Controller
                 foreach($emails as $email){
                     $sendTo[] = $email['email'];
                 }
-                // $user = User::role('admin')->where('status','ACTIVE')->get();
-                // foreach($user as $keyx){
+                $details = [
+                    'name' => 'ADMIN',
+                    'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'request_number' => $value['req_num'],
+                    'reqdate' => $value['req_date'],
+                    'requested_by' => $value['req_by'],
+                    'needdate' => $value['needdate'],
+                    'reqtype' => $value['req_type'],
+                    'status' => $value['status'],
+                    'client_name' => $value['client_name'],
+                    'location' => $value['location'],
+                    'contact' => $value['contact'],
+                    'remarks' => $value['remarks'],
+                    'reference' => $value['reference'],
+                    'orderID' => $value['orderID'],
+                    'assembly_reqnum' => $value['assembly_reqnum'],
+                    'item_desc' => $item_desc[0]['item_desc'] ?? '',
+                    'item_code' => $item_desc[0]['item_code'] ?? '',
+                    'qty' => $value['qty'],
+                    'role' => 'Admin',
+                    'items' => $items,
+                    'files' => array()
+                ];
+                Mail::to($sendTo)->send(new notifRequest($details, $subject));
+                unset($sendTo);
+                if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
+                    $emails = User::role('approver - sales')
+                        ->where('status','ACTIVE')
+                        ->where('company',$value['company'])
+                        ->get('email')
+                        ->toArray();
+                    foreach($emails as $email){
+                        $sendTo[] = $email['email'];
+                    }
                     $details = [
-                        'name' => 'ADMIN',
+                        'name' => 'APPROVER - SALES',
                         'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
                         'request_number' => $value['req_num'],
                         'reqdate' => $value['req_date'],
@@ -3218,52 +3182,11 @@ class StockRequestController extends Controller
                         'item_desc' => $item_desc[0]['item_desc'] ?? '',
                         'item_code' => $item_desc[0]['item_code'] ?? '',
                         'qty' => $value['qty'],
-                        'role' => 'Admin',
+                        'role' => 'Approver - Sales',
                         'items' => $items,
-                        'files' => array()
+                        'files' => $attachments
                     ];
                     Mail::to($sendTo)->send(new notifRequest($details, $subject));
-                // }
-                unset($sendTo);
-                if(($value['req_type'] == 'SALES' || $value['req_type'] == 'DEMO UNIT') && $value['status'] == 'FOR APPROVAL'){
-                    $emails = User::role('approver - sales')
-                        ->where('status','ACTIVE')
-                        ->where('company',$value['company'])
-                        ->get('email')
-                        ->toArray();
-                    foreach($emails as $email){
-                        $sendTo[] = $email['email'];
-                    }
-                    // $user = User::role('approver - sales')
-                    //     ->where('status','ACTIVE')
-                    //     ->where('company',$value['company'])
-                    //     ->get();
-                    // foreach($user as $keyx){
-                        $details = [
-                            'name' => 'APPROVER - SALES',
-                            'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                            'request_number' => $value['req_num'],
-                            'reqdate' => $value['req_date'],
-                            'requested_by' => $value['req_by'],
-                            'needdate' => $value['needdate'],
-                            'reqtype' => $value['req_type'],
-                            'status' => $value['status'],
-                            'client_name' => $value['client_name'],
-                            'location' => $value['location'],
-                            'contact' => $value['contact'],
-                            'remarks' => $value['remarks'],
-                            'reference' => $value['reference'],
-                            'orderID' => $value['orderID'],
-                            'assembly_reqnum' => $value['assembly_reqnum'],
-                            'item_desc' => $item_desc[0]['item_desc'] ?? '',
-                            'item_code' => $item_desc[0]['item_code'] ?? '',
-                            'qty' => $value['qty'],
-                            'role' => 'Approver - Sales',
-                            'items' => $items,
-                            'files' => $attachments
-                        ];
-                        Mail::to($sendTo)->send(new notifRequest($details, $subject));
-                    // }
                 }
                 unset($sendTo);
                 $details = [
@@ -3325,25 +3248,20 @@ class StockRequestController extends Controller
                 foreach($emails as $email){
                     $sendTo[] = $email['email'];
                 }
-                // $user = User::role('admin')->where('status','ACTIVE')->get();
-                // foreach($user as $key){
-                //     if($key->email != $value['email']){
-                        $details = [
-                            'name' => 'ADMIN',
-                            'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                            'request_number' => $value['req_num'],
-                            'reqdate' => $value['req_date'],
-                            'requested_by' => $value['req_by'],
-                            'needdate' => $value['needdate'],
-                            'locfrom' => $locfrom,
-                            'locto' => $locto,
-                            'status' => $value['status'],
-                            'role' => 'Admin',
-                            'items' => $items
-                        ];
-                        Mail::to($sendTo)->send(new notifTransfer($details, $subject));
-                //     }
-                // }
+                $details = [
+                    'name' => 'ADMIN',
+                    'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'request_number' => $value['req_num'],
+                    'reqdate' => $value['req_date'],
+                    'requested_by' => $value['req_by'],
+                    'needdate' => $value['needdate'],
+                    'locfrom' => $locfrom,
+                    'locto' => $locto,
+                    'status' => $value['status'],
+                    'role' => 'Admin',
+                    'items' => $items
+                ];
+                Mail::to($sendTo)->send(new notifTransfer($details, $subject));
                 unset($sendTo);
                 if($value['status'] == 'FOR APPROVAL'){  
                     $emails = User::role('approver - warehouse')
@@ -3354,25 +3272,20 @@ class StockRequestController extends Controller
                     foreach($emails as $email){
                         $sendTo[] = $email['email'];
                     }      
-                    // $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
-                    // foreach($user as $key){
-                    //     if($key->email != $value['email']){
-                            $details = [
-                                'name' => 'APPROVER - WAREHOUSE',
-                                'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                                'request_number' => $value['req_num'],
-                                'reqdate' => $value['req_date'],
-                                'requested_by' => $value['req_by'],
-                                'needdate' => $value['needdate'],
-                                'locfrom' => $locfrom,
-                                'locto' => $locto,
-                                'status' => $value['status'],
-                                'role' => 'Approver - Warehouse',
-                                'items' => $items
-                            ];
-                            Mail::to($sendTo)->send(new notifTransfer($details, $subject));
-                    //     }
-                    // }
+                    $details = [
+                        'name' => 'APPROVER - WAREHOUSE',
+                        'action' => 'is '.$difference.'-DAY/S PRIOR its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'request_number' => $value['req_num'],
+                        'reqdate' => $value['req_date'],
+                        'requested_by' => $value['req_by'],
+                        'needdate' => $value['needdate'],
+                        'locfrom' => $locfrom,
+                        'locto' => $locto,
+                        'status' => $value['status'],
+                        'role' => 'Approver - Warehouse',
+                        'items' => $items
+                    ];
+                    Mail::to($sendTo)->send(new notifTransfer($details, $subject));
                 }
                 unset($sendTo);
                 $details = [
@@ -3408,25 +3321,20 @@ class StockRequestController extends Controller
                 foreach($emails as $email){
                     $sendTo[] = $email['email'];
                 }
-                // $user = User::role('admin')->where('status','ACTIVE')->get();
-                // foreach($user as $key){
-                //     if($key->email != $value['email']){
-                        $details = [
-                            'name' => 'ADMIN',
-                            'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                            'request_number' => $value['req_num'],
-                            'reqdate' => $value['req_date'],
-                            'requested_by' => $value['req_by'],
-                            'needdate' => $value['needdate'],
-                            'locfrom' => $locfrom,
-                            'locto' => $locto,
-                            'status' => $value['status'],
-                            'role' => 'Admin',
-                            'items' => $items
-                        ];
-                        Mail::to($sendTo)->send(new notifTransfer($details, $subject));
-                //     }
-                // }
+                $details = [
+                    'name' => 'ADMIN',
+                    'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'request_number' => $value['req_num'],
+                    'reqdate' => $value['req_date'],
+                    'requested_by' => $value['req_by'],
+                    'needdate' => $value['needdate'],
+                    'locfrom' => $locfrom,
+                    'locto' => $locto,
+                    'status' => $value['status'],
+                    'role' => 'Admin',
+                    'items' => $items
+                ];
+                Mail::to($sendTo)->send(new notifTransfer($details, $subject));
                 unset($sendTo);
                 if($value['status'] == 'FOR APPROVAL'){
                     $emails = User::role('approver - warehouse')
@@ -3437,25 +3345,20 @@ class StockRequestController extends Controller
                     foreach($emails as $email){
                         $sendTo[] = $email['email'];
                     }
-                    // $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
-                    // foreach($user as $key){
-                    //     if($key->email != $value['email']){
-                            $details = [
-                                'name' => 'APPROVER - WAREHOUSE',
-                                'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                                'request_number' => $value['req_num'],
-                                'reqdate' => $value['req_date'],
-                                'requested_by' => $value['req_by'],
-                                'needdate' => $value['needdate'],
-                                'locfrom' => $locfrom,
-                                'locto' => $locto,
-                                'status' => $value['status'],
-                                'role' => 'Approver - Warehouse',
-                                'items' => $items
-                            ];
-                            Mail::to($sendTo)->send(new notifTransfer($details, $subject));
-                    //     }
-                    // }
+                    $details = [
+                        'name' => 'APPROVER - WAREHOUSE',
+                        'action' => 'is now DUE TODAY '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'request_number' => $value['req_num'],
+                        'reqdate' => $value['req_date'],
+                        'requested_by' => $value['req_by'],
+                        'needdate' => $value['needdate'],
+                        'locfrom' => $locfrom,
+                        'locto' => $locto,
+                        'status' => $value['status'],
+                        'role' => 'Approver - Warehouse',
+                        'items' => $items
+                    ];
+                    Mail::to($sendTo)->send(new notifTransfer($details, $subject));
                 }
                 unset($sendTo);
                 $details = [
@@ -3491,25 +3394,20 @@ class StockRequestController extends Controller
                 foreach($emails as $email){
                     $sendTo[] = $email['email'];
                 }
-                // $user = User::role('admin')->where('status','ACTIVE')->get();
-                // foreach($user as $key){
-                //     if($key->email != $value['email']){
-                        $details = [
-                            'name' => 'ADMIN',
-                            'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                            'request_number' => $value['req_num'],
-                            'reqdate' => $value['req_date'],
-                            'requested_by' => $value['req_by'],
-                            'needdate' => $value['needdate'],
-                            'locfrom' => $locfrom,
-                            'locto' => $locto,
-                            'status' => $value['status'],
-                            'role' => 'Admin',
-                            'items' => $items
-                        ];
-                        Mail::to($sendTo)->send(new notifTransfer($details, $subject));
-                //     }
-                // }
+                $details = [
+                    'name' => 'ADMIN',
+                    'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                    'request_number' => $value['req_num'],
+                    'reqdate' => $value['req_date'],
+                    'requested_by' => $value['req_by'],
+                    'needdate' => $value['needdate'],
+                    'locfrom' => $locfrom,
+                    'locto' => $locto,
+                    'status' => $value['status'],
+                    'role' => 'Admin',
+                    'items' => $items
+                ];
+                Mail::to($sendTo)->send(new notifTransfer($details, $subject));
                 unset($sendTo);
                 if($value['status'] == 'FOR APPROVAL'){
                     $emails = User::role('approver - warehouse')
@@ -3520,25 +3418,20 @@ class StockRequestController extends Controller
                     foreach($emails as $email){
                         $sendTo[] = $email['email'];
                     }
-                    // $user = User::role('approver - warehouse')->where('status','ACTIVE')->get();
-                    // foreach($user as $key){
-                    //     if($key->email != $value['email']){
-                            $details = [
-                                'name' => 'APPROVER - WAREHOUSE',
-                                'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
-                                'request_number' => $value['req_num'],
-                                'reqdate' => $value['req_date'],
-                                'requested_by' => $value['req_by'],
-                                'needdate' => $value['needdate'],
-                                'locfrom' => $locfrom,
-                                'locto' => $locto,
-                                'status' => $value['status'],
-                                'role' => 'Approver - Warehouse',
-                                'items' => $items
-                            ];
-                            Mail::to($sendTo)->send(new notifTransfer($details, $subject));
-                    //     }
-                    // }
+                    $details = [
+                        'name' => 'APPROVER - WAREHOUSE',
+                        'action' => 'is already OVERDUE past its deadline on '.Carbon::parse($value['needdate'])->isoformat('dddd, MMMM DD, YYYY').'.',
+                        'request_number' => $value['req_num'],
+                        'reqdate' => $value['req_date'],
+                        'requested_by' => $value['req_by'],
+                        'needdate' => $value['needdate'],
+                        'locfrom' => $locfrom,
+                        'locto' => $locto,
+                        'status' => $value['status'],
+                        'role' => 'Approver - Warehouse',
+                        'items' => $items
+                    ];
+                    Mail::to($sendTo)->send(new notifTransfer($details, $subject));
                 }
                 unset($sendTo);
                 $details = [

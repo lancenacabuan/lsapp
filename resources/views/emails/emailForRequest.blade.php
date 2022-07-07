@@ -3,7 +3,8 @@
 <body>
     <p>Hello, {{$details['name']}}!<br><br>
     @if($details['reqtype'] == 'FIXED ASSET')
-    A new <span style="color: red;"><strong>FIXED ASSET</strong></span> Stock Request has been submitted by Admin - {{$details['submitted_by']}}.<br></p>
+    A new <span style="color: red;"><strong>FIXED ASSET</strong></span> Stock Request has been submitted by Admin - {{$details['submitted_by']}} 
+    for the requested items of {{$details['requested_by']}}.<br></p>
     @else
     {{$details['action']}} is waiting for your approval.<br></p>
     @endif
@@ -14,7 +15,8 @@
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         @if($details['reqtype'] == 'FIXED ASSET')
         Requested By: {{$details['requested_by']}}<br>
-        Approved By: {{$details['approved_by']}}
+        Approved By: {{$details['approved_by']}}<br>
+        Submitted By: {{$details['submitted_by']}}
         @else
         Requested By: {{$details['requested_by']}}<br><br>
         Client Name: {{$details['client_name']}}<br>

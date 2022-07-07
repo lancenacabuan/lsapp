@@ -250,24 +250,21 @@ class MerchantController extends Controller
         foreach($emails as $email){
             $sendTo[] = $email['email'];
         }
-        // $user = User::role('accounting')->where('status','ACTIVE')->get();
-        // foreach($user as $key){
-            $details = [
-                'name' => 'ACCOUNTING',
-                'action' => 'MERCHANT STOCK REQUEST',
-                'request_number' => $request->request_number,
-                'reqdate' => $request_details->reqdate,
-                'requested_by' => $request_details->reqby,
-                'needdate' => $request_details->needdate,
-                'reqtype' => $request_details->reqtype,
-                'orderID' => $request_details->orderID,
-                'role' => 'Accounting',
-                'receipient' => 'accounting',
-                'items' => $items,
-                'files' => $attachments
-            ];
-            Mail::to($sendTo)->send(new merchantRequest($details, $subject));
-        // }
+        $details = [
+            'name' => 'ACCOUNTING',
+            'action' => 'MERCHANT STOCK REQUEST',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'needdate' => $request_details->needdate,
+            'reqtype' => $request_details->reqtype,
+            'orderID' => $request_details->orderID,
+            'role' => 'Accounting',
+            'receipient' => 'accounting',
+            'items' => $items,
+            'files' => $attachments
+        ];
+        Mail::to($sendTo)->send(new merchantRequest($details, $subject));
         unset($sendTo);
         $details = [
             'name' => auth()->user()->name,

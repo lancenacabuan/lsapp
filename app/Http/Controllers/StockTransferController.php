@@ -184,25 +184,19 @@ class StockTransferController extends Controller
         foreach($emails as $email){
             $sendTo[] = $email['email'];
         }
-        // $user = User::role('approver - warehouse')
-        //     ->where('status','ACTIVE')
-        //     ->where('company',auth()->user()->company)
-        //     ->get();
-        // foreach($user as $key){
-            $details = [
-                'name' => 'APPROVER - WAREHOUSE',
-                'action' => 'STOCK TRANSFER REQUEST',
-                'request_number' => $request->request_number,
-                'reqdate' => $request_details->reqdate,
-                'requested_by' => auth()->user()->name,
-                'needdate' => $request_details->needdate,
-                'locfrom' => $locfrom,
-                'locto' => $locto,
-                'role' => 'Approver - Warehouse',
-                'items' => $items
-            ];
-            Mail::to($sendTo)->send(new emailForTransfer($details, $subject));
-        // }
+        $details = [
+            'name' => 'APPROVER - WAREHOUSE',
+            'action' => 'STOCK TRANSFER REQUEST',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => auth()->user()->name,
+            'needdate' => $request_details->needdate,
+            'locfrom' => $locfrom,
+            'locto' => $locto,
+            'role' => 'Approver - Warehouse',
+            'items' => $items
+        ];
+        Mail::to($sendTo)->send(new emailForTransfer($details, $subject));
         unset($sendTo);
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
@@ -798,28 +792,23 @@ class StockTransferController extends Controller
             foreach($emails as $email){
                 $sendTo[] = $email['email'];
             }
-            // $user = User::role('admin')->where('status','ACTIVE')->get();
-            // foreach($user as $key){
-            //     if($key->email != $request_details->email){
-                    $details = [
-                        'name' => 'ADMIN',
-                        'action' => 'STOCK TRANSFER REQUEST',
-                        'request_number' => $request->request_number,
-                        'reqdate' => $request_details->reqdate,
-                        'requested_by' => $request_details->reqby,
-                        'needdate' => $request_details->needdate,
-                        'locfrom' => $locfrom,
-                        'locto' => $locto,
-                        'prepared_by' => $trans->prepby,
-                        'prepdate' => $request_details->prepdate,
-                        'scheddate' => $request_details->schedule,
-                        'receivedby' => auth()->user()->name,
-                        'role' => 'Admin',
-                        'items' => $items
-                    ];
-                    Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
-            //     }
-            // }
+            $details = [
+                'name' => 'ADMIN',
+                'action' => 'STOCK TRANSFER REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'locfrom' => $locfrom,
+                'locto' => $locto,
+                'prepared_by' => $trans->prepby,
+                'prepdate' => $request_details->prepdate,
+                'scheddate' => $request_details->schedule,
+                'receivedby' => auth()->user()->name,
+                'role' => 'Admin',
+                'items' => $items
+            ];
+            Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
             unset($sendTo);
             $emails = User::role('approver - warehouse')
                 ->where('status','ACTIVE')
@@ -829,31 +818,23 @@ class StockTransferController extends Controller
             foreach($emails as $email){
                 $sendTo[] = $email['email'];
             }
-            // $user = User::role('approver - warehouse')
-            //     ->where('status','ACTIVE')
-            //     ->where('company',auth()->user()->company)
-            //     ->get();
-            // foreach($user as $key){
-            //     if($key->email != $request_details->email){
-                    $details = [
-                        'name' => 'APPROVER - WAREHOUSE',
-                        'action' => 'STOCK TRANSFER REQUEST',
-                        'request_number' => $request->request_number,
-                        'reqdate' => $request_details->reqdate,
-                        'requested_by' => $request_details->reqby,
-                        'needdate' => $request_details->needdate,
-                        'locfrom' => $locfrom,
-                        'locto' => $locto,
-                        'prepared_by' => $trans->prepby,
-                        'prepdate' => $request_details->prepdate,
-                        'scheddate' => $request_details->schedule,
-                        'receivedby' => auth()->user()->name,
-                        'role' => 'Approver - Warehouse',
-                        'items' => $items
-                    ];
-                    Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
-            //     }
-            // }
+            $details = [
+                'name' => 'APPROVER - WAREHOUSE',
+                'action' => 'STOCK TRANSFER REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'locfrom' => $locfrom,
+                'locto' => $locto,
+                'prepared_by' => $trans->prepby,
+                'prepdate' => $request_details->prepdate,
+                'scheddate' => $request_details->schedule,
+                'receivedby' => auth()->user()->name,
+                'role' => 'Approver - Warehouse',
+                'items' => $items
+            ];
+            Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
             unset($sendTo);
             $details = [
                 'name' => $request_details->reqby,

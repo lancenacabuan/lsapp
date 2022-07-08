@@ -2215,7 +2215,7 @@ $("#btnProceed").unbind('click').click(function(){
 
 $('#btnBack').on('click', function(){
     var req_type_id = $('#req_type_id_details').val();
-    if(req_type_id == '4' || req_type_id == '5'){
+    if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6' || req_type_id == '7'){
         items = [];
     }
     $("#stockDetailsrequest *").prop('disabled', false);

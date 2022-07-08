@@ -21,7 +21,6 @@
         Received By: {{$details['received_by']}}<br>
         @if($details['token'] != '')
         <a href="{{ env('APP_URL_LIVE') }}receive?request_number={{$details['request_number']}}&token={{$details['token']}}"><h3>PLEASE CLICK HERE TO CONFIRM RECEIVED ITEMS</h3></a>
-        <br>
         @else
         <br>
         @endif
@@ -76,8 +75,9 @@
     </p>
     @if($details['role'] != '')
     <a href="{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number']}}">{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number']}}</a>
+    <br>
     @endif
-    <br><br>
+    <br>
     This is a system-generated email. Please do not reply.
     @else
     <p>Hello, {{$details['name']}}!<br><br>

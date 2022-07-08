@@ -116,8 +116,9 @@
     </p>
     @if($details['role'] != '')
     <a href="{{ env('APP_URL_LIVE') }}stockrequest?request_number={{$details['request_number']}}">{{ env('APP_URL_LIVE') }}stockrequest?request_number={{$details['request_number']}}</a>
+    <br>
     @endif
-    <br><br>
+    <br>
     This is a system-generated email. Please do not reply.
 </body>
 </html>

@@ -1,5 +1,13 @@
 @extends('layouts.app')
 @section('content')
+@role('sales|merchant|accounting|assembler|approver - sales|approver - warehouse') {{---ROLES---}}
+<script>
+    window.location = '/';
+</script>
+@endrole
+@role('admin|encoder|viewer') {{---ROLES---}}
+<script>$('#loading').hide(); Spinner.hide();</script>
+@endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
 <div class="container-fluid">
     <button id="btnPrint" type="button" class="btn btn-primary bp" style="margin-right: 5px;">PRINT</button>

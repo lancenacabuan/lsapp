@@ -18,6 +18,13 @@ use Yajra\Datatables\Datatables;
 class ConfirmReceiveController extends Controller
 {
     public function confirm(Request $request){
+        if(Requests::where('request_number', $request->request_number)->where('token', $request->token)->count() == 0){
+            return redirect()->to('/');
+        }
+        Requests::where('request_number', $request->request_number)
+            ->where('notify', '!=', 'Confirmed')
+            ->update(['notify' => 'Confirmed']);
+
         $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS req_date, requests.updated_at AS confirmdate, requests.request_number AS req_num, requests.requested_by AS user_id, users.name AS req_by, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, needdate, prepdate, requests.item_id AS item_id, qty, assembly_reqnum, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email')
             ->where('request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'requests.requested_by')

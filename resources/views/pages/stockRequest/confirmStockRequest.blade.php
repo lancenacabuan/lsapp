@@ -144,6 +144,8 @@ document.addEventListener("contextmenu", function(e){
 }, false);
 
 $(document).ready(function(){
+    var req_num = $('#req_num').val();
+    Swal.fire('RECEIVE CONFIRMED', 'Fixed Asset Stock Request '+req_num+' has been received successfully.', 'success');
     for(var i = 1; i <= 5; i++){
         $('#format_date'+i).html(moment($('#format_date'+i).html()).format('dddd, MMMM DD, YYYY'));
     }

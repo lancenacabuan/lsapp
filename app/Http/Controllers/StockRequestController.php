@@ -2094,6 +2094,20 @@ class StockRequestController extends Controller
             }
 
             if($request_details->req_type_id == '7'){
+                do{
+                    $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+                    $key = array();
+                    $charLength = strlen($char) - 1;
+                    for($i = 0; $i < 15; $i++){
+                        $n = rand(0, $charLength);
+                        $key[] = $char[$n];
+                    }
+                    $token = implode($key);
+                    Requests::where('request_number', $request->request_number)
+                        ->update(['token' => $token]);
+                }
+                while(Requests::query()->select()->where('token',$token)->count() > 1);
+
                 $subject = '[RECEIVED] STOCK REQUEST NO. '.$request->request_number;
 
                 $details = [
@@ -2112,6 +2126,7 @@ class StockRequestController extends Controller
                     'role' => 'Admin / Encoder',
                     'items' => $items,
                     'files' => array(),
+                    'token' => ''
                 ];
                 Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
 
@@ -2131,6 +2146,7 @@ class StockRequestController extends Controller
                     'role' => 'Admin / Encoder',
                     'items' => $items,
                     'files' => array(),
+                    'token' => ''
                 ];
                 Mail::to($request_details->email)->send(new receivedRequest($details, $subject));
 
@@ -2150,6 +2166,7 @@ class StockRequestController extends Controller
                     'role' => '',
                     'items' => $items,
                     'files' => array(),
+                    'token' => $token
                 ];
                 Mail::to($request_details->asset_reqby_email)->send(new receivedRequest($details, $subject));
 
@@ -2169,6 +2186,7 @@ class StockRequestController extends Controller
                     'role' => '',
                     'items' => $items,
                     'files' => array(),
+                    'token' => ''
                 ];
                 Mail::to($request_details->asset_apvby_email)->send(new receivedRequest($details, $subject));
 

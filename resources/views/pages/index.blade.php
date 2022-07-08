@@ -1,12 +1,5 @@
 @extends('layouts.app')
 @section('content')
-@php
-$stocks = DB::table('stocks')->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly','asset'])->get()->count();
-$belowmin = count($list);
-$stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10','14','19','26','29'])->get()->count();
-$stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
-$defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->count();
-@endphp
 @role('admin|encoder|viewer') {{---ROLES---}}
 <div class="row" style="text-align: center; height: 200px;">
     <div class="col-sm-1"></div>

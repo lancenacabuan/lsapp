@@ -52,13 +52,18 @@ class PagesController extends Controller
         {
             return redirect('/merchant');
         }
-        $stocks = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
+        $stocks = DB::table('stocks')->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly','asset'])->get()->count();
+        $stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10','14','19','26','29'])->get()->count();
+        $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
+        $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->count();
+        $items = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
                 DB::raw("SUM(CASE 
                     WHEN stocks.status = 'in' THEN 1
                     WHEN stocks.status = 'defectives' THEN 1
                     WHEN stocks.status = 'FOR RECEIVING' THEN 1
                     WHEN stocks.status = 'demo' THEN 1
                     WHEN stocks.status = 'assembly' THEN 1
+                    WHEN stocks.status = 'asset' THEN 1
                     ELSE 0 END
                 ) as Current_stocks"))
             ->join('categories', 'categories.id', 'items.category_id')
@@ -68,13 +73,14 @@ class PagesController extends Controller
             ->orderBy('Item', 'ASC')
             ->get();
         
-        foreach($stocks as $stock){
-            if($stock->Current_stocks <= $stock->Minimum_stocks){
-                $list[]=$stock;
+        foreach($items as $item){
+            if($item->Current_stocks <= $item->Minimum_stocks){
+                $array[]=$item;
             }
         }
+        $belowmin = count($array);
 
-        return view('pages/index', compact('list'));
+        return view('pages/index', compact('stocks','stockrequest','stocktransfer','defective','belowmin'));
     }
 
     public function logs(){
@@ -89,6 +95,7 @@ class PagesController extends Controller
                     WHEN stocks.status = 'FOR RECEIVING' THEN 1
                     WHEN stocks.status = 'demo' THEN 1
                     WHEN stocks.status = 'assembly' THEN 1
+                    WHEN stocks.status = 'asset' THEN 1
                     ELSE 0 END
                 ) as Current_stocks"))
             ->join('categories', 'categories.id', 'items.category_id')

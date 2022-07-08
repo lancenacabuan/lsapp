@@ -494,20 +494,22 @@ class StockRequestController extends Controller
             'files' => $attachments
         ];
         Mail::to(auth()->user()->email)->send(new emailForRequest($details, $subject));
-        $details = [
-            'name' => $request_details->asset_reqby,
-            'request_number' => $request->request_number,
-            'reqtype' => $request_details->reqtype,
-            'reqdate' => $request_details->reqdate,
-            'needdate' => $request_details->needdate,
-            'submitted_by' => auth()->user()->name,
-            'requested_by' => $request_details->asset_reqby,
-            'approved_by' => $request_details->asset_apvby,
-            'role' => '',
-            'items' => $items,
-            'files' => $attachments
-        ];
-        Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
+        if(auth()->user()->email != $request_details->asset_reqby_email){
+            $details = [
+                'name' => $request_details->asset_reqby,
+                'request_number' => $request->request_number,
+                'reqtype' => $request_details->reqtype,
+                'reqdate' => $request_details->reqdate,
+                'needdate' => $request_details->needdate,
+                'submitted_by' => auth()->user()->name,
+                'requested_by' => $request_details->asset_reqby,
+                'approved_by' => $request_details->asset_apvby,
+                'role' => '',
+                'items' => $items,
+                'files' => $attachments
+            ];
+            Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
+        }
         $details = [
             'name' => $request_details->asset_apvby,
             'request_number' => $request->request_number,
@@ -2129,25 +2131,27 @@ class StockRequestController extends Controller
                 ];
                 Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
 
-                $details = [
-                    'name' => $request_details->reqby,
-                    'request_number' => $request->request_number,
-                    'reqdate' => $request_details->reqdate,
-                    'needdate' => $request_details->needdate,
-                    'prepdate' => $request_details->prepdate,
-                    'scheddate' => $request_details->schedule,
-                    'reqtype' => $request_details->reqtype,
-                    'submitted_by' => $request_details->reqby,
-                    'requested_by' => $request_details->asset_reqby,
-                    'approved_by' => $request_details->asset_apvby,
-                    'prepared_by' => $prep->prepby,
-                    'received_by' => auth()->user()->name,
-                    'role' => 'Admin / Encoder',
-                    'items' => $items,
-                    'files' => $attachments,
-                    'token' => ''
-                ];
-                Mail::to($request_details->email)->send(new receivedRequest($details, $subject));
+                if(auth()->user()->email != $request_details->email){
+                    $details = [
+                        'name' => $request_details->reqby,
+                        'request_number' => $request->request_number,
+                        'reqdate' => $request_details->reqdate,
+                        'needdate' => $request_details->needdate,
+                        'prepdate' => $request_details->prepdate,
+                        'scheddate' => $request_details->schedule,
+                        'reqtype' => $request_details->reqtype,
+                        'submitted_by' => $request_details->reqby,
+                        'requested_by' => $request_details->asset_reqby,
+                        'approved_by' => $request_details->asset_apvby,
+                        'prepared_by' => $prep->prepby,
+                        'received_by' => auth()->user()->name,
+                        'role' => 'Admin / Encoder',
+                        'items' => $items,
+                        'files' => $attachments,
+                        'token' => ''
+                    ];
+                    Mail::to($request_details->email)->send(new receivedRequest($details, $subject));
+                }
 
                 $details = [
                     'name' => $request_details->asset_reqby,

@@ -2109,7 +2109,6 @@ class StockRequestController extends Controller
                 while(Requests::query()->select()->where('token',$token)->count() > 1);
 
                 $subject = '[RECEIVED] STOCK REQUEST NO. '.$request->request_number;
-
                 $details = [
                     'name' => auth()->user()->name,
                     'request_number' => $request->request_number,
@@ -2125,7 +2124,7 @@ class StockRequestController extends Controller
                     'received_by' => auth()->user()->name,
                     'role' => 'Admin / Encoder',
                     'items' => $items,
-                    'files' => array(),
+                    'files' => $attachments,
                     'token' => ''
                 ];
                 Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
@@ -2145,7 +2144,7 @@ class StockRequestController extends Controller
                     'received_by' => auth()->user()->name,
                     'role' => 'Admin / Encoder',
                     'items' => $items,
-                    'files' => array(),
+                    'files' => $attachments,
                     'token' => ''
                 ];
                 Mail::to($request_details->email)->send(new receivedRequest($details, $subject));
@@ -2165,7 +2164,7 @@ class StockRequestController extends Controller
                     'received_by' => auth()->user()->name,
                     'role' => '',
                     'items' => $items,
-                    'files' => array(),
+                    'files' => $attachments,
                     'token' => $token
                 ];
                 Mail::to($request_details->asset_reqby_email)->send(new receivedRequest($details, $subject));
@@ -2185,7 +2184,7 @@ class StockRequestController extends Controller
                     'received_by' => auth()->user()->name,
                     'role' => '',
                     'items' => $items,
-                    'files' => array(),
+                    'files' => $attachments,
                     'token' => ''
                 ];
                 Mail::to($request_details->asset_apvby_email)->send(new receivedRequest($details, $subject));

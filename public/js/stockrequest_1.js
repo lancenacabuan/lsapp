@@ -1935,6 +1935,7 @@ $("#btnProceed").unbind('click').click(function(){
     $("#stockDetailsrequest *").prop('disabled', true);
     $("#proceed_label").hide();
     $("#btnProceed").hide();
+    $("#btnDelete").hide();
     $("#reqContents").empty();
     $("#requestItems").slideDown();
     // $('#schedOn').attr('max', maxDate);
@@ -2223,6 +2224,7 @@ $('#btnBack').on('click', function(){
     $("#requestItems").hide();
     $("#schedOn").val('');
     $("#btnProceed").show();
+    $("#btnDelete").show();
 });
 
 $("#btnSale").unbind('click').click(function(){

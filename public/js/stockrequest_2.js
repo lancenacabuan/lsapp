@@ -703,6 +703,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#incItemsModal").show();
                         $(".divResched1").show();
                         $("#incFooter").hide();
+                        if(req_type_id == '7'){
+                            $('#increceive_label').show();
+                            $("#inc2Footer").show();
+                        }
                     }
                     if(requestStatus == '17' && $("#current_role").val() == 'sales'){
                         $('#increceive_label').show();
@@ -1996,6 +2000,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#incItemsModal").show();
             $(".divResched1").show();
             $("#incFooter").hide();
+            if(req_type_id == '7'){
+                $('#increceive_label').show();
+                $("#inc2Footer").show();
+            }
         }
         if(requestStatus == '17' && $("#current_role").val() == 'sales'){
             $('#increceive_label').show();

@@ -1864,6 +1864,7 @@ $('.transItems1 tbody').on('click', 'tr td:not(:nth-child(6))', function(){
 
 $('.table.incItems').DataTable().on('select', function(){});
 $('.incItems tbody').on('click', 'tr', function(){
+    var req_type_id = $('#req_type_id_details').val();
     var requestStatus = $('#status_id_details').val();
     if((requestStatus == '11' || requestStatus == '25' || requestStatus == '27' || requestStatus == '28' || requestStatus == '18' || requestStatus == '21') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){
         var table = $('table.incItems').DataTable();
@@ -1886,7 +1887,7 @@ $('.incItems tbody').on('click', 'tr', function(){
             $('#btnReceiveDfc').prop('disabled', false);
         }
     }
-    if(requestStatus == '17' && $("#current_role").val() == 'sales'){
+    if(requestStatus == '17' && (($("#current_role").val() == 'sales') || (($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder') && req_type_id == '7'))){
         var table = $('table.incItems').DataTable();
         var data = table.row(this).data();
         item_count = table.data().count();

@@ -500,6 +500,12 @@
             </div>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
+            <div id="increceive_label" class="alert alert-primary" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+            </div>
+            @endrole
+            @role('admin|encoder') {{---ROLES---}}
             <div id="retreceive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
@@ -554,6 +560,14 @@
             <span class="float-right rcvShow" style="width: 10px; display: none;">&nbsp;</span>
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="showMore" style="display: none;" value="SHOW DETAILS">
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="showLess" style="display: none;" value="HIDE DETAILS">
+            <br>
+            <br>
+            </div>
+            @endrole
+            @role('admin|encoder') {{---ROLES---}}
+            <div id="inc2Footer" style="display: none">
+            <hr>
+            <button type="button" class="btn btn-primary float-right bp btnReceive" disabled>RECEIVE</button>
             <br>
             <br>
             </div>

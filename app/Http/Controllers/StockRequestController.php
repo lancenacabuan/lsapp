@@ -1294,7 +1294,7 @@ class StockRequestController extends Controller
     }
 
     public function reschedRequest(Request $request){
-        if($request->request_type == '4' || $request->request_type == '5'){
+        if($request->request_type == '4' || $request->request_type == '5' || $request->request_type == '7'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
                     ->update(['status' => '17', 'prepared_by' => auth()->user()->id, 'schedule' => $request->resched]);

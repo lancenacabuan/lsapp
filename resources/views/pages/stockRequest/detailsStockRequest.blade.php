@@ -254,6 +254,7 @@
             <input type="button" class="btn btn-primary bp mt-4" id="btnDisapprove" value="DISAPPROVE">
             @endrole
             @role('admin|encoder') {{---ROLES---}}
+            <button type="button" id="btnDelete" class="btn btn-danger bp mt-4" style="display: none;">DELETE</button>
             <input type="button" class="btn btn-primary float-right bp my-4" id="btnProceed" value="PROCEED" disabled>
             <button type="button" id="btnDefDetails" class="btn btn-primary float-right bp my-4 rcvDef" style="display: none;">DEFECTIVE DETAILS</button>
             @endrole

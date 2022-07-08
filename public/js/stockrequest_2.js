@@ -320,6 +320,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#qty_details').val(qty);
                 var status = value.status;
                     $('#status_details').val(status);
+                    if(status == 'RECEIVED' && value.notify == 'Confirmed'){
+                        $('#status_details').val(status+' CONFIRMED');
+                    }
                 var prep_by = value.prep_by;
                     $('#prep_by').val(prep_by);
                     $('#prep_by1').val(prep_by);
@@ -757,6 +760,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#btnDelete").hide();
                         $("#sd1").show();
                         $("#sd2").remove();
+                    }
+                    if(req_type_id == '7' && requestStatus == '1'){
+                        $("#btnDelete").show();
                     }
                     if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24'){
                         var targetStockDetails = [6,7,8,9,10];
@@ -1607,6 +1613,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#qty_details').val(qty);
     var status = value.status;
         $('#status_details').val(status);
+        if(status == 'RECEIVED' && value.notify == 'Confirmed'){
+            $('#status_details').val(status+' CONFIRMED');
+        }
     var prep_by = value.prep_by;
         $('#prep_by').val(prep_by);
         $('#prep_by1').val(prep_by);
@@ -2044,6 +2053,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#btnDelete").hide();
             $("#sd1").show();
             $("#sd2").remove();
+        }
+        if(req_type_id == '7' && requestStatus == '1'){
+            $("#btnDelete").show();
         }
         if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24'){
             var targetStockDetails = [6,7,8,9,10];

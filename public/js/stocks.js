@@ -37,6 +37,7 @@ $(document).ready(function(){
                 { data: 'Defective', width: '9%' },
                 { data: 'Demo', width: '7%' },
                 { data: 'Assembly', width: '9%' },
+                { data: 'Asset', width: '10%' },
                 { data: 'A1', width: '6%' },
                 { data: 'A2', width: '6%' },
                 { data: 'A3', width: '6%' },
@@ -87,11 +88,12 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
                 }
             },
             columns: [
-                { data: 'ProdCode', width: '15%' },
+                { data: 'ProdCode', width: '10%' },
                 { data: 'Item' },
                 { data: 'Defective', width: '8%' },
                 { data: 'Demo', width: '6%' },
                 { data: 'Assembly', width: '8%' },
+                { data: 'Asset', width: '9%' },
                 { data: 'A1', width: '5%' },
                 { data: 'A2', width: '5%' },
                 { data: 'A3', width: '5%' },
@@ -146,11 +148,12 @@ $('#btnBack').on('click', function(){
                 }
             },
             columns: [
-                { data: 'ProdCode', width: '15%' },
+                { data: 'ProdCode', width: '10%' },
                 { data: 'Item' },
                 { data: 'Defective', width: '8%' },
                 { data: 'Demo', width: '6%' },
                 { data: 'Assembly', width: '8%' },
+                { data: 'Asset', width: '9%' },
                 { data: 'A1', width: '5%' },
                 { data: 'A2', width: '5%' },
                 { data: 'A3', width: '5%' },

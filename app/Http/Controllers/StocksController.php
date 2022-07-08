@@ -60,13 +60,14 @@ class StocksController extends Controller
                     SUM(CASE WHEN stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' THEN 1 ELSE 0 END) as Defective,
                     SUM(CASE WHEN stocks.status = 'demo' THEN 1 ELSE 0 END) as Demo,
                     SUM(CASE WHEN stocks.status = 'assembly' THEN 1 ELSE 0 END) as Assembly,
+                    SUM(CASE WHEN stocks.status = 'asset' THEN 1 ELSE 0 END) as Asset,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '1' THEN 1 ELSE 0 END) as A1,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '2' THEN 1 ELSE 0 END) as A2,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '3' THEN 1 ELSE 0 END) as A3,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '4' THEN 1 ELSE 0 END) as A4,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '5' THEN 1 ELSE 0 END) as Balintawak,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '6' THEN 1 ELSE 0 END) as Malabon,
-                    SUM(CASE WHEN stocks.status = 'in' OR stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' OR stocks.status = 'demo' OR stocks.status = 'assembly' THEN 1 ELSE 0 END) as Total_stocks
+                    SUM(CASE WHEN stocks.status = 'in' OR stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' OR stocks.status = 'demo' OR stocks.status = 'assembly' OR stocks.status = 'asset' THEN 1 ELSE 0 END) as Total_stocks
                 ")
             )
             ->join('items', 'items.category_id', 'categories.id')
@@ -81,7 +82,7 @@ class StocksController extends Controller
                 DB::raw
                 ("
                     minimum as Minimum_stocks,
-                    SUM(CASE WHEN stocks.status = 'in' OR stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' OR stocks.status = 'demo' OR stocks.status = 'assembly' THEN 1 ELSE 0 END) as Total_stocks
+                    SUM(CASE WHEN stocks.status = 'in' OR stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' OR stocks.status = 'demo' OR stocks.status = 'assembly' OR stocks.status = 'asset' THEN 1 ELSE 0 END) as Total_stocks
                 ")
             )
             ->where('items.category_id', $value['id'])
@@ -108,13 +109,14 @@ class StocksController extends Controller
                     SUM(CASE WHEN stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' THEN 1 ELSE 0 END) as Defective,
                     SUM(CASE WHEN stocks.status = 'demo' THEN 1 ELSE 0 END) as Demo,
                     SUM(CASE WHEN stocks.status = 'assembly' THEN 1 ELSE 0 END) as Assembly,
+                    SUM(CASE WHEN stocks.status = 'asset' THEN 1 ELSE 0 END) as Asset,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '1' THEN 1 ELSE 0 END) as A1,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '2' THEN 1 ELSE 0 END) as A2,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '3' THEN 1 ELSE 0 END) as A3,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '4' THEN 1 ELSE 0 END) as A4,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '5' THEN 1 ELSE 0 END) as Balintawak,
                     SUM(CASE WHEN stocks.status = 'in' AND stocks.location_id = '6' THEN 1 ELSE 0 END) as Malabon,
-                    SUM(CASE WHEN stocks.status = 'in' OR stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' OR stocks.status = 'demo' OR stocks.status = 'assembly' THEN 1 ELSE 0 END) as Total_stocks
+                    SUM(CASE WHEN stocks.status = 'in' OR stocks.status = 'defectives' OR stocks.status = 'FOR RECEIVING' OR stocks.status = 'demo' OR stocks.status = 'assembly' OR stocks.status = 'asset' THEN 1 ELSE 0 END) as Total_stocks
                 ")
             )
             ->where('items.category_id', $request->CategoryId)
@@ -152,11 +154,12 @@ class StocksController extends Controller
                         WHEN stocks.status = "FOR RECEIVING" THEN "DEFECTIVE (RETURNED)"
                         WHEN stocks.status = "demo" THEN "DEMO"
                         WHEN stocks.status = "assembly" THEN "ASSEMBLY"
+                        WHEN stocks.status = "asset" THEN "FIXED ASSET"
                         ELSE location END
                     )AS location
                 ')
                 ->where('item_id', $request->ItemId)
-                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
+                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly','asset'])
                 ->join('items', 'items.id', 'item_id')
                 ->join('categories', 'categories.id', 'category_id')
                 ->join('locations', 'locations.id', 'location_id')
@@ -178,11 +181,12 @@ class StocksController extends Controller
                         WHEN stocks.status = "FOR RECEIVING" THEN "DEFECTIVE (RETURNED)"
                         WHEN stocks.status = "demo" THEN "DEMO"
                         WHEN stocks.status = "assembly" THEN "ASSEMBLY"
+                        WHEN stocks.status = "asset" THEN "FIXED ASSET"
                         ELSE location END
                     )AS location
                 ')
                 ->where('item_id', $request->ItemId)
-                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
+                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly','asset'])
                 ->join('items', 'items.id', 'item_id')
                 ->join('categories', 'categories.id', 'category_id')
                 ->join('locations', 'locations.id', 'location_id')
@@ -211,13 +215,14 @@ class StocksController extends Controller
                         WHEN stocks.status = "FOR RECEIVING" THEN "DEFECTIVE (RETURNED)"
                         WHEN stocks.status = "demo" THEN "DEMO"
                         WHEN stocks.status = "assembly" THEN "ASSEMBLY"
+                        WHEN stocks.status = "asset" THEN "FIXED ASSET"
                         ELSE location END
                     )AS location
                 ')
                 ->where('serial', 'like', '%'.$request->serial.'%')
                 ->where('serial', '!=', 'N/A')
                 ->where('UOM', 'Unit')
-                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly'])
+                ->whereIn('stocks.status', ['in','defectives','FOR RECEIVING','demo','assembly','asset'])
                 ->join('items', 'items.id', 'item_id')
                 ->join('categories', 'categories.id', 'category_id')
                 ->join('locations', 'locations.id', 'location_id')
@@ -243,6 +248,7 @@ class StocksController extends Controller
                     WHEN stocks.status = 'FOR RECEIVING' THEN 1
                     WHEN stocks.status = 'demo' THEN 1
                     WHEN stocks.status = 'assembly' THEN 1
+                    WHEN stocks.status = 'asset' THEN 1
                     ELSE 0 END
                 ) as Current_stocks"))
             ->join('categories', 'categories.id', 'items.category_id')

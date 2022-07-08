@@ -28,11 +28,12 @@
                 <th>DEFECTIVE</th>
                 <th>DEMO</th>
                 <th>ASSEMBLY</th>
+                <th>FIXED ASSET</th>
                 <th>A1</th>
                 <th>A2</th>
                 <th>A3</th>
                 <th>A4</th>
-                <th>BALINTAWAK</th> 
+                <th>BALINTAWAK</th>
                 <th>MALABON</th>
                 <th>TOTAL STOCKS</th>
             </tr>
@@ -48,11 +49,12 @@
                 <th>DEFECTIVE</th>
                 <th>DEMO</th>
                 <th>ASSEMBLY</th>
+                <th>FIXED ASSET</th>
                 <th>A1</th>
                 <th>A2</th>
                 <th>A3</th>
                 <th>A4</th>
-                <th>BALINTAWAK</th> 
+                <th>BALINTAWAK</th>
                 <th>MALABON</th>
                 <th>TOTAL STOCKS</th>
             </tr>
@@ -148,7 +150,7 @@
     .dt-buttons{
         display: none;
     }
-    .text-control {
+    .text-control{
         width: 100%;
         padding: 0.375rem 0.75rem;
         font-size: 1rem;
@@ -163,7 +165,7 @@
         appearance: none;
         border-radius: 0.25rem;
         transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
+    }
 </style>
 @include('pages.stocks.addStock')
 @include('pages.stocks.importStock')

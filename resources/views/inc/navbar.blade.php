@@ -11,7 +11,7 @@
             @endrole
             @role('admin|encoder|viewer|sales|approver - sales|accounting') {{---ROLES---}}
             <li class="nav-item">
-                <a class="nav-link n {{ Request::is('stockrequest') || Request::is('printRequest') ? 'active' : '' }}" href="{{ url('/stockrequest') }}">STOCK REQUEST</a>
+                <a class="nav-link n {{ Request::is('stockrequest') || Request::is('printRequest') || Request::is('receive') ? 'active' : '' }}" href="{{ url('/stockrequest') }}">STOCK REQUEST</a>
             </li>
             @endrole
             @role('admin|encoder|viewer|approver - warehouse') {{---ROLES---}}

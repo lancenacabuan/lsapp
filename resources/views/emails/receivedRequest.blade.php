@@ -18,11 +18,12 @@
         Approved By: {{$details['approved_by']}}<br>
         Submitted By: {{$details['submitted_by']}}<br>
         Prepared By: {{$details['prepared_by']}}<br>
-        Received By: {{$details['received_by']}}
-        <br><br>
+        Received By: {{$details['received_by']}}<br>
         @if($details['token'] != '')
         <a href="{{ env('APP_URL_LIVE') }}receive?request_number={{$details['request_number']}}&token={{$details['token']}}"><h3>PLEASE CLICK HERE TO CONFIRM RECEIVED ITEMS</h3></a>
-        <br><br>
+        <br>
+        @else
+        <br>
         @endif
         <strong>RECEIVED ITEMS</strong>
         <br>

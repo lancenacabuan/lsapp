@@ -222,6 +222,7 @@ $(".btnNewStockRequest").on('click', function(){
 setInterval(runFunction, 0);
 function runFunction(){
     if($('#newStockRequest').is(':visible') && $("#current_role").val() == 'sales'){
+        var check1, check2, check3;
         var needdate = $('#needdate').val();
         var request_type = $('#request_type').val();
         var client_name = $.trim($('#client_name').val());
@@ -230,25 +231,51 @@ function runFunction(){
         var remarks = $.trim($('#remarks').val());
         var reference = $.trim($('#reference').val());
         var reference_upload = $('#reference_upload').val();
+        var asset_reqby_email = $.trim($('#asset_reqby_email').val()).toLowerCase();
+        var asset_reqby_verify = $.trim($('#asset_reqby_verify').val()).toLowerCase();
         if($('.reference_field').is(':visible')){
-            if(needdate && request_type && client_name && location_name && contact && reference && reference_upload){
-                $('#requestDetails').show();
+            if(needdate && request_type && client_name && location_name && contact && reference && reference_upload && asset_reqby_email && asset_reqby_verify){
                 $('.header_label').hide();
+                check1 = true;
             }
             else{
-                $('#requestDetails').hide();
                 $('.header_label').show();
+                check1 = false;
             }
         }
         else{
-            if(needdate && request_type && client_name && location_name && contact){
-                $('#requestDetails').show();
+            if(needdate && request_type && client_name && location_name && contact && asset_reqby_email && asset_reqby_verify){
                 $('.header_label').hide();
+                check1 = true;
             }
             else{
-                $('#requestDetails').hide();
                 $('.header_label').show();
+                check1 = false;
             }
+        }
+        if(asset_reqby_email && !validateEmail(asset_reqby_email)){
+            $('#valid_text').html('Client Email Address has an invalid format!');
+            $('.valid_label').show();
+            check2 = false;
+        }
+        else{
+            $('.valid_label').hide();
+            check2 = true;
+        }
+        if(asset_reqby_email && asset_reqby_verify && asset_reqby_email != asset_reqby_verify){
+            $('#verify_text').html('Client Email Address does not match the re-entered email confirmation text field!');
+            $('.verify_label').show();
+            check3 = false;
+        }
+        else{
+            $('.verify_label').hide();
+            check3 = true;
+        }
+        if(check1 == true && check2 == true && check3 == true){
+            $('#requestDetails').show();
+        }
+        else{
+            $('#requestDetails').hide();
         }
     }
     if($('#newStockRequest').is(':visible') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){
@@ -813,130 +840,160 @@ $('#btnSave').on('click', function(){
         var location_name = $.trim($('#location').val());
         var contact = $.trim($('#contact').val());
         var remarks = $.trim($('#remarks').val());
+        var asset_reqby_email = $.trim($('#asset_reqby_email').val()).toLowerCase();
+        var asset_reqby_verify = $.trim($('#asset_reqby_verify').val()).toLowerCase();
         var reference = ($.trim($('#reference').val()).toUpperCase().split("\n")).join(', ');
         var reference_upload = $('#reference_upload').val();
-        if(needdate < minDate){
-            Swal.fire('Minimum Date is today!','Select within date range from today onwards.','error');
-            return false;
-        }
-        Swal.fire({
-            title: "SUBMIT STOCK REQUEST?",
-            text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
-            icon: "warning",
-            showCancelButton: true,
-            cancelButtonColor: '#3085d6',
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'Confirm',
-            allowOutsideClick: false
-        })
-        .then((result) => {
-            if(result.isConfirmed){
+        $('#loading').show(); Spinner(); Spinner.show();
+        setTimeout(function(){
+            if(asset_reqby_email && asset_reqby_verify && validateEmail(asset_reqby_email) && asset_reqby_email == asset_reqby_verify){
                 $.ajax({
-                    type:'post',
-                    url:'/saveReqNum',
-                    async: false,
                     headers:{
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        Authorization: "Bearer " + apiKey
                     },
-                    data:{
-                        'request_number': $('#request_num').val(),
-                        'needdate': needdate,
-                        'request_type': request_type,
-                        'client_name': client_name,
-                        'location': location_name,
-                        'contact': contact,
-                        'remarks': remarks,
-                        'reference': reference
-                    },
+                    async: false,
+                    type: 'GET',
+                    url: 'https://isitarealemail.com/api/email/validate?email='+asset_reqby_email,
                     success: function(data){
-                        if(data == 'true'){
-                            var myTable = $('#stockRequestTable').DataTable();
-                            var form_data  = myTable.rows().data();
-                            $.each(form_data, function(key, value){
-                                $.ajax({
-                                    type:'post',
-                                    url:'/saveRequest',
-                                    async: false,
-                                    headers:{
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    data:{
-                                        'request_number': $('#request_num').val(),
-                                        'category': value[0],
-                                        'item': value[1],
-                                        'warranty': value[2],
-                                        'quantity': value[6]
-                                    },
-                                    success: function(data){
-                                        if(data == 'true'){
-                                            return true;
-                                        }
-                                        else{
-                                            return false;
-                                        }
-                                    },
-                                    error: function(data){
-                                        if(data.status == 401){
-                                            window.location.href = '/stockrequest';
-                                        }
-                                        alert(data.responseText);
-                                    }
-                                });
-                            });
-                            if(!reference_upload){
-                                scrollReset();
-                                $('#newStockRequest').modal('hide');
-                                $('#loading').show(); Spinner(); Spinner.show();
-                                $.ajax({
-                                    type:'post',
-                                    url:'/logSave',
-                                    headers:{
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    data:{
-                                        'request_number': $('#request_num').val()
-                                    },
-                                    success: function(data){
-                                        if(data == 'true'){
-                                            $('#loading').hide(); Spinner.hide();
-                                            Swal.fire("SUBMIT SUCCESS", "STOCK REQUEST", "success");
-                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
-                                        }
-                                        else{
-                                            $('#loading').hide(); Spinner.hide();
-                                            Swal.fire("SUBMIT FAILED", "STOCK REQUEST", "error");
-                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
-                                        }
-                                    },
-                                    error: function(data){
-                                        if(data.status == 401){
-                                            window.location.href = '/stockrequest';
-                                        }
-                                        alert(data.responseText);
-                                    }
-                                });
-                            }
-                            else{
-                                $('#newStockRequest').modal('hide');
-                                $('#loading').show(); Spinner(); Spinner.show();
-                                $('#btnUpload').click();
-                            }
+                        if(data.status == 'invalid'){
+                            email1 = false;
                         }
                         else{
-                            $('#newStockRequest').hide();
-                            Swal.fire("SUBMIT FAILED", "STOCK REQUEST", "error");
-                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                            email1 = true;
                         }
-                    },
-                    error: function(data){
-                        if(data.status == 401){
-                            window.location.href = '/stockrequest';
-                        }
-                        alert(data.responseText);
                     }
                 });
+                if(email1 == false){
+                    Swal.fire('NON-EXISTENT EMAIL','Client Email Address does not exist!','error');
+                    $('#loading').hide(); Spinner.hide();
+                    return false;
+                }
+                $('#loading').hide(); Spinner.hide();
             }
-        });
+            if(needdate < minDate){
+                Swal.fire('Minimum Date is today!','Select within date range from today onwards.','error');
+                return false;
+            }
+            Swal.fire({
+                title: "SUBMIT STOCK REQUEST?",
+                text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
+                icon: "warning",
+                showCancelButton: true,
+                cancelButtonColor: '#3085d6',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Confirm',
+                allowOutsideClick: false
+            })
+            .then((result) => {
+                if(result.isConfirmed){
+                    $.ajax({
+                        type:'post',
+                        url:'/saveReqNum',
+                        async: false,
+                        headers:{
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data:{
+                            'request_number': $('#request_num').val(),
+                            'needdate': needdate,
+                            'request_type': request_type,
+                            'client_name': client_name,
+                            'location': location_name,
+                            'contact': contact,
+                            'remarks': remarks,
+                            'asset_reqby_email': asset_reqby_email,
+                            'reference': reference
+                        },
+                        success: function(data){
+                            if(data == 'true'){
+                                var myTable = $('#stockRequestTable').DataTable();
+                                var form_data  = myTable.rows().data();
+                                $.each(form_data, function(key, value){
+                                    $.ajax({
+                                        type:'post',
+                                        url:'/saveRequest',
+                                        async: false,
+                                        headers:{
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        data:{
+                                            'request_number': $('#request_num').val(),
+                                            'category': value[0],
+                                            'item': value[1],
+                                            'warranty': value[2],
+                                            'quantity': value[6]
+                                        },
+                                        success: function(data){
+                                            if(data == 'true'){
+                                                return true;
+                                            }
+                                            else{
+                                                return false;
+                                            }
+                                        },
+                                        error: function(data){
+                                            if(data.status == 401){
+                                                window.location.href = '/stockrequest';
+                                            }
+                                            alert(data.responseText);
+                                        }
+                                    });
+                                });
+                                if(!reference_upload){
+                                    scrollReset();
+                                    $('#newStockRequest').modal('hide');
+                                    $('#loading').show(); Spinner(); Spinner.show();
+                                    $.ajax({
+                                        type:'post',
+                                        url:'/logSave',
+                                        headers:{
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        data:{
+                                            'request_number': $('#request_num').val()
+                                        },
+                                        success: function(data){
+                                            if(data == 'true'){
+                                                $('#loading').hide(); Spinner.hide();
+                                                Swal.fire("SUBMIT SUCCESS", "STOCK REQUEST", "success");
+                                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                            }
+                                            else{
+                                                $('#loading').hide(); Spinner.hide();
+                                                Swal.fire("SUBMIT FAILED", "STOCK REQUEST", "error");
+                                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                            }
+                                        },
+                                        error: function(data){
+                                            if(data.status == 401){
+                                                window.location.href = '/stockrequest';
+                                            }
+                                            alert(data.responseText);
+                                        }
+                                    });
+                                }
+                                else{
+                                    $('#newStockRequest').modal('hide');
+                                    $('#loading').show(); Spinner(); Spinner.show();
+                                    $('#btnUpload').click();
+                                }
+                            }
+                            else{
+                                $('#newStockRequest').hide();
+                                Swal.fire("SUBMIT FAILED", "STOCK REQUEST", "error");
+                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                            }
+                        },
+                        error: function(data){
+                            if(data.status == 401){
+                                window.location.href = '/stockrequest';
+                            }
+                            alert(data.responseText);
+                        }
+                    });
+                }
+            });
+        }, 500);
     }
 });
 

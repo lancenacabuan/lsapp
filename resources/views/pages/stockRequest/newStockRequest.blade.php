@@ -51,14 +51,6 @@
                     <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
                 </form>
             </div>
-            <div class="valid_label alert alert-warning mt-4" role="alert" style="display: none;">
-                <i class='fa fa-exclamation-triangle'></i>
-                <strong>CANNOT PROCEED:</strong> <span id="valid_text"></span>
-            </div>
-            <div class="verify_label alert alert-warning mt-4" role="alert" style="display: none;">
-                <i class='fa fa-exclamation-triangle'></i>
-                <strong>CANNOT PROCEED:</strong> <span id="verify_text"></span>
-            </div>
             @endrole
             @role('sales')
             <div class="form-inline" style="margin-left: 5px;">
@@ -151,6 +143,14 @@
                 <label class="form-control form-control-sm reference_field" style="width: 860px; border-color: white; display: none;">&nbsp;</label>
             </div>
             @endrole
+            <div class="valid_label alert alert-warning mt-4" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>CANNOT PROCEED:</strong> <span id="valid_text"></span>
+            </div>
+            <div class="verify_label alert alert-warning mt-4" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>CANNOT PROCEED:</strong> <span id="verify_text"></span>
+            </div>
             <div class="header_label alert alert-primary mt-4" role="alert">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please fill up all required fields to proceed.

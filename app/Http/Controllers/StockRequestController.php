@@ -154,6 +154,7 @@ class StockRequestController extends Controller
                 $requests->contact = ucwords($request->contact);
                 $requests->remarks = ucfirst($request->remarks);
                 $requests->reference = strtoupper($request->reference);
+                $requests->asset_reqby_email = strtolower($request->asset_reqby_email);
                 $sql = $requests->save();
             }
             while(!$sql);
@@ -431,6 +432,24 @@ class StockRequestController extends Controller
         ];
         Mail::to($sendTo)->send(new emailForRequest($details, $subject));
         unset($sendTo);
+        $details = [
+            'name' => $request_details->client_name,
+            'action' => $action,
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => auth()->user()->name,
+            'needdate' => $request_details->needdate,
+            'reqtype' => $request_details->reqtype,
+            'client_name' => $request_details->client_name,
+            'location' => $request_details->location,
+            'contact' => $request_details->contact,
+            'remarks' => $request_details->remarks,
+            'reference' => $request_details->reference,
+            'role' => 'Approver - Sales',
+            'items' => $items,
+            'files' => $attachments
+        ];
+        Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
         if($request->reqstatus != 7){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;

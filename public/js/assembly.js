@@ -198,16 +198,16 @@ var assemblyTable = $('table.assemblyTable').DataTable({
                 if(row.status_id == '6'){
                     return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                 }
-                else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28'){
+                else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23'){
                     return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
                     return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
+                else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17'){
                     return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                 }
-                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26' || row.status_id == '29'){
+                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20'){
                     return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
                 }
                 else if(row.status_id == '10'){

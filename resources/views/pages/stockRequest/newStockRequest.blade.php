@@ -34,6 +34,12 @@
                 <input class="form-control form-control-sm" id="asset_apvby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 165px;">Requester Email Re-Enter</label>
+                <input class="form-control form-control-sm" id="asset_reqby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+                <label class="form-control form-control-sm" style="width: 165px;">Approver Email Re-Enter</label>
+                <input class="form-control form-control-sm" id="asset_apvby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+            </div>
+            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="margin-left: 455px; width: 165px;" onclick="$('#reference_upload').click();">Attach Request Form</label>
                 <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
                 <button class="form-control btn btn-primary bp" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
@@ -44,6 +50,14 @@
                     <input id="reference_upload" name="reference_upload[]" type="file" style="zoom: 90%; display: none;" onchange="validate_fileupload(this);" multiple>
                     <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
                 </form>
+            </div>
+            <div class="valid_label alert alert-warning mt-4" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>CANNOT PROCEED:</strong> <span id="valid_text"></span>
+            </div>
+            <div class="verify_label alert alert-warning mt-4" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>CANNOT PROCEED:</strong> <span id="verify_text"></span>
             </div>
             @endrole
             @role('sales')

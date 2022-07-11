@@ -25,6 +25,7 @@
     <input type="hidden" id="current_user" value="{{auth()->user()->id}}" disabled>
     <input type="hidden" id="current_company" value="{{auth()->user()->company}}" disabled>
     <input type="hidden" id="current_role" value="{{auth()->user()->getRoleNames()[0]}}" disabled>
+    <input type="hidden" id="apiKey" value="8d4493a1-ab93-47b7-a15e-49d9918b52a5" disabled>
 </div>
 <script>
     window.onload = displayClock();

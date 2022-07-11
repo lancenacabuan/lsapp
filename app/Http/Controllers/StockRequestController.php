@@ -344,7 +344,7 @@ class StockRequestController extends Controller
         }
 
         do{
-            $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, contact, remarks, reference, needdate')
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, contact, remarks, reference, needdate, asset_reqby_email')
                 ->where('requests.request_number', $request->request_number)
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->get();

@@ -400,9 +400,11 @@ $('#request_type').on('change', function(){
     $('.disupload').hide();
     if(reqtype == '2'){
         $('.reference_field').show();
+        $('.divAdjust').hide();
     }
     else{
         $('.reference_field').hide();
+        $('.divAdjust').show();
     }
     $("#categoryReq").val('');
     $("#itemReq").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();

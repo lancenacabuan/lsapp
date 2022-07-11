@@ -62,7 +62,7 @@
             @endrole
             @role('sales')
             <div class="form-inline" style="margin-left: 5px;">
-                <label class="form-control form-control-sm" style="width: 130px;">Request Type</label>
+                <label class="form-control form-control-sm" style="width: 140px;">Request Type</label>
                 <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;">
                     <option value="" selected disabled>Select Request Type</option>
                     @foreach($req_types as $req_type)
@@ -73,31 +73,46 @@
                 <input class="form-control form-control-sm" id="request_num" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 130px;">Date Needed</label>
+                <label class="form-control form-control-sm" style="width: 140px;">Date Needed</label>
                 <input class="form-control form-control-sm"  id="needdate" style="width: 280px; margin-right: 10px;" type="date">
                 <label class="form-control form-control-sm" style="width: 160px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 130px;">Client Name</label>
+                <label class="form-control form-control-sm" style="width: 140px;">Client Name</label>
                 <input class="form-control form-control-sm" id="client_name" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="requested_by" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{auth()->user()->name}}">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 130px;">Address / Branch</label>
+                <label class="form-control form-control-sm" style="width: 140px;">Address / Branch</label>
                 <input class="form-control form-control-sm" id="location" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
                 <label class="form-control form-control-sm" style="width: 160px;">Contact Person</label>
                 <input class="form-control form-control-sm" id="contact" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="margin-top: -38px; width: 130px;">Remarks</label>
+                <label class="form-control form-control-sm" style="width: 140px;">Client Email Address</label>
+                <input class="form-control form-control-sm" id="asset_reqby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+            </div>
+            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="width: 140px;">Client Email Re-Enter</label>
+                <input class="form-control form-control-sm" id="asset_reqby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+            </div>
+            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
+                <label class="form-control form-control-sm" style="margin-top: -38px; width: 140px;">Remarks</label>
                 <textarea class="form-control" name="remarks" id="remarks" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Optional Field" maxlength="200"></textarea>
+            </div>
+            <div class="divAdjust" style="margin-top: -156px;">
+                <div class="form-inline" style="height: 166px; width: 440px; margin-left: 435px; margin-top: 10px; background-color: white;">
+                </div>
+            </div>
+            <div class="reference_field" style="margin-top: -156px; height: 136px; display: none;">
+            <div class="form-inline" style="margin-left: 435px; margin-top: 10px;">
                 <label class="form-control form-control-sm reference_field" style="margin-top: -38px; width: 160px; display: none;">Reference SO/PO No.</label>
                 <textarea class="form-control reference_field spChar" name="reference" id="reference" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field" maxlength="500"></textarea>
             </div>
-            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm reference_field" style="margin-left: 420px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
+            <div class="form-inline" style="margin-left: 435px; margin-top: 10px;">
+                <label class="form-control form-control-sm reference_field" style="width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
                 <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
                 <button class="form-control btn btn-primary bp reference_field" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
@@ -108,10 +123,11 @@
                     <button class="d-none" id="btnUpload" type="submit" form="formUpload" value="Submit">UPLOAD</button>
                 </form>
             </div>
-            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <span class="reference_field" style="margin-left: 420px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple PDF and/or Image files for upload.</span>
+            <div class="form-inline" style="margin-left: 435px; margin-top: 10px;">
+                <span class="reference_field" style="color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple PDF and/or Image files for upload.</span>
             </div>
-            <div id="warrantyDetails" style="zoom: 85%; height: 260px; margin-top: -260px; margin-left: 990px; line-height: 70%; display: none;">
+            </div>
+            <div id="warrantyDetails" style="zoom: 85%; height: 300px; margin-top: -300px; margin-left: 1000px; line-height: 70%; display: none;">
                 <div class="form-inline" style="margin-left: 35px;">
                     <input class="form-control form-control-sm warrantyName" style="width: 300px; margin-right: 10px; font-size: 18px; border-color: white; background-color: white; font-weight: bolder; pointer-events: none;" type="text" readonly>
                 </div>

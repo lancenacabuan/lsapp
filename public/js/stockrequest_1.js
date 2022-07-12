@@ -2120,7 +2120,9 @@ $("#btnProceed").unbind('click').click(function(){
     $("#stockDetailsrequest *").prop('disabled', true);
     $("#proceed_label").hide();
     $("#btnProceed").hide();
-    $("#btnDelete").hide();
+    if(req_type_id == '7' && requestStatus == '1'){
+        $("#btnDelete").hide();
+    }
     $("#reqContents").empty();
     $("#requestItems").slideDown();
     // $('#schedOn').attr('max', maxDate);
@@ -2409,7 +2411,9 @@ $('#btnBack').on('click', function(){
     $("#requestItems").hide();
     $("#schedOn").val('');
     $("#btnProceed").show();
-    $("#btnDelete").show();
+    if(req_type_id == '7' && requestStatus == '1'){
+        $("#btnDelete").show();
+    }
 });
 
 $("#btnSale").unbind('click').click(function(){

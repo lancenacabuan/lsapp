@@ -106,8 +106,11 @@
         Date Prepared: {{Carbon\Carbon::parse($details['prepdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Prepared By: {{$details['prepared_by']}}<br>
         Date Scheduled: {{Carbon\Carbon::parse($details['scheddate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
-        Date Received: {{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}
-        <br><br>
+        Date Received: {{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}<br>
+        @if($details['token'] != '')
+        <a href="{{ env('APP_URL_LIVE') }}receive?request_number={{$details['request_number']}}&token={{$details['token']}}"><h3>PLEASE CLICK HERE TO CONFIRM RECEIVED ITEMS</h3></a>
+        @else
+        <br>
         <strong>{{$details['verb']}} ITEMS</strong>
         <br>
         @php
@@ -199,8 +202,8 @@
             </tfoot>
         </table>
         @endif
-        <br><br>
         @if($details['pendcount'] > 0)
+        <br><br>
         <strong>PENDING ITEMS</strong>
         <br><br>
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
@@ -238,13 +241,18 @@
                 </tr>
             </tfoot>
         </table>
-        <br><br>
         @endif
+        @if($details['role'] != '')
+        <br><br>
         Kindly login to your {{$details['role']}} account if you wish to view or download this request by clicking on the link below.<br>
         Thank you!
+        @endif
     </p>
+    @if($details['role'] != '')
     <a href="{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number'].$concat}}">{{ env('APP_URL_LIVE') }}printRequest?request_number={{$details['request_number'].$concat}}</a>
-    <br><br>
+    <br>
+    @endif
+    <br>
     This is a system-generated email. Please do not reply.
     @endif
 </body>

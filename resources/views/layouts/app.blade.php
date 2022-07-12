@@ -334,6 +334,12 @@
             var regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return regex.test(email);
         }
+        function emailProvider(email){
+            if(email.includes('@gmail.') || email.includes('@yahoo.') || email.includes('@outlook.')){
+                return true;
+            }
+            return false;
+        }
         function notifyDeadline(){
             if($('#current_url').val() == 'live'){
                 $.ajax({

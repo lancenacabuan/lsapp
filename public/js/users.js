@@ -66,15 +66,17 @@ document.querySelectorAll('input[type=search]').forEach(function(input){
 
 var data_update;
 setInterval(function(){
-    $.ajax({
-        url: "/users/reload",
-        success: function(data){
-            if(data != data_update){
-                data_update = data;
-                table.ajax.reload(null, false);
+    if($('#addUser').is(':hidden') && $('#updateUser').is(':hidden')){
+        $.ajax({
+            url: "/users/reload",
+            success: function(data){
+                if(data != data_update){
+                    data_update = data;
+                    table.ajax.reload(null, false);
+                }
             }
-        }
-    });
+        });
+    }
 }, 1000);
 
 $(document).on('change', '.togBtn', function(){
@@ -119,6 +121,7 @@ $('#btnAddUser').on('click', function(){
 var emailv1 = true;
 var emailv2 = true;
 $('#btnSave').on('click', function(){
+    var warntext = '';
     var name = $.trim($('#name').val());
     var email = $.trim($('#email').val());
     var company = $('#company').val();
@@ -135,27 +138,33 @@ $('#btnSave').on('click', function(){
             Swal.fire("INVALID EMAIL", "Enter a valid email address format!", "error");
             return false;
         }
-        $.ajax({
-            headers:{
-                Authorization: "Bearer " + apiKey
-            },
-            async: false,
-            type: 'GET',
-            url: 'https://isitarealemail.com/api/email/validate?email='+email,
-            success: function(data){
-                if(data.status == 'invalid'){
-                    emailv1 = false;
+        if(emailProvider(email)){
+            $.ajax({
+                headers:{
+                    Authorization: "Bearer " + apiKey
+                },
+                async: false,
+                type: 'GET',
+                url: 'https://isitarealemail.com/api/email/validate?email='+email,
+                success: function(data){
+                    if(data.status == 'invalid'){
+                        emailv1 = false;
+                    }
+                    else{
+                        emailv1 = true;
+                    }
                 }
-                else{
-                    emailv1 = true;
-                }
+            });
+            $('#loading').hide();
+            if(emailv1 == false){
+                Swal.fire('NON-EXISTENT EMAIL','User Email Address does not exist!','error');
+                return false;
             }
-        });
-        $('#loading').hide();
-        if(emailv1 == false){
-            Swal.fire('NON-EXISTENT EMAIL','User Email Address does not exist!','error');
-            return false;
         }
+        else{
+            warntext = ' WARNING: This Email Address is not verified! Continue?';
+        }
+        $('#loading').hide();
         $.ajax({
             url: "/users/validate/save",
             type: "POST",
@@ -173,7 +182,7 @@ $('#btnSave').on('click', function(){
                 if(data.result == 'true'){
                     Swal.fire({
                         title: "ADD NEW USER?",
-                        text: "You are about to ADD a new user!",
+                        text: "You are about to ADD a new user!"+warntext,
                         icon: "warning",
                         showCancelButton: true,
                         cancelButtonColor: '#3085d6',
@@ -267,6 +276,7 @@ $('#userTable tbody').on('click', 'tr td:not(:nth-child(5))', function(){
 });
 
 $('#btnUpdate').on('click', function(){
+    var warntext = '';
     var id1 = $('#id1').val();
     var name1 = $.trim($('#name1').val());
     var name2 = $('#name2').val();
@@ -293,27 +303,33 @@ $('#btnUpdate').on('click', function(){
             Swal.fire("INVALID EMAIL", "Enter a valid email address format!", "error");
             return false;
         }
-        $.ajax({
-            headers:{
-                Authorization: "Bearer " + apiKey
-            },
-            async: false,
-            type: 'GET',
-            url: 'https://isitarealemail.com/api/email/validate?email='+email1,
-            success: function(data){
-                if(data.status == 'invalid'){
-                    emailv2 = false;
+        if(emailProvider(email1)){
+            $.ajax({
+                headers:{
+                    Authorization: "Bearer " + apiKey
+                },
+                async: false,
+                type: 'GET',
+                url: 'https://isitarealemail.com/api/email/validate?email='+email1,
+                success: function(data){
+                    if(data.status == 'invalid'){
+                        emailv2 = false;
+                    }
+                    else{
+                        emailv2 = true;
+                    }
                 }
-                else{
-                    emailv2 = true;
-                }
+            });
+            $('#loading').hide();
+            if(emailv2 == false){
+                Swal.fire('NON-EXISTENT EMAIL','User Email Address does not exist!','error');
+                return false;
             }
-        });
-        $('#loading').hide();
-        if(emailv2 == false){
-            Swal.fire('NON-EXISTENT EMAIL','User Email Address does not exist!','error');
-            return false;
         }
+        else{
+            warntext = ' WARNING: This Email Address is not verified! Continue?';
+        }
+        $('#loading').hide();
         $.ajax({
             url: "/users/validate/update",
             type: "PUT",
@@ -336,7 +352,7 @@ $('#btnUpdate').on('click', function(){
                 if(data == 'true'){
                     Swal.fire({
                         title: "UPDATE USER DETAILS?",
-                        text: "You are about to UPDATE this user!",
+                        text: "You are about to UPDATE this user!"+warntext,
                         icon: "warning",
                         showCancelButton: true,
                         cancelButtonColor: '#3085d6',

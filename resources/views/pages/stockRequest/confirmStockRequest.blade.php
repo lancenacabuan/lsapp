@@ -25,11 +25,45 @@
         <table id="tblPrint" cellspacing="0" cellpadding="0" style="width: 100%;">
             <col span="9" />
             <tr height="20">
+                @if($list->req_type_id == 7)
                 <td style="text-align: center; font-size: 18px;" colspan="9" height="20"><strong>TRANSMITTAL RECEIPT</strong></td>
+                @else
+                <td style="text-align: center; font-size: 18px;" colspan="9" height="20"><strong>DELIVERY RECEIPT</strong></td>
+                @endif
             </tr>
             <tr height="20">
                 <td colspan="9">&nbsp;</td>
             </tr>
+            @if($list->req_type_id == 2 || ($list->req_type_id == 3 && ($list->status_id == 10 || $list->status_id >= 27)))
+            <tr height="20">
+                <td colspan="1" style="font-weight: bold; width: 200px;">Delivery Receipt No.:</td>
+                <td colspan="8">{{$list->req_num}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="1" style="font-weight: bold;">Date Scheduled:</td>
+                <td colspan="8" id="format_date1">{{$list->sched}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="1" style="font-weight: bold;">Client Name:</td>
+                <td colspan="8">{{$list->client_name}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="1" style="font-weight: bold;">Address / Branch:</td>
+                <td colspan="8">{{$list->location}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="1" style="font-weight: bold;">Contact Person:</td>
+                <td colspan="8">{{$list->contact}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="1" style="font-weight: bold;">Remarks:</td>
+                <td colspan="8">{{$list->remarks}}</td>
+            </tr>
+            <tr height="20">
+                <td colspan="1" style="font-weight: bold;">Reference SO/PO No.:</td>
+                <td colspan="8">{{$list->reference}}</td>
+            </tr>
+            @elseif($list->req_type_id == 7)
             <tr height="20">
                 <td colspan="2" style="font-weight: bold;">Request Type:</td>
                 <td colspan="2">{{$list->req_type}}</td>
@@ -65,6 +99,7 @@
                 <td colspan="2" style="font-weight: bold;">Date Scheduled:</td>
                 <td colspan="2" id="format_date4">{{$list->sched}}</td>
             </tr>
+            @endif
             <tr height="20">
                 <td colspan="9">&nbsp;</td>
             </tr>
@@ -131,7 +166,7 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;">Received By:</td>
-                <td colspan="2">{{$list->asset_reqby}}</td>
+                <td colspan="2">{{$list->asset_reqby ?? $list->client_name}}</td>
             </tr>
             <tr height="20">
                 <td height="20"></td>
@@ -153,7 +188,7 @@ document.addEventListener("contextmenu", function(e){
 
 $(document).ready(function(){
     var req_num = $('#req_num').val();
-    Swal.fire('RECEIVE CONFIRMED', 'Fixed Asset Stock Request '+req_num+' has been received successfully.', 'success');
+    Swal.fire('RECEIVE CONFIRMED', 'Stock Request '+req_num+' has been received successfully.', 'success');
     for(var i = 1; i <= 5; i++){
         $('#format_date'+i).html(moment($('#format_date'+i).html()).format('dddd, MMMM DD, YYYY'));
     }

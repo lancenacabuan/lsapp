@@ -431,25 +431,7 @@ class StockRequestController extends Controller
             'files' => $attachments
         ];
         Mail::to($sendTo)->send(new emailForRequest($details, $subject));
-        unset($sendTo);
-        $details = [
-            'name' => $request_details->client_name,
-            'action' => $action,
-            'request_number' => $request->request_number,
-            'reqdate' => $request_details->reqdate,
-            'requested_by' => auth()->user()->name,
-            'needdate' => $request_details->needdate,
-            'reqtype' => $request_details->reqtype,
-            'client_name' => $request_details->client_name,
-            'location' => $request_details->location,
-            'contact' => $request_details->contact,
-            'remarks' => $request_details->remarks,
-            'reference' => $request_details->reference,
-            'role' => 'Approver - Sales',
-            'items' => $items,
-            'files' => $attachments
-        ];
-        Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
+
         if($request->reqstatus != 7){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
@@ -1104,7 +1086,7 @@ class StockRequestController extends Controller
 
     public function logApprove(Request $request){
         do{
-            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, contact, remarks, reference, reason, needdate')
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, client_name, location, contact, remarks, reference, reason, needdate, asset_reqby_email')
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -1202,6 +1184,25 @@ class StockRequestController extends Controller
             'files' => $attachments
         ];
         Mail::to($request_details->email)->send(new approvedRequest($details, $subject));
+        $details = [
+            'name' => $request_details->client_name,
+            'action' => 'STOCK REQUEST',
+            'request_number' => $request->request_number,
+            'reqdate' => $request_details->reqdate,
+            'requested_by' => $request_details->reqby,
+            'needdate' => $request_details->needdate,
+            'reqtype' => $request_details->reqtype,
+            'client_name' => $request_details->client_name,
+            'location' => $request_details->location,
+            'contact' => $request_details->contact,
+            'remarks' => $request_details->remarks,
+            'reference' => $request_details->reference,
+            'approvedby' => auth()->user()->name,
+            'role' => '',
+            'items' => $items,
+            'files' => $attachments
+        ];
+        Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
 
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;

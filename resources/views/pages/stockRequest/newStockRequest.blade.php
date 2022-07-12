@@ -95,7 +95,7 @@
                 <textarea class="form-control" name="remarks" id="remarks" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Optional Field" maxlength="200"></textarea>
             </div>
             <div class="divAdjust" style="margin-top: -156px;">
-                <div class="form-inline" style="height: 166px; width: 440px; margin-left: 435px; margin-top: 10px; background-color: white;">
+                <div class="form-inline" style="height: 166px; width: 440px; margin-left: 435px; margin-top: 10px; background-color: transparent;">
                 </div>
             </div>
             <div class="reference_field" style="margin-top: -156px; height: 136px; display: none;">
@@ -140,7 +140,7 @@
                 </div>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm reference_field" style="width: 860px; border-color: white; display: none;">&nbsp;</label>
+                <label class="form-control form-control-sm reference_field" style="width: 860px; border-color: transparent; background-color: transparent; display: none;">&nbsp;</label>
             </div>
             @endrole
             <div class="valid_label alert alert-warning mt-4" role="alert" style="display: none;">

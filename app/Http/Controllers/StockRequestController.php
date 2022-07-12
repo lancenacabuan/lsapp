@@ -1202,7 +1202,7 @@ class StockRequestController extends Controller
             'items' => $items,
             'files' => $attachments
         ];
-        Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
+        Mail::to($request_details->asset_reqby_email)->send(new approvedRequest($details, $subject));
 
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;

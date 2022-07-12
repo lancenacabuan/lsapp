@@ -29,15 +29,15 @@
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 165px;">Requester Email Address</label>
-                <input class="form-control form-control-sm" id="asset_reqby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+                <input class="form-control form-control-sm" id="asset_reqby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
                 <label class="form-control form-control-sm" style="width: 165px;">Approver Email Address</label>
-                <input class="form-control form-control-sm" id="asset_apvby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+                <input class="form-control form-control-sm" id="asset_apvby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 165px;">Requester Email Re-Enter</label>
-                <input class="form-control form-control-sm" id="asset_reqby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+                <input class="form-control form-control-sm" id="asset_reqby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
                 <label class="form-control form-control-sm" style="width: 165px;">Approver Email Re-Enter</label>
-                <input class="form-control form-control-sm" id="asset_apvby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+                <input class="form-control form-control-sm" id="asset_apvby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="margin-left: 455px; width: 165px;" onclick="$('#reference_upload').click();">Attach Request Form</label>
@@ -84,11 +84,11 @@
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 140px;">Client Email Address</label>
-                <input class="form-control form-control-sm" id="asset_reqby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+                <input class="form-control form-control-sm" id="asset_reqby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 140px;">Client Email Re-Enter</label>
-                <input class="form-control form-control-sm" id="asset_reqby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100">
+                <input class="form-control form-control-sm" id="asset_reqby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="margin-top: -38px; width: 140px;">Remarks</label>

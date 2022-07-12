@@ -480,29 +480,31 @@ $('#btnGenerate').on('click', function(){
 
 var data_update;
 setInterval(function(){
-    $.ajax({
-        url: "/stocks/reload",
-        success: function(data){
-            if(data != data_update){
-                data_update = data;
-                if($('#CategoryTableDiv').is(':visible')){
-                    CategoryTable.ajax.reload(null, false);
-                }
-                if($('#ItemTableDiv').is(':visible')){
-                    ItemTable.ajax.reload(null, false);
-                }
-                if($('#ItemSerialTableDiv').is(':visible')){
-                    ItemSerialTable.ajax.reload(null, false);
-                }
-                if($('#SerialTableDiv').is(':visible')){
-                    SerialTable.ajax.reload(null, false);
-                }
-                if($('#MinStocksTableDiv').is(':visible')){
-                    MinStocksTable.ajax.reload(null, false);
+    if($('#addStock').is(':hidden') && $('#importStock').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+        $.ajax({
+            url: "/stocks/reload",
+            success: function(data){
+                if(data != data_update){
+                    data_update = data;
+                    if($('#CategoryTableDiv').is(':visible')){
+                        CategoryTable.ajax.reload(null, false);
+                    }
+                    if($('#ItemTableDiv').is(':visible')){
+                        ItemTable.ajax.reload(null, false);
+                    }
+                    if($('#ItemSerialTableDiv').is(':visible')){
+                        ItemSerialTable.ajax.reload(null, false);
+                    }
+                    if($('#SerialTableDiv').is(':visible')){
+                        SerialTable.ajax.reload(null, false);
+                    }
+                    if($('#MinStocksTableDiv').is(':visible')){
+                        MinStocksTable.ajax.reload(null, false);
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 }, 1000);
 
 $('#btnDownload').on('click', function(){

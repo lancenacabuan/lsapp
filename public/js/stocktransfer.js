@@ -565,15 +565,17 @@ var stocktransferTable = $('table.stocktransferTable').DataTable({
 
 var data_update;
 setInterval(function(){
-    $.ajax({
-        url: "/stocktransfer/reload",
-        success: function(data){
-            if(data != data_update){
-                data_update = data;
-                stocktransferTable.ajax.reload(null, false);
+    if($('#newStockTransfer').is(':hidden') && $('#detailsStockTransfer').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+        $.ajax({
+            url: "/stocktransfer/reload",
+            success: function(data){
+                if(data != data_update){
+                    data_update = data;
+                    stocktransferTable.ajax.reload(null, false);
+                }
             }
-        }
-    });
+        });
+    }
 }, 1000);
 
 if($(location).attr('pathname')+window.location.search != '/stocktransfer'){

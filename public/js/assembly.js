@@ -227,15 +227,17 @@ var assemblyTable = $('table.assemblyTable').DataTable({
 
 var data_update;
 setInterval(function(){
-    $.ajax({
-        url: "/assembly/reload",
-        success: function(data){
-            if(data != data_update){
-                data_update = data;
-                assemblyTable.ajax.reload(null, false);
+    if($('#newAssembly').is(':hidden') && $('#detailsAssembly').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+        $.ajax({
+            url: "/assembly/reload",
+            success: function(data){
+                if(data != data_update){
+                    data_update = data;
+                    assemblyTable.ajax.reload(null, false);
+                }
             }
-        }
-    });
+        });
+    }
 }, 1000);
 
 $('#btnAssemblyProceed').on('click', function(){

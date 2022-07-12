@@ -524,15 +524,17 @@ var merchantTable = $('table.merchantTable').DataTable({
 
 var data_update;
 setInterval(function(){
-    $.ajax({
-        url: "/merchant/reload",
-        success: function(data){
-            if(data != data_update){
-                data_update = data;
-                merchantTable.ajax.reload(null, false);
+    if($('#newMerchRequest').is(':hidden') && $('#detailsMerchRequest').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+        $.ajax({
+            url: "/merchant/reload",
+            success: function(data){
+                if(data != data_update){
+                    data_update = data;
+                    merchantTable.ajax.reload(null, false);
+                }
             }
-        }
-    });
+        });
+    }
 }, 1000);
 
 if($(location).attr('pathname')+window.location.search != '/merchant'){

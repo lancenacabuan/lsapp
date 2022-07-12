@@ -37,15 +37,17 @@ if(
 
     var data_update;
     setInterval(function(){
-        $.ajax({
-            url: "/fm_items/reload",
-            success: function(data){
-                if(data != data_update){
-                    data_update = data;
-                    tblItem.ajax.reload(null, false);
+        if($('#newItem').is(':hidden') && $('#detailsItem').is(':hidden') && $('#importItem').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+            $.ajax({
+                url: "/fm_items/reload",
+                success: function(data){
+                    if(data != data_update){
+                        data_update = data;
+                        tblItem.ajax.reload(null, false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }, 1000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=assembleditems'){
@@ -77,15 +79,17 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
 
     var data_update;
     setInterval(function(){
-        $.ajax({
-            url: "/asm_items/reload",
-            success: function(data){
-                if(data != data_update){
-                    data_update = data;
-                    tblAssembly.ajax.reload(null, false);
+        if($('#createItem').is(':hidden') && $('#detailsAssemblyItem').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+            $.ajax({
+                url: "/asm_items/reload",
+                success: function(data){
+                    if(data != data_update){
+                        data_update = data;
+                        tblAssembly.ajax.reload(null, false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }, 1000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=categories'){
@@ -115,15 +119,17 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
 
     var data_update;
     setInterval(function(){
-        $.ajax({
-            url: "/fm_categories/reload",
-            success: function(data){
-                if(data != data_update){
-                    data_update = data;
-                    tblCategory.ajax.reload(null, false);
+        if($('#newCategory').is(':hidden') && $('#detailsCategory').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+            $.ajax({
+                url: "/fm_categories/reload",
+                success: function(data){
+                    if(data != data_update){
+                        data_update = data;
+                        tblCategory.ajax.reload(null, false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }, 1000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=locations'){
@@ -168,15 +174,17 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
 
     var data_update;
     setInterval(function(){
-        $.ajax({
-            url: "/fm_locations/reload",
-            success: function(data){
-                if(data != data_update){
-                    data_update = data;
-                    tblLocation.ajax.reload(null, false);
+        if($('#newLocation').is(':hidden') && $('#detailsLocation').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+            $.ajax({
+                url: "/fm_locations/reload",
+                success: function(data){
+                    if(data != data_update){
+                        data_update = data;
+                        tblLocation.ajax.reload(null, false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }, 1000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=warranty'){
@@ -311,15 +319,17 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
 
     var data_update;
     setInterval(function(){
-        $.ajax({
-            url: "/fm_warranty/reload",
-            success: function(data){
-                if(data != data_update){
-                    data_update = data;
-                    tblWarranty.ajax.reload(null, false);
+        if($('#AddWarranty').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+            $.ajax({
+                url: "/fm_warranty/reload",
+                success: function(data){
+                    if(data != data_update){
+                        data_update = data;
+                        tblWarranty.ajax.reload(null, false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }, 1000);
 }
 else{

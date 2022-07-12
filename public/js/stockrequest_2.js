@@ -259,15 +259,17 @@ else{
 
 var data_update;
 setInterval(function(){
-    $.ajax({
-        url: "/stockrequest/reload",
-        success: function(data){
-            if(data != data_update){
-                data_update = data;
-                stockrequestTable.ajax.reload(null, false);
+    if($('#newStockRequest').is(':hidden') && $('#detailsStockRequest').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+        $.ajax({
+            url: "/stockrequest/reload",
+            success: function(data){
+                if(data != data_update){
+                    data_update = data;
+                    stockrequestTable.ajax.reload(null, false);
+                }
             }
-        }
-    });
+        });
+    }
 }, 1000);
 
 if($(location).attr('pathname')+window.location.search != '/stockrequest'){

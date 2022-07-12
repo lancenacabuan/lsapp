@@ -66,7 +66,7 @@ document.querySelectorAll('input[type=search]').forEach(function(input){
 
 var data_update;
 setInterval(function(){
-    if($('#addUser').is(':hidden') && $('#updateUser').is(':hidden')){
+    if($('#addUser').is(':hidden') && $('#updateUser').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
         $.ajax({
             url: "/users/reload",
             success: function(data){

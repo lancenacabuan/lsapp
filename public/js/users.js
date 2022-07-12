@@ -116,17 +116,46 @@ $('#btnAddUser').on('click', function(){
     $('#addUser').modal('show');
 });
 
+var emailv1 = true;
+var emailv2 = true;
 $('#btnSave').on('click', function(){
     var name = $.trim($('#name').val());
     var email = $.trim($('#email').val());
     var company = $('#company').val();
     var role = $('#role').val();
-
-    if(!name || !email || !company || !role){
-        Swal.fire('REQUIRED','Please fill up all required fields!','error');
-        return false;
-    }
-    else{
+    $('#loading').show(); Spinner(); Spinner.show();
+    setTimeout(function(){
+        if(!name || !email || !company || !role){
+            $('#loading').hide(); Spinner.hide();
+            Swal.fire('REQUIRED','Please fill up all required fields!','error');
+            return false;
+        }
+        if(!validateEmail(email)){
+            $('#loading').hide(); Spinner.hide();
+            Swal.fire("INVALID EMAIL", "Enter a valid email address format!", "error");
+            return false;
+        }
+        $.ajax({
+            headers:{
+                Authorization: "Bearer " + apiKey
+            },
+            async: false,
+            type: 'GET',
+            url: 'https://isitarealemail.com/api/email/validate?email='+email,
+            success: function(data){
+                if(data.status == 'invalid'){
+                    emailv1 = false;
+                }
+                else{
+                    emailv1 = true;
+                }
+            }
+        });
+        $('#loading').hide(); Spinner.hide();
+        if(emailv1 == false){
+            Swal.fire('NON-EXISTENT EMAIL','User Email Address does not exist!','error');
+            return false;
+        }
         $.ajax({
             url: "/users/validate/save",
             type: "POST",
@@ -193,7 +222,7 @@ $('#btnSave').on('click', function(){
                     });
                 }
                 else if(data.result == 'invalid'){
-                    Swal.fire("INVALID EMAIL", "Enter a valid email address!", "error");
+                    Swal.fire("INVALID EMAIL", "Enter a valid email address format!", "error");
                     return false;
                 }
                 else if(data.result == 'duplicate'){
@@ -213,7 +242,7 @@ $('#btnSave').on('click', function(){
                 alert(data.responseText);
             }
         });
-    }
+    }, 500);
 });
 
 $('#userTable tbody').on('click', 'tr td:not(:nth-child(5))', function(){
@@ -247,16 +276,44 @@ $('#btnUpdate').on('click', function(){
     var company2 = $('#company2').val();
     var role1 = $('#role1').val();
     var role2 = $('#role2').val();
-
-    if(!name1 || !email1 || !company1 || !role1){
-        Swal.fire('REQUIRED','Please fill up all required fields!','error');
-        return false;
-    }
-    else if(name1.toUpperCase() == name2.toUpperCase() && email1.toUpperCase() == email2.toUpperCase() && company1 == company2 && role1 == role2){
-        Swal.fire("NO CHANGES FOUND", "User Details are all still the same!", "error");
-        return false;
-    }
-    else{
+    $('#loading').show(); Spinner(); Spinner.show();
+    setTimeout(function(){
+        if(!name1 || !email1 || !company1 || !role1){
+            $('#loading').hide(); Spinner.hide();
+            Swal.fire('REQUIRED','Please fill up all required fields!','error');
+            return false;
+        }
+        if(name1.toUpperCase() == name2.toUpperCase() && email1.toUpperCase() == email2.toUpperCase() && company1 == company2 && role1 == role2){
+            $('#loading').hide(); Spinner.hide();
+            Swal.fire("NO CHANGES FOUND", "User Details are all still the same!", "error");
+            return false;
+        }
+        if(!validateEmail(email1)){
+            $('#loading').hide(); Spinner.hide();
+            Swal.fire("INVALID EMAIL", "Enter a valid email address format!", "error");
+            return false;
+        }
+        $.ajax({
+            headers:{
+                Authorization: "Bearer " + apiKey
+            },
+            async: false,
+            type: 'GET',
+            url: 'https://isitarealemail.com/api/email/validate?email='+email1,
+            success: function(data){
+                if(data.status == 'invalid'){
+                    emailv2 = false;
+                }
+                else{
+                    emailv2 = true;
+                }
+            }
+        });
+        $('#loading').hide(); Spinner.hide();
+        if(emailv2 == false){
+            Swal.fire('NON-EXISTENT EMAIL','User Email Address does not exist!','error');
+            return false;
+        }
         $.ajax({
             url: "/users/validate/update",
             type: "PUT",
@@ -330,7 +387,7 @@ $('#btnUpdate').on('click', function(){
                     });
                 }
                 else if(data == 'invalid'){
-                    Swal.fire("INVALID EMAIL", "Enter a valid email address!", "error");
+                    Swal.fire("INVALID EMAIL", "Enter a valid email address format!", "error");
                 }
                 else if(data == 'duplicate'){
                     Swal.fire("DUPLICATE EMAIL", "Email address already exists!", "error");
@@ -348,7 +405,7 @@ $('#btnUpdate').on('click', function(){
                 alert(data.responseText);
             }
         });
-    }
+    }, 500);
 });
 
 $('#company').on('change', function(){

@@ -648,55 +648,50 @@ $('#btnSave').on('click', function(){
         var reference_upload = $('#reference_upload').val();
         $('#loading').show(); Spinner(); Spinner.show();
         setTimeout(function(){
-            if(asset_reqby_email && asset_apvby_email && asset_reqby_verify && asset_apvby_verify && validateEmail(asset_reqby_email) && validateEmail(asset_apvby_email) && asset_reqby_email == asset_reqby_verify && asset_apvby_email == asset_apvby_verify){
-                $.ajax({
-                    headers:{
-                        Authorization: "Bearer " + apiKey
-                    },
-                    async: false,
-                    type: 'GET',
-                    url: 'https://isitarealemail.com/api/email/validate?email='+asset_reqby_email,
-                    success: function(data){
-                        if(data.status == 'invalid'){
-                            email1 = false;
-                        }
-                        else{
-                            email1 = true;
-                        }
+            $.ajax({
+                headers:{
+                    Authorization: "Bearer " + apiKey
+                },
+                async: false,
+                type: 'GET',
+                url: 'https://isitarealemail.com/api/email/validate?email='+asset_reqby_email,
+                success: function(data){
+                    if(data.status == 'invalid'){
+                        email1 = false;
                     }
-                });
-                $.ajax({
-                    headers:{
-                        Authorization: "Bearer " + apiKey
-                    },
-                    async: false,
-                    type: 'GET',
-                    url: 'https://isitarealemail.com/api/email/validate?email='+asset_apvby_email,
-                    success: function(data){
-                        if(data.status == 'invalid'){
-                            email2 = false;
-                        }
-                        else{
-                            email2 = true;
-                        }
+                    else{
+                        email1 = true;
                     }
-                });
-                if(email1 == false && email2 == false){
-                    Swal.fire('NON-EXISTENT EMAIL','Requester and Approver Email Addresses are both non-existent!','error');
-                    $('#loading').hide(); Spinner.hide();
-                    return false;
                 }
-                else if(email1 == false){
-                    Swal.fire('NON-EXISTENT EMAIL','Requester Email Address does not exist!','error');
-                    $('#loading').hide(); Spinner.hide();
-                    return false;
+            });
+            $.ajax({
+                headers:{
+                    Authorization: "Bearer " + apiKey
+                },
+                async: false,
+                type: 'GET',
+                url: 'https://isitarealemail.com/api/email/validate?email='+asset_apvby_email,
+                success: function(data){
+                    if(data.status == 'invalid'){
+                        email2 = false;
+                    }
+                    else{
+                        email2 = true;
+                    }
                 }
-                else if(email2 == false){
-                    Swal.fire('NON-EXISTENT EMAIL','Approver Email Address does not exist!','error');
-                    $('#loading').hide(); Spinner.hide();
-                    return false;
-                }
-                $('#loading').hide(); Spinner.hide();
+            });
+            $('#loading').hide(); Spinner.hide();
+            if(email1 == false && email2 == false){
+                Swal.fire('NON-EXISTENT EMAIL','Requester and Approver Email Addresses are both non-existent!','error');
+                return false;
+            }
+            else if(email1 == false){
+                Swal.fire('NON-EXISTENT EMAIL','Requester Email Address does not exist!','error');
+                return false;
+            }
+            else if(email2 == false){
+                Swal.fire('NON-EXISTENT EMAIL','Approver Email Address does not exist!','error');
+                return false;
             }
             if(needdate < minDate){
                 Swal.fire('Minimum Date is today!','Select within date range from today onwards.','error');
@@ -846,29 +841,26 @@ $('#btnSave').on('click', function(){
         var reference_upload = $('#reference_upload').val();
         $('#loading').show(); Spinner(); Spinner.show();
         setTimeout(function(){
-            if(asset_reqby_email && asset_reqby_verify && validateEmail(asset_reqby_email) && asset_reqby_email == asset_reqby_verify){
-                $.ajax({
-                    headers:{
-                        Authorization: "Bearer " + apiKey
-                    },
-                    async: false,
-                    type: 'GET',
-                    url: 'https://isitarealemail.com/api/email/validate?email='+asset_reqby_email,
-                    success: function(data){
-                        if(data.status == 'invalid'){
-                            email1 = false;
-                        }
-                        else{
-                            email1 = true;
-                        }
+            $.ajax({
+                headers:{
+                    Authorization: "Bearer " + apiKey
+                },
+                async: false,
+                type: 'GET',
+                url: 'https://isitarealemail.com/api/email/validate?email='+asset_reqby_email,
+                success: function(data){
+                    if(data.status == 'invalid'){
+                        email1 = false;
                     }
-                });
-                if(email1 == false){
-                    Swal.fire('NON-EXISTENT EMAIL','Client Email Address does not exist!','error');
-                    $('#loading').hide(); Spinner.hide();
-                    return false;
+                    else{
+                        email1 = true;
+                    }
                 }
-                $('#loading').hide(); Spinner.hide();
+            });
+            $('#loading').hide(); Spinner.hide();
+            if(email1 == false){
+                Swal.fire('NON-EXISTENT EMAIL','Client Email Address does not exist!','error');
+                return false;
             }
             if(needdate < minDate){
                 Swal.fire('Minimum Date is today!','Select within date range from today onwards.','error');

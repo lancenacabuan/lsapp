@@ -323,7 +323,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 var status = value.status;
                     $('#status_details').val(status);
                     if(status == 'RECEIVED' && value.notify == 'Confirmed'){
-                        $('#status_details').val(status+' CONFIRMED');
+                        $('#status_details').val('CONFIRMED '+status);
                     }
                 var prep_by = value.prep_by;
                     $('#prep_by').val(prep_by);
@@ -1620,7 +1620,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     var status = value.status;
         $('#status_details').val(status);
         if(status == 'RECEIVED' && value.notify == 'Confirmed'){
-            $('#status_details').val(status+' CONFIRMED');
+            $('#status_details').val('CONFIRMED '+status);
         }
     var prep_by = value.prep_by;
         $('#prep_by').val(prep_by);

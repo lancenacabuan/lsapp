@@ -111,6 +111,7 @@
         <a href="{{ env('APP_URL_LIVE') }}receive?request_number={{$details['request_number']}}&token={{$details['token']}}"><h3>PLEASE CLICK HERE TO CONFIRM RECEIVED ITEMS</h3></a>
         @else
         <br>
+        @endif
         <strong>{{$details['verb']}} ITEMS</strong>
         <br>
         @php

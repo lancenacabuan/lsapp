@@ -267,10 +267,12 @@
     </style>
 </head>
 <body>
-    <div id="loading" style="color: #0d1a80; line-height: 60vh;">
+    <div id="loading" style="color: #0d1a80; line-height: 35vh;">
         <strong style="font-size: 40px;">
             PLEASE WAIT...
         </strong>
+        <br>
+        <div style="zoom: 400%; color: #0d1a80;" class="spinner-border"></div>
         <br>
         <strong style="font-size: 22px;">
             Please DO NOT interrupt or cancel this process.
@@ -280,7 +282,7 @@
     @include('inc.header')
     @include('inc.navbar')
     @if(!Request::is('stocks'))
-        <script>$('#loading').show(); Spinner(); Spinner.show();</script>
+        <script>$('#loading').show();</script>
     @endif
     @else
     @include('inc.guest')
@@ -338,12 +340,12 @@
                     type: 'get', 
                     url: '/stockrequest/notify',
                     success: function(){
-                        $('#loading').hide(); Spinner.hide();
+                        $('#loading').hide();
                     }
                 });
             }
             else{
-                $('#loading').hide(); Spinner.hide();
+                $('#loading').hide();
             }
         }
         function idleLogout(){

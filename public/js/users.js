@@ -123,15 +123,15 @@ $('#btnSave').on('click', function(){
     var email = $.trim($('#email').val());
     var company = $('#company').val();
     var role = $('#role').val();
-    $('#loading').show(); Spinner(); Spinner.show();
+    $('#loading').show();
     setTimeout(function(){
         if(!name || !email || !company || !role){
-            $('#loading').hide(); Spinner.hide();
+            $('#loading').hide();
             Swal.fire('REQUIRED','Please fill up all required fields!','error');
             return false;
         }
         if(!validateEmail(email)){
-            $('#loading').hide(); Spinner.hide();
+            $('#loading').hide();
             Swal.fire("INVALID EMAIL", "Enter a valid email address format!", "error");
             return false;
         }
@@ -151,7 +151,7 @@ $('#btnSave').on('click', function(){
                 }
             }
         });
-        $('#loading').hide(); Spinner.hide();
+        $('#loading').hide();
         if(emailv1 == false){
             Swal.fire('NON-EXISTENT EMAIL','User Email Address does not exist!','error');
             return false;
@@ -185,7 +185,7 @@ $('#btnSave').on('click', function(){
                         if(result.isConfirmed){
                             scrollReset();
                             $('#addUser').modal('hide');
-                            $('#loading').show(); Spinner(); Spinner.show();
+                            $('#loading').show();
                             $.ajax({
                                 url: "/users/save",
                                 type: "POST",
@@ -201,12 +201,12 @@ $('#btnSave').on('click', function(){
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
+                                        $('#loading').hide();
                                         Swal.fire("SAVE SUCCESS", "New user saved successfully!", "success");
                                         table.ajax.reload(null, false);
                                     }
                                     else{
-                                        $('#loading').hide(); Spinner.hide();
+                                        $('#loading').hide();
                                         Swal.fire("SAVE FAILED", "New user save failed!", "error");
                                         table.ajax.reload(null, false);
                                     }
@@ -276,20 +276,20 @@ $('#btnUpdate').on('click', function(){
     var company2 = $('#company2').val();
     var role1 = $('#role1').val();
     var role2 = $('#role2').val();
-    $('#loading').show(); Spinner(); Spinner.show();
+    $('#loading').show();
     setTimeout(function(){
         if(!name1 || !email1 || !company1 || !role1){
-            $('#loading').hide(); Spinner.hide();
+            $('#loading').hide();
             Swal.fire('REQUIRED','Please fill up all required fields!','error');
             return false;
         }
         if(name1.toUpperCase() == name2.toUpperCase() && email1.toUpperCase() == email2.toUpperCase() && company1 == company2 && role1 == role2){
-            $('#loading').hide(); Spinner.hide();
+            $('#loading').hide();
             Swal.fire("NO CHANGES FOUND", "User Details are all still the same!", "error");
             return false;
         }
         if(!validateEmail(email1)){
-            $('#loading').hide(); Spinner.hide();
+            $('#loading').hide();
             Swal.fire("INVALID EMAIL", "Enter a valid email address format!", "error");
             return false;
         }
@@ -309,7 +309,7 @@ $('#btnUpdate').on('click', function(){
                 }
             }
         });
-        $('#loading').hide(); Spinner.hide();
+        $('#loading').hide();
         if(emailv2 == false){
             Swal.fire('NON-EXISTENT EMAIL','User Email Address does not exist!','error');
             return false;

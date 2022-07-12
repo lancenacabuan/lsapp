@@ -646,7 +646,7 @@ $('#btnSave').on('click', function(){
         var asset_apvby_email = $.trim($('#asset_apvby_email').val()).toLowerCase();
         var asset_apvby_verify = $.trim($('#asset_apvby_verify').val()).toLowerCase();
         var reference_upload = $('#reference_upload').val();
-        $('#loading').show(); Spinner(); Spinner.show();
+        $('#loading').show();
         setTimeout(function(){
             $.ajax({
                 headers:{
@@ -680,7 +680,7 @@ $('#btnSave').on('click', function(){
                     }
                 }
             });
-            $('#loading').hide(); Spinner.hide();
+            $('#loading').hide();
             if(email1 == false && email2 == false){
                 Swal.fire('NON-EXISTENT EMAIL','Requester and Approver Email Addresses are both non-existent!','error');
                 return false;
@@ -763,7 +763,7 @@ $('#btnSave').on('click', function(){
                                 if(!reference_upload){
                                     scrollReset();
                                     $('#newStockRequest').modal('hide');
-                                    $('#loading').show(); Spinner(); Spinner.show();
+                                    $('#loading').show();
                                     $.ajax({
                                         type:'post',
                                         url:'/asset/logSave',
@@ -775,12 +775,12 @@ $('#btnSave').on('click', function(){
                                         },
                                         success: function(data){
                                             if(data == 'true'){
-                                                $('#loading').hide(); Spinner.hide();
+                                                $('#loading').hide();
                                                 Swal.fire("SUBMIT SUCCESS", "FIXED ASSET STOCK REQUEST", "success");
                                                 setTimeout(function(){location.href="/stockrequest"}, 2000);
                                             }
                                             else{
-                                                $('#loading').hide(); Spinner.hide();
+                                                $('#loading').hide();
                                                 Swal.fire("SUBMIT FAILED", "FIXED ASSET STOCK REQUEST", "error");
                                                 setTimeout(function(){location.href="/stockrequest"}, 2000);
                                             }
@@ -795,7 +795,7 @@ $('#btnSave').on('click', function(){
                                 }
                                 else{
                                     $('#newStockRequest').modal('hide');
-                                    $('#loading').show(); Spinner(); Spinner.show();
+                                    $('#loading').show();
                                     $('#btnUpload').click();
                                 }
                             }
@@ -839,7 +839,7 @@ $('#btnSave').on('click', function(){
         var asset_reqby_verify = $.trim($('#asset_reqby_verify').val()).toLowerCase();
         var reference = ($.trim($('#reference').val()).toUpperCase().split("\n")).join(', ');
         var reference_upload = $('#reference_upload').val();
-        $('#loading').show(); Spinner(); Spinner.show();
+        $('#loading').show();
         setTimeout(function(){
             $.ajax({
                 headers:{
@@ -857,7 +857,7 @@ $('#btnSave').on('click', function(){
                     }
                 }
             });
-            $('#loading').hide(); Spinner.hide();
+            $('#loading').hide();
             if(email1 == false){
                 Swal.fire('NON-EXISTENT EMAIL','Client Email Address does not exist!','error');
                 return false;
@@ -934,7 +934,7 @@ $('#btnSave').on('click', function(){
                                 if(!reference_upload){
                                     scrollReset();
                                     $('#newStockRequest').modal('hide');
-                                    $('#loading').show(); Spinner(); Spinner.show();
+                                    $('#loading').show();
                                     $.ajax({
                                         type:'post',
                                         url:'/logSave',
@@ -946,12 +946,12 @@ $('#btnSave').on('click', function(){
                                         },
                                         success: function(data){
                                             if(data == 'true'){
-                                                $('#loading').hide(); Spinner.hide();
+                                                $('#loading').hide();
                                                 Swal.fire("SUBMIT SUCCESS", "STOCK REQUEST", "success");
                                                 setTimeout(function(){location.href="/stockrequest"}, 2000);
                                             }
                                             else{
-                                                $('#loading').hide(); Spinner.hide();
+                                                $('#loading').hide();
                                                 Swal.fire("SUBMIT FAILED", "STOCK REQUEST", "error");
                                                 setTimeout(function(){location.href="/stockrequest"}, 2000);
                                             }
@@ -966,7 +966,7 @@ $('#btnSave').on('click', function(){
                                 }
                                 else{
                                     $('#newStockRequest').modal('hide');
-                                    $('#loading').show(); Spinner(); Spinner.show();
+                                    $('#loading').show();
                                     $('#btnUpload').click();
                                 }
                             }
@@ -1023,7 +1023,7 @@ $(document).on('click', '#btnSaveChanges', function(){
         if(result.isConfirmed){
             scrollReset();
             $('#detailsStockRequest').modal('hide');
-            $('#loading').show(); Spinner(); Spinner.show();
+            $('#loading').show();
             $.ajax({
                 type:'post',
                 url:'/editRequest',
@@ -1048,10 +1048,10 @@ $(document).on('click', '#btnSaveChanges', function(){
                     'reference_upload': reference_upload
                 },
                 success: function(data){
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     if(data == 'true'){
                         if(reference_upload){
-                            $('#loading').show(); Spinner(); Spinner.show();
+                            $('#loading').show();
                             $('#btnUpload').click();
                         }
                         else{
@@ -1191,7 +1191,7 @@ $('#btnEdit').on('click', function(){
         if(result.isConfirmed){
             scrollReset();
             $('#editSerialModal').modal('hide');
-            $('#loading').show(); Spinner(); Spinner.show();
+            $('#loading').show();
             $.ajax({
                 type:'post',
                 url: '/editSerial',
@@ -1207,7 +1207,7 @@ $('#btnEdit').on('click', function(){
                 },
                 success: function(data){
                     if(data == 'true'){
-                        $('#loading').hide(); Spinner.hide();
+                        $('#loading').hide();
                         Swal.fire({
                             title: "EDIT SUCCESS",
                             text: "Item Serial edited successfully!",
@@ -1217,7 +1217,7 @@ $('#btnEdit').on('click', function(){
                         $(tblEdit).DataTable().ajax.reload();
                     }
                     else if(data == 'duplicate'){
-                        $('#loading').hide(); Spinner.hide();
+                        $('#loading').hide();
                         Swal.fire({
                             title: "DUPLICATE SERIAL",
                             text: "Serial already exists!",
@@ -1227,7 +1227,7 @@ $('#btnEdit').on('click', function(){
                         $(tblEdit).DataTable().ajax.reload();
                     }
                     else{
-                        $('#loading').hide(); Spinner.hide();
+                        $('#loading').hide();
                         Swal.fire({
                             title: "EDIT FAILED",
                             text: "Item Serial edit failed!",
@@ -1356,7 +1356,7 @@ $('#btnApprove').on('click', function(){
                     if(data == 'true'){
                         scrollReset();
                         $('#detailsStockRequest').modal('hide');
-                        $('#loading').show(); Spinner(); Spinner.show();
+                        $('#loading').show();
                         $.ajax({
                             type:'post',
                             url:'/logApprove',
@@ -1368,7 +1368,7 @@ $('#btnApprove').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
+                                    $('#loading').hide();
                                     Swal.fire("APPROVE SUCCESS", "STOCK REQUEST", "success");
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
@@ -1443,7 +1443,7 @@ $('#btnReason').on('click', function(){
                             scrollReset();
                             $('#reasonModal').modal('hide');
                             $('#detailsStockRequest').modal('hide');
-                            $('#loading').show(); Spinner(); Spinner.show();
+                            $('#loading').show();
                             $.ajax({
                                 type:'post',
                                 url:'/logDisapprove',
@@ -1456,7 +1456,7 @@ $('#btnReason').on('click', function(){
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
+                                        $('#loading').hide();
                                         Swal.fire("DISAPPROVE SUCCESS", "STOCK REQUEST", "success");
                                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                                     }
@@ -2657,7 +2657,7 @@ $('.btnReceive').on('click', function(){
                         }
                         scrollReset();
                         $('#detailsStockRequest').modal('hide');
-                        $('#loading').show(); Spinner(); Spinner.show();
+                        $('#loading').show();
                         $.ajax({
                             type: 'post',
                             url: '/logReceive',
@@ -2672,7 +2672,7 @@ $('.btnReceive').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
+                                    $('#loading').hide();
                                     Swal.fire("RECEIVE SUCCESS", "STOCK REQUEST", "success");
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
@@ -2767,7 +2767,7 @@ $('.btnReceiveReturned').on('click', function(){
                         }
                         scrollReset();
                         $('#detailsStockRequest').modal('hide');
-                        $('#loading').show(); Spinner(); Spinner.show();
+                        $('#loading').show();
                         $.ajax({
                             type: 'post',
                             url: '/logReceiveRet',
@@ -2780,7 +2780,7 @@ $('.btnReceiveReturned').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
+                                    $('#loading').hide();
                                     Swal.fire("RECEIVED "+inctype, "RETURNED ITEMS", "success");
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
@@ -2874,7 +2874,7 @@ $('#btnReceiveDfc').on('click', function(){
                         }
                         scrollReset();
                         $('#detailsStockRequest').modal('hide');
-                        $('#loading').show(); Spinner(); Spinner.show();
+                        $('#loading').show();
                         $.ajax({
                             type: 'post',
                             url: '/logReceiveDfc',
@@ -2887,7 +2887,7 @@ $('#btnReceiveDfc').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
+                                    $('#loading').hide();
                                     Swal.fire("RECEIVED "+inctype, "DEFECTIVE PARTS", "success");
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
@@ -2991,7 +2991,7 @@ $('#btnReference').on('click', function(){
                             }
                             $('#referenceModal').modal('hide');
                             $('#detailsStockRequest').modal('hide');
-                            $('#loading').show(); Spinner(); Spinner.show();
+                            $('#loading').show();
                             $('#btnUpload').click();
                         }
                         else if(data == 'duplicate'){
@@ -3075,7 +3075,7 @@ $('#btnReturn').on('click', function(){
                         }
                         scrollReset();
                         $('#detailsStockRequest').modal('hide');
-                        $('#loading').show(); Spinner(); Spinner.show();
+                        $('#loading').show();
                         $.ajax({
                             type:'post',
                             url:'/logReturn',
@@ -3087,7 +3087,7 @@ $('#btnReturn').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
+                                    $('#loading').hide();
                                     Swal.fire("RETURN SUCCESS", "STOCK REQUEST", "success");
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }

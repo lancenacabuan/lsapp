@@ -150,7 +150,7 @@ document.addEventListener("contextmenu", function(e){
 }, false);
 
 $(document).ready(function(){
-    $('#loading').hide(); Spinner.hide();
+    $('#loading').hide();
     var req_date = $('#req_date').html();
     req_date = moment(req_date).format('dddd, MMMM DD, YYYY');
     $('#req_date').html(req_date);

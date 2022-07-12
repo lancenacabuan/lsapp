@@ -268,7 +268,7 @@ document.addEventListener("contextmenu", function(e){
 }, false);
 
 $(document).ready(function(){
-    $('#loading').hide(); Spinner.hide();
+    $('#loading').hide();
     for(var i = 1; i <= 4; i++){
         $('#format_date'+i).html(moment($('#format_date'+i).html()).format('dddd, MMMM DD, YYYY'));
     }

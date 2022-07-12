@@ -423,7 +423,7 @@ $('#btnSave').on('click', function(){
                             });
                             scrollReset();
                             $('#newStockTransfer').modal('hide');
-                            $('#loading').show(); Spinner(); Spinner.show();
+                            $('#loading').show();
                             $.ajax({
                                 type:'post',
                                 url:'/logTransSave',
@@ -435,7 +435,7 @@ $('#btnSave').on('click', function(){
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
+                                        $('#loading').hide();
                                         Swal.fire("SUBMIT SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                     }
@@ -1372,7 +1372,7 @@ $('#btnEdit').on('click', function(){
         if(result.isConfirmed){
             scrollReset();
             $('#editSerialModal').modal('hide');
-            $('#loading').show(); Spinner(); Spinner.show();
+            $('#loading').show();
             $.ajax({
                 type:'post',
                 url: '/editSerial',
@@ -1388,7 +1388,7 @@ $('#btnEdit').on('click', function(){
                 },
                 success: function(data){
                     if(data == 'true'){
-                        $('#loading').hide(); Spinner.hide();
+                        $('#loading').hide();
                         Swal.fire({
                             title: "EDIT SUCCESS",
                             text: "Item Serial edited successfully!",
@@ -1398,7 +1398,7 @@ $('#btnEdit').on('click', function(){
                         $(tblEdit).DataTable().ajax.reload();
                     }
                     else if(data == 'duplicate'){
-                        $('#loading').hide(); Spinner.hide();
+                        $('#loading').hide();
                         Swal.fire({
                             title: "DUPLICATE SERIAL",
                             text: "Serial already exists!",
@@ -1408,7 +1408,7 @@ $('#btnEdit').on('click', function(){
                         $(tblEdit).DataTable().ajax.reload();
                     }
                     else{
-                        $('#loading').hide(); Spinner.hide();
+                        $('#loading').hide();
                         Swal.fire({
                             title: "EDIT FAILED",
                             text: "Item Serial edit failed!",
@@ -1597,7 +1597,7 @@ $('#btnReason').on('click', function(){
                             scrollReset();
                             $('#reasonModal').modal('hide');
                             $('#detailsStockTransfer').modal('hide');
-                            $('#loading').show(); Spinner(); Spinner.show();
+                            $('#loading').show();
                             $.ajax({
                                 type:'post',
                                 url:'/logTransDisapprove',
@@ -1610,7 +1610,7 @@ $('#btnReason').on('click', function(){
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
+                                        $('#loading').hide();
                                         Swal.fire("DISAPPROVE SUCCESS", "STOCK TRANSFER REQUEST", "success");
                                         setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                     }
@@ -2300,7 +2300,7 @@ $('.btnReceive').on('click', function(){
                         }
                         scrollReset();
                         $('#detailsStockTransfer').modal('hide');
-                        $('#loading').show(); Spinner(); Spinner.show();
+                        $('#loading').show();
                         $.ajax({
                             type: 'post',
                             url: '/logTransReceive',
@@ -2314,7 +2314,7 @@ $('.btnReceive').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
+                                    $('#loading').hide();
                                     Swal.fire("RECEIVED "+inctype, "STOCK TRANSFER REQUEST", "success");
                                     setTimeout(function(){location.href="/stocktransfer"}, 2000);
                                 }

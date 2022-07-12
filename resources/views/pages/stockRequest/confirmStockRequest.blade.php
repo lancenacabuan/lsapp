@@ -6,7 +6,7 @@
 </script>
 @endrole
 @role('admin|encoder|viewer') {{---ROLES---}}
-<script>$('#loading').hide(); Spinner.hide();</script>
+<script>$('#loading').hide();</script>
 @endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
 <div class="container-fluid">

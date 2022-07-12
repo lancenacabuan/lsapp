@@ -1426,7 +1426,7 @@ $('.btnReceive').on('click', function(){
                         }
                         scrollReset();
                         $('#detailsAssembly').modal('hide');
-                        $('#loading').show(); Spinner(); Spinner.show();
+                        $('#loading').show();
                         $.ajax({
                             type: 'post',
                             url: '/assembly/logReceive',
@@ -1440,7 +1440,7 @@ $('.btnReceive').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
+                                    $('#loading').hide();
                                     Swal.fire("RECEIVED "+inctype, "ASSEMBLY REQUEST", "success");
                                     setTimeout(function(){location.href="/assembly"}, 2000);
                                 }
@@ -1530,7 +1530,7 @@ $('#btnDefective').on('click', function(){
                         }
                         scrollReset();
                         $('#detailsAssembly').modal('hide');
-                        $('#loading').show(); Spinner(); Spinner.show();
+                        $('#loading').show();
                         $.ajax({
                             type: 'post',
                             url: '/assembly/logDefective',
@@ -1543,7 +1543,7 @@ $('#btnDefective').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
+                                    $('#loading').hide();
                                     Swal.fire("REQUEST SUCCESS", "ASSEMBLY REQUEST", "success");
                                     setTimeout(function(){location.href="/assembly"}, 2000);
                                 }

@@ -25,7 +25,7 @@ $(document).ready(function(){
     $('#btnBack').hide();
     $('#backBtn').hide();
     $('#stocksHeader').html('WAREHOUSE STOCKS');
-    $('#loading').show(); Spinner(); Spinner.show();
+    $('#loading').show();
     CategoryTable = 
         $('table.CategoryTable').DataTable({
             aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
@@ -75,7 +75,7 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('#backBtn').show();
     $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html(categoryName);
-    $('#loading').show(); Spinner(); Spinner.show();
+    $('#loading').show();
     ItemTable = 
         $('table.ItemTable').DataTable({
             aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
@@ -135,7 +135,7 @@ $('#btnBack').on('click', function(){
     $('#backBtn').show();
     $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html(categoryName);
-    $('#loading').show(); Spinner(); Spinner.show();
+    $('#loading').show();
     ItemTable = 
         $('table.ItemTable').DataTable({
             aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
@@ -194,7 +194,7 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#backBtn').hide();
     $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html(itemName);
-    $('#loading').show(); Spinner(); Spinner.show();
+    $('#loading').show();
     if(trdata.serialize == 'YES'){
         ItemSerialTable = 
             $('table.ItemSerialTable').DataTable({
@@ -438,7 +438,7 @@ $('#btnGenerate').on('click', function(){
     $('#backBtn').show();
     $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html('BELOW MINIMUM STOCKS');
-    $('#loading').show(); Spinner(); Spinner.show();
+    $('#loading').show();
     MinStocksTable = 
         $('table.MinStocksTable').DataTable({
             dom: 'Blftrip',
@@ -561,7 +561,7 @@ $('#btnEdit').on('click', function(){
         if(result.isConfirmed){
             scrollReset();
             $('#editSerialModal').modal('hide');
-            $('#loading').show(); Spinner(); Spinner.show();
+            $('#loading').show();
             $.ajax({
                 type:'post',
                 url: '/editSerial',
@@ -577,7 +577,7 @@ $('#btnEdit').on('click', function(){
                 },
                 success: function(data){
                     if(data == 'true'){
-                        $('#loading').hide(); Spinner.hide();
+                        $('#loading').hide();
                         Swal.fire({
                             title: "EDIT SUCCESS",
                             text: "Item Serial edited successfully!",
@@ -587,7 +587,7 @@ $('#btnEdit').on('click', function(){
                         table.ajax.reload();
                     }
                     else if(data == 'duplicate'){
-                        $('#loading').hide(); Spinner.hide();
+                        $('#loading').hide();
                         Swal.fire({
                             title: "DUPLICATE SERIAL",
                             text: "Serial already exists!",
@@ -597,7 +597,7 @@ $('#btnEdit').on('click', function(){
                         table.ajax.reload();
                     }
                     else{
-                        $('#loading').hide(); Spinner.hide();
+                        $('#loading').hide();
                         Swal.fire({
                             title: "EDIT FAILED",
                             text: "Item Serial edit failed!",
@@ -933,15 +933,15 @@ $('#btnUpload').on('click', function(){
 
 $(document).ready(function(){
     if($(location).attr('pathname')+window.location.search == '/stocks?import=success_without_errors'){
-        $('#loading').hide(); Spinner.hide();
+        $('#loading').hide();
         Swal.fire("IMPORT SUCCESS", "ADD STOCKS via import file is successful without errors.", "success");
     }
     else if($(location).attr('pathname')+window.location.search == '/stocks?import=success_with_errors'){
-        $('#loading').hide(); Spinner.hide();
+        $('#loading').hide();
         Swal.fire("IMPORT SUCCESS W/ ERRORS", "ADD STOCKS via import file is successful with some errors.", "warning");
     }
     else if($(location).attr('pathname')+window.location.search == '/stocks?import=failed'){
-        $('#loading').hide(); Spinner.hide();
+        $('#loading').hide();
         Swal.fire("IMPORT FAILED", "ADD STOCKS via import file has failed.", "error");
     }
     else if($(location).attr('pathname')+window.location.search == '/stocks?min=below'){

@@ -1067,7 +1067,7 @@ $('#btnSaveLocation').on('click', function(){
                         if(data.result == 'true'){
                             scrollReset();
                             $('#newLocation').modal('hide');
-                            $('#loading').show(); Spinner(); Spinner.show();
+                            $('#loading').show();
                             $.ajax({
                                 url: "/logNewLocation",
                                 type: "POST",
@@ -1080,7 +1080,7 @@ $('#btnSaveLocation').on('click', function(){
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
+                                        $('#loading').hide();
                                         Swal.fire("REQUEST SUCCESS", "New Location has been requested successfully!", "success");
                                         tblLocation.ajax.reload(null, false);
                                     }
@@ -1206,7 +1206,7 @@ $('#btnUpdateLocation').on('click', function(){
                         if(data.result == 'request'){
                             scrollReset();
                             $('#detailsLocation').modal('hide');
-                            $('#loading').show(); Spinner(); Spinner.show();
+                            $('#loading').show();
                             $.ajax({
                                 url: "/requestStatusChange",
                                 type: "POST",
@@ -1221,7 +1221,7 @@ $('#btnUpdateLocation').on('click', function(){
                                 },
                                 success: function(data){
                                     if(data == 'true'){
-                                        $('#loading').hide(); Spinner.hide();
+                                        $('#loading').hide();
                                         Swal.fire("REQUEST SUCCESS", "Location Status Change has been requested successfully!", "success");
                                         tblLocation.ajax.reload(null, false);
                                     }
@@ -1740,15 +1740,15 @@ $('#btnUpdate').on('click', function(){
 
 $(document).ready(function(){
     if($(location).attr('pathname')+window.location.search == '/maintenance?import=success_without_errors'){
-        $('#loading').hide(); Spinner.hide();
+        $('#loading').hide();
         Swal.fire("IMPORT SUCCESS", "ADD ITEMS via import file is successful without errors.", "success");
     }
     else if($(location).attr('pathname')+window.location.search == '/maintenance?import=success_with_errors'){
-        $('#loading').hide(); Spinner.hide();
+        $('#loading').hide();
         Swal.fire("IMPORT SUCCESS W/ ERRORS", "ADD ITEMS via import file is successful with some errors.", "warning");
     }
     else if($(location).attr('pathname')+window.location.search == '/maintenance?import=failed'){
-        $('#loading').hide(); Spinner.hide();
+        $('#loading').hide();
         Swal.fire("IMPORT FAILED", "ADD ITEMS via import file has failed.", "error");
     }
 });

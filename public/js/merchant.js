@@ -410,7 +410,7 @@ $('#btnSave').on('click', function(){
                                 });
                             });
                             $('#newMerchRequest').modal('hide');
-                            $('#loading').show(); Spinner(); Spinner.show();
+                            $('#loading').show();
                             $('#btnUpload').click();
                         }
                         else if(data == 'duplicate'){
@@ -1405,7 +1405,7 @@ $('.btnReceive').on('click', function(){
                         }
                         scrollReset();
                         $('#detailsMerchRequest').modal('hide');
-                        $('#loading').show(); Spinner(); Spinner.show();
+                        $('#loading').show();
                         $.ajax({
                             type: 'post',
                             url: '/logReceive',
@@ -1420,7 +1420,7 @@ $('.btnReceive').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
+                                    $('#loading').hide();
                                     Swal.fire("RECEIVE SUCCESS", "MERCHANT STOCK REQUEST", "success");
                                     setTimeout(function(){location.href="/merchant"}, 2000);
                                 }
@@ -1484,12 +1484,12 @@ $(document).ready(function(){
             },
             success: function(data){
                 if(data == 'true'){
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     Swal.fire("SUBMIT SUCCESS", "MERCHANT STOCK REQUEST", "success");
                     setTimeout(function(){location.href="/merchant"}, 2000);
                 }
                 else{
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     Swal.fire("SUBMIT FAILED", "MERCHANT STOCK REQUEST", "error");
                     setTimeout(function(){location.href="/merchant"}, 2000);
                 }

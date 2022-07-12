@@ -2888,12 +2888,12 @@ $(document).ready(function(){
             },
             success: function(data){
                 if(data == 'true'){
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     Swal.fire("SUBMIT SUCCESS", "STOCK REQUEST", "success");
                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                 }
                 else{
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     Swal.fire("SUBMIT FAILED", "STOCK REQUEST", "error");
                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                 }
@@ -2920,12 +2920,12 @@ $(document).ready(function(){
             },
             success: function(data){
                 if(data == 'true'){
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     Swal.fire("SUBMIT SUCCESS", "FIXED ASSET STOCK REQUEST", "success");
                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                 }
                 else{
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     Swal.fire("SUBMIT FAILED", "FIXED ASSET STOCK REQUEST", "error");
                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                 }
@@ -2939,7 +2939,7 @@ $(document).ready(function(){
         });
     }
     else if($(location).attr('pathname')+window.location.search == '/stockrequest?edit=success'){
-        $('#loading').hide(); Spinner.hide();
+        $('#loading').hide();
         Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
         setTimeout(function(){location.href="/stockrequest"}, 2000);
     }
@@ -2959,12 +2959,12 @@ $(document).ready(function(){
             },
             success: function(data){
                 if(data == 'true'){
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                 }
                 else{
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                 }
@@ -2991,12 +2991,12 @@ $(document).ready(function(){
             },
             success: function(data){
                 if(data == 'true'){
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     Swal.fire("SALE SUCCESS", "STOCK REQUEST", "success");
                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                 }
                 else{
-                    $('#loading').hide(); Spinner.hide();
+                    $('#loading').hide();
                     Swal.fire("SALE FAILED", "STOCK REQUEST", "error");
                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                 }

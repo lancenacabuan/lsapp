@@ -224,7 +224,7 @@ $('#btnSupport').on('click', function(){
                     if(data == 'true'){
                         scrollReset();
                         $('#reportModal').modal('hide');
-                        $('#loading').show(); Spinner(); Spinner.show();
+                        $('#loading').show();
                         $.ajax({
                             url: "/report/log",
                             data:{
@@ -234,7 +234,7 @@ $('#btnSupport').on('click', function(){
                             },
                             success: function(data){
                                 if(data == 'true'){
-                                    $('#loading').hide(); Spinner.hide();
+                                    $('#loading').hide();
                                     Swal.fire("SUBMIT SUCCESS", "Report submitted successfully!", "success");
                                 }
                                 else{

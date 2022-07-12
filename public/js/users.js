@@ -118,10 +118,10 @@ $('#btnAddUser').on('click', function(){
     $('#addUser').modal('show');
 });
 
-var emailv1 = true;
-var emailv2 = true;
 $('#btnSave').on('click', function(){
     var warntext = '';
+    var emailv1 = true;
+    var emailv2 = true;
     var name = $.trim($('#name').val());
     var email = $.trim($('#email').val());
     var company = $('#company').val();
@@ -162,7 +162,7 @@ $('#btnSave').on('click', function(){
             }
         }
         else{
-            warntext = ' WARNING: This Email Address is not verified! Continue?';
+            warntext = ' <br><strong style="color: red;">WARNING: This Email Address is not verified! Continue?</strong>';
         }
         $('#loading').hide();
         $.ajax({
@@ -182,7 +182,7 @@ $('#btnSave').on('click', function(){
                 if(data.result == 'true'){
                     Swal.fire({
                         title: "ADD NEW USER?",
-                        text: "You are about to ADD a new user!"+warntext,
+                        html: "You are about to ADD a new user!"+warntext,
                         icon: "warning",
                         showCancelButton: true,
                         cancelButtonColor: '#3085d6',
@@ -277,6 +277,8 @@ $('#userTable tbody').on('click', 'tr td:not(:nth-child(5))', function(){
 
 $('#btnUpdate').on('click', function(){
     var warntext = '';
+    var emailv1 = true;
+    var emailv2 = true;
     var id1 = $('#id1').val();
     var name1 = $.trim($('#name1').val());
     var name2 = $('#name2').val();
@@ -327,7 +329,7 @@ $('#btnUpdate').on('click', function(){
             }
         }
         else{
-            warntext = ' WARNING: This Email Address is not verified! Continue?';
+            warntext = ' <br><strong style="color: red;">WARNING: This Email Address is not verified! Continue?</strong>';
         }
         $('#loading').hide();
         $.ajax({
@@ -352,7 +354,7 @@ $('#btnUpdate').on('click', function(){
                 if(data == 'true'){
                     Swal.fire({
                         title: "UPDATE USER DETAILS?",
-                        text: "You are about to UPDATE this user!"+warntext,
+                        html: "You are about to UPDATE this user!"+warntext,
                         icon: "warning",
                         showCancelButton: true,
                         cancelButtonColor: '#3085d6',

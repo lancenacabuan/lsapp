@@ -632,10 +632,11 @@ $("#stockRequestTable").on('click', '.delete-row', function(){
     }
 });
 
-var email1 = true;
-var email2 = true;
-var apiKey = $('#apiKey').val();
 $('#btnSave').on('click', function(){
+    var warntext = '';
+    var email1 = 'true';
+    var email2 = 'true';
+    var apiKey = $('#apiKey').val();
     if($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder'){
         var needdate = $('#needdate').val();
         var request_type = $('#request_type').val();
@@ -648,50 +649,69 @@ $('#btnSave').on('click', function(){
         var reference_upload = $('#reference_upload').val();
         $('#loading').show();
         setTimeout(function(){
-            $.ajax({
-                headers:{
-                    Authorization: "Bearer " + apiKey
-                },
-                async: false,
-                type: 'GET',
-                url: 'https://isitarealemail.com/api/email/validate?email='+asset_reqby_email,
-                success: function(data){
-                    if(data.status == 'invalid'){
-                        email1 = false;
+            if(emailProvider(asset_reqby_email)){
+                $.ajax({
+                    headers:{
+                        Authorization: "Bearer " + apiKey
+                    },
+                    async: false,
+                    type: 'GET',
+                    url: 'https://isitarealemail.com/api/email/validate?email='+asset_reqby_email,
+                    success: function(data){
+                        if(data.status == 'invalid'){
+                            email1 = 'false';
+                        }
+                        else{
+                            email1 = 'true';
+                        }
                     }
-                    else{
-                        email1 = true;
+                });
+            }
+            else{
+                email1 = 'unknown';
+            }
+            if(emailProvider(asset_apvby_email)){
+                $.ajax({
+                    headers:{
+                        Authorization: "Bearer " + apiKey
+                    },
+                    async: false,
+                    type: 'GET',
+                    url: 'https://isitarealemail.com/api/email/validate?email='+asset_apvby_email,
+                    success: function(data){
+                        if(data.status == 'invalid'){
+                            email2 = 'false';
+                        }
+                        else{
+                            email2 = 'true';
+                        }
                     }
-                }
-            });
-            $.ajax({
-                headers:{
-                    Authorization: "Bearer " + apiKey
-                },
-                async: false,
-                type: 'GET',
-                url: 'https://isitarealemail.com/api/email/validate?email='+asset_apvby_email,
-                success: function(data){
-                    if(data.status == 'invalid'){
-                        email2 = false;
-                    }
-                    else{
-                        email2 = true;
-                    }
-                }
-            });
+                });
+            }
+            else{
+                email2 = 'unknown';
+            }
             $('#loading').hide();
-            if(email1 == false && email2 == false){
+            if(email1 == 'false' && email2 == 'false'){
                 Swal.fire('NON-EXISTENT EMAIL','Requester and Approver Email Addresses are both non-existent!','error');
                 return false;
             }
-            else if(email1 == false){
+            if(email1 == 'false'){
                 Swal.fire('NON-EXISTENT EMAIL','Requester Email Address does not exist!','error');
                 return false;
             }
-            else if(email2 == false){
+            if(email2 == 'false'){
                 Swal.fire('NON-EXISTENT EMAIL','Approver Email Address does not exist!','error');
                 return false;
+            }
+            if(email1 == 'unknown' && email2 == 'unknown'){
+                warntext = ' <br><strong style="color: red;">WARNING: Requester and Approver Email Addresses are both unverified! Continue?</strong>';
+            }
+            if(email1 == 'unknown' && email2 != 'unknown'){
+                warntext = ' <br><strong style="color: red;">WARNING: Requester Email Address is not verified! Continue?</strong>';
+            }
+            if(email1 != 'unknown' && email2 == 'unknown'){
+                warntext = ' <br><strong style="color: red;">WARNING: Approver Email Address is not verified! Continue?</strong>';
             }
             if(needdate < minDate){
                 Swal.fire('Minimum Date is today!','Select within date range from today onwards.','error');
@@ -699,7 +719,7 @@ $('#btnSave').on('click', function(){
             }
             Swal.fire({
                 title: "SUBMIT STOCK REQUEST?",
-                text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
+                html: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button."+warntext,
                 icon: "warning",
                 showCancelButton: true,
                 cancelButtonColor: '#3085d6',
@@ -841,26 +861,34 @@ $('#btnSave').on('click', function(){
         var reference_upload = $('#reference_upload').val();
         $('#loading').show();
         setTimeout(function(){
-            $.ajax({
-                headers:{
-                    Authorization: "Bearer " + apiKey
-                },
-                async: false,
-                type: 'GET',
-                url: 'https://isitarealemail.com/api/email/validate?email='+asset_reqby_email,
-                success: function(data){
-                    if(data.status == 'invalid'){
-                        email1 = false;
+            if(emailProvider(asset_reqby_email)){
+                $.ajax({
+                    headers:{
+                        Authorization: "Bearer " + apiKey
+                    },
+                    async: false,
+                    type: 'GET',
+                    url: 'https://isitarealemail.com/api/email/validate?email='+asset_reqby_email,
+                    success: function(data){
+                        if(data.status == 'invalid'){
+                            email1 = 'false';
+                        }
+                        else{
+                            email1 = 'true';
+                        }
                     }
-                    else{
-                        email1 = true;
-                    }
-                }
-            });
+                });
+            }
+            else{
+                email1 = 'unknown';
+            }
             $('#loading').hide();
-            if(email1 == false){
+            if(email1 == 'false'){
                 Swal.fire('NON-EXISTENT EMAIL','Client Email Address does not exist!','error');
                 return false;
+            }
+            if(email1 == 'unknown'){
+                warntext = ' <br><strong style="color: red;">WARNING: Client Email Address is not verified! Continue?</strong>';
             }
             if(needdate < minDate){
                 Swal.fire('Minimum Date is today!','Select within date range from today onwards.','error');
@@ -868,7 +896,7 @@ $('#btnSave').on('click', function(){
             }
             Swal.fire({
                 title: "SUBMIT STOCK REQUEST?",
-                text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
+                html: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button."+warntext,
                 icon: "warning",
                 showCancelButton: true,
                 cancelButtonColor: '#3085d6',

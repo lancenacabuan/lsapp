@@ -1556,7 +1556,8 @@ class StockRequestController extends Controller
             'pendcount' => 0,
             'penditems' => NULL,
             'req_type_id' => $request_details->req_type_id,
-            'status_id' => $request_details->status_id
+            'status_id' => $request_details->status_id,
+            'token' => ''
         ];
         Mail::to($sendTo)->send(new receivedRequest($details, $subject));
         unset($sendTo);
@@ -1592,7 +1593,8 @@ class StockRequestController extends Controller
             'pendcount' => 0,
             'penditems' => NULL,
             'req_type_id' => $request_details->req_type_id,
-            'status_id' => $request_details->status_id
+            'status_id' => $request_details->status_id,
+            'token' => ''
         ];
         Mail::to($sendTo)->send(new receivedRequest($details, $subject));
         unset($sendTo);
@@ -1624,7 +1626,8 @@ class StockRequestController extends Controller
             'pendcount' => 0,
             'penditems' => NULL,
             'req_type_id' => $request_details->req_type_id,
-            'status_id' => $request_details->status_id
+            'status_id' => $request_details->status_id,
+            'token' => ''
         ];
         Mail::to($sendTo)->send(new receivedRequest($details, $subject));
         unset($sendTo);
@@ -1652,7 +1655,8 @@ class StockRequestController extends Controller
             'pendcount' => 0,
             'penditems' => NULL,
             'req_type_id' => $request_details->req_type_id,
-            'status_id' => $request_details->status_id
+            'status_id' => $request_details->status_id,
+            'token' => ''
         ];
         Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
 

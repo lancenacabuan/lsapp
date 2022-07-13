@@ -14,6 +14,11 @@ use Yajra\Datatables\Datatables;
 
 class ConfirmReceiveController extends Controller
 {
+    public function gitpull(){
+        $output = shell_exec('cd /var/www/html/main-warehouse && git pull');
+        return $output;
+    }
+
     public function confirm(Request $request){
         if(Requests::where('request_number', $request->request_number)->where('token', $request->token)->count() == 0){
             return redirect()->to('/');

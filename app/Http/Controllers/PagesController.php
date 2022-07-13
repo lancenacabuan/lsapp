@@ -30,11 +30,6 @@ class PagesController extends Controller
         $this->middleware('auth');
     }
 
-    public function gitpull(){
-        $output = shell_exec('cd /var/www/html/main-warehouse && git pull');
-        return $output;
-    }
-
     public function index(){
         if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
         {

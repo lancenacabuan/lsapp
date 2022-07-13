@@ -14,8 +14,8 @@ use App\Http\Controllers\FileMaintenanceController;
 use App\Http\Controllers\ConfirmReceiveController;
 
 Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
-Route::get('/gitpull',[PagesController::class,'gitpull']);
 Route::get('/logout',[LoginController::class,'logout']);
+Route::get('/gitpull',[ConfirmReceiveController::class,'gitpull']);
 Route::get('/receive',[ConfirmReceiveController::class,'confirm']);
 
 //Index

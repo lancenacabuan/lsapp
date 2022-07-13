@@ -12,7 +12,7 @@
             <input type="hidden" id="item_id_details">
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
-                <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" type="text" readonly>
                 <label class="form-control form-control-sm dfcshow assethide" style="width: 160px; display: none;">Assembly Request No.</label>
                 <input class="form-control form-control-sm dfcshow assethide" id="asm_request_num_details" onclick="copyAsmReqNum()" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
             </div>

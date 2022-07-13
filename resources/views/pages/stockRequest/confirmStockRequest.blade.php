@@ -197,7 +197,7 @@ document.addEventListener("contextmenu", function(e){
 $(document).ready(function(){
     var req_num = $('#req_num').val();
     if($('#confirmed').val() == true){
-        Swal.fire('THANK YOU', 'You already received these item/s! No further actions needed.', 'info');
+        Swal.fire('THANK YOU', 'You already received these item/s! <br>No further actions needed.', 'info');
     }
     else{
         Swal.fire('RECEIVE CONFIRMED', 'Stock Request '+req_num+' has been received successfully.', 'success');

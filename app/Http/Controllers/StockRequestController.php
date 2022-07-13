@@ -2119,7 +2119,7 @@ class StockRequestController extends Controller
                 }
             }
 
-            if($request_details->req_type_id == '2' || $request_details->req_type_id == '3' || $request_details->req_type_id == '6' || $request_details->req_type_id == '7'){
+            if($request_details->req_type_id == '2' || $request_details->req_type_id == '3' || $request_details->req_type_id == '7'){
                 do{
                     $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
                     $key = array();
@@ -2364,7 +2364,7 @@ class StockRequestController extends Controller
                     'token' => ''
                 ];
                 Mail::to(auth()->user()->email)->send(new receivedRequest($details, $subject));
-                if($request_details->req_type_id == 2 || $request_details->req_type_id == 3 || $request_details->req_type_id == 6){
+                if($request_details->req_type_id == 2 || $request_details->req_type_id == 3){
                     $details = [
                         'name' => $request_details->client_name,
                         'action' => 'STOCK REQUEST',

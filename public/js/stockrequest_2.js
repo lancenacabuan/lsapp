@@ -322,7 +322,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#qty_details').val(qty);
                 var status = value.status;
                     $('#status_details').val(status);
-                    if(status == 'RECEIVED' && value.notify == 'Confirmed'){
+                    if(value.notify == 'Confirmed'){
                         $('#status_details').val('CONFIRMED '+status);
                     }
                 var prep_by = value.prep_by;
@@ -1619,7 +1619,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#qty_details').val(qty);
     var status = value.status;
         $('#status_details').val(status);
-        if(status == 'RECEIVED' && value.notify == 'Confirmed'){
+        if(value.notify == 'Confirmed'){
             $('#status_details').val('CONFIRMED '+status);
         }
     var prep_by = value.prep_by;

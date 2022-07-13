@@ -1,11 +1,18 @@
 @extends('layouts.app')
 @section('content')
-@role('sales|merchant|accounting|assembler|approver - sales|approver - warehouse') {{---ROLES---}}
+@role('accounting|assembler|approver - sales|approver - warehouse') {{---ROLES---}}
 <script>
     window.location = '/';
 </script>
 @endrole
-@role('admin|encoder|viewer') {{---ROLES---}}
+@role('sales|merchant') {{---ROLES---}}
+@if(auth()->user()->id != $list->user_id)
+<script>
+    window.location = '/';
+</script>
+@endif
+@endrole
+@role('admin|encoder|viewer|sales|merchant') {{---ROLES---}}
 <script>$('#loading').hide();</script>
 @endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">

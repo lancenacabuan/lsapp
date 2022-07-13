@@ -206,7 +206,17 @@ else{
                     }
                 }
             },
-            { data: 'req_by' },
+            {
+                data: 'req_by',
+                "render": function(data, type, row){
+                    if(row.req_type_id == '7'){
+                        return row.asset_reqby;
+                    }
+                    else{
+                        return row.req_by;
+                    }
+                }
+            },
             { data: 'req_type' },
             {
                 data: 'status',

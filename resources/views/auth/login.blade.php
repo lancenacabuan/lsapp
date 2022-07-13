@@ -63,7 +63,7 @@
 <script>
 $(document).ready(function(){
     if($(location).attr('pathname')+window.location.search == '/login?user=inactive'){
-        swal("INACTIVE ACCOUNT", "This user account is currently inactive and is restricted to access the system. Try contacting an admin to resolve this issue.", "warning");
+        Swal.fire("INACTIVE ACCOUNT", "Your account is currently inactive. Please contact the administrator to resolve the issue.", "warning");
         return false;
     }
 });

@@ -16,6 +16,7 @@
 <script>$('#loading').hide();</script>
 @endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
+<input type="hidden" id="confirmed" value="{{$confirmed}}">
 <div class="container-fluid">
     <button id="btnPrint" type="button" class="btn btn-primary bp" style="margin-right: 5px;">PRINT</button>
     <button id="btnSavePDF" type="button" class="btn btn-primary bp">SAVE AS PDF</button>
@@ -195,7 +196,12 @@ document.addEventListener("contextmenu", function(e){
 
 $(document).ready(function(){
     var req_num = $('#req_num').val();
-    Swal.fire('RECEIVE CONFIRMED', 'Stock Request '+req_num+' has been received successfully.', 'success');
+    if($('#confirmed').val() == true){
+        Swal.fire('THANK YOU', 'You already have received these item/s! No further actions needed.', 'info');
+    }
+    else{
+        Swal.fire('RECEIVE CONFIRMED', 'Stock Request '+req_num+' has been received successfully.', 'success');
+    }
     for(var i = 1; i <= 5; i++){
         $('#format_date'+i).html(moment($('#format_date'+i).html()).format('dddd, MMMM DD, YYYY'));
     }

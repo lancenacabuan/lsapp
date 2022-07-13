@@ -41,7 +41,7 @@
             <button type="button" id="btnResetReport" class="btn btn-primary bp" style="zoom: 85%; float: right; margin-right: 5px;">RESET</button><br><br>
             <span style="font-size: 14px;">You may also contact us at our Viber numbers below for chat support.</span>
             <div class="my-2" style="height: 50px; line-height: 50px;">
-                <img src="{{asset('viber.png')}}" style="width: auto; height: 50px;">
+                <img src="{{asset('/inc/viber.png')}}" style="width: auto; height: 50px;">
                 <span class="ml-2" style="font-size: 14px;">0999-220-6507 / 0998-848-8624 / 0946-5656-535</span>
             </div>
         </div>

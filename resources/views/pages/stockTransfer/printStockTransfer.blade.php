@@ -185,7 +185,7 @@ $(document).ready(function(){
     if($('#locto').html() == '4'){
         $('#locto').html('A4');
     }
-    var x = $('#tblPrint tr').length;
+    var x = $('#tblPrint tr:visible').length;
     if(x > 30){
         $('.extend').show();
     }

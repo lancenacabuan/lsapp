@@ -470,7 +470,7 @@ $(document).ready(function(){
             $('#ellipsis').html(ellipsis);
         }
     }
-    var x = $('#tblPrint tr').length;
+    var x = $('#tblPrint tr:visible').length;
     if(x > 30){
         $('.extend').show();
     }

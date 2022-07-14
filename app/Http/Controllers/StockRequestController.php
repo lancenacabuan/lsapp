@@ -1900,6 +1900,8 @@ class StockRequestController extends Controller
     }
 
     public function receiveRequest(Request $request){
+        Requests::where('request_number', $request->request_number)
+            ->update(['notify' => '']);
         if($request->inc == 'true'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
@@ -2036,16 +2038,7 @@ class StockRequestController extends Controller
                 ->update(['status' => 'incomplete', 'user_id' => auth()->user()->id]);
         }
         $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
-
-        if($request->inc == 'true'){
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "RECEIVED INCOMPLETE STOCK REQUEST: User successfully received incomplete requested items of Stock Request No. $request->request_number.";
-            $userlogs->save();
-
-            return response('true');
-        }
-        else if($total == 0){
+        if($total == 0){
             do{
                 $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, orderID, schedule, needdate, prepdate, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email')
                     ->where('requests.request_number', $request->request_number)
@@ -2115,6 +2108,49 @@ class StockRequestController extends Controller
                 while(!$items);
             }
 
+            if($request->inc == 'true'){
+                $complete1 = 'INCOMPLETE';
+                $complete2 = 'incomplete';
+                if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
+                    do{
+                        $incitems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
+                            ->whereIn('request_number', $include)
+                            ->whereIn('stocks.status', ['incomplete'])
+                            ->join('items','items.id','stocks.item_id')
+                            ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
+                            ->orderBy('item', 'ASC')
+                            ->get()
+                            ->toArray();
+                        foreach($incitems as $key => $value){
+                            if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
+                                $incitems[$key]['Warranty_Name'] = 'NO WARRANTY';
+                            }
+                            else{
+                                $incitems[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
+                            }
+                        }
+                    }
+                    while(!$incitems);
+                }
+                else{
+                    do{
+                        $incitems = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                            ->whereIn('request_number', $include)
+                            ->whereIn('stocks.status', ['incomplete'])
+                            ->join('items','items.id','stocks.item_id')
+                            ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                            ->orderBy('item', 'ASC')
+                            ->get();
+                    }
+                    while(!$incitems);
+                }
+            }
+            else{
+                $complete1 = 'COMPLETE';
+                $complete2 = 'complete';
+                $incitems = array();
+            }
+
             $attachments = [];
             $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
             if($files != NULL){
@@ -2160,6 +2196,7 @@ class StockRequestController extends Controller
                     'received_by' => auth()->user()->name,
                     'role' => 'Admin / Encoder',
                     'items' => $items,
+                    'incitems' => $incitems,
                     'files' => $attachments,
                     'token' => ''
                 ];
@@ -2181,6 +2218,7 @@ class StockRequestController extends Controller
                         'received_by' => auth()->user()->name,
                         'role' => 'Admin / Encoder',
                         'items' => $items,
+                        'incitems' => $incitems,
                         'files' => $attachments,
                         'token' => ''
                     ];
@@ -2202,6 +2240,7 @@ class StockRequestController extends Controller
                     'received_by' => auth()->user()->name,
                     'role' => '',
                     'items' => $items,
+                    'incitems' => $incitems,
                     'files' => $attachments,
                     'token' => $token
                 ];
@@ -2222,6 +2261,7 @@ class StockRequestController extends Controller
                     'received_by' => auth()->user()->name,
                     'role' => '',
                     'items' => $items,
+                    'incitems' => $incitems,
                     'files' => $attachments,
                     'token' => ''
                 ];
@@ -2259,6 +2299,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Admin',
                     'items' => $items,
+                    'incitems' => $incitems,
                     'files' => array(),
                     'pendcount' => 0,
                     'penditems' => NULL,
@@ -2297,6 +2338,7 @@ class StockRequestController extends Controller
                         'receivedby' => auth()->user()->name,
                         'role' => 'Approver - Sales',
                         'items' => $items,
+                        'incitems' => $incitems,
                         'files' => $attachments,
                         'pendcount' => 0,
                         'penditems' => NULL,
@@ -2333,6 +2375,7 @@ class StockRequestController extends Controller
                         'receivedby' => auth()->user()->name,
                         'role' => 'Accounting',
                         'items' => $items,
+                        'incitems' => $incitems,
                         'files' => $attachments,
                         'pendcount' => 0,
                         'penditems' => NULL,
@@ -2364,6 +2407,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Sales/Merchant',
                     'items' => $items,
+                    'incitems' => $incitems,
                     'files' => $attachments,
                     'pendcount' => 0,
                     'penditems' => NULL,
@@ -2394,6 +2438,7 @@ class StockRequestController extends Controller
                         'receivedby' => auth()->user()->name,
                         'role' => '',
                         'items' => $items,
+                        'incitems' => $incitems,
                         'files' => $attachments,
                         'pendcount' => 0,
                         'penditems' => NULL,
@@ -2406,7 +2451,7 @@ class StockRequestController extends Controller
 
                 $userlogs = new UserLogs;
                 $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "RECEIVED COMPLETE STOCK REQUEST: User successfully received complete requested items of Stock Request No. $request->request_number.";
+                $userlogs->activity = "RECEIVED $complete1 STOCK REQUEST: User successfully received $complete2 requested items of Stock Request No. $request->request_number.";
                 $userlogs->save();
             }
         }

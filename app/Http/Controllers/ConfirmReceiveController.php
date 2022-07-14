@@ -78,6 +78,23 @@ class ConfirmReceiveController extends Controller
             return redirect()->to('/');
         }
 
-        return view('/pages/stockRequest/confirmStockRequest', compact('list','list1','list2','list3','confirmed'));
+        $include = Requests::query()->select('request_number')
+            ->where('assembly_reqnum', $request->request_number)
+            ->get();
+        
+        $include = str_replace("{\"request_number\":","",$include);
+        $include = str_replace("}","",$include);
+        $include = json_decode($include);
+        $include[] = $request->request_number;
+
+        $list4 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+            ->whereIn('request_number', $include)
+            ->whereIn('stocks.status', ['incomplete'])
+            ->join('items','items.id','stocks.item_id')
+            ->groupBy('prodcode','item','uom','serial','qty','item_id')
+            ->orderBy('item', 'ASC')
+            ->get();
+        
+        return view('/pages/stockRequest/confirmStockRequest', compact('list','list1','list2','list3','list4','confirmed'));
     }
 }

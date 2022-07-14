@@ -615,7 +615,7 @@ class StockRequestController extends Controller
     }
 
     public function reqModal(Request $request){
-        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify')
+        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
             ->where('requests.request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -3025,6 +3025,10 @@ class StockRequestController extends Controller
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')
                 ->get();
+            $getList3 = true;
+        }
+        else{
+            $getList3 = false;
         }
 
         if($request->demo == 'received'){
@@ -3069,7 +3073,7 @@ class StockRequestController extends Controller
             $list5 = array();
         }
 
-        return view('/pages/stockRequest/printStockRequest', compact('list','list1','list2','list3','list4','list5'));
+        return view('/pages/stockRequest/printStockRequest', compact('list','list1','list2','list3','list4','list5','getList3'));
     }
 
     public function notify(){

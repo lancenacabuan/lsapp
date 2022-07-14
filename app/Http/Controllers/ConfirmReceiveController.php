@@ -24,9 +24,15 @@ class ConfirmReceiveController extends Controller
         if(Requests::where('request_number', $request->request_number)->where('token', $request->token)->count() == 0){
             return redirect()->to('/');
         }
-        if(Requests::where('request_number', $request->request_number)->where('token', $request->token)->where('verify', 'Confirmed')->count() == 0){
-            Requests::where('request_number', $request->request_number)
-                ->update(['verify' => 'Confirmed']);
+        if(Requests::where('request_number', $request->request_number)->first()->verify == ''){
+            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() == 0){
+                Requests::where('request_number', $request->request_number)
+                    ->update(['verify' => 'Confirmed']);
+            }
+            else{
+                Requests::where('request_number', $request->request_number)
+                    ->update(['verify' => 'Incomplete Confirmed']);
+            }
         }
         else{
             $confirmed = true;
@@ -83,6 +89,10 @@ class ConfirmReceiveController extends Controller
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')
                 ->get();
+            $getList3 = true;
+        }
+        else{
+            $getList3 = false;
         }
         
         if(!$list3){
@@ -125,6 +135,6 @@ class ConfirmReceiveController extends Controller
             $list5 = array();
         }
         
-        return view('/pages/stockRequest/confirmStockRequest', compact('list','list1','list2','list3','list4','list5','confirmed'));
+        return view('/pages/stockRequest/confirmStockRequest', compact('list','list1','list2','list3','list4','list5','getList3','confirmed'));
     }
 }

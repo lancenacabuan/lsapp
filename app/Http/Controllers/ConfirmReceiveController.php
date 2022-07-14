@@ -24,9 +24,9 @@ class ConfirmReceiveController extends Controller
         if(Requests::where('request_number', $request->request_number)->where('token', $request->token)->count() == 0){
             return redirect()->to('/');
         }
-        if(Requests::where('request_number', $request->request_number)->where('token', $request->token)->where('notify', 'Confirmed')->count() == 0){
+        if(Requests::where('request_number', $request->request_number)->where('token', $request->token)->where('verify', 'Confirmed')->count() == 0){
             Requests::where('request_number', $request->request_number)
-                ->update(['notify' => 'Confirmed']);
+                ->update(['verify' => 'Confirmed']);
         }
         else{
             $confirmed = true;
@@ -68,11 +68,22 @@ class ConfirmReceiveController extends Controller
 
         $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
             ->whereIn('request_number', $include)
+            ->whereIn('stocks.batch', ['new'])
             ->whereIn('stocks.status', ['prep','assembly','out','asset','demo','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->groupBy('prodcode','item','uom','serial','qty','item_id')
             ->orderBy('item', 'ASC')
             ->get();
+        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 && Stock::where('request_number', $request->request_number)->where('batch','new')->count() == 0){
+            $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.batch', ['old'])
+                ->whereIn('stocks.status', ['prep','assembly','out','asset','demo','assembled'])
+                ->join('items','items.id','stocks.item_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
         
         if(!$list3){
             return redirect()->to('/');
@@ -87,14 +98,33 @@ class ConfirmReceiveController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        $list4 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
-            ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['incomplete'])
-            ->join('items','items.id','stocks.item_id')
-            ->groupBy('prodcode','item','uom','serial','qty','item_id')
-            ->orderBy('item', 'ASC')
-            ->get();
+        if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
+            $list4 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.status', ['incomplete'])
+                ->join('items','items.id','stocks.item_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
+        else{
+            $list4 = array();
+        }
         
-        return view('/pages/stockRequest/confirmStockRequest', compact('list','list1','list2','list3','list4','confirmed'));
+        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
+            $list5 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.batch', ['old'])
+                ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                ->join('items','items.id','stocks.item_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
+        else{
+            $list5 = array();
+        }
+        
+        return view('/pages/stockRequest/confirmStockRequest', compact('list','list1','list2','list3','list4','list5','confirmed'));
     }
 }

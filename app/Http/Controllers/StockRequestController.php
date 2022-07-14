@@ -536,10 +536,10 @@ class StockRequestController extends Controller
 
     public function request_data(){
         if(auth()->user()->hasanyRole('approver - sales')){ //---ROLES---//
-            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify')
+            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
                 ->where('users.company', auth()->user()->company)
                 ->whereIn('request_type.id', ['2','3'])
-                ->whereNotIn('requests.notify', ['confirmed'])
+                ->whereNotIn('requests.verify', ['confirmed'])
                 ->whereNotIn('requests.status', ['7','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -549,9 +549,9 @@ class StockRequestController extends Controller
                 ->get();
         }
         else if(auth()->user()->hasanyRole('accounting')){ //---ROLES---//
-            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify')
+            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
                 ->whereIn('request_type.id', ['2','3','6'])
-                ->whereNotIn('requests.notify', ['confirmed'])
+                ->whereNotIn('requests.verify', ['confirmed'])
                 ->whereNotIn('requests.status', ['7','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -561,8 +561,8 @@ class StockRequestController extends Controller
                 ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
-            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify')
-                ->whereNotIn('requests.notify', ['confirmed'])
+            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+                ->whereNotIn('requests.verify', ['confirmed'])
                 ->whereNotIn('requests.status', ['7','14','19','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -572,9 +572,9 @@ class StockRequestController extends Controller
                 ->get();
         }
         else{
-            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify')
+            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
                 ->where('requests.requested_by', auth()->user()->id)
-                ->whereNotIn('requests.notify', ['confirmed'])
+                ->whereNotIn('requests.verify', ['confirmed'])
                 ->whereNotIn('requests.status', ['14','19','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -1901,7 +1901,7 @@ class StockRequestController extends Controller
 
     public function receiveRequest(Request $request){
         Requests::where('request_number', $request->request_number)
-            ->update(['notify' => '']);
+            ->update(['verify' => '']);
         if($request->inc == 'true'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
@@ -1936,7 +1936,7 @@ class StockRequestController extends Controller
                     while(!$sql);
                     if($request->request_type == '1' || $request->request_type == '4' || $request->request_type == '5' || $request->request_type == '6'){
                         Requests::where('request_number', $request->request_number)
-                            ->update(['notify' => 'confirmed']);
+                            ->update(['verify' => 'confirmed']);
                     }
                 }
                 else{
@@ -2037,6 +2037,14 @@ class StockRequestController extends Controller
                 ->whereNotIn('status', ['out','asset','demo','assembly','assembled'])
                 ->update(['status' => 'incomplete', 'user_id' => auth()->user()->id]);
         }
+        Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['out','asset','demo','assembly','assembled'])
+            ->where('batch', '=', 'new')
+            ->update(['batch' => 'old']);
+        Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['out','asset','demo','assembly','assembled'])
+            ->where('batch', '=', '')
+            ->update(['batch' => 'new']);
         $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
         if($total == 0){
             do{
@@ -2078,6 +2086,7 @@ class StockRequestController extends Controller
                 do{
                     $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
+                        ->whereIn('stocks.batch', ['new'])
                         ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
@@ -2099,6 +2108,7 @@ class StockRequestController extends Controller
                 do{
                     $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                         ->whereIn('request_number', $include)
+                        ->whereIn('stocks.batch', ['new'])
                         ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->groupBy('prodcode','item','uom','serial','qty','item_id')
@@ -2106,6 +2116,84 @@ class StockRequestController extends Controller
                         ->get();
                 }
                 while(!$items);
+            }
+            if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 && Stock::where('request_number', $request->request_number)->where('batch','new')->count() == 0){
+                if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
+                    do{
+                        $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
+                            ->whereIn('request_number', $include)
+                            ->whereIn('stocks.batch', ['old'])
+                            ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                            ->join('items','items.id','stocks.item_id')
+                            ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
+                            ->orderBy('item', 'ASC')
+                            ->get()
+                            ->toArray();
+                        foreach($items as $key => $value){
+                            if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
+                                $items[$key]['Warranty_Name'] = 'NO WARRANTY';
+                            }
+                            else{
+                                $items[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
+                            }
+                        }
+                    }
+                    while(!$items);
+                }
+                else{
+                    do{
+                        $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                            ->whereIn('request_number', $include)
+                            ->whereIn('stocks.batch', ['old'])
+                            ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                            ->join('items','items.id','stocks.item_id')
+                            ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                            ->orderBy('item', 'ASC')
+                            ->get();
+                    }
+                    while(!$items);
+                }
+            }
+
+            if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
+                if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
+                    do{
+                        $olditems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
+                            ->whereIn('request_number', $include)
+                            ->whereIn('stocks.batch', ['old'])
+                            ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                            ->join('items','items.id','stocks.item_id')
+                            ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
+                            ->orderBy('item', 'ASC')
+                            ->get()
+                            ->toArray();
+                        foreach($olditems as $key => $value){
+                            if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
+                                $olditems[$key]['Warranty_Name'] = 'NO WARRANTY';
+                            }
+                            else{
+                                $olditems[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
+                            }
+                        }
+                    }
+                    while(!$olditems);
+                }
+                else{
+                    do{
+                        $olditems = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                            ->whereIn('request_number', $include)
+                            ->whereIn('stocks.batch', ['old'])
+                            ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                            ->join('items','items.id','stocks.item_id')
+                            ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                            ->orderBy('item', 'ASC')
+                            ->get();
+                    }
+                    while(!$olditems);
+                }
+            }
+            else{
+                $olditems = array();
             }
 
             if($request->inc == 'true'){
@@ -2196,6 +2284,7 @@ class StockRequestController extends Controller
                     'received_by' => auth()->user()->name,
                     'role' => 'Admin / Encoder',
                     'items' => $items,
+                    'olditems' => $olditems,
                     'incitems' => $incitems,
                     'files' => $attachments,
                     'token' => ''
@@ -2218,6 +2307,7 @@ class StockRequestController extends Controller
                         'received_by' => auth()->user()->name,
                         'role' => 'Admin / Encoder',
                         'items' => $items,
+                        'olditems' => $olditems,
                         'incitems' => $incitems,
                         'files' => $attachments,
                         'token' => ''
@@ -2240,6 +2330,7 @@ class StockRequestController extends Controller
                     'received_by' => auth()->user()->name,
                     'role' => '',
                     'items' => $items,
+                    'olditems' => $olditems,
                     'incitems' => $incitems,
                     'files' => $attachments,
                     'token' => $token
@@ -2261,6 +2352,7 @@ class StockRequestController extends Controller
                     'received_by' => auth()->user()->name,
                     'role' => '',
                     'items' => $items,
+                    'olditems' => $olditems,
                     'incitems' => $incitems,
                     'files' => $attachments,
                     'token' => ''
@@ -2299,6 +2391,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Admin',
                     'items' => $items,
+                    'olditems' => $olditems,
                     'incitems' => $incitems,
                     'files' => array(),
                     'pendcount' => 0,
@@ -2338,6 +2431,7 @@ class StockRequestController extends Controller
                         'receivedby' => auth()->user()->name,
                         'role' => 'Approver - Sales',
                         'items' => $items,
+                        'olditems' => $olditems,
                         'incitems' => $incitems,
                         'files' => $attachments,
                         'pendcount' => 0,
@@ -2375,6 +2469,7 @@ class StockRequestController extends Controller
                         'receivedby' => auth()->user()->name,
                         'role' => 'Accounting',
                         'items' => $items,
+                        'olditems' => $olditems,
                         'incitems' => $incitems,
                         'files' => $attachments,
                         'pendcount' => 0,
@@ -2407,6 +2502,7 @@ class StockRequestController extends Controller
                     'receivedby' => auth()->user()->name,
                     'role' => 'Sales/Merchant',
                     'items' => $items,
+                    'olditems' => $olditems,
                     'incitems' => $incitems,
                     'files' => $attachments,
                     'pendcount' => 0,
@@ -2438,6 +2534,7 @@ class StockRequestController extends Controller
                         'receivedby' => auth()->user()->name,
                         'role' => '',
                         'items' => $items,
+                        'olditems' => $olditems,
                         'incitems' => $incitems,
                         'files' => $attachments,
                         'pendcount' => 0,
@@ -2727,7 +2824,7 @@ class StockRequestController extends Controller
                     $sql = Requests::where('request_number', $request->request_number)
                         ->update(['status' => '29']);
                     Requests::where('request_number', $request->request_number)
-                        ->update(['notify' => 'confirmed']);
+                        ->update(['verify' => 'confirmed']);
                 }
                 while(!$sql);
             }
@@ -2911,27 +3008,18 @@ class StockRequestController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        if($list->req_type_id == 2 || $list->req_type_id == 6 || ($list->req_type_id == 3 && ($list->status_id == 10 || $list->status_id >= 27))){
-            $list3 = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
-                ->whereIn('request_number', $include)
-                ->whereIn('stocks.status', ['prep','assembly','out','asset','demo','assembled'])
-                ->join('items','items.id','stocks.item_id')
-                ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
-                ->orderBy('item', 'ASC')
-                ->get()
-                ->toArray();
-            foreach($list3 as $key => $value){
-                if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
-                    $list3[$key]['Warranty_Name'] = 'NO WARRANTY';
-                }
-                else{
-                    $list3[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
-                }
-            }
-        }
-        else{
+        $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+            ->whereIn('request_number', $include)
+            ->whereIn('stocks.batch', ['new'])
+            ->whereIn('stocks.status', ['prep','assembly','out','asset','demo','assembled'])
+            ->join('items','items.id','stocks.item_id')
+            ->groupBy('prodcode','item','uom','serial','qty','item_id')
+            ->orderBy('item', 'ASC')
+            ->get();
+        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 && Stock::where('request_number', $request->request_number)->where('batch','new')->count() == 0){
             $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
+                ->whereIn('stocks.batch', ['old'])
                 ->whereIn('stocks.status', ['prep','assembly','out','asset','demo','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
@@ -2954,7 +3042,34 @@ class StockRequestController extends Controller
             return redirect()->to('/stockrequest');
         }
 
-        return view('/pages/stockRequest/printStockRequest', compact('list','list1','list2','list3'));
+        if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
+            $list4 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.status', ['incomplete'])
+                ->join('items','items.id','stocks.item_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
+        else{
+            $list4 = array();
+        }
+
+        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
+            $list5 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.batch', ['old'])
+                ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                ->join('items','items.id','stocks.item_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
+        else{
+            $list5 = array();
+        }
+
+        return view('/pages/stockRequest/printStockRequest', compact('list','list1','list2','list3','list4','list5'));
     }
 
     public function notify(){

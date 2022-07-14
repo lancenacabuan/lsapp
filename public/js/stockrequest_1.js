@@ -2622,12 +2622,23 @@ $('#btnCancel').on('click', function(){
 
 $('.btnReceive').on('click', function(){
     var inc = 'false';
+    var req_type_id = $('#req_type_id_details').val();
     if(items.length < item_count){
         inc = 'true';
     }
+    if(req_type_id == 2 || req_type_id == 3 || req_type_id == 7){
+        var title = 'SEND CONFIRMATION EMAIL?';
+        var text = 'The Client/Requester will be sent a confirmation email for the received items!';
+        var action = 'SEND';
+    }
+    else{
+        var title = 'RECEIVE STOCK REQUEST?';
+        var text = 'You are about to RECEIVE this Stock Request!';
+        var action = 'RECEIVE';
+    }
     Swal.fire({
-        title: "RECEIVE STOCK REQUEST?",
-        text: "You are about to RECEIVE this Stock Request!",
+        title: title,
+        text: text,
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -2646,7 +2657,7 @@ $('.btnReceive').on('click', function(){
                 },
                 data:{
                     'request_number': $('#request_num_details').val(),
-                    'request_type': $('#req_type_id_details').val(),
+                    'request_type': req_type_id,
                     'inc': inc
                 },
                 success: function(data){
@@ -2661,7 +2672,7 @@ $('.btnReceive').on('click', function(){
                                 },
                                 data:{
                                     'request_number': $('#request_num_details').val(),
-                                    'request_type': $('#req_type_id_details').val(),
+                                    'request_type': req_type_id,
                                     'status': $('#status_id_details').val(),
                                     'id': items[i]
                                 },
@@ -2699,7 +2710,7 @@ $('.btnReceive').on('click', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide();
-                                    Swal.fire("RECEIVE SUCCESS", "STOCK REQUEST", "success");
+                                    Swal.fire(action+" SUCCESS", "STOCK REQUEST", "success");
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
                                 else{
@@ -2716,7 +2727,7 @@ $('.btnReceive').on('click', function(){
                     }
                     else{
                         $('#detailsStockRequest').hide();
-                        Swal.fire("RECEIVE FAILED", "STOCK REQUEST", "error");
+                        Swal.fire(action+" FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },

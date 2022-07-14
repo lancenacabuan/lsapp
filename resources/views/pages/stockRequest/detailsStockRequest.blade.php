@@ -394,7 +394,7 @@
             @role('sales') {{---ROLES---}}
             <div id="receive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+                <strong>NOTE:</strong> <span id="receive_text">Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.</span>
             </div>
             <div id="demoreceive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
@@ -404,7 +404,7 @@
             @role('admin|encoder') {{---ROLES---}}
             <div id="receive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+                <strong>NOTE:</strong> <span id="receive_text">Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.</span>
             </div>
             @endrole
             <div class="prephide">

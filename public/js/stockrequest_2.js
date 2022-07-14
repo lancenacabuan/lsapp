@@ -485,6 +485,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $('#sched1_label').html('Date Prepared');
                             $('#receive_label').show();
                             $('.btnReceive').show();
+                            $('.btnReceive').html('SEND CONFIRMATION');
+                            $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
                         }
                     }
                     if(req_type_id != '2'){
@@ -578,8 +580,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     }
                     if(requestStatus == '3' || requestStatus == '4'){
                         $("#transitItemsModal").show();
-                        if(req_type_id == '3'){
-                            $(".btnReceive").html('RECEIVE DEMO');
+                        if(req_type_id == '2' || req_type_id == '3'){
+                            $('.btnReceive').html('SEND CONFIRMATION');
+                            $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
                         }
                         if($("#current_role").val() == 'sales'){
                             $('#receive_label').show();
@@ -1782,6 +1785,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $('#sched1_label').html('Date Prepared');
                 $('#receive_label').show();
                 $('.btnReceive').show();
+                $('.btnReceive').html('SEND CONFIRMATION');
+                $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
             }
         }
         if(req_type_id != '2'){
@@ -1875,8 +1880,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         }
         if(requestStatus == '3' || requestStatus == '4'){
             $("#transitItemsModal").show();
-            if(req_type_id == '3'){
-                $(".btnReceive").html('RECEIVE DEMO');
+            if(req_type_id == '2' || req_type_id == '3'){
+                $('.btnReceive').html('SEND CONFIRMATION');
+                $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
             }
             if($("#current_role").val() == 'sales'){
                 $('#receive_label').show();

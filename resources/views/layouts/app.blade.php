@@ -339,6 +339,8 @@
         }
         function notifyDeadline(){
             if($('#current_url').val() == 'live'){
+                $('#loading').hide();
+                return false;
                 $.ajax({
                     type: 'get', 
                     url: '/stockrequest/notify',

@@ -440,6 +440,56 @@
                 </td>
             </tr>
             @endif
+            @if(count($list0) > 0)
+            <tr height="20" class="tblPending">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr height="20" class="tblPending">
+                <td colspan="9"><strong>PENDING ITEMS</strong></td>
+            </tr>
+            <tr height="20" class="tblPending">
+                @php
+                    $total = 0;
+                @endphp
+                <td colspan="9" height="20">
+                    <table class="table tblPending display" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>ITEM CODE</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>QTY</th>
+                                <th>UOM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($list0 as $x)
+                            @php
+                                if($x['uom'] == 'Meter'){
+                                    $total+=1;
+                                }
+                                else{
+                                    $total+=$x['pending'];
+                                }
+                            @endphp
+                            <tr>
+                                <td>{{$x['prodcode']}}</td>
+                                <td>{{$x['item']}}</td>
+                                <td>{{$x['pending']}}</td>
+                                <td>{{$x['uom']}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th>{{$total}}</th>
+                                <th colspan="1"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+            @endif
             <tr height="20" class="extend" style="display: none;">
                 <td colspan="9">&nbsp;</td>
             </tr>
@@ -540,6 +590,9 @@ $(document).ready(function(){
     }
     if($('.tblDefective tbody tr').length == 0){
         $('.tblDefective').hide();
+    }
+    if($('.tblPending tbody tr').length == 0){
+        $('.tblPending').hide();
     }
 });
 

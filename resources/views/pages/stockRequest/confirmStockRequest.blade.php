@@ -108,18 +108,18 @@
                 <td colspan="2" id="format_date4">{{$list->sched}}</td>
             </tr>
             @endif
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblReceived">
                 <td colspan="9">&nbsp;</td>
             </tr>
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblReceived">
                 <td colspan="9"><strong>RECEIVED ITEMS</strong></td>
             </tr>
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblReceived">
                 @php
                     $total = 0;
                 @endphp
                 <td colspan="9" height="20">
-                    <table class="table stockReqTable display" style="margin-top: 10px;">
+                    <table class="table tblReceived display" style="margin-top: 10px;">
                         <thead>
                             <tr>
                                 <th>ITEM CODE</th>
@@ -159,18 +159,18 @@
                 </td>
             </tr>
             @if(count($list5) > 0)
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblPrevReceived">
                 <td colspan="9">&nbsp;</td>
             </tr>
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblPrevReceived">
                 <td colspan="9"><strong>PREVIOUSLY RECEIVED ITEMS</strong></td>
             </tr>
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblPrevReceived">
                 @php
                     $total = 0;
                 @endphp
                 <td colspan="9" height="20">
-                    <table class="table stockReqTable display" style="margin-top: 10px;">
+                    <table class="table tblPrevReceived display" style="margin-top: 10px;">
                         <thead>
                             <tr>
                                 <th>ITEM CODE</th>
@@ -212,18 +212,18 @@
             @endif
             @if($getList3 == true)
             <script>$('.tblHide').hide();</script>
-            <tr height="20">
+            <tr height="20" class="tblUpdReceived">
                 <td colspan="9">&nbsp;</td>
             </tr>
-            <tr height="20">
+            <tr height="20" class="tblUpdReceived">
                 <td colspan="9"><strong>RECEIVED ITEMS</strong></td>
             </tr>
-            <tr height="20">
+            <tr height="20" class="tblUpdReceived">
                 @php
                     $total = 0;
                 @endphp
                 <td colspan="9" height="20">
-                    <table class="table stockReqTable display" style="margin-top: 10px;">
+                    <table class="table tblUpdReceived display" style="margin-top: 10px;">
                         <thead>
                             <tr>
                                 <th>ITEM CODE</th>
@@ -264,18 +264,18 @@
             </tr>
             @endif
             @if(count($list4) > 0)
-            <tr height="20">
+            <tr height="20" class="tblIncomplete">
                 <td colspan="9">&nbsp;</td>
             </tr>
-            <tr height="20">
+            <tr height="20" class="tblIncomplete">
                 <td colspan="9"><strong>INCOMPLETE ITEMS</strong></td>
             </tr>
-            <tr height="20">
+            <tr height="20" class="tblIncomplete">
                 @php
                     $total = 0;
                 @endphp
                 <td colspan="9" height="20">
-                    <table class="table stockReqTable display" style="margin-top: 10px;">
+                    <table class="table tblIncomplete display" style="margin-top: 10px;">
                         <thead>
                             <tr>
                                 <th>ITEM CODE</th>
@@ -309,6 +309,56 @@
                                 <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
                                 <th>{{$total}}</th>
                                 <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+            @endif
+            @if(count($list0) > 0)
+            <tr height="20" class="tblPending">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr height="20" class="tblPending">
+                <td colspan="9"><strong>PENDING ITEMS</strong></td>
+            </tr>
+            <tr height="20" class="tblPending">
+                @php
+                    $total = 0;
+                @endphp
+                <td colspan="9" height="20">
+                    <table class="table tblPending display" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>ITEM CODE</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>QTY</th>
+                                <th>UOM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($list0 as $x)
+                            @php
+                                if($x['uom'] == 'Meter'){
+                                    $total+=1;
+                                }
+                                else{
+                                    $total+=$x['pending'];
+                                }
+                            @endphp
+                            <tr>
+                                <td>{{$x['prodcode']}}</td>
+                                <td>{{$x['item']}}</td>
+                                <td>{{$x['pending']}}</td>
+                                <td>{{$x['uom']}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th>{{$total}}</th>
+                                <th colspan="1"></th>
                             </tr>
                         </tfoot>
                     </table>
@@ -369,6 +419,24 @@ $(document).ready(function(){
     var x = $('#tblPrint tr:visible').length;
     if(x > 30){
         $('.extend').show();
+    }
+    if($('.tblReceived tbody tr').length == 0){
+        $('.tblReceived').hide();
+    }
+    if($('.tblPrevReceived tbody tr').length == 0){
+        $('.tblPrevReceived').hide();
+    }
+    if($('.tblUpdReceived tbody tr').length == 0){
+        $('.tblUpdReceived').hide();
+    }
+    if($('.tblIncomplete tbody tr').length == 0){
+        $('.tblIncomplete').hide();
+    }
+    if($('.tblDefective tbody tr').length == 0){
+        $('.tblDefective').hide();
+    }
+    if($('.tblPending tbody tr').length == 0){
+        $('.tblPending').hide();
     }
 });
 

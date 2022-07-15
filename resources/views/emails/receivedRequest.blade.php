@@ -459,7 +459,7 @@
         </table>
         @endif
         @endif
-        @if($details['pendcount'] > 0)
+        @if(count($details['penditems']) > 0)
         <br><br>
         <strong>PENDING ITEMS</strong>
         <br><br>

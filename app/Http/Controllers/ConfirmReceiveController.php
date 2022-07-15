@@ -25,13 +25,13 @@ class ConfirmReceiveController extends Controller
             return redirect()->to('/');
         }
         if(Requests::where('request_number', $request->request_number)->first()->verify == ''){
-            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() == 0){
+            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() > 0 || StockRequest::where('request_number', $request->request_number)->sum('pending') > 0){
                 Requests::where('request_number', $request->request_number)
-                    ->update(['verify' => 'Confirmed']);
+                    ->update(['verify' => 'Incomplete Confirmed']);
             }
             else{
                 Requests::where('request_number', $request->request_number)
-                    ->update(['verify' => 'Incomplete Confirmed']);
+                    ->update(['verify' => 'Confirmed']);
             }
         }
         else{
@@ -94,19 +94,10 @@ class ConfirmReceiveController extends Controller
         else{
             $getList3 = false;
         }
-        
+
         if(!$list3){
             return redirect()->to('/');
         }
-
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
-        $include[] = $request->request_number;
 
         if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
             $list4 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
@@ -120,7 +111,7 @@ class ConfirmReceiveController extends Controller
         else{
             $list4 = array();
         }
-        
+
         if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
             $list5 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
@@ -134,7 +125,22 @@ class ConfirmReceiveController extends Controller
         else{
             $list5 = array();
         }
+
+        if(StockRequest::where('request_number', $request->request_number)->sum('pending') > 0){
+            do{
+                $list0 = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','pending')
+                    ->join('items', 'items.id', 'stock_request.item')
+                    ->where('request_number', $request->request_number)
+                    ->where('pending', '>', '0')
+                    ->orderBy('item', 'ASC')
+                    ->get();
+            }
+            while(!$list0);
+        }
+        else{
+            $list0 = array();
+        }
         
-        return view('/pages/stockRequest/confirmStockRequest', compact('list','list1','list2','list3','list4','list5','getList3','confirmed'));
+        return view('/pages/stockRequest/confirmStockRequest', compact('list','list0','list1','list2','list3','list4','list5','getList3','confirmed'));
     }
 }

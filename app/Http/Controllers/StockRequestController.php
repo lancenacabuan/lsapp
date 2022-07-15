@@ -3010,7 +3010,7 @@ class StockRequestController extends Controller
 
         $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
             ->whereIn('request_number', $include)
-            ->whereIn('stocks.batch', ['new'])
+            ->whereIn('stocks.batch', ['new',''])
             ->whereIn('stocks.status', ['prep','assembly','out','asset','demo','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->groupBy('prodcode','item','uom','serial','qty','item_id')

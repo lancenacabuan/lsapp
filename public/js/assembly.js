@@ -610,6 +610,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
                         $("#incFooter").hide();
+                        $(".divPrint").show();
                     }
 
                 $('.modal-body').html();
@@ -1020,6 +1021,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
             $("#incFooter").hide();
+            $(".divPrint").show();
         }
 
     $('.modal-body').html();

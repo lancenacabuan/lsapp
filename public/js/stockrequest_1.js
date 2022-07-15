@@ -1569,7 +1569,7 @@ $('.btnTransit').on('click', function(){
 
 $('#btnReschedule').on('click', function(){
     if(!$("#resched").val()){
-        Swal.fire('Recheduled On is required!','Select within date range from today up to Date Needed.','error');
+        Swal.fire('Date Rescheduled is required!','Select within date range from today up to Date Needed.','error');
         return false;
     }
     else if($("#resched").val() < minDate){

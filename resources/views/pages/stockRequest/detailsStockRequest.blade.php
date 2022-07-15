@@ -131,7 +131,7 @@
                 <input class="form-control form-control-sm" id="recby" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px;">
-                <label class="form-control form-control-sm" style="width: 160px;">Received On</label>
+                <label class="form-control form-control-sm" style="width: 160px;">Date Received</label>
                 <input class="form-control form-control-sm" id="recsched" style="width: 280px;" type="text" readonly>
             </div>
             <br>
@@ -316,6 +316,9 @@
                     </tr>
                 </tfoot>
             </table>
+            <br>
+            <hr>
+            <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <br>
         </div>
         </div>

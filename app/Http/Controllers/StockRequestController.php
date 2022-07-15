@@ -2786,7 +2786,7 @@ class StockRequestController extends Controller
         $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.batch', ['new',''])
-            ->whereIn('stocks.status', ['prep','assembly','out','asset','demo','assembled'])
+            ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->groupBy('prodcode','item','uom','serial','qty','item_id')
             ->orderBy('item', 'ASC')
@@ -2795,7 +2795,7 @@ class StockRequestController extends Controller
             $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
-                ->whereIn('stocks.status', ['prep','assembly','out','asset','demo','assembled'])
+                ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')
@@ -2876,7 +2876,20 @@ class StockRequestController extends Controller
             $list0 = array();
         }
 
-        return view('/pages/stockRequest/printStockRequest', compact('list','list0','list1','list2','list3','list4','list5','list6','getList3'));
+        if(Stock::where('request_number', $request->request_number)->where('status','prep')->count() != 0){
+            $listX = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.status', ['prep'])
+                ->join('items','items.id','stocks.item_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
+        else{
+            $listX = array();
+        }
+
+        return view('/pages/stockRequest/printStockRequest', compact('list','listX','list0','list1','list2','list3','list4','list5','list6','getList3'));
     }
 
     public function notify(){

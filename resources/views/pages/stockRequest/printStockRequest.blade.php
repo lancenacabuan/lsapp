@@ -181,6 +181,58 @@
                 @endif
             </tr>
             @endif
+            @if(count($listX) > 0)
+            <tr height="20" class="tblPrepared">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr height="20" class="tblPrepared">
+                <td colspan="9"><strong>FOR RECEIVING ITEMS</strong></td>
+            </tr>
+            <tr height="20" class="tblPrepared">
+                @php
+                    $total = 0;
+                @endphp
+                <td colspan="9" height="20">
+                    <table class="table tblPrepared display" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>ITEM CODE</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>QTY</th>
+                                <th>UOM</th>
+                                <th>SERIAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($listX as $x)
+                            @php
+                                if($x['uom'] == 'Meter'){
+                                    $total+=1;
+                                }
+                                else{
+                                    $total+=$x['qty'];
+                                }
+                            @endphp
+                            <tr>
+                                <td>{{$x['prodcode']}}</td>
+                                <td>{{$x['item']}}</td>
+                                <td>{{$x['qty']}}</td>
+                                <td>{{$x['uom']}}</td>
+                                <td>{{strtoupper($x['serial'])}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th>{{$total}}</th>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+            @endif
             <tr height="20" class="tblHide tblReceived">
                 <td colspan="9">&nbsp;</td>
             </tr>
@@ -575,6 +627,9 @@ $(document).ready(function(){
     var x = $('#tblPrint tr:visible').length;
     if(x > 30){
         $('.extend').show();
+    }
+    if($('.tblPrepared tbody tr').length == 0){
+        $('.tblPrepared').hide();
     }
     if($('.tblReceived tbody tr').length == 0){
         $('.tblReceived').hide();

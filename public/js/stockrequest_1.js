@@ -2704,8 +2704,7 @@ $('.btnReceive').on('click', function(){
                             data:{
                                 'request_number': $('#request_num_details').val(),
                                 'request_type': $('#req_type_id_details').val(),
-                                'status': $('#status_id_details').val(),
-                                'inc': inc
+                                'status': $('#status_id_details').val()
                             },
                             success: function(data){
                                 if(data == 'true'){

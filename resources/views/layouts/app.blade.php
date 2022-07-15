@@ -340,14 +340,13 @@
         function notifyDeadline(){
             if($('#current_url').val() == 'live'){
                 $('#loading').hide();
-                return false;
-                $.ajax({
-                    type: 'get', 
-                    url: '/stockrequest/notify',
-                    success: function(){
-                        $('#loading').hide();
-                    }
-                });
+                // $.ajax({
+                //     type: 'get', 
+                //     url: '/stockrequest/notify',
+                //     success: function(){
+                //         $('#loading').hide();
+                //     }
+                // });
             }
             else{
                 $('#loading').hide();

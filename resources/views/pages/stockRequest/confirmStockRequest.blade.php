@@ -458,11 +458,39 @@ document.addEventListener("contextmenu", function(e){
 
 $(document).ready(function(){
     var req_num = $('#req_num').val();
+    var url = new URL(window.location.href);
+    var token = url.searchParams.get("token");
     if($('#confirmed').val() == true){
         Swal.fire('THANK YOU', 'You already received these item/s! <br>No further actions needed.', 'info');
     }
     else{
-        Swal.fire('RECEIVE CONFIRMED', 'Stock Request '+req_num+' has been received successfully.', 'success');
+        $('#loading').show();
+        $.ajax({
+            type: 'post',
+            url: '/logConfirm',
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{
+                'request_number': req_num,
+                'token': token
+            },
+            success: function(data){
+                if(data == 'true'){
+                    $('#loading').hide();
+                    Swal.fire('RECEIVE CONFIRMED', 'Stock Request '+req_num+' has been received successfully.', 'success');
+                }
+                else{
+                    return false;
+                }
+            },
+            error: function(data){
+                if(data.status == 401){
+                    window.location.reload;
+                }
+                alert(data.responseText);
+            }
+        });
     }
     for(var i = 1; i <= 5; i++){
         $('#format_date'+i).html(moment($('#format_date'+i).html()).format('dddd, MMMM DD, YYYY'));

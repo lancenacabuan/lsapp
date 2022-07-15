@@ -17,6 +17,7 @@ Auth::routes(['register' => false, 'verify' => false, 'confirm' => false]);
 Route::get('/logout',[LoginController::class,'logout']);
 Route::get('/gitpull',[ConfirmReceiveController::class,'gitpull']);
 Route::get('/receive',[ConfirmReceiveController::class,'confirm']);
+Route::any('/logConfirm',[ConfirmReceiveController::class,'logConfirm']);
 
 //Index
 Route::get('/',[PagesController::class,'index']);

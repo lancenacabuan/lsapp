@@ -140,6 +140,11 @@
                         </tfoot>
                     </table> 
                     <br>
+                    <div class="divPrint" style="display: none;">
+                        <hr>
+                        <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
+                        <br>
+                    </div>
                     <div class="prephide">
                         <hr>
                         <button type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" disabled>RECEIVE</button>
@@ -150,6 +155,7 @@
                     </div>
                     <div class="pendshow" style="display: none;">
                         <hr>
+                        <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
                         <button type="button" id="btnPending" class="btn btn-primary float-right bp">PENDING DETAILS</button>
                         <br>
                         <br>

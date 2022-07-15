@@ -334,7 +334,7 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;">Received By:</td>
-                <td colspan="2">{{$list->asset_reqby ?? $list->client_name}}</td>
+                <td colspan="2">{{$list->asset_reqby ?? $list->client_name ?? '______________________________'}}</td>
             </tr>
             <tr height="20">
                 <td height="20"></td>

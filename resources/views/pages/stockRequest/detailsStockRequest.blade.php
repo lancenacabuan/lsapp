@@ -485,6 +485,7 @@
             </div>
             <div class="pendshow" style="display: none;">
             <hr>
+            <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <button type="button" id="btnPending" class="btn btn-primary float-right bp">PENDING DETAILS</button>
             <br>
             <br>

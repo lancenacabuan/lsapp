@@ -3073,7 +3073,20 @@ class StockRequestController extends Controller
             $list5 = array();
         }
 
-        return view('/pages/stockRequest/printStockRequest', compact('list','list1','list2','list3','list4','list5','getList3'));
+        if(Stock::where('request_number', $request->request_number)->whereIn('status',['incdefective','defective','defectives','FOR RECEIVING'])->count() != 0){
+            $list6 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.status', ['incdefective','defective','defectives','FOR RECEIVING'])
+                ->join('items','items.id','stocks.item_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
+        else{
+            $list6 = array();
+        }
+
+        return view('/pages/stockRequest/printStockRequest', compact('list','list1','list2','list3','list4','list5','list6','getList3'));
     }
 
     public function notify(){

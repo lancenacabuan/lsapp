@@ -181,18 +181,18 @@
                 @endif
             </tr>
             @endif
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblReceived">
                 <td colspan="9">&nbsp;</td>
             </tr>
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblReceived">
                 <td colspan="9"><strong>RECEIVED ITEMS</strong></td>
             </tr>
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblReceived">
                 @php
                     $total = 0;
                 @endphp
                 <td colspan="9" height="20">
-                    <table class="table stockReqTable display" style="margin-top: 10px;">
+                    <table class="table tblReceived display" style="margin-top: 10px;">
                         <thead>
                             <tr>
                                 <th>ITEM CODE</th>
@@ -232,18 +232,18 @@
                 </td>
             </tr>
             @if(count($list5) > 0)
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblPrevReceived">
                 <td colspan="9">&nbsp;</td>
             </tr>
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblPrevReceived">
                 <td colspan="9"><strong>PREVIOUSLY RECEIVED ITEMS</strong></td>
             </tr>
-            <tr height="20" class="tblHide">
+            <tr height="20" class="tblHide tblPrevReceived">
                 @php
                     $total = 0;
                 @endphp
                 <td colspan="9" height="20">
-                    <table class="table stockReqTable display" style="margin-top: 10px;">
+                    <table class="table tblPrevReceived display" style="margin-top: 10px;">
                         <thead>
                             <tr>
                                 <th>ITEM CODE</th>
@@ -285,18 +285,18 @@
             @endif
             @if($getList3 == true)
             <script>$('.tblHide').hide();</script>
-            <tr height="20">
+            <tr height="20" class="tblUpdReceived">
                 <td colspan="9">&nbsp;</td>
             </tr>
-            <tr height="20">
+            <tr height="20" class="tblUpdReceived">
                 <td colspan="9"><strong>RECEIVED ITEMS</strong></td>
             </tr>
-            <tr height="20">
+            <tr height="20" class="tblUpdReceived">
                 @php
                     $total = 0;
                 @endphp
                 <td colspan="9" height="20">
-                    <table class="table stockReqTable display" style="margin-top: 10px;">
+                    <table class="table tblUpdReceived display" style="margin-top: 10px;">
                         <thead>
                             <tr>
                                 <th>ITEM CODE</th>
@@ -337,18 +337,18 @@
             </tr>
             @endif
             @if(count($list4) > 0)
-            <tr height="20">
+            <tr height="20" class="tblIncomplete">
                 <td colspan="9">&nbsp;</td>
             </tr>
-            <tr height="20">
+            <tr height="20" class="tblIncomplete">
                 <td colspan="9"><strong>INCOMPLETE ITEMS</strong></td>
             </tr>
-            <tr height="20">
+            <tr height="20" class="tblIncomplete">
                 @php
                     $total = 0;
                 @endphp
                 <td colspan="9" height="20">
-                    <table class="table stockReqTable display" style="margin-top: 10px;">
+                    <table class="table tblIncomplete display" style="margin-top: 10px;">
                         <thead>
                             <tr>
                                 <th>ITEM CODE</th>
@@ -360,6 +360,58 @@
                         </thead>
                         <tbody>
                             @foreach($list4 as $x)
+                            @php
+                                if($x['uom'] == 'Meter'){
+                                    $total+=1;
+                                }
+                                else{
+                                    $total+=$x['qty'];
+                                }
+                            @endphp
+                            <tr>
+                                <td>{{$x['prodcode']}}</td>
+                                <td>{{$x['item']}}</td>
+                                <td>{{$x['qty']}}</td>
+                                <td>{{$x['uom']}}</td>
+                                <td>{{strtoupper($x['serial'])}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th>{{$total}}</th>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+            @endif
+            @if(count($list6) > 0)
+            <tr height="20" class="tblDefective">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr height="20" class="tblDefective">
+                <td colspan="9"><strong>DEFECTIVE ITEMS</strong></td>
+            </tr>
+            <tr height="20" class="tblDefective">
+                @php
+                    $total = 0;
+                @endphp
+                <td colspan="9" height="20">
+                    <table class="table tblDefective display" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>ITEM CODE</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>QTY</th>
+                                <th>UOM</th>
+                                <th>SERIAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($list6 as $x)
                             @php
                                 if($x['uom'] == 'Meter'){
                                     $total+=1;
@@ -407,7 +459,7 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;">Received By:</td>
-                <td colspan="2">{{$list->asset_reqby ?? $list->client_name}}</td>
+                <td colspan="2">{{$list->asset_reqby ?? $list->client_name ?? '______________________________'}}</td>
             </tr>
             <tr height="20">
                 <td height="20"></td>
@@ -473,6 +525,21 @@ $(document).ready(function(){
     var x = $('#tblPrint tr:visible').length;
     if(x > 30){
         $('.extend').show();
+    }
+    if($('.tblReceived tbody tr').length == 0){
+        $('.tblReceived').hide();
+    }
+    if($('.tblPrevReceived tbody tr').length == 0){
+        $('.tblPrevReceived').hide();
+    }
+    if($('.tblUpdReceived tbody tr').length == 0){
+        $('.tblUpdReceived').hide();
+    }
+    if($('.tblIncomplete tbody tr').length == 0){
+        $('.tblIncomplete').hide();
+    }
+    if($('.tblDefective tbody tr').length == 0){
+        $('.tblDefective').hide();
     }
 });
 

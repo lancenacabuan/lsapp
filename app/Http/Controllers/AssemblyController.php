@@ -216,6 +216,14 @@ class AssemblyController extends Controller
                 ->where('status', '=', 'received')
                 ->update(['status' => 'assembly', 'user_id' => auth()->user()->id]);
         }
+        Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['assembly'])
+            ->where('batch', '=', 'new')
+            ->update(['batch' => 'old']);
+        Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['assembly'])
+            ->where('batch', '=', '')
+            ->update(['batch' => 'new']);
 
         if($request->inc == 'true'){
             $userlogs = new UserLogs;

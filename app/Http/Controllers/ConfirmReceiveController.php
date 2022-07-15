@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Item;
 use App\Models\Stock;
 use App\Models\Requests;
+use App\Models\StockRequest;
 use Yajra\Datatables\Datatables;
 
 class ConfirmReceiveController extends Controller

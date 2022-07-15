@@ -2454,12 +2454,10 @@ class StockRequestController extends Controller
                 Mail::to($request_details->asset_reqby_email)->send(new receivedRequest($details, $subject));
             }
 
-            if(auth()->user()->id){
-                $userlogs = new UserLogs;
-                $userlogs->user_id = auth()->user()->id;
-                $userlogs->activity = "RECEIVED STOCK REQUEST: User successfully received requested items of Stock Request No. $request->request_number.";
-                $userlogs->save();
-            }
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED STOCK REQUEST: User successfully received requested items of Stock Request No. $request->request_number.";
+            $userlogs->save();
         }
 
         return response('true');

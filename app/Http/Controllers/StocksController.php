@@ -74,6 +74,7 @@ class StocksController extends Controller
             ->join('stocks', 'stocks.item_id', 'items.id')
             ->groupBy('categories.id','Category')
             ->orderBy('Category', 'ASC')
+            ->orderBy('categories.id', 'ASC')
             ->get()
             ->toArray();
         
@@ -123,6 +124,7 @@ class StocksController extends Controller
             ->join('stocks', 'stocks.item_id', 'items.id')
             ->groupBy('items.id','Item','ProdCode','serialize')
             ->orderBy('Item', 'ASC')
+            ->orderBy('items.id', 'ASC')
             ->get()
             ->toArray();
         
@@ -256,6 +258,7 @@ class StocksController extends Controller
             ->groupBy('items.id','Item','ProdCode','uom','Category')
             ->orderBy('Category', 'ASC')
             ->orderBy('Item', 'ASC')
+            ->orderBy('items.id', 'ASC')
             ->get();
         
         foreach($stocks as $stock){

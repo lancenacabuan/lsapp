@@ -46,6 +46,7 @@ class FileMaintenanceController extends Controller
             ->join('categories', 'categories.id', 'category_id')
             ->orderBy('category', 'ASC')
             ->orderBy('item', 'ASC')
+            ->orderBy('items.id', 'ASC')
             ->get();
         return DataTables::of($list)->make(true);
     }
@@ -55,17 +56,18 @@ class FileMaintenanceController extends Controller
             ->where('items.assemble', 'YES')
             ->join('categories', 'categories.id', 'category_id')
             ->orderBy('item', 'ASC')
+            ->orderBy('items.id', 'ASC')
             ->get();
         return DataTables::of($list)->make(true);
     }
 
     public function fm_categories(){
-        $list = Category::select('id', 'category')->orderBy('category', 'ASC')->get();
+        $list = Category::select('id', 'category')->orderBy('category', 'ASC')->orderBy('id', 'ASC')->get();
         return DataTables::of($list)->make(true);
     }
 
     public function fm_locations(){
-        $list = Location::select('id AS location_id', 'location', 'status')->orderBy('location', 'ASC')->get();
+        $list = Location::select('id AS location_id', 'location', 'status')->orderBy('location', 'ASC')->orderBy('id', 'ASC')->get();
         return DataTables::of($list)->make(true);
     }
 

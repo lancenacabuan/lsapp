@@ -208,6 +208,7 @@ class PagesController extends Controller
             ->orderBy('role_name', 'ASC')
             ->orderBy('company', 'ASC')
             ->orderBy('user_name', 'ASC')
+            ->orderBy('users.id', 'ASC')
             ->get();
 
         return DataTables::of($list)->make(true);

@@ -53,6 +53,7 @@ class DefectiveController extends Controller
             ->orderBy('name', 'ASC')
             ->orderBy('category', 'ASC')
             ->orderBy('item', 'ASC')
+            ->orderBy('stocks.id', 'ASC')
             ->get();
         
         return DataTables::of($data)->make(true);

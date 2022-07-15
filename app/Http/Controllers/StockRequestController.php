@@ -546,6 +546,7 @@ class StockRequestController extends Controller
                 ->join('status', 'status.id', '=', 'requests.status')
                 ->orderBy('reqdate', 'ASC')
                 ->orderBy('requests.needdate', 'ASC')
+                ->orderBy('requests.id', 'ASC')
                 ->get();
         }
         else if(auth()->user()->hasanyRole('accounting')){ //---ROLES---//
@@ -558,6 +559,7 @@ class StockRequestController extends Controller
                 ->join('status', 'status.id', '=', 'requests.status')
                 ->orderBy('reqdate', 'ASC')
                 ->orderBy('requests.needdate', 'ASC')
+                ->orderBy('requests.id', 'ASC')
                 ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
@@ -569,6 +571,7 @@ class StockRequestController extends Controller
                 ->join('status', 'status.id', '=', 'requests.status')
                 ->orderBy('reqdate', 'ASC')
                 ->orderBy('requests.needdate', 'ASC')
+                ->orderBy('requests.id', 'ASC')
                 ->get();
         }
         else{
@@ -581,6 +584,7 @@ class StockRequestController extends Controller
                 ->join('status', 'status.id', '=', 'requests.status')
                 ->orderBy('reqdate', 'ASC')
                 ->orderBy('requests.needdate', 'ASC')
+                ->orderBy('requests.id', 'ASC')
                 ->get();
         }
 

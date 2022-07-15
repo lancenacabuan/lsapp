@@ -79,6 +79,7 @@ class MerchantController extends Controller
             ->join('status', 'status.id', '=', 'requests.status')
             ->orderBy('reqdate', 'ASC')
             ->orderBy('requests.needdate', 'ASC')
+            ->orderBy('requests.id', 'ASC')
             ->get();
 
         return DataTables::of($list)

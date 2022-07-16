@@ -2669,6 +2669,9 @@ class StockRequestController extends Controller
         }
 
         if($request->demo == 'received'){
+            if($list->status_id < 9){
+                return redirect()->to('/stockrequest');
+            }
             unset($list3);
             $list3 = Transfer::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id')
                 ->where('transferred_items.request_number', $request->request_number)

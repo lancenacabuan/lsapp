@@ -35,6 +35,10 @@ class ConfirmReceiveController extends Controller
                 Requests::where('request_number', $request->request_number)
                     ->update(['verify' => 'Incomplete Confirmed']);
             }
+            else if(Requests::where('request_number', $request->request_number)->first()->status == 9){
+                Requests::where('request_number', $request->request_number)
+                    ->update(['verify' => 'Demo Confirmed']);
+            }
             else{
                 Requests::where('request_number', $request->request_number)
                     ->update(['verify' => 'Confirmed']);

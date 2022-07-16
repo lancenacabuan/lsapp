@@ -524,7 +524,7 @@ var merchantTable = $('table.merchantTable').DataTable({
 
 var data_update;
 setInterval(function(){
-    if($('#newMerchRequest').is(':hidden') && $('#detailsMerchRequest').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+    if($('#newMerchRequest').is(':hidden') && $('#detailsMerchRequest').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
         $.ajax({
             url: "/merchant/reload",
             success: function(data){

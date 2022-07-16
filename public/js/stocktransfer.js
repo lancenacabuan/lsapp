@@ -565,7 +565,7 @@ var stocktransferTable = $('table.stocktransferTable').DataTable({
 
 var data_update;
 setInterval(function(){
-    if($('#newStockTransfer').is(':hidden') && $('#detailsStockTransfer').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+    if($('#newStockTransfer').is(':hidden') && $('#detailsStockTransfer').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
         $.ajax({
             url: "/stocktransfer/reload",
             success: function(data){

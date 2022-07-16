@@ -480,7 +480,7 @@ $('#btnGenerate').on('click', function(){
 
 var data_update;
 setInterval(function(){
-    if($('#addStock').is(':hidden') && $('#importStock').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+    if($('#addStock').is(':hidden') && $('#importStock').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
         $.ajax({
             url: "/stocks/reload",
             success: function(data){

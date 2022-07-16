@@ -277,7 +277,7 @@ else{
 
 var data_update;
 setInterval(function(){
-    if($('#newStockRequest').is(':hidden') && $('#detailsStockRequest').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+    if($('#newStockRequest').is(':hidden') && $('#detailsStockRequest').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
         $.ajax({
             url: "/stockrequest/reload",
             success: function(data){

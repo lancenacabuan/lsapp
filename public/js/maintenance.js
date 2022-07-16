@@ -37,7 +37,7 @@ if(
 
     var data_update;
     setInterval(function(){
-        if($('#newItem').is(':hidden') && $('#detailsItem').is(':hidden') && $('#importItem').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+        if($('#newItem').is(':hidden') && $('#detailsItem').is(':hidden') && $('#importItem').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
             $.ajax({
                 url: "/fm_items/reload",
                 success: function(data){
@@ -79,7 +79,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
 
     var data_update;
     setInterval(function(){
-        if($('#createItem').is(':hidden') && $('#detailsAssemblyItem').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+        if($('#createItem').is(':hidden') && $('#detailsAssemblyItem').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
             $.ajax({
                 url: "/asm_items/reload",
                 success: function(data){
@@ -119,7 +119,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
 
     var data_update;
     setInterval(function(){
-        if($('#newCategory').is(':hidden') && $('#detailsCategory').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+        if($('#newCategory').is(':hidden') && $('#detailsCategory').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
             $.ajax({
                 url: "/fm_categories/reload",
                 success: function(data){
@@ -174,7 +174,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
 
     var data_update;
     setInterval(function(){
-        if($('#newLocation').is(':hidden') && $('#detailsLocation').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+        if($('#newLocation').is(':hidden') && $('#detailsLocation').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
             $.ajax({
                 url: "/fm_locations/reload",
                 success: function(data){
@@ -319,7 +319,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
 
     var data_update;
     setInterval(function(){
-        if($('#AddWarranty').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+        if($('#AddWarranty').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
             $.ajax({
                 url: "/fm_warranty/reload",
                 success: function(data){

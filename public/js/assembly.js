@@ -227,7 +227,7 @@ var assemblyTable = $('table.assemblyTable').DataTable({
 
 var data_update;
 setInterval(function(){
-    if($('#newAssembly').is(':hidden') && $('#detailsAssembly').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden')){
+    if($('#newAssembly').is(':hidden') && $('#detailsAssembly').is(':hidden') && $('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
         $.ajax({
             url: "/assembly/reload",
             success: function(data){

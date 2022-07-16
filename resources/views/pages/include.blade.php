@@ -49,7 +49,7 @@
     </div>
 </div>
 <div class="modal fade in" id="changePassword">
-    <div class="modal-dialog modal-m modal-dialog-centered">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
             <h6 class="modal-title w-100">CHANGE PASSWORD</h6>
@@ -57,27 +57,28 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <form id="form_changepassword">
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" style="width: 150px;">Current Password</label>
+                <div class="mb-3">
+                    <div class="f-outline">
+                        <input class="forminput form-control" type="password" id="pass1" name="pass1" minlength="8" maxlength="30" placeholder=" " required autofocus>
+                        <label class="formlabel form-label" for="pass1">Current Password</label>
                     </div>
-                    <input type="password" id="pass1" style="width: 320px;" minlength="8" maxlength="30" required autofocus>
                 </div>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" style="width: 150px;">New Password</label>
+                <div class="mb-3">
+                    <div class="f-outline">
+                        <input class="forminput form-control" type="password" id="pass2" name="pass2" minlength="8" maxlength="30" placeholder=" " required>
+                        <label class="formlabel form-label" for="pass2">New Password</label>
                     </div>
-                    <input type="password" id="pass2" style="width: 320px;" minlength="8" maxlength="30" required>
                 </div>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" style="width: 150px;">Confirm Password</label>
+                <div class="mb-3">
+                    <div class="f-outline">
+                        <input class="forminput form-control" type="password" id="pass3" name="pass3" minlength="8" maxlength="30" placeholder=" " required>
+                        <label class="formlabel form-label" for="pass3">Confirm Password</label>
                     </div>
-                    <input type="password" id="pass3" style="width: 320px;" minlength="8" maxlength="30" required>
                 </div>
-                <br>
-                <button type="reset" id="btnResetChange" class="btn btn-primary bp" onclick="$('#pass1').focus();">RESET</button>
-                <button type="button" id="btnChangePassword" class="btn btn-primary float-right bp">UPDATE</button>
+                <div style="zoom: 85%;">
+                    <button type="reset" id="btnResetChange" class="btn btn-primary bp" onclick="$('#pass1').focus();">RESET</button>
+                    <button type="button" id="btnChangePassword" class="btn btn-primary float-right bp">UPDATE</button>
+                </div>
             </form>
         </div>
     </div>

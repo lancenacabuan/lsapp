@@ -583,6 +583,9 @@ document.addEventListener("contextmenu", function(e){
 
 $(document).ready(function(){
     $('#loading').hide();
+    var url = new URL(window.location.href);
+    var demo = url.searchParams.get("demo");
+
     for(var i = 1; i <= 4; i++){
         $('#format_date'+i).html(moment($('#format_date'+i).html()).format('dddd, MMMM DD, YYYY'));
     }
@@ -634,7 +637,7 @@ $(document).ready(function(){
     if($('.tblReceived tbody tr').length == 0){
         $('.tblReceived').hide();
     }
-    if($('.tblPrevReceived tbody tr').length == 0){
+    if($('.tblPrevReceived tbody tr').length == 0 || demo == 'received'){
         $('.tblPrevReceived').hide();
     }
     if($('.tblUpdReceived tbody tr').length == 0){

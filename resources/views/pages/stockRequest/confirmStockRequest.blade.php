@@ -460,6 +460,7 @@ $(document).ready(function(){
     var req_num = $('#req_num').val();
     var url = new URL(window.location.href);
     var token = url.searchParams.get("token");
+    var demo = url.searchParams.get("demo");
     if($('#confirmed').val() == true){
         Swal.fire('THANK YOU', 'You already received these item/s! <br>No further actions needed.', 'info');
     }
@@ -506,7 +507,7 @@ $(document).ready(function(){
     if($('.tblReceived tbody tr').length == 0){
         $('.tblReceived').hide();
     }
-    if($('.tblPrevReceived tbody tr').length == 0){
+    if($('.tblPrevReceived tbody tr').length == 0 || demo == 'received'){
         $('.tblPrevReceived').hide();
     }
     if($('.tblUpdReceived tbody tr').length == 0){

@@ -20,11 +20,14 @@
 @endif
 @endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
+<input type="hidden" id="status" value="{{$list->status}}">
 <div class="container-fluid">
     <button id="btnPrint" type="button" class="btn btn-primary bp" style="margin-right: 5px;">PRINT</button>
     <button id="btnSavePDF" type="button" class="btn btn-primary bp">SAVE AS PDF</button>
     @role('admin|encoder|viewer|sales|approver - sales|accounting') {{---ROLES---}}
     <a href="/stockrequest?request_number={{$list->req_num}}" class="btn btn-primary float-right bp">BACK</a>
+    <a href="/printRequest?request_number={{$list->req_num}}&demo=received" id="btnDemoReceived" class="btn btn-primary float-right bp mr-2" style="display: none;">DEMO RECEIVED RECEIPT</a>
+    <a href="/printRequest?request_number={{$list->req_num}}" id="btnDemoSold" class="btn btn-primary float-right bp mr-2" style="display: none;">DEMO SOLD RECEIPT</a>
     @endrole
     @role('assembler') {{---ROLES---}}
     <a href="/assembly?request_number={{$list->req_num}}" class="btn btn-primary float-right bp">BACK</a>
@@ -237,7 +240,7 @@
                 <td colspan="9">&nbsp;</td>
             </tr>
             <tr height="20" class="tblHide tblReceived">
-                <td colspan="9"><strong>RECEIVED ITEMS</strong></td>
+                <td colspan="9"><strong id="tblReceived">RECEIVED ITEMS</strong></td>
             </tr>
             <tr height="20" class="tblHide tblReceived">
                 @php
@@ -585,6 +588,16 @@ $(document).ready(function(){
     $('#loading').hide();
     var url = new URL(window.location.href);
     var demo = url.searchParams.get("demo");
+
+    if($('#status').val().includes('SOLD')){
+        $('#tblReceived').html('SOLD ITEMS');
+        $('#btnDemoReceived').show();
+    }
+    if($('#status').val().includes('SOLD') && demo == 'received'){
+        $('#tblReceived').html('RECEIVED ITEMS');
+        $('#btnDemoSold').show();
+        $('#btnDemoReceived').hide();
+    }
 
     for(var i = 1; i <= 4; i++){
         $('#format_date'+i).html(moment($('#format_date'+i).html()).format('dddd, MMMM DD, YYYY'));

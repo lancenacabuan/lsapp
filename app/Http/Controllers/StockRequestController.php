@@ -1468,6 +1468,12 @@ class StockRequestController extends Controller
             $sql = Requests::where('request_number', $request->request_number)
                 ->update(['status' => '27']);
         }
+
+        Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['out'])
+            ->where('batch', '=', 'old')
+            ->update(['batch' => 'new']);
+
         do{
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, schedule, needdate, prepdate')
                 ->where('requests.request_number', $request->request_number)

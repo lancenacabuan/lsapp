@@ -8,41 +8,41 @@
         <div class="modal-body" style="background-color: white; color: black;">
             @role('admin|encoder')
             <div class="form-inline" style="margin-left: 5px;">
-                <label class="form-control form-control-sm" style="width: 165px;">Request Type</label>
+                <label class="form-control form-control-sm" style="width: 170px;">Request Type</label>
                 <select class="form-select form-control-sm" id="request_type" style=" margin-right: 10px; font-size: .85rem; padding: 0.25rem 0.5rem; height: 30px !important; width: 280px;" disabled>
                     <option value="7" selected>FIXED ASSET</option>
                 </select>
-                <label class="form-control form-control-sm" style="width: 165px;">Stock Request No.</label>
+                <label class="form-control form-control-sm" style="width: 170px;">Stock Request No.</label>
                 <input class="form-control form-control-sm" id="request_num" style="width: 280px; margin-right: 10px;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 165px;">Date Needed</label>
+                <label class="form-control form-control-sm" style="width: 170px;">Date Needed</label>
                 <input class="form-control form-control-sm"  id="needdate" style="width: 280px; margin-right: 10px;" type="date">
-                <label class="form-control form-control-sm" style="width: 165px;">Date Requested</label>
+                <label class="form-control form-control-sm" style="width: 170px;">Date Requested</label>
                 <input class="form-control form-control-sm"  id="reqdate" style="width: 280px; margin-right: 10px;" type="text" readonly value="{{Carbon\Carbon::now()->isoformat('dddd, MMMM DD, YYYY')}}">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 165px;">Requested By</label>
+                <label class="form-control form-control-sm" style="width: 170px;">Requested By</label>
                 <input class="form-control form-control-sm" id="asset_reqby" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
-                <label class="form-control form-control-sm" style="width: 165px;">Approved By</label>
+                <label class="form-control form-control-sm" style="width: 170px;">Approved By</label>
                 <input class="form-control form-control-sm" id="asset_apvby" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 165px;">Requester Email Address</label>
+                <label class="form-control form-control-sm" style="width: 170px;">Requester Email Address</label>
                 <input class="form-control form-control-sm" id="asset_reqby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
-                <label class="form-control form-control-sm" style="width: 165px;">Approver Email Address</label>
+                <label class="form-control form-control-sm" style="width: 170px;">Approver Email Address</label>
                 <input class="form-control form-control-sm" id="asset_apvby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="width: 165px;">Requester Email Re-Enter</label>
+                <label class="form-control form-control-sm" style="width: 170px;">Requester Email Re-Enter</label>
                 <input class="form-control form-control-sm" id="asset_reqby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
-                <label class="form-control form-control-sm" style="width: 165px;">Approver Email Re-Enter</label>
+                <label class="form-control form-control-sm" style="width: 170px;">Approver Email Re-Enter</label>
                 <input class="form-control form-control-sm" id="asset_apvby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="margin-left: 455px; width: 165px;" onclick="$('#reference_upload').click();">Attach Request Form</label>
-                <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
-                <button class="form-control btn btn-primary bp" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
+                <label class="form-control form-control-sm" style="margin-left: 460px; width: 170px;" onclick="$('#reference_upload').click();">Attachment Request Form</label>
+                <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
+                <button class="form-control btn btn-primary bp" id="btnUploadForm" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                     <input type="hidden" name="reqnum" id="reqnum">

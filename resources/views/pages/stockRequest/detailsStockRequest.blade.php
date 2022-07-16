@@ -104,7 +104,7 @@
         </div>
         <div id="attachmentModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">ATTACHMENT SO/PO</h6>
+            <h6 class="modal-title w-100"><span id="txtAttachment">ATTACHMENT SO/PO</span></h6>
         </div>
         <div class="modal-body text-center">
             <button type="button" id="btnRemoveAttachment" class="btn btn-danger mb-4" style="zoom: 85%; font-weight: bold; display: none;">REMOVE ATTACHMENTS</button>

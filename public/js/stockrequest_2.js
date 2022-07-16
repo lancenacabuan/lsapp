@@ -484,8 +484,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     var included = 'yes';
 
                     if(req_type_id == '7'){
-                        $(".assethide").hide();
-                        $(".assetshow").show();
+                        $('#txtAttachment').html('ATTACHMENT REQUEST FORM');
+                        $('.assethide').hide();
+                        $('.assetshow').show();
                         $('#requested_by_details').val(value.asset_reqby);
                         $('#approved_by_details').val(value.asset_apvby);
                         if(requestStatus == '3'){
@@ -1784,8 +1785,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         var included = 'yes';
 
         if(req_type_id == '7'){
-            $(".assethide").hide();
-            $(".assetshow").show();
+            $('#txtAttachment').html('ATTACHMENT REQUEST FORM');
+            $('.assethide').hide();
+            $('.assetshow').show();
             $('#requested_by_details').val(value.asset_reqby);
             $('#approved_by_details').val(value.asset_apvby);
             if(requestStatus == '3'){

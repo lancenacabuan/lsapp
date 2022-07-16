@@ -113,6 +113,7 @@ function validate_fileupload(reference_upload){
         $('.disupload').hide();
         $('.disupload1').hide();
         $('#xbtn_upload').css("width", "100%");
+        $('#btnUploadForm').css("width", "280px");
         return false;
     }
     else if(error_ext > 0){
@@ -122,6 +123,7 @@ function validate_fileupload(reference_upload){
         $('.disupload').hide();
         $('.disupload1').hide();
         $('#xbtn_upload').css("width", "100%");
+        $('#btnUploadForm').css("width", "280px");
         return false;
     }
     else if(error_mb > 0){
@@ -131,11 +133,13 @@ function validate_fileupload(reference_upload){
         $('.disupload').hide();
         $('.disupload1').hide();
         $('#xbtn_upload').css("width", "100%");
+        $('#btnUploadForm').css("width", "280px");
         return false;
     }
     else{
         if(files_length == 1){
             $('.upload_label').html(reference_upload.value.split("\\").pop());
+            $('#btnUploadForm').css("width", "250px");
             if($('#referenceModal').is(':hidden')){
                 $('.disupload').show();
             }
@@ -146,6 +150,7 @@ function validate_fileupload(reference_upload){
         }
         else if(files_length > 1){
             $('.upload_label').html('UPLOADED ('+files_length+') FILES');
+            $('#btnUploadForm').css("width", "250px");
             if($('#referenceModal').is(':hidden')){
                 $('.disupload').show();
             }
@@ -159,6 +164,7 @@ function validate_fileupload(reference_upload){
             $('.disupload').hide();
             $('.disupload1').hide();
             $('#xbtn_upload').css("width", "100%");
+            $('#btnUploadForm').css("width", "280px");
         }
         return true;
     }
@@ -1108,6 +1114,7 @@ $(document).on('click', '.disupload', function(){
     $('#reference_upload').val('');
     $('.upload_label').html('Upload PDF or Image less than 5MB each');
     $('.disupload').hide();
+    $('#btnUploadForm').css("width", "280px");
 });
 
 $(document).on('click', '.disupload1', function(){

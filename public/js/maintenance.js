@@ -422,7 +422,7 @@ $(document).on('click', '.btnNewWarranty', function(){
     });
     $('#WarrantyForm').trigger('reset');
     $('.cb').prop('checked', false );
-    $('.modal-title').text('ADD NEW WARRANTY');
+    $('#txtWarranty').text('ADD NEW WARRANTY');
     $('#btnSubmit').val('SUBMIT');
     $('#AddWarranty').modal('show');
 });
@@ -434,7 +434,7 @@ $(document).on("click", ".warrantyTable tbody tr", function(){
     });
     wrdata = tblWarranty.row(this).data();
     $('#WarrantyForm').trigger('reset');
-    $('.modal-title').text('UPDATE WARRANTY DETAILS');
+    $('#txtWarranty').text('UPDATE WARRANTY DETAILS');
     $('#btnSubmit').val('UPDATE');
     $('#warranty').val(wrdata.Warranty_Name);
     $('#duration').val(wrdata.Duration);

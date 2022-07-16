@@ -275,6 +275,13 @@ $('#userTable tbody').on('click', 'tr td:not(:nth-child(5))', function(){
         $('#updateUser').modal('show');
 });
 
+$('#btnReset').on('click', function(){
+    $('#name1').val($('#name2').val());
+    $('#email1').val($('#email2').val());
+    $('#company1').val($('#company2').val());
+    $('#role1').val($('#role2').val());
+});
+
 $('#btnUpdate').on('click', function(){
     var warntext = '';
     var emailv1 = true;

@@ -32,7 +32,7 @@
         </tr>
         <tr>
             <th>FULLNAME</th>
-            <th>EMAIL</th>
+            <th>EMAIL ADDRESS</th>
             <th>COMPANY</th>
             <th>USER LEVEL</th>
             <th style="width: 120px;">STATUS</th>

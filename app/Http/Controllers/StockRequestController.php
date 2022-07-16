@@ -1576,44 +1576,6 @@ class StockRequestController extends Controller
         ];
         Mail::to($sendTo)->send(new receivedRequest($details, $subject));
         unset($sendTo);
-        $emails = User::role('approver - sales')
-            ->where('status','ACTIVE')
-            ->where('company',auth()->user()->company)
-            ->get('email')
-            ->toArray();
-        foreach($emails as $email){
-            $sendTo[] = $email['email'];
-        }
-        $details = [
-            'name' => 'APPROVER - SALES',
-            'action' => 'STOCK REQUEST',
-            'verb' => 'SOLD',
-            'request_number' => $request->request_number,
-            'reqdate' => $request_details->reqdate,
-            'requested_by' => $request_details->reqby,
-            'needdate' => $request_details->needdate,
-            'reqtype' => $request_details->reqtype,
-            'client_name' => $request_details->client_name,
-            'location' => $request_details->location,
-            'contact' => $request_details->contact,
-            'remarks' => $request_details->remarks,
-            'reference' => $request_details->reference,
-            'prepared_by' => $prep->prepby,
-            'prepdate' => $request_details->prepdate,
-            'scheddate' => $request_details->schedule,
-            'receivedby' => auth()->user()->name,
-            'role' => 'Approver - Sales',
-            'items' => $items,
-            'olditems' => array(),
-            'incitems' => array(),
-            'penditems' => array(),
-            'files' => $attachments,
-            'req_type_id' => $request_details->req_type_id,
-            'status_id' => $request_details->status_id,
-            'token' => ''
-        ];
-        Mail::to($sendTo)->send(new receivedRequest($details, $subject));
-        unset($sendTo);
         $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
         foreach($emails as $email){
             $sendTo[] = $email['email'];
@@ -2346,7 +2308,7 @@ class StockRequestController extends Controller
                     'prepared_by' => $prep->prepby,
                     'prepdate' => $request_details->prepdate,
                     'scheddate' => $request_details->schedule,
-                    'receivedby' => auth()->user()->name ?? $request_details->client_name ?? $request_details->reqby ?? 'N/A',
+                    'receivedby' => $request_details->client_name ?? auth()->user()->name ?? $request_details->reqby ?? 'N/A',
                     'role' => 'Admin',
                     'items' => $items,
                     'olditems' => $olditems,
@@ -2382,7 +2344,7 @@ class StockRequestController extends Controller
                         'prepared_by' => $prep->prepby,
                         'prepdate' => $request_details->prepdate,
                         'scheddate' => $request_details->schedule,
-                        'receivedby' => auth()->user()->name ?? $request_details->client_name ?? $request_details->reqby ?? 'N/A',
+                        'receivedby' => $request_details->client_name ?? auth()->user()->name ?? $request_details->reqby ?? 'N/A',
                         'role' => 'Accounting',
                         'items' => $items,
                         'olditems' => $olditems,
@@ -2414,7 +2376,7 @@ class StockRequestController extends Controller
                     'prepared_by' => $prep->prepby,
                     'prepdate' => $request_details->prepdate,
                     'scheddate' => $request_details->schedule,
-                    'receivedby' => auth()->user()->name ?? $request_details->client_name ?? $request_details->reqby ?? 'N/A',
+                    'receivedby' => $request_details->client_name ?? auth()->user()->name ?? $request_details->reqby ?? 'N/A',
                     'role' => 'Sales/Merchant',
                     'items' => $items,
                     'olditems' => $olditems,
@@ -2446,7 +2408,7 @@ class StockRequestController extends Controller
                     'prepared_by' => $prep->prepby,
                     'prepdate' => $request_details->prepdate,
                     'scheddate' => $request_details->schedule,
-                    'receivedby' => auth()->user()->name ?? $request_details->client_name ?? $request_details->reqby ?? 'N/A',
+                    'receivedby' => $request_details->client_name ?? auth()->user()->name ?? $request_details->reqby ?? 'N/A',
                     'role' => '',
                     'items' => $items,
                     'olditems' => $olditems,

@@ -16,6 +16,7 @@
 <script>$('#loading').hide();</script>
 @endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
+<input type="hidden" id="status" value="{{$list->status}}">
 <input type="hidden" id="confirmed" value="{{$confirmed}}">
 <div class="container-fluid">
     <button id="btnPrint" type="button" class="btn btn-primary bp" style="margin-right: 5px;">PRINT</button>
@@ -164,7 +165,7 @@
                 <td colspan="9">&nbsp;</td>
             </tr>
             <tr height="20" class="tblHide tblReceived">
-                <td colspan="9"><strong>RECEIVED ITEMS</strong></td>
+                <td colspan="9"><strong id="tblReceived">RECEIVED ITEMS</strong></td>
             </tr>
             <tr height="20" class="tblHide tblReceived">
                 @php
@@ -461,6 +462,11 @@ $(document).ready(function(){
     var url = new URL(window.location.href);
     var token = url.searchParams.get("token");
     var demo = url.searchParams.get("demo");
+
+    if($('#status').val().includes('SOLD')){
+        $('#tblReceived').html('SOLD ITEMS');
+    }
+
     if($('#confirmed').val() == true){
         Swal.fire('THANK YOU', 'You already received these item/s! <br>No further actions needed.', 'info');
     }
@@ -493,6 +499,7 @@ $(document).ready(function(){
             }
         });
     }
+
     for(var i = 1; i <= 5; i++){
         $('#format_date'+i).html(moment($('#format_date'+i).html()).format('dddd, MMMM DD, YYYY'));
     }

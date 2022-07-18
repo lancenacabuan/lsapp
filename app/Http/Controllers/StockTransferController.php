@@ -862,7 +862,7 @@ class StockTransferController extends Controller
             'action' => 'STOCK TRANSFER REQUEST',
             'request_number' => $request->request_number,
             'reqdate' => $request_details->reqdate,
-            'requested_by' => $request_details->reqby,
+            'requested_by' => $request_details->req_by,
             'needdate' => $request_details->needdate,
             'locfrom' => $locfrom,
             'locto' => $locto,
@@ -890,7 +890,7 @@ class StockTransferController extends Controller
             'action' => 'STOCK TRANSFER REQUEST',
             'request_number' => $request->request_number,
             'reqdate' => $request_details->reqdate,
-            'requested_by' => $request_details->reqby,
+            'requested_by' => $request_details->req_by,
             'needdate' => $request_details->needdate,
             'locfrom' => $locfrom,
             'locto' => $locto,
@@ -906,11 +906,11 @@ class StockTransferController extends Controller
         Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
         unset($sendTo);
         $details = [
-            'name' => $request_details->reqby,
+            'name' => $request_details->req_by,
             'action' => 'STOCK TRANSFER REQUEST',
             'request_number' => $request->request_number,
             'reqdate' => $request_details->reqdate,
-            'requested_by' => $request_details->reqby,
+            'requested_by' => $request_details->req_by,
             'needdate' => $request_details->needdate,
             'locfrom' => $locfrom,
             'locto' => $locto,

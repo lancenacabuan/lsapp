@@ -698,6 +698,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     $('.divResched').show();
                     // $('#resched').attr('max', maxDate);
                     hideEdit1 = 5;
+                    $('.btnPrint').show();
                 }
                 if(requestStatus == '16'){
                     $("#processModal").show();
@@ -707,6 +708,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     $("#incItemsModal").show();
                     $('.divResched1').show();
                     hideEdit1 = 5;
+                    $('.btnPrint').show();
                 }
                 if(requestStatus == '17'){
                     $("#processModal").show();
@@ -719,6 +721,7 @@ if($(location).attr('pathname')+window.location.search != '/stocktransfer'){
                     hideEdit1 = 5;
                     $(".btnTransit").hide();
                     $(".btnReceiveInc").show();
+                    $('.btnPrint').show();
                 }
                 if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6'){
                     var transferDetails = [5,6,7,8,9,10,hideCol,btnDel];
@@ -1053,6 +1056,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $('.divResched').show();
         // $('#resched').attr('max', maxDate);
         hideEdit1 = 5;
+        $('.btnPrint').show();
     }
     if(requestStatus == '16'){
         $("#processModal").show();
@@ -1062,6 +1066,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         $("#incItemsModal").show();
         $('.divResched1').show();
         hideEdit1 = 5;
+        $('.btnPrint').show();
     }
     if(requestStatus == '17'){
         $("#processModal").show();
@@ -1074,6 +1079,7 @@ $('#stocktransferTable tbody').on('click', 'tr', function(){
         hideEdit1 = 5;
         $(".btnTransit").hide();
         $(".btnReceiveInc").show();
+        $('.btnPrint').show();
     }
     if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6'){
         var transferDetails = [5,6,7,8,9,10,hideCol,btnDel];

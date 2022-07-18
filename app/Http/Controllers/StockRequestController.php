@@ -2278,9 +2278,18 @@ class StockRequestController extends Controller
             ];
             Mail::to($request_details->asset_reqby_email)->send(new receivedRequest($details, $subject));
             
+            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() == 0){
+                $inc1 = 'COMPLETE';
+                $inc2 = 'complete';
+            }
+            else{
+                $inc1 = 'INCOMPLETE';
+                $inc2 = 'incomplete';
+            }
+
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "RECEIVED FIXED ASSET STOCK REQUEST: User successfully received requested items of Fixed Asset Stock Request No. $request->request_number.";
+            $userlogs->activity = "RECEIVED $inc1 FIXED ASSET STOCK REQUEST: User successfully received $inc2 requested items of Fixed Asset Stock Request No. $request->request_number.";
             $userlogs->save();
         }
         else{
@@ -2422,9 +2431,18 @@ class StockRequestController extends Controller
                 Mail::to($request_details->asset_reqby_email)->send(new receivedRequest($details, $subject));
             }
 
+            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() == 0){
+                $inc1 = 'COMPLETE';
+                $inc2 = 'complete';
+            }
+            else{
+                $inc1 = 'INCOMPLETE';
+                $inc2 = 'incomplete';
+            }
+
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "RECEIVED STOCK REQUEST: User successfully received requested items of Stock Request No. $request->request_number.";
+            $userlogs->activity = "RECEIVED $inc1 STOCK REQUEST: User successfully received $inc2 requested items of Stock Request No. $request->request_number.";
             $userlogs->save();
         }
 

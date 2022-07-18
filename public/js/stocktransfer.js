@@ -2311,8 +2311,7 @@ $('.btnReceive').on('click', function(){
                             },
                             data:{
                                 'request_number': $('#request_num_details').val(),
-                                'status': $('#status_id_details').val(),
-                                'inc': inc
+                                'status': $('#status_id_details').val()
                             },
                             success: function(data){
                                 if(data == 'true'){

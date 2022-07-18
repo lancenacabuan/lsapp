@@ -25,11 +25,8 @@
         <br>
         @endif
         <strong>RECEIVED ITEMS</strong>
-        <br>
-        @php
-            $total = 0;
-            $sum = 0;
-        @endphp
+        <br><br>
+        @php $total = 0; @endphp
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>
@@ -199,7 +196,7 @@
         <br>
         @endif
         <strong>{{$details['verb']}} ITEMS</strong>
-        <br>
+        <br><br>
         @php
             $total = 0;
             $sum = 0;

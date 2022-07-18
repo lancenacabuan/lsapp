@@ -63,15 +63,70 @@
                 <td colspan="2" style="font-weight: bold;"></td>
                 <td colspan="2"></td>
             </tr>
-            <tr height="20">
-                <td colspan="9" height="20">&nbsp;</td>
+            @if(count($listX) > 0)
+            <tr height="20" class="tblPrepared">
+                <td colspan="9">&nbsp;</td>
             </tr>
-            <tr height="20">
+            <tr height="20" class="tblPrepared">
+                <td colspan="9"><strong>FOR RECEIVING ITEMS</strong></td>
+            </tr>
+            <tr height="20" class="tblPrepared">
                 @php
                     $total = 0;
                 @endphp
                 <td colspan="9" height="20">
-                    <table id="stockTransTable" class="table stockTransTable display" style="margin-top: 10px;">
+                    <table class="table tblPrepared display" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>ITEM CODE</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>QTY</th>
+                                <th>UOM</th>
+                                <th>SERIAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($listX as $x)
+                            @php
+                                if($x['uom'] == 'Meter'){
+                                    $total+=1;
+                                }
+                                else{
+                                    $total+=$x['qty'];
+                                }
+                            @endphp
+                            <tr>
+                                <td>{{$x['prodcode']}}</td>
+                                <td>{{$x['item']}}</td>
+                                <td>{{$x['qty']}}</td>
+                                <td>{{$x['uom']}}</td>
+                                <td>{{strtoupper($x['serial'])}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th>{{$total}}</th>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+            @endif
+            <tr height="20" class="tblReceived">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr height="20" class="tblReceived">
+                <td colspan="9"><strong>RECEIVED ITEMS</strong></td>
+            </tr>
+            <tr height="20" class="tblReceived">
+                @php
+                    $total = 0;
+                @endphp
+                <td colspan="9" height="20">
+                    <table class="table tblReceived display" style="margin-top: 10px;">
                         <thead>
                             <tr>
                                 <th>ITEM CODE</th>
@@ -107,9 +162,113 @@
                                 <th colspan="2"></th>
                             </tr>
                         </tfoot>
-                    </table> 
+                    </table>
                 </td>
             </tr>
+            @if(count($list5) > 0)
+            <tr height="20" class="tblPrevReceived">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr height="20" class="tblPrevReceived">
+                <td colspan="9"><strong>PREVIOUSLY RECEIVED ITEMS</strong></td>
+            </tr>
+            <tr height="20" class="tblPrevReceived">
+                @php
+                    $total = 0;
+                @endphp
+                <td colspan="9" height="20">
+                    <table class="table tblPrevReceived display" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>ITEM CODE</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>QTY</th>
+                                <th>UOM</th>
+                                <th>SERIAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($list5 as $x)
+                            @php
+                                if($x['uom'] == 'Meter'){
+                                    $total+=1;
+                                }
+                                else{
+                                    $total+=$x['qty'];
+                                }
+                            @endphp
+                            <tr>
+                                <td>{{$x['prodcode']}}</td>
+                                <td>{{$x['item']}}</td>
+                                <td>{{$x['qty']}}</td>
+                                <td>{{$x['uom']}}</td>
+                                <td>{{strtoupper($x['serial'])}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th>{{$total}}</th>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+            @endif
+            @if(count($list4) > 0)
+            <tr height="20" class="tblIncomplete">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+            <tr height="20" class="tblIncomplete">
+                <td colspan="9"><strong>INCOMPLETE ITEMS</strong></td>
+            </tr>
+            <tr height="20" class="tblIncomplete">
+                @php
+                    $total = 0;
+                @endphp
+                <td colspan="9" height="20">
+                    <table class="table tblIncomplete display" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th>ITEM CODE</th>
+                                <th>ITEM DESCRIPTION</th>
+                                <th>QTY</th>
+                                <th>UOM</th>
+                                <th>SERIAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($list4 as $x)
+                            @php
+                                if($x['uom'] == 'Meter'){
+                                    $total+=1;
+                                }
+                                else{
+                                    $total+=$x['qty'];
+                                }
+                            @endphp
+                            <tr>
+                                <td>{{$x['prodcode']}}</td>
+                                <td>{{$x['item']}}</td>
+                                <td>{{$x['qty']}}</td>
+                                <td>{{$x['uom']}}</td>
+                                <td>{{strtoupper($x['serial'])}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                                <th>{{$total}}</th>
+                                <th colspan="2"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+            @endif
             <tr height="20" class="extend" style="display: none;">
                 <td colspan="9">&nbsp;</td>
             </tr>
@@ -188,6 +347,18 @@ $(document).ready(function(){
     var x = $('#tblPrint tr:visible').length;
     if(x > 30){
         $('.extend').show();
+    }
+    if($('.tblPrepared tbody tr').length == 0){
+        $('.tblPrepared').hide();
+    }
+    if($('.tblReceived tbody tr').length == 0){
+        $('.tblReceived').hide();
+    }
+    if($('.tblPrevReceived tbody tr').length == 0){
+        $('.tblPrevReceived').hide();
+    }
+    if($('.tblIncomplete tbody tr').length == 0){
+        $('.tblIncomplete').hide();
     }
 });
 

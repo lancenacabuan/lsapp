@@ -726,6 +726,22 @@ class StockTransferController extends Controller
                 ->update(['status' => 'in', 'user_id' => auth()->user()->id]);
         }
 
+        if(RequestTransfer::where('request_number', $request->request_number)->first()->status == '8'){
+            Stock::where('request_number', $request->request_number)
+                ->whereIn('status', ['in'])
+                ->update(['batch' => '', 'request_number' => '']);
+        }
+        else{
+            Stock::where('request_number', $request->request_number)
+                ->whereIn('status', ['in'])
+                ->where('batch', '=', 'new')
+                ->update(['batch' => 'old']);
+            Stock::where('request_number', $request->request_number)
+                ->whereIn('status', ['in'])
+                ->where('batch', '=', '')
+                ->update(['batch' => 'new']);
+        }
+
         if($request->inc == 'true'){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
@@ -787,32 +803,32 @@ class StockTransferController extends Controller
             $locto = str_replace('"}]','', $locto);
     
             $subject = '[RECEIVED] STOCK TRANSFER REQUEST NO. '.$request->request_number;
-            $emails = User::role('admin')
-                ->where('status','ACTIVE')
-                ->where('email','!=',$request_details->email)
-                ->get('email')
-                ->toArray();
-            foreach($emails as $email){
-                $sendTo[] = $email['email'];
-            }
-            $details = [
-                'name' => 'ADMIN',
-                'action' => 'STOCK TRANSFER REQUEST',
-                'request_number' => $request->request_number,
-                'reqdate' => $request_details->reqdate,
-                'requested_by' => $request_details->reqby,
-                'needdate' => $request_details->needdate,
-                'locfrom' => $locfrom,
-                'locto' => $locto,
-                'prepared_by' => $trans->prepby,
-                'prepdate' => $request_details->prepdate,
-                'scheddate' => $request_details->schedule,
-                'receivedby' => auth()->user()->name,
-                'role' => 'Admin',
-                'items' => $items
-            ];
-            Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
-            unset($sendTo);
+            // $emails = User::role('admin')
+            //     ->where('status','ACTIVE')
+            //     ->where('email','!=',$request_details->email)
+            //     ->get('email')
+            //     ->toArray();
+            // foreach($emails as $email){
+            //     $sendTo[] = $email['email'];
+            // }
+            // $details = [
+            //     'name' => 'ADMIN',
+            //     'action' => 'STOCK TRANSFER REQUEST',
+            //     'request_number' => $request->request_number,
+            //     'reqdate' => $request_details->reqdate,
+            //     'requested_by' => $request_details->reqby,
+            //     'needdate' => $request_details->needdate,
+            //     'locfrom' => $locfrom,
+            //     'locto' => $locto,
+            //     'prepared_by' => $trans->prepby,
+            //     'prepdate' => $request_details->prepdate,
+            //     'scheddate' => $request_details->schedule,
+            //     'receivedby' => auth()->user()->name,
+            //     'role' => 'Admin',
+            //     'items' => $items
+            // ];
+            // Mail::to($sendTo)->send(new receivedTransfer($details, $subject));
+            // unset($sendTo);
             $emails = User::role('approver - warehouse')
                 ->where('status','ACTIVE')
                 ->where('company',auth()->user()->company)
@@ -1029,6 +1045,7 @@ class StockTransferController extends Controller
     }
 
     public function printTransferRequest(Request $request){
+        $list4 = array(); $list5 = array(); $listX = array();
         $list = RequestTransfer::selectRaw('request_transfer.id AS req_id, request_transfer.created_at AS req_date, request_transfer.request_number AS req_num, request_transfer.requested_by AS user_id, users.name AS req_by, status.status AS status, status.id AS status_id, request_transfer.schedule AS sched, prepared_by, needdate, prepdate, locfrom, locto')
             ->where('request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'request_transfer.requested_by')
@@ -1043,7 +1060,8 @@ class StockTransferController extends Controller
                 
         $list3 = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
             ->where('transferred_items.request_number', $request->request_number)
-            ->where('stocks.status', '!=', 'incomplete')
+            ->whereIn('stocks.batch', ['new',''])
+            ->whereIn('stocks.status', ['in'])
             ->join('stocks','stocks.id','transferred_items.stock_id')
             ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
             ->join('items','items.id','stocks.item_id')
@@ -1052,11 +1070,64 @@ class StockTransferController extends Controller
             ->groupBy('category','prodcode','item','uom','serial','qty','item_id','location')
             ->orderBy('item', 'ASC')
             ->get();
+        if($list->status_id == '8'){
+            $list3 = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
+                ->where('transferred_items.request_number', $request->request_number)
+                ->join('stocks','stocks.id','transferred_items.stock_id')
+                ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
+                ->join('items','items.id','stocks.item_id')
+                ->join('categories','categories.id','items.category_id')
+                ->join('locations','locations.id','request_transfer.locfrom')
+                ->groupBy('category','prodcode','item','uom','serial','qty','item_id','location')
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
+        else{
+            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
+                $list4 = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
+                    ->where('transferred_items.request_number', $request->request_number)
+                    ->where('stocks.status', '=', 'incomplete')
+                    ->join('stocks','stocks.id','transferred_items.stock_id')
+                    ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
+                    ->join('items','items.id','stocks.item_id')
+                    ->join('categories','categories.id','items.category_id')
+                    ->join('locations','locations.id','request_transfer.locfrom')
+                    ->groupBy('category','prodcode','item','uom','serial','qty','item_id','location')
+                    ->orderBy('item', 'ASC')
+                    ->get();
+            }
+            if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
+                $list5 = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
+                    ->where('transferred_items.request_number', $request->request_number)
+                    ->whereIn('stocks.batch', ['old'])
+                    ->whereIn('stocks.status', ['in'])
+                    ->join('stocks','stocks.id','transferred_items.stock_id')
+                    ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
+                    ->join('items','items.id','stocks.item_id')
+                    ->join('categories','categories.id','items.category_id')
+                    ->join('locations','locations.id','request_transfer.locfrom')
+                    ->groupBy('category','prodcode','item','uom','serial','qty','item_id','location')
+                    ->orderBy('item', 'ASC')
+                    ->get();
+            }
+            if(Stock::where('request_number', $request->request_number)->where('status','trans')->count() != 0){
+                $listX = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
+                    ->where('transferred_items.request_number', $request->request_number)
+                    ->where('stocks.status', '=', 'trans')
+                    ->join('stocks','stocks.id','transferred_items.stock_id')
+                    ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
+                    ->join('items','items.id','stocks.item_id')
+                    ->join('categories','categories.id','items.category_id')
+                    ->join('locations','locations.id','request_transfer.locfrom')
+                    ->groupBy('category','prodcode','item','uom','serial','qty','item_id','location')
+                    ->orderBy('item', 'ASC')
+                    ->get();
+            }
+        }
         
         if(!$list || !$list2 || !$list3){
             return redirect()->to('/stocktransfer');
         }
-
-        return view('/pages/stockTransfer/printStockTransfer', compact('list','list2','list3'));
+        return view('/pages/stockTransfer/printStockTransfer', compact('list','list2','list3','list4','list5','listX'));
     }
 }

@@ -1060,8 +1060,7 @@ class StockTransferController extends Controller
                 
         $list3 = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
             ->where('transferred_items.request_number', $request->request_number)
-            ->whereIn('stocks.batch', ['new',''])
-            ->whereIn('stocks.status', ['in'])
+            ->whereRaw('stocks.request_number = ? AND (stocks.batch = "new" OR stocks.batch = "") AND stocks.status = "in"', $request->request_number)
             ->join('stocks','stocks.id','transferred_items.stock_id')
             ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
             ->join('items','items.id','stocks.item_id')
@@ -1086,7 +1085,7 @@ class StockTransferController extends Controller
             if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
                 $list4 = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
                     ->where('transferred_items.request_number', $request->request_number)
-                    ->where('stocks.status', '=', 'incomplete')
+                    ->whereRaw('stocks.request_number = ? AND stocks.status = "incomplete"', $request->request_number)
                     ->join('stocks','stocks.id','transferred_items.stock_id')
                     ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
                     ->join('items','items.id','stocks.item_id')
@@ -1096,19 +1095,28 @@ class StockTransferController extends Controller
                     ->orderBy('item', 'ASC')
                     ->get();
             }
-            if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
-                $list5 = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
+            $list5add = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id')
+                ->where('transferred_items.request_number', $request->request_number)
+                ->whereRaw('stocks.request_number != ?', $request->request_number)
+                ->join('stocks','stocks.id','transferred_items.stock_id')
+                ->join('items','items.id','stocks.item_id')
+                ->join('categories','categories.id','items.category_id')
+                ->groupBy('category','prodcode','item','uom','serial','qty','item_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+            if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 || count($list5add) != 0){
+                $list5 = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id')
                     ->where('transferred_items.request_number', $request->request_number)
-                    ->whereIn('stocks.batch', ['old'])
-                    ->whereIn('stocks.status', ['in'])
+                    ->whereRaw('stocks.request_number = ? AND stocks.batch = "old" AND stocks.status = "in"', $request->request_number)
                     ->join('stocks','stocks.id','transferred_items.stock_id')
-                    ->join('request_transfer','request_transfer.request_number','transferred_items.request_number')
                     ->join('items','items.id','stocks.item_id')
                     ->join('categories','categories.id','items.category_id')
-                    ->join('locations','locations.id','request_transfer.locfrom')
-                    ->groupBy('category','prodcode','item','uom','serial','qty','item_id','location')
+                    ->groupBy('category','prodcode','item','uom','serial','qty','item_id')
                     ->orderBy('item', 'ASC')
                     ->get();
+                foreach($list5add as $add){
+                    $list5[]=$add;
+                }
             }
             if(Stock::where('request_number', $request->request_number)->where('status','trans')->count() != 0){
                 $listX = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')

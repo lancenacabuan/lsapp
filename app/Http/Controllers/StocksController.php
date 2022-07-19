@@ -298,8 +298,8 @@ class StocksController extends Controller
             do{
                 $stocks = new Stock;
                 $stocks->item_id = $request->item;
-                $stocks->user_id =auth()->user()->id;
-                $stocks->location_id =$request->location;
+                $stocks->user_id = auth()->user()->id;
+                $stocks->location_id = $request->location;
                 $stocks->status = 'in';
                 $stocks->qty = '1';
                 $stocks->serial = $request->serial;
@@ -326,8 +326,8 @@ class StocksController extends Controller
                 do{
                     $stocks = new Stock;
                     $stocks->item_id = $request->item;
-                    $stocks->user_id =auth()->user()->id;
-                    $stocks->location_id =$request->location;
+                    $stocks->user_id = auth()->user()->id;
+                    $stocks->location_id = $request->location;
                     $stocks->status = 'in';
                     $stocks->qty = '1';
                     $stocks->serial = 'N/A';

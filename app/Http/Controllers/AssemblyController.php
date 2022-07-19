@@ -378,8 +378,8 @@ class AssemblyController extends Controller
             $stocks->request_number = $request->request_number;
             $stocks->assembly_reqnum = $request->request_number;
             $stocks->item_id = $request->item_id;
-            $stocks->user_id =auth()->user()->id;
-            $stocks->location_id =$request->location_id;
+            $stocks->user_id = auth()->user()->id;
+            $stocks->location_id = $request->location_id;
             $stocks->status = 'in';
             $stocks->serial = $request->serial;
             $stocks->rack = 'N/A';

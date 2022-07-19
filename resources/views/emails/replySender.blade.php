@@ -13,7 +13,7 @@
         Should there be any concerns or follow up on this matter, <br>
         please let us know by sending an email to: <br>
         <ul>
-            <li>mw_support@ideaserv.com.ph</li>
+            <li>{{env('MAIL_TO_SUPPORT')}}</li>
         </ul>
         <br>
         Thank you!

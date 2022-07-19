@@ -416,7 +416,8 @@ class PagesController extends Controller
 
     public function report_submit(Request $request){    
         $report = new Report;
-        $report->reported_by =auth()->user()->id;
+        $report->reported_by = auth()->user()->id;
+        $report->contact_email = auth()->user()->email;
         $report->ticket_number = $request->ticket_number;
         $report->report_category = ucwords($request->report_category);
         $report->details = ucfirst($request->details);

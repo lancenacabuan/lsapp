@@ -27,6 +27,7 @@
                     <option value="Maintenance - Locations">Maintenance - Locations</option>
                     <option value="Maintenance - Warranty">Maintenance - Warranty</option>
                     <option value="Users">Users</option>
+                    <option value="Email Notifications">Email Notifications</option>
                     <option value="Others...">Others...</option>
                 </select>
             </div>

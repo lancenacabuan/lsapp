@@ -95,7 +95,7 @@ if($("#current_role").val() == 'sales'){
                     else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28'){
                         return "<span style='color: Red; font-weight: bold;'>"+row_status+"</span>";
                     }
-                    else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
+                    else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16' || row.status_id == '30' || row.status_id == '31'){
                         return "<span style='color: Indigo; font-weight: bold;'>"+row_status+"</span>";
                     }
                     else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
@@ -235,7 +235,7 @@ else{
                     else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28'){
                         return "<span style='color: Red; font-weight: bold;'>"+row_status+"</span>";
                     }
-                    else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16'){
+                    else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16' || row.status_id == '30' || row.status_id == '31'){
                         return "<span style='color: Indigo; font-weight: bold;'>"+row_status+"</span>";
                     }
                     else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
@@ -586,6 +586,35 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 alert(data.responseText);
                             }
                         });
+                        if(req_type_id == '8'){
+                            $(".btnTransit").hide();
+                            $(".btnStaging").show();
+                        }
+                    }
+                    if(requestStatus == '30' || requestStatus == '31'){
+                        $("#schedItemsModal").show();
+                        $.ajax({
+                            type:'get', 
+                            url:'/checkProcessed', 
+                            data:{
+                                'request_number': $('#request_num_details').val()
+                            }, 
+                            success: function(data){
+                                if(data != 0){
+                                    $("#receivedItemsModal").show();
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                        if(req_type_id == '8'){
+                            $(".btnTransit").show();
+                            $(".btnStaging").hide();
+                        }
                     }
                     if(requestStatus == '3' || requestStatus == '4'){
                         $("#transitItemsModal").show();
@@ -1887,6 +1916,35 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     alert(data.responseText);
                 }
             });
+            if(req_type_id == '8'){
+                $(".btnTransit").hide();
+                $(".btnStaging").show();
+            }
+        }
+        if(requestStatus == '30' || requestStatus == '31'){
+            $("#schedItemsModal").show();
+            $.ajax({
+                type:'get', 
+                url:'/checkProcessed', 
+                data:{
+                    'request_number': $('#request_num_details').val()
+                }, 
+                success: function(data){
+                    if(data != 0){
+                        $("#receivedItemsModal").show();
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+            if(req_type_id == '8'){
+                $(".btnTransit").show();
+                $(".btnStaging").hide();
+            }
         }
         if(requestStatus == '3' || requestStatus == '4'){
             $("#transitItemsModal").show();

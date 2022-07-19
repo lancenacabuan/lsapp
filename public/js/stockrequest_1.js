@@ -1526,6 +1526,52 @@ $('#btnReason').on('click', function(){
     }
 });
 
+$('.btnStaging').on('click', function(){
+    Swal.fire({
+        title: "FOR STAGING?",
+        text: "You are about to move these items FOR STAGING!",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
+    })
+    .then((result) => {
+        if(result.isConfirmed){
+            $.ajax({
+                type:'post',
+                url:'/stageRequest',
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'status': $('#status_id_details').val()
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        $('#detailsStockRequest').hide();
+                        Swal.fire("FOR STAGING SUCCESS", "STOCK REQUEST", "success");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                    else{
+                        $('#detailsStockRequest').hide();
+                        Swal.fire("FOR STAGING FAILED", "STOCK REQUEST", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });    
+});
+
 $('.btnTransit').on('click', function(){
     Swal.fire({
         title: "FOR RECEIVING?",

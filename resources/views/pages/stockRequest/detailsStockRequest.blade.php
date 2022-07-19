@@ -383,6 +383,7 @@
             <br>
             <hr>
             @role('admin|encoder') {{---ROLES---}}
+            <input type="button" class="btn btn-primary float-right bp btnStaging" style="display: none;" value="FOR STAGING">
             <input type="button" class="btn btn-primary float-right bp btnTransit" value="FOR RECEIVING">
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>

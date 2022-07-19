@@ -1365,20 +1365,54 @@ class StockRequestController extends Controller
         return response($result);
     }
 
-    public function inTransit(Request $request){
+    public function stageRequest(Request $request){
         if($request->status == '2'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
-                    ->where('status','2')
+                    ->update(['status' => '30']);
+            }
+            while(!$sql);
+            $sched = 'FOR STAGING';
+        }
+        else if($request->status == '5'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '31']);
+            }
+            while(!$sql);
+            $sched = 'PARTIAL FOR STAGING';
+        }
+        else{
+            return response('false');
+        }
+
+        if(!$sql){
+            $result = 'false';
+        }
+        else {
+            $result = 'true';
+
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = $sched." STOCK REQUEST: User successfully processed for staging Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response($result);
+    }
+
+    public function inTransit(Request $request){
+        if($request->status == '2' || $request->status == '30'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
                     ->update(['status' => '3']);
             }
             while(!$sql);
             $sched = 'FOR RECEIVING';
         }
-        else if($request->status == '5'){
+        else if($request->status == '5' || $request->status == '31'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
-                    ->where('status','5')
                     ->update(['status' => '4']);
             }
             while(!$sql);

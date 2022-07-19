@@ -94,6 +94,7 @@ Route::any('/logApprove',[StockRequestController::class,'logApprove']);
 Route::any('/disapproveRequest',[StockRequestController::class,'disapproveRequest']);
 Route::any('/logDisapprove',[StockRequestController::class,'logDisapprove']);
 Route::any('/reschedRequest',[StockRequestController::class,'reschedRequest']);
+Route::any('/stageRequest',[StockRequestController::class,'stageRequest']);
 Route::any('/inTransit',[StockRequestController::class,'inTransit']);
 Route::any('/saleRequest',[StockRequestController::class,'saleRequest']);
 Route::any('/sellItems',[StockRequestController::class,'sellItems']);

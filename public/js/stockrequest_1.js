@@ -431,7 +431,7 @@ $('#request_type').on('change', function(){
     $('#reference_upload').val('');
     $('.upload_label').html('Upload PDF or Image less than 5MB each');
     $('.disupload').hide();
-    if(reqtype == '2'){
+    if(reqtype == '2' || reqtype == '8'){
         $('.reference_field').show();
         $('.divAdjust').hide();
     }
@@ -567,18 +567,18 @@ $(".add-row").on('click', function(){
     var prodcode = $("#prodcode").val();
     var uom = $("#uom").val();
     let qty = $("#qtyReq").val();
-    if(request_type == '2'){
+    if(request_type == '2' || request_type == '8'){
         var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'>" + warranty_id + "</td><td style='display: none;'>" + category + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td>" + warranty + "</td><td><button type='button' style='zoom: 80%;' class='delete-row btn btn-danger bp'>REMOVE</button></td></tr>";
     }
     else{
         var markup = "<tr><td style='display: none;'>" + category_id + "</td><td style='display: none;'>" + item_id + "</td><td style='display: none;'></td><td style='display: none;'>" + category + "</td><td>" + prodcode + "</td><td>" + item + "</td><td>" + qty + "</td><td>" + uom + "</td><td style='display: none;'></td><td><button type='button' style='zoom: 80%;' class='delete-row btn btn-danger bp'>REMOVE</button></td></tr>";
     }
     var ctr = 'false';
-    if(request_type == '2' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "" || warranty == "Select Warranty Type")){
+    if((request_type == '2' || request_type == '8') && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "" || warranty == "Select Warranty Type")){
         Swal.fire('REQUIRED','Please fill up all required item details!','error');
         return false;
     }
-    else if(request_type != '2' && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "")){
+    else if((request_type == '3' || request_type == '7') && (category == "Select Category" || item == "Select Item" || qty == "" || qty == "0" || uom == "")){
         Swal.fire('REQUIRED','Please fill up all required item details!','error');
         return false;
     }
@@ -1938,7 +1938,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
                 ''
             );
         }
-        if(req_type_id < 4 && req_type_id != 7){
+        if((req_type_id < 4 && req_type_id != 7) || req_type_id == 8){
             $(this).toggleClass('selected');
             if(items.includes(item_id) == true){
                 items = items.filter(item => item !== item_id);
@@ -2633,7 +2633,7 @@ $('.btnReceive').on('click', function(){
     if(items.length < item_count){
         inc = 'true';
     }
-    if(req_type_id == 2 || req_type_id == 3 || req_type_id == 7){
+    if(req_type_id == 2 || req_type_id == 3 || req_type_id == 7 || req_type_id == 8){
         var title = 'SEND CONFIRMATION EMAIL?';
         var text = 'The Client/Requester will be sent a confirmation email for the received items!';
         var action = 'SEND';

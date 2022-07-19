@@ -415,7 +415,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#action').val('');
                     }
                     
-                    if((($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus >= 27)) || req_type_id == '6')) || 
+                    if((($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus >= 27)) || req_type_id == '6' || req_type_id == '8')) || 
                     ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder' || $("#current_role").val() == 'viewer') && req_type_id == '7'){
                         var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
                         var reference_attachments = decodeHtml(reference_uploads).split(',');
@@ -498,7 +498,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
                         }
                     }
-                    if(req_type_id != '2'){
+                    if(req_type_id != '2' && req_type_id != '8'){
                         $(".sales_details").hide();
                         if(req_type_id == '6'){
                             $("#btnShowAttachment").show();
@@ -589,7 +589,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     }
                     if(requestStatus == '3' || requestStatus == '4'){
                         $("#transitItemsModal").show();
-                        if(req_type_id == '2' || req_type_id == '3'){
+                        if(req_type_id == '2' || req_type_id == '3' || req_type_id == '8'){
                             $('.btnReceive').html('SEND CONFIRMATION');
                             $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
                         }
@@ -1716,7 +1716,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('#action').val('');
         }
 
-        if((($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus >= 27)) || req_type_id == '6')) || 
+        if((($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus >= 27)) || req_type_id == '6' || req_type_id == '8')) || 
         ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder' || $("#current_role").val() == 'viewer') && req_type_id == '7'){
             var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
             var reference_attachments = decodeHtml(reference_uploads).split(',');
@@ -1799,7 +1799,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
             }
         }
-        if(req_type_id != '2'){
+        if(req_type_id != '2' && req_type_id != '8'){
             $(".sales_details").hide();
             if(req_type_id == '6'){
                 $("#btnShowAttachment").show();
@@ -1890,7 +1890,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         }
         if(requestStatus == '3' || requestStatus == '4'){
             $("#transitItemsModal").show();
-            if(req_type_id == '2' || req_type_id == '3'){
+            if(req_type_id == '2' || req_type_id == '3' || req_type_id == '8'){
                 $('.btnReceive').html('SEND CONFIRMATION');
                 $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
             }

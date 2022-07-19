@@ -101,10 +101,10 @@ if($("#current_role").val() == 'sales'){
                     else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
                         return "<span style='color: Green; font-weight: bold;'>"+row_status+"</span>";
                     }
-                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26' || row.status_id == '29'){
+                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '19' || row.status_id == '20'){
                         return "<span style='color: Blue; font-weight: bold;'>"+row_status+"</span>";
                     }
-                    else if(row.status_id == '10'){
+                    else if(row.status_id == '10' || row.status_id == '14' || row.status_id == '26' || row.status_id == '29'){
                         return "<span style='color: DarkBlue; font-weight: bold;'>"+row_status+"</span>";
                     }
                     else{
@@ -241,10 +241,10 @@ else{
                     else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
                         return "<span style='color: Green; font-weight: bold;'>"+row_status+"</span>";
                     }
-                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '14' || row.status_id == '19' || row.status_id == '20' || row.status_id == '26' || row.status_id == '29'){
+                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '19' || row.status_id == '20'){
                         return "<span style='color: Blue; font-weight: bold;'>"+row_status+"</span>";
                     }
-                    else if(row.status_id == '10'){
+                    else if(row.status_id == '10' || row.status_id == '14' || row.status_id == '26' || row.status_id == '29'){
                         return "<span style='color: DarkBlue; font-weight: bold;'>"+row_status+"</span>";
                     }
                     else{

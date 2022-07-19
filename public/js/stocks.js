@@ -26,37 +26,36 @@ $(document).ready(function(){
     $('#backBtn').hide();
     $('#stocksHeader').html('WAREHOUSE STOCKS');
     $('#loading').show();
-    CategoryTable = 
-        $('table.CategoryTable').DataTable({
-            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
-            iDisplayLength: -1,
-            serverSide: true,
-            ajax: 'category_data',
-            columns: [
-                { data: 'Category' },
-                { data: 'Defective', width: '9%' },
-                { data: 'Demo', width: '7%' },
-                { data: 'Assembly', width: '9%' },
-                { data: 'Asset', width: '10%' },
-                { data: 'A1', width: '6%' },
-                { data: 'A2', width: '6%' },
-                { data: 'A3', width: '6%' },
-                { data: 'A4', width: '6%' },
-                { data: 'Balintawak', width: '10%' },
-                { data: 'Malabon', width: '8%' },
-                { data: 'Total_stocks', width: '10%' }
-            ],
-            fnRowCallback: function(nRow, aData) {
-                if(aData.RowColor == 'RED') {
-                    $('td', nRow).css('color', 'red');
-                    $('td', nRow).css('font-weight', 'bold');
-                }
-            },
-            order: [],
-            initComplete: function(){
-                return notifyDeadline();
+    CategoryTable = $('table.CategoryTable').DataTable({
+        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+        iDisplayLength: -1,
+        serverSide: true,
+        ajax: 'category_data',
+        columns: [
+            { data: 'Category' },
+            { data: 'Defective', width: '9%' },
+            { data: 'Demo', width: '7%' },
+            { data: 'Assembly', width: '9%' },
+            { data: 'Asset', width: '10%' },
+            { data: 'A1', width: '6%' },
+            { data: 'A2', width: '6%' },
+            { data: 'A3', width: '6%' },
+            { data: 'A4', width: '6%' },
+            { data: 'Balintawak', width: '10%' },
+            { data: 'Malabon', width: '8%' },
+            { data: 'Total_stocks', width: '10%' }
+        ],
+        fnRowCallback: function(nRow, aData) {
+            if(aData.RowColor == 'RED') {
+                $('td', nRow).css('color', 'red');
+                $('td', nRow).css('font-weight', 'bold');
             }
-        });
+        },
+        order: [],
+        initComplete: function(){
+            return notifyDeadline();
+        }
+    });
 });
 
 $(document).on('click', '#CategoryTable tbody tr', function(){
@@ -73,48 +72,43 @@ $(document).on('click', '#CategoryTable tbody tr', function(){
     $('#MinStocksTableDiv').hide();
     $('#btnBack').hide();
     $('#backBtn').show();
-    $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html(categoryName);
     $('#loading').show();
-    ItemTable = 
-        $('table.ItemTable').DataTable({
-            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
-            iDisplayLength: -1,
-            serverSide: true,
-            ajax:{
-                url: '/item_data',
-                data:{
-                    CategoryId: categoryID
-                }
-            },
-            columns: [
-                { data: 'ProdCode', width: '10%' },
-                { data: 'Item' },
-                { data: 'Defective', width: '8%' },
-                { data: 'Demo', width: '6%' },
-                { data: 'Assembly', width: '8%' },
-                { data: 'Asset', width: '9%' },
-                { data: 'A1', width: '5%' },
-                { data: 'A2', width: '5%' },
-                { data: 'A3', width: '5%' },
-                { data: 'A4', width: '5%' },
-                { data: 'Balintawak', width: '9%' },
-                { data: 'Malabon', width: '7%' },
-                { data: 'Total_stocks', width: '10%' }
-            ],
-            fnRowCallback: function(nRow, aData) {
-                if(aData.RowColor == 'RED') {
-                    $('td', nRow).css('color', 'red');
-                    $('td', nRow).css('font-weight', 'bold');
-                }
-            },
-            order: [],
-            initComplete: function(){
-                return notifyDeadline();
+    ItemTable = $('table.ItemTable').DataTable({
+        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+        iDisplayLength: -1,
+        serverSide: true,
+        ajax:{
+            url: '/item_data',
+            data:{
+                CategoryId: categoryID
             }
-        });
-    $('#stocksURL').on('click', function(){
-        ItemTable.ajax.reload();
+        },
+        columns: [
+            { data: 'ProdCode', width: '10%' },
+            { data: 'Item' },
+            { data: 'Defective', width: '8%' },
+            { data: 'Demo', width: '6%' },
+            { data: 'Assembly', width: '8%' },
+            { data: 'Asset', width: '9%' },
+            { data: 'A1', width: '5%' },
+            { data: 'A2', width: '5%' },
+            { data: 'A3', width: '5%' },
+            { data: 'A4', width: '5%' },
+            { data: 'Balintawak', width: '9%' },
+            { data: 'Malabon', width: '7%' },
+            { data: 'Total_stocks', width: '10%' }
+        ],
+        fnRowCallback: function(nRow, aData) {
+            if(aData.RowColor == 'RED') {
+                $('td', nRow).css('color', 'red');
+                $('td', nRow).css('font-weight', 'bold');
+            }
+        },
+        order: [],
+        initComplete: function(){
+            return notifyDeadline();
+        }
     });
 });
 
@@ -133,48 +127,43 @@ $('#btnBack').on('click', function(){
     $('#MinStocksTableDiv').hide();
     $('#btnBack').hide();
     $('#backBtn').show();
-    $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html(categoryName);
     $('#loading').show();
-    ItemTable = 
-        $('table.ItemTable').DataTable({
-            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
-            iDisplayLength: -1,
-            serverSide: true,
-            ajax:{
-                url: '/item_data',
-                data:{
-                    CategoryId: categoryID
-                }
-            },
-            columns: [
-                { data: 'ProdCode', width: '10%' },
-                { data: 'Item' },
-                { data: 'Defective', width: '8%' },
-                { data: 'Demo', width: '6%' },
-                { data: 'Assembly', width: '8%' },
-                { data: 'Asset', width: '9%' },
-                { data: 'A1', width: '5%' },
-                { data: 'A2', width: '5%' },
-                { data: 'A3', width: '5%' },
-                { data: 'A4', width: '5%' },
-                { data: 'Balintawak', width: '9%' },
-                { data: 'Malabon', width: '7%' },
-                { data: 'Total_stocks', width: '10%' }
-            ],
-            fnRowCallback: function(nRow, aData) {
-                if(aData.RowColor == 'RED') {
-                    $('td', nRow).css('color', 'red');
-                    $('td', nRow).css('font-weight', 'bold');
-                }
-            },
-            order: [],
-            initComplete: function(){
-                return notifyDeadline();
+    ItemTable = $('table.ItemTable').DataTable({
+        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+        iDisplayLength: -1,
+        serverSide: true,
+        ajax:{
+            url: '/item_data',
+            data:{
+                CategoryId: categoryID
             }
-        });
-    $('#stocksURL').on('click', function(){
-        ItemTable.ajax.reload();
+        },
+        columns: [
+            { data: 'ProdCode', width: '10%' },
+            { data: 'Item' },
+            { data: 'Defective', width: '8%' },
+            { data: 'Demo', width: '6%' },
+            { data: 'Assembly', width: '8%' },
+            { data: 'Asset', width: '9%' },
+            { data: 'A1', width: '5%' },
+            { data: 'A2', width: '5%' },
+            { data: 'A3', width: '5%' },
+            { data: 'A4', width: '5%' },
+            { data: 'Balintawak', width: '9%' },
+            { data: 'Malabon', width: '7%' },
+            { data: 'Total_stocks', width: '10%' }
+        ],
+        fnRowCallback: function(nRow, aData) {
+            if(aData.RowColor == 'RED') {
+                $('td', nRow).css('color', 'red');
+                $('td', nRow).css('font-weight', 'bold');
+            }
+        },
+        order: [],
+        initComplete: function(){
+            return notifyDeadline();
+        }
     });
 });
 
@@ -192,99 +181,93 @@ $(document).on('click', '#ItemTable tbody tr', function(){
     $('#MinStocksTableDiv').hide();
     $('#btnBack').show();
     $('#backBtn').hide();
-    $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html(itemName);
     $('#loading').show();
     if(trdata.serialize == 'YES'){
-        ItemSerialTable = 
-            $('table.ItemSerialTable').DataTable({
-                aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
-                serverSide: true,
-                ajax:{
-                    url: '/itemserial_data',
-                    data:{
-                        ItemId: itemID
-                    }
-                },
-                columnDefs: [
-                    {
-                        "targets": [0,1],
-                        "visible": false,
-                        "searchable": true
-                    },
-                    {
-                        "targets": [2,3],
-                        "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
-                    },
-                ],
-                columns: [
-                    { data: 'addDatetime' },
-                    { data: 'modDatetime' },
-                    { data: 'addDate', width: '14%' },
-                    { data: 'modDate', width: '14%' },
-                    { data: 'name' },
-                    { data: 'qty', width: '5%' },
-                    { data: 'UOM', width: '7%' },
-                    { data: 'serial' },
-                    { data: 'location' },
-                    { data: 'rack', width: '8%' },
-                    { data: 'row', width: '8%' }
-                ],
-                order: [],
-                initComplete: function(){
-                    return notifyDeadline();
+        ItemSerialTable = $('table.ItemSerialTable').DataTable({
+            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+            serverSide: true,
+            ajax:{
+                url: '/itemserial_data',
+                data:{
+                    ItemId: itemID
                 }
-            });
+            },
+            columnDefs: [
+                {
+                    "targets": [0,1],
+                    "visible": false,
+                    "searchable": true
+                },
+                {
+                    "targets": [2,3],
+                    "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
+                },
+            ],
+            columns: [
+                { data: 'addDatetime' },
+                { data: 'modDatetime' },
+                { data: 'addDate', width: '14%' },
+                { data: 'modDate', width: '14%' },
+                { data: 'name' },
+                { data: 'qty', width: '5%' },
+                { data: 'UOM', width: '7%' },
+                { data: 'serial' },
+                { data: 'location' },
+                { data: 'rack', width: '8%' },
+                { data: 'row', width: '8%' }
+            ],
+            order: [],
+            initComplete: function(){
+                return notifyDeadline();
+            }
+        });
     }
     else{
-        ItemSerialTable = 
-            $('table.ItemSerialTable').DataTable({
-                aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
-                serverSide: true,
-                ajax:{
-                    url: '/itemserial_data',
-                    data:{
-                        ItemId: itemID
-                    }
-                },
-                columnDefs: [
-                    {
-                        "targets": [0,1],
-                        "visible": false,
-                        "searchable": true
-                    },
-                    {
-                        "targets": [2,3],
-                        "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
-                    },
-                    {
-                        "targets": [7],
-                        "visible": false,
-                        "searchable": false
-                    },
-                ],
-                columns: [
-                    { data: 'addDatetime' },
-                    { data: 'modDatetime' },
-                    { data: 'addDate', width: '14%' },
-                    { data: 'modDate', width: '14%' },
-                    { data: 'name' },
-                    { data: 'qty', width: '5%' },
-                    { data: 'UOM', width: '7%' },
-                    { data: 'serial' },
-                    { data: 'location' },
-                    { data: 'rack', width: '8%' },
-                    { data: 'row', width: '8%' }
-                ],
-                order: [],
-                initComplete: function(){
-                    return notifyDeadline();
+        ItemSerialTable = $('table.ItemSerialTable').DataTable({
+            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+            serverSide: true,
+            ajax:{
+                url: '/itemserial_data',
+                data:{
+                    ItemId: itemID
                 }
-            });
+            },
+            columnDefs: [
+                {
+                    "targets": [0,1],
+                    "visible": false,
+                    "searchable": true
+                },
+                {
+                    "targets": [2,3],
+                    "render": $.fn.dataTable.render.moment('YYYY-MM-DD HH:mm:ss', 'MMM. DD, YYYY, h:mm A')
+                },
+                {
+                    "targets": [7],
+                    "visible": false,
+                    "searchable": false
+                },
+            ],
+            columns: [
+                { data: 'addDatetime' },
+                { data: 'modDatetime' },
+                { data: 'addDate', width: '14%' },
+                { data: 'modDate', width: '14%' },
+                { data: 'name' },
+                { data: 'qty', width: '5%' },
+                { data: 'UOM', width: '7%' },
+                { data: 'serial' },
+                { data: 'location' },
+                { data: 'rack', width: '8%' },
+                { data: 'row', width: '8%' }
+            ],
+            order: [],
+            initComplete: function(){
+                return notifyDeadline();
+            }
+        });
     }
-    $('#stocksURL').on('click', function(){
-        ItemSerialTable.ajax.reload();
-    });
 });
 
 $(document).on('click', '#ItemSerialTable tbody tr', function(){
@@ -338,7 +321,6 @@ $('#z_serial').on('keyup', function(){
             $('#MinStocksTableDiv').hide();
             $('#btnBack').hide();
             $('#backBtn').show();
-            $('#stocksURL').attr('href', '#');
             $('#stocksHeader').html($('#z_serial').val());
             SerialTable = $('table.SerialTable').DataTable({
                 aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
@@ -376,9 +358,6 @@ $('#z_serial').on('keyup', function(){
                 }
             });
         }
-    });
-    $('#stocksURL').on('click', function(){
-        SerialTable.ajax.reload();
     });
 });
 
@@ -436,45 +415,40 @@ $('#btnGenerate').on('click', function(){
     $('#MinStocksTableDiv').show();
     $('#btnBack').hide();
     $('#backBtn').show();
-    $('#stocksURL').attr('href', '#');
     $('#stocksHeader').html('BELOW MINIMUM STOCKS');
     $('#loading').show();
-    MinStocksTable = 
-        $('table.MinStocksTable').DataTable({
-            dom: 'Blftrip',
-            buttons: ['excel'],
-            aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
-            iDisplayLength: -1,
-            serverSide: true,
-            ajax:{
-                url: '/minstocks_data',
+    MinStocksTable = $('table.MinStocksTable').DataTable({
+        dom: 'Blftrip',
+        buttons: ['excel'],
+        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+        iDisplayLength: -1,
+        serverSide: true,
+        ajax:{
+            url: '/minstocks_data',
+        },
+        columns: [
+            { data: 'Category', width: '15%' },
+            { data: 'ProdCode', width: '15%' },
+            { data: 'Item' },
+            {
+                data: 'Current_stocks',
+                "render": function(data, type, row){
+                    return row.Current_stocks+'-'+row.uom+'/s'
+                }, 
+                width: '12%'
             },
-            columns: [
-                { data: 'Category', width: '15%' },
-                { data: 'ProdCode', width: '15%' },
-                { data: 'Item' },
-                {
-                    data: 'Current_stocks',
-                    "render": function(data, type, row){
-                        return row.Current_stocks+'-'+row.uom+'/s'
-                    }, 
-                    width: '12%' 
-                },
-                {
-                    data: 'Minimum_stocks',
-                    "render": function(data, type, row){
-                        return row.Minimum_stocks+'-'+row.uom+'/s'
-                    }, 
-                    width: '12%' 
-                }
-            ],
-            order: [],
-            initComplete: function(){
-                return notifyDeadline();
+            {
+                data: 'Minimum_stocks',
+                "render": function(data, type, row){
+                    return row.Minimum_stocks+'-'+row.uom+'/s'
+                }, 
+                width: '12%'
             }
-        });
-    $('#stocksURL').on('click', function(){
-        MinStocksTable.ajax.reload();
+        ],
+        order: [],
+        initComplete: function(){
+            return notifyDeadline();
+        }
     });
 });
 

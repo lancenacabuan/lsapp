@@ -15,7 +15,7 @@
 <button class="btn btn-primary bp float-right mb-2 d-none" type="button">&nbsp</button>
 @endrole
 <br><br><br><br>
-<a id="stocksURL" href="/stocks" title="Reload">
+<a href="/stocks" title="Reload">
     <div id="stocksHeader" class="text-center" style="background-color: #0d1a80; color: white; font-size: 20px; font-weight: bold; height: 45px; line-height: 45px;">
         WAREHOUSE STOCKS
     </div>

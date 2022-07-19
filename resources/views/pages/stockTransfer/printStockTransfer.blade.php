@@ -6,6 +6,7 @@
 </script>
 @endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
+<input type="hidden" id="status" value="{{$list->status}}">
 <div class="container-fluid">
     <button id="btnPrint" type="button" class="btn btn-primary bp" style="margin-right: 5px;">PRINT</button>
     <button id="btnSavePDF" type="button" class="btn btn-primary bp">SAVE AS PDF</button>
@@ -68,7 +69,7 @@
                 <td colspan="9">&nbsp;</td>
             </tr>
             <tr height="20" class="tblPrepared">
-                <td colspan="9"><strong>FOR RECEIVING ITEMS</strong></td>
+                <td colspan="9"><strong>{{$list->status}} ITEMS</strong></td>
             </tr>
             <tr height="20" class="tblPrepared">
                 @php

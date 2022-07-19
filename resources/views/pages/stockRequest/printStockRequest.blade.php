@@ -189,7 +189,7 @@
                 <td colspan="9">&nbsp;</td>
             </tr>
             <tr height="20" class="tblPrepared">
-                <td colspan="9"><strong>FOR RECEIVING ITEMS</strong></td>
+                <td colspan="9"><strong>{{$list->status}} ITEMS</strong></td>
             </tr>
             <tr height="20" class="tblPrepared">
                 @php

@@ -401,7 +401,7 @@ function runFunction(){
     }
     if($('#requestDetails').is(':visible')){
         var request_type = $('#request_type').val();
-        if(request_type == '2'){
+        if(request_type == '2' || request_type == '8'){
             $('.classWarranty').show();
         }
         else{
@@ -427,10 +427,6 @@ function checkLocation(){
 
 $('#request_type').on('change', function(){
     var reqtype = $(this).val();
-    $('#reference').val('');
-    $('#reference_upload').val('');
-    $('.upload_label').html('Upload PDF or Image less than 5MB each');
-    $('.disupload').hide();
     if(reqtype == '2' || reqtype == '8'){
         $('.reference_field').show();
         $('.divAdjust').hide();
@@ -438,6 +434,10 @@ $('#request_type').on('change', function(){
     else{
         $('.reference_field').hide();
         $('.divAdjust').show();
+        $('#reference').val('');
+        $('#reference_upload').val('');
+        $('.upload_label').html('Upload PDF or Image less than 5MB each');
+        $('.disupload').hide();
     }
     $("#categoryReq").val('');
     $("#itemReq").find('option').remove().end().append('<option value="" selected disabled>Select Item</option>').val();

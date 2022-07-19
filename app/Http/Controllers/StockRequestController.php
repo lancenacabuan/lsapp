@@ -480,9 +480,8 @@ class StockRequestController extends Controller
             }
         }
 
-        $subject = '[FIXED ASSET] STOCK REQUEST NO. '.$request->request_number;
         $details = [
-            'name' => auth()->user()->name,
+            'name' => $request_details->asset_reqby,
             'request_number' => $request->request_number,
             'reqtype' => $request_details->reqtype,
             'reqdate' => $request_details->reqdate,
@@ -490,27 +489,11 @@ class StockRequestController extends Controller
             'submitted_by' => auth()->user()->name,
             'requested_by' => $request_details->asset_reqby,
             'approved_by' => $request_details->asset_apvby,
-            'role' => 'Admin / Encoder',
+            'role' => '',
             'items' => $items,
             'files' => $attachments
         ];
-        Mail::to(auth()->user()->email)->send(new emailForRequest($details, $subject));
-        if(auth()->user()->email != $request_details->asset_reqby_email){
-            $details = [
-                'name' => $request_details->asset_reqby,
-                'request_number' => $request->request_number,
-                'reqtype' => $request_details->reqtype,
-                'reqdate' => $request_details->reqdate,
-                'needdate' => $request_details->needdate,
-                'submitted_by' => auth()->user()->name,
-                'requested_by' => $request_details->asset_reqby,
-                'approved_by' => $request_details->asset_apvby,
-                'role' => '',
-                'items' => $items,
-                'files' => $attachments
-            ];
-            Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
-        }
+        Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
         $details = [
             'name' => $request_details->asset_apvby,
             'request_number' => $request->request_number,
@@ -538,7 +521,7 @@ class StockRequestController extends Controller
         if(auth()->user()->hasanyRole('approver - sales')){ //---ROLES---//
             $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
                 ->where('users.company', auth()->user()->company)
-                ->whereIn('request_type.id', ['2','3'])
+                ->whereIn('request_type.id', ['2','3','8'])
                 ->whereNotIn('requests.verify', ['Confirmed'])
                 ->whereNotIn('requests.status', ['7','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
@@ -551,7 +534,7 @@ class StockRequestController extends Controller
         }
         else if(auth()->user()->hasanyRole('accounting')){ //---ROLES---//
             $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
-                ->whereIn('request_type.id', ['2','3','6'])
+                ->whereIn('request_type.id', ['2','3','6','8'])
                 ->whereNotIn('requests.verify', ['Confirmed'])
                 ->whereNotIn('requests.status', ['7','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')

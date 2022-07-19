@@ -11,11 +11,9 @@
         Report Details: {{$details['details']}}
         <br><br>
         Should there be any concerns or follow up on this matter, <br>
-        please let us know by sending an email to either the following: <br>
+        please let us know by sending an email to: <br>
         <ul>
-            <li>gerard.mallari@gmail.com</li>
-            <li>jolopez@ideaserv.com.ph</li>
-            <li>lancenacabuan@outlook.com</li>
+            <li>mw_support@ideaserv.com.ph</li>
         </ul>
         <br>
         Thank you!

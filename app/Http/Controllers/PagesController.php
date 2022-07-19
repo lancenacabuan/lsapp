@@ -442,7 +442,7 @@ class PagesController extends Controller
             'report_category' => ucwords($request->report_category),
             'details' => ucfirst($request->details)
         ];
-        Mail::to(explode(',',env('MAIL_TO_DEV')))->send(new reportProblem($details, $subject));
+        Mail::to(env('MAIL_TO_SUPPORT'))->send(new reportProblem($details, $subject));
 
         $details = [
             'name' => auth()->user()->name,

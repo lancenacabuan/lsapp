@@ -32,6 +32,7 @@ class requestLocation extends Mailable
     {
         return $this->subject($this->subject)
             ->from('noreply@ideaserv.com.ph')
+            ->cc(explode(',',env('MAIL_TO_DEV')))
             ->view('emails/requestLocation');
     }
 }

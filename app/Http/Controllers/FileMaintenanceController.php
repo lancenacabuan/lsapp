@@ -464,7 +464,7 @@ class FileMaintenanceController extends Controller
             'reqdate' => Carbon::now()->isoformat('dddd, MMMM DD, YYYY'),
             'requested_by' => auth()->user()->name
         ];
-        Mail::to(explode(',',env('MAIL_TO_DEV')))->send(new requestLocation($details, $subject));
+        Mail::to(env('MAIL_TO_SUPPORT'))->send(new requestLocation($details, $subject));
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
@@ -538,7 +538,7 @@ class FileMaintenanceController extends Controller
             'status_original' => $request->status_original,
             'status' => $request->status
         ];
-        Mail::to(explode(',',env('MAIL_TO_DEV')))->send(new requestStatusChange($details, $subject));
+        Mail::to(env('MAIL_TO_SUPPORT'))->send(new requestStatusChange($details, $subject));
         
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;

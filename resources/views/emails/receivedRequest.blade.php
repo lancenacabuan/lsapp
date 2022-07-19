@@ -167,7 +167,7 @@
     This is to inform you that a {{$details['action']}} has been 
     <span style="color: blue;"><strong>{{$details['verb']}}</strong></span> by {{$details['receivedby']}}
     @if($details['verb'] == 'SOLD')
-    &nbsp;to {{$details['client_name']}}.<br>
+    to {{$details['client_name']}}.<br>
     @else
     .<br>
     @endif

@@ -1474,6 +1474,11 @@ class StockRequestController extends Controller
             ->where('batch', '=', 'old')
             ->update(['batch' => 'new']);
 
+        if(Requests::where('request_number', $request->request_number)->first()->status == '10'){
+            Requests::where('request_number', $request->request_number)
+                ->update(['verify' => 'Confirmed']);
+        }
+
         do{
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, schedule, needdate, prepdate')
                 ->where('requests.request_number', $request->request_number)

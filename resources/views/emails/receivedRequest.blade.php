@@ -187,7 +187,7 @@
         Contact Person: {{$details['contact']}}<br>
         Remarks: {{$details['remarks']}}
         @endif
-        @if($details['req_type_id'] == 2 || ($details['req_type_id'] == 3 && ($details['status_id'] == 10 || $details['status_id'] >= 27)))
+        @if($details['req_type_id'] == 2 || $details['req_type_id'] == 8 || ($details['req_type_id'] == 3 && ($details['status_id'] == 10 || $details['status_id'] >= 27)))
         <br><br>Reference SO/PO No.: {{$details['reference']}}
         @endif
         <br><br>
@@ -212,7 +212,7 @@
                 $concat = NULL;
             }
         @endphp
-        @if($details['req_type_id'] == 2 || $details['req_type_id'] == 6 || ($details['req_type_id'] == 3 && ($details['status_id'] == 10 || $details['status_id'] >= 27)))
+        @if($details['req_type_id'] == 2 || $details['req_type_id'] == 6 || $details['req_type_id'] == 8 || ($details['req_type_id'] == 3 && ($details['status_id'] == 10 || $details['status_id'] >= 27)))
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>
@@ -296,7 +296,7 @@
         <br><br>
         <strong>PREVIOUSLY RECEIVED ITEMS</strong>
         <br><br>
-        @if($details['req_type_id'] == 2 || $details['req_type_id'] == 6 || ($details['req_type_id'] == 3 && ($details['status_id'] == 10 || $details['status_id'] >= 27)))
+        @if($details['req_type_id'] == 2 || $details['req_type_id'] == 6 || $details['req_type_id'] == 8 || ($details['req_type_id'] == 3 && ($details['status_id'] == 10 || $details['status_id'] >= 27)))
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>
@@ -381,7 +381,7 @@
         <br><br>
         <strong>INCOMPLETE ITEMS</strong>
         <br><br>
-        @if($details['req_type_id'] == 2 || $details['req_type_id'] == 6 || ($details['req_type_id'] == 3 && ($details['status_id'] == 10 || $details['status_id'] >= 27)))
+        @if($details['req_type_id'] == 2 || $details['req_type_id'] == 6 || $details['req_type_id'] == 8 || ($details['req_type_id'] == 3 && ($details['status_id'] == 10 || $details['status_id'] >= 27)))
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>

@@ -14,7 +14,7 @@
         Address / Branch: {{$details['location']}}<br>
         Contact Person: {{$details['contact']}}<br>
         Remarks: {{$details['remarks']}}
-        @if($details['reqtype'] == 'SALES')
+        @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'FOR STAGING')
         <br><br>Reference SO/PO No.: {{$details['reference']}}
         @endif
         <br><br>
@@ -23,7 +23,7 @@
         @php
             $total = 0;
         @endphp
-        @if($details['reqtype'] == 'SALES')
+        @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'FOR STAGING')
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>

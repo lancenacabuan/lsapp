@@ -21,13 +21,13 @@
         Assembled Item Name: {{$details['item_desc']}}<br>
         Quantity: {{$details['qty']}}-Unit/s
         @endif
-        @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'DEMO UNIT')
+        @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'FOR STAGING' || $details['reqtype'] == 'DEMO UNIT')
         <br><br>Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
         Contact Person: {{$details['contact']}}<br>
         Remarks: {{$details['remarks']}}
         @endif
-        @if($details['reqtype'] == 'SALES')
+        @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'FOR STAGING')
         <br><br>Reference SO/PO No.: {{$details['reference']}}
         @endif
         <br><br>
@@ -36,7 +36,7 @@
         @php
             $total = 0;
         @endphp
-        @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'MERCHANT')
+        @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'FOR STAGING' || $details['reqtype'] == 'MERCHANT')
         <table style="border: 1px solid black; border-collapse: collapse; padding: 5px;">
             <thead>
                 <tr>

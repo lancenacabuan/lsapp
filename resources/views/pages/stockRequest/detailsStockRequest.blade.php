@@ -7,6 +7,7 @@
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+            <input type="hidden" id="requested_by_id_details">
             <input type="hidden" id="req_type_id_details">
             <input type="hidden" id="status_id_details">
             <input type="hidden" id="item_id_details">
@@ -324,9 +325,15 @@
         </div>
         <div id="schedItemsModal" style="display: none;">
         <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
+            <h6 id="prepheader" class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
+            @role('sales') {{---ROLES---}}
+            <div id="reissue_label" class="alert alert-info" role="alert" style="display: none;">
+                <i class='fa fa-info-circle'></i>
+                <strong>INFO:</strong> You can select table rows to <b>re-issue items</b> for another request then click the RE-ISSUE button below.
+            </div>
+            @endrole
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                 <input class="form-control form-control-sm" id="prep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
@@ -382,6 +389,7 @@
             @endrole
             <br>
             <hr>
+            <input type="button" class="btn btn-primary float-right bp btnReissue" style="display: none;" value="RE-ISSUE" disabled>
             @role('admin|encoder') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp btnStaging" style="display: none;" value="FOR STAGING">
             <input type="button" class="btn btn-primary float-right bp btnTransit" value="FOR RECEIVING">

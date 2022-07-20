@@ -330,6 +330,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#asm_request_num_details').val(asm_req_num);
                 var req_by = value.req_by;
                     $('#requested_by_details').val(req_by);
+                var req_by_id = value.user_id;
+                    $('#requested_by_id_details').val(req_by_id);
                 var req_type = value.req_type;
                     $('#request_type_details').val(req_type);
                 var item_id = value.item_id;
@@ -373,7 +375,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales') && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '6' || req_type_id == '7')){
                         window.location.href = '/stockrequest';
                     }
-                    if($("#current_role").val() == 'sales' && $('#current_user').val() != value.user_id){
+                    if($("#current_role").val() == 'sales' && $('#current_user').val() != req_by_id){
                         window.location.href = '/stockrequest';
                     }
 
@@ -593,6 +595,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     }
                     if(requestStatus == '30' || requestStatus == '31'){
                         $("#schedItemsModal").show();
+                        $("#prepheader").html('FOR STAGING ITEM DETAILS');
                         $.ajax({
                             type:'get', 
                             url:'/checkProcessed', 
@@ -614,6 +617,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         if(req_type_id == '8'){
                             $(".btnTransit").show();
                             $(".btnStaging").hide();
+                        }
+                        if(req_by_id == $('#current_user').val()){
+                            $("#reissue_label").show();
+                            $(".btnReissue").show();
                         }
                     }
                     if(requestStatus == '3' || requestStatus == '4'){
@@ -809,7 +816,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#proceed_label").show();
                         $("#btnProceed").show();
                     }
-                    if(value.user_id == $('#current_user').val() && $("#current_role").val() == 'sales'){
+                    if(req_by_id == $('#current_user').val() && $("#current_role").val() == 'sales'){
                         $("#sd2").show();
                         $("#sd1").remove();
                     }
@@ -825,7 +832,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         var targetStockDetails = [6,7,8,9,10];
                         var targetStockDetails1 = [5];
                         var targetStockDetails2 = [5,6];
-                        if(requestStatus == '6' && $("#current_role").val() == 'sales' && $('#current_user').val() == value.user_id){
+                        if(requestStatus == '6' && $("#current_role").val() == 'sales' && $('#current_user').val() == req_by_id){
                             targetStockDetails2 = [6];
                         }
                     }
@@ -1167,6 +1174,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     }
                 });
             
+                $('table.schedItems1').dataTable().fnDestroy();
                 $('table.schedItems1').DataTable({
                     columnDefs: [
                         {
@@ -1660,6 +1668,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#asm_request_num_details').val(asm_req_num);
     var req_by = value.req_by;
         $('#requested_by_details').val(req_by);
+    var req_by_id = value.user_id;
+        $('#requested_by_id_details').val(req_by_id);
     var req_type = value.req_type;
         $('#request_type_details').val(req_type);
     var item_id = value.item_id;
@@ -1703,7 +1713,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales') && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '6' || req_type_id == '7')){
             window.location.href = '/stockrequest';
         }
-        if($("#current_role").val() == 'sales' && $('#current_user').val() != value.user_id){
+        if($("#current_role").val() == 'sales' && $('#current_user').val() != req_by_id){
             window.location.href = '/stockrequest';
         }
 
@@ -1923,6 +1933,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         }
         if(requestStatus == '30' || requestStatus == '31'){
             $("#schedItemsModal").show();
+            $("#prepheader").html('FOR STAGING ITEM DETAILS');
             $.ajax({
                 type:'get', 
                 url:'/checkProcessed', 
@@ -1944,6 +1955,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             if(req_type_id == '8'){
                 $(".btnTransit").show();
                 $(".btnStaging").hide();
+            }
+            if(req_by_id == $('#current_user').val()){
+                $("#reissue_label").show();
+                $(".btnReissue").show();
             }
         }
         if(requestStatus == '3' || requestStatus == '4'){
@@ -2139,7 +2154,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#proceed_label").show();
             $("#btnProceed").show();
         }
-        if(value.user_id == $('#current_user').val() && $("#current_role").val() == 'sales'){
+        if(req_by_id == $('#current_user').val() && $("#current_role").val() == 'sales'){
             $("#sd2").show();
             $("#sd1").remove();
         }
@@ -2155,7 +2170,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             var targetStockDetails = [6,7,8,9,10];
             var targetStockDetails1 = [5];
             var targetStockDetails2 = [5,6];
-            if(requestStatus == '6' && $("#current_role").val() == 'sales' && $('#current_user').val() == value.user_id){
+            if(requestStatus == '6' && $("#current_role").val() == 'sales' && $('#current_user').val() == req_by_id){
                 targetStockDetails2 = [6];
             }
         }
@@ -2497,6 +2512,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         }
     });
 
+    $('table.schedItems1').dataTable().fnDestroy();
     $('table.schedItems1').DataTable({
         columnDefs: [
             {

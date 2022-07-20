@@ -2023,6 +2023,32 @@ $('.stockDetails tbody').on('click', 'tr', function(){
     }
 });
 
+$('.table.schedItems1').DataTable().on('select', function(){});
+$('.schedItems1 tbody').on('click', 'tr', function(){
+    var req_by_id = $('#requested_by_id_details').val();
+    var req_type_id = $('#req_type_id_details').val();
+    var requestStatus = $('#status_id_details').val();
+    if(($("#current_user").val() == req_by_id) && req_type_id == '8' && (requestStatus == '30' || requestStatus == '31')){
+        var table = $('table.schedItems1').DataTable();
+        var data = table.row(this).data();
+        item_count = table.data().count();
+        
+        $(this).toggleClass('selected');
+        if(items.includes(data.id) == true){
+            items = items.filter(item => item !== data.id);
+        }
+        else {
+            items.push(data.id);
+        }
+        if(items.length == 0){
+            $('.btnReissue').prop('disabled', true);
+        }
+        else{
+            $('.btnReissue').prop('disabled', false);
+        }
+    }
+});
+
 $('.table.transItems').DataTable().on('select', function(){});
 $('.transItems tbody').on('click', 'tr', function(){
     if($("#current_role").val() != 'sales'){

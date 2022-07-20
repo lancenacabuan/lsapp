@@ -218,6 +218,10 @@
             <h6 class="modal-title w-100">FOR RE-ISSUE ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
+            <div class="form-inline" style="margin-left: 35px;">
+                <label class="form-control form-control-sm" style="width: 160px;">Date Scheduled</label>
+                <input class="form-control form-control-sm" id="reissueSched" style="width: 280px;" type="date">
+            </div>
             <br>
             <table id="reissueItems" class="table reissueItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>

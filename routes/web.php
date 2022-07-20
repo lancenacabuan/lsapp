@@ -72,6 +72,7 @@ Route::get('/itemsreq',[StockRequestController::class,'itemsreq']);
 Route::get('/setuom',[StockRequestController::class,'setuom']);
 Route::any('/saveReqNum',[StockRequestController::class,'saveReqNum']);
 Route::any('/saveRequest',[StockRequestController::class,'saveRequest']);
+Route::any('/reissueRequest',[StockRequestController::class,'reissueRequest']);
 Route::any('/logSave',[StockRequestController::class,'logSave']);
 Route::any('/asset/logSave',[StockRequestController::class,'asset_logSave']);
 Route::any('/editRequest',[StockRequestController::class,'editRequest']);

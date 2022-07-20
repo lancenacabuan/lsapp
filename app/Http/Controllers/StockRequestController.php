@@ -253,6 +253,49 @@ class StockRequestController extends Controller
         return response($result);
     }
 
+    public function reissueRequest(Request $request){
+        do{
+            $list = Stock::selectRaw('item_id, warranty_id, SUM(stocks.qty) AS quantity')
+                ->whereIn('stocks.id', $request->items)
+                ->groupby('item_id','warranty_id')
+                ->get();
+        }
+        while(!$list);
+        
+        foreach($list as $key){
+            do{
+                $stockRequest = new StockRequest;
+                $stockRequest->request_number = $request->request_number;
+                $stockRequest->item = $key->item_id;
+                $stockRequest->warranty = $key->warranty_id;
+                $stockRequest->quantity = $key->quantity;
+                $stockRequest->served = $key->quantity;
+                $stockRequest->pending = '0';
+                $dump = $stockRequest->save();
+            }
+            while(!$dump);
+            StockRequest::where('request_number', $request->request_number_prev)
+                ->where('item', $key->item_id)
+                ->decrement('served', $key->quantity);
+            StockRequest::where('request_number', $request->request_number_prev)
+                ->where('item', $key->item_id)
+                ->increment('pending', $key->quantity);
+        }
+
+        if(!$dump){
+            return response('false');
+        }
+        else{
+            Stock::whereIn('stocks.id', $request->items)->update(['request_number' => $request->request_number]);
+            Requests::where('request_number', $request->request_number_prev)
+                ->update(['status' => '31']);
+            Requests::where('request_number', $request->request_number)
+                ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->reissueSched, 'prepdate' => date('Y-m-d')]);
+        }
+
+        return response('true');
+    }
+
     public function uploadFile(Request $request){
         $x = 1;
         $reference_upload = array();

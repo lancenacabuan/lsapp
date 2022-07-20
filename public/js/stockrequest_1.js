@@ -14,6 +14,7 @@ $(function(){
     $('#needdate').attr('min', minDate);
     $('#schedOn').attr('min', minDate);
     $('#resched').attr('min', minDate);
+    $('#reissueSched').attr('min', minDate);
 });
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -283,10 +284,12 @@ function runFunction(){
         else{
             $('#requestDetails').hide();
         }
-        if(check1 == true && check2 == true && check3 == true && item_count != 0){
+        if(check1 == true && check2 == true && check3 == true && item_count != 0 && $('#reissueSched').val()){
+            $('.header_label').hide();
             $("#btnReissue").prop('disabled', false);
         }
         else{
+            $('.header_label').show();
             $("#btnReissue").prop('disabled', true);
         }
     }
@@ -1852,6 +1855,7 @@ $('.btnReissue').on('click', function(){
             $('#detailsStockRequest').modal('hide');
             $('#txtNewStockRequest').html('RE-ISSUE STOCK REQUEST');
             $('.btnNewStockRequest').click();
+            $('#action').val('SUBMIT');
             $('#request_type').val('2');
             $('#request_type').change();
             $('#request_type').prop('disabled', true);
@@ -1904,6 +1908,142 @@ $('.btnReissue').on('click', function(){
             });
         }
     }); 
+});
+
+$('#btnReissue').on('click', function(){
+    var warntext = '';
+    var email1 = 'true';
+    var apiKey = $('#apiKey').val();
+    var needdate = $('#needdate').val();
+    var request_type = $('#request_type').val();
+    var client_name = $.trim($('#client_name').val());
+    var location_name = $.trim($('#location').val());
+    var contact = $.trim($('#contact').val());
+    var remarks = $.trim($('#remarks').val());
+    var asset_reqby_email = $.trim($('#asset_reqby_email').val()).toLowerCase();
+    var asset_reqby_verify = $.trim($('#asset_reqby_verify').val()).toLowerCase();
+    var reference = ($.trim($('#reference').val()).toUpperCase().split("\n")).join(', ');
+    var reference_upload = $('#reference_upload').val();
+    $('#loading').show();
+    setTimeout(function(){
+        if(emailProvider(asset_reqby_email)){
+            $.ajax({
+                headers:{
+                    Authorization: "Bearer " + apiKey
+                },
+                async: false,
+                type: 'GET',
+                url: 'https://isitarealemail.com/api/email/validate?email='+asset_reqby_email,
+                success: function(data){
+                    if(data.status == 'invalid'){
+                        email1 = 'false';
+                    }
+                    else{
+                        email1 = 'true';
+                    }
+                }
+            });
+        }
+        else{
+            email1 = 'unknown';
+        }
+        $('#loading').hide();
+        if(email1 == 'false'){
+            Swal.fire('NON-EXISTENT EMAIL','Client Email Address does not exist!','error');
+            return false;
+        }
+        if(email1 == 'unknown'){
+            warntext = ' <br><strong style="color: red;">WARNING: Client Email Address is not verified! Continue?</strong>';
+        }
+        if(needdate < minDate){
+            Swal.fire('Minimum Date Needed is today!','Select within date range from today onwards.','error');
+            return false;
+        }
+        if($('#reissueSched').val() < minDate){
+            Swal.fire('Minimum Date Scheduled is today!','Select within date range from today onwards.','error');
+            return false;
+        }
+        Swal.fire({
+            title: "SUBMIT STOCK REQUEST?",
+            html: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button."+warntext,
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                $.ajax({
+                    type:'post',
+                    url:'/saveReqNum',
+                    async: false,
+                    headers:{
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{
+                        'request_number': $('#request_num').val(),
+                        'needdate': needdate,
+                        'request_type': request_type,
+                        'client_name': client_name,
+                        'location': location_name,
+                        'contact': contact,
+                        'remarks': remarks,
+                        'asset_reqby_email': asset_reqby_email,
+                        'reference': reference
+                    },
+                    success: function(data){
+                        if(data == 'true'){
+                            $.ajax({
+                                type: 'post',
+                                url: '/reissueRequest',
+                                async: false,
+                                headers:{
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data:{
+                                    'request_number': $('#request_num').val(),
+                                    'request_number_prev': $('#request_num_details').val(),
+                                    'reissueSched': $('#reissueSched').val(),
+                                    'items': items
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        $('#newStockRequest').modal('hide');
+                                        $('#loading').show();
+                                        $('#btnUpload').click();
+                                    }
+                                    else{
+                                        $('#newStockRequest').hide();
+                                        Swal.fire("SUBMIT FAILED", "STOCK REQUEST", "error");
+                                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        else{
+                            $('#newStockRequest').hide();
+                            Swal.fire("SUBMIT FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
+    }, 500);
 });
 
 setInterval(checkReqType, 0);

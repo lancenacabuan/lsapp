@@ -1115,11 +1115,20 @@ class StockRequestController extends Controller
     }
 
     public function approveRequest(Request $request){
-        do{
-            $sql = Requests::where('request_number', $request->request_number)
-                ->update(['status' => '1', 'reason' => '']);
+        if(Requests::where('request_number', $request->request_number)->first()->prepared_by){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '3', 'reason' => '']);
+            }
+            while(!$sql);
         }
-        while(!$sql);
+        else{
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '1', 'reason' => '']);
+            }
+            while(!$sql);
+        }
         
         if(!$sql){
             $result = 'false';

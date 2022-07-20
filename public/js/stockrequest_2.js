@@ -816,14 +816,21 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#proceed_label").show();
                         $("#btnProceed").show();
                     }
-                    if(req_by_id == $('#current_user').val() && $("#current_role").val() == 'sales'){
-                        $("#sd2").show();
-                        $("#sd1").remove();
-                    }
-                    else{
+                    if(requestStatus == '6' && value.prep_by){
                         $("#btnDelete").hide();
                         $("#sd1").show();
                         $("#sd2").remove();
+                    }
+                    else{
+                        if(req_by_id == $('#current_user').val() && $("#current_role").val() == 'sales'){
+                            $("#sd2").show();
+                            $("#sd1").remove();
+                        }
+                        else{
+                            $("#btnDelete").hide();
+                            $("#sd1").show();
+                            $("#sd2").remove();
+                        }
                     }
                     if(req_type_id == '7' && requestStatus == '1'){
                         $("#btnDelete").show();
@@ -2154,14 +2161,21 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#proceed_label").show();
             $("#btnProceed").show();
         }
-        if(req_by_id == $('#current_user').val() && $("#current_role").val() == 'sales'){
-            $("#sd2").show();
-            $("#sd1").remove();
-        }
-        else{
+        if(requestStatus == '6' && value.prep_by){
             $("#btnDelete").hide();
             $("#sd1").show();
             $("#sd2").remove();
+        }
+        else{
+            if(req_by_id == $('#current_user').val() && $("#current_role").val() == 'sales'){
+                $("#sd2").show();
+                $("#sd1").remove();
+            }
+            else{
+                $("#btnDelete").hide();
+                $("#sd1").show();
+                $("#sd2").remove();
+            }
         }
         if(req_type_id == '7' && requestStatus == '1'){
             $("#btnDelete").show();

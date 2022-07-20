@@ -261,8 +261,8 @@
             @endrole
             @role('sales') {{---ROLES---}}
             <button type="button" id="btnDelete" class="btn btn-danger bp mt-4">DELETE</button>
-            <button type="button" id="btnSaveChanges" class="btn btn-success bp mt-4 float-right" style="width: 140px; display: none;">SAVE CHANGES</button>
-            <button type="button" id="btnEditDetails" class="btn btn-primary bp mt-4 float-right" style="width: 140px; display: none;">EDIT DETAILS</button>
+            <button type="button" id="btnSaveChanges" class="btn btn-success bp my-4 float-right" style="width: 140px; display: none;">SAVE CHANGES</button>
+            <button type="button" id="btnEditDetails" class="btn btn-primary bp my-4 float-right" style="width: 140px; display: none;">EDIT DETAILS</button>
             <span class="btnCancelDetails float-right" style="width: 10px; display: none;">&nbsp;</span>
             <button type="button" class="btnCancelDetails btnClose btn btn-primary bp mt-4 float-right" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
             @endrole

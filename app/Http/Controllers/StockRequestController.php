@@ -189,7 +189,6 @@ class StockRequestController extends Controller
         }
         else {
             $result = 'true';
-
             if($request->reference_upload){
                 $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
                 if($files != NULL){
@@ -1319,14 +1318,14 @@ class StockRequestController extends Controller
             if(Stock::where('request_number', $request->request_number)->where('status','return')->count() != 0){
                 do{
                     $sql = Requests::where('request_number', $request->request_number)
-                        ->update(['status' => '11']);
+                        ->update(['status' => '11', 'orderID' => '', 'prepared_by' => '', 'schedule' => '', 'prepdate' => '']);
                 }
                 while(!$sql);
             }
             else{
                 do{
                     $sql = Requests::where('request_number', $request->request_number)
-                        ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
+                        ->update(['status' => '7', 'reason' => ucfirst($request->reason), 'orderID' => '', 'prepared_by' => '', 'schedule' => '', 'prepdate' => '']);
                 }
                 while(!$sql);
             }

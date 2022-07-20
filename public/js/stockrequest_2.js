@@ -816,7 +816,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#proceed_label").show();
                         $("#btnProceed").show();
                     }
-                    if(requestStatus == '6' && value.prep_by){
+                    if(requestStatus == '6' && value.prep_by > 0){
                         $("#btnDelete").hide();
                         $("#sd1").show();
                         $("#sd2").remove();
@@ -2161,7 +2161,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#proceed_label").show();
             $("#btnProceed").show();
         }
-        if(requestStatus == '6' && value.prep_by){
+        if(requestStatus == '6' && value.prep_by > 0){
             $("#btnDelete").hide();
             $("#sd1").show();
             $("#sd2").remove();

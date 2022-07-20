@@ -290,7 +290,7 @@ class StockRequestController extends Controller
             Requests::where('request_number', $request->request_number_prev)
                 ->update(['status' => '31']);
             Requests::where('request_number', $request->request_number)
-                ->update(['prepared_by' => auth()->user()->id, 'schedule' => $request->reissueSched, 'prepdate' => date('Y-m-d')]);
+                ->update(['orderID' => $request->request_number_prev, 'prepared_by' => auth()->user()->id, 'schedule' => $request->reissueSched, 'prepdate' => date('Y-m-d')]);
         }
 
         return response('true');
@@ -1269,19 +1269,79 @@ class StockRequestController extends Controller
     }
 
     public function disapproveRequest(Request $request){
-        do{
-            $sql = Requests::where('request_number', $request->request_number)
-                ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
+        if(!Requests::where('request_number', $request->request_number)->first()->prepared_by){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
+            }
+            while(!$sql);
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+            }
         }
-        while(!$sql);
-        
-        if(!$sql){
-            $result = 'false';
+        else{
+            $request_number_prev = Requests::where('request_number', $request->request_number)->first()->orderID;
+            $list = StockRequest::where('request_number', $request->request_number)->get();
+            foreach($list as $key){
+                if($key->quantity == StockRequest::where('request_number', $request_number_prev)->where('item', $key->item)->first()->pending){
+                    Stock::where('request_number', $request->request_number)
+                        ->where('item_id', $key->item)
+                        ->update(['request_number' => $request_number_prev]);
+                    StockRequest::where('request_number', $request_number_prev)
+                        ->where('item', $key->item)
+                        ->increment('served', $key->quantity);
+                    StockRequest::where('request_number', $request_number_prev)
+                        ->where('item', $key->item)
+                        ->decrement('pending', $key->quantity);
+                    StockRequest::where('request_number', $request->request_number)
+                        ->where('item', $key->item)
+                        ->decrement('served', $key->quantity);
+                    StockRequest::where('request_number', $request->request_number)
+                        ->where('item', $key->item)
+                        ->increment('pending', $key->quantity);
+                }
+                else{
+                    Stock::where('request_number', $request->request_number)
+                        ->where('item_id', $key->item)
+                        ->update(['status' => 'return', 'warranty_id' => '', 'batch' => '', 'user_id' => auth()->user()->id]);
+                    StockRequest::where('request_number', $request->request_number)
+                        ->where('item', $key->item)
+                        ->decrement('served', $key->quantity);
+                    StockRequest::where('request_number', $request->request_number)
+                        ->where('item', $key->item)
+                        ->increment('pending', $key->quantity);
+                }
+            }
+            if(Stock::where('request_number', $request->request_number)->where('status','return')->count() != 0){
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '11']);
+                }
+                while(!$sql);
+            }
+            else{
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
+                }
+                while(!$sql);
+            }
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+                if(StockRequest::where('request_number', $request_number_prev)->sum('pending') == 0){
+                    Requests::where('request_number', $request_number_prev)
+                        ->update(['status' => '30']);
+                }
+            }
         }
-        else {
-            $result = 'true';
-        }
-        
         return response($result);
     }
 

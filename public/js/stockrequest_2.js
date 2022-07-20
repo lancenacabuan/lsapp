@@ -805,7 +805,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
                         $("#incFooter").hide();
                     }
-                    if(requestStatus == '24'){
+                    if(requestStatus == '24' || requestStatus == '31'){
                         $("#proceed_label").show();
                         $("#btnProceed").show();
                     }
@@ -821,7 +821,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(req_type_id == '7' && requestStatus == '1'){
                         $("#btnDelete").show();
                     }
-                    if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24'){
+                    if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24' || requestStatus == '31'){
                         var targetStockDetails = [6,7,8,9,10];
                         var targetStockDetails1 = [5];
                         var targetStockDetails2 = [5,6];
@@ -2135,7 +2135,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
             $("#incFooter").hide();
         }
-        if(requestStatus == '24'){
+        if(requestStatus == '24' || requestStatus == '31'){
             $("#proceed_label").show();
             $("#btnProceed").show();
         }
@@ -2151,7 +2151,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(req_type_id == '7' && requestStatus == '1'){
             $("#btnDelete").show();
         }
-        if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24'){
+        if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24' || requestStatus == '31'){
             var targetStockDetails = [6,7,8,9,10];
             var targetStockDetails1 = [5];
             var targetStockDetails2 = [5,6];

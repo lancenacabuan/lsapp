@@ -1877,7 +1877,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
     }
     var req_type_id = $('#req_type_id_details').val();
     var requestStatus = $('#status_id_details').val();
-    if((requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7) && requestStatus != '24'){
+    if((requestStatus == '2' || requestStatus == '3' || requestStatus == '4' || requestStatus == '6' || requestStatus == '7' || requestStatus > 7) && requestStatus != '24' && requestStatus != '31'){
         return false;
     }
     var table = $('table.stockDetails').DataTable();

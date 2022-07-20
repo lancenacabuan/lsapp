@@ -702,6 +702,19 @@ class StockRequestController extends Controller
         ->make(true);
     }
 
+    public function reissueItems(Request $request){        
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
+        (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id')
+            ->whereIn('stocks.id', $request->items)
+            ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
+            ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id')
+            ->orderBy('item', 'ASC')
+            ->get();
+
+        return DataTables::of($list)->make(true);
+    }
+
     public function receivedItems(Request $request){
         if($request->included != 'no'){
             $include = Requests::query()->select('request_number')

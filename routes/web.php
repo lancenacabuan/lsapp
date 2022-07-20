@@ -86,6 +86,7 @@ Route::get('/retItems',[StockRequestController::class,'retItems']);
 Route::get('/dfcItems',[StockRequestController::class,'dfcItems']);
 Route::get('/incdfcItems',[StockRequestController::class,'incdfcItems']);
 Route::get('/asmItems',[StockRequestController::class,'asmItems']);
+Route::get('/reissueItems',[StockRequestController::class,'reissueItems']);
 Route::any('/editSerial',[StockRequestController::class,'editSerial']);
 Route::any('/delReqItem',[StockRequestController::class,'delReqItem']);
 Route::any('/deleteRequest',[StockRequestController::class,'deleteRequest']);

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl">
     <div class="modal-content">
         <div class="modal-header text-center" style="background-color: #0d1a80; color: white; height: 45px;">
-            <h6 class="modal-title w-100">NEW STOCK REQUEST</h6>
+            <h6 id="txtNewStockRequest" class="modal-title w-100">NEW STOCK REQUEST</h6>
             <button type="button" class="btn-close btn-close-white close btnClose" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body" style="background-color: white; color: black;">
@@ -212,6 +212,37 @@
                 <button type="button" class="btnClose btnCloseCancel btn btn-primary bp" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
                 <button type="button" id="btnSave" class="btn btn-primary float-right bp" style="display: none;">SUBMIT</button>
             </div>
+        </div>
+        <div id="reissueItemsModal" style="display: none;">
+        <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">
+            <h6 class="modal-title w-100">FOR RE-ISSUE ITEM DETAILS</h6>
+        </div>
+        <div class="modal-body">
+            <br>
+            <table id="reissueItems" class="table reissueItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>ITEM CODE</th>
+                        <th>ITEM DESCRIPTION</th>
+                        <th class="sum">QTY</th>
+                        <th>UOM</th>
+                        <th>SERIAL</th>
+                    </tr>
+                </thead>
+                <tfoot style="font-size: 14px;">
+                    <tr>
+                        <th colspan="2" style="text-align: right;">TOTAL ITEM COUNT:</th>
+                        <th></th>
+                        <th colspan="2"></th>
+                    </tr>
+                </tfoot>
+            </table>
+            <br>
+            <hr>
+                <button type="button" class="btnClose btn btn-primary bp" data-bs-dismiss="modal">CANCEL</button>
+                <button type="button" id="btnReissue" class="btn btn-primary float-right bp" disabled>SUBMIT</button>
+            <br>
+        </div>
         </div>
     </div>
     </div>

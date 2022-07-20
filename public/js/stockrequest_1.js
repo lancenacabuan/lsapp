@@ -277,11 +277,17 @@ function runFunction(){
             $('.verify_label').hide();
             check3 = true;
         }
-        if(check1 == true && check2 == true && check3 == true){
+        if(check1 == true && check2 == true && check3 == true && item_count == 0){
             $('#requestDetails').show();
         }
         else{
             $('#requestDetails').hide();
+        }
+        if(check1 == true && check2 == true && check3 == true && item_count != 0){
+            $("#btnReissue").prop('disabled', false);
+        }
+        else{
+            $("#btnReissue").prop('disabled', true);
         }
     }
     if($('#newStockRequest').is(':visible') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){
@@ -1824,6 +1830,76 @@ $('#btnReceiveAssembled').on('click', function(){
                         window.location.href = '/stockrequest';
                     }
                     alert(data.responseText);
+                }
+            });
+        }
+    }); 
+});
+
+$('.btnReissue').on('click', function(){
+    Swal.fire({
+        title: "RE-ISSUE ITEMS?",
+        text: "You are about to RE-ISSUE these item/s for another request!",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
+    })
+    .then((result) => {
+        if(result.isConfirmed){
+            $('#detailsStockRequest').modal('hide');
+            $('#txtNewStockRequest').html('RE-ISSUE STOCK REQUEST');
+            $('.btnNewStockRequest').click();
+            $('#request_type').val('2');
+            $('#request_type').change();
+            $('#request_type').prop('disabled', true);
+            $('#reissueItemsModal').show();
+            $('table.reissueItems').DataTable({
+                searching: false,
+                paging: false,
+                ordering: false,
+                info: false,
+                language:{
+                    processing: "Loading...",
+                    emptyTable: "No data available in table"
+                },
+                serverSide: true,
+                ajax:{
+                    url: '/reissueItems',
+                    data:{
+                        items: items
+                    }
+                },
+                order: [],
+                columns: [
+                    { data: 'prodcode' },
+                    { data: 'item' },
+                    { data: 'qty' },
+                    { data: 'uom' },
+                    { data: 'serial' }
+                ],
+                footerCallback: function(row,data,start,end,display){
+                    var api = this.api(), data;
+                    var intVal = function(i){
+                        return typeof i === 'string'?
+                            i.replace(/[\$,]/g,'')*1:
+                            typeof i === 'number'?
+                                i:0;
+                    };
+                    api.columns('.sum', {page:'all'}).every(function(){
+                        var sum = this
+                        .data()
+                        .reduce(function(a,b){
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                        sum = sum.toString();
+                        var pattern = /(-?\d+)(\d{3})/;
+                        while(pattern.test(sum))
+                        sum = sum.replace(pattern,"$1,$2");
+                        this.footer().innerHTML = sum;
+                    });
                 }
             });
         }

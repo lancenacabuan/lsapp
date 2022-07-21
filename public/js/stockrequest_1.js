@@ -284,13 +284,15 @@ function runFunction(){
         else{
             $('#requestDetails').hide();
         }
-        if(check1 == true && check2 == true && check3 == true && item_count != 0 && $('#reissueSched').val()){
-            $('.header_label').hide();
-            $("#btnReissue").prop('disabled', false);
-        }
-        else{
-            $('.header_label').show();
-            $("#btnReissue").prop('disabled', true);
+        if($('#reissueItemsModal').is(':visible')){
+            if(check1 == true && check2 == true && check3 == true && item_count != 0 && $('#reissueSched').val()){
+                $('.header_label').hide();
+                $("#btnReissue").prop('disabled', false);
+            }
+            else{
+                $('.header_label').show();
+                $("#btnReissue").prop('disabled', true);
+            }
         }
     }
     if($('#newStockRequest').is(':visible') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder')){

@@ -479,7 +479,7 @@ setInterval(function(){
             }
         });
     }
-}, 1000);
+}, 3000);
 
 $('#btnDownload').on('click', function(){
     $('.buttons-excel').click();

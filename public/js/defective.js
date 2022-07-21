@@ -67,7 +67,7 @@ setInterval(function(){
             }
         }
     });
-}, 1000);
+}, 3000);
 
 function generateReturnNum(){
     var today = new Date();

@@ -77,7 +77,7 @@ setInterval(function(){
             }
         });
     }
-}, 1000);
+}, 3000);
 
 $(document).on('change', '.togBtn', function(){
     var id = $(this).attr("id");

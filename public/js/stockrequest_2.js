@@ -288,7 +288,7 @@ setInterval(function(){
             }
         });
     }
-}, 1000);
+}, 3000);
 
 if($(location).attr('pathname')+window.location.search != '/stockrequest'){
     url = window.location.search;

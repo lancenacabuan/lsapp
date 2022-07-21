@@ -48,7 +48,7 @@ if(
                 }
             });
         }
-    }, 1000);
+    }, 3000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=assembleditems'){
     $('#nav2').addClass("active-link");
@@ -90,7 +90,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
                 }
             });
         }
-    }, 1000);
+    }, 3000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=categories'){
     $('#nav3').addClass("active-link");
@@ -130,7 +130,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
                 }
             });
         }
-    }, 1000);
+    }, 3000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=locations'){
     $('#nav4').addClass("active-link");
@@ -185,7 +185,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
                 }
             });
         }
-    }, 1000);
+    }, 3000);
 }
 else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl=warranty'){
     $('#nav5').addClass("active-link");
@@ -330,7 +330,7 @@ else if($(location).attr('pathname')+window.location.search == '/maintenance?tbl
                 }
             });
         }
-    }, 1000);
+    }, 3000);
 }
 else{
     window.location.href = '/maintenance';

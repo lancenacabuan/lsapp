@@ -108,7 +108,7 @@ setInterval(function(){
             }
         }
     });
-}, 1000);
+}, 3000);
 
 $(document).ready(function(){
     $('#hover1').hover(

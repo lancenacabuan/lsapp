@@ -238,7 +238,7 @@ setInterval(function(){
             }
         });
     }
-}, 1000);
+}, 3000);
 
 $('#btnAssemblyProceed').on('click', function(){
     $('#btnAssemblyProceed').hide();

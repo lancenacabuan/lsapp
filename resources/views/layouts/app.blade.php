@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    @php $version = '1.0.6.2.7'; @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -301,9 +302,8 @@
     <script src="js/inc/datetime.js"></script>
     <script src="js/inc/chosen.jquery.js"></script>
     <script>
-        const version = '1.0.6.2.6';
-        $('#htmlHeader').prop('title', 'v'+version);
-        $('#htmlGuest').prop('title', 'v'+version);
+        $('#htmlHeader').prop('title', 'v{{$version}}');
+        $('#htmlGuest').prop('title', 'v{{$version}}');
         setInterval(loadFunction, 0);
         function loadFunction(){
             if($('#loading').is(':visible')){
@@ -397,32 +397,32 @@
         });
     </script>
     @if(Request::is('/') || Request::is('logs'))
-        <script src="{{ env('APP_URL')}}js/index.js?version=1.0.6.2.6"></script>
+        <script src="{{ env('APP_URL')}}js/index.js?version={{$version}}"></script>
     @endif
     @if(Request::is('stocks'))
-        <script src="{{ env('APP_URL')}}js/stocks.js?version=1.0.6.2.6"></script>
+        <script src="{{ env('APP_URL')}}js/stocks.js?version={{$version}}"></script>
     @endif
     @if(Request::is('stockrequest'))
-        <script src="{{ env('APP_URL')}}js/stockrequest_1.js?version=1.0.6.2.6"></script>
-        <script src="{{ env('APP_URL')}}js/stockrequest_2.js?version=1.0.6.2.6"></script>
+        <script src="{{ env('APP_URL')}}js/stockrequest_1.js?version={{$version}}"></script>
+        <script src="{{ env('APP_URL')}}js/stockrequest_2.js?version={{$version}}"></script>
     @endif
     @if(Request::is('stocktransfer'))
-        <script src="{{ env('APP_URL')}}js/stocktransfer.js?version=1.0.6.2.6"></script>
+        <script src="{{ env('APP_URL')}}js/stocktransfer.js?version={{$version}}"></script>
     @endif
     @if(Request::is('assembly'))
-    <script src="{{ env('APP_URL')}}js/assembly.js?version=1.0.6.2.6"></script>
+    <script src="{{ env('APP_URL')}}js/assembly.js?version={{$version}}"></script>
     @endif
     @if(Request::is('merchant'))
-    <script src="{{ env('APP_URL')}}js/merchant.js?version=1.0.6.2.6"></script>
+    <script src="{{ env('APP_URL')}}js/merchant.js?version={{$version}}"></script>
     @endif
     @if(Request::is('defective'))
-    <script src="{{ env('APP_URL')}}js/defective.js?version=1.0.6.2.6"></script>
+    <script src="{{ env('APP_URL')}}js/defective.js?version={{$version}}"></script>
     @endif
     @if(Request::is('maintenance'))
-    <script src="{{ env('APP_URL')}}js/maintenance.js?version=1.0.6.2.6"></script>
+    <script src="{{ env('APP_URL')}}js/maintenance.js?version={{$version}}"></script>
     @endif
     @if(Request::is('users'))
-        <script src="{{ env('APP_URL')}}js/users.js?version=1.0.6.2.6"></script>
+        <script src="{{ env('APP_URL')}}js/users.js?version={{$version}}"></script>
     @endif
 </body>
 </html>

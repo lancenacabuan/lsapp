@@ -301,6 +301,9 @@
     <script src="js/inc/datetime.js"></script>
     <script src="js/inc/chosen.jquery.js"></script>
     <script>
+        const version = '1.0.6.2.6';
+        $('#htmlHeader').prop('title', 'v'+version);
+        $('#htmlGuest').prop('title', 'v'+version);
         setInterval(loadFunction, 0);
         function loadFunction(){
             if($('#loading').is(':visible')){
@@ -394,32 +397,32 @@
         });
     </script>
     @if(Request::is('/') || Request::is('logs'))
-        <script src="{{ asset('js/index.js') }}"></script>
+        <script src="{{ env('APP_URL')}}js/index.js?version=1.0.6.2.6"></script>
     @endif
     @if(Request::is('stocks'))
-        <script src="{{ asset('js/stocks.js') }}"></script>
+        <script src="{{ env('APP_URL')}}js/stocks.js?version=1.0.6.2.6"></script>
     @endif
     @if(Request::is('stockrequest'))
-        <script src="{{ asset('js/stockrequest_1.js') }}"></script>
-        <script src="{{ asset('js/stockrequest_2.js') }}"></script>
+        <script src="{{ env('APP_URL')}}js/stockrequest_1.js?version=1.0.6.2.6"></script>
+        <script src="{{ env('APP_URL')}}js/stockrequest_2.js?version=1.0.6.2.6"></script>
     @endif
     @if(Request::is('stocktransfer'))
-        <script src="{{ asset('js/stocktransfer.js') }}"></script>
+        <script src="{{ env('APP_URL')}}js/stocktransfer.js?version=1.0.6.2.6"></script>
     @endif
     @if(Request::is('assembly'))
-    <script src="{{ asset('js/assembly.js') }}"></script>
+    <script src="{{ env('APP_URL')}}js/assembly.js?version=1.0.6.2.6"></script>
     @endif
     @if(Request::is('merchant'))
-    <script src="{{ asset('js/merchant.js') }}"></script>
+    <script src="{{ env('APP_URL')}}js/merchant.js?version=1.0.6.2.6"></script>
     @endif
     @if(Request::is('defective'))
-    <script src="{{ asset('js/defective.js') }}"></script>
+    <script src="{{ env('APP_URL')}}js/defective.js?version=1.0.6.2.6"></script>
     @endif
     @if(Request::is('maintenance'))
-    <script src="{{ asset('js/maintenance.js') }}"></script>
+    <script src="{{ env('APP_URL')}}js/maintenance.js?version=1.0.6.2.6"></script>
     @endif
     @if(Request::is('users'))
-        <script src="{{ asset('js/users.js') }}"></script>
+        <script src="{{ env('APP_URL')}}js/users.js?version=1.0.6.2.6"></script>
     @endif
 </body>
 </html>

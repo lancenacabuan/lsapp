@@ -54,60 +54,62 @@ document.querySelectorAll('input[type=search]').forEach(function(input){
 
 var logs, stockrequest, stocks, belowmin, stocktransfer, defective;
 setInterval(function(){
-    $.ajax({
-        url: "/index/logs/reload",
-        success: function(data){
-            if(data != logs){
-                logs = data;
-                table.ajax.reload(null, false);
+    if($('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
+        $.ajax({
+            url: "/index/logs/reload",
+            success: function(data){
+                if(data != logs){
+                    logs = data;
+                    table.ajax.reload(null, false);
+                }
             }
-        }
-    });
-    $.ajax({
-        url: "/index/stockrequest/reload",
-        success: function(data){
-            if(data != stockrequest){
-                stockrequest = data;
-                $('.box1').html(formatNumber(stockrequest));
+        });
+        $.ajax({
+            url: "/index/stockrequest/reload",
+            success: function(data){
+                if(data != stockrequest){
+                    stockrequest = data;
+                    $('.box1').html(formatNumber(stockrequest));
+                }
             }
-        }
-    });
-    $.ajax({
-        url: "/index/stocks/reload",
-        success: function(data){
-            if(data != stocks){
-                stocks = data;
-                $('.box2').html(formatNumber(stocks));
+        });
+        $.ajax({
+            url: "/index/stocks/reload",
+            success: function(data){
+                if(data != stocks){
+                    stocks = data;
+                    $('.box2').html(formatNumber(stocks));
+                }
             }
-        }
-    });
-    $.ajax({
-        url: "/index/belowmin/reload",
-        success: function(data){
-            if(data != belowmin){
-                belowmin = data;
-                $('.box3').html(formatNumber(belowmin));
+        });
+        $.ajax({
+            url: "/index/belowmin/reload",
+            success: function(data){
+                if(data != belowmin){
+                    belowmin = data;
+                    $('.box3').html(formatNumber(belowmin));
+                }
             }
-        }
-    });
-    $.ajax({
-        url: "/index/stocktransfer/reload",
-        success: function(data){
-            if(data != stocktransfer){
-                stocktransfer = data;
-                $('.box4').html(formatNumber(stocktransfer));
+        });
+        $.ajax({
+            url: "/index/stocktransfer/reload",
+            success: function(data){
+                if(data != stocktransfer){
+                    stocktransfer = data;
+                    $('.box4').html(formatNumber(stocktransfer));
+                }
             }
-        }
-    });
-    $.ajax({
-        url: "/index/defective/reload",
-        success: function(data){
-            if(data != defective){
-                defective = data;
-                $('.box5').html(formatNumber(defective));
+        });
+        $.ajax({
+            url: "/index/defective/reload",
+            success: function(data){
+                if(data != defective){
+                    defective = data;
+                    $('.box5').html(formatNumber(defective));
+                }
             }
-        }
-    });
+        });
+    }
 }, 3000);
 
 $(document).ready(function(){

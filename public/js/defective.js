@@ -58,15 +58,17 @@ var defectiveTable = $('table.defectiveTable').DataTable({
 
 var data_update;
 setInterval(function(){
-    $.ajax({
-        url: "/defective/reload",
-        success: function(data){
-            if(data != data_update){
-                data_update = data;
-                defectiveTable.ajax.reload(null, false);
+    if($('#reportModal').is(':hidden') && $('#changePassword').is(':hidden') && $('#loading').is(':hidden')){
+        $.ajax({
+            url: "/defective/reload",
+            success: function(data){
+                if(data != data_update){
+                    data_update = data;
+                    defectiveTable.ajax.reload(null, false);
+                }
             }
-        }
-    });
+        });
+    }
 }, 3000);
 
 function generateReturnNum(){

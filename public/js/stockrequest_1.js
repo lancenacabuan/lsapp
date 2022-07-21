@@ -1098,12 +1098,45 @@ $(document).on('click', '#btnSaveChanges', function(){
                             $('#btnUpload').click();
                         }
                         else{
-                            Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
-                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                            if($('#status_id_details').val() == '7'){
+                                $('#loading').show();
+                                $.ajax({
+                                    type: 'post',
+                                    url: '/logSave',
+                                    headers:{
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    data:{
+                                        'request_number': $('#request_num').val(),
+                                        'reqstatus': '7'
+                                    },
+                                    success: function(data){
+                                        if(data == 'true'){
+                                            $('#loading').hide();
+                                            Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
+                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                        }
+                                        else{
+                                            $('#loading').hide();
+                                            Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
+                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                        }
+                                    },
+                                    error: function(data){
+                                        if(data.status == 401){
+                                            window.location.href = '/stockrequest';
+                                        }
+                                        alert(data.responseText);
+                                    }
+                                });
+                            }
+                            else{
+                                Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
+                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                            }
                         }
                     }
                     else{
-                        $('#newStockRequest').hide();
                         Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }

@@ -347,12 +347,7 @@ class StockRequestController extends Controller
             return redirect()->to('/stockrequest?asset='.$request->reqnum);
         }
         else if($request->action == 'EDIT'){
-            $status = Requests::where('request_number', $request->reqnum)
-                ->first()
-                ->status;
-            if($status == 7){
-                Requests::where('request_number', $request->reqnum)
-                    ->update(['status' => 6]);
+            if(Requests::where('request_number', $request->reqnum)->first()->status == 7){
                 return redirect()->to('/stockrequest?status=7&edit='.$request->reqnum);
             }
             else{
@@ -444,6 +439,8 @@ class StockRequestController extends Controller
         }
         else{
             $action = 'A revised STOCK REQUEST';
+            Requests::where('request_number', $request->request_number)
+                ->update(['status' => 6]);
         }
 
         $subject = '[FOR APPROVAL] STOCK REQUEST NO. '.$request->request_number;

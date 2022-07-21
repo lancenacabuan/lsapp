@@ -308,6 +308,7 @@
                     overflow: 'hidden',
                     height: '100%'
                 });
+                $('html, body').animate({scrollTop:0}, 10);
                 $('#current_user').focus();
             }
             else{
@@ -339,7 +340,7 @@
         }
         function notifyDeadline(){
             if($('#current_url').val() == 'live'){
-                $('#loading').hide();
+                $('#loading').hide(); //
                 // $.ajax({
                 //     type: 'get', 
                 //     url: '/stockrequest/notify',
@@ -370,9 +371,6 @@
             }
         }
         idleLogout();
-        function scrollReset(){
-            $('html, body').animate({scrollTop:0}, 10);
-        }
         $(document).on('keyup', '#x_serial', function(){
             var serial = $('#x_serial').val().toUpperCase();
             $('#x_serial').val(serial);

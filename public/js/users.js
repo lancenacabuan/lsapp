@@ -192,7 +192,6 @@ $('#btnSave').on('click', function(){
                     })
                     .then((result) => {
                         if(result.isConfirmed){
-                            scrollReset();
                             $('#addUser').modal('hide');
                             $('#loading').show();
                             $.ajax({

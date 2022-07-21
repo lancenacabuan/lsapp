@@ -1075,7 +1075,6 @@ $('#btnSaveLocation').on('click', function(){
                     },
                     success: function(data){
                         if(data.result == 'true'){
-                            scrollReset();
                             $('#newLocation').modal('hide');
                             $('#loading').show();
                             $.ajax({
@@ -1214,7 +1213,6 @@ $('#btnUpdateLocation').on('click', function(){
                     },
                     success: function(data){
                         if(data.result == 'request'){
-                            scrollReset();
                             $('#detailsLocation').modal('hide');
                             $('#loading').show();
                             $.ajax({

@@ -535,7 +535,6 @@ $('#btnEdit').on('click', function(){
     })
     .then((result) => {
         if(result.isConfirmed){
-            scrollReset();
             $('#editSerialModal').modal('hide');
             $('#loading').show();
             $.ajax({

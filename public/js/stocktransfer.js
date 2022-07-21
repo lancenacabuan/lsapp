@@ -421,7 +421,6 @@ $('#btnSave').on('click', function(){
                                     }
                                 });
                             });
-                            scrollReset();
                             $('#newStockTransfer').modal('hide');
                             $('#loading').show();
                             $.ajax({
@@ -1378,7 +1377,6 @@ $('#btnEdit').on('click', function(){
     })
     .then((result) => {
         if(result.isConfirmed){
-            scrollReset();
             $('#editSerialModal').modal('hide');
             $('#loading').show();
             $.ajax({
@@ -1602,7 +1600,6 @@ $('#btnReason').on('click', function(){
                     },
                     success: function(data){
                         if(data == 'true'){
-                            scrollReset();
                             $('#reasonModal').modal('hide');
                             $('#detailsStockTransfer').modal('hide');
                             $('#loading').show();
@@ -2306,7 +2303,6 @@ $('.btnReceive').on('click', function(){
                                 }
                             });
                         }
-                        scrollReset();
                         $('#detailsStockTransfer').modal('hide');
                         $('#loading').show();
                         $.ajax({

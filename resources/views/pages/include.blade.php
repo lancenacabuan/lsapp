@@ -224,7 +224,6 @@ $('#btnSupport').on('click', function(){
                 },
                 success: function(data){
                     if(data == 'true'){
-                        scrollReset();
                         $('#reportModal').modal('hide');
                         $('#loading').show();
                         $.ajax({

@@ -1438,7 +1438,6 @@ $('.btnReceive').on('click', function(){
                                 }
                             });
                         }
-                        scrollReset();
                         $('#detailsAssembly').modal('hide');
                         $('#loading').show();
                         $.ajax({
@@ -1542,7 +1541,6 @@ $('#btnDefective').on('click', function(){
                                 }
                             });
                         }
-                        scrollReset();
                         $('#detailsAssembly').modal('hide');
                         $('#loading').show();
                         $.ajax({

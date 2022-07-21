@@ -1405,7 +1405,6 @@ $('.btnReceive').on('click', function(){
                                 }
                             });
                         }
-                        scrollReset();
                         $('#detailsMerchRequest').modal('hide');
                         $('#loading').show();
                         $.ajax({

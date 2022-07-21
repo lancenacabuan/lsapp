@@ -796,7 +796,6 @@ $('#btnSave').on('click', function(){
                                     });
                                 });
                                 if(!reference_upload){
-                                    scrollReset();
                                     $('#newStockRequest').modal('hide');
                                     $('#loading').show();
                                     $.ajax({
@@ -975,7 +974,6 @@ $('#btnSave').on('click', function(){
                                     });
                                 });
                                 if(!reference_upload){
-                                    scrollReset();
                                     $('#newStockRequest').modal('hide');
                                     $('#loading').show();
                                     $.ajax({
@@ -1064,7 +1062,6 @@ $(document).on('click', '#btnSaveChanges', function(){
     })
     .then((result) => {
         if(result.isConfirmed){
-            scrollReset();
             $('#detailsStockRequest').modal('hide');
             $('#loading').show();
             $.ajax({
@@ -1266,7 +1263,6 @@ $('#btnEdit').on('click', function(){
     })
     .then((result) => {
         if(result.isConfirmed){
-            scrollReset();
             $('#editSerialModal').modal('hide');
             $('#loading').show();
             $.ajax({
@@ -1431,7 +1427,6 @@ $('#btnApprove').on('click', function(){
                 },
                 success: function(data){
                     if(data == 'true'){
-                        scrollReset();
                         $('#detailsStockRequest').modal('hide');
                         $('#loading').show();
                         $.ajax({
@@ -1517,7 +1512,6 @@ $('#btnReason').on('click', function(){
                     },
                     success: function(data){
                         if(data == 'true'){
-                            scrollReset();
                             $('#reasonModal').modal('hide');
                             $('#detailsStockRequest').modal('hide');
                             $('#loading').show();
@@ -3020,7 +3014,6 @@ $('.btnReceive').on('click', function(){
                                 }
                             });
                         }
-                        scrollReset();
                         $('#detailsStockRequest').modal('hide');
                         $('#loading').show();
                         $.ajax({
@@ -3129,7 +3122,6 @@ $('.btnReceiveReturned').on('click', function(){
                                 }
                             });
                         }
-                        scrollReset();
                         $('#detailsStockRequest').modal('hide');
                         $('#loading').show();
                         $.ajax({
@@ -3236,7 +3228,6 @@ $('#btnReceiveDfc').on('click', function(){
                                 }
                             });
                         }
-                        scrollReset();
                         $('#detailsStockRequest').modal('hide');
                         $('#loading').show();
                         $.ajax({
@@ -3437,7 +3428,6 @@ $('#btnReturn').on('click', function(){
                                 }
                             });
                         }
-                        scrollReset();
                         $('#detailsStockRequest').modal('hide');
                         $('#loading').show();
                         $.ajax({

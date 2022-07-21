@@ -52,14 +52,59 @@ document.querySelectorAll('input[type=search]').forEach(function(input){
     });
 });
 
-var logs;
+var logs, stockrequest, stocks, belowmin, stocktransfer, defective;
 setInterval(function(){
     $.ajax({
-        url: "/index/reload",
+        url: "/index/logs/reload",
         success: function(data){
             if(data != logs){
                 logs = data;
                 table.ajax.reload(null, false);
+            }
+        }
+    });
+    $.ajax({
+        url: "/index/stockrequest/reload",
+        success: function(data){
+            if(data != stockrequest){
+                stockrequest = data;
+                $('.box1').html(formatNumber(stockrequest));
+            }
+        }
+    });
+    $.ajax({
+        url: "/index/stocks/reload",
+        success: function(data){
+            if(data != stocks){
+                stocks = data;
+                $('.box2').html(formatNumber(stocks));
+            }
+        }
+    });
+    $.ajax({
+        url: "/index/belowmin/reload",
+        success: function(data){
+            if(data != belowmin){
+                belowmin = data;
+                $('.box3').html(formatNumber(belowmin));
+            }
+        }
+    });
+    $.ajax({
+        url: "/index/stocktransfer/reload",
+        success: function(data){
+            if(data != stocktransfer){
+                stocktransfer = data;
+                $('.box4').html(formatNumber(stocktransfer));
+            }
+        }
+    });
+    $.ajax({
+        url: "/index/defective/reload",
+        success: function(data){
+            if(data != defective){
+                defective = data;
+                $('.box5').html(formatNumber(defective));
             }
         }
     });
@@ -80,9 +125,6 @@ $(document).ready(function(){
             $('.text1').css({"color": "#0d1a80"});
         }
     );
-});
-
-$(document).ready(function(){
     $('#hover2').hover(
         function(){
             $('.zoomout2').hide();
@@ -97,9 +139,6 @@ $(document).ready(function(){
             $('.text2').css({"color": "#0d1a80"});
         }
     );
-});
-
-$(document).ready(function(){
     $('#hover3').hover(
         function(){
             $('.zoomout3').hide();
@@ -114,9 +153,6 @@ $(document).ready(function(){
             $('.text3').css({"color": "#0d1a80"});
         }
     );
-});
-
-$(document).ready(function(){
     $('#hover4').hover(
         function(){
             $('.zoomout4').hide();
@@ -131,9 +167,6 @@ $(document).ready(function(){
             $('.text4').css({"color": "#0d1a80"});
         }
     );
-});
-
-$(document).ready(function(){
     $('#hover5').hover(
         function(){
             $('.zoomout5').hide();

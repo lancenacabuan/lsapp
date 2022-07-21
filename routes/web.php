@@ -23,7 +23,12 @@ Route::any('/logConfirm',[ConfirmReceiveController::class,'logConfirm']);
 Route::get('/',[PagesController::class,'index']);
 Route::get('/logs',[PagesController::class,'logs']);
 Route::get('/index/data',[PagesController::class,'index_data']);
-Route::get('/index/reload',[PagesController::class,'index_reload']);
+Route::get('/index/logs/reload',[PagesController::class,'logs_reload']);
+Route::get('/index/stockrequest/reload',[PagesController::class,'stockrequest_reload']);
+Route::get('/index/stocks/reload',[PagesController::class,'stocks_reload']);
+Route::get('/index/belowmin/reload',[PagesController::class,'belowmin_reload']);
+Route::get('/index/stocktransfer/reload',[PagesController::class,'stocktransfer_reload']);
+Route::get('/index/defective/reload',[PagesController::class,'defective_reload']);
 //
 
 //Report A Problem

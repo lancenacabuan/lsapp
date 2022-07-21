@@ -78,6 +78,58 @@ class PagesController extends Controller
         return view('pages/index', compact('stocks','stockrequest','stocktransfer','defective','belowmin'));
     }
 
+    public function logs_reload(){
+        $logs = UserLogs::select()->count();
+        return $logs;
+    }
+
+    public function stockrequest_reload(){
+        $stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10','14','19','26','29'])->get()->count();
+        return $stockrequest;
+    }
+
+    public function stocks_reload(){
+        $stocks = DB::table('stocks')->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly','asset'])->get()->count();
+        return $stocks;
+    }
+
+    public function belowmin_reload(){
+        $items = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
+                DB::raw("SUM(CASE 
+                    WHEN stocks.status = 'in' THEN 1
+                    WHEN stocks.status = 'defectives' THEN 1
+                    WHEN stocks.status = 'FOR RECEIVING' THEN 1
+                    WHEN stocks.status = 'demo' THEN 1
+                    WHEN stocks.status = 'assembly' THEN 1
+                    WHEN stocks.status = 'asset' THEN 1
+                    ELSE 0 END
+                ) as Current_stocks"))
+            ->join('categories', 'categories.id', 'items.category_id')
+            ->join('stocks', 'stocks.item_id', 'items.id')
+            ->groupBy('items.id','Item','ProdCode','Category')
+            ->orderBy('Category', 'ASC')
+            ->orderBy('Item', 'ASC')
+            ->get();
+        
+        foreach($items as $item){
+            if($item->Current_stocks <= $item->Minimum_stocks){
+                $array[]=$item;
+            }
+        }
+        $belowmin = count($array);
+        return $belowmin;
+    }
+
+    public function stocktransfer_reload(){
+        $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
+        return $stocktransfer;
+    }
+
+    public function defective_reload(){
+        $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->count();
+        return $defective;
+    }
+
     public function logs(){
         if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')) //---ROLES---//
         {
@@ -148,11 +200,6 @@ class PagesController extends Controller
         }
 
         return DataTables::of($list)->make(true);
-    }
-
-    public function index_reload(){
-        $logs = UserLogs::select()->count();
-        return $logs;
     }
 
     public function change_validate(Request $request){

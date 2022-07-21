@@ -18,7 +18,7 @@
             <img class="zoomout2" style="height: 100px;" src="{{ asset('/inc/index-stocks.png') }}">
             <img class="zoomin2" style="height: 110px; display: none;" src="{{ asset('/inc/index-stocks-hover.png') }}">
             <div class="box2 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
-                {{number_format($stocks)}}   
+                {{number_format($stocks)}}
             </div>
             <strong class="text2" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">STOCKS</strong>
         </a>
@@ -28,7 +28,7 @@
             <img class="zoomout3" style="height: 100px;" src="{{ asset('/inc/index-below-min.png') }}">
             <img class="zoomin3" style="height: 110px; display: none;" src="{{ asset('/inc/index-below-min-hover.png') }}">
             <div class="box3 container" style="z-index: 100; background-color: #0d1a80; color: white; margin-bottom: 5px; line-height: 48px; height: 48px; width: 150px; text-align: center; font-size: 26px; border-radius: 30px;">
-                {{number_format($belowmin)}}   
+                {{number_format($belowmin)}}
             </div>
             <strong class="text3" style="color: #0d1a80; font-size: 20px; padding-top: 10px;">BELOW MIN</strong>
         </a>

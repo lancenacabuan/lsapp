@@ -206,7 +206,7 @@ class ConfirmReceiveController extends Controller
         $include = json_decode($include);
         $include[] = $request->request_number;
 
-        if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
+        if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
             do{
                 $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                     ->whereIn('request_number', $include)
@@ -242,7 +242,7 @@ class ConfirmReceiveController extends Controller
             while(!$items);
         }
         if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 && Stock::where('request_number', $request->request_number)->where('batch','new')->count() == 0){
-            if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
+            if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 do{
                     $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
@@ -280,7 +280,7 @@ class ConfirmReceiveController extends Controller
         }
 
         if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
-            if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
+            if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 do{
                     $olditems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
@@ -321,7 +321,7 @@ class ConfirmReceiveController extends Controller
         }
 
         if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
-            if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
+            if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 do{
                     $incitems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
@@ -434,7 +434,7 @@ class ConfirmReceiveController extends Controller
         }
         else{
             $subject = '[RECEIVED] STOCK REQUEST NO. '.$request->request_number;
-            if($request_details->req_type_id == '2' || $request_details->req_type_id == '3'){
+            if($request_details->req_type_id == 2 || $request_details->req_type_id == 3 || $request_details->req_type_id == 8){
                 $emails = User::role('admin')->where('status','ACTIVE')->get('email')->toArray();
                 foreach($emails as $email){
                     $sendTo[] = $email['email'];
@@ -470,7 +470,7 @@ class ConfirmReceiveController extends Controller
                 ];
                 Mail::to($sendTo)->send(new receivedRequest($details, $subject));
                 unset($sendTo);
-                if($request_details->req_type_id == 2 || $request_details->req_type_id == 3){
+                if($request_details->req_type_id == 2 || $request_details->req_type_id == 3 || $request_details->req_type_id == 8){
                     $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
                     foreach($emails as $email){
                         $sendTo[] = $email['email'];

@@ -1114,7 +1114,7 @@ class StockRequestController extends Controller
     }
 
     public function approveRequest(Request $request){
-        if(Requests::where('request_number', $request->request_number)->first()->prepared_by){
+        if(Requests::where('request_number', $request->request_number)->first()->prepared_by > 0){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
                     ->update(['status' => '3', 'reason' => '']);
@@ -1268,21 +1268,7 @@ class StockRequestController extends Controller
     }
 
     public function disapproveRequest(Request $request){
-        if(!Requests::where('request_number', $request->request_number)->first()->prepared_by){
-            do{
-                $sql = Requests::where('request_number', $request->request_number)
-                    ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
-            }
-            while(!$sql);
-
-            if(!$sql){
-                $result = 'false';
-            }
-            else {
-                $result = 'true';
-            }
-        }
-        else{
+        if(Requests::where('request_number', $request->request_number)->first()->prepared_by > 0){
             $request_number_prev = Requests::where('request_number', $request->request_number)->first()->orderID;
             $list = StockRequest::where('request_number', $request->request_number)->get();
             foreach($list as $key){
@@ -1339,6 +1325,20 @@ class StockRequestController extends Controller
                     Requests::where('request_number', $request_number_prev)
                         ->update(['status' => '30']);
                 }
+            }
+        }
+        else{
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '7', 'reason' => ucfirst($request->reason)]);
+            }
+            while(!$sql);
+
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
             }
         }
         return response($result);

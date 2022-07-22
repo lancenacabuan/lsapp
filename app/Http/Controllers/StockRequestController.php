@@ -558,7 +558,18 @@ class StockRequestController extends Controller
 
     public function request_data(){
         if(auth()->user()->hasanyRole('approver - sales')){ //---ROLES---//
-            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+                ->selectRaw('(CASE
+                    WHEN requests.verify LIKE "%Confirmed%"
+                        THEN CONCAT("CONFIRMED ", status.status)
+                    WHEN ((requests.request_type = "2" OR requests.request_type = "7" OR requests.request_type = "8")
+                        AND requests.status = "8" AND requests.verify != "Confirmed")
+                        OR (requests.request_type = "3" AND requests.status = "9" AND requests.verify != "Demo Confirmed")
+                        THEN "FOR CONFIRMATION"
+                    ELSE
+                        status.status
+                    END
+                ) AS status')
                 ->where('users.company', auth()->user()->company)
                 ->whereIn('request_type.id', ['2','3','8'])
                 ->whereNotIn('requests.verify', ['Confirmed'])
@@ -572,7 +583,18 @@ class StockRequestController extends Controller
                 ->get();
         }
         else if(auth()->user()->hasanyRole('accounting')){ //---ROLES---//
-            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+                ->selectRaw('(CASE
+                    WHEN requests.verify LIKE "%Confirmed%"
+                        THEN CONCAT("CONFIRMED ", status.status)
+                    WHEN ((requests.request_type = "2" OR requests.request_type = "7" OR requests.request_type = "8")
+                        AND requests.status = "8" AND requests.verify != "Confirmed")
+                        OR (requests.request_type = "3" AND requests.status = "9" AND requests.verify != "Demo Confirmed")
+                        THEN "FOR CONFIRMATION"
+                    ELSE
+                        status.status
+                    END
+                ) AS status')
                 ->whereIn('request_type.id', ['2','3','6','8'])
                 ->whereNotIn('requests.verify', ['Confirmed'])
                 ->whereNotIn('requests.status', ['7','26'])
@@ -585,7 +607,18 @@ class StockRequestController extends Controller
                 ->get();
         }
         else if(auth()->user()->hasanyRole('admin') || auth()->user()->hasanyRole('encoder') || auth()->user()->hasanyRole('viewer')){ //---ROLES---//
-            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+                ->selectRaw('(CASE
+                    WHEN requests.verify LIKE "%Confirmed%"
+                        THEN CONCAT("CONFIRMED ", status.status)
+                    WHEN ((requests.request_type = "2" OR requests.request_type = "7" OR requests.request_type = "8")
+                        AND requests.status = "8" AND requests.verify != "Confirmed")
+                        OR (requests.request_type = "3" AND requests.status = "9" AND requests.verify != "Demo Confirmed")
+                        THEN "FOR CONFIRMATION"
+                    ELSE
+                        status.status
+                    END
+                ) AS status')
                 ->whereNotIn('requests.verify', ['Confirmed'])
                 ->whereNotIn('requests.status', ['7','14','19','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
@@ -597,7 +630,18 @@ class StockRequestController extends Controller
                 ->get();
         }
         else{
-            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+                ->selectRaw('(CASE
+                    WHEN requests.verify LIKE "%Confirmed%"
+                        THEN CONCAT("CONFIRMED ", status.status)
+                    WHEN ((requests.request_type = "2" OR requests.request_type = "7" OR requests.request_type = "8")
+                        AND requests.status = "8" AND requests.verify != "Confirmed")
+                        OR (requests.request_type = "3" AND requests.status = "9" AND requests.verify != "Demo Confirmed")
+                        THEN "FOR CONFIRMATION"
+                    ELSE
+                        status.status
+                    END
+                ) AS status')
                 ->where('requests.requested_by', auth()->user()->id)
                 ->whereNotIn('requests.verify', ['Confirmed'])
                 ->whereNotIn('requests.status', ['14','19','26'])
@@ -609,27 +653,23 @@ class StockRequestController extends Controller
                 ->orderBy('requests.id', 'ASC')
                 ->get();
         }
-
         return DataTables::of($list)
         ->addColumn('item_desc', function (Requests $list){
-            $items = Item::query()
-                ->select('item')
-                ->where('id', $list->item_id)
-                ->get();
-            $items = str_replace("[{\"item\":\"","",$items);
-            $items = str_replace("\"}]","",$items);
-            $items = str_replace("[]","",$items);
-            
+            if($list->item_id > 0){
+                $items = Item::where('id', $list->item_id)->first()->item;
+            }
+            else{
+                $items = NULL;
+            }
             return $items;
         })
         ->addColumn('prep_by', function (Requests $list){
-            $users = User::query()
-                ->select('name')
-                ->where('id', $list->prepared_by)
-                ->get();
-            $users = str_replace("[{\"name\":\"","",$users);
-            $users = str_replace("\"}]","",$users);
-            
+            if($list->prepared_by > 0){
+                $users = User::where('id', $list->prepared_by)->first()->name;            
+            }
+            else{
+                $users = NULL;
+            }
             return $users;
         })
         ->make(true);
@@ -641,7 +681,18 @@ class StockRequestController extends Controller
     }
 
     public function reqModal(Request $request){
-        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+        $list = Requests::selectRaw('requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+            ->selectRaw('(CASE
+                WHEN requests.verify LIKE "%Confirmed%"
+                    THEN CONCAT("CONFIRMED ", status.status)
+                WHEN ((requests.request_type = "2" OR requests.request_type = "7" OR requests.request_type = "8")
+                    AND requests.status = "8" AND requests.verify != "Confirmed")
+                    OR (requests.request_type = "3" AND requests.status = "9" AND requests.verify != "Demo Confirmed")
+                    THEN "FOR CONFIRMATION"
+                ELSE
+                    status.status
+                END
+            ) AS status')
             ->where('requests.request_number', $request->request_number)
             ->join('users', 'users.id', '=', 'requests.requested_by')
             ->join('request_type', 'request_type.id', '=', 'requests.request_type')
@@ -651,24 +702,21 @@ class StockRequestController extends Controller
 
         return DataTables::of($list)
         ->addColumn('item_desc', function (Requests $list){
-            $items = Item::query()
-                ->select('item')
-                ->where('id', $list->item_id)
-                ->get();
-            $items = str_replace("[{\"item\":\"","",$items);
-            $items = str_replace("\"}]","",$items);
-            $items = str_replace("[]","",$items);
-            
+            if($list->item_id > 0){
+                $items = Item::where('id', $list->item_id)->first()->item;
+            }
+            else{
+                $items = NULL;
+            }
             return $items;
         })
         ->addColumn('prep_by', function (Requests $list){
-            $users = User::query()
-                ->select('name')
-                ->where('id', $list->prepared_by)
-                ->get();
-            $users = str_replace("[{\"name\":\"","",$users);
-            $users = str_replace("\"}]","",$users);
-            
+            if($list->prepared_by > 0){
+                $users = User::where('id', $list->prepared_by)->first()->name;            
+            }
+            else{
+                $users = NULL;
+            }
             return $users;
         })
         ->toJson();

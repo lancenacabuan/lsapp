@@ -89,6 +89,9 @@ if($("#current_role").val() == 'sales'){
                     if(row.verify.includes('Confirmed') == true){
                         row_status = 'CONFIRMED '+row_status;
                     }
+                    if(((row.req_type_id == '2' || row.req_type_id == '7' || row.req_type_id == '8') && row.status_id == '8' && row.verify != 'Confirmed') || (row.req_type_id == '3' && row.status_id == '9' && row.verify != 'Demo Confirmed')){
+                        row_status = 'FOR CONFIRMATION';
+                    }
                     if(row.status_id == '6'){
                         return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row_status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                     }
@@ -228,6 +231,9 @@ else{
                     var row_status = row.status;
                     if(row.verify.includes('Confirmed') == true){
                         row_status = 'CONFIRMED '+row_status;
+                    }
+                    if(((row.req_type_id == '2' || row.req_type_id == '7' || row.req_type_id == '8') && row.status_id == '8' && row.verify != 'Confirmed') || (row.req_type_id == '3' && row.status_id == '9' && row.verify != 'Demo Confirmed')){
+                        row_status = 'FOR CONFIRMATION';
                     }
                     if(row.status_id == '6'){
                         return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row_status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";

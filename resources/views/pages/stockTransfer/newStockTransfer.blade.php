@@ -72,7 +72,7 @@
                             <input class="forminput form-control" id="qtystock" name="qtystock" min="1" max="" style="background-color: white; width: 70px;" type="number" placeholder=" " disabled>
                             <label for="qtystock" class="formlabel form-label">Stock</label>
                         </div>
-                        <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 90%; margin-left: 10px;">
+                        <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 90%; margin-left: 10px; margin-top: -1px;">
                     </div>
                 </form>
                 <div class="container-fluid"  id="#divNewStockTransfer">

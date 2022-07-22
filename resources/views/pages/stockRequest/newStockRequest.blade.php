@@ -187,7 +187,7 @@
                             <input class="forminput form-control" id="qtyReq" name="qtyReq" min="1" max="" style="width: 70px;" type="number" placeholder=" " onkeyup="if(value<1) value=1;">
                             <label for="qtyReq" class="formlabel form-label">Qty</label>
                         </div>
-                        <div class="f-outline" style="margin-left: 10px;">
+                        <div class="f-outline classWarranty" style="margin-left: 10px;">
                             <select class="forminput form-control form-select classWarranty" id="warrantyReq" name="warrantyReq" style="width: 200px;" placeholder=" ">
                                 <option value="" selected disabled>Select Warranty Type</option>
                                 <option value="0">NO WARRANTY</option>
@@ -197,7 +197,7 @@
                             </select>
                             <label for="warrantyReq" class="formlabel form-label classWarranty">Warranty Type</label>
                         </div>
-                        <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 90%; margin-left: 10px;">
+                        <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 90%; margin-left: 10px; margin-top: -1px;">
                     </div>
                 </form>
                 <div class="container-fluid"  id="#stockRequestDiv">

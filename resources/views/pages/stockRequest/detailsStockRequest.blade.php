@@ -606,7 +606,7 @@
                 <strong>CANNOT PROCEED:</strong> Please select all corresponding <strong>WARRANTY TYPES</strong> on every item to continue selling items. 
             </div>
             <hr>
-            <input type="button" class="btn btn-primary bp" id="btnCancel" value="CANCEL">
+            <input type="button" class="btn btn-primary bp" id="btnCancel" value="BACK">
             <input type="button" class="btn btn-primary float-right bp" id="btnConfirm" value="CONFIRM" disabled>
             <br>
         </div>

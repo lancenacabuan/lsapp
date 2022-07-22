@@ -48,13 +48,13 @@
                 <form class="mt-2 mb-2">
                     <div class="form-inline" style="margin-left: 20px;">
                         <div class="f-outline">
-                            <select class="forminput form-control form-select" id="category" name="category" style="width: 250px;" placeholder=" " required>
+                            <select class="forminput form-control form-select" id="category" name="category" style="width: 260px;" placeholder=" " required>
                                 <option value="" selected disabled>Select Category</option>
                             </select>
                             <label for="category" class="formlabel form-label">Category</label>
                         </div>
                         <div class="f-outline" style="margin-left: 10px;">
-                            <select class="forminput form-control form-select" id="item" name="item" style="width: 350px;" placeholder=" ">
+                            <select class="forminput form-control form-select" id="item" name="item" style="width: 420px;" placeholder=" ">
                                 <option value="" selected disabled>Select Item</option>
                             </select>
                             <label for="item" class="formlabel form-label">Item Description</label>

@@ -1322,9 +1322,11 @@ function checkCreateItem(){
         var item_code = $('#aic_item_code').val();
         var minimum = $('#aic_minimum').val();
         if(item_description && item_code && minimum){
+            $('.create_label').hide();
             $('#partsDetails').show();
         }
         else{
+            $('.create_label').show();
             $('#partsDetails').hide();
         }
     }

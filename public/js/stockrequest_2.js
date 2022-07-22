@@ -348,6 +348,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     $('#qty_details').val(qty);
                 var status = value.status;
                     $('#status_details').val(status);
+                    if(((value.req_type_id == '2' || value.req_type_id == '7' || value.req_type_id == '8') && value.status_id == '8' && value.verify != 'Confirmed') || (value.req_type_id == '3' && value.status_id == '9' && value.verify != 'Demo Confirmed')){
+                        $('#status_details').val('FOR CONFIRMATION');
+                    }
                     if(value.verify.includes('Confirmed') == true){
                         $('#status_details').val('CONFIRMED '+status);
                     }
@@ -1693,6 +1696,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         $('#qty_details').val(qty);
     var status = value.status;
         $('#status_details').val(status);
+        if(((value.req_type_id == '2' || value.req_type_id == '7' || value.req_type_id == '8') && value.status_id == '8' && value.verify != 'Confirmed') || (value.req_type_id == '3' && value.status_id == '9' && value.verify != 'Demo Confirmed')){
+            $('#status_details').val('FOR CONFIRMATION');
+        }
         if(value.verify.includes('Confirmed') == true){
             $('#status_details').val('CONFIRMED '+status);
         }

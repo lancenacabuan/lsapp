@@ -654,7 +654,7 @@ class StockRequestController extends Controller
                 ->get();
         }
         return DataTables::of($list)
-        ->addColumn('item_desc', function (Requests $list){
+        ->addColumn('item_desc', function(Requests $list){
             if($list->item_id > 0){
                 $items = Item::where('id', $list->item_id)->first()->item;
             }
@@ -663,7 +663,7 @@ class StockRequestController extends Controller
             }
             return $items;
         })
-        ->addColumn('prep_by', function (Requests $list){
+        ->addColumn('prep_by', function(Requests $list){
             if($list->prepared_by > 0){
                 $users = User::where('id', $list->prepared_by)->first()->name;            
             }
@@ -701,7 +701,7 @@ class StockRequestController extends Controller
             ->get();
 
         return DataTables::of($list)
-        ->addColumn('item_desc', function (Requests $list){
+        ->addColumn('item_desc', function(Requests $list){
             if($list->item_id > 0){
                 $items = Item::where('id', $list->item_id)->first()->item;
             }
@@ -710,7 +710,7 @@ class StockRequestController extends Controller
             }
             return $items;
         })
-        ->addColumn('prep_by', function (Requests $list){
+        ->addColumn('prep_by', function(Requests $list){
             if($list->prepared_by > 0){
                 $users = User::where('id', $list->prepared_by)->first()->name;            
             }
@@ -730,7 +730,7 @@ class StockRequestController extends Controller
             ->get();        
         
         return DataTables::of($stockreq)
-        ->addColumn('qtystock', function (StockRequest $stockreq){
+        ->addColumn('qtystock', function(StockRequest $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->whereIn('location_id', ['1','2','3','4'])
@@ -738,7 +738,7 @@ class StockRequestController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtya1', function (StockRequest $stockreq){
+        ->addColumn('qtya1', function(StockRequest $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '1')
@@ -746,7 +746,7 @@ class StockRequestController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtya2', function (StockRequest $stockreq){
+        ->addColumn('qtya2', function(StockRequest $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '2')
@@ -754,7 +754,7 @@ class StockRequestController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtya3', function (StockRequest $stockreq){
+        ->addColumn('qtya3', function(StockRequest $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '3')
@@ -762,7 +762,7 @@ class StockRequestController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtya4', function (StockRequest $stockreq){
+        ->addColumn('qtya4', function(StockRequest $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '4')
@@ -770,7 +770,7 @@ class StockRequestController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtybal', function (StockRequest $stockreq){
+        ->addColumn('qtybal', function(StockRequest $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '5')
@@ -778,7 +778,7 @@ class StockRequestController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtymal', function (StockRequest $stockreq){
+        ->addColumn('qtymal', function(StockRequest $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '6')
@@ -1909,7 +1909,7 @@ class StockRequestController extends Controller
             ->get();
 
         return DataTables::of($list)
-        ->addColumn('qtystock', function (StockRequest $list){
+        ->addColumn('qtystock', function(StockRequest $list){
             $stocks = Stock::query()
                 ->where('item_id', $list->item_id)
                 ->whereIn('location_id', ['1','2','3','4'])

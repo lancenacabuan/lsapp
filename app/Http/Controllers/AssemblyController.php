@@ -112,37 +112,34 @@ class AssemblyController extends Controller
 
     public function request_data(){
         $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, status.status AS status, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, needdate, requests.item_id AS item_id, qty, assembly_reqnum')
-        ->where('requests.requested_by', auth()->user()->id)
-        ->whereIn('requests.request_type', ['4','5'])
-        ->whereNotIn('requests.status', ['7','8','14','19'])
-        ->join('users', 'users.id', '=', 'requests.requested_by')
-        ->join('request_type', 'request_type.id', '=', 'requests.request_type')
-        ->join('status', 'status.id', '=', 'requests.status')
-        ->orderBy('reqdate', 'ASC')
-        ->orderBy('requests.needdate', 'ASC')
-        ->orderBy('requests.id', 'ASC')
-        ->get();
+            ->where('requests.requested_by', auth()->user()->id)
+            ->whereIn('requests.request_type', ['4','5'])
+            ->whereNotIn('requests.status', ['7','8','14','19'])
+            ->join('users', 'users.id', '=', 'requests.requested_by')
+            ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+            ->join('status', 'status.id', '=', 'requests.status')
+            ->orderBy('reqdate', 'ASC')
+            ->orderBy('requests.needdate', 'ASC')
+            ->orderBy('requests.id', 'ASC')
+            ->get();
 
         return DataTables::of($list)
-        ->addColumn('item_desc', function (Requests $list){
-            $items = Item::query()
-                ->select('item')
-                ->where('id', $list->item_id)
-                ->get();
-            $items = str_replace("[{\"item\":\"","",$items);
-            $items = str_replace("\"}]","",$items);
-            $items = str_replace("[]","",$items);
-            
+        ->addColumn('item_desc', function(Requests $list){
+            if($list->item_id > 0){
+                $items = Item::where('id', $list->item_id)->first()->item;
+            }
+            else{
+                $items = NULL;
+            }
             return $items;
         })
-        ->addColumn('prep_by', function (Requests $list){
-            $users = User::query()
-                ->select('name')
-                ->where('id', $list->prepared_by)
-                ->get();
-            $users = str_replace("[{\"name\":\"","",$users);
-            $users = str_replace("\"}]","",$users);
-            
+        ->addColumn('prep_by', function(Requests $list){
+            if($list->prepared_by > 0){
+                $users = User::where('id', $list->prepared_by)->first()->name;            
+            }
+            else{
+                $users = NULL;
+            }
             return $users;
         })
         ->make(true);

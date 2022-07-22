@@ -162,18 +162,14 @@ class StockTransferController extends Controller
         while(!$items);
         
         do{
-            $locfrom = Location::query()->select('location')->where('id',$request_details->locfrom)->get();
+            $locfrom = Location::where('id',$request_details->locfrom)->first()->location;
         }
         while(!$locfrom);
-        $locfrom = str_replace('[{"location":"','', $locfrom);
-        $locfrom = str_replace('"}]','', $locfrom);
 
         do{
-            $locto = Location::query()->select('location')->where('id',$request_details->locto)->get();
+            $locto = Location::where('id',$request_details->locto)->first()->location;
         }
         while(!$locto);
-        $locto = str_replace('[{"location":"','', $locto);
-        $locto = str_replace('"}]','', $locto);
 
         $subject = '[FOR APPROVAL] STOCK TRANSFER REQUEST NO. '.$request->request_number;
         $emails = User::role('approver - warehouse')
@@ -239,36 +235,22 @@ class StockTransferController extends Controller
                 ->orderBy('request_transfer.id', 'ASC')
                 ->get();
         }
-
         return DataTables::of($list)
-        ->addColumn('prep_by', function (RequestTransfer $list){
-            $users = User::query()
-                ->select('name')
-                ->where('id', $list->prepared_by)
-                ->get();
-            $users = str_replace("[{\"name\":\"","",$users);
-            $users = str_replace("\"}]","",$users);
-            
+        ->addColumn('prep_by', function(RequestTransfer $list){
+            if($list->prepared_by > 0){
+                $users = User::where('id', $list->prepared_by)->first()->name;            
+            }
+            else{
+                $users = NULL;
+            }
             return $users;
         })
-        ->addColumn('location_from', function (RequestTransfer $list){
-            $locfrom = Location::query()
-                ->select('location')
-                ->where('id', $list->locfrom)
-                ->get();
-            $locfrom = str_replace("[{\"location\":\"","",$locfrom);
-            $locfrom = str_replace("\"}]","",$locfrom);
-            
+        ->addColumn('location_from', function(RequestTransfer $list){
+            $locfrom = Location::where('id', $list->locfrom)->first()->location;            
             return $locfrom;
         })
-        ->addColumn('location_to', function (RequestTransfer $list){
-            $locto = Location::query()
-                ->select('location')
-                ->where('id', $list->locto)
-                ->get();
-            $locto = str_replace("[{\"location\":\"","",$locto);
-            $locto = str_replace("\"}]","",$locto);
-            
+        ->addColumn('location_to', function(RequestTransfer $list){
+            $locto = Location::where('id', $list->locto)->first()->location;            
             return $locto;
         })
         ->make(true);
@@ -289,14 +271,13 @@ class StockTransferController extends Controller
             ->get();
 
         return DataTables::of($list)
-        ->addColumn('prep_by', function (RequestTransfer $list){
-            $users = User::query()
-                ->select('name')
-                ->where('id', $list->prepared_by)
-                ->get();
-            $users = str_replace("[{\"name\":\"","",$users);
-            $users = str_replace("\"}]","",$users);
-            
+        ->addColumn('prep_by', function(RequestTransfer $list){
+            if($list->prepared_by > 0){
+                $users = User::where('id', $list->prepared_by)->first()->name;            
+            }
+            else{
+                $users = NULL;
+            }
             return $users;
         })
         ->toJson();
@@ -310,7 +291,7 @@ class StockTransferController extends Controller
             ->get();        
         
         return DataTables::of($stockreq)
-        ->addColumn('qtystock', function (StockTransfer $stockreq){
+        ->addColumn('qtystock', function(StockTransfer $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->whereIn('location_id', ['1','2','3','4'])
@@ -318,7 +299,7 @@ class StockTransferController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtya1', function (StockTransfer $stockreq){
+        ->addColumn('qtya1', function(StockTransfer $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '1')
@@ -326,7 +307,7 @@ class StockTransferController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtya2', function (StockTransfer $stockreq){
+        ->addColumn('qtya2', function(StockTransfer $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '2')
@@ -334,7 +315,7 @@ class StockTransferController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtya3', function (StockTransfer $stockreq){
+        ->addColumn('qtya3', function(StockTransfer $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '3')
@@ -342,7 +323,7 @@ class StockTransferController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtya4', function (StockTransfer $stockreq){
+        ->addColumn('qtya4', function(StockTransfer $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '4')
@@ -350,7 +331,7 @@ class StockTransferController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtybal', function (StockTransfer $stockreq){
+        ->addColumn('qtybal', function(StockTransfer $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '5')
@@ -358,7 +339,7 @@ class StockTransferController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtymal', function (StockTransfer $stockreq){
+        ->addColumn('qtymal', function(StockTransfer $stockreq){
             $stocks = Stock::query()
                 ->where('item_id', $stockreq->item_id)
                 ->where('location_id', '6')
@@ -563,18 +544,14 @@ class StockTransferController extends Controller
         while(!$items);
         
         do{
-            $locfrom = Location::query()->select('location')->where('id',$request_details->locfrom)->get();
+            $locfrom = Location::where('id',$request_details->locfrom)->first()->location;
         }
         while(!$locfrom);
-        $locfrom = str_replace('[{"location":"','', $locfrom);
-        $locfrom = str_replace('"}]','', $locfrom);
 
         do{
-            $locto = Location::query()->select('location')->where('id',$request_details->locto)->get();
+            $locto = Location::where('id',$request_details->locto)->first()->location;
         }
         while(!$locto);
-        $locto = str_replace('[{"location":"','', $locto);
-        $locto = str_replace('"}]','', $locto);
         
         $subject = '[DISAPPROVED] STOCK TRANSFER REQUEST NO. '.$request->request_number;
         $details = [
@@ -956,7 +933,7 @@ class StockTransferController extends Controller
             ->get();
 
         return DataTables::of($list)
-        ->addColumn('qtybal', function (StockTransfer $list){
+        ->addColumn('qtybal', function(StockTransfer $list){
             $stocks = Stock::query()
                 ->where('item_id', $list->item_id)
                 ->whereIn('location_id', ['5'])
@@ -964,7 +941,7 @@ class StockTransferController extends Controller
                 ->count();
             return $stocks;
         })
-        ->addColumn('qtymal', function (StockTransfer $list){
+        ->addColumn('qtymal', function(StockTransfer $list){
             $stocks = Stock::query()
                 ->where('item_id', $list->item_id)
                 ->whereIn('location_id', ['6'])
@@ -1112,6 +1089,8 @@ class StockTransferController extends Controller
             ->join('status', 'status.id', '=', 'request_transfer.status')
             ->orderBy('request_transfer.created_at', 'DESC')
             ->first();
+        $locfrom = Location::where('id',$list->locfrom)->first()->location;
+        $locto = Location::where('id',$list->locto)->first()->location;
         
         $list2 = RequestTransfer::selectRaw('users.name AS prepby')
             ->where('request_transfer.request_number', $request->request_number)
@@ -1196,6 +1175,6 @@ class StockTransferController extends Controller
         if(!$list || !$list2 || !$list3){
             return redirect()->to('/stocktransfer');
         }
-        return view('/pages/stockTransfer/printStockTransfer', compact('list','list2','list3','list4','list5','listX'));
+        return view('/pages/stockTransfer/printStockTransfer', compact('list','list2','list3','list4','list5','listX','locfrom','locto'));
     }
 }

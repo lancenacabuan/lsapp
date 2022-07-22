@@ -83,14 +83,13 @@ class MerchantController extends Controller
             ->get();
 
         return DataTables::of($list)
-        ->addColumn('prep_by', function (Requests $list){
-            $users = User::query()
-                ->select('name')
-                ->where('id', $list->prepared_by)
-                ->get();
-            $users = str_replace("[{\"name\":\"","",$users);
-            $users = str_replace("\"}]","",$users);
-            
+        ->addColumn('prep_by', function(Requests $list){
+            if($list->prepared_by > 0){
+                $users = User::where('id', $list->prepared_by)->first()->name;            
+            }
+            else{
+                $users = NULL;
+            }
             return $users;
         })
         ->make(true);

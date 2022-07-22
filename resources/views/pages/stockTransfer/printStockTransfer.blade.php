@@ -48,14 +48,14 @@
                 <td colspan="2">{{$list->req_by}}</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;">FROM Location</td>
-                <td colspan="2" id="locfrom">{{$list->locfrom}}</td>
+                <td colspan="2">{{$locfrom}}</td>
             </tr>
             <tr height="20">
                 <td colspan="2" height="20" style="font-weight: bold;">Date Prepared:</td>
                 <td colspan="2" id="prep_date">{{$list->prepdate}}</td>
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;">TO New Location</td>
-                <td colspan="2" id="locto">{{$list->locto}}</td>
+                <td colspan="2">{{$locto}}</td>
             </tr>
             <tr height="20">
                 <td colspan="2" height="20" style="font-weight: bold;">Prepared By:</td>
@@ -327,24 +327,6 @@ $(document).ready(function(){
     sched = moment(sched).format('dddd, MMMM DD, YYYY');
     $('#sched').html(sched);
 
-    if($('#locfrom').html() == '5'){
-        $('#locfrom').html('BALINTAWAK');
-    }
-    if($('#locfrom').html() == '6'){
-        $('#locfrom').html('MALABON');
-    }
-    if($('#locto').html() == '1'){
-        $('#locto').html('A1');
-    }
-    if($('#locto').html() == '2'){
-        $('#locto').html('A2');
-    }
-    if($('#locto').html() == '3'){
-        $('#locto').html('A3');
-    }
-    if($('#locto').html() == '4'){
-        $('#locto').html('A4');
-    }
     var x = $('#tblPrint tr:visible').length;
     if(x > 30){
         $('.extend').show();

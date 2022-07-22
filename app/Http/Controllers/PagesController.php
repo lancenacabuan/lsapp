@@ -47,10 +47,10 @@ class PagesController extends Controller
         {
             return redirect('/merchant');
         }
-        $stocks = DB::table('stocks')->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly','asset'])->get()->count();
-        $stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10','14','19','26','29'])->get()->count();
-        $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
-        $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->count();
+        $stocks = DB::table('stocks')->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly','asset'])->count();
+        $stockrequest = DB::table('requests')->whereNotIn('requests.verify', ['Confirmed'])->whereNotIn('requests.status', ['7','14','19','26'])->count();
+        $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->count();
+        $defective = DB::table('stocks')->whereIn('status', ['defectives'])->count();
         $items = Item::query()->select('items.id', 'items.item as Item', 'items.prodcode as ProdCode', 'categories.category as Category', 'items.minimum as Minimum_stocks', 
                 DB::raw("SUM(CASE 
                     WHEN stocks.status = 'in' THEN 1
@@ -84,12 +84,12 @@ class PagesController extends Controller
     }
 
     public function stockrequest_reload(){
-        $stockrequest = DB::table('requests')->whereNotIn('requests.status',['7','8','10','14','19','26','29'])->get()->count();
+        $stockrequest = DB::table('requests')->whereNotIn('requests.verify', ['Confirmed'])->whereNotIn('requests.status', ['7','14','19','26'])->count();
         return $stockrequest;
     }
 
     public function stocks_reload(){
-        $stocks = DB::table('stocks')->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly','asset'])->get()->count();
+        $stocks = DB::table('stocks')->whereIn('status', ['in','defectives','FOR RECEIVING','demo','assembly','asset'])->count();
         return $stocks;
     }
 
@@ -121,12 +121,12 @@ class PagesController extends Controller
     }
 
     public function stocktransfer_reload(){
-        $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->get()->count();
+        $stocktransfer = DB::table('request_transfer')->whereNotIn('request_transfer.status',['7','8'])->count();
         return $stocktransfer;
     }
 
     public function defective_reload(){
-        $defective = DB::table('stocks')->whereIn('status', ['defectives'])->get()->count();
+        $defective = DB::table('stocks')->whereIn('status', ['defectives'])->count();
         return $defective;
     }
 

@@ -22,20 +22,32 @@
             </div>
             <div class="modal-body" style="background-color: white; color: black;">
                 <form class="mt-2 mb-2">
-                    <div class="form-inline" style="margin-left: 35px;">
-                        <select class="form-control form-select" id="categoryAssembly" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 300px;" required>
+                    <div class="form-inline">                        
+                        <div class="f-outline">
+                            <select class="forminput form-control form-select" id="categoryAssembly" name="categoryAssembly" style="width: 300px;" placeholder=" " required>
                                 <option value="" selected disabled>Select Category</option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
                                 @endforeach
-                        </select>
-                        <select class="form-control form-select" id="itemAssembly" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 450px; margin-left: 10px;">
-                            <option value="" selected disabled>Select Item</option>
-                        </select>
+                            </select>
+                            <label for="categoryAssembly" class="formlabel form-label">Category</label>
+                        </div>
+                        <div class="f-outline" style="margin-left: 10px;">
+                            <select class="forminput form-control form-select" id="itemAssembly" name="itemAssembly" style="width: 540px;" placeholder=" ">
+                                <option value="" selected disabled>Select Item</option>
+                            </select>
+                            <label for="itemAssembly" class="formlabel form-label">Item Description</label>
+                        </div>
                         <input class="d-none" id="prodcodeAssembly" type="hidden"/>
-                        <input class="form-control" id="uomAssembly" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>
-                        <input class="form-control" id="qtyAssembly" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty" onkeyup="if(value<0) value=0;">
-                        <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 75%; margin-left: 10px; margin-top: -1px;">
+                        <div class="f-outline" style="margin-left: 10px;">
+                            <input class="forminput form-control" id="uomAssembly" name="uomAssembly" style="background-color: white; width: 70px;" type="text" placeholder=" " disabled>
+                            <label for="uomAssembly" class="formlabel form-label">UOM</label>
+                        </div>
+                        <div class="f-outline" style="margin-left: 10px;">
+                            <input class="forminput form-control" id="qtyAssembly" name="qtyAssembly" min="1" max="" style="width: 70px;" type="number" placeholder=" " onkeyup="if(value<1) value=1;">
+                            <label for="qtyAssembly" class="formlabel form-label">Qty</label>
+                        </div>
+                        <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 90%; margin-left: 10px;">
                     </div>
                 </form>
                 <div class="container-fluid"  id="#divCreateItem">

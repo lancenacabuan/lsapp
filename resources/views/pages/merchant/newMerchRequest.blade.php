@@ -70,26 +70,41 @@
             <div class="modal-body" style="background-color: white; color: black;">
                 <form class="mt-2 mb-2">
                     <div class="form-inline" style="margin-left: 20px;">
-                        <select class="form-control form-select" id="categoryReq" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 250px;" required>
+                        <div class="f-outline">
+                            <select class="forminput form-control form-select" id="categoryReq" name="categoryReq" style="width: 250px;" placeholder=" " required>
                                 <option value="" selected disabled>Select Category</option>
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}">{{strtoupper($category->category)}}</option>
                                 @endforeach
-                        </select>
-                        <select class="form-control form-select" id="itemReq" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 350px; margin-left: 10px;">
-                            <option value="" selected disabled>Select Item</option>
-                        </select>
+                            </select>
+                            <label for="categoryReq" class="formlabel form-label">Category</label>
+                        </div>
+                        <div class="f-outline" style="margin-left: 10px;">
+                            <select class="forminput form-control form-select" id="itemReq" name="itemReq" style="width: 350px;" placeholder=" ">
+                                <option value="" selected disabled>Select Item</option>
+                            </select>
+                            <label for="itemReq" class="formlabel form-label">Item Description</label>
+                        </div>
                         <input class="d-none" id="prodcode" type="hidden"/>
-                        <input class="form-control" id="uom" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="text" placeholder="UOM" readonly>
-                        <input class="form-control" id="qtyReq" min="0" max="" style="font-size: 12px; padding: 0.25rem 0.5rem; width: 70px; height: 30px; margin-left: 10px;" type="number" placeholder="Qty" onkeyup="if(value<0) value=0;">
-                        <select class="form-control form-select classWarranty" id="warrantyReq" style="font-size: 12px; padding: 0.25rem 0.5rem; height: 30px !important; width: 200px; margin-left: 10px;">
-                            <option value="" selected disabled>Select Warranty Type</option>
-                            <option value="0">NO WARRANTY</option>
-                            @foreach($warranty as $warranty_type)
-                                <option value="{{$warranty_type->id}}">{{strtoupper($warranty_type->Warranty_Name)}}</option>
-                            @endforeach
-                        </select>
-                        <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 75%; margin-left: 10px; margin-top: -1px;">
+                        <div class="f-outline" style="margin-left: 10px;">
+                            <input class="forminput form-control" id="uom" name="uom" style="background-color: white; width: 70px;" type="text" placeholder=" " disabled>
+                            <label for="uom" class="formlabel form-label">UOM</label>
+                        </div>
+                        <div class="f-outline" style="margin-left: 10px;">
+                            <input class="forminput form-control" id="qtyReq" name="qtyReq" min="1" max="" style="width: 70px;" type="number" placeholder=" " onkeyup="if(value<1) value=1;">
+                            <label for="qtyReq" class="formlabel form-label">Qty</label>
+                        </div>
+                        <div class="f-outline" style="margin-left: 10px;">
+                            <select class="forminput form-control form-select classWarranty" id="warrantyReq" name="warrantyReq" style="width: 200px;" placeholder=" ">
+                                <option value="" selected disabled>Select Warranty Type</option>
+                                <option value="0">NO WARRANTY</option>
+                                @foreach($warranty as $warranty_type)
+                                    <option value="{{$warranty_type->id}}">{{strtoupper($warranty_type->Warranty_Name)}}</option>
+                                @endforeach
+                            </select>
+                            <label for="warrantyReq" class="formlabel form-label classWarranty">Warranty Type</label>
+                        </div>
+                        <input type="button" class="add-row btn btn-primary bp" value="ADD ITEM" style="zoom: 90%; margin-left: 10px;">
                     </div>
                 </form>
                 <div class="container-fluid"  id="#stockRequestDiv">

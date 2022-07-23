@@ -237,12 +237,9 @@ class AssemblyController extends Controller
         do{
             $list = Requests::selectRaw('needdate')
                 ->where('request_number', $request->request_number)
-                ->get();
+                ->first();
         }
         while(!$list);
-        $list = str_replace('[','',$list);
-        $list = str_replace(']','',$list);
-        $list = json_decode($list);
         
         do{
             $requests = new Requests;

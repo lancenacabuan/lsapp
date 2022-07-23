@@ -133,11 +133,7 @@ class StockTransferController extends Controller
         do{
             $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, needdate, locfrom, locto')
                 ->where('request_transfer.request_number', $request->request_number)
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
+                ->first();
         }
         while(!$request_details);
         
@@ -515,11 +511,7 @@ class StockTransferController extends Controller
             $request_details = RequestTransfer::selectRaw('request_transfer.created_at AS reqdate, users.name AS reqby, users.email AS email, needdate, locfrom, locto, reason')
                 ->where('request_transfer.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'request_transfer.requested_by')
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
+                ->first();
         }
         while(!$request_details);
         

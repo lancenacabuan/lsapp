@@ -206,11 +206,7 @@ class MerchantController extends Controller
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
+                ->first();
         }
         while(!$request_details);
 

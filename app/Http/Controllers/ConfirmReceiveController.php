@@ -173,11 +173,7 @@ class ConfirmReceiveController extends Controller
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->join('status', 'status.id', '=', 'requests.status')
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
+                ->first();
         }
         while(!$request_details);
 
@@ -185,11 +181,7 @@ class ConfirmReceiveController extends Controller
             $prep = Requests::selectRaw('users.name AS prepby')
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.prepared_by')
-                ->get();
-            
-                $prep = str_replace('[','',$prep);
-                $prep = str_replace(']','',$prep);
-                $prep = json_decode($prep);
+                ->first();
         }
         while(!$prep);
 

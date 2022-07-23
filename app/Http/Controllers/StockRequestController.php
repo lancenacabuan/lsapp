@@ -383,11 +383,7 @@ class StockRequestController extends Controller
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, contact, remarks, reference, needdate, asset_reqby_email')
                 ->where('requests.request_number', $request->request_number)
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
+                ->first();
         }
         while(!$request_details);
 
@@ -489,11 +485,7 @@ class StockRequestController extends Controller
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, needdate, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email')
                 ->where('requests.request_number', $request->request_number)
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
+                ->first();
         }
         while(!$request_details);
 
@@ -1161,11 +1153,7 @@ class StockRequestController extends Controller
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
+                ->first();
         }
         while(!$request_details);
 
@@ -1366,11 +1354,7 @@ class StockRequestController extends Controller
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
+                ->first();
         }
         while(!$request_details);
 
@@ -1642,11 +1626,7 @@ class StockRequestController extends Controller
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->join('status', 'status.id', '=', 'requests.status')
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
+                ->first();
         }
         while(!$request_details);
 
@@ -1654,11 +1634,7 @@ class StockRequestController extends Controller
             $prep = Requests::selectRaw('users.name AS prepby')
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.prepared_by')
-                ->get();
-            
-                $prep = str_replace('[','',$prep);
-                $prep = str_replace(']','',$prep);
-                $prep = json_decode($prep);
+                ->first();
         }
         while(!$prep);
 
@@ -1919,13 +1895,9 @@ class StockRequestController extends Controller
         $list = Stock::query()->select('stocks.location_id AS location_id','locations.location AS location')
             ->join('locations','locations.id','stocks.location_id')
             ->where('stocks.id',$request->serial_id)
-            ->get();
+            ->first();
 
-        $list = str_replace('[','',$list);
-        $list = str_replace(']','',$list);
-        $list = json_decode($list);
-
-        return ($list);
+        return $list;
     }
 
     public function prepareItems(Request $request){
@@ -2187,11 +2159,7 @@ class StockRequestController extends Controller
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->join('status', 'status.id', '=', 'requests.status')
-                ->get();
-
-                $request_details = str_replace('[','',$request_details);
-                $request_details = str_replace(']','',$request_details);
-                $request_details = json_decode($request_details);
+                ->first();
         }
         while(!$request_details);
 
@@ -2199,11 +2167,7 @@ class StockRequestController extends Controller
             $prep = Requests::selectRaw('users.name AS prepby')
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.prepared_by')
-                ->get();
-            
-                $prep = str_replace('[','',$prep);
-                $prep = str_replace(']','',$prep);
-                $prep = json_decode($prep);
+                ->first();
         }
         while(!$prep);
 

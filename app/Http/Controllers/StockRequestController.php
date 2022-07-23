@@ -380,7 +380,7 @@ class StockRequestController extends Controller
         }
 
         do{
-            $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, client_name, location, contact, remarks, reference, needdate, asset_reqby_email')
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, request_type.name AS reqtype, request_type.id AS req_type_id, client_name, location, contact, remarks, reference, needdate, asset_reqby_email')
                 ->where('requests.request_number', $request->request_number)
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->first();
@@ -466,10 +466,22 @@ class StockRequestController extends Controller
         ];
         Mail::to($sendTo)->send(new emailForRequest($details, $subject));
 
+        switch($request_details->req_type_id){
+            case 1: $reqtype = 'Service Unit'; break;
+            case 2: $reqtype = 'Sales'; break;
+            case 3: $reqtype = 'Demo Unit'; break;
+            case 4: $reqtype = 'Replacement'; break;
+            case 5: $reqtype = 'Assembly'; break;
+            case 6: $reqtype = 'Merchant'; break;
+            case 7: $reqtype = 'Fixed Asset'; break;
+            case 8: $reqtype = 'For Staging'; break;
+            default: $reqtype = NULL;
+        }
+
         if($request->reqstatus != 7){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "NEW STOCK REQUEST: User successfully submitted Stock Request No. $request->request_number.";
+            $userlogs->activity = "NEW $request_details->reqtype STOCK REQUEST: User successfully submitted $reqtype Stock Request No. $request->request_number.";
             $userlogs->save();
         }
         
@@ -1461,6 +1473,7 @@ class StockRequestController extends Controller
                 case 5: $reqtype = 'Assembly'; break;
                 case 6: $reqtype = 'Merchant'; break;
                 case 7: $reqtype = 'Fixed Asset'; break;
+                case 8: $reqtype = 'For Staging'; break;
                 default: $reqtype = NULL;
             }
             $userlogs = new UserLogs;

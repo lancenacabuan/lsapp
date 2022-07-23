@@ -1106,7 +1106,7 @@ $(document).on('click', '#btnSaveChanges', function(){
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
                                     data:{
-                                        'request_number': $('#request_num').val(),
+                                        'request_number': $('#request_num_details').val(),
                                         'reqstatus': '7'
                                     },
                                     success: function(data){

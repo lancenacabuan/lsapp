@@ -1826,15 +1826,10 @@ class StockRequestController extends Controller
 
     public function checkStatus(Request $request){       
         do{
-            $sql = Requests::select('status')
-                ->where('request_number', $request->assembly_reqnum)
-                ->get();
+            $sql = Requests::where('request_number', $request->assembly_reqnum)->first()->status;
         }
         while(!$sql);
 
-        $sql = str_replace('[{"status":','',$sql);
-        $sql = str_replace('}]','',$sql);
-        
         return response($sql);
     }
 
@@ -2721,24 +2716,13 @@ class StockRequestController extends Controller
             ->whereIn('assembly_reqnum', $include)
             ->join('users','users.id','stocks.user_id')
             ->limit(1)
-            ->get();
-        
-        $list = str_replace("[","",$list);
-        $list = str_replace("]","",$list);
-        $list = json_decode($list);
-        
+            ->first();
+
         return $list;
     }
     
     public function getLink(Request $request){       
-        $link = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $link = str_replace("[{\"request_number\":","",$link);
-        $link = str_replace("}]","",$link);
-        $link = json_decode($link);
-        
+        $link = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
         return $link;
     }
 

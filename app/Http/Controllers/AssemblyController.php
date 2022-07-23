@@ -29,9 +29,8 @@ class AssemblyController extends Controller
         {
             return redirect('/');
         }
-        $categories = Category::select('id','category')->get()->sortBy('category');
         $items = Item::select('id','item')->where('assemble','YES')->get()->sortBy('item');
-        return view('/pages/assembly', compact('categories','items'));
+        return view('/pages/assembly', compact('items'));
     }
 
     public function itemsAssembly(Request $request){       

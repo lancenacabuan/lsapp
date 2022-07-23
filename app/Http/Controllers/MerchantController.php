@@ -38,10 +38,9 @@ class MerchantController extends Controller
             return redirect('/');
         }
         $categories = Category::select('id','category')->get()->sortBy('category');
-        $items = Item::select('id','item')->get()->sortBy('item');
         $warranty = Warranty::select('id','Warranty_Name')->get()->sortBy('Warranty_Name');
         
-        return view('/pages/merchant', compact('categories','items','warranty'));
+        return view('/pages/merchant', compact('categories','warranty'));
     }
 
     public function items(Request $request){       

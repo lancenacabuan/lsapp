@@ -36,9 +36,8 @@ class DefectiveController extends Controller
         {
             return redirect('/');
         }
-        $categories = Category::select('id','category')->get()->sortBy('category');
-        $items = Item::select('id','item')->get()->sortBy('item');
-        return view('/pages/defective', compact('categories','items'));
+
+        return view('/pages/defective');
     }
 
     public function defective_data(){

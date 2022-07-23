@@ -40,11 +40,10 @@ class StocksController extends Controller
         {
             return redirect('/');
         }
-        $categories= Category::select('id','category')->get()->sortBy('category');
-        $locations= Location::select('id','location')->whereNotIn('id', ['7','8','9','10'])->get()->sortBy('location');
-        $items= Item::select('id','item')->get()->sortBy('item');
-        $list = DB::table('stocks')->get();
-        return view('/pages/stocks', compact('list','categories','locations','items'));
+        $categories = Category::select('id','category')->get()->sortBy('category');
+        $locations = Location::select('id','location')->whereNotIn('id', ['7','8','9','10'])->get()->sortBy('location');
+
+        return view('/pages/stocks', compact('categories','locations'));
     }
 
     public function reload(){
@@ -347,23 +346,8 @@ class StocksController extends Controller
         return response($result);
     }
 
-    public function update(Request $request){ 
-        for($i=0; $i < $request->qty ; $i++){ 
-            $stocks = Stock::where('item_id','=',$request->item)
-                ->where('location_id',$request->locationfrom)
-                ->where('status','in')
-                ->first();                
-            $stocks->location_id = $request->locationto;
-            $stocks->save();
-        }
-        return response()->json($stocks);
-    }
-
     public function add(Request $request){
-        if(is_numeric($request->item_id) != 1){
-            return 'false';
-        }
-        if(Item::where('id', $request->item_id)->count() != 0){
+        if(Item::where('id', $request->item_id)->count() > 0){
             $return = Item::where('id', $request->item_id)->first()->category_id;
         }
         else{

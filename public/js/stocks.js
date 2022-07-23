@@ -934,7 +934,7 @@ $(document).ready(function(){
             },
             success: function(data){
                 if(data == 'false'){
-                    window.location.href="/stocks";
+                    window.location.href = "/stocks";
                 }
                 else{
                     $('#location').val(location_id);
@@ -965,7 +965,7 @@ $(document).ready(function(){
             },
             success: function(data){
                 if(data == 'false'){
-                    window.location.href="/stocks";
+                    window.location.href = "/stocks";
                 }
                 else{
                     $('#category').val(data);

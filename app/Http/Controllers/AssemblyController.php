@@ -352,13 +352,9 @@ class AssemblyController extends Controller
         else {
             $result = 'true';
 
-            $include = Requests::query()->select('request_number')
-                ->where('assembly_reqnum', $request->request_number)
-                ->get();
-        
-            $include = str_replace("{\"request_number\":","",$include);
-            $include = str_replace("}","",$include);
-            $include = json_decode($include);
+            if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+                $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+            }
             $include[] = $request->request_number;
 
             Stock::whereIn('request_number', $include)

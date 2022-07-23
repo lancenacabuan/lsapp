@@ -804,13 +804,9 @@ class StockRequestController extends Controller
 
     public function receivedItems(Request $request){
         if($request->included != 'no'){
-            $include = Requests::query()->select('request_number')
-                ->where('assembly_reqnum', $request->request_number)
-                ->get();
-            
-            $include = str_replace("{\"request_number\":","",$include);
-            $include = str_replace("}","",$include);
-            $include = json_decode($include);
+            if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+                $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+            }
         }
         $include[] = $request->request_number;
         
@@ -829,13 +825,9 @@ class StockRequestController extends Controller
     
     public function schedItems(Request $request){
         if($request->included != 'no'){
-            $include = Requests::query()->select('request_number')
-                ->where('assembly_reqnum', $request->request_number)
-                ->get();
-            
-            $include = str_replace("{\"request_number\":","",$include);
-            $include = str_replace("}","",$include);
-            $include = json_decode($include);
+            if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+                $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+            }
         }
         $include[] = $request->request_number;
 
@@ -870,13 +862,9 @@ class StockRequestController extends Controller
     }
 
     public function incItems(Request $request){
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
         $include[] = $request->request_number;
 
         $status = Requests::select()
@@ -910,13 +898,9 @@ class StockRequestController extends Controller
     }
 
     public function retItems(Request $request){
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
         $include[] = $request->request_number;
 
         $status = Requests::select()
@@ -950,13 +934,9 @@ class StockRequestController extends Controller
     }
 
     public function dfcItems(Request $request){
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
         $include[] = $request->request_number;
 
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
@@ -971,13 +951,9 @@ class StockRequestController extends Controller
     }
 
     public function incdfcItems(Request $request){
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
         $include[] = $request->request_number;
 
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
@@ -992,13 +968,9 @@ class StockRequestController extends Controller
     }
 
     public function asmItems(Request $request){
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
         $include[] = $request->request_number;
 
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
@@ -1691,13 +1663,9 @@ class StockRequestController extends Controller
         }
         while(!$prep);
 
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-    
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
         $include[] = $request->request_number;
 
         do{
@@ -2240,13 +2208,9 @@ class StockRequestController extends Controller
         }
         while(!$prep);
 
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-    
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
         $include[] = $request->request_number;
 
         if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
@@ -2785,13 +2749,9 @@ class StockRequestController extends Controller
     }
     
     public function getReceive(Request $request){       
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
         $include[] = $request->request_number;
 
         $list = Stock::query()->selectRaw('users.name AS recby, stocks.created_at AS recsched')
@@ -2845,13 +2805,9 @@ class StockRequestController extends Controller
             return redirect()->to('/stockrequest');
         }
         
-        $include = Requests::query()->select('request_number')
-            ->where('assembly_reqnum', $request->request_number)
-            ->get();
-        
-        $include = str_replace("{\"request_number\":","",$include);
-        $include = str_replace("}","",$include);
-        $include = json_decode($include);
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
         $include[] = $request->request_number;
 
         $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')

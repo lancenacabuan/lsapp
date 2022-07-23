@@ -804,7 +804,7 @@ class StockRequestController extends Controller
         $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
         (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id')
             ->whereIn('request_number', $include)
-            ->whereIn('stocks.status', ['out','demo','asset','assembly','assembled'])
+            ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->join('categories','categories.id','items.category_id')
             ->groupBy('category','prodcode','item','uom','serial','qty','item_id','id')
@@ -1944,6 +1944,25 @@ class StockRequestController extends Controller
             while(!$sql);
             $sched = 'SCHEDULED FOR RECEIVING';
         }
+        else if($request->req_type_id == '8'){
+            $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
+            if($total == 0){
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '3']);
+                }
+                while(!$sql);
+                $sched = 'SCHEDULED FOR RECEIVING';
+            }
+            else{
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '4']);
+                }
+                while(!$sql);
+                $sched = 'PARTIAL SCHEDULED FOR RECEIVING';
+            }
+        }
         else{
             $total = StockRequest::where('request_number', $request->request_number)->sum('pending');
             if($total == 0){
@@ -1988,6 +2007,7 @@ class StockRequestController extends Controller
                     case 5: $reqtype = 'Assembly'; break;
                     case 6: $reqtype = 'Merchant'; break;
                     case 7: $reqtype = 'Fixed Asset'; break;
+                    case 8: $reqtype = 'For Staging'; break;
                     default: $reqtype = NULL;
                 }
                 $userlogs = new UserLogs;
@@ -2028,6 +2048,22 @@ class StockRequestController extends Controller
                     while(!$sql);
                 }
             }
+            if($request->request_type == '8'){
+                if($total == 0){
+                    do{
+                        $sql = Requests::where('request_number', $request->request_number)
+                            ->update(['status' => '30']);
+                    }
+                    while(!$sql);
+                }
+                else{
+                    do{
+                        $sql = Requests::where('request_number', $request->request_number)
+                            ->update(['status' => '31']);
+                    }
+                    while(!$sql);
+                }
+            }
             else{
                 if($total == 0){
                     do{
@@ -2064,7 +2100,7 @@ class StockRequestController extends Controller
         if($request->status == '3' || $request->status == '4'){
             do{
                 $sql = Stock::where('id', $request->id)
-                    ->whereNotIn('status', ['out','asset','demo','assembly','assembled'])
+                    ->whereNotIn('status', ['out','staging','asset','demo','assembly','assembled'])
                     ->update(['status' => 'received', 'user_id' => auth()->user()->id]);
             }
             while(!$sql);
@@ -2087,6 +2123,13 @@ class StockRequestController extends Controller
                 do{
                     $sql = Stock::where('id', $request->id)
                         ->update(['status' => 'asset', 'user_id' => auth()->user()->id]);
+                }
+                while(!$sql);
+            }
+            else if($request->request_type == '8'){
+                do{
+                    $sql = Stock::where('id', $request->id)
+                        ->update(['status' => 'staging', 'user_id' => auth()->user()->id]);
                 }
                 while(!$sql);
             }
@@ -2128,6 +2171,11 @@ class StockRequestController extends Controller
                     ->where('status', '=', 'received')
                     ->update(['status' => 'asset', 'user_id' => auth()->user()->id]);
             }
+            else if($request->request_type == '8'){
+                Stock::where('request_number', $request->request_number)
+                    ->where('status', '=', 'received')
+                    ->update(['status' => 'staging', 'user_id' => auth()->user()->id]);
+            }
             else{
                 Stock::where('request_number', $request->request_number)
                     ->where('status', '=', 'received')
@@ -2135,16 +2183,16 @@ class StockRequestController extends Controller
             }
 
             Stock::where('request_number', $request->request_number)
-                ->whereNotIn('status', ['out','asset','demo','assembly','assembled'])
+                ->whereNotIn('status', ['out','staging','asset','demo','assembly','assembled'])
                 ->update(['status' => 'incomplete', 'user_id' => auth()->user()->id]);
         }
 
         Stock::where('request_number', $request->request_number)
-            ->whereIn('status', ['out','asset','demo','assembly','assembled'])
+            ->whereIn('status', ['out','staging','asset','demo','assembly','assembled'])
             ->where('batch', '=', 'new')
             ->update(['batch' => 'old']);
         Stock::where('request_number', $request->request_number)
-            ->whereIn('status', ['out','asset','demo','assembly','assembled'])
+            ->whereIn('status', ['out','staging','asset','demo','assembly','assembled'])
             ->where('batch', '=', '')
             ->update(['batch' => 'new']);
 
@@ -2176,7 +2224,7 @@ class StockRequestController extends Controller
                 $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                     ->whereIn('request_number', $include)
                     ->whereIn('stocks.batch', ['new'])
-                    ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                    ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                     ->join('items','items.id','stocks.item_id')
                     ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
                     ->orderBy('item', 'ASC')
@@ -2198,7 +2246,7 @@ class StockRequestController extends Controller
                 $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                     ->whereIn('request_number', $include)
                     ->whereIn('stocks.batch', ['new'])
-                    ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                    ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                     ->join('items','items.id','stocks.item_id')
                     ->groupBy('prodcode','item','uom','serial','qty','item_id')
                     ->orderBy('item', 'ASC')
@@ -2212,7 +2260,7 @@ class StockRequestController extends Controller
                     $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.batch', ['old'])
-                        ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                        ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
                         ->orderBy('item', 'ASC')
@@ -2234,7 +2282,7 @@ class StockRequestController extends Controller
                     $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.batch', ['old'])
-                        ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                        ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->groupBy('prodcode','item','uom','serial','qty','item_id')
                         ->orderBy('item', 'ASC')
@@ -2250,7 +2298,7 @@ class StockRequestController extends Controller
                     $olditems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.batch', ['old'])
-                        ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                        ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
                         ->orderBy('item', 'ASC')
@@ -2272,7 +2320,7 @@ class StockRequestController extends Controller
                     $olditems = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                         ->whereIn('request_number', $include)
                         ->whereIn('stocks.batch', ['old'])
-                        ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                        ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                         ->join('items','items.id','stocks.item_id')
                         ->groupBy('prodcode','item','uom','serial','qty','item_id')
                         ->orderBy('item', 'ASC')
@@ -2351,7 +2399,7 @@ class StockRequestController extends Controller
             }
         }
 
-        if($request_details->req_type_id == 2 || $request_details->req_type_id == 3 || $request_details->req_type_id == 7 || $request_details->req_type_id == 8){
+        if($request_details->req_type_id == 2 || $request_details->req_type_id == 3 || $request_details->req_type_id == 7 || $request_details->req_type_id == 8 && ($request_details->status_id != 30 && $request_details->status_id != 31)){
             do{
                 $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
                 $key = array();
@@ -2406,6 +2454,23 @@ class StockRequestController extends Controller
             $userlogs->save();
         }
         else{
+            if($request_details->status_id == 30 || $request_details->status_id == 31){
+                if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() == 0){
+                    $inc1 = 'COMPLETE';
+                    $inc2 = 'complete';
+                }
+                else{
+                    $inc1 = 'INCOMPLETE';
+                    $inc2 = 'incomplete';
+                }
+    
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = "RECEIVED $inc1 FOR STAGING: User successfully received $inc2 items for staging of Stock Request No. $request->request_number.";
+                $userlogs->save();
+
+                return response('true');
+            }
             $subject = '[RECEIVED] STOCK REQUEST NO. '.$request->request_number;
             if($request_details->req_type_id == 1 || $request_details->req_type_id == 4 || $request_details->req_type_id == 5 || $request_details->req_type_id == 6){
                 $emails = User::role('admin')->where('status','ACTIVE')->get('email')->toArray();
@@ -2760,7 +2825,7 @@ class StockRequestController extends Controller
         $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.batch', ['new',''])
-            ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+            ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
             ->join('items','items.id','stocks.item_id')
             ->groupBy('prodcode','item','uom','serial','qty','item_id')
             ->orderBy('item', 'ASC')
@@ -2769,7 +2834,7 @@ class StockRequestController extends Controller
             $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
-                ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')
@@ -2815,7 +2880,7 @@ class StockRequestController extends Controller
             $list5 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
-                ->whereIn('stocks.status', ['out','asset','demo','assembly','assembled'])
+                ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')

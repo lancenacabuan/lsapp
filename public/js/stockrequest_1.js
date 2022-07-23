@@ -2950,7 +2950,7 @@ $('.btnReceive').on('click', function(){
     if(items.length < item_count){
         inc = 'true';
     }
-    if(req_type_id == 2 || req_type_id == 3 || req_type_id == 7 || req_type_id == 8){
+    if(req_type_id == 2 || req_type_id == 3 || req_type_id == 7){
         var title = 'SEND CONFIRMATION EMAIL?';
         var text = 'The Client/Requester will be sent a confirmation email for the received items!';
         var action = 'SEND';

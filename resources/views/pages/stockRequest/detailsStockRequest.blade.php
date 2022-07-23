@@ -391,7 +391,6 @@
             <hr>
             <input type="button" class="btn btn-primary float-right bp btnReissue" style="display: none;" value="RE-ISSUE" disabled>
             @role('admin|encoder') {{---ROLES---}}
-            <input type="button" class="btn btn-primary float-right bp btnStaging" style="display: none;" value="FOR STAGING">
             <input type="button" class="btn btn-primary float-right bp btnTransit" value="FOR RECEIVING">
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>

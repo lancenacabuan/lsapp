@@ -577,10 +577,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 alert(data.responseText);
                             }
                         });
-                        if(req_type_id == '8'){
-                            $(".btnTransit").hide();
-                            $(".btnStaging").show();
-                        }
                     }
                     if(requestStatus == '30' || requestStatus == '31'){
                         $("#schedItemsModal").show();
@@ -603,10 +599,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 alert(data.responseText);
                             }
                         });
-                        if(req_type_id == '8'){
-                            $(".btnTransit").show();
-                            $(".btnStaging").hide();
-                        }
                         if(req_by_id == $('#current_user').val()){
                             $("#reissue_label").show();
                             $(".btnReissue").show();
@@ -614,7 +606,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     }
                     if(requestStatus == '3' || requestStatus == '4'){
                         $("#transitItemsModal").show();
-                        if(req_type_id == '2' || req_type_id == '3' || req_type_id == '8'){
+                        if(req_type_id == '2' || req_type_id == '3'){
                             $('.btnReceive').html('SEND CONFIRMATION');
                             $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
                         }
@@ -1919,10 +1911,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     alert(data.responseText);
                 }
             });
-            if(req_type_id == '8'){
-                $(".btnTransit").hide();
-                $(".btnStaging").show();
-            }
         }
         if(requestStatus == '30' || requestStatus == '31'){
             $("#schedItemsModal").show();
@@ -1945,10 +1933,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     alert(data.responseText);
                 }
             });
-            if(req_type_id == '8'){
-                $(".btnTransit").show();
-                $(".btnStaging").hide();
-            }
             if(req_by_id == $('#current_user').val()){
                 $("#reissue_label").show();
                 $(".btnReissue").show();
@@ -1956,7 +1940,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         }
         if(requestStatus == '3' || requestStatus == '4'){
             $("#transitItemsModal").show();
-            if(req_type_id == '2' || req_type_id == '3' || req_type_id == '8'){
+            if(req_type_id == '2' || req_type_id == '3'){
                 $('.btnReceive').html('SEND CONFIRMATION');
                 $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
             }

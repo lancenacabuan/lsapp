@@ -2436,20 +2436,25 @@ class StockRequestController extends Controller
             }
         }
 
-        if($request_details->req_type_id == 2 || $request_details->req_type_id == 3 || $request_details->req_type_id == 7 || $request_details->req_type_id == 8 && ($request_details->status_id != 30 && $request_details->status_id != 31)){
-            do{
-                $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-                $key = array();
-                $charLength = strlen($char) - 1;
-                for($i = 0; $i < 25; $i++){
-                    $n = rand(0, $charLength);
-                    $key[] = $char[$n];
-                }
-                $token = implode($key);
-                Requests::where('request_number', $request->request_number)
-                    ->update(['token' => $token]);
+        if($request_details->req_type_id == 2 || $request_details->req_type_id == 3 || $request_details->req_type_id == 7 || $request_details->req_type_id == 8){
+            if($request_details->req_type_id == 8 && ($request_details->status_id == 15 || $request_details->status_id == 30 || $request_details->status_id == 31)){
+                echo(null);
             }
-            while(Requests::query()->select()->where('token',$token)->count() > 1);
+            else{
+                do{
+                    $char = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+                    $key = array();
+                    $charLength = strlen($char) - 1;
+                    for($i = 0; $i < 25; $i++){
+                        $n = rand(0, $charLength);
+                        $key[] = $char[$n];
+                    }
+                    $token = implode($key);
+                    Requests::where('request_number', $request->request_number)
+                        ->update(['token' => $token]);
+                }
+                while(Requests::query()->select()->where('token',$token)->count() > 1);
+            }
         }
 
         if($request_details->req_type_id == '7'){
@@ -2491,7 +2496,7 @@ class StockRequestController extends Controller
             $userlogs->save();
         }
         else{
-            if($request_details->status_id == 30 || $request_details->status_id == 31){
+            if($request_details->req_type_id == 8 && ($request_details->status_id == 15 || $request_details->status_id == 30 || $request_details->status_id == 31)){
                 if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() == 0){
                     $inc1 = 'COMPLETE';
                     $inc2 = 'complete';

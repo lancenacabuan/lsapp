@@ -599,6 +599,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 alert(data.responseText);
                             }
                         });
+                        $(".btnTransit").hide();
                         if(req_by_id == $('#current_user').val()){
                             $("#reissue_label").show();
                             $(".btnReissue").show();
@@ -1933,6 +1934,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     alert(data.responseText);
                 }
             });
+            $(".btnTransit").hide();
             if(req_by_id == $('#current_user').val()){
                 $("#reissue_label").show();
                 $(".btnReissue").show();

@@ -838,10 +838,10 @@ class StockRequestController extends Controller
             ->where('request_number', $request->request_number)
             ->first()
             ->status;
-        if($status == '3' || $status == '4' || $status == '12'){
+        if($status == '3' || $status == '4' || $status == '12' || $status == '30' || $status == '31'){
             $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
                 ->whereIn('request_number', $include)
-                ->whereIn('stocks.status', ['prep','assembly'])
+                ->whereIn('stocks.status', ['prep','staging','assembly'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
                 ->orderBy('item', 'ASC')
@@ -853,7 +853,7 @@ class StockRequestController extends Controller
             $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
             (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id')
                 ->whereIn('request_number', $include)
-                ->whereIn('stocks.status', ['prep','assembly'])
+                ->whereIn('stocks.status', ['prep','staging','assembly'])
                 ->join('items','items.id','stocks.item_id')
                 ->join('categories','categories.id','items.category_id')
                 ->groupBy('category','prodcode','item','uom','serialize','serial','qty','item_id','id')
@@ -1169,7 +1169,7 @@ class StockRequestController extends Controller
         }
         while(!$request_details);
 
-        if($request_details->reqtype == 'SALES'){
+        if($request_details->reqtype == 'SALES' || $request_details->reqtype == 'FOR STAGING'){
             do{
                 $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                     ->join('items', 'items.id', 'stock_request.item')
@@ -1382,7 +1382,7 @@ class StockRequestController extends Controller
         }
         while(!$request_details);
 
-        if($request_details->reqtype == 'SALES'){
+        if($request_details->reqtype == 'SALES' || $request_details->reqtype == 'FOR STAGING'){
             do{
                 $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
                     ->join('items', 'items.id', 'stock_request.item')
@@ -1467,7 +1467,7 @@ class StockRequestController extends Controller
     }
 
     public function reschedRequest(Request $request){
-        if($request->request_type == '4' || $request->request_type == '5' || $request->request_type == '7'){
+        if($request->request_type == '4' || $request->request_type == '5' || $request->request_type == '7' || $request->request_type == '8'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
                     ->update(['status' => '17', 'prepared_by' => auth()->user()->id, 'schedule' => $request->resched]);

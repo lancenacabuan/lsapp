@@ -71,7 +71,7 @@ Route::get('/stocks/add',[StocksController::class,'add']);
 //Stock Requests
 Route::get('/stockrequest',[StockRequestController::class,'stockrequest']);
 Route::get('/stockrequest/reload',[StockRequestController::class,'reload']);
-Route::get('/generatedr',[StockRequestController::class,'generatedr']);
+Route::get('/generateReqNum',[StockRequestController::class,'generateReqNum']);
 Route::get('/getInclusive',[StockRequestController::class,'getInclusive']);
 Route::get('/itemsreq',[StockRequestController::class,'itemsreq']);
 Route::get('/setuom',[StockRequestController::class,'setuom']);
@@ -137,7 +137,6 @@ Route::any('/stockrequest/notify',[StockRequestController::class,'notify']);
 //Stock Transfer
 Route::get('/stocktransfer',[StockTransferController::class,'stocktransfer']);
 Route::get('/stocktransfer/reload',[StockTransferController::class,'reload']);
-Route::get('/generateReqNum',[StockTransferController::class,'generateReqNum']);
 Route::get('/setcategory',[StockTransferController::class,'setcategory']);
 Route::get('/setitems',[StockTransferController::class,'setitems']);
 Route::get('/settransuom',[StockTransferController::class,'settransuom']);
@@ -170,7 +169,6 @@ Route::get('/printTransferRequest',[StockTransferController::class,'printTransfe
 //Assembly
 Route::get('/assembly',[AssemblyController::class,'assembly']);
 Route::get('/assembly/reload',[AssemblyController::class,'reload']);
-Route::get('/assembly/generateReqNum',[AssemblyController::class,'generateReqNum']);
 Route::get('/itemsAssembly',[AssemblyController::class,'itemsAssembly']);
 Route::get('/uomAssembly',[AssemblyController::class,'uomAssembly']);
 Route::any('/assembly/saveReqNum',[AssemblyController::class,'saveReqNum']);

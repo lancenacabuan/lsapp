@@ -75,8 +75,8 @@ function generateReqNum(){
     var request_number = date+result;
 
     $.ajax({
-        type:'get',
-        url:'/generateReqNum',
+        type: 'get',
+        url: '/generateReqNum',
         async: false,
         data:{
             'request_number': request_number

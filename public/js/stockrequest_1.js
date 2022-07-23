@@ -171,7 +171,7 @@ function validate_fileupload(reference_upload){
     }
 }
 
-function generatedr(){
+function generateReqNum(){
     var today = new Date();
     var month = today.getMonth()+1;
     if(month <= 9){
@@ -191,8 +191,8 @@ function generatedr(){
     var request_number = date+result;
 
     $.ajax({
-        type:'get',
-        url:'/generatedr',
+        type: 'get',
+        url: '/generateReqNum',
         async: false,
         data:{
             'request_number': request_number
@@ -203,7 +203,7 @@ function generatedr(){
                 document.getElementById("reqnum").value = request_number;
             }
             else{
-                generatedr();
+                generateReqNum();
             }
         },
         error: function(data){
@@ -223,7 +223,7 @@ $(".btnNewStockRequest").on('click', function(){
 
     $('.modal-body').html();
     $('#newStockRequest').modal('show');
-    generatedr();
+    generateReqNum();
 });
 
 setInterval(runFunction, 0);

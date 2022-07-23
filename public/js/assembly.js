@@ -71,7 +71,7 @@ function generateReqNum(){
 
     $.ajax({
         type: 'get',
-        url: '/assembly/generateReqNum',
+        url: '/generateReqNum',
         async: false,
         data:{
             'request_number': request_number

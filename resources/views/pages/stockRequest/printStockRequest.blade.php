@@ -13,7 +13,7 @@
 @endif
 @endrole
 @role('sales|approver - sales|accounting|merchant') {{---ROLES---}}
-@if($list->req_type_id == '1' || $list->req_type_id == '4' || $list->req_type_id == '5' || $list->req_type_id == '7')
+@if($list->req_type_id == '1' || ($list->req_type_id == '4' && auth()->user()->id != $list->user_id) || $list->req_type_id == '5' || $list->req_type_id == '7')
 <script>
     window.location = '/';
 </script>
@@ -154,7 +154,7 @@
                 <td>&nbsp;</td>
                 <td colspan="2" style="font-weight: bold;" class="tdHide">Address / Branch:</td>
                 <td colspan="2" class="tdHide">{{$list->location}}</td>
-                <td colspan="2" style="font-weight: bold; display: none;" class="tdShow">Assembly Request No.:</td>
+                <td colspan="2" style="font-weight: bold; display: none;" class="tdShow">Original Request No.:</td>
                 <td colspan="2" style="display: none;" class="tdShow">{{$list->assembly_reqnum}}</td>
                 <td colspan="2" style="font-weight: bold; display: none;" class="tdAssembly">Assembled Item Name:</td>
                 <td colspan="2" style="display: none;" class="tdAssembly" id="ellipsis">{{$list1[0]->item_desc ?? 'N/A'}}</td>

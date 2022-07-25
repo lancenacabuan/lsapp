@@ -5,7 +5,7 @@
     This is to inform you that a Stock Request {{$details['action']}}<br></p>
     <strong>Request Number: {{$details['request_number']}}</strong><br>
     @if($details['reqtype'] == 'REPLACEMENT')
-    <strong>Assembly Request No.: {{$details['assembly_reqnum']}}</strong><br>
+    <strong>Original Request No.: {{$details['assembly_reqnum']}}</strong><br>
     @endif
     <strong>Status: {{$details['status']}}</strong><br>
     <p>

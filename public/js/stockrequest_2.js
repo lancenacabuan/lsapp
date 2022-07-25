@@ -361,7 +361,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if($("#current_role").val() == 'accounting' && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '7')){
                         window.location.href = '/stockrequest';
                     }
-                    if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales') && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '6' || req_type_id == '7')){
+                    if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales') && (req_type_id == '1' || (req_type_id == '4' && req_by_id != $('#current_user').val()) || req_type_id == '5' || req_type_id == '6' || req_type_id == '7')){
                         window.location.href = '/stockrequest';
                     }
                     if($("#current_role").val() == 'sales' && $('#current_user').val() != req_by_id){
@@ -787,6 +787,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         var ajax_url = '/dfcItems';
                         $("#receivedItemsModal").show();
                         document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        if(req_type_id != '5'){
+                            document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                        }
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
                         $("#request_info").hide();
@@ -799,6 +802,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         var ajax_url = '/incdfcItems';
                         $("#receivedItemsModal").show();
                         document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        if(req_type_id != '5'){
+                            document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                        }
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE DEFECTIVE ITEM DETAILS';
                         $("#request_info").hide();
@@ -813,12 +819,18 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $("#transitItemsModal").show();
                         $(".prephide").hide();
                         document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        if(req_type_id != '5'){
+                            document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                        }
                         $(".pendshow").show();
                     }
                     if(requestStatus == '23'){
                         var ajax_url = '/incItems';
                         $("#receivedItemsModal").show();
                         document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+                        if(req_type_id != '5'){
+                            document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                        }
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
                         $("#incFooter").hide();
@@ -1725,7 +1737,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if($("#current_role").val() == 'accounting' && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '7')){
             window.location.href = '/stockrequest';
         }
-        if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales') && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '6' || req_type_id == '7')){
+        if(($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales') && (req_type_id == '1' || (req_type_id == '4' && req_by_id != $('#current_user').val()) || req_type_id == '5' || req_type_id == '6' || req_type_id == '7')){
             window.location.href = '/stockrequest';
         }
         if($("#current_role").val() == 'sales' && $('#current_user').val() != req_by_id){
@@ -2151,6 +2163,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             var ajax_url = '/dfcItems';
             $("#receivedItemsModal").show();
             document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            if(req_type_id != '5'){
+                document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
+            }
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
             $("#request_info").hide();
@@ -2163,6 +2178,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             var ajax_url = '/incdfcItems';
             $("#receivedItemsModal").show();
             document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            if(req_type_id != '5'){
+                document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
+            }
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE DEFECTIVE ITEM DETAILS';
             $("#request_info").hide();
@@ -2177,12 +2195,18 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $("#transitItemsModal").show();
             $(".prephide").hide();
             document.getElementById('modalheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            if(req_type_id != '5'){
+                document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
+            }
             $(".pendshow").show();
         }
         if(requestStatus == '23'){
             var ajax_url = '/incItems';
             $("#receivedItemsModal").show();
             document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
+            if(req_type_id != '5'){
+                document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
+            }
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
             $("#incFooter").hide();

@@ -13,7 +13,7 @@
                 <div class="form-inline" style="margin-left: 35px;">
                     <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
                     <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                    <label class="form-control form-control-sm repshow" style="width: 160px; display: none;">Assembly Request No.</label>
+                    <label class="form-control form-control-sm repshow" style="width: 160px; display: none;">Original Request No.</label>
                     <input class="form-control form-control-sm repshow" id="asm_request_num_details" onclick="copyAsmReqNum()" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
                 </div>
                 <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
@@ -155,10 +155,8 @@
                     </div>
                     <div class="pendshow" style="display: none;">
                         <hr>
-                        <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-                        <button type="button" id="btnPending" class="btn btn-primary float-right bp">PENDING DETAILS</button>
-                        <br>
-                        <br>
+                        <button type="button" class="btnPrint btn btn-primary bp mb-2">PRINT PREVIEW</button>
+                        <button type="button" id="btnPending" class="btn btn-primary float-right bp mb-2">PENDING DETAILS</button>
                     </div>
                 </div>
             </div>

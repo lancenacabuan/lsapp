@@ -3288,8 +3288,8 @@ $('#btnReceiveDfc').on('click', function(){
         inctype = 'INCOMPLETE';
     }
     Swal.fire({
-        title: "RECEIVE "+inctype+" DEFECTIVE PARTS?",
-        text: "You are about to RECEIVE these DEFECTIVE PARTS!",
+        title: "RECEIVE "+inctype+" DEFECTIVE ITEMS?",
+        text: "You are about to RECEIVE these DEFECTIVE ITEMS!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -3354,7 +3354,7 @@ $('#btnReceiveDfc').on('click', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide();
-                                    Swal.fire("RECEIVED "+inctype, "DEFECTIVE PARTS", "success");
+                                    Swal.fire("RECEIVED "+inctype, "DEFECTIVE ITEMS", "success");
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
                                 else{
@@ -3371,7 +3371,7 @@ $('#btnReceiveDfc').on('click', function(){
                     }
                     else{
                         $('#detailsStockRequest').hide();
-                        Swal.fire("RECEIVE FAILED", "DEFECTIVE PARTS", "error");
+                        Swal.fire("RECEIVE FAILED", "DEFECTIVE ITEMS", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },

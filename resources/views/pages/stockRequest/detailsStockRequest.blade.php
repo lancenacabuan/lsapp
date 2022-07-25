@@ -14,7 +14,7 @@
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" id="status_label" style="width: 160px;">Status</label>
                 <input class="form-control form-control-sm" id="status_details" style="width: 280px; margin-right: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" type="text" readonly>
-                <label class="form-control form-control-sm dfcshow assethide" style="width: 160px; display: none;">Assembly Request No.</label>
+                <label class="form-control form-control-sm dfcshow assethide" style="width: 160px; display: none;">Original Request No.</label>
                 <input class="form-control form-control-sm dfcshow assethide" id="asm_request_num_details" onclick="copyAsmReqNum()" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
             </div>
             <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
@@ -173,7 +173,7 @@
             </div>
             <div id="warningdfc" class="alert alert-warning rcvDef" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>CANNOT PROCEED:</strong> Please receive first <b>defective items</b> by clicking the DEFECTIVE DETAILS button below before processing replacements.
+                <strong>CANNOT PROCEED:</strong> Please receive first <b>defective items</b> by clicking the <b>DEFECTIVE DETAILS</b> button below before processing replacements.
             </div>
             @endrole
             @role('sales|approver - sales|accounting') {{---ROLES---}}
@@ -495,10 +495,8 @@
             </div>
             <div class="pendshow" style="display: none;">
             <hr>
-            <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-            <button type="button" id="btnPending" class="btn btn-primary float-right bp">PENDING DETAILS</button>
-            <br>
-            <br>
+            <button type="button" class="btnPrint btn btn-primary bp mb-2">PRINT PREVIEW</button>
+            <button type="button" id="btnPending" class="btn btn-primary float-right bp mb-2">PENDING DETAILS</button>
             </div>
         </div>
         </div>

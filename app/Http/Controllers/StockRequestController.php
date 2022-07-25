@@ -2778,16 +2778,25 @@ class StockRequestController extends Controller
             ->where('status', '=', 'dfcreceived')
             ->update(['status' => 'defectives', 'user_id' => auth()->user()->id, 'defectiveDate' => date("Y-m-d H:i:s")]);
 
+        if(Requests::where('request_number', $request->request_number)->first()->request_type == 8){
+            $reqtype = 'For Staging';
+            $items = 'items';
+        }
+        else{
+            $reqtype = 'Assembly';
+            $items = 'parts';
+        }
+
         if($request->inc == 'true'){
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "RECEIVED INCOMPLETE DEFECTIVE ITEMS: User successfully received incomplete defective parts of Assembly Stock Request No. $request->request_number.";
+            $userlogs->activity = "RECEIVED INCOMPLETE DEFECTIVE ITEMS: User successfully received incomplete defective $items of $reqtype Stock Request No. $request->request_number.";
             $userlogs->save();
         }
         else{
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "RECEIVED COMPLETE DEFECTIVE ITEMS: User successfully received complete defective parts of Assembly Stock Request No. $request->request_number.";
+            $userlogs->activity = "RECEIVED COMPLETE DEFECTIVE ITEMS: User successfully received complete defective $items of $reqtype Stock Request No. $request->request_number.";
             $userlogs->save();
         }
 

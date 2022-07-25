@@ -2956,9 +2956,11 @@ $('.btnReceive').on('click', function(){
         return false;
     }
     var inc = 'false';
+    var inctype = 'COMPLETE';
     var req_type_id = $('#req_type_id_details').val();
     if(items.length < item_count){
         inc = 'true';
+        inctype = 'INCOMPLETE';
     }
     if($('#btnReceive').val() == 'SEND CONFIRMATION'){
         var title = 'SEND CONFIRMATION EMAIL?';
@@ -2966,7 +2968,7 @@ $('.btnReceive').on('click', function(){
         var action = 'SEND';
     }
     else{
-        var title = 'RECEIVE STOCK REQUEST?';
+        var title = "RECEIVE "+inctype+" STOCK REQUEST?";
         var text = 'You are about to RECEIVE this Stock Request!';
         var action = 'RECEIVE';
     }
@@ -3043,7 +3045,7 @@ $('.btnReceive').on('click', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide();
-                                    Swal.fire(action+" SUCCESS", "STOCK REQUEST", "success");
+                                    Swal.fire(action+" "+inctype, "STOCK REQUEST", "success");
                                     setTimeout(function(){location.href="/stockrequest"}, 2000);
                                 }
                                 else{

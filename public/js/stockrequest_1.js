@@ -2300,7 +2300,7 @@ $('.transItems tbody').on('click', 'tr', function(){
         return false;
     }
     var requestStatus = $('#status_id_details').val();
-    if(requestStatus == '3' || requestStatus == '4'){
+    if(requestStatus == '3' || requestStatus == '4' || requestStatus == '30' || requestStatus == '31'){
         var table = $('table.transItems').DataTable();
         var data = table.row(this).data();
         item_count = table.data().count();
@@ -2314,9 +2314,11 @@ $('.transItems tbody').on('click', 'tr', function(){
         }
         if(items.length == 0){
             $('.btnReceive').prop('disabled', true);
+            $('.btnReissue').prop('disabled', true);
         }
         else{
             $('.btnReceive').prop('disabled', false);
+            $('.btnReissue').prop('disabled', false);
         }
     }
     if(requestStatus == '9'){
@@ -2950,7 +2952,7 @@ $('.btnReceive').on('click', function(){
     if(items.length < item_count){
         inc = 'true';
     }
-    if(req_type_id == 2 || req_type_id == 3 || req_type_id == 7){
+    if($('#btnReceive').val() == 'SEND CONFIRMATION'){
         var title = 'SEND CONFIRMATION EMAIL?';
         var text = 'The Client/Requester will be sent a confirmation email for the received items!';
         var action = 'SEND';
@@ -2982,6 +2984,7 @@ $('.btnReceive').on('click', function(){
                 data:{
                     'request_number': $('#request_num_details').val(),
                     'request_type': req_type_id,
+                    'status': $('#status_id_details').val(),
                     'inc': inc
                 },
                 success: function(data){

@@ -2085,21 +2085,12 @@ class StockRequestController extends Controller
                     while(!$sql);
                 }
             }
-            if($request->request_type == '8'){
-                if($total == 0){
-                    do{
-                        $sql = Requests::where('request_number', $request->request_number)
-                            ->update(['status' => '30']);
-                    }
-                    while(!$sql);
+            if($request->request_type == '8' && ($request->status == '3' || $request->status == '4')){
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '32']);
                 }
-                else{
-                    do{
-                        $sql = Requests::where('request_number', $request->request_number)
-                            ->update(['status' => '31']);
-                    }
-                    while(!$sql);
-                }
+                while(!$sql);
             }
             else{
                 if($total == 0){
@@ -2437,7 +2428,7 @@ class StockRequestController extends Controller
         }
 
         if($request_details->req_type_id == 2 || $request_details->req_type_id == 3 || $request_details->req_type_id == 7 || $request_details->req_type_id == 8){
-            if($request_details->req_type_id == 8 && ($request_details->status_id == 15 || $request_details->status_id == 30 || $request_details->status_id == 31)){
+            if($request_details->req_type_id == 8 && ($request_details->status_id == 15 || $request_details->status_id == 32)){
                 echo(null);
             }
             else{
@@ -2496,7 +2487,7 @@ class StockRequestController extends Controller
             $userlogs->save();
         }
         else{
-            if($request_details->req_type_id == 8 && ($request_details->status_id == 15 || $request_details->status_id == 30 || $request_details->status_id == 31)){
+            if($request_details->req_type_id == 8 && ($request_details->status_id == 15 || $request_details->status_id == 32)){
                 if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() == 0){
                     $inc1 = 'COMPLETE';
                     $inc2 = 'complete';

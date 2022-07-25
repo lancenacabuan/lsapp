@@ -579,8 +579,8 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         });
                     }
                     if(requestStatus == '30' || requestStatus == '31'){
-                        $("#schedItemsModal").show();
-                        $("#prepheader").html('FOR STAGING ITEM DETAILS');
+                        $("#transitItemsModal").show();
+                        $("#modalheader").html('FOR STAGING ITEM DETAILS');
                         $.ajax({
                             type:'get', 
                             url:'/checkProcessed', 
@@ -599,10 +599,12 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 alert(data.responseText);
                             }
                         });
-                        $(".btnTransit").hide();
                         if(req_by_id == $('#current_user').val()){
+                            $('#receive_label').show();
                             $("#reissue_label").show();
                             $(".btnReissue").show();
+                            $('#btnReceive').val('SEND CONFIRMATION');
+                            $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
                         }
                     }
                     if(requestStatus == '3' || requestStatus == '4'){
@@ -1914,8 +1916,8 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             });
         }
         if(requestStatus == '30' || requestStatus == '31'){
-            $("#schedItemsModal").show();
-            $("#prepheader").html('FOR STAGING ITEM DETAILS');
+            $("#transitItemsModal").show();
+            $("#modalheader").html('FOR STAGING ITEM DETAILS');
             $.ajax({
                 type:'get', 
                 url:'/checkProcessed', 
@@ -1934,10 +1936,12 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     alert(data.responseText);
                 }
             });
-            $(".btnTransit").hide();
             if(req_by_id == $('#current_user').val()){
+                $('#receive_label').show();
                 $("#reissue_label").show();
                 $(".btnReissue").show();
+                $('#btnReceive').val('SEND CONFIRMATION');
+                $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
             }
         }
         if(requestStatus == '3' || requestStatus == '4'){

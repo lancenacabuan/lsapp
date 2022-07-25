@@ -97,8 +97,7 @@
             @role('admin|encoder') {{---ROLES---}}
             <div id="divAssembly" style="display: none;">
             <hr>
-            <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp" disabled>RECEIVE ASSEMBLED</button>
-            <span class="float-right" style="width: 10px;">&nbsp;</span>
+            <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp ml-2" disabled>RECEIVE ASSEMBLED</button>
             <button type="button" id="btnShowDetails" class="btn btn-primary float-right bp">SHOW DETAILS</button>
             </div>
             @endrole
@@ -262,8 +261,7 @@
             @role('sales') {{---ROLES---}}
             <button type="button" id="btnDelete" class="btn btn-danger bp mt-4">DELETE</button>
             <button type="button" id="btnSaveChanges" class="btn btn-success bp my-4 float-right" style="width: 140px; display: none;">SAVE CHANGES</button>
-            <button type="button" id="btnEditDetails" class="btn btn-primary bp my-4 float-right" style="width: 140px; display: none;">EDIT DETAILS</button>
-            <span class="btnCancelDetails float-right" style="width: 10px; display: none;">&nbsp;</span>
+            <button type="button" id="btnEditDetails" class="btn btn-primary bp my-4 float-right ml-2" style="width: 140px; display: none;">EDIT DETAILS</button>
             <button type="button" class="btnCancelDetails btnClose btn btn-primary bp mt-4 float-right" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
             @endrole
         </div>
@@ -328,12 +326,6 @@
             <h6 id="prepheader" class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
-            @role('sales') {{---ROLES---}}
-            <div id="reissue_label" class="alert alert-info" role="alert" style="display: none;">
-                <i class='fa fa-info-circle'></i>
-                <strong>INFO:</strong> You can select table rows to <b>re-issue items</b> for another request then click the RE-ISSUE button below.
-            </div>
-            @endrole
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                 <input class="form-control form-control-sm" id="prep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
@@ -389,7 +381,6 @@
             @endrole
             <br>
             <hr>
-            <input type="button" class="btn btn-primary float-right bp btnReissue" style="display: none;" value="RE-ISSUE" disabled>
             @role('admin|encoder') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp btnTransit" value="FOR RECEIVING">
             @endrole
@@ -410,6 +401,10 @@
             <div id="demoreceive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please select table rows to confirm items <b>FOR SALE or FOR RETURN</b> then click the corresponding button below.
+            </div>
+            <div id="reissue_label" class="alert alert-info" role="alert" style="display: none;">
+                <i class='fa fa-info-circle'></i>
+                <strong>INFO:</strong> You can select table rows to <b>re-issue items</b> for another request then click the RE-ISSUE button below.
             </div>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
@@ -477,15 +472,14 @@
             <div class="prephide soldhide">
             <hr>
             @role('sales') {{---ROLES---}}
-            <button type="button" class="btn btn-primary float-right bp btnReceive" disabled>RECEIVE</button>
-            <button type="button" id="btnSale" class="btn btn-primary float-right bp" style="display: none;" disabled>SALE</button>
-            <span class="float-right" style="width: 10px;">&nbsp;</span>
+            <input type="button" class="btn btn-primary float-right bp btnReceive ml-2" id="btnReceive" value="RECEIVE" disabled>
+            <input type="button" class="btn btn-primary float-right bp btnReissue" style="display: none;" value="RE-ISSUE" disabled>
+            <button type="button" id="btnSale" class="btn btn-primary float-right bp ml-2" style="display: none;" disabled>SALE</button>
             <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;" disabled>RETURN</button>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
             <button type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" disabled>RECEIVE</button>
-            <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp" style="display: none;" disabled>RECEIVE ASSEMBLED</button>
-            <span class="float-right" style="width: 10px;">&nbsp;</span>
+            <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp ml-2" style="display: none;" disabled>RECEIVE ASSEMBLED</button>
             <button type="button" id="btnHideDetails" class="btn btn-primary float-right bp" style="display: none;">HIDE DETAILS</button>
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
@@ -568,8 +562,7 @@
             <button type="button" class="btn btn-primary float-right bp btnReceiveReturned" style="display: none;" disabled>RECEIVE</button>
             <input type="button" class="btn btn-primary float-right bp" id="btnReschedule" style="display: none;" value="RESCHEDULE">
             <input type="button" class="btn btn-primary float-right bp btnTransit" style="display: none;" value="FOR RECEIVING">
-            <input type="button" class="btn btn-primary float-right bp rcvShow" id="btnReceiveDfc" style="display: none;" value="RECEIVE DEFECTIVE" disabled>
-            <span class="float-right rcvShow" style="width: 10px; display: none;">&nbsp;</span>
+            <input type="button" class="btn btn-primary float-right bp rcvShow ml-2" id="btnReceiveDfc" style="display: none;" value="RECEIVE DEFECTIVE" disabled>
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="showMore" style="display: none;" value="SHOW DETAILS">
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="showLess" style="display: none;" value="HIDE DETAILS">
             <br>
@@ -645,8 +638,7 @@
             <textarea style="margin-bottom: 8px; font-size: 12px; resize: none;" class="form-control" rows="5" name="x_item" id="x_item" readonly></textarea>
             <input style="margin-bottom: 8px; font-size: 12px;" class="form-control form-control-sm" type="text" name="x_serial" id="x_serial" placeholder="Input Item Serial" autocomplete="off">
             <br>
-            <button type="button" id="btnEdit" class="btn btn-primary float-right bp" style="zoom: 80%;">EDIT</button>
-            <span class="float-right" style="width: 5px;">&nbsp;</span>
+            <button type="button" id="btnEdit" class="btn btn-primary float-right bp ml-2" style="zoom: 80%;">EDIT</button>
             <button type="button" id="btnClear" class="btn btn-primary float-right bp" style="zoom: 80%;">CLEAR</button>
         </div>
     </div>

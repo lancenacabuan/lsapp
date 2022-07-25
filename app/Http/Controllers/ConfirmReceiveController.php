@@ -168,6 +168,15 @@ class ConfirmReceiveController extends Controller
         if(Requests::where('request_number', $request->request_number)->where('token', $request->token)->count() == 0){
             return redirect()->to('/');
         }
+
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
+        $include[] = $request->request_number;
+
+        Stock::whereIn('request_number', $include)->where('status', 'staging')
+            ->update(['batch' => 'new', 'status' => 'out']);
+
         do{
             $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, status.id AS status_id, client_name, location, contact, remarks, reference, orderID, schedule, needdate, prepdate, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email')
                 ->where('requests.request_number', $request->request_number)
@@ -185,11 +194,6 @@ class ConfirmReceiveController extends Controller
                 ->first();
         }
         while(!$prep);
-
-        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
-            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
-        }
-        $include[] = $request->request_number;
 
         if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
             do{

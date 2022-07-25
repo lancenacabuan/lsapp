@@ -21,6 +21,7 @@
 @endrole
 <input type="hidden" id="req_num" value="{{$list->req_num}}">
 <input type="hidden" id="status" value="{{$list->status}}">
+<input type="hidden" id="verify" value="{{$list->verify}}">
 <div class="container-fluid">
     <button id="btnPrint" type="button" class="btn btn-primary bp" style="margin-right: 5px;">PRINT</button>
     <button id="btnSavePDF" type="button" class="btn btn-primary bp">SAVE AS PDF</button>
@@ -659,7 +660,7 @@ $(document).ready(function(){
     if($('.tblIncomplete tbody tr').length == 0){
         $('.tblIncomplete').hide();
     }
-    if($('.tblDefective tbody tr').length == 0){
+    if($('.tblDefective tbody tr').length == 0 || $('#verify').val() == 'Confirmed'){
         $('.tblDefective').hide();
     }
     if($('.tblPending tbody tr').length == 0){

@@ -326,6 +326,10 @@
             <h6 id="prepheader" class="modal-title w-100">SCHEDULED ITEM DETAILS</h6>
         </div>
         <div class="modal-body">
+            <div id="defective_label" class="alert alert-warning" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>NOTE:</strong> Select table rows to confirm <b>defective items</b> then click the <b>DEFECTIVE</b> button below. Otherwise, click the <b>FOR STAGING</b> button to proceed.
+            </div>
             <div class="form-inline" style="margin-left: 35px;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Scheduled By</label>
                 <input class="form-control form-control-sm" id="prep_by" style="width: 280px; margin-bottom: 10px;" type="text" readonly>
@@ -381,6 +385,10 @@
             @endrole
             <br>
             <hr>
+            @role('sales') {{---ROLES---}}
+            <button type="button" id="btnStaging" class="btn btn-primary float-right bp" style="display: none;">FOR STAGING</button>
+            <button type="button" id="btnDefective" class="btn btn-primary float-right bp" style="display: none;">DEFECTIVE</button>
+            @endrole
             @role('admin|encoder') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp btnTransit" value="FOR RECEIVING">
             @endrole
@@ -396,7 +404,7 @@
             @role('sales') {{---ROLES---}}
             <div id="receive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>NOTE:</strong> <span id="receive_text">Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.</span>
+                <strong>NOTE:</strong> <span id="receive_text">Please select table rows to confirm <b>received items</b> then click the <b>RECEIVE</b> button below.</span>
             </div>
             <div id="demoreceive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
@@ -404,13 +412,13 @@
             </div>
             <div id="reissue_label" class="alert alert-info" role="alert" style="display: none;">
                 <i class='fa fa-info-circle'></i>
-                <strong>INFO:</strong> You can select table rows to <b>re-issue items</b> for another request then click the RE-ISSUE button below.
+                <strong>INFO:</strong> You can select table rows to <b>re-issue items</b> for another request then click the <b>RE-ISSUE</b> button below.
             </div>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
             <div id="receive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>NOTE:</strong> <span id="receive_text">Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.</span>
+                <strong>NOTE:</strong> <span id="receive_text">Please select table rows to confirm <b>received items</b> then click the <b>RECEIVE</b> button below.</span>
             </div>
             @endrole
             <div class="prephide">
@@ -502,19 +510,19 @@
             @role('sales') {{---ROLES---}}
             <div id="increceive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the <b>RECEIVE</b> button below.
             </div>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
             <div id="increceive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the <b>RECEIVE</b> button below.
             </div>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
             <div id="retreceive_label" class="alert alert-primary" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
-                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+                <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the <b>RECEIVE</b> button below.
             </div>
             <div class="form-inline divResched" style="margin-left: 35px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>

@@ -1556,7 +1556,7 @@ $('#btnDefective').on('click', function(){
                             success: function(data){
                                 if(data == 'true'){
                                     $('#loading').hide();
-                                    Swal.fire("REQUEST SUCCESS", "ASSEMBLY REQUEST", "success");
+                                    Swal.fire("REQUEST SUCCESS", "REPLACEMENT REQUEST", "success");
                                     setTimeout(function(){location.href="/assembly"}, 2000);
                                 }
                                 else{
@@ -1573,7 +1573,7 @@ $('#btnDefective').on('click', function(){
                     }
                     else{
                         $('#detailsAssembly').hide();
-                        Swal.fire("REQUEST FAILED", "ASSEMBLY REQUEST", "error");
+                        Swal.fire("REQUEST FAILED", "REPLACEMENT REQUEST", "error");
                         setTimeout(function(){location.href="/assembly"}, 2000);
                     }
                 },

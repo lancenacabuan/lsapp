@@ -83,7 +83,7 @@
                 <div class="modal-body">
                     <div id="receive_label" class="alert alert-primary" role="alert" style="display: none;">
                         <i class='fa fa-exclamation-triangle'></i>
-                        <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+                        <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the <b>RECEIVE</b> button below.
                     </div>
                     <div class="prephide">
                         <div class="form-inline" style="margin-left: 35px;">
@@ -127,7 +127,7 @@
                 <div class="modal-body">
                     <div id="increceive_label" class="alert alert-primary" role="alert" style="display: none;">
                         <i class='fa fa-exclamation-triangle'></i>
-                        <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the RECEIVE button below.
+                        <strong>NOTE:</strong> Please select table rows to confirm <b>received items</b> then click the <b>RECEIVE</b> button below.
                     </div>
                     <div class="form-inline divResched" style="margin-left: 35px; display: none;">
                         <label class="form-control form-control-sm" style="width: 160px; margin-bottom: 10px;">Rescheduled By</label>

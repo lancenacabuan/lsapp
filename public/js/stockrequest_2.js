@@ -94,7 +94,7 @@ if($("#current_role").val() == 'sales'){
                     else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16' || row.status_id == '30' || row.status_id == '31'){
                         return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
+                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27' || row.status_id == '32'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '19' || row.status_id == '20'){
@@ -230,7 +230,7 @@ else{
                     else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16' || row.status_id == '30' || row.status_id == '31'){
                         return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27'){
+                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27' || row.status_id == '32'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '19' || row.status_id == '20'){
@@ -605,6 +605,33 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $(".btnReissue").show();
                             $('#btnReceive').val('SEND CONFIRMATION');
                             $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
+                        }
+                    }
+                    if(requestStatus == '32'){
+                        $("#schedItemsModal").show();
+                        $("#prepheader").html('FOR INSPECTION ITEM DETAILS');
+                        $.ajax({
+                            type:'get', 
+                            url:'/checkProcessed', 
+                            data:{
+                                'request_number': $('#request_num_details').val()
+                            }, 
+                            success: function(data){
+                                if(data != 0){
+                                    $("#receivedItemsModal").show();
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                        $('.btnTransit').hide();
+                        if(req_by_id == $('#current_user').val()){
+                            $('#defective_label').show();
+                            $('#btnStaging').show();
                         }
                     }
                     if(requestStatus == '3' || requestStatus == '4'){
@@ -1942,6 +1969,33 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $(".btnReissue").show();
                 $('#btnReceive').val('SEND CONFIRMATION');
                 $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
+            }
+        }
+        if(requestStatus == '32'){
+            $("#schedItemsModal").show();
+            $("#prepheader").html('FOR INSPECTION ITEM DETAILS');
+            $.ajax({
+                type:'get', 
+                url:'/checkProcessed', 
+                data:{
+                    'request_number': $('#request_num_details').val()
+                }, 
+                success: function(data){
+                    if(data != 0){
+                        $("#receivedItemsModal").show();
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+            $('.btnTransit').hide();
+            if(req_by_id == $('#current_user').val()){
+                $('#defective_label').show();
+                $('#btnStaging').show();
             }
         }
         if(requestStatus == '3' || requestStatus == '4'){

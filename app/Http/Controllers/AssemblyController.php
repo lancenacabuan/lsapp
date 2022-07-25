@@ -301,9 +301,19 @@ class AssemblyController extends Controller
             while(!$dump);
         }
 
+        if(Requests::where('request_number', $request->request_number)->first()->request_type == 8){
+            $reqtype = 'For Staging';
+            $items = 'items';
+            $info = strtoupper($reqtype);
+        }
+        else{
+            $reqtype = 'Assembly';
+            $items = 'parts';
+            $info = strtoupper($reqtype);
+        }
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "REQUESTED DEFECTIVE REPLACEMENTS: User successfully requested replacements for defective parts of Assembly Stock Request No. $request->request_number.";
+        $userlogs->activity = "REQUESTED DEFECTIVE $info REPLACEMENTS: User successfully requested replacements for defective $items of $reqtype Stock Request No. $request->request_number.";
         $userlogs->save();
 
         return response('true');

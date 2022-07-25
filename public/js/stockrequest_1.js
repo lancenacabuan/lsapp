@@ -171,6 +171,7 @@ function validate_fileupload(reference_upload){
     }
 }
 
+var generatedReqNum;
 function generateReqNum(){
     var today = new Date();
     var month = today.getMonth()+1;
@@ -199,6 +200,7 @@ function generateReqNum(){
         },
         success: function(data){
             if(data == 'unique'){
+                generatedReqNum = request_number;
                 document.getElementById("request_num").value = request_number;
                 document.getElementById("reqnum").value = request_number;
             }
@@ -2273,7 +2275,7 @@ $('.schedItems1 tbody').on('click', 'tr', function(){
     var req_by_id = $('#requested_by_id_details').val();
     var req_type_id = $('#req_type_id_details').val();
     var requestStatus = $('#status_id_details').val();
-    if(($("#current_user").val() == req_by_id) && req_type_id == '8' && (requestStatus == '30' || requestStatus == '31')){
+    if($("#current_user").val() == req_by_id && req_type_id == '8' && requestStatus == '32'){
         var table = $('table.schedItems1').DataTable();
         var data = table.row(this).data();
         item_count = table.data().count();
@@ -2286,10 +2288,12 @@ $('.schedItems1 tbody').on('click', 'tr', function(){
             items.push(data.id);
         }
         if(items.length == 0){
-            $('.btnReissue').prop('disabled', true);
+            $('#btnStaging').show();
+            $('#btnDefective').hide();
         }
         else{
-            $('.btnReissue').prop('disabled', false);
+            $('#btnStaging').hide();
+            $('#btnDefective').show();
         }
     }
 });
@@ -3160,6 +3164,108 @@ $('.btnReceiveReturned').on('click', function(){
                     else{
                         $('#detailsStockRequest').hide();
                         Swal.fire("RECEIVE FAILED", "RETURNED ITEMS", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
+});
+
+$('#btnDefective').on('click', function(){
+    generateReqNum();
+    Swal.fire({
+        title: "REQUEST REPLACEMENTS?",
+        text: "You are about to REQUEST REPLACEMENTS for these DEFECTIVE FOR STAGING ITEMS!",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
+    })
+    .then((result) => {
+        if(result.isConfirmed){
+            $.ajax({
+                type: 'post',
+                url: '/assembly/defectiveRequest',
+                async: false,
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'generatedReqNum': generatedReqNum
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        for(var i=0; i < items.length; i++){
+                            $.ajax({
+                                type: 'post',
+                                url: '/assembly/defectiveItems',
+                                async: false,
+                                headers:{
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data:{
+                                    'generatedReqNum': generatedReqNum,
+                                    'id': items[i]
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        return true;
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        $('#detailsStockRequest').modal('hide');
+                        $('#loading').show();
+                        $.ajax({
+                            type: 'post',
+                            url: '/assembly/logDefective',
+                            headers:{
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data:{
+                                'request_number': $('#request_num_details').val(),
+                                'generatedReqNum': generatedReqNum
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide();
+                                    Swal.fire("REQUEST SUCCESS", "REPLACEMENT REQUEST", "success");
+                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    }
+                    else{
+                        $('#detailsStockRequest').hide();
+                        Swal.fire("REQUEST FAILED", "REPLACEMENT REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },

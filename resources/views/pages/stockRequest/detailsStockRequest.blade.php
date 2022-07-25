@@ -481,6 +481,7 @@
             <hr>
             @role('sales') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp btnReceive ml-2" id="btnReceive" value="RECEIVE" disabled>
+            <input type="button" class="btn btn-primary float-right bp btnReceive ml-2" style="display: none;" id="btnReceiveRpl" value="RECEIVE" disabled>
             <input type="button" class="btn btn-primary float-right bp btnReissue" style="display: none;" value="RE-ISSUE" disabled>
             <button type="button" id="btnSale" class="btn btn-primary float-right bp ml-2" style="display: none;" disabled>SALE</button>
             <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;" disabled>RETURN</button>

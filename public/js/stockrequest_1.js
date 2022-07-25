@@ -1566,7 +1566,7 @@ $('#btnReason').on('click', function(){
     }
 });
 
-$('.btnStaging').on('click', function(){
+$('#btnStaging').on('click', function(){
     Swal.fire({
         title: "FOR STAGING?",
         text: "You are about to move these items FOR STAGING!",
@@ -2658,6 +2658,7 @@ $("#btnProceed").unbind('click').click(function(){
                                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                             },
                                             data:{
+                                                'orig_reqnum': $('#asm_request_num_details').val(),
                                                 'request_number': reqnum,
                                                 'req_type_id': req_type_id,
                                                 'stock_id': $('#serial'+n).val(),
@@ -3372,6 +3373,117 @@ $('#btnReceiveDfc').on('click', function(){
                     else{
                         $('#detailsStockRequest').hide();
                         Swal.fire("RECEIVE FAILED", "DEFECTIVE ITEMS", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    });
+});
+
+$('#btnReceiveRpl').on('click', function(){
+    var inc = 'false';
+    var inctype = 'COMPLETE';
+    if(items.length < item_count){
+        inc = 'true';
+        inctype = 'INCOMPLETE';
+    }
+    Swal.fire({
+        title: "RECEIVE "+inctype+" REPLACEMENTS?",
+        text: "You are about to RECEIVE these REPLACEMENTS!",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
+    })
+    .then((result) => {
+        if(result.isConfirmed){
+            $.ajax({
+                type: 'post',
+                url: '/receiveReplacement',
+                async: false,
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    'request_number': $('#request_num_details').val(),
+                    'assembly_reqnum': $('#asm_request_num_details').val(),
+                    'request_type': $('#req_type_id_details').val(),
+                    'inc': inc
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        for(var i=0; i < items.length; i++){
+                            $.ajax({
+                                type: 'post',
+                                url: '/replacementItems',
+                                async: false,
+                                headers:{
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data:{
+                                    'request_number': $('#request_num_details').val(),
+                                    'status': $('#status_id_details').val(),
+                                    'id': items[i]
+                                },
+                                success: function(data){
+                                    if(data == 'true'){
+                                        return true;
+                                    }
+                                    else{
+                                        return false;
+                                    }
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+                        }
+                        $('#detailsStockRequest').modal('hide');
+                        $('#loading').show();
+                        $.ajax({
+                            type: 'post',
+                            url: '/logReplacement',
+                            headers:{
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data:{
+                                'request_number': $('#request_num_details').val(),
+                                'status': $('#status_id_details').val(),
+                                'inc': inc
+                            },
+                            success: function(data){
+                                if(data == 'true'){
+                                    $('#loading').hide();
+                                    Swal.fire("RECEIVED "+inctype, "REPLACEMENT REQUEST", "success");
+                                    setTimeout(function(){location.href="/assembly"}, 2000);
+                                }
+                                else{
+                                    return false;
+                                }
+                            },
+                            error: function(data){
+                                if(data.status == 401){
+                                    window.location.href = '/stockrequest';
+                                }
+                                alert(data.responseText);
+                            }
+                        });
+                    }
+                    else{
+                        $('#detailsStockRequest').hide();
+                        Swal.fire("RECEIVE FAILED", "REPLACEMENT REQUEST", "error");
                         setTimeout(function(){location.href="/stockrequest"}, 2000);
                     }
                 },

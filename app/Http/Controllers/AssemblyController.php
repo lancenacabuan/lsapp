@@ -266,7 +266,7 @@ class AssemblyController extends Controller
     public function defectiveItems(Request $request){
         do{
             $sql = Stock::where('id', $request->id)
-                ->update(['status' => 'defective', 'user_id' => auth()->user()->id]);
+                ->update(['status' => 'defective', 'warranty_id' => '', 'batch' => '', 'user_id' => auth()->user()->id]);
         }
         while(!$sql);
         
@@ -274,8 +274,11 @@ class AssemblyController extends Controller
     }
 
     public function logDefective(Request $request){
+        Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['out','staging','asset','demo','assembly','assembled'])
+            ->update(['batch' => '']);
         do{
-            $list = Stock::select('request_number', 'item_id',
+            $list = Stock::select('request_number', 'item_id', 'warranty_id',
                 DB::raw
                     (
                         "SUM(CASE WHEN stocks.status = 'defective' THEN 1 ELSE 0 END) as quantity"
@@ -283,7 +286,7 @@ class AssemblyController extends Controller
                 )
                 ->where('request_number', $request->request_number)
                 ->where('status', 'defective')
-                ->groupby('request_number', 'item_id')
+                ->groupby('request_number', 'item_id', 'warranty_id')
                 ->get();
         }
         while(!$list);
@@ -293,6 +296,7 @@ class AssemblyController extends Controller
                 $stockRequest = new StockRequest;
                 $stockRequest->request_number = $request->generatedReqNum;
                 $stockRequest->item = $key->item_id;
+                $stockRequest->warranty = $key->warranty_id;
                 $stockRequest->quantity = $key->quantity;
                 $stockRequest->served = '0';
                 $stockRequest->pending = $key->quantity;
@@ -313,7 +317,7 @@ class AssemblyController extends Controller
         }
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "REQUESTED DEFECTIVE $info REPLACEMENTS: User successfully requested replacements for defective $items of $reqtype Stock Request No. $request->request_number.";
+        $userlogs->activity = "REQUESTED $info DEFECTIVE REPLACEMENTS: User successfully requested replacements for defective $items of $reqtype Stock Request No. $request->request_number.";
         $userlogs->save();
 
         return response('true');

@@ -1510,7 +1510,7 @@ class StockRequestController extends Controller
     }
 
     public function stageRequest(Request $request){
-        if($request->status == '2'){
+        if(StockRequest::where('request_number', $request->request_number)->sum('pending') == 0){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
                     ->update(['status' => '30']);
@@ -1518,16 +1518,13 @@ class StockRequestController extends Controller
             while(!$sql);
             $sched = 'FOR STAGING';
         }
-        else if($request->status == '5'){
+        else{
             do{
                 $sql = Requests::where('request_number', $request->request_number)
                     ->update(['status' => '31']);
             }
             while(!$sql);
             $sched = 'PARTIAL FOR STAGING';
-        }
-        else{
-            return response('false');
         }
 
         if(!$sql){
@@ -1933,20 +1930,40 @@ class StockRequestController extends Controller
     }
 
     public function prepareItems(Request $request){
-        if($request->req_type_id == '4' || $request->req_type_id == '5'){
+        if($request->req_type_id == '5'){
             do{
                 $sql = Stock::where('id',$request->stock_id)
                     ->update(['status' => 'assembly', 'user_id' => auth()->user()->id, 'request_number' => $request->request_number]);
             }
             while(!$sql);
         }
-        else{
+        else if($request->req_type_id == '4' && Requests::where('request_number', $request->orig_reqnum)->first()->request_type == '5'){
             do{
-                if($request->warranty_id == 'null'){
-                    $warranty_id = '';
+                $sql = Stock::where('id',$request->stock_id)
+                    ->update(['status' => 'assembly', 'user_id' => auth()->user()->id, 'request_number' => $request->request_number]);
+            }
+            while(!$sql);
+        }
+        else if($request->req_type_id == '4' && Requests::where('request_number', $request->orig_reqnum)->first()->request_type == '8'){
+            do{
+                if($request->warranty_id > -1){
+                    $warranty_id = $request->warranty_id;
                 }
                 else{
+                    $warranty_id = '';
+                }
+                $sql = Stock::where('id',$request->stock_id)
+                    ->update(['status' => 'staging', 'user_id' => auth()->user()->id, 'warranty_id' => $warranty_id, 'request_number' => $request->request_number]);
+            }
+            while(!$sql);
+        }
+        else{
+            do{
+                if($request->warranty_id > -1){
                     $warranty_id = $request->warranty_id;
+                }
+                else{
+                    $warranty_id = '';
                 }
                 $sql = Stock::where('id',$request->stock_id)
                     ->update(['status' => 'prep', 'user_id' => auth()->user()->id, 'warranty_id' => $warranty_id, 'request_number' => $request->request_number]);
@@ -2654,6 +2671,83 @@ class StockRequestController extends Controller
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
             $userlogs->activity = "RECEIVED $inc1 STOCK REQUEST: User successfully received $inc2 requested items of Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
+        return response('true');
+    }
+
+    public function receiveReplacement(Request $request){
+        if($request->inc == 'true'){
+            Requests::where('request_number', $request->request_number)
+                ->update(['status' => '15']);
+            Requests::where('request_number', $request->assembly_reqnum)
+                ->update(['status' => '23']);
+        }
+        else{
+            Requests::where('request_number', $request->request_number)
+                ->update(['status' => '19']);
+            if(StockRequest::where('request_number', $request->assembly_reqnum)->sum('pending') == 0){
+                Requests::where('request_number', $request->assembly_reqnum)
+                    ->update(['status' => '30']);
+            }
+            else{
+                Requests::where('request_number', $request->assembly_reqnum)
+                    ->update(['status' => '31']);
+            }
+        }
+
+        return response('true');
+    }
+
+    public function replacementItems(Request $request){
+        if($request->status == '3'){
+            do{
+                $sql = Stock::where('id', $request->id)
+                    ->update(['status' => 'received', 'user_id' => auth()->user()->id]);
+            }
+            while(!$sql);
+        }
+        if($request->status == '17'){
+            do{
+                $sql = Stock::where('id', $request->id)
+                    ->update(['status' => 'staging', 'user_id' => auth()->user()->id]);
+            }
+            while(!$sql);
+        }
+        
+        return response('true');
+    }
+
+    public function logReplacement(Request $request){
+        if($request->status == '3'){
+            Stock::where('request_number', $request->request_number)
+                ->where('status', '=', 'staging')
+                ->update(['status' => 'incomplete', 'user_id' => auth()->user()->id]);
+            
+            Stock::where('request_number', $request->request_number)
+                ->where('status', '=', 'received')
+                ->update(['status' => 'staging', 'user_id' => auth()->user()->id]);
+        }
+        Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['staging'])
+            ->where('batch', '=', 'new')
+            ->update(['batch' => 'old']);
+        Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['staging'])
+            ->where('batch', '=', '')
+            ->update(['batch' => 'new']);
+
+        if($request->inc == 'true'){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED INCOMPLETE FOR STAGING REPLACEMENTS: User successfully received incomplete replacement items of For Staging Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+        else{
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "RECEIVED COMPLETE FOR STAGING REPLACEMENTS: User successfully received complete replacement items of For Staging Stock Request No. $request->request_number.";
             $userlogs->save();
         }
 

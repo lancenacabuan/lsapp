@@ -266,7 +266,7 @@ class AssemblyController extends Controller
     public function defectiveItems(Request $request){
         do{
             $sql = Stock::where('id', $request->id)
-                ->update(['status' => 'defective', 'warranty_id' => '', 'batch' => '', 'user_id' => auth()->user()->id]);
+                ->update(['status' => 'defective', 'user_id' => auth()->user()->id]);
         }
         while(!$sql);
         

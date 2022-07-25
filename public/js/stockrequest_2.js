@@ -749,6 +749,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         if(req_type_id != '5'){
                             document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
                         }
+                        if(req_type_id == '8'){
+                            document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
+                        }
                         $("#incItemsModal").show();
                         $(".divResched").show();
                         // $('#resched').attr('max', maxDate);
@@ -764,6 +767,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         if(req_type_id != '5'){
                             document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
                         }
+                        if(req_type_id == '8'){
+                            document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
+                        }
                         $("#incItemsModal").show();
                         $(".divResched1").show();
                         $(".btnTransit").show();
@@ -774,6 +780,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         if(req_type_id != '5'){
                             document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                        }
+                        if(req_type_id == '8'){
+                            document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
                         }
                         $("#incItemsModal").show();
                         $(".divResched1").show();
@@ -786,6 +795,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if(requestStatus == '17' && $("#current_role").val() == 'sales'){
                         $('#increceive_label').show();
                         $("#inc2Footer").show();
+                        if(req_type_id == '4'){
+                            $("#btnReceiveInc").hide();
+                            $("#btnReceiveRplInc").show();
+                        }
                     }
                     if(requestStatus == '18'){
                         var ajax_url = '/dfcItems';
@@ -794,6 +807,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         if(req_type_id != '5'){
                             document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
                         }
+                        if(req_type_id == '8'){
+                            document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
+                        }
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
                         $("#request_info").hide();
@@ -801,6 +817,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $(".rcvShow").show();
                         $("#showMore").show();
                         $("#showLess").hide();
+                        if($("#current_role").val() == 'sales'){
+                            $("#request_info").show();
+                            $("#receivedItemsModal").show();
+                        }
                     }
                     if(requestStatus == '21'){
                         var ajax_url = '/incdfcItems';
@@ -809,6 +829,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         if(req_type_id != '5'){
                             document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
                         }
+                        if(req_type_id == '8'){
+                            document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
+                        }
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE DEFECTIVE ITEM DETAILS';
                         $("#request_info").hide();
@@ -816,6 +839,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $(".rcvShow").show();
                         $("#showMore").show();
                         $("#showLess").hide();
+                        if($("#current_role").val() == 'sales'){
+                            $("#request_info").show();
+                            $("#receivedItemsModal").show();
+                        }
                     }
                     if(requestStatus == '22'){
                         var rcv_url = 'receivedItems';
@@ -826,6 +853,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         if(req_type_id != '5'){
                             document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                         }
+                        if(req_type_id == '8'){
+                            document.getElementById('modalheader').innerHTML = 'FOR STAGING ITEM DETAILS';
+                        }
                         $(".pendshow").show();
                     }
                     if(requestStatus == '23'){
@@ -834,6 +864,9 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
                         if(req_type_id != '5'){
                             document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
+                        }
+                        if(req_type_id == '8'){
+                            document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
                         }
                         $("#incItemsModal").show();
                         document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';
@@ -2129,6 +2162,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             if(req_type_id != '5'){
                 document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
             }
+            if(req_type_id == '8'){
+                document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
+            }
             $("#incItemsModal").show();
             $(".divResched").show();
             // $('#resched').attr('max', maxDate);
@@ -2144,6 +2180,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             if(req_type_id != '5'){
                 document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
             }
+            if(req_type_id == '8'){
+                document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
+            }
             $("#incItemsModal").show();
             $(".divResched1").show();
             $(".btnTransit").show();
@@ -2154,6 +2193,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             if(req_type_id != '5'){
                 document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
+            }
+            if(req_type_id == '8'){
+                document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
             }
             $("#incItemsModal").show();
             $(".divResched1").show();
@@ -2166,6 +2208,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if(requestStatus == '17' && $("#current_role").val() == 'sales'){
             $('#increceive_label').show();
             $("#inc2Footer").show();
+            if(req_type_id == '4'){
+                $("#btnReceiveInc").hide();
+                $("#btnReceiveRplInc").show();
+            }
         }
         if(requestStatus == '18'){
             var ajax_url = '/dfcItems';
@@ -2174,6 +2220,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             if(req_type_id != '5'){
                 document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
             }
+            if(req_type_id == '8'){
+                document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
+            }
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'DEFECTIVE ITEM DETAILS';
             $("#request_info").hide();
@@ -2181,6 +2230,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $(".rcvShow").show();
             $("#showMore").show();
             $("#showLess").hide();
+            if($("#current_role").val() == 'sales'){
+                $("#request_info").show();
+                $("#receivedItemsModal").show();
+            }
         }
         if(requestStatus == '21'){
             var ajax_url = '/incdfcItems';
@@ -2189,6 +2242,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             if(req_type_id != '5'){
                 document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
             }
+            if(req_type_id == '8'){
+                document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
+            }
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE DEFECTIVE ITEM DETAILS';
             $("#request_info").hide();
@@ -2196,6 +2252,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $(".rcvShow").show();
             $("#showMore").show();
             $("#showLess").hide();
+            if($("#current_role").val() == 'sales'){
+                $("#request_info").show();
+                $("#receivedItemsModal").show();
+            }
         }
         if(requestStatus == '22'){
             var rcv_url = 'receivedItems';
@@ -2206,6 +2266,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             if(req_type_id != '5'){
                 document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
             }
+            if(req_type_id == '8'){
+                document.getElementById('modalheader').innerHTML = 'FOR STAGING ITEM DETAILS';
+            }
             $(".pendshow").show();
         }
         if(requestStatus == '23'){
@@ -2214,6 +2277,9 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
             if(req_type_id != '5'){
                 document.getElementById('receivedheader').innerHTML = 'RECEIVED ITEM DETAILS';
+            }
+            if(req_type_id == '8'){
+                document.getElementById('receivedheader').innerHTML = 'FOR STAGING ITEM DETAILS';
             }
             $("#incItemsModal").show();
             document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE REPLACEMENT ITEM DETAILS';

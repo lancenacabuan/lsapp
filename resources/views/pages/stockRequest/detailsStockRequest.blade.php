@@ -480,14 +480,14 @@
             <div class="prephide soldhide">
             <hr>
             @role('sales') {{---ROLES---}}
-            <input type="button" class="btn btn-primary float-right bp btnReceive ml-2" id="btnReceive" value="RECEIVE" disabled>
-            <input type="button" class="btn btn-primary float-right bp btnReceive ml-2" style="display: none;" id="btnReceiveRpl" value="RECEIVE" disabled>
+            <input type="button" class="btn btn-primary float-right bp ml-2 btnReceive" id="btnReceive" value="RECEIVE" disabled>
+            <input type="button" class="btn btn-primary float-right bp ml-2 btnReceiveRpl btnReceive" style="display: none;" id="btnReceiveRpl" value="RECEIVE" disabled>
             <input type="button" class="btn btn-primary float-right bp btnReissue" style="display: none;" value="RE-ISSUE" disabled>
             <button type="button" id="btnSale" class="btn btn-primary float-right bp ml-2" style="display: none;" disabled>SALE</button>
             <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;" disabled>RETURN</button>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
-            <button type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" disabled>RECEIVE</button>
+            <button type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceive" style="display: none;" disabled>RECEIVE</button>
             <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp ml-2" style="display: none;" disabled>RECEIVE ASSEMBLED</button>
             <button type="button" id="btnHideDetails" class="btn btn-primary float-right bp" style="display: none;">HIDE DETAILS</button>
             @endrole
@@ -579,7 +579,7 @@
             @role('admin|encoder') {{---ROLES---}}
             <div id="inc2Footer" style="display: none">
             <hr>
-            <button type="button" class="btn btn-primary float-right bp btnReceive" disabled>RECEIVE</button>
+            <button type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceiveInc" disabled>RECEIVE</button>
             <br>
             <br>
             </div>
@@ -587,7 +587,8 @@
             @role('sales') {{---ROLES---}}
             <div id="inc2Footer" style="display: none">
             <hr>
-            <button type="button" class="btn btn-primary float-right bp btnReceive" disabled>RECEIVE</button>
+            <button type="button" class="btn btn-primary float-right bp btnReceiveRpl btnReceive" id="btnReceiveRplInc" disabled>RECEIVE</button>
+            <button type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceiveInc" disabled>RECEIVE</button>
             <br>
             <br>
             </div>

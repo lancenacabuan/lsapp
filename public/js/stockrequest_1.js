@@ -2952,6 +2952,9 @@ $('#btnCancel').on('click', function(){
 });
 
 $('.btnReceive').on('click', function(){
+    if($(this).hasClass('btnReceiveRpl')){
+        return false;
+    }
     var inc = 'false';
     var req_type_id = $('#req_type_id_details').val();
     if(items.length < item_count){
@@ -3387,7 +3390,7 @@ $('#btnReceiveDfc').on('click', function(){
     });
 });
 
-$('#btnReceiveRpl').on('click', function(){
+$('.btnReceiveRpl').on('click', function(){
     var inc = 'false';
     var inctype = 'COMPLETE';
     if(items.length < item_count){

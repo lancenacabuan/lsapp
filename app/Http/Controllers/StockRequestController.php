@@ -2299,7 +2299,7 @@ class StockRequestController extends Controller
             }
             while(!$items);
         }
-        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 && Stock::where('request_number', $request->request_number)->where('batch','new')->count() == 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0 && Stock::whereIn('request_number', $include)->where('batch','new')->count() == 0){
             if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 do{
                     $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
@@ -2337,7 +2337,7 @@ class StockRequestController extends Controller
             }
         }
 
-        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0){
             if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 do{
                     $olditems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
@@ -2378,7 +2378,7 @@ class StockRequestController extends Controller
             $olditems = array();
         }
 
-        if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() != 0){
             if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 do{
                     $incitems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
@@ -2489,7 +2489,7 @@ class StockRequestController extends Controller
             ];
             Mail::to($request_details->asset_reqby_email)->send(new receivedRequest($details, $subject));
             
-            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() == 0){
+            if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() == 0){
                 $inc1 = 'COMPLETE';
                 $inc2 = 'complete';
             }
@@ -2505,7 +2505,7 @@ class StockRequestController extends Controller
         }
         else{
             if($request_details->req_type_id == 8 && ($request_details->status_id == 15 || $request_details->status_id == 32)){
-                if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() == 0){
+                if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() == 0){
                     $inc1 = 'COMPLETE';
                     $inc2 = 'complete';
                 }
@@ -2659,7 +2659,7 @@ class StockRequestController extends Controller
                 Mail::to($request_details->asset_reqby_email)->send(new receivedRequest($details, $subject));
             }
 
-            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() == 0){
+            if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() == 0){
                 $inc1 = 'COMPLETE';
                 $inc2 = 'complete';
             }
@@ -2856,7 +2856,7 @@ class StockRequestController extends Controller
     public function receiveDfcItems(Request $request){
         do{
             $sql = Stock::where('id', $request->id)
-                ->update(['status' => 'dfcreceived', 'user_id' => auth()->user()->id]);
+                ->update(['status' => 'dfcreceived', 'warranty_id' => '', 'batch' => '', 'user_id' => auth()->user()->id]);
         }
         while(!$sql);
         
@@ -2966,7 +2966,7 @@ class StockRequestController extends Controller
             ->groupBy('prodcode','item','uom','serial','qty','item_id')
             ->orderBy('item', 'ASC')
             ->get();
-        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 && Stock::where('request_number', $request->request_number)->where('batch','new')->count() == 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0 && Stock::whereIn('request_number', $include)->where('batch','new')->count() == 0){
             $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
@@ -2999,7 +2999,7 @@ class StockRequestController extends Controller
             return redirect()->to('/stockrequest');
         }
 
-        if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() != 0){
             $list4 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['incomplete'])
@@ -3012,7 +3012,7 @@ class StockRequestController extends Controller
             $list4 = array();
         }
 
-        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0){
             $list5 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
@@ -3026,7 +3026,7 @@ class StockRequestController extends Controller
             $list5 = array();
         }
 
-        if(Stock::where('request_number', $request->request_number)->whereIn('status',['incdefective','defective','defectives','FOR RECEIVING'])->count() != 0){
+        if(Stock::whereIn('request_number', $include)->whereIn('status',['incdefective','defective','defectives','FOR RECEIVING'])->count() > 0){
             $list6 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['incdefective','defective','defectives','FOR RECEIVING'])
@@ -3054,7 +3054,7 @@ class StockRequestController extends Controller
             $list0 = array();
         }
 
-        if(Stock::where('request_number', $request->request_number)->where('status','prep')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('status','prep')->count() != 0){
             $listX = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep'])

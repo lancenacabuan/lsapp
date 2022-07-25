@@ -30,8 +30,14 @@ class ConfirmReceiveController extends Controller
         if(Requests::where('request_number', $request->request_number)->where('token', $request->token)->count() == 0){
             return redirect()->to('/');
         }
+
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
+        $include[] = $request->request_number;
+
         if(Requests::where('request_number', $request->request_number)->first()->verify == ''){
-            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() > 0 || StockRequest::where('request_number', $request->request_number)->sum('pending') > 0){
+            if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() > 0 || StockRequest::where('request_number', $request->request_number)->sum('pending') > 0){
                 Requests::where('request_number', $request->request_number)
                     ->update(['verify' => 'Incomplete Confirmed']);
             }
@@ -73,11 +79,6 @@ class ConfirmReceiveController extends Controller
             return redirect()->to('/');
         }
         
-        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
-            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
-        }
-        $include[] = $request->request_number;
-
         $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.batch', ['new',''])
@@ -86,7 +87,7 @@ class ConfirmReceiveController extends Controller
             ->groupBy('prodcode','item','uom','serial','qty','item_id')
             ->orderBy('item', 'ASC')
             ->get();
-        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 && Stock::where('request_number', $request->request_number)->where('batch','new')->count() == 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0 && Stock::whereIn('request_number', $include)->where('batch','new')->count() == 0){
             $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
@@ -105,7 +106,7 @@ class ConfirmReceiveController extends Controller
             return redirect()->to('/');
         }
 
-        if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() != 0){
             $list4 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['incomplete'])
@@ -118,7 +119,7 @@ class ConfirmReceiveController extends Controller
             $list4 = array();
         }
 
-        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0){
             $list5 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
@@ -147,7 +148,7 @@ class ConfirmReceiveController extends Controller
             $list0 = array();
         }
 
-        if(Stock::where('request_number', $request->request_number)->where('status','prep')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('status','prep')->count() != 0){
             $listX = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep'])
@@ -225,7 +226,7 @@ class ConfirmReceiveController extends Controller
             }
             while(!$items);
         }
-        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 && Stock::where('request_number', $request->request_number)->where('batch','new')->count() == 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0 && Stock::whereIn('request_number', $include)->where('batch','new')->count() == 0){
             if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 do{
                     $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
@@ -263,7 +264,7 @@ class ConfirmReceiveController extends Controller
             }
         }
 
-        if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0){
             if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 do{
                     $olditems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
@@ -304,7 +305,7 @@ class ConfirmReceiveController extends Controller
             $olditems = array();
         }
 
-        if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() != 0){
             if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 do{
                     $incitems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')

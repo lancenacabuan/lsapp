@@ -2224,14 +2224,19 @@ class StockRequestController extends Controller
     }
 
     public function logReceive(Request $request){
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
+        $include[] = $request->request_number;
+
         if($request->status == '3' || $request->status == '4' || $request->status == '30' || $request->status == '31'){
             if($request->request_type == '3'){
-                Stock::where('request_number', $request->request_number)
+                Stock::whereIn('request_number', $include)
                     ->where('status', '=', 'received')
                     ->update(['status' => 'demo', 'user_id' => auth()->user()->id]);
 
                 $demos = Stock::select('id')
-                    ->where('request_number', $request->request_number)
+                    ->whereIn('request_number', $include)
                     ->where('status', 'demo')
                     ->get();
                 
@@ -2245,34 +2250,34 @@ class StockRequestController extends Controller
                 }
             }
             else if($request->request_type == '7'){
-                Stock::where('request_number', $request->request_number)
+                Stock::whereIn('request_number', $include)
                     ->where('status', '=', 'received')
                     ->update(['status' => 'asset', 'user_id' => auth()->user()->id]);
             }
             else if($request->request_type == '8'){
-                Stock::where('request_number', $request->request_number)
+                Stock::whereIn('request_number', $include)
                     ->where('status', '=', 'received')
                     ->update(['status' => 'staging', 'user_id' => auth()->user()->id]);
             }
             else{
-                Stock::where('request_number', $request->request_number)
+                Stock::whereIn('request_number', $include)
                     ->where('status', '=', 'received')
                     ->update(['status' => 'out', 'user_id' => auth()->user()->id]);
             }
 
-            Stock::where('request_number', $request->request_number)
-                ->whereNotIn('status', ['out','staging','asset','demo','assembly','assembled'])
+            Stock::whereIn('request_number', $include)
+                ->whereNotIn('status', ['out','staging','asset','demo','assembly','assembled','defective','defectives','FOR RECEIVING','default'])
                 ->update(['status' => 'incomplete', 'user_id' => auth()->user()->id]);
         }
 
-        Stock::where('request_number', $request->request_number)
+        Stock::whereIn('request_number', $include)
             ->whereIn('status', ['incomplete'])
             ->update(['batch' => '']);
-        Stock::where('request_number', $request->request_number)
+        Stock::whereIn('request_number', $include)
             ->whereIn('status', ['out','staging','asset','demo','assembly','assembled'])
             ->where('batch', '=', 'new')
             ->update(['batch' => 'old']);
-        Stock::where('request_number', $request->request_number)
+        Stock::whereIn('request_number', $include)
             ->whereIn('status', ['out','staging','asset','demo','assembly','assembled'])
             ->where('batch', '=', '')
             ->update(['batch' => 'new']);
@@ -2294,11 +2299,6 @@ class StockRequestController extends Controller
                 ->first();
         }
         while(!$prep);
-
-        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
-            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
-        }
-        $include[] = $request->request_number;
 
         if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
             do{

@@ -793,6 +793,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         }
                         if(requestStatus == '34'){
                             $('#btnReceiveInc').val('SEND CONFIRMATION');
+                            $('#btnReceiveRplInc').hide();
                         }
                     }
                     if((requestStatus == '17' || requestStatus == '34') && $("#current_role").val() == 'sales'){
@@ -2209,6 +2210,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             }
             if(requestStatus == '34'){
                 $('#btnReceiveInc').val('SEND CONFIRMATION');
+                $('#btnReceiveRplInc').hide();
             }
         }
         if((requestStatus == '17' || requestStatus == '34') && $("#current_role").val() == 'sales'){

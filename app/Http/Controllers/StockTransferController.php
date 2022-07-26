@@ -691,6 +691,9 @@ class StockTransferController extends Controller
         }
         else{
             Stock::where('request_number', $request->request_number)
+                ->whereIn('status', ['incomplete'])
+                ->update(['batch' => '']);
+            Stock::where('request_number', $request->request_number)
                 ->whereIn('status', ['in'])
                 ->where('batch', '=', 'new')
                 ->update(['batch' => 'old']);

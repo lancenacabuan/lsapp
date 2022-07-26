@@ -203,6 +203,9 @@ class AssemblyController extends Controller
                 ->update(['status' => 'assembly', 'user_id' => auth()->user()->id]);
         }
         Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['incomplete'])
+            ->update(['batch' => '']);
+        Stock::where('request_number', $request->request_number)
             ->whereIn('status', ['assembly'])
             ->where('batch', '=', 'new')
             ->update(['batch' => 'old']);

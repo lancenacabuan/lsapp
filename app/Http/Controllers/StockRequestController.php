@@ -2160,7 +2160,15 @@ class StockRequestController extends Controller
     }
 
     public function receiveItems(Request $request){
-        if($request->status == '3' || $request->status == '4'){
+        if($request->status == '30' || $request->status == '31'){
+            do{
+                $sql = Stock::where('id', $request->id)
+                    ->whereIn('status', ['staging'])
+                    ->update(['status' => 'received', 'user_id' => auth()->user()->id]);
+            }
+            while(!$sql);
+        }
+        else if($request->status == '3' || $request->status == '4'){
             do{
                 $sql = Stock::where('id', $request->id)
                     ->whereNotIn('status', ['out','staging','asset','demo','assembly','assembled'])
@@ -2168,7 +2176,14 @@ class StockRequestController extends Controller
             }
             while(!$sql);
         }
-        if($request->status == '17'){
+        else if($request->status == '34'){
+            do{
+                $sql = Stock::where('id', $request->id)
+                    ->update(['status' => 'staging', 'user_id' => auth()->user()->id]);
+            }
+            while(!$sql);
+        }
+        else if($request->status == '17'){
             if($request->request_type == '3'){
                 do{
                     $sql = Stock::where('id', $request->id)
@@ -2209,7 +2224,7 @@ class StockRequestController extends Controller
     }
 
     public function logReceive(Request $request){
-        if($request->status == '3' || $request->status == '4'){
+        if($request->status == '3' || $request->status == '4' || $request->status == '30' || $request->status == '31'){
             if($request->request_type == '3'){
                 Stock::where('request_number', $request->request_number)
                     ->where('status', '=', 'received')
@@ -2250,6 +2265,9 @@ class StockRequestController extends Controller
                 ->update(['status' => 'incomplete', 'user_id' => auth()->user()->id]);
         }
 
+        Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['incomplete'])
+            ->update(['batch' => '']);
         Stock::where('request_number', $request->request_number)
             ->whereIn('status', ['out','staging','asset','demo','assembly','assembled'])
             ->where('batch', '=', 'new')
@@ -2747,6 +2765,9 @@ class StockRequestController extends Controller
                 ->where('status', '=', 'received')
                 ->update(['status' => 'staging', 'user_id' => auth()->user()->id]);
         }
+        Stock::where('request_number', $request->request_number)
+            ->whereIn('status', ['incomplete'])
+            ->update(['batch' => '']);
         Stock::where('request_number', $request->request_number)
             ->whereIn('status', ['staging'])
             ->where('batch', '=', 'new')

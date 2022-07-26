@@ -575,6 +575,7 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                     $('#reqnum').val(req_num);
                 var req_by = value.req_by;
                     $('#requested_by_details').val(req_by);
+                var req_by_id = value.user_id;
                 var status = value.status;
                     $('#status_details').val(status);
                 var prep_by = value.prep_by;
@@ -662,7 +663,11 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                 var stockDetailsTargets = [];
                 var ajax_url = '/schedItems';
                 var included = 'yes';
-            
+
+                if($('#current_user').val() == req_by_id && requestStatus == 3){
+                    $("#btnCancelRequest").show();
+                }
+
                 if(requestStatus == 1){
                     $('#btnDelete').show();
                 }
@@ -906,6 +911,7 @@ $('#merchantTable tbody').on('click', 'tr', function(){
         $('#reqnum').val(req_num);
     var req_by = value.req_by;
         $('#requested_by_details').val(req_by);
+    var req_by_id = value.user_id;
     var status = value.status;
         $('#status_details').val(status);
     var prep_by = value.prep_by;
@@ -993,6 +999,10 @@ $('#merchantTable tbody').on('click', 'tr', function(){
     var stockDetailsTargets = [];
     var ajax_url = '/schedItems';
     var included = 'yes';
+
+    if($('#current_user').val() == req_by_id && requestStatus == 3){
+        $("#btnCancelRequest").show();
+    }
 
     if(requestStatus == 1){
         $('#btnDelete').show();

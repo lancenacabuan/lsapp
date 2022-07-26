@@ -474,6 +474,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     var rcv_url = '/schedItems';
                     var included = 'yes';
 
+                    if($('#current_user').val() == req_by_id && [2,3,7,8].includes(req_type_id) == true && [3,4,30,31].includes(requestStatus) == true){
+                        $("#btnCancelRequest").show();
+                    }
+
                     if(req_type_id == '7'){
                         $('#txtAttachment').html('ATTACHMENT REQUEST FORM');
                         $('.assethide').hide();
@@ -665,9 +669,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 alert(data.responseText);
                             }
                         });
-                        if($('#current_user').val() == req_by_id && (req_type_id == '2' || req_type_id == '3' || req_type_id == '6' || req_type_id == '7' || req_type_id == '8')){
-                            $("#btnCancelRequest").show();
-                        }
                     }
                     if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14' || requestStatus == '19' || requestStatus == '20' || requestStatus == '24'){
                         var rcv_url = 'receivedItems';
@@ -1894,6 +1895,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         var rcv_url = '/schedItems';
         var included = 'yes';
 
+        if($('#current_user').val() == req_by_id && [2,3,7,8].includes(req_type_id) == true && [3,4,30,31].includes(requestStatus) == true){
+            $("#btnCancelRequest").show();
+        }
+
         if(req_type_id == '7'){
             $('#txtAttachment').html('ATTACHMENT REQUEST FORM');
             $('.assethide').hide();
@@ -2085,9 +2090,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     alert(data.responseText);
                 }
             });
-            if($('#current_user').val() == req_by_id && (req_type_id == '2' || req_type_id == '3' || req_type_id == '6' || req_type_id == '7' || req_type_id == '8')){
-                $("#btnCancelRequest").show();
-            }
         }
         if(requestStatus == '8' || requestStatus == '9'|| requestStatus == '12' || requestStatus == '13' || requestStatus == '14' || requestStatus == '19' || requestStatus == '20' || requestStatus == '24'){
             var rcv_url = 'receivedItems';

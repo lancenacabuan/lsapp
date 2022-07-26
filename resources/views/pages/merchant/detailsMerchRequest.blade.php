@@ -117,6 +117,7 @@
                     <hr>
                     <button type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" disabled>RECEIVE</button>
                     <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
+                    <input type="button" class="btn btn-outline-danger font-weight-bold ml-2" id="btnCancelRequest" style="display: none;" value="CANCEL REQUEST">
                     <br>
                 </div>
             </div>

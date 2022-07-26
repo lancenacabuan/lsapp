@@ -523,9 +523,6 @@ $(document).ready(function(){
     if($('.tblIncomplete tbody tr').length == 0){
         $('.tblIncomplete').hide();
     }
-    if($('.tblDefective tbody tr').length == 0){
-        $('.tblDefective').hide();
-    }
     if($('.tblPending tbody tr').length == 0){
         $('.tblPending').hide();
     }

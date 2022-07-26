@@ -2302,7 +2302,7 @@ class StockRequestController extends Controller
         if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
             $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                 ->whereIn('request_number', $include)
-                ->whereIn('stocks.batch', ['new'])
+                ->whereIn('stocks.batch', ['new',''])
                 ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
@@ -2321,13 +2321,14 @@ class StockRequestController extends Controller
         else{
             $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
-                ->whereIn('stocks.batch', ['new'])
+                ->whereIn('stocks.batch', ['new',''])
                 ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                 ->join('items','items.id','stocks.item_id')
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')
                 ->get();
         }
+        $getOld = true;
         if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0 && Stock::whereIn('request_number', $include)->where('batch','new')->count() == 0){
             if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
@@ -2358,9 +2359,10 @@ class StockRequestController extends Controller
                     ->orderBy('item', 'ASC')
                     ->get();
             }
+            $getOld = false;
         }
 
-        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0 && $getOld == true){
             if($request_details->req_type_id == 2 || $request_details->req_type_id == 6 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 $olditems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                     ->whereIn('request_number', $include)

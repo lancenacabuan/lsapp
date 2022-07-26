@@ -358,7 +358,7 @@ $('#btnChangePassword').on('click', function(){
 $('#btnCancelRequest').on('click', function(){
     Swal.fire({
         title: "CANCEL STOCK REQUEST?",
-        html: "You are about to CANCEL and RETURN all requested item/s of this STOCK REQUEST! <br><strong style='color: red;'>WARNING: This process cannot be undone. CONTINUE?</strong>",
+        html: "You are about to CANCEL and RETURN all requested item/s of this STOCK REQUEST! <br><strong style='color: red;'>WARNING: This process cannot be undone! CONTINUE?</strong>",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',

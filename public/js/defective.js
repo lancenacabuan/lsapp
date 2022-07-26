@@ -121,7 +121,7 @@ $(document).on('click', '.btnReturnItem', function(){
 
     Swal.fire({
         title: "RETURN DEFECTIVE ITEM w/ SERIAL: "+data.serial,
-        text: "You are about to RETURN this DEFECTIVE ITEM. Continue?",
+        text: "You are about to RETURN this DEFECTIVE ITEM. CONTINUE?",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',

@@ -724,13 +724,13 @@ $('#btnSave').on('click', function(){
                 return false;
             }
             if(email1 == 'unknown' && email2 == 'unknown'){
-                warntext = ' <br><strong style="color: red;">WARNING: Requester and Approver Email Addresses are both unverified! Continue?</strong>';
+                warntext = ' <br><strong style="color: red;">WARNING: Requester and Approver Email Addresses are both unverified! CONTINUE?</strong>';
             }
             if(email1 == 'unknown' && email2 != 'unknown'){
-                warntext = ' <br><strong style="color: red;">WARNING: Requester Email Address is not verified! Continue?</strong>';
+                warntext = ' <br><strong style="color: red;">WARNING: Requester Email Address is not verified! CONTINUE?</strong>';
             }
             if(email1 != 'unknown' && email2 == 'unknown'){
-                warntext = ' <br><strong style="color: red;">WARNING: Approver Email Address is not verified! Continue?</strong>';
+                warntext = ' <br><strong style="color: red;">WARNING: Approver Email Address is not verified! CONTINUE?</strong>';
             }
             if(needdate < minDate){
                 Swal.fire('Minimum Date is today!','Select within date range from today onwards.','error');
@@ -906,7 +906,7 @@ $('#btnSave').on('click', function(){
                 return false;
             }
             if(email1 == 'unknown'){
-                warntext = ' <br><strong style="color: red;">WARNING: Client Email Address is not verified! Continue?</strong>';
+                warntext = ' <br><strong style="color: red;">WARNING: Client Email Address is not verified! CONTINUE?</strong>';
             }
             if(needdate < minDate){
                 Swal.fire('Minimum Date is today!','Select within date range from today onwards.','error');
@@ -1170,7 +1170,7 @@ $(document).on('click', '.disupload1', function(){
 $(document).on('click', '#btnRemoveAttachment', function(){
     Swal.fire({
         title: "REMOVE ATTACHMENTS?",
-        text: "You are about to REMOVE your ATTACHMENT SO/PO!\n This will be permanently deleted from the system.",
+        html: "You are about to REMOVE your ATTACHMENT SO/PO! <br><strong style='color: red;'>This will be permanently deleted from the system! CONTINUE?</strong>",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -1364,7 +1364,7 @@ $(document).on('click', '.btndelItem', function(){
 $('#btnDelete').on('click', function(){
     Swal.fire({
         title: "DELETE STOCK REQUEST?",
-        text: "You are about to DELETE your STOCK REQUEST!\n This will be permanently deleted from the system.",
+        html: "You are about to DELETE your STOCK REQUEST! <br><strong style='color: red;'>This will be permanently deleted from the system! CONTINUE?</strong>",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -1984,7 +1984,7 @@ $('#btnReissue').on('click', function(){
             return false;
         }
         if(email1 == 'unknown'){
-            warntext = ' <br><strong style="color: red;">WARNING: Client Email Address is not verified! Continue?</strong>';
+            warntext = ' <br><strong style="color: red;">WARNING: Client Email Address is not verified! CONTINUE?</strong>';
         }
         if(needdate < minDate){
             Swal.fire('Minimum Date Needed is today!','Select within date range from today onwards.','error');
@@ -2962,7 +2962,7 @@ $('.btnReceive').on('click', function(){
     if(items.length < item_count){
         inc = 'true';
         inctype = 'INCOMPLETE';
-        note = ' <br><strong style="color: red;">WARNING: Items for confirmation are INCOMPLETE! Continue?</strong>';
+        note = ' <br><strong style="color: red;">WARNING: Items for confirmation are INCOMPLETE! CONTINUE?</strong>';
     }
     if($('#btnReceive').val() == 'SEND CONFIRMATION' || $('#btnReceiveInc').val() == 'SEND CONFIRMATION'){
         var title = 'SEND CONFIRMATION EMAIL?';

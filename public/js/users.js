@@ -162,7 +162,7 @@ $('#btnSave').on('click', function(){
             }
         }
         else{
-            warntext = ' <br><strong style="color: red;">WARNING: This Email Address is not verified! Continue?</strong>';
+            warntext = ' <br><strong style="color: red;">WARNING: This Email Address is not verified! CONTINUE?</strong>';
         }
         $('#loading').hide();
         $.ajax({
@@ -335,7 +335,7 @@ $('#btnUpdate').on('click', function(){
             }
         }
         else{
-            warntext = ' <br><strong style="color: red;">WARNING: This Email Address is not verified! Continue?</strong>';
+            warntext = ' <br><strong style="color: red;">WARNING: This Email Address is not verified! CONTINUE?</strong>';
         }
         $('#loading').hide();
         $.ajax({

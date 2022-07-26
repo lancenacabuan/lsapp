@@ -1260,7 +1260,7 @@ $(document).on('click', '.btndelItem', function(){
 $('#btnDelete').on('click', function(){
     Swal.fire({
         title: "DELETE MERCHANT STOCK REQUEST?",
-        text: "You are about to DELETE your MERCHANT STOCK REQUEST!\n This will be permanently deleted from the system.",
+        html: "You are about to DELETE your MERCHANT STOCK REQUEST! <br><strong style='color: red;'>This will be permanently deleted from the system! CONTINUE?</strong>",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',

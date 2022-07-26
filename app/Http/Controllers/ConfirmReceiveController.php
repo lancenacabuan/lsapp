@@ -429,42 +429,40 @@ class ConfirmReceiveController extends Controller
                 ];
                 Mail::to($sendTo)->send(new receivedRequest($details, $subject));
                 unset($sendTo);
-                if($request_details->req_type_id == 2 || $request_details->req_type_id == 3 || $request_details->req_type_id == 8){
-                    $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
-                    foreach($emails as $email){
-                        $sendTo[] = $email['email'];
-                    }
-                    $details = [
-                        'name' => 'ACCOUNTING',
-                        'action' => 'STOCK REQUEST',
-                        'verb' => 'RECEIVED',
-                        'request_number' => $request->request_number,
-                        'reqdate' => $request_details->reqdate,
-                        'requested_by' => $request_details->reqby,
-                        'needdate' => $request_details->needdate,
-                        'reqtype' => $request_details->reqtype,
-                        'client_name' => $request_details->client_name,
-                        'location' => $request_details->location,
-                        'contact' => $request_details->contact,
-                        'remarks' => $request_details->remarks,
-                        'reference' => $request_details->reference,
-                        'orderID' => $request_details->orderID,
-                        'prepared_by' => $prep->prepby,
-                        'prepdate' => $request_details->prepdate,
-                        'scheddate' => $request_details->schedule,
-                        'receivedby' => $request_details->client_name,
-                        'role' => 'Accounting',
-                        'items' => $items,
-                        'olditems' => $olditems,
-                        'incitems' => $incitems,
-                        'penditems' => $penditems,
-                        'files' => $attachments,
-                        'req_type_id' => $request_details->req_type_id,
-                        'status_id' => $request_details->status_id,
-                        'token' => ''
-                    ];
-                    Mail::to($sendTo)->send(new receivedRequest($details, $subject));
+                $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
+                foreach($emails as $email){
+                    $sendTo[] = $email['email'];
                 }
+                $details = [
+                    'name' => 'ACCOUNTING',
+                    'action' => 'STOCK REQUEST',
+                    'verb' => 'RECEIVED',
+                    'request_number' => $request->request_number,
+                    'reqdate' => $request_details->reqdate,
+                    'requested_by' => $request_details->reqby,
+                    'needdate' => $request_details->needdate,
+                    'reqtype' => $request_details->reqtype,
+                    'client_name' => $request_details->client_name,
+                    'location' => $request_details->location,
+                    'contact' => $request_details->contact,
+                    'remarks' => $request_details->remarks,
+                    'reference' => $request_details->reference,
+                    'orderID' => $request_details->orderID,
+                    'prepared_by' => $prep->prepby,
+                    'prepdate' => $request_details->prepdate,
+                    'scheddate' => $request_details->schedule,
+                    'receivedby' => $request_details->client_name,
+                    'role' => 'Accounting',
+                    'items' => $items,
+                    'olditems' => $olditems,
+                    'incitems' => $incitems,
+                    'penditems' => $penditems,
+                    'files' => $attachments,
+                    'req_type_id' => $request_details->req_type_id,
+                    'status_id' => $request_details->status_id,
+                    'token' => ''
+                ];
+                Mail::to($sendTo)->send(new receivedRequest($details, $subject));
                 unset($sendTo);
                 $details = [
                     'name' => $request_details->reqby,

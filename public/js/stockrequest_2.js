@@ -566,7 +566,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 'request_number': $('#request_num_details').val()
                             }, 
                             success: function(data){
-                                if(data != 0){
+                                if(data > 0){
                                     $("#receivedItemsModal").show();
                                 }
                             },
@@ -588,7 +588,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 'request_number': $('#request_num_details').val()
                             }, 
                             success: function(data){
-                                if(data != 0){
+                                if(data > 0){
                                     $("#receivedItemsModal").show();
                                 }
                             },
@@ -617,7 +617,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 'request_number': $('#request_num_details').val()
                             }, 
                             success: function(data){
-                                if(data != 0){
+                                if(data > 0){
                                     $("#receivedItemsModal").show();
                                 }
                             },
@@ -654,7 +654,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                 'request_number': $('#request_num_details').val()
                             }, 
                             success: function(data){
-                                if(data != 0){
+                                if(data > 0){
                                     $("#receivedItemsModal").show();
                                 }
                             },
@@ -1982,7 +1982,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     'request_number': $('#request_num_details').val()
                 }, 
                 success: function(data){
-                    if(data != 0){
+                    if(data > 0){
                         $("#receivedItemsModal").show();
                     }
                 },
@@ -2004,7 +2004,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     'request_number': $('#request_num_details').val()
                 }, 
                 success: function(data){
-                    if(data != 0){
+                    if(data > 0){
                         $("#receivedItemsModal").show();
                     }
                 },
@@ -2033,7 +2033,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     'request_number': $('#request_num_details').val()
                 }, 
                 success: function(data){
-                    if(data != 0){
+                    if(data > 0){
                         $("#receivedItemsModal").show();
                     }
                 },
@@ -2070,7 +2070,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                     'request_number': $('#request_num_details').val()
                 }, 
                 success: function(data){
-                    if(data != 0){
+                    if(data > 0){
                         $("#receivedItemsModal").show();
                     }
                 },

@@ -417,11 +417,11 @@ class AssemblyController extends Controller
         else{
             $code = 0;
         }
-        if($item != 0){
+        if($item > 0){
             $data = array('result' => 'duplicate');
             return response()->json($data);
         }
-        else if($code != 0){
+        else if($code > 0){
             $data = array('result' => 'dupecode');
             return response()->json($data);
         }
@@ -511,11 +511,11 @@ class AssemblyController extends Controller
         else{
             $code = 0;
         }
-        if($item != 0){
+        if($item > 0){
             $result = 'duplicate';
             return response($result);
         }
-        else if($code != 0){
+        else if($code > 0){
             $result = 'dupecode';
             return response($result);
         }

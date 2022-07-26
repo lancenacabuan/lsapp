@@ -274,7 +274,7 @@ class PagesController extends Controller
             $data = array('result' => 'invalid');
             return response()->json($data);
         }
-        else if($email != 0){
+        else if($email > 0){
             $data = array('result' => 'duplicate');
             return response()->json($data);
         }
@@ -345,7 +345,7 @@ class PagesController extends Controller
         if(!filter_var($request->email1, FILTER_VALIDATE_EMAIL)){
             return response('invalid');
         }
-        else if($email != 0){
+        else if($email > 0){
             return response('duplicate');
         }
         else {

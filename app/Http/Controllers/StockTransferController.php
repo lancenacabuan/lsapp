@@ -752,7 +752,7 @@ class StockTransferController extends Controller
             while(!$items);
         }
         else{
-            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
+            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() > 0){
                 do{
                     $incitems = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
                         ->where('transferred_items.request_number', $request->request_number)
@@ -780,7 +780,7 @@ class StockTransferController extends Controller
                     ->get();
             }
             while(!$olditemsadd);
-            if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 || count($olditemsadd) != 0){
+            if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() > 0 || count($olditemsadd) > 0){
                 do{
                     $olditems = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id')
                         ->where('transferred_items.request_number', $request->request_number)
@@ -1105,7 +1105,7 @@ class StockTransferController extends Controller
                 ->get();
         }
         else{
-            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() != 0){
+            if(Stock::where('request_number', $request->request_number)->where('status','incomplete')->count() > 0){
                 $list4 = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
                     ->where('transferred_items.request_number', $request->request_number)
                     ->whereRaw('stocks.request_number = ? AND stocks.status = "incomplete"', $request->request_number)
@@ -1127,7 +1127,7 @@ class StockTransferController extends Controller
                 ->groupBy('category','prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')
                 ->get();
-            if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() != 0 || count($list5add) != 0){
+            if(Stock::where('request_number', $request->request_number)->where('batch','old')->count() > 0 || count($list5add) > 0){
                 $list5 = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id')
                     ->where('transferred_items.request_number', $request->request_number)
                     ->whereRaw('stocks.request_number = ? AND stocks.batch = "old" AND stocks.status = "in"', $request->request_number)
@@ -1141,7 +1141,7 @@ class StockTransferController extends Controller
                     $list5[]=$add;
                 }
             }
-            if(Stock::where('request_number', $request->request_number)->where('status','trans')->count() != 0){
+            if(Stock::where('request_number', $request->request_number)->where('status','trans')->count() > 0){
                 $listX = Transfer::query()->selectRaw('categories.category AS category, items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, items.id AS item_id, locations.location AS location')
                     ->where('transferred_items.request_number', $request->request_number)
                     ->where('stocks.status', '=', 'trans')

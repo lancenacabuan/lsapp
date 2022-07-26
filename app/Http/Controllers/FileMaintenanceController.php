@@ -199,7 +199,7 @@ class FileMaintenanceController extends Controller
         $item = Item::query()->select()
             ->whereRaw('LOWER(item) = ?',strtolower($request->item_name))
             ->count();
-        if($item != 0){
+        if($item > 0){
             $data = array('result' => 'duplicate');
             return response()->json($data);
         }
@@ -207,7 +207,7 @@ class FileMaintenanceController extends Controller
         $itemcode = Item::query()->select()
             ->whereRaw('UPPER(prodcode) = ?',strtoupper($request->prodcode))
             ->count();
-        if($itemcode != 0){
+        if($itemcode > 0){
             $data = array('result' => 'duplicatecode');
             return response()->json($data);
         }
@@ -258,7 +258,7 @@ class FileMaintenanceController extends Controller
         else{
             $item = 0;
         }
-        if($item != 0){
+        if($item > 0){
             $data = array('result' => 'duplicate');
             return response()->json($data);
         }
@@ -271,7 +271,7 @@ class FileMaintenanceController extends Controller
         else{
             $itemcode = 0;
         }
-        if($itemcode != 0){
+        if($itemcode > 0){
             $data = array('result' => 'duplicatecode');
             return response()->json($data);
         }
@@ -358,7 +358,7 @@ class FileMaintenanceController extends Controller
         $category = Category::query()->select()
             ->where('category',strtoupper($request->category))
             ->count();
-        if($category != 0){
+        if($category > 0){
             $data = array('result' => 'duplicate');
             return response()->json($data);
         }
@@ -398,7 +398,7 @@ class FileMaintenanceController extends Controller
         else{
             $category = 0; 
         }
-        if($category != 0){
+        if($category > 0){
             $data = array('result' => 'duplicate');
             return response()->json($data);
         }
@@ -432,7 +432,7 @@ class FileMaintenanceController extends Controller
         $location = Location::query()->select()
             ->whereRaw('LOWER(location) = ?',strtolower($request->location))
             ->count();
-        if($location != 0){
+        if($location > 0){
             $data = array('result' => 'duplicate');
             return response()->json($data);
         }
@@ -500,7 +500,7 @@ class FileMaintenanceController extends Controller
         else{
             $location = 0; 
         }
-        if($location != 0){
+        if($location > 0){
             $data = array('result' => 'duplicate');
             return response()->json($data);
         }

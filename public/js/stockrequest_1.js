@@ -2141,7 +2141,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
         Swal.fire('Item is fullfiled!','','success');
     }
     else if(stock == 0){
-        if(bal != 0 && mal != 0){
+        if(bal > 0 && mal > 0){
             sweet(
                 'Item out of stock!',
                 'Request Stock Transfer from Balintawak and/or Malabon? OR Add Stocks to Warehouse?',
@@ -2152,7 +2152,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
                 '/stocks?item='+item_id
             );
         }
-        else if(bal != 0 && mal == 0){
+        else if(bal > 0 && mal == 0){
             sweet(
                 'Item out of stock!',
                 'Request Stock Transfer from Balintawak? OR Add Stocks to Warehouse?',
@@ -2163,7 +2163,7 @@ $('.stockDetails tbody').on('click', 'tr', function(){
                 '/stocks?item='+item_id
             );
         }
-        else if(bal == 0 && mal != 0){
+        else if(bal == 0 && mal > 0){
             sweet(
                 'Item out of stock!',
                 'Request Stock Transfer from Malabon? OR Add Stocks to Warehouse?',
@@ -2427,7 +2427,7 @@ $("#btnProceed").unbind('click').click(function(){
     j = 0;
     var reqnum = $('#request_num_details').val();
     var req_type_id = $('#req_type_id_details').val();
-    if((exceed.length != 0 || items.length < item_count) &&  req_type_id < 4){
+    if((exceed.length > 0 || items.length < item_count) &&  req_type_id < 4){
         Swal.fire('NOTICE: PARTIAL', 'Stock Request will be prepared partially!', 'warning')
     }
     if(req_type_id == '4' || req_type_id == '5' || req_type_id == '6' || req_type_id == '7'){

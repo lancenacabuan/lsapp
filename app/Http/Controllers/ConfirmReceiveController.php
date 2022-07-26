@@ -87,7 +87,7 @@ class ConfirmReceiveController extends Controller
             ->groupBy('prodcode','item','uom','serial','qty','item_id')
             ->orderBy('item', 'ASC')
             ->get();
-        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0 && Stock::whereIn('request_number', $include)->where('batch','new')->count() == 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0 && Stock::whereIn('request_number', $include)->where('batch','new')->count() == 0){
             $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
@@ -106,7 +106,7 @@ class ConfirmReceiveController extends Controller
             return redirect()->to('/');
         }
 
-        if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() > 0){
             $list4 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['incomplete'])
@@ -119,7 +119,7 @@ class ConfirmReceiveController extends Controller
             $list4 = array();
         }
 
-        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0){
             $list5 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
@@ -134,21 +134,18 @@ class ConfirmReceiveController extends Controller
         }
 
         if(StockRequest::where('request_number', $request->request_number)->sum('pending') > 0){
-            do{
-                $list0 = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','pending')
-                    ->join('items', 'items.id', 'stock_request.item')
-                    ->where('request_number', $request->request_number)
-                    ->where('pending', '>', '0')
-                    ->orderBy('item', 'ASC')
-                    ->get();
-            }
-            while(!$list0);
+            $list0 = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','pending')
+                ->join('items', 'items.id', 'stock_request.item')
+                ->where('request_number', $request->request_number)
+                ->where('pending', '>', '0')
+                ->orderBy('item', 'ASC')
+                ->get();
         }
         else{
             $list0 = array();
         }
 
-        if(Stock::whereIn('request_number', $include)->where('status','prep')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('status','prep')->count() > 0){
             $listX = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.status', ['prep'])
@@ -196,10 +193,39 @@ class ConfirmReceiveController extends Controller
         while(!$prep);
 
         if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
-            do{
+            $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.batch', ['new'])
+                ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
+                ->join('items','items.id','stocks.item_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
+                ->orderBy('item', 'ASC')
+                ->get()
+                ->toArray();
+            foreach($items as $key => $value){
+                if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
+                    $items[$key]['Warranty_Name'] = 'NO WARRANTY';
+                }
+                else{
+                    $items[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
+                }
+            }
+        }
+        else{
+            $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                ->whereIn('request_number', $include)
+                ->whereIn('stocks.batch', ['new'])
+                ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
+                ->join('items','items.id','stocks.item_id')
+                ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                ->orderBy('item', 'ASC')
+                ->get();
+        }
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0 && Stock::whereIn('request_number', $include)->where('batch','new')->count() == 0){
+            if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
                 $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
                     ->whereIn('request_number', $include)
-                    ->whereIn('stocks.batch', ['new'])
+                    ->whereIn('stocks.batch', ['old'])
                     ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                     ->join('items','items.id','stocks.item_id')
                     ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
@@ -215,133 +241,80 @@ class ConfirmReceiveController extends Controller
                     }
                 }
             }
-            while(!$items);
-        }
-        else{
-            do{
+            else{
                 $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                     ->whereIn('request_number', $include)
-                    ->whereIn('stocks.batch', ['new'])
+                    ->whereIn('stocks.batch', ['old'])
                     ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
                     ->join('items','items.id','stocks.item_id')
                     ->groupBy('prodcode','item','uom','serial','qty','item_id')
                     ->orderBy('item', 'ASC')
                     ->get();
             }
-            while(!$items);
-        }
-        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0 && Stock::whereIn('request_number', $include)->where('batch','new')->count() == 0){
-            if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
-                do{
-                    $items = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
-                        ->whereIn('request_number', $include)
-                        ->whereIn('stocks.batch', ['old'])
-                        ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
-                        ->join('items','items.id','stocks.item_id')
-                        ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
-                        ->orderBy('item', 'ASC')
-                        ->get()
-                        ->toArray();
-                    foreach($items as $key => $value){
-                        if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
-                            $items[$key]['Warranty_Name'] = 'NO WARRANTY';
-                        }
-                        else{
-                            $items[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
-                        }
-                    }
-                }
-                while(!$items);
-            }
-            else{
-                do{
-                    $items = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
-                        ->whereIn('request_number', $include)
-                        ->whereIn('stocks.batch', ['old'])
-                        ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
-                        ->join('items','items.id','stocks.item_id')
-                        ->groupBy('prodcode','item','uom','serial','qty','item_id')
-                        ->orderBy('item', 'ASC')
-                        ->get();
-                }
-                while(!$items);
-            }
         }
 
-        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0){
             if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
-                do{
-                    $olditems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
-                        ->whereIn('request_number', $include)
-                        ->whereIn('stocks.batch', ['old'])
-                        ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
-                        ->join('items','items.id','stocks.item_id')
-                        ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
-                        ->orderBy('item', 'ASC')
-                        ->get()
-                        ->toArray();
-                    foreach($olditems as $key => $value){
-                        if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
-                            $olditems[$key]['Warranty_Name'] = 'NO WARRANTY';
-                        }
-                        else{
-                            $olditems[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
-                        }
+                $olditems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
+                    ->whereIn('request_number', $include)
+                    ->whereIn('stocks.batch', ['old'])
+                    ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
+                    ->join('items','items.id','stocks.item_id')
+                    ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
+                    ->orderBy('item', 'ASC')
+                    ->get()
+                    ->toArray();
+                foreach($olditems as $key => $value){
+                    if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
+                        $olditems[$key]['Warranty_Name'] = 'NO WARRANTY';
+                    }
+                    else{
+                        $olditems[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
                     }
                 }
-                while(!$olditems);
             }
             else{
-                do{
-                    $olditems = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
-                        ->whereIn('request_number', $include)
-                        ->whereIn('stocks.batch', ['old'])
-                        ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
-                        ->join('items','items.id','stocks.item_id')
-                        ->groupBy('prodcode','item','uom','serial','qty','item_id')
-                        ->orderBy('item', 'ASC')
-                        ->get();
-                }
-                while(!$olditems);
+                $olditems = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                    ->whereIn('request_number', $include)
+                    ->whereIn('stocks.batch', ['old'])
+                    ->whereIn('stocks.status', ['out','staging','asset','demo','assembly','assembled'])
+                    ->join('items','items.id','stocks.item_id')
+                    ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                    ->orderBy('item', 'ASC')
+                    ->get();
             }
         }
         else{
             $olditems = array();
         }
 
-        if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() != 0){
+        if(Stock::whereIn('request_number', $include)->where('status','incomplete')->count() > 0){
             if($request_details->req_type_id == 2 || $request_details->req_type_id == 8 || ($request_details->req_type_id == 3 && ($request_details->status_id == 10 || $request_details->status_id >= 27))){
-                do{
-                    $incitems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
-                        ->whereIn('request_number', $include)
-                        ->whereIn('stocks.status', ['incomplete'])
-                        ->join('items','items.id','stocks.item_id')
-                        ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
-                        ->orderBy('item', 'ASC')
-                        ->get()
-                        ->toArray();
-                    foreach($incitems as $key => $value){
-                        if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
-                            $incitems[$key]['Warranty_Name'] = 'NO WARRANTY';
-                        }
-                        else{
-                            $incitems[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
-                        }
+                $incitems = Stock::query()->select('items.prodcode AS prodcode', 'items.item AS item', 'items.UOM AS uom', 'stocks.serial AS serial', DB::raw('SUM(stocks.qty) AS qty'), 'stocks.item_id AS item_id', 'stocks.warranty_id AS warranty_id')
+                    ->whereIn('request_number', $include)
+                    ->whereIn('stocks.status', ['incomplete'])
+                    ->join('items','items.id','stocks.item_id')
+                    ->groupBy('prodcode','item','uom','serial','qty','item_id','warranty_id')
+                    ->orderBy('item', 'ASC')
+                    ->get()
+                    ->toArray();
+                foreach($incitems as $key => $value){
+                    if($value['warranty_id'] == '0' || $value['warranty_id'] == ''){
+                        $incitems[$key]['Warranty_Name'] = 'NO WARRANTY';
+                    }
+                    else{
+                        $incitems[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty_id'])->first()->Warranty_Name;
                     }
                 }
-                while(!$incitems);
             }
             else{
-                do{
-                    $incitems = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
-                        ->whereIn('request_number', $include)
-                        ->whereIn('stocks.status', ['incomplete'])
-                        ->join('items','items.id','stocks.item_id')
-                        ->groupBy('prodcode','item','uom','serial','qty','item_id')
-                        ->orderBy('item', 'ASC')
-                        ->get();
-                }
-                while(!$incitems);
+                $incitems = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
+                    ->whereIn('request_number', $include)
+                    ->whereIn('stocks.status', ['incomplete'])
+                    ->join('items','items.id','stocks.item_id')
+                    ->groupBy('prodcode','item','uom','serial','qty','item_id')
+                    ->orderBy('item', 'ASC')
+                    ->get();
             }
         }
         else{
@@ -349,15 +322,12 @@ class ConfirmReceiveController extends Controller
         }
 
         if(StockRequest::where('request_number', $request->request_number)->sum('pending') > 0){
-            do{
-                $penditems = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','pending')
-                    ->join('items', 'items.id', 'stock_request.item')
-                    ->where('request_number', $request->request_number)
-                    ->where('pending', '>', '0')
-                    ->orderBy('item', 'ASC')
-                    ->get();
-            }
-            while(!$penditems);
+            $penditems = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','pending')
+                ->join('items', 'items.id', 'stock_request.item')
+                ->where('request_number', $request->request_number)
+                ->where('pending', '>', '0')
+                ->orderBy('item', 'ASC')
+                ->get();
         }
         else{
             $penditems = array();

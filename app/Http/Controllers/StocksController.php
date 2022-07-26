@@ -206,7 +206,7 @@ class StocksController extends Controller
         $count = Stock::select()
             ->where('serial', 'like', '%'.$request->serial.'%')
             ->count();
-        if($count != 0){
+        if($count > 0){
             $stock = Stock::query()
                 ->select('stocks.id AS stock_id', 'category', 'item', 'serialize', 'prodcode', 'stocks.qty', 'UOM', 'name', 'rack', 'row', 'stocks.status AS status', 'stocks.created_at AS addDate', 'stocks.updated_at AS modDate')
                 ->selectRaw('DATE_FORMAT(stocks.created_at, "%b. %d, %Y, %h:%i %p") AS addDatetime, DATE_FORMAT(stocks.updated_at, "%b. %d, %Y, %h:%i %p") AS modDatetime, UPPER(serial) AS serial')

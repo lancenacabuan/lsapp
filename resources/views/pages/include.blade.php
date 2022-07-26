@@ -355,4 +355,50 @@ $('#btnChangePassword').on('click', function(){
         }
     }
 });
+$('#btnCancelRequest').on('click', function(){
+    Swal.fire({
+        title: "CANCEL STOCK REQUEST?",
+        html: "You are about to CANCEL and RETURN all requested item/s of this STOCK REQUEST! <br><strong style='color: red;'>WARNING: This process cannot be undone. CONTINUE?</strong>",
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        allowOutsideClick: false
+    })
+    .then((result) => {
+        if(result.isConfirmed){
+            $('#detailsStockRequest').modal('hide');
+            $('#loading').show();
+            $.ajax({
+                type: 'post',
+                url: '/cancelRequest',
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    'request_number': $('#request_num_details').val()
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        $('#loading').hide();
+                        Swal.fire("CANCEL SUCCESS", "STOCK REQUEST", "success");
+                        setTimeout(function(){location.reload()}, 2000);
+                    }
+                    else{
+                        $('#loading').hide();
+                        Swal.fire("CANCEL FAILED", "STOCK REQUEST", "error");
+                        setTimeout(function(){location.reload()}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        location.reload();
+                    }
+                    alert(data.responseText);
+                }
+            });
+        }
+    }); 
+});
 </script>

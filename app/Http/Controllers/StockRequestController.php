@@ -906,34 +906,15 @@ class StockRequestController extends Controller
         }
         $include[] = $request->request_number;
 
-        $status = Requests::select()
-            ->where('request_number', $request->request_number)
-            ->first()
-            ->status;
-        if($status == '17'){
-            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
-                ->whereIn('request_number', $include)
-                ->where('stocks.status', 'return')
-                ->join('items','items.id','stocks.item_id')
-                ->join('categories','categories.id','items.category_id')
-                ->orderBy('item', 'ASC')
-                ->get();
-    
-            return DataTables::of($list)->make(true);
-        }
-        else{
-            $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id, 
-            (CASE WHEN items.serialize = \'NO\' THEN 0 ELSE stocks.id END) AS id')
-                ->whereIn('request_number', $include)
-                ->where('stocks.status', 'return')
-                ->join('items','items.id','stocks.item_id')
-                ->join('categories','categories.id','items.category_id')
-                ->groupBy('category','prodcode','item','uom','serialize','serial','qty','item_id','id')
-                ->orderBy('item', 'ASC')
-                ->get();
-    
-            return DataTables::of($list)->make(true);
-        }
+        $list = Stock::query()->selectRaw('categories.category AS category, items.item AS item, items.prodcode AS prodcode, items.UOM AS uom, items.serialize AS serialize, stocks.serial AS serial, stocks.qty AS qty, stocks.item_id AS item_id, stocks.id AS id')
+            ->whereIn('request_number', $include)
+            ->where('stocks.status', 'return')
+            ->join('items','items.id','stocks.item_id')
+            ->join('categories','categories.id','items.category_id')
+            ->orderBy('item', 'ASC')
+            ->get();
+
+        return DataTables::of($list)->make(true);
     }
 
     public function dfcItems(Request $request){
@@ -1820,6 +1801,27 @@ class StockRequestController extends Controller
         $userlogs = new UserLogs;
         $userlogs->user_id = auth()->user()->id;
         $userlogs->activity = "SOLD STOCK REQUEST: User successfully sold Stock Request No. $request->request_number.";
+        $userlogs->save();
+
+        return response('true');
+    }
+
+    public function cancelRequest(Request $request){
+        Requests::where('request_number', $request->request_number)
+            ->update(['status' => '11']);
+
+        if(Requests::where('assembly_reqnum', $request->request_number)->count() > 0){
+            $include[] = Requests::where('assembly_reqnum', $request->request_number)->first()->request_number;
+        }
+        $include[] = $request->request_number;
+
+        Stock::whereIn('request_number', $include)
+            ->whereNotIn('status', ['defective','defectives','FOR RECEIVING'])
+            ->update(['status' => 'return', 'warranty_id' => '', 'batch' => '', 'user_id' => auth()->user()->id]);
+
+        $userlogs = new UserLogs;
+        $userlogs->user_id = auth()->user()->id;
+        $userlogs->activity = "RETURNED STOCK REQUEST ITEMS: User successfully returned items of Stock Request No. $request->request_number.";
         $userlogs->save();
 
         return response('true');
@@ -2826,11 +2828,8 @@ class StockRequestController extends Controller
     }
 
     public function receiveRetItems(Request $request){
-        do{
-            $sql = Stock::where('id', $request->id)
-                ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
-        }
-        while(!$sql);
+        Stock::where('id', $request->id)
+            ->update(['status' => 'in', 'request_number' => '', 'user_id' => auth()->user()->id]);
         
         return response('true');
     }

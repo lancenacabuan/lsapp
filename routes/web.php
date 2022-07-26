@@ -106,6 +106,7 @@ Route::any('/inTransit',[StockRequestController::class,'inTransit']);
 Route::any('/saleRequest',[StockRequestController::class,'saleRequest']);
 Route::any('/sellItems',[StockRequestController::class,'sellItems']);
 Route::any('/logSold',[StockRequestController::class,'logSold']);
+Route::any('/cancelRequest',[StockRequestController::class,'cancelRequest']);
 Route::any('/returnRequest',[StockRequestController::class,'returnRequest']);
 Route::any('/returnItems',[StockRequestController::class,'returnItems']);
 Route::any('/logReturn',[StockRequestController::class,'logReturn']);

@@ -1467,7 +1467,16 @@ class StockRequestController extends Controller
     }
 
     public function reschedRequest(Request $request){
-        if($request->request_type == '4' || $request->request_type == '5' || $request->request_type == '7' || $request->request_type == '8'){
+        $status = Requests::where('request_number', $request->request_number)->first()->status;
+        if($request->request_type == '8' && $status == '33'){
+            do{
+                $sql = Requests::where('request_number', $request->request_number)
+                    ->update(['status' => '34', 'prepared_by' => auth()->user()->id, 'schedule' => $request->resched]);
+            }
+            while(!$sql);
+            $sched = 'RESCHEDULED FOR RECEIVING BY CLIENT';
+        }
+        else if($request->request_type == '4' || $request->request_type == '5' || $request->request_type == '7' || $request->request_type == '8'){
             do{
                 $sql = Requests::where('request_number', $request->request_number)
                     ->update(['status' => '17', 'prepared_by' => auth()->user()->id, 'schedule' => $request->resched]);
@@ -2078,11 +2087,20 @@ class StockRequestController extends Controller
         Requests::where('request_number', $request->request_number)
             ->update(['verify' => '']);
         if($request->inc == 'true'){
-            do{
-                $sql = Requests::where('request_number', $request->request_number)
-                    ->update(['status' => '15']);
+            if($request->request_type == '8' && ($request->status == '30' || $request->status == '31' || $request->status == '34')){
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '33']);
+                }
+                while(!$sql);
             }
-            while(!$sql);
+            else{
+                do{
+                    $sql = Requests::where('request_number', $request->request_number)
+                        ->update(['status' => '15']);
+                }
+                while(!$sql);
+            }
         }
         else{
             $total = StockRequest::where('request_number', $request->request_number)->sum('pending');

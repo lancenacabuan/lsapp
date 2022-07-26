@@ -2401,7 +2401,7 @@ $('.incItems tbody').on('click', 'tr', function(){
             $('#btnReceiveDfc').prop('disabled', false);
         }
     }
-    if(requestStatus == '17' && (($("#current_role").val() == 'sales') || (($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder') && req_type_id == '7'))){
+    if((requestStatus == '17' || requestStatus == '34') && (($("#current_role").val() == 'sales') || (($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder') && req_type_id == '7'))){
         var table = $('table.incItems').DataTable();
         var data = table.row(this).data();
         item_count = table.data().count();
@@ -2957,14 +2957,16 @@ $('.btnReceive').on('click', function(){
     }
     var inc = 'false';
     var inctype = 'COMPLETE';
+    var note = '';
     var req_type_id = $('#req_type_id_details').val();
     if(items.length < item_count){
         inc = 'true';
         inctype = 'INCOMPLETE';
+        note = ' <br><strong style="color: red;">WARNING: Items for confirmation are INCOMPLETE! Continue?</strong>';
     }
-    if($('#btnReceive').val() == 'SEND CONFIRMATION'){
+    if($('#btnReceive').val() == 'SEND CONFIRMATION' || $('#btnReceiveInc').val() == 'SEND CONFIRMATION'){
         var title = 'SEND CONFIRMATION EMAIL?';
-        var text = 'The Client/Requester will be sent a confirmation email for the received items!';
+        var text = 'The Client/Requester will be sent a confirmation email for the received items!'+note;
         var action = 'SEND';
     }
     else{
@@ -2974,7 +2976,7 @@ $('.btnReceive').on('click', function(){
     }
     Swal.fire({
         title: title,
-        text: text,
+        html: text,
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',

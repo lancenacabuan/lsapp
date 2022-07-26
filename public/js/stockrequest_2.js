@@ -88,13 +88,13 @@ if($("#current_role").val() == 'sales'){
                     if(row.status_id == '6'){
                         return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                     }
-                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28'){
+                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28' || row.status_id == '33'){
                         return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16' || row.status_id == '30' || row.status_id == '31'){
                         return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27' || row.status_id == '32'){
+                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27' || row.status_id == '32' || row.status_id == '34'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '19' || row.status_id == '20'){
@@ -224,13 +224,13 @@ else{
                     if(row.status_id == '6'){
                         return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                     }
-                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28'){
+                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28' || row.status_id == '33'){
                         return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16' || row.status_id == '30' || row.status_id == '31'){
                         return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                     }
-                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27' || row.status_id == '32'){
+                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27' || row.status_id == '32' || row.status_id == '34'){
                         return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
                     }
                     else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '19' || row.status_id == '20'){
@@ -742,7 +742,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $('#retreceive_label').show();
                         $(".btnReceiveReturned").show();
                     }
-                    if(requestStatus == '15'){
+                    if(requestStatus == '15' || requestStatus == '33'){
                         var ajax_url = '/incItems';
                         $("#receivedItemsModal").show();
                         document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
@@ -774,7 +774,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                         $(".divResched1").show();
                         $(".btnTransit").show();
                     }
-                    if(requestStatus == '17'){
+                    if(requestStatus == '17' || requestStatus == '34'){
                         var ajax_url = '/incItems';
                         $("#receivedItemsModal").show();
                         document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
@@ -791,8 +791,11 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $('#increceive_label').show();
                             $("#inc2Footer").show();
                         }
+                        if(requestStatus == '34'){
+                            $('#btnReceiveInc').val('SEND CONFIRMATION');
+                        }
                     }
-                    if(requestStatus == '17' && $("#current_role").val() == 'sales'){
+                    if((requestStatus == '17' || requestStatus == '34') && $("#current_role").val() == 'sales'){
                         $('#increceive_label').show();
                         $("#inc2Footer").show();
                         if(req_type_id == '4'){
@@ -2155,7 +2158,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $('#retreceive_label').show();
             $(".btnReceiveReturned").show();
         }
-        if(requestStatus == '15'){
+        if(requestStatus == '15' || requestStatus == '33'){
             var ajax_url = '/incItems';
             $("#receivedItemsModal").show();
             document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
@@ -2187,7 +2190,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
             $(".divResched1").show();
             $(".btnTransit").show();
         }
-        if(requestStatus == '17'){
+        if(requestStatus == '17' || requestStatus == '34'){
             var ajax_url = '/incItems';
             $("#receivedItemsModal").show();
             document.getElementById('receivedheader').innerHTML = 'FOR ASSEMBLY ITEM DETAILS';
@@ -2204,8 +2207,11 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $('#increceive_label').show();
                 $("#inc2Footer").show();
             }
+            if(requestStatus == '34'){
+                $('#btnReceiveInc').val('SEND CONFIRMATION');
+            }
         }
-        if(requestStatus == '17' && $("#current_role").val() == 'sales'){
+        if((requestStatus == '17' || requestStatus == '34') && $("#current_role").val() == 'sales'){
             $('#increceive_label').show();
             $("#inc2Footer").show();
             if(req_type_id == '4'){

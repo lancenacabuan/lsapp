@@ -487,7 +487,7 @@
             <button type="button" id="btnReturn" class="btn btn-primary float-right bp" style="display: none;" disabled>RETURN</button>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
-            <button type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceive" style="display: none;" disabled>RECEIVE</button>
+            <input type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceive" style="display: none;" value="RECEIVE" disabled>
             <button type="button" class="btnReceiveAssembled btn btn-primary float-right bp ml-2" style="display: none;" disabled>RECEIVE ASSEMBLED</button>
             <button type="button" id="btnHideDetails" class="btn btn-primary float-right bp" style="display: none;">HIDE DETAILS</button>
             @endrole
@@ -579,7 +579,7 @@
             @role('admin|encoder') {{---ROLES---}}
             <div id="inc2Footer" style="display: none">
             <hr>
-            <button type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceiveInc" disabled>RECEIVE</button>
+            <input type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceiveInc" value="RECEIVE" disabled>
             <br>
             <br>
             </div>
@@ -588,7 +588,7 @@
             <div id="inc2Footer" style="display: none">
             <hr>
             <button type="button" class="btn btn-primary float-right bp btnReceiveRpl btnReceive" id="btnReceiveRplInc" disabled>RECEIVE</button>
-            <button type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceiveInc" disabled>RECEIVE</button>
+            <input type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceiveInc" value="RECEIVE" disabled>
             <br>
             <br>
             </div>

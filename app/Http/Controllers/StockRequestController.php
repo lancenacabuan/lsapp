@@ -2678,9 +2678,21 @@ class StockRequestController extends Controller
                 $inc2 = 'incomplete';
             }
 
+            switch($request_details->req_type_id){
+                case 1: $reqtype = 'Service Unit'; break;
+                case 2: $reqtype = 'Sales'; break;
+                case 3: $reqtype = 'Demo Unit'; break;
+                case 4: $reqtype = 'Replacement'; break;
+                case 5: $reqtype = 'Assembly'; break;
+                case 6: $reqtype = 'Merchant'; break;
+                case 7: $reqtype = 'Fixed Asset'; break;
+                case 8: $reqtype = 'For Staging'; break;
+                default: $reqtype = NULL;
+            }
+
             $userlogs = new UserLogs;
             $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "RECEIVED $inc1 STOCK REQUEST: User successfully received $inc2 requested items of Stock Request No. $request->request_number.";
+            $userlogs->activity = "RECEIVED $inc1 $request_details->reqtype STOCK REQUEST: User successfully received $inc2 requested items of $reqtype Stock Request No. $request->request_number.";
             $userlogs->save();
         }
 

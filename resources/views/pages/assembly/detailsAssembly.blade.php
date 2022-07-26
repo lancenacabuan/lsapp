@@ -93,7 +93,7 @@
                         </tr>
                     </tfoot>
                 </table>
-                <button type="button" id="btnDelete" class="btn btn-danger bp mt-4" style="display: none;">DELETE</button>
+                <button type="button" id="btnDelete" class="btn btn-outline-danger font-weight-bold mt-4" style="display: none;">DELETE</button>
             </div>
             <div id="prepItemsModal" style="display: none;">
                 <div class="modal-header text-center" style="border-radius: 0px; background-color: #0d1a80; color: white; height: 45px;">

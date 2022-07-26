@@ -99,7 +99,7 @@
             <input type="button" class="btn btn-primary float-right bp mt-4" id="btnProceed" value="PROCEED" disabled>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
-            <button type="button" id="btnDelete" class="btn btn-danger bp mt-4">DELETE</button>
+            <button type="button" id="btnDelete" class="btn btn-outline-danger font-weight-bold mt-4">DELETE</button>
             @endrole
         </div>
         <div id="requestItems" style="display: none;">

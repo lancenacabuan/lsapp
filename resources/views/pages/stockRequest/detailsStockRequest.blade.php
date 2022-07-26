@@ -254,12 +254,12 @@
             <input type="button" class="btn btn-primary bp mt-4" id="btnDisapprove" value="DISAPPROVE">
             @endrole
             @role('admin|encoder') {{---ROLES---}}
-            <button type="button" id="btnDelete" class="btn btn-danger bp mt-4" style="display: none;">DELETE</button>
+            <button type="button" id="btnDelete" class="btn btn-outline-danger font-weight-bold mt-4" style="display: none;">DELETE</button>
             <input type="button" class="btn btn-primary float-right bp my-4" id="btnProceed" value="PROCEED" disabled>
             <button type="button" id="btnDefDetails" class="btn btn-primary float-right bp my-4 rcvDef" style="display: none;">DEFECTIVE DETAILS</button>
             @endrole
             @role('sales') {{---ROLES---}}
-            <button type="button" id="btnDelete" class="btn btn-danger bp mt-4">DELETE</button>
+            <button type="button" id="btnDelete" class="btn btn-outline-danger font-weight-bold mt-4">DELETE</button>
             <button type="button" id="btnSaveChanges" class="btn btn-success bp my-4 float-right" style="width: 140px; display: none;">SAVE CHANGES</button>
             <button type="button" id="btnEditDetails" class="btn btn-primary bp my-4 float-right ml-2" style="width: 140px; display: none;">EDIT DETAILS</button>
             <button type="button" class="btnCancelDetails btnClose btn btn-primary bp mt-4 float-right" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
@@ -492,7 +492,7 @@
             <button type="button" id="btnHideDetails" class="btn btn-primary float-right bp" style="display: none;">HIDE DETAILS</button>
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-            <br>
+            <input type="button" class="btn btn-outline-danger font-weight-bold ml-2" id="btnCancelRequest" style="display: none;" value="CANCEL REQUEST">
             </div>
             <div class="pendshow" style="display: none;">
             <hr>

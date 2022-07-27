@@ -288,7 +288,6 @@
             <hr>
             <input type="button" class="btn btn-primary bp" id="btnBack" value="BACK">
             <input type="button" class="btn btn-primary float-right bp" id="btnSubmit" value="SCHEDULE" disabled>
-            <div class="mb-2"><br></div>
         </div>
         </div>
         <div id="receivedItemsModal" style="display: none;">
@@ -318,7 +317,6 @@
             <br>
             <hr>
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-            <div class="mb-2"><br></div>
         </div>
         </div>
         <div id="schedItemsModal" style="display: none;">
@@ -393,7 +391,6 @@
             <input type="button" class="btn btn-primary float-right bp btnTransit" value="FOR RECEIVING">
             @endrole
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-            <div class="mb-2"><br></div>
         </div>
         </div>
         <div id="transitItemsModal" style="display: none;">
@@ -498,7 +495,6 @@
             <hr>
             <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
             <button type="button" id="btnPending" class="btn btn-primary float-right bp">PENDING DETAILS</button>
-            <div class="mb-2"><br></div>
             </div>
         </div>
         </div>
@@ -573,22 +569,22 @@
             <input type="button" class="btn btn-primary float-right bp rcvShow ml-2" id="btnReceiveDfc" style="display: none;" value="RECEIVE DEFECTIVE" disabled>
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="showMore" style="display: none;" value="SHOW DETAILS">
             <input type="button" class="btn btn-primary float-right bp rcvShow" id="showLess" style="display: none;" value="HIDE DETAILS">
-            <div class="mb-2"><br></div>
+            <div class="mb-3"><br></div>
             </div>
             @endrole
             @role('admin|encoder') {{---ROLES---}}
             <div id="inc2Footer" style="display: none">
             <hr>
             <input type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceiveInc" value="RECEIVE" disabled>
-            <div class="mb-2"><br></div>
+            <div class="mb-3"><br></div>
             </div>
             @endrole
             @role('sales') {{---ROLES---}}
             <div id="inc2Footer" style="display: none">
             <hr>
-            <button type="button" class="btn btn-primary float-right bp btnReceiveRpl btnReceive" id="btnReceiveRplInc" disabled>RECEIVE</button>
+            <button type="button" class="btn btn-primary float-right bp btnReceiveRpl btnReceive" style="display: none;" id="btnReceiveRplInc" disabled>RECEIVE</button>
             <input type="button" class="btn btn-primary float-right bp btnReceive" id="btnReceiveInc" value="RECEIVE" disabled>
-            <div class="mb-2"><br></div>
+            <div class="mb-3"><br></div>
             </div>
             @endrole
         </div>
@@ -606,7 +602,6 @@
             <hr>
             <input type="button" class="btn btn-primary bp" id="btnCancel" value="BACK">
             <input type="button" class="btn btn-primary float-right bp" id="btnConfirm" value="CONFIRM" disabled>
-            <div class="mb-2"><br></div>
         </div>
         </div>
     </div>

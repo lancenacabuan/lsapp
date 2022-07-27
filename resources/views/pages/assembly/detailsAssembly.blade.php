@@ -143,7 +143,6 @@
                     <div class="divPrint" style="display: none;">
                         <hr>
                         <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-                        <div class="mb-2"><br></div>
                     </div>
                     <div class="prephide">
                         <hr>
@@ -152,13 +151,11 @@
                         <button type="button" id="btnDefective" class="btn btn-primary float-right bp" style="display: none;">DEFECTIVE</button>
                         <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
                         <input type="button" class="btn btn-outline-danger font-weight-bold ml-2" id="btnCancelRequest" style="display: none;" value="CANCEL REQUEST">
-                        <div class="mb-2"><br></div>
                     </div>
                     <div class="pendshow" style="display: none;">
                         <hr>
                         <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
                         <button type="button" id="btnPending" class="btn btn-primary float-right bp">PENDING DETAILS</button>
-                        <div class="mb-2"><br></div>
                     </div>
                 </div>
             </div>
@@ -203,7 +200,7 @@
                     <div id="incFooter">
                         <hr>
                         <input type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" value="RECEIVE" disabled>
-                        <div class="mb-2"><br></div>
+                        <div class="mb-3"><br></div>
                     </div>
                 </div>
             </div>

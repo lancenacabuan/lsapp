@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    @php $version = '1.0.6.4.7'; @endphp
+    @php $version = '1.0.6.4.8'; @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -74,6 +74,8 @@
             background-color: transparent !important;
         }
         #loading{
+            color: #0d1a80;
+            line-height: 35vh;
             display: none;
             position: fixed;
             top: 0;
@@ -265,14 +267,15 @@
     </style>
 </head>
 <body>
-    <div id="loading" style="color: #0d1a80; line-height: 35vh;">
+    <div id="loading">
         <strong style="font-size: 40px;">
             PLEASE WAIT...
         </strong>
         <br>
-        <div style="zoom: 400%; color: #0d1a80;" class="spinner-border"></div>
+        <div style="zoom: 400%;" class="spinner-border"></div>
         <br>
-        <strong style="font-size: 22px;">
+        <strong style="font-size: 25px;">
+            <i class='fa fa-exclamation-triangle'></i>
             Please DO NOT interrupt or cancel this process.
         </strong>
     </div>

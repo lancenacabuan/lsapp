@@ -360,7 +360,7 @@ function runFunction(){
             $('#requestDetails').hide();
         }
     }
-    if($('#detailsStockRequest').is(':visible') && $("#current_role").val() == 'sales' && $("#status_details").val() == 'FOR APPROVAL' && editMode == true){
+    if($('#detailsStockRequest').is(':visible') && $("#current_role").val() == 'sales' && ($("#status_details").val() == 'FOR APPROVAL' || $("#status_details").val() == 'DISAPPROVED') && editMode == true){
         var needdate = $('#needdate_details').val();
         var request_type = $('#request_type_details').val();
         var client_name = $.trim($('#client_name_details').val());
@@ -369,7 +369,7 @@ function runFunction(){
         var remarks = $.trim($('#remarks_details').val());
         var reference = $.trim($('#reference_details').val());
         var reference_upload = $('#reference_upload').val();
-        if(request_type == 'SALES' && $('.reupload').is(':hidden')){
+        if((request_type == 'SALES' || request_type == 'FOR STAGING') && $('.reupload').is(':hidden')){
             if(needdate && client_name && location_name && contact && reference){
                 $('#btnSaveChanges').prop('disabled', false);
                 $('.header_label').hide();
@@ -379,7 +379,7 @@ function runFunction(){
                 $('.header_label').show();
             }
         }
-        else if(request_type == 'SALES' && $('.reupload').is(':visible')){
+        else if((request_type == 'SALES' || request_type == 'FOR STAGING') && $('.reupload').is(':visible')){
             if(needdate && client_name && location_name && contact && reference && reference_upload){
                 $('#btnSaveChanges').prop('disabled', false);
                 $('.header_label').hide();

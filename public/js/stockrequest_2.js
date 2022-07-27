@@ -1,271 +1,134 @@
+$("#current_role").val() == 'sales' ? index = 7 : index = -1;
 $('table.stockrequestTable').dataTable().fnDestroy();
-if($("#current_role").val() == 'sales'){
-    var stockrequestTable = $('table.stockrequestTable').DataTable({
-        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
-        language:{
-            processing: "Loading...",
-            emptyTable: "No data available in table"
+var stockrequestTable = $('table.stockrequestTable').DataTable({
+    aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
+    language:{
+        processing: "Loading...",
+        emptyTable: "No data available in table"
+    },
+    serverSide: true,
+    ajax:{
+        url: '/request_data',
+    },
+    columnDefs: [
+        {
+            "targets": [0,1],
+            "visible": false,
+            "searchable": true
         },
-        serverSide: true,
-        ajax:{
-            url: '/request_data',
+        {
+            "targets": [2],
+            "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
         },
-        columnDefs: [
-            {
-                "targets": [0,1],
-                "visible": false,
-                "searchable": true
-            },
-            {
-                "targets": [2],
-                "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
-            },
-            {
-                "targets": [7],
-                "visible": false,
-                "searchable": false
-            },
-            {
-                "targets": [10],
-                "visible": false,
-                "searchable": true
-            }
-        ],
-        columns: [
-            { data: 'reqdatetime' },
-            { data: 'needdatetime' },
-            { data: 'reqdate' },
-            {
-                data: 'needdate',
-                "render": function(data, type, row){
-                    if(row.status_id >= 7){
+        {
+            "targets": [index],
+            "visible": false,
+            "searchable": false
+        },
+        {
+            "targets": [10],
+            "visible": false,
+            "searchable": true
+        }
+    ],
+    columns: [
+        { data: 'reqdatetime' },
+        { data: 'needdatetime' },
+        { data: 'reqdate' },
+        {
+            data: 'needdate',
+            "render": function(data, type, row){
+                if(row.status_id >= 7){
+                    return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
+                }
+                else{
+                    var a = new Date(minDate);
+                    var b = new Date(row.needdate);
+                    var difference = dateDiffInDays(a, b);
+                    if(difference >= 0 && difference <= 3){
+                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
+                    }
+                    else if(difference < 0){
+                        return "<span class='d-none'>"+row.needdate+"</span><span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
+                    }
+                    else{
                         return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
                     }
-                    else{
-                        var a = new Date(minDate);
-                        var b = new Date(row.needdate);
-                        var difference = dateDiffInDays(a, b);
-                        if(difference >= 0 && difference <= 3){
-                            return "<span class='d-none'>"+row.needdate+"</span><span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
-                        }
-                        else if(difference < 0){
-                            return "<span class='d-none'>"+row.needdate+"</span><span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
-                        }
-                        else{
-                            return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
-                        }
-                    }
                 }
-            },
-            {
-                data: 'client_name',
-                "render": function(data, type, row){
-                    if(row.client_name == null && row.req_num != null){
-                        return row.req_num;
-                    }
-                    else{
-                        return row.client_name;
-                    }
-                }
-            },
-            { data: 'location' },
-            {
-                data: 'reference',
-                "render": function(data, type, row){
-                    if(row.reference == null && row.orderID != null){
-                        return row.orderID;
-                    }
-                    else{
-                        return row.reference;
-                    }
-                }
-            },
-            { data: 'req_by' },
-            { data: 'req_type' },
-            {
-                data: 'status',
-                "render": function(data, type, row){
-                    if(row.status_id == '6'){
-                        return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
-                    }
-                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28' || row.status_id == '33'){
-                        return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                    else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16' || row.status_id == '30' || row.status_id == '31'){
-                        return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27' || row.status_id == '32' || row.status_id == '34'){
-                        return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '19' || row.status_id == '20'){
-                        return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                    else if(row.status_id == '10' || row.status_id == '14' || row.status_id == '26' || row.status_id == '29'){
-                        return "<span style='color: DarkBlue; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                    else{
-                        return "<span style='color: Gray; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                }
-            },
-            { data: 'req_num' }
-        ],
-        order: [],
-        initComplete: function(){
-            if(($(location).attr('pathname')+window.location.search).includes('submit') == true){
-                return false;
             }
-            else if(($(location).attr('pathname')+window.location.search).includes('asset') == true){
-                return false;
-            }
-            else if(($(location).attr('pathname')+window.location.search).includes('status') == true){
-                return false;
-            }
-            else if(($(location).attr('pathname')+window.location.search).includes('sale') == true){
-                return false;
-            }
-            else{
-                return notifyDeadline();
-            }
-        }
-    });
-}
-else{
-    var stockrequestTable = $('table.stockrequestTable').DataTable({
-        aLengthMenu:[[10,25,50,100,500,1000,-1], [10,25,50,100,500,1000,"All"]],
-        language:{
-            processing: "Loading...",
-            emptyTable: "No data available in table"
         },
-        serverSide: true,
-        ajax:{
-            url: '/request_data',
+        {
+            data: 'client_name',
+            "render": function(data, type, row){
+                if(row.client_name == null && row.req_num != null){
+                    return row.req_num;
+                }
+                else{
+                    return row.client_name;
+                }
+            }
         },
-        columnDefs: [
-            {
-                "targets": [0,1],
-                "visible": false,
-                "searchable": true
-            },
-            {
-                "targets": [2],
-                "render": $.fn.dataTable.render.moment('YYYY-MM-DD', 'MMM. DD, YYYY')
-            },
-            {
-                "targets": [10],
-                "visible": false,
-                "searchable": true
-            }
-        ],
-        columns: [
-            { data: 'reqdatetime' },
-            { data: 'needdatetime' },
-            { data: 'reqdate' },
-            {
-                data: 'needdate',
-                "render": function(data, type, row){
-                    if(row.status_id >= 7){
-                        return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
-                    }
-                    else{
-                        var a = new Date(minDate);
-                        var b = new Date(row.needdate);
-                        var difference = dateDiffInDays(a, b);
-                        if(difference >= 0 && difference <= 3){
-                            return "<span class='d-none'>"+row.needdate+"</span><span style='color: Blue; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: blue;' class='fa fa-exclamation-triangle'></i></span>";
-                        }
-                        else if(difference < 0){
-                            return "<span class='d-none'>"+row.needdate+"</span><span style='color: Red; font-weight: bold;'>"+moment(row.needdate).format('MMM. DD, YYYY')+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: red;' class='fa fa-exclamation-circle'></i></span>";
-                        }
-                        else{
-                            return "<span class='d-none'>"+row.needdate+"</span>"+moment(row.needdate).format('MMM. DD, YYYY');
-                        }
-                    }
+        { data: 'location' },
+        {
+            data: 'reference',
+            "render": function(data, type, row){
+                if(row.reference == null && row.orderID != null){
+                    return row.orderID;
                 }
-            },
-            {
-                data: 'client_name',
-                "render": function(data, type, row){
-                    if(row.client_name == null && row.req_num != null){
-                        return row.req_num;
-                    }
-                    else{
-                        return row.client_name;
-                    }
+                else{
+                    return row.reference;
                 }
-            },
-            { data: 'location' },
-            {
-                data: 'reference',
-                "render": function(data, type, row){
-                    if(row.reference == null && row.orderID != null){
-                        return row.orderID;
-                    }
-                    else{
-                        return row.reference;
-                    }
+            }
+        },
+        { data: 'req_by' },
+        { data: 'req_type' },
+        {
+            data: 'status',
+            "render": function(data, type, row){
+                if(row.status_id == '6'){
+                    return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
                 }
-            },
-            {
-                data: 'req_by',
-                "render": function(data, type, row){
-                    if(row.req_type_id == '7'){
-                        return row.asset_reqby;
-                    }
-                    else{
-                        return row.req_by;
-                    }
+                else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28' || row.status_id == '33'){
+                    return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
                 }
-            },
-            { data: 'req_type' },
-            {
-                data: 'status',
-                "render": function(data, type, row){
-                    if(row.status_id == '6'){
-                        return "<span style='color: DarkSlateGray; font-weight: bold;'>"+row.status+'&nbsp;&nbsp;&nbsp;'+"<i style='zoom: 150%; color: DarkSlateGray;' class='fa fa-exclamation-triangle'></i></span>";
-                    }
-                    else if(row.status_id == '1' || row.status_id == '15' || row.status_id == '18' || row.status_id == '21' || row.status_id == '22' || row.status_id == '23' || row.status_id == '24' || row.status_id == '25' || row.status_id == '28' || row.status_id == '33'){
-                        return "<span style='color: Red; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                    else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16' || row.status_id == '30' || row.status_id == '31'){
-                        return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                    else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27' || row.status_id == '32' || row.status_id == '34'){
-                        return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                    else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '19' || row.status_id == '20'){
-                        return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                    else if(row.status_id == '10' || row.status_id == '14' || row.status_id == '26' || row.status_id == '29'){
-                        return "<span style='color: DarkBlue; font-weight: bold;'>"+row.status+"</span>";
-                    }
-                    else{
-                        return "<span style='color: Gray; font-weight: bold;'>"+row.status+"</span>";
-                    }
+                else if(row.status_id == '2' || row.status_id == '5' || row.status_id == '16' || row.status_id == '30' || row.status_id == '31'){
+                    return "<span style='color: Indigo; font-weight: bold;'>"+row.status+"</span>";
                 }
-            },
-            { data: 'req_num' }
-        ],
-        order: [],
-        initComplete: function(){
-            if(($(location).attr('pathname')+window.location.search).includes('submit') == true){
-                return false;
+                else if(row.status_id == '3' || row.status_id == '4' || row.status_id == '11' || row.status_id == '13' || row.status_id == '17' || row.status_id == '27' || row.status_id == '32' || row.status_id == '34'){
+                    return "<span style='color: Green; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '8' || row.status_id == '9' || row.status_id == '12' || row.status_id == '19' || row.status_id == '20'){
+                    return "<span style='color: Blue; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else if(row.status_id == '10' || row.status_id == '14' || row.status_id == '26' || row.status_id == '29'){
+                    return "<span style='color: DarkBlue; font-weight: bold;'>"+row.status+"</span>";
+                }
+                else{
+                    return "<span style='color: Gray; font-weight: bold;'>"+row.status+"</span>";
+                }
             }
-            else if(($(location).attr('pathname')+window.location.search).includes('asset') == true){
-                return false;
-            }
-            else if(($(location).attr('pathname')+window.location.search).includes('status') == true){
-                return false;
-            }
-            else if(($(location).attr('pathname')+window.location.search).includes('sale') == true){
-                return false;
-            }
-            else{
-                return notifyDeadline();
-            }
+        },
+        { data: 'req_num' }
+    ],
+    order: [],
+    initComplete: function(){
+        if(($(location).attr('pathname')+window.location.search).includes('submit') == true){
+            return false;
         }
-    });
-}
+        else if(($(location).attr('pathname')+window.location.search).includes('asset') == true){
+            return false;
+        }
+        else if(($(location).attr('pathname')+window.location.search).includes('status') == true){
+            return false;
+        }
+        else if(($(location).attr('pathname')+window.location.search).includes('sale') == true){
+            return false;
+        }
+        else{
+            return notifyDeadline();
+        }
+    }
+});
 
 var data_update;
 setInterval(function(){

@@ -212,7 +212,7 @@ function generateReqNum(){
             if(data.status == 401){
                 window.location.href = '/stockrequest';
             }
-                alert(data.responseText);
+            alert(data.responseText);
         }
     });
 }

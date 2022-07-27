@@ -89,7 +89,7 @@ function generateReqNum(){
             if(data.status == 401){
                 location.reload();
             }
-                alert(data.responseText);
+            alert(data.responseText);
         }
     });
 }

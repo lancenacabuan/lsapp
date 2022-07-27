@@ -93,7 +93,7 @@ function generateReqNum(){
             if(data.status == 401){
                 window.location.href = '/stocktransfer';
             }
-                alert(data.responseText);
+            alert(data.responseText);
         }
     });
 }

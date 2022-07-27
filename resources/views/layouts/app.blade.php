@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    @php $version = '1.0.6.4.9'; @endphp
+    @php $version = '1.0.6.4.10'; @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -23,9 +23,6 @@
     <style>
         .f-outline{
             position: relative;
-        }
-        .fi{
-            background-color: white !important;
         }
         .forminput{
             background-color: white;

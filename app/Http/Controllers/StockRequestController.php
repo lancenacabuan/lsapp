@@ -1816,7 +1816,7 @@ class StockRequestController extends Controller
         $include[] = $request->request_number;
 
         Stock::whereIn('request_number', $include)
-            ->whereNotIn('status', ['defective','defectives','FOR RECEIVING'])
+            ->whereNotIn('status', ['in','defective','defectives','FOR RECEIVING'])
             ->update(['status' => 'return', 'warranty_id' => '', 'batch' => '', 'user_id' => auth()->user()->id]);
 
         $userlogs = new UserLogs;

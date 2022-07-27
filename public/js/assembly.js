@@ -468,6 +468,7 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     $('#asm_request_num_details').val(asm_req_num);
                 var req_by = value.req_by;
                     $('#requested_by_details').val(req_by);
+                var req_by_id = value.user_id;
                 var req_type = value.req_type;
                     $('#request_type_details').val(req_type);
                 var item_id = value.item_id;
@@ -500,6 +501,10 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                     var ajax_url = '/schedItems';
                     var rcv_url = '/schedItems';
                     var included = 'yes';
+
+                    if($('#current_user').val() == req_by_id && requestStatus == 3){
+                        $("#btnCancelRequest").show();
+                    }
 
                     if(req_type_id == '4'){
                         $(".rephide").hide();
@@ -879,6 +884,7 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         $('#asm_request_num_details').val(asm_req_num);
     var req_by = value.req_by;
         $('#requested_by_details').val(req_by);
+    var req_by_id = value.user_id;
     var req_type = value.req_type;
         $('#request_type_details').val(req_type);
     var item_id = value.item_id;
@@ -911,6 +917,10 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
         var ajax_url = '/schedItems';
         var rcv_url = '/schedItems';
         var included = 'yes';
+
+        if($('#current_user').val() == req_by_id && requestStatus == 3){
+            $("#btnCancelRequest").show();
+        }
 
         if(req_type_id == '4'){
             $(".rephide").hide();

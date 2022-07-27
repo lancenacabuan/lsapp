@@ -143,7 +143,7 @@
                     <div class="divPrint" style="display: none;">
                         <hr>
                         <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-                        <br>
+                        <div class="mb-2"><br></div>
                     </div>
                     <div class="prephide">
                         <hr>
@@ -151,12 +151,14 @@
                         <button type="button" id="btnAssemble" class="btn btn-primary float-right bp" style="display: none;">ASSEMBLE</button>
                         <button type="button" id="btnDefective" class="btn btn-primary float-right bp" style="display: none;">DEFECTIVE</button>
                         <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
-                        <br>
+                        <input type="button" class="btn btn-outline-danger font-weight-bold ml-2" id="btnCancelRequest" style="display: none;" value="CANCEL REQUEST">
+                        <div class="mb-2"><br></div>
                     </div>
                     <div class="pendshow" style="display: none;">
                         <hr>
-                        <button type="button" class="btnPrint btn btn-primary bp mb-2">PRINT PREVIEW</button>
-                        <button type="button" id="btnPending" class="btn btn-primary float-right bp mb-2">PENDING DETAILS</button>
+                        <button type="button" class="btnPrint btn btn-primary bp">PRINT PREVIEW</button>
+                        <button type="button" id="btnPending" class="btn btn-primary float-right bp">PENDING DETAILS</button>
+                        <div class="mb-2"><br></div>
                     </div>
                 </div>
             </div>
@@ -201,8 +203,7 @@
                     <div id="incFooter">
                         <hr>
                         <input type="button" class="btn btn-primary float-right bp btnReceive" style="display: none;" value="RECEIVE" disabled>
-                        <br>
-                        <br>
+                        <div class="mb-2"><br></div>
                     </div>
                 </div>
             </div>

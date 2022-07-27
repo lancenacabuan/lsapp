@@ -2982,6 +2982,7 @@ class StockRequestController extends Controller
         }
         $include[] = $request->request_number;
 
+        $getOld = true;
         $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.batch', ['new',''])
@@ -2999,14 +3000,11 @@ class StockRequestController extends Controller
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')
                 ->get();
-            $getList3 = true;
-        }
-        else{
-            $getList3 = false;
+            $getOld = false;
         }
 
         if($request->demo == 'received'){
-            if($list->status_id < 9){
+            if(($list->status_id < 9 && $list->req_type_id == 3) || $list->req_type_id != 3){
                 return redirect()->to('/stockrequest');
             }
             unset($list3);
@@ -3036,7 +3034,7 @@ class StockRequestController extends Controller
             $list4 = array();
         }
 
-        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0 && $getOld == true){
             $list5 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
@@ -3088,7 +3086,7 @@ class StockRequestController extends Controller
             $listX = array();
         }
 
-        return view('/pages/stockRequest/printStockRequest', compact('list','listX','list0','list1','list2','list3','list4','list5','list6','getList3'));
+        return view('/pages/stockRequest/printStockRequest', compact('list','listX','list0','list1','list2','list3','list4','list5','list6'));
     }
 
     public function notify(){

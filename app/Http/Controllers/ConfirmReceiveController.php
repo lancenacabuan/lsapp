@@ -78,7 +78,8 @@ class ConfirmReceiveController extends Controller
         if(!$list2){
             return redirect()->to('/');
         }
-        
+
+        $getOld = true;
         $list3 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
             ->whereIn('request_number', $include)
             ->whereIn('stocks.batch', ['new',''])
@@ -96,10 +97,7 @@ class ConfirmReceiveController extends Controller
                 ->groupBy('prodcode','item','uom','serial','qty','item_id')
                 ->orderBy('item', 'ASC')
                 ->get();
-            $getList3 = true;
-        }
-        else{
-            $getList3 = false;
+            $getOld = false;
         }
 
         if(!$list3){
@@ -119,7 +117,7 @@ class ConfirmReceiveController extends Controller
             $list4 = array();
         }
 
-        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0){
+        if(Stock::whereIn('request_number', $include)->where('batch','old')->count() > 0 && $getOld == true){
             $list5 = Stock::query()->selectRaw('items.prodcode AS prodcode, items.item AS item, items.UOM AS uom, stocks.serial AS serial, SUM(stocks.qty) AS qty, stocks.item_id AS item_id')
                 ->whereIn('request_number', $include)
                 ->whereIn('stocks.batch', ['old'])
@@ -158,7 +156,7 @@ class ConfirmReceiveController extends Controller
             $listX = array();
         }
         
-        return view('/pages/stockRequest/confirmStockRequest', compact('list','listX','list0','list1','list2','list3','list4','list5','getList3','confirmed'));
+        return view('/pages/stockRequest/confirmStockRequest', compact('list','listX','list0','list1','list2','list3','list4','list5','confirmed'));
     }
 
     public function logConfirm(Request $request){

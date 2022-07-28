@@ -375,6 +375,7 @@ $('#btnCancelRequest').on('click', function(){
             $.ajax({
                 type: 'post',
                 url: '/cancelRequest',
+                async: false,
                 headers:{
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },

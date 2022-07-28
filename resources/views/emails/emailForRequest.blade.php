@@ -3,8 +3,13 @@
 <body>
     <p>Hello, {{$details['name']}}!<br><br>
     @if($details['reqtype'] == 'FIXED ASSET')
-    A new <span style="color: red;"><strong>FIXED ASSET</strong></span> Stock Request has been submitted by Admin - {{$details['submitted_by']}} 
-    for the requested items of {{$details['requested_by']}}.<br></p>
+        @if($details['role'] == 'Approver - Warehouse')
+            A new <span style="color: red;"><strong>FIXED ASSET</strong></span> Stock Request has been submitted by Admin - {{$details['submitted_by']}} 
+            for the requested items of {{$details['requested_by']}} is waiting for your approval.<br></p>
+        @else
+            A new <span style="color: red;"><strong>FIXED ASSET</strong></span> Stock Request has been submitted by Admin - {{$details['submitted_by']}} 
+            for the requested items of {{$details['requested_by']}}.<br></p>
+        @endif
     @else
     {{$details['action']}} is waiting for your approval.<br></p>
     @endif

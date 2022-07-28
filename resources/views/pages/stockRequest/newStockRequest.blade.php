@@ -24,23 +24,29 @@
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 170px;">Requested By</label>
                 <input class="form-control form-control-sm" id="asset_reqby" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
-                <label class="form-control form-control-sm" style="width: 170px;">Approved By</label>
-                <input class="form-control form-control-sm" id="asset_apvby" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="100">
+                <label class="form-control form-control-sm" style="width: 170px;">Company</label>
+                <select class="form-select form-control" id="company" style="margin-right: 10px; zoom: 83%; width: 337px;">
+                    <option value="" selected disabled>Select Company</option>
+                    <option value="Apsoft" style="color: Black;">Apsoft, Inc.</option>
+                    <option value="Ideaserv" style="color: Black;">Ideaserv Systems, Inc.</option>
+                    <option value="NuServ" style="color: Black;">NuServ Solutions, Inc.</option>
+                    <option value="Phillogix" style="color: Black;">Phillogix Systems, Inc.</option>
+                </select>
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 170px;">Requester Email Address</label>
                 <input class="form-control form-control-sm" id="asset_reqby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
-                <label class="form-control form-control-sm" style="width: 170px;">Approver Email Address</label>
-                <input class="form-control form-control-sm" id="asset_apvby_email" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
+                <label class="form-control form-control-sm" style="width: 170px;">Approver</label>
+                <select class="form-select form-control" id="asset_apvby" style="margin-right: 10px; zoom: 83%; width: 337px;">
+                    <option value="" selected disabled>Select Approver</option>
+                </select>
+                <input type="hidden" id="asset_apvby_email">
+                <input type="hidden" id="asset_apvby_verify">
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 170px;">Requester Email Re-Enter</label>
                 <input class="form-control form-control-sm" id="asset_reqby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
-                <label class="form-control form-control-sm" style="width: 170px;">Approver Email Re-Enter</label>
-                <input class="form-control form-control-sm" id="asset_apvby_verify" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
-            </div>
-            <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
-                <label class="form-control form-control-sm" style="margin-left: 460px; width: 170px;" onclick="$('#reference_upload').click();">Attachment Request Form</label>
+                <label class="form-control form-control-sm" style="width: 170px;" onclick="$('#reference_upload').click();">Attachment Request Form</label>
                 <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="height: 29px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
                 <button class="form-control btn btn-primary bp" id="btnUploadForm" style="width: 280px; height: 29px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">

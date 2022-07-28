@@ -96,6 +96,20 @@ class StockRequestController extends Controller
         return response()->json($list);
     }
 
+    public function getApprover(Request $request){       
+        $list = User::select('id','name')
+            ->where('company', $request->company)
+            ->where('userlevel', '6')
+            ->orderBy('name', 'ASC')
+            ->get();
+        
+        return response()->json($list);
+    }
+
+    public function getApvEmail(Request $request){       
+        return User::where('id',$request->id)->first()->email;
+    }
+    
     public function itemsreq(Request $request){       
         $list = Item::query()->select('items.id','items.item')
             ->where('items.category_id',$request->category_id)

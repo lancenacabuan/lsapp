@@ -73,6 +73,8 @@ Route::get('/stockrequest',[StockRequestController::class,'stockrequest']);
 Route::get('/stockrequest/reload',[StockRequestController::class,'reload']);
 Route::get('/generateReqNum',[StockRequestController::class,'generateReqNum']);
 Route::get('/getInclusive',[StockRequestController::class,'getInclusive']);
+Route::get('/getApprover',[StockRequestController::class,'getApprover']);
+Route::get('/getApvEmail',[StockRequestController::class,'getApvEmail']);
 Route::get('/itemsreq',[StockRequestController::class,'itemsreq']);
 Route::get('/setuom',[StockRequestController::class,'setuom']);
 Route::any('/saveReqNum',[StockRequestController::class,'saveReqNum']);

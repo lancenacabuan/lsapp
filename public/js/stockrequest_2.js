@@ -80,7 +80,17 @@ var stockrequestTable = $('table.stockrequestTable').DataTable({
                 }
             }
         },
-        { data: 'req_by' },
+        {
+            data: 'req_by',
+            "render": function(data, type, row){
+                if(row.req_type_id == '7'){
+                    return row.asset_reqby;
+                }
+                else{
+                    return row.req_by;
+                }
+            }
+        },
         { data: 'req_type' },
         {
             data: 'status',
@@ -763,7 +773,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $("#sd2").remove();
                         }
                     }
-                    if(req_type_id == '7' && requestStatus == '1'){
+                    if(req_type_id == '7' && requestStatus == '1' && req_by_id == $('#current_user').val()){
                         $("#btnDelete").show();
                     }
                     if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24' || requestStatus == '31'){
@@ -2184,7 +2194,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $("#sd2").remove();
             }
         }
-        if(req_type_id == '7' && requestStatus == '1'){
+        if(req_type_id == '7' && requestStatus == '1' && req_by_id == $('#current_user').val()){
             $("#btnDelete").show();
         }
         if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24' || requestStatus == '31'){

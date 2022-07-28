@@ -522,6 +522,7 @@ class StockRequestController extends Controller
             }
         }
 
+        $subject = '[FIXED ASSET] STOCK REQUEST NO. '.$request->request_number;
         $details = [
             'name' => $request_details->asset_reqby,
             'request_number' => $request->request_number,

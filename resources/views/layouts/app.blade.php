@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    @php $version = '1.0.6.5.3'; @endphp
+    @php $version = '1.0.6.5.4'; @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -101,6 +101,14 @@
             background: #d9534f;
             border-color: #0d1a80;
             color: white;
+        }
+        body.modal-open{
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            overflow-y: scroll;
         }
         a, a:hover, img, thead, .xD{
             -webkit-user-drag: none;
@@ -263,7 +271,7 @@
         }
     </style>
 </head>
-<body>
+<body class="p-0">
     <div id="loading">
         <strong style="font-size: 40px;">
             PLEASE WAIT...

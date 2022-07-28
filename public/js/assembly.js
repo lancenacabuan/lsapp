@@ -524,6 +524,18 @@ if($(location).attr('pathname')+window.location.search != '/assembly'){
                         $('.btnReceive').show();
                         document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
                     }
+                    if(requestStatus == '11'){
+                        var ajax_url = '/retItems';
+                        $("#incItemsModal").show();
+                        document.getElementById('incmodalheader').innerHTML = 'RETURNED ITEM DETAILS';
+                        $("#incFooter").hide();
+                    }
+                    if(requestStatus == '25'){
+                        var ajax_url = '/retItems';
+                        $("#incItemsModal").show();
+                        document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE RETURNED ITEM DETAILS';
+                        $("#incFooter").hide();
+                    }
                     if(requestStatus == '12'){
                         $('#prepItemsModal').show();
                         $('#defective_label').show();
@@ -939,6 +951,18 @@ $('#assemblyTable tbody').on('click', 'tr', function(){
             $('#receive_label').show();
             $('.btnReceive').show();
             document.getElementById('modalheader').innerHTML = 'FOR RECEIVING ITEM DETAILS';
+        }
+        if(requestStatus == '11'){
+            var ajax_url = '/retItems';
+            $("#incItemsModal").show();
+            document.getElementById('incmodalheader').innerHTML = 'RETURNED ITEM DETAILS';
+            $("#incFooter").hide();
+        }
+        if(requestStatus == '25'){
+            var ajax_url = '/retItems';
+            $("#incItemsModal").show();
+            document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE RETURNED ITEM DETAILS';
+            $("#incFooter").hide();
         }
         if(requestStatus == '12'){
             $('#prepItemsModal').show();

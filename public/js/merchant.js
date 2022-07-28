@@ -665,6 +665,7 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
 
                 var stockDetailsTargets = [];
                 var ajax_url = '/schedItems';
+                var inc_url = '/incItems';
                 var included = 'yes';
 
                 if($('#current_user').val() == req_by_id && requestStatus == 3){
@@ -692,6 +693,16 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                     $('#prepItemsModal').show();
                     document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
                     ajax_url = '/receivedItems';
+                }
+                if(requestStatus == '11'){
+                    inc_url = '/retItems';
+                    $("#incItemsModal").show();
+                    document.getElementById('incmodalheader').innerHTML = 'RETURNED ITEM DETAILS';
+                }
+                if(requestStatus == '25'){
+                    inc_url = '/retItems';
+                    $("#incItemsModal").show();
+                    document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE RETURNED ITEM DETAILS';
                 }
                 if(requestStatus == '15'){
                     ajax_url = '/receivedItems';
@@ -848,7 +859,7 @@ if($(location).attr('pathname')+window.location.search != '/merchant'){
                     },
                     serverSide: true,
                     ajax:{
-                        url: '/incItems',
+                        url: inc_url,
                         data:{
                             request_number: req_num,
                         }
@@ -1001,6 +1012,7 @@ $('#merchantTable tbody').on('click', 'tr', function(){
 
     var stockDetailsTargets = [];
     var ajax_url = '/schedItems';
+    var inc_url = '/incItems';
     var included = 'yes';
 
     if($('#current_user').val() == req_by_id && requestStatus == 3){
@@ -1028,6 +1040,16 @@ $('#merchantTable tbody').on('click', 'tr', function(){
         $('#prepItemsModal').show();
         document.getElementById('modalheader').innerHTML = 'RECEIVED ITEM DETAILS';
         ajax_url = '/receivedItems';
+    }
+    if(requestStatus == '11'){
+        inc_url = '/retItems';
+        $("#incItemsModal").show();
+        document.getElementById('incmodalheader').innerHTML = 'RETURNED ITEM DETAILS';
+    }
+    if(requestStatus == '25'){
+        inc_url = '/retItems';
+        $("#incItemsModal").show();
+        document.getElementById('incmodalheader').innerHTML = 'INCOMPLETE RETURNED ITEM DETAILS';
     }
     if(requestStatus == '15'){
         ajax_url = '/receivedItems';
@@ -1184,7 +1206,7 @@ $('#merchantTable tbody').on('click', 'tr', function(){
         },
         serverSide: true,
         ajax:{
-            url: '/incItems',
+            url: inc_url,
             data:{
                 request_number: req_num,
             }

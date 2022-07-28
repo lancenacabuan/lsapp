@@ -369,6 +369,8 @@ $('#btnCancelRequest').on('click', function(){
     .then((result) => {
         if(result.isConfirmed){
             $('#detailsStockRequest').modal('hide');
+            $('#detailsMerchRequest').modal('hide');
+            $('#detailsAssembly').modal('hide');
             $('#loading').show();
             $.ajax({
                 type: 'post',

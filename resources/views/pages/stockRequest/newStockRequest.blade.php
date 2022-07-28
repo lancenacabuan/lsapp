@@ -41,8 +41,8 @@
             </div>
             <div class="form-inline" style="margin-left: 5px; margin-top: 10px;">
                 <label class="form-control form-control-sm" style="margin-left: 460px; width: 170px;" onclick="$('#reference_upload').click();">Attachment Request Form</label>
-                <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
-                <button class="form-control btn btn-primary bp" id="btnUploadForm" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
+                <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="height: 29px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
+                <button class="form-control btn btn-primary bp" id="btnUploadForm" style="width: 280px; height: 29px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                     <input type="hidden" name="reqnum" id="reqnum">
@@ -100,13 +100,13 @@
             </div>
             <div class="reference_field" style="margin-top: -156px; height: 136px; display: none;">
             <div class="form-inline" style="margin-left: 435px; margin-top: 10px;">
-                <label class="form-control form-control-sm reference_field" style="margin-top: -38px; width: 160px; display: none;">Reference SO/PO No.</label>
-                <textarea class="form-control reference_field spChar" name="reference" id="reference" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field" maxlength="500"></textarea>
+                <label class="form-control form-control-sm reference_field" style="margin-top: -40px; width: 160px; height: 30px; display: none;">Reference SO/PO No.</label>
+                <textarea class="form-control reference_field spChar" name="reference" id="reference" style="height: 69px; width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field" maxlength="500"></textarea>
             </div>
             <div class="form-inline" style="margin-left: 435px; margin-top: 10px;">
                 <label class="form-control form-control-sm reference_field" style="width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
-                <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
-                <button class="form-control btn btn-primary bp reference_field" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
+                <button class="form-control btn btn-danger disupload" title="Remove Attachments" style="margin-left: -30px; height: 29px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
+                <button class="form-control btn btn-primary bp reference_field" style="width: 280px; height: 29px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
                 <form class="d-none" id="formUpload" action="{{ route('uploadFile') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
                     <input type="hidden" name="reqnum" id="reqnum">

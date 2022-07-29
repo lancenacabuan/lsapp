@@ -20,7 +20,6 @@
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         @if($details['reqtype'] == 'FIXED ASSET')
         <br>Requested By: {{$details['requested_by']}}<br>
-        Approved By: {{$details['approved_by']}}<br>
         Submitted By: {{$details['submitted_by']}}
         @else
         Requested By: {{$details['requested_by']}}<br><br>

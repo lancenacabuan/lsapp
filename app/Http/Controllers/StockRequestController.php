@@ -537,28 +537,6 @@ class StockRequestController extends Controller
         }
 
         $subject = '[FIXED ASSET] STOCK REQUEST NO. '.$request->request_number;
-        $emails = User::role('approver - warehouse')
-            ->where('status','ACTIVE')
-            ->where('company',auth()->user()->company)
-            ->get('email')
-            ->toArray();
-        foreach($emails as $email){
-            $sendTo[] = $email['email'];
-        }
-        $details = [
-            'name' => 'APPROVER - WAREHOUSE',
-            'request_number' => $request->request_number,
-            'reqtype' => $request_details->reqtype,
-            'reqdate' => $request_details->reqdate,
-            'needdate' => $request_details->needdate,
-            'submitted_by' => auth()->user()->name,
-            'requested_by' => $request_details->asset_reqby,
-            'approved_by' => $request_details->asset_apvby,
-            'role' => 'Approver - Warehouse',
-            'items' => $items,
-            'files' => $attachments
-        ];
-        Mail::to($sendTo)->send(new emailForRequest($details, $subject));
         $details = [
             'name' => $request_details->asset_reqby,
             'request_number' => $request->request_number,
@@ -567,7 +545,6 @@ class StockRequestController extends Controller
             'needdate' => $request_details->needdate,
             'submitted_by' => auth()->user()->name,
             'requested_by' => $request_details->asset_reqby,
-            'approved_by' => $request_details->asset_apvby,
             'role' => '',
             'items' => $items,
             'files' => $attachments
@@ -581,8 +558,7 @@ class StockRequestController extends Controller
             'needdate' => $request_details->needdate,
             'submitted_by' => auth()->user()->name,
             'requested_by' => $request_details->asset_reqby,
-            'approved_by' => $request_details->asset_apvby,
-            'role' => '',
+            'role' => 'Approver - Warehouse',
             'items' => $items,
             'files' => $attachments
         ];

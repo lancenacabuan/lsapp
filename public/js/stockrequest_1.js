@@ -218,6 +218,10 @@ function generateReqNum(){
 }
 
 $(".btnNewStockRequest").on('click', function(){
+    if($('#current_url').val() == 'live' && ($('#current_role').val() == 'admin' || $('#current_role').val() == 'encoder')){
+        Swal.fire('UNDER MAINTENANCE', 'This feature is currently under maintenance. Thank you for understanding.', 'info');
+        return false;
+    }
     $('#newStockRequest').modal({
         backdrop: 'static',
         keyboard: false
@@ -484,7 +488,7 @@ $('#company').on('change', function(){
             });
             descOp+='<option value="" selected disabled>Select Approver</option>'; 
             approver.forEach(value => {
-                descOp+='<option value="'+value.id+'">'+value.name+'</option>'; 
+                descOp+='<option value="'+value.name+'">'+value.name+'</option>'; 
             });
             $("#asset_apvby").find('option').remove().end().append(descOp);                 
         },
@@ -736,27 +740,6 @@ $('#btnSave').on('click', function(){
             }
             else{
                 email1 = 'unknown';
-            }
-            if(emailProvider(asset_apvby_email)){
-                $.ajax({
-                    headers:{
-                        Authorization: "Bearer " + apiKey
-                    },
-                    async: false,
-                    type: 'GET',
-                    url: 'https://isitarealemail.com/api/email/validate?email='+asset_apvby_email,
-                    success: function(data){
-                        if(data.status == 'invalid'){
-                            email2 = 'false';
-                        }
-                        else{
-                            email2 = 'true';
-                        }
-                    }
-                });
-            }
-            else{
-                email2 = 'unknown';
             }
             $('#loading').hide();
             if(email1 == 'false' && email2 == 'false'){

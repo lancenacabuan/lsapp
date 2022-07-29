@@ -31,13 +31,9 @@ class PagesController extends Controller
     }
 
     public function index(){
-        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting')) //---ROLES---//
+        if(auth()->user()->hasanyRole('sales') || auth()->user()->hasanyRole('approver - sales') || auth()->user()->hasanyRole('accounting') || auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
         {
             return redirect('/stockrequest');
-        }
-        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
-        {
-            return redirect('/stocktransfer');
         }
         if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
         {

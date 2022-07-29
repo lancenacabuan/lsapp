@@ -40,10 +40,6 @@ class StockRequestController extends Controller
     }
 
     public function stockrequest(){
-        if(auth()->user()->hasanyRole('approver - warehouse')) //---ROLES---//
-        {
-            return redirect('/');
-        }
         if(auth()->user()->hasanyRole('assembler')) //---ROLES---//
         {
             return redirect('/');
@@ -588,6 +584,31 @@ class StockRequestController extends Controller
                 ) AS status')
                 ->where('users.company', auth()->user()->company)
                 ->whereIn('request_type.id', ['2','3','8'])
+                ->whereNotIn('requests.verify', ['Confirmed'])
+                ->whereNotIn('requests.status', ['7','26'])
+                ->join('users', 'users.id', '=', 'requests.requested_by')
+                ->join('request_type', 'request_type.id', '=', 'requests.request_type')
+                ->join('status', 'status.id', '=', 'requests.status')
+                ->orderBy('reqdate', 'ASC')
+                ->orderBy('requests.needdate', 'ASC')
+                ->orderBy('requests.id', 'ASC')
+                ->get();
+        }
+        else if(auth()->user()->hasanyRole('approver - warehouse')){ //---ROLES---//
+            $list = Requests::selectRaw('DATE_FORMAT(requests.created_at, "%b. %d, %Y") AS reqdatetime, DATE_FORMAT(requests.needdate, "%b. %d, %Y") AS needdatetime, DATE_FORMAT(requests.created_at, "%Y-%m-%d") AS reqdate, requests.id AS req_id, requests.created_at AS date, requests.request_number AS req_num, requests.requested_by AS user_id, request_type.name AS req_type, users.name AS req_by, request_type.id AS req_type_id, status.id AS status_id, requests.schedule AS sched, prepared_by, client_name, location, contact, remarks, reference, reason, needdate, requests.item_id AS item_id, qty, assembly_reqnum, reference_upload, orderID, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email, notify, verify')
+                ->selectRaw('(CASE
+                    WHEN requests.verify LIKE "%Confirmed%"
+                        THEN CONCAT("CONFIRMED ", status.status)
+                    WHEN ((requests.request_type = "2" OR requests.request_type = "7" OR requests.request_type = "8")
+                        AND requests.status = "8" AND requests.verify != "Confirmed")
+                        OR (requests.request_type = "3" AND requests.status = "9" AND requests.verify != "Demo Confirmed")
+                        THEN "FOR CONFIRMATION"
+                    ELSE
+                        status.status
+                    END
+                ) AS status')
+                ->where('requests.asset_apvby_email', auth()->user()->email)
+                ->whereIn('request_type.id', ['7'])
                 ->whereNotIn('requests.verify', ['Confirmed'])
                 ->whereNotIn('requests.status', ['7','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')

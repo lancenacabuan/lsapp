@@ -64,7 +64,7 @@
                 <textarea class="form-control dfchide sales_details soldShow spChar" id="reference_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none;" rows="3" placeholder="Please input SO/PO Number.                       (Press 'Enter' to separate multiple inputs.)          Required Field" readonly></textarea>
             </div>
             <div class="form-inline assetshow" style="margin-left: 35px; margin-top: 10px; display: none;">
-                @role('admin|encoder|viewer') {{---ROLES---}}
+                @role('admin|encoder|viewer|approver - warehouse') {{---ROLES---}}
                 <button type="button" id="btnShowAttachment" class="btn btn-primary bp" style="zoom: 85%; width: 188px; margin-left: 530px;">VIEW ATTACHMENT</button>
                 <button type="button" id="btnHideAttachment" class="btn btn-primary bp" style="zoom: 85%; width: 188px; margin-left: 530px; display: none;">HIDE ATTACHMENT</button>
                 @endrole
@@ -221,7 +221,7 @@
             </table>
             </div>
             @endrole
-            @role('admin|encoder|viewer') {{---ROLES---}}
+            @role('admin|encoder|viewer|approver - warehouse') {{---ROLES---}}
             <table id="stockDetailsrequest" class="table stockDetails table-hover display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
@@ -249,7 +249,7 @@
                 </tfoot>
             </table>
             @endrole
-            @role('approver - sales') {{---ROLES---}}
+            @role('approver - sales|approver - warehouse') {{---ROLES---}}
             <input type="button" class="btn btn-primary float-right bp mt-4" id="btnApprove" value="APPROVE">
             <input type="button" class="btn btn-primary bp mt-4" id="btnDisapprove" value="DISAPPROVE">
             @endrole
@@ -337,7 +337,7 @@
                 <input class="form-control form-control-sm" id="sched" style="width: 280px;" type="text" readonly>
             </div>
             <br>
-            @role('admin|encoder') {{---ROLES---}}
+            @role('admin|encoder|approver - warehouse') {{---ROLES---}}
             <table id="schedItems" class="table schedItems display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>
@@ -450,7 +450,7 @@
                 </tfoot>
             </table>
             @endrole
-            @role('admin|encoder') {{---ROLES---}}
+            @role('admin|encoder|approver - warehouse') {{---ROLES---}}
             <table id="transItems1" class="table transItems1 display" style="cursor: pointer; border: none; font-size: 12px; width: 100%;">
                 <thead>
                     <tr>

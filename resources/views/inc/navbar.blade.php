@@ -9,7 +9,7 @@
                 <a class="nav-link n {{ Request::is('stocks') ? 'active' : '' }}" href="{{ url('/stocks') }}">STOCKS</a>
             </li>
             @endrole
-            @role('admin|encoder|viewer|sales|approver - sales|accounting') {{---ROLES---}}
+            @role('admin|encoder|viewer|sales|approver - sales|accounting|approver - warehouse') {{---ROLES---}}
             <li class="nav-item">
                 <a class="nav-link n {{ Request::is('stockrequest') || Request::is('printRequest') || Request::is('receive') ? 'active' : '' }}" href="{{ url('/stockrequest') }}">STOCK REQUEST</a>
             </li>

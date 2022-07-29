@@ -284,7 +284,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     }
                     
                     if((($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus >= 27)) || req_type_id == '6' || req_type_id == '8')) || 
-                    ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder' || $("#current_role").val() == 'viewer') && req_type_id == '7'){
+                    ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder' || $("#current_role").val() == 'viewer' || $("#current_role").val() == 'approver - warehouse') && req_type_id == '7'){
                         var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
                         var reference_attachments = decodeHtml(reference_uploads).split(',');
                         for(var i=0; i < reference_attachments.length; i++){
@@ -1709,7 +1709,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         }
 
         if((($("#current_role").val() == 'sales' || $("#current_role").val() == 'approver - sales' || $("#current_role").val() == 'accounting') && (req_type_id == '2' || (req_type_id == '3' && (requestStatus == '10' || requestStatus >= 27)) || req_type_id == '6' || req_type_id == '8')) || 
-        ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder' || $("#current_role").val() == 'viewer') && req_type_id == '7'){
+        ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder' || $("#current_role").val() == 'viewer' || $("#current_role").val() == 'approver - warehouse') && req_type_id == '7'){
             var reference_uploads = value.reference_upload.slice(1).slice(0,-1);
             var reference_attachments = decodeHtml(reference_uploads).split(',');
             for(var i=0; i < reference_attachments.length; i++){

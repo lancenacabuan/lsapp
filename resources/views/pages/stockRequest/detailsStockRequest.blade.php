@@ -43,7 +43,7 @@
                 <label class="form-control form-control-sm assethide" id="item_desc_label" style="width: 160px; display: none;">Assembled Item Name</label>
                 <input class="form-control form-control-sm assethide" id="item_desc_details" style="width: 450px; margin-right: 10px; display: none;" type="text" readonly>
                 <label class="form-control form-control-sm editAssetShow" style="width: 160px; display: none;">Requested By</label>
-                <input class="form-control form-control-sm editAssetShow" id="asset_reqby_details" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field" maxlength="100">
+                <input class="form-control form-control-sm editAssetShow" id="asset_reqby_details" style="width: 280px; margin-right: 10px; display: none;" type="search" placeholder="Required Field" maxlength="100">
                 <label class="form-control form-control-sm editAssetShow" style="width: 160px; display: none;">Company Name</label>
                 <select class="form-select form-control editAssetShow" id="company_details" style="margin-right: 10px; zoom: 83%; width: 337px; display: none;">
                     <option value="" selected disabled>Select Company</option>
@@ -55,7 +55,7 @@
             </div>
             <div class="form-inline editAssetShow" style="margin-left: 35px; margin-top: 10px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px;">Requester Email Address</label>
-                <input class="form-control form-control-sm" id="asset_reqby_email_details" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
+                <input class="form-control form-control-sm" id="asset_reqby_email_details" style="width: 280px; margin-right: 10px;" type="search" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
                 <label class="form-control form-control-sm" style="width: 160px;">Approver Name</label>
                 <select class="form-select form-control" id="asset_apvby_details" style="margin-right: 10px; zoom: 83%; width: 337px;">
                     <option value="" selected disabled>Select Approver</option>
@@ -97,22 +97,24 @@
                 @endrole
                 <span id="warehouse_note" style="color: Red; font-size: 12px; display: none;">Please select location to store the Assembled Item/s.</span>
             </div>
-            <div class="form-inline" style="margin-left: 35px;;">
-                <label class="form-control form-control-sm" name="reason_label" id="reason_label" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>
-                <textarea class="form-control" name="reason_details" id="reason_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="4" readonly></textarea>
-                <label id="lblReupload" class="form-control form-control-sm reupload classReupload assethide" style="margin-left: 450px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
-                <button class="form-control btn btn-danger disupload classReupload assethide" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
-                <button class="form-control btn btn-primary bp reupload classReupload assethide" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
+            <div class="form-inline" style="margin-left: 35px;">
+                <label class="form-control form-control-sm reason_class" name="reason_label" id="reason_label" style="margin-top: -56px; width: 160px; display: none;">Disapproval Reason</label>
+                <textarea class="form-control reason_class" name="reason_details" id="reason_details" style="width: 280px; margin-right: 10px; font-size: 12px; resize: none; display: none;" rows="4" readonly></textarea>
+                <label id="lblReupload" class="form-control form-control-sm reupload classReupload" style="margin-left: 450px; width: 160px; display: none;" onclick="$('#reference_upload').click();">Attachment SO/PO</label>
+                <button class="form-control btn btn-danger disupload classReupload" title="Remove Attachments" style="margin-left: -30px; height: 28px; width: 30px; padding: 0px; font-size: 18px; display: none;"><i class="fa fa-trash"></i></button>
+                <button class="form-control btn btn-primary bp reupload classReupload" style="width: 280px; height: 28px; line-height: 30%; font-size: 12px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: none;" onclick="$('#reference_upload').click();"><i class="fa fa-image" style="zoom: 120%;"></i>&nbsp;&nbsp;<span class="upload_label">Upload PDF or Image less than 5MB each</span></button>
             </div>
-            <div class="form-inline assethide" style="margin-left: 35px; margin-top: 10px;">
+            <div class="form-inline" style="margin-left: 35px; margin-top: 10px;">
                 <span class="reupload classReupload" style="margin-left: 450px; color: Red; font-size: 12px; display: none;">Use 'Ctrl + Left Click' to select multiple PDF and/or Image files for upload.</span>
             </div>
-            @role('sales')
+            <div class="valid_label alert alert-warning mt-4" role="alert" style="display: none;">
+                <i class='fa fa-exclamation-triangle'></i>
+                <strong>CANNOT PROCEED:</strong> Requester Email Address has an invalid format!
+            </div>
             <div class="header_label alert alert-primary mt-4" role="alert" style="display: none;">
                 <i class='fa fa-exclamation-triangle'></i>
                 <strong>NOTE:</strong> Please fill up all required fields to proceed.
             </div>
-            @endrole
             @role('admin|encoder') {{---ROLES---}}
             <div id="divAssembly" style="display: none;">
             <hr>
@@ -280,8 +282,8 @@
             @role('sales') {{---ROLES---}}
             <button type="button" id="btnDelete" class="btn btn-outline-danger font-weight-bold mt-4">DELETE</button>
             @endrole
-            <button type="button" id="btnSaveChanges" class="btn btn-success bp my-4 float-right ml-2" style="width: 140px; display: none;">SAVE CHANGES</button>
-            <button type="button" id="btnEditDetails" class="btn btn-primary bp my-4 float-right ml-2" style="width: 140px; display: none;">EDIT DETAILS</button>
+            <button type="button" id="btnSaveChanges" class="btn btn-primary bp my-4 float-right ml-2" style="width: 140px; display: none;">SAVE CHANGES</button>
+            <button type="button" id="btnEditDetails" class="btn btn-success bp my-4 float-right ml-2" style="width: 140px; display: none;">EDIT DETAILS</button>
             <button type="button" class="btnCancelDetails btnClose btn btn-primary bp mt-4 float-right" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
         </div>
         </div>

@@ -231,10 +231,6 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                 var reason = value.reason;
                     $('#reason_details').val(reason);
 
-                    if(req_type_id == '7' && $('#current_url').val() == 'live' && ($('#current_role').val() == 'admin' || $('#current_role').val() == 'encoder')){
-                        Swal.fire('UNDER MAINTENANCE', 'This feature is currently under maintenance. Thank you for understanding.', 'info');
-                        return false;
-                    }
                     if($("#current_role").val() == 'accounting' && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '7')){
                         window.location.href = '/stockrequest';
                     }
@@ -328,7 +324,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $('#asset_reqby_email_details').val(value.asset_reqby_email);
                             $('#asset_apvby_email_details').val(value.asset_apvby_email);
 
-                            //$('#btnRemoveAttachment').show();
+                            $('#btnRemoveAttachment').show();
                             $('#action').val('EDIT');
                         });
                     }
@@ -1713,10 +1709,6 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
     var reason = value.reason;
         $('#reason_details').val(reason);
 
-        if(req_type_id == '7' && $('#current_url').val() == 'live' && ($('#current_role').val() == 'admin' || $('#current_role').val() == 'encoder')){
-            Swal.fire('UNDER MAINTENANCE', 'This feature is currently under maintenance. Thank you for understanding.', 'info');
-            return false;
-        }
         if($("#current_role").val() == 'accounting' && (req_type_id == '1' || req_type_id == '4' || req_type_id == '5' || req_type_id == '7')){
             window.location.href = '/stockrequest';
         }
@@ -1810,7 +1802,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $('#asset_reqby_email_details').val(value.asset_reqby_email);
                 $('#asset_apvby_email_details').val(value.asset_apvby_email);
 
-                //$('#btnRemoveAttachment').show();
+                $('#btnRemoveAttachment').show();
                 $('#action').val('EDIT');
             });
         }

@@ -218,10 +218,6 @@ function generateReqNum(){
 }
 
 $(".btnNewStockRequest").on('click', function(){
-    if($('#current_url').val() == 'live' && ($('#current_role').val() == 'admin' || $('#current_role').val() == 'encoder')){
-        Swal.fire('UNDER MAINTENANCE', 'This feature is currently under maintenance. Thank you for understanding.', 'info');
-        return false;
-    }
     $('#newStockRequest').modal({
         backdrop: 'static',
         keyboard: false
@@ -402,6 +398,52 @@ function runFunction(){
                 $('#btnSaveChanges').prop('disabled', true);
                 $('.header_label').show();
             }
+        }
+    }
+    if($('#detailsStockRequest').is(':visible') && ($("#current_role").val() == 'admin' || $("#current_role").val() == 'encoder') && ($("#status_details").val() == 'FOR APPROVAL' || $("#status_details").val() == 'DISAPPROVED') && editMode == true){
+        var needdate = $('#needdate_details').val();
+        var asset_reqby = $.trim($('#asset_reqby_details').val());
+        var asset_reqby_email = $.trim($('#asset_reqby_email_details').val());
+        var asset_apvby = $('#asset_apvby_details').val();
+        var reference_upload = $('#reference_upload').val();
+        if($('.reupload').is(':hidden')){
+            if(needdate && asset_reqby && asset_reqby_email && asset_apvby){
+                $('#btnSaveChanges').prop('disabled', false);
+                $('.header_label').hide();
+                if(asset_reqby_email && !validateEmail(asset_reqby_email)){
+                    $('.valid_label').show();
+                    $('#btnSaveChanges').prop('disabled', true);
+                }
+            }
+            else{
+                $('#btnSaveChanges').prop('disabled', true);
+                $('.header_label').show();
+                if(asset_reqby_email && !validateEmail(asset_reqby_email)){
+                    $('.valid_label').show();
+                    $('#btnSaveChanges').prop('disabled', true);
+                }
+            }
+        }
+        else if($('.reupload').is(':visible')){
+            if(needdate && asset_reqby && asset_reqby_email && asset_apvby && reference_upload){
+                $('#btnSaveChanges').prop('disabled', false);
+                $('.header_label').hide();
+                if(asset_reqby_email && !validateEmail(asset_reqby_email)){
+                    $('.valid_label').show();
+                    $('#btnSaveChanges').prop('disabled', true);
+                }
+            }
+            else{
+                $('#btnSaveChanges').prop('disabled', true);
+                $('.header_label').show();
+                if(asset_reqby_email && !validateEmail(asset_reqby_email)){
+                    $('.valid_label').show();
+                    $('#btnSaveChanges').prop('disabled', true);
+                }
+            }
+        }
+        if(!asset_reqby_email){
+            $('.valid_label').hide();
         }
     }
     if($('#referenceModal').is(':visible')){
@@ -1116,122 +1158,128 @@ $('#btnSave').on('click', function(){
 });
 
 $(document).on('click', '#btnSaveChanges', function(){
-    var needdate = $('#needdate').val();
-    var client_name = $('#client_name').val();
-    var location_name = $('#location').val();
-    var contact = $('#contact').val();
-    var remarks = $('#remarks').val();
-    var reference = $('#reference').val();
-    var needdate_details = $('#needdate_details').val();
-    var client_name_details = $.trim($('#client_name_details').val());
-    var location_details = $.trim($('#location_details').val());
-    var contact_details = $.trim($('#contact_details').val());
-    var remarks_details = $.trim($('#remarks_details').val());
-    var reference_details = ($.trim($('#reference_details').val()).toUpperCase().split("\n")).join(', ');
-    var reference_upload = $('#reference_upload').val();
-    if($('.reupload').is(':hidden')){
-        if(needdate == needdate_details && client_name == client_name_details && location_name == location_details && contact == contact_details && remarks == remarks_details && reference == reference_details){
-            Swal.fire("NO CHANGES FOUND", "Stock Request Details are still all the same!", "error");
-            return false;
-        }
+    if($('#req_type_id_details').val() == '7'){
+        Swal.fire('UNDER MAINTENANCE', 'This feature is currently under maintenance. Thank you for understanding.', 'info');
+        return false;
     }
-    Swal.fire({
-        title: "EDIT STOCK REQUEST DETAILS?",
-        text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
-        icon: "warning",
-        showCancelButton: true,
-        cancelButtonColor: '#3085d6',
-        confirmButtonColor: '#d33',
-        confirmButtonText: 'Confirm',
-        allowOutsideClick: false
-    })
-    .then((result) => {
-        if(result.isConfirmed){
-            $('#detailsStockRequest').modal('hide');
-            $('#loading').show();
-            $.ajax({
-                type:'post',
-                url:'/editRequest',
-                async: false,
-                headers:{
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data:{
-                    'request_number': $('#request_num_details').val(),
-                    'needdate_orig': needdate,
-                    'client_name_orig': client_name,
-                    'location_orig': location_name,
-                    'contact_orig': contact,
-                    'remarks_orig': remarks,
-                    'reference_orig': reference,
-                    'needdate': needdate_details,
-                    'client_name': client_name_details,
-                    'location': location_details,
-                    'contact': contact_details,
-                    'remarks': remarks_details,
-                    'reference': reference_details,
-                    'reference_upload': reference_upload
-                },
-                success: function(data){
-                    $('#loading').hide();
-                    if(data == 'true'){
-                        if(reference_upload){
-                            $('#loading').show();
-                            $('#btnUpload').click();
-                        }
-                        else{
-                            if($('#status_id_details').val() == '7'){
+    else{
+        var needdate = $('#needdate').val();
+        var client_name = $('#client_name').val();
+        var location_name = $('#location').val();
+        var contact = $('#contact').val();
+        var remarks = $('#remarks').val();
+        var reference = $('#reference').val();
+        var needdate_details = $('#needdate_details').val();
+        var client_name_details = $.trim($('#client_name_details').val());
+        var location_details = $.trim($('#location_details').val());
+        var contact_details = $.trim($('#contact_details').val());
+        var remarks_details = $.trim($('#remarks_details').val());
+        var reference_details = ($.trim($('#reference_details').val()).toUpperCase().split("\n")).join(', ');
+        var reference_upload = $('#reference_upload').val();
+        if($('.reupload').is(':hidden')){
+            if(needdate == needdate_details && client_name == client_name_details && location_name == location_details && contact == contact_details && remarks == remarks_details && reference == reference_details){
+                Swal.fire("NO CHANGES FOUND", "Stock Request Details are still all the same!", "error");
+                return false;
+            }
+        }
+        Swal.fire({
+            title: "EDIT STOCK REQUEST DETAILS?",
+            text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                $('#detailsStockRequest').modal('hide');
+                $('#loading').show();
+                $.ajax({
+                    type:'post',
+                    url:'/editRequest',
+                    async: false,
+                    headers:{
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{
+                        'request_number': $('#request_num_details').val(),
+                        'needdate_orig': needdate,
+                        'client_name_orig': client_name,
+                        'location_orig': location_name,
+                        'contact_orig': contact,
+                        'remarks_orig': remarks,
+                        'reference_orig': reference,
+                        'needdate': needdate_details,
+                        'client_name': client_name_details,
+                        'location': location_details,
+                        'contact': contact_details,
+                        'remarks': remarks_details,
+                        'reference': reference_details,
+                        'reference_upload': reference_upload
+                    },
+                    success: function(data){
+                        $('#loading').hide();
+                        if(data == 'true'){
+                            if(reference_upload){
                                 $('#loading').show();
-                                $.ajax({
-                                    type: 'post',
-                                    url: '/logSave',
-                                    headers:{
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    data:{
-                                        'request_number': $('#request_num_details').val(),
-                                        'reqstatus': '7'
-                                    },
-                                    success: function(data){
-                                        if(data == 'true'){
-                                            $('#loading').hide();
-                                            Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
-                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
-                                        }
-                                        else{
-                                            $('#loading').hide();
-                                            Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
-                                            setTimeout(function(){location.href="/stockrequest"}, 2000);
-                                        }
-                                    },
-                                    error: function(data){
-                                        if(data.status == 401){
-                                            window.location.href = '/stockrequest';
-                                        }
-                                        alert(data.responseText);
-                                    }
-                                });
+                                $('#btnUpload').click();
                             }
                             else{
-                                Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
-                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                if($('#status_id_details').val() == '7'){
+                                    $('#loading').show();
+                                    $.ajax({
+                                        type: 'post',
+                                        url: '/logSave',
+                                        headers:{
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        data:{
+                                            'request_number': $('#request_num_details').val(),
+                                            'reqstatus': '7'
+                                        },
+                                        success: function(data){
+                                            if(data == 'true'){
+                                                $('#loading').hide();
+                                                Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
+                                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                            }
+                                            else{
+                                                $('#loading').hide();
+                                                Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
+                                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                            }
+                                        },
+                                        error: function(data){
+                                            if(data.status == 401){
+                                                window.location.href = '/stockrequest';
+                                            }
+                                            alert(data.responseText);
+                                        }
+                                    });
+                                }
+                                else{
+                                    Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
+                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                }
                             }
                         }
+                        else{
+                            Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
                     }
-                    else{
-                        Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
-                        setTimeout(function(){location.href="/stockrequest"}, 2000);
-                    }
-                },
-                error: function(data){
-                    if(data.status == 401){
-                        window.location.href = '/stockrequest';
-                    }
-                    alert(data.responseText);
-                }
-            });
-        }
-    })
+                });
+            }
+        });
+    }
 });
 
 $(document).on('click', '.disupload', function(){
@@ -1265,6 +1313,12 @@ $(document).on('click', '#btnRemoveAttachment', function(){
             $("#btnShowAttachment").hide();
             $("#btnHideAttachment").hide();
             $(".reupload").show();
+            if($('#req_type_id_details').val() == '7'){
+                $('#lblReupload').css({"margin-left": "0px"});
+                $('.classReupload').css({"margin-top": "-56px"});
+                $('.reason_class').css({"margin-top": "0px"});
+                $('#reason_label').css({"margin-top": "-56px"});
+            }
         }
     });   
 });

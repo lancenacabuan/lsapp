@@ -1314,10 +1314,16 @@ $(document).on('click', '#btnRemoveAttachment', function(){
             $("#btnHideAttachment").hide();
             $(".reupload").show();
             if($('#req_type_id_details').val() == '7'){
-                $('#lblReupload').css({"margin-left": "0px"});
-                $('.classReupload').css({"margin-top": "-56px"});
-                $('.reason_class').css({"margin-top": "0px"});
-                $('#reason_label').css({"margin-top": "-56px"});
+                if($('#status_id_details').val() == '7'){
+                    $('#lblReupload').css({"margin-left": "0px"});
+                    $('.classReupload').css({"margin-top": "-56px"});
+                    $('.reason_class').css({"margin-top": "0px"});
+                    $('#reason_label').css({"margin-top": "-56px"});
+                }
+                else{
+                    $('.reason_class').css({"margin-top": "0px"});
+                    $('#reason_label').css({"margin-top": "-56px"});
+                }
             }
         }
     });   

@@ -11,11 +11,16 @@
         Request Type: {{$details['reqtype']}}<br>
         Date Requested: {{Carbon\Carbon::parse($details['reqdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
         Date Needed: {{Carbon\Carbon::parse($details['needdate'])->isoformat('dddd, MMMM DD, YYYY')}}<br>
+        @if($details['reqtype'] == 'FIXED ASSET')
+        <br>Requested By: {{$details['requested_by']}}<br>
+        Submitted By: {{$details['submitted_by']}}
+        @else
         Requested By: {{$details['requested_by']}}<br><br>
         Client Name: {{$details['client_name']}}<br>
         Address / Branch: {{$details['location']}}<br>
         Contact Person: {{$details['contact']}}<br>
         Remarks: {{$details['remarks']}}
+        @endif
         @if($details['reqtype'] == 'SALES' || $details['reqtype'] == 'FOR STAGING')
         <br><br>Reference SO/PO No.: {{$details['reference']}}
         @endif
@@ -100,12 +105,17 @@
             </tfoot>
         </table>
         @endif
+        @if($details['role'] != '')
         <br><br>
         Kindly login to your {{$details['role']}} account if you wish to view this request for revision or deletion by clicking on the link below.<br>
         Thank you!
+        @endif
     </p>
+    @if($details['role'] != '')
     <a href="{{ env('APP_URL_LIVE') }}stockrequest?request_number={{$details['request_number']}}">{{ env('APP_URL_LIVE') }}stockrequest?request_number={{$details['request_number']}}</a>
-    <br><br>
+    <br>
+    @endif
+    <br>
     This is a system-generated email. Please do not reply.
 </body>
 </html>

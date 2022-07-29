@@ -1184,111 +1184,113 @@ class StockRequestController extends Controller
         }
         while(!$request_details);
 
-        if($request_details->reqtype == 'SALES' || $request_details->reqtype == 'FOR STAGING'){
-            do{
-                $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
-                    ->join('items', 'items.id', 'stock_request.item')
-                    ->where('request_number', $request->request_number)
-                    ->orderBy('item', 'ASC')
-                    ->get()
-                    ->toArray();
-                foreach($items as $key => $value){
-                    if($value['warranty'] == '0' || $value['warranty'] == ''){
-                        $items[$key]['Warranty_Name'] = 'NO WARRANTY';
+        if($request_details->req_type_id != '7'){
+            if($request_details->reqtype == 'SALES' || $request_details->reqtype == 'FOR STAGING'){
+                do{
+                    $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity','warranty')
+                        ->join('items', 'items.id', 'stock_request.item')
+                        ->where('request_number', $request->request_number)
+                        ->orderBy('item', 'ASC')
+                        ->get()
+                        ->toArray();
+                    foreach($items as $key => $value){
+                        if($value['warranty'] == '0' || $value['warranty'] == ''){
+                            $items[$key]['Warranty_Name'] = 'NO WARRANTY';
+                        }
+                        else{
+                            $items[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty'])->first()->Warranty_Name;
+                        }
                     }
-                    else{
-                        $items[$key]['Warranty_Name'] = Warranty::query()->where('id',$value['warranty'])->first()->Warranty_Name;
+                }
+                while(!$items);
+            }
+            else{
+                do{
+                    $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
+                        ->join('items', 'items.id', 'stock_request.item')
+                        ->where('request_number', $request->request_number)
+                        ->orderBy('item', 'ASC')
+                        ->get();
+                }
+                while(!$items);
+            }
+    
+            $attachments = [];
+            $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+            if($files != NULL){
+                $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+                foreach($files as $file){
+                    $file = str_replace('"','',$file);
+                    if(file_exists(public_path('uploads/'.$file))){
+                        array_push($attachments, public_path('uploads/'.$file));
                     }
                 }
             }
-            while(!$items);
-        }
-        else{
-            do{
-                $items = StockRequest::query()->select('items.prodcode AS prodcode','items.item AS item','items.UOM AS uom','quantity')
-                    ->join('items', 'items.id', 'stock_request.item')
-                    ->where('request_number', $request->request_number)
-                    ->orderBy('item', 'ASC')
-                    ->get();
-            }
-            while(!$items);
-        }
 
-        $attachments = [];
-        $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
-        if($files != NULL){
-            $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
-            foreach($files as $file){
-                $file = str_replace('"','',$file);
-                if(file_exists(public_path('uploads/'.$file))){
-                    array_push($attachments, public_path('uploads/'.$file));
-                }
+            $subject = '[APPROVED] STOCK REQUEST NO. '.$request->request_number;
+            $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
+            foreach($emails as $email){
+                $sendTo[] = $email['email'];
             }
+            $details = [
+                'name' => 'ACCOUNTING',
+                'action' => 'STOCK REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'client_name' => $request_details->client_name,
+                'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
+                'reference' => $request_details->reference,
+                'approvedby' => auth()->user()->name,
+                'role' => 'Accounting',
+                'items' => $items,
+                'files' => $attachments
+            ];
+            Mail::to($sendTo)->send(new approvedRequest($details, $subject));
+            unset($sendTo);
+            $details = [
+                'name' => $request_details->reqby,
+                'action' => 'STOCK REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'client_name' => $request_details->client_name,
+                'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
+                'reference' => $request_details->reference,
+                'approvedby' => auth()->user()->name,
+                'role' => 'Sales',
+                'items' => $items,
+                'files' => $attachments
+            ];
+            Mail::to($request_details->email)->send(new approvedRequest($details, $subject));
+            $details = [
+                'name' => $request_details->client_name,
+                'action' => 'STOCK REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'client_name' => $request_details->client_name,
+                'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
+                'reference' => $request_details->reference,
+                'approvedby' => auth()->user()->name,
+                'role' => '',
+                'items' => $items,
+                'files' => $attachments
+            ];
+            Mail::to($request_details->asset_reqby_email)->send(new approvedRequest($details, $subject));
         }
-        
-        $subject = '[APPROVED] STOCK REQUEST NO. '.$request->request_number;
-        $emails = User::role('accounting')->where('status','ACTIVE')->get('email')->toArray();
-        foreach($emails as $email){
-            $sendTo[] = $email['email'];
-        }
-        $details = [
-            'name' => 'ACCOUNTING',
-            'action' => 'STOCK REQUEST',
-            'request_number' => $request->request_number,
-            'reqdate' => $request_details->reqdate,
-            'requested_by' => $request_details->reqby,
-            'needdate' => $request_details->needdate,
-            'reqtype' => $request_details->reqtype,
-            'client_name' => $request_details->client_name,
-            'location' => $request_details->location,
-            'contact' => $request_details->contact,
-            'remarks' => $request_details->remarks,
-            'reference' => $request_details->reference,
-            'approvedby' => auth()->user()->name,
-            'role' => 'Accounting',
-            'items' => $items,
-            'files' => $attachments
-        ];
-        Mail::to($sendTo)->send(new approvedRequest($details, $subject));
-        unset($sendTo);
-        $details = [
-            'name' => $request_details->reqby,
-            'action' => 'STOCK REQUEST',
-            'request_number' => $request->request_number,
-            'reqdate' => $request_details->reqdate,
-            'requested_by' => $request_details->reqby,
-            'needdate' => $request_details->needdate,
-            'reqtype' => $request_details->reqtype,
-            'client_name' => $request_details->client_name,
-            'location' => $request_details->location,
-            'contact' => $request_details->contact,
-            'remarks' => $request_details->remarks,
-            'reference' => $request_details->reference,
-            'approvedby' => auth()->user()->name,
-            'role' => 'Sales',
-            'items' => $items,
-            'files' => $attachments
-        ];
-        Mail::to($request_details->email)->send(new approvedRequest($details, $subject));
-        $details = [
-            'name' => $request_details->client_name,
-            'action' => 'STOCK REQUEST',
-            'request_number' => $request->request_number,
-            'reqdate' => $request_details->reqdate,
-            'requested_by' => $request_details->reqby,
-            'needdate' => $request_details->needdate,
-            'reqtype' => $request_details->reqtype,
-            'client_name' => $request_details->client_name,
-            'location' => $request_details->location,
-            'contact' => $request_details->contact,
-            'remarks' => $request_details->remarks,
-            'reference' => $request_details->reference,
-            'approvedby' => auth()->user()->name,
-            'role' => '',
-            'items' => $items,
-            'files' => $attachments
-        ];
-        Mail::to($request_details->asset_reqby_email)->send(new approvedRequest($details, $subject));
 
         switch($request_details->req_type_id){
             case 1: $reqtype = 'Service Unit'; break;
@@ -1440,26 +1442,62 @@ class StockRequestController extends Controller
         }
         
         $subject = '[DISAPPROVED] STOCK REQUEST NO. '.$request->request_number;
-        $details = [
-            'name' => $request_details->reqby,
-            'action' => 'STOCK REQUEST',
-            'request_number' => $request->request_number,
-            'reqdate' => $request_details->reqdate,
-            'requested_by' => $request_details->reqby,
-            'needdate' => $request_details->needdate,
-            'reqtype' => $request_details->reqtype,
-            'client_name' => $request_details->client_name,
-            'location' => $request_details->location,
-            'contact' => $request_details->contact,
-            'remarks' => $request_details->remarks,
-            'reference' => $request_details->reference,
-            'reason' => $request_details->reason,
-            'disapprovedby' => auth()->user()->name,
-            'role' => 'Sales',
-            'items' => $items,
-            'files' => $attachments
-        ];
-        Mail::to($request_details->email)->send(new disapprovedRequest($details, $subject));
+        if($request_details->req_type_id == '7'){
+            $details = [
+                'name' => $request_details->asset_reqby,
+                'action' => 'FIXED ASSET STOCK REQUEST',
+                'request_number' => $request->request_number,
+                'reqtype' => $request_details->reqtype,
+                'reqdate' => $request_details->reqdate,
+                'needdate' => $request_details->needdate,
+                'submitted_by' => $request_details->reqby,
+                'requested_by' => $request_details->asset_reqby,
+                'disapprovedby' => auth()->user()->name,
+                'reason' => $request_details->reason,
+                'role' => '',
+                'items' => $items,
+                'files' => $attachments
+            ];
+            Mail::to($request_details->asset_reqby_email)->send(new disapprovedRequest($details, $subject));
+            $details = [
+                'name' => $request_details->reqby,
+                'action' => 'FIXED ASSET STOCK REQUEST',
+                'request_number' => $request->request_number,
+                'reqtype' => $request_details->reqtype,
+                'reqdate' => $request_details->reqdate,
+                'needdate' => $request_details->needdate,
+                'submitted_by' => $request_details->reqby,
+                'requested_by' => $request_details->asset_reqby,
+                'disapprovedby' => auth()->user()->name,
+                'reason' => $request_details->reason,
+                'role' => 'Admin/Encoder',
+                'items' => $items,
+                'files' => $attachments
+            ];
+            Mail::to($request_details->email)->send(new disapprovedRequest($details, $subject));
+        }
+        else{
+            $details = [
+                'name' => $request_details->reqby,
+                'action' => 'STOCK REQUEST',
+                'request_number' => $request->request_number,
+                'reqdate' => $request_details->reqdate,
+                'requested_by' => $request_details->reqby,
+                'needdate' => $request_details->needdate,
+                'reqtype' => $request_details->reqtype,
+                'client_name' => $request_details->client_name,
+                'location' => $request_details->location,
+                'contact' => $request_details->contact,
+                'remarks' => $request_details->remarks,
+                'reference' => $request_details->reference,
+                'reason' => $request_details->reason,
+                'disapprovedby' => auth()->user()->name,
+                'role' => 'Sales',
+                'items' => $items,
+                'files' => $attachments
+            ];
+            Mail::to($request_details->email)->send(new disapprovedRequest($details, $subject));
+        }
 
         switch($request_details->req_type_id){
             case 1: $reqtype = 'Service Unit'; break;

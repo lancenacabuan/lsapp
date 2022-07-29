@@ -38,7 +38,7 @@
                 <input class="form-control form-control-sm dfchide assethide spChar" id="orderID_details" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field" readonly>
                 <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
                 <input class="form-control form-control-sm" id="requested_by_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm assetshow" style="width: 160px; display: none;">Approved By</label>
+                <label class="form-control form-control-sm assetshow" style="width: 160px; display: none;">Approver Name</label>
                 <input class="form-control form-control-sm assetshow" id="approved_by_details" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
                 <label class="form-control form-control-sm assethide" id="item_desc_label" style="width: 160px; display: none;">Assembled Item Name</label>
                 <input class="form-control form-control-sm assethide" id="item_desc_details" style="width: 450px; margin-right: 10px; display: none;" type="text" readonly>

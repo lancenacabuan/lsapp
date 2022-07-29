@@ -476,6 +476,8 @@ $('#request_type').on('change', function(){
 $('#company').on('change', function(){
     var company = $('#company').val();
     var descOp = " ";
+    $('#asset_apvby_email').val('');
+    $('#asset_apvby_verify').val('');
     $.ajax({ 
         type: 'get', 
         url: '/getApprover', 
@@ -488,7 +490,7 @@ $('#company').on('change', function(){
             });
             descOp+='<option value="" selected disabled>Select Approver</option>'; 
             approver.forEach(value => {
-                descOp+='<option value="'+value.name+'">'+value.name+'</option>'; 
+                descOp+='<option value="'+value.id+'">'+value.name+'</option>'; 
             });
             $("#asset_apvby").find('option').remove().end().append(descOp);                 
         },
@@ -712,7 +714,7 @@ $('#btnSave').on('click', function(){
         var needdate = $('#needdate').val();
         var request_type = $('#request_type').val();
         var asset_reqby = $.trim($('#asset_reqby').val());
-        var asset_apvby = $.trim($('#asset_apvby').val());
+        var asset_apvby = $("#asset_apvby option:selected").text();
         var asset_reqby_email = $.trim($('#asset_reqby_email').val()).toLowerCase();
         var asset_reqby_verify = $.trim($('#asset_reqby_verify').val()).toLowerCase();
         var asset_apvby_email = $.trim($('#asset_apvby_email').val()).toLowerCase();

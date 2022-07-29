@@ -366,28 +366,6 @@ class ConfirmReceiveController extends Controller
                 'token' => ''
             ];
             Mail::to($request_details->email)->send(new receivedRequest($details, $subject));
-            
-            $details = [
-                'name' => $request_details->asset_apvby,
-                'request_number' => $request->request_number,
-                'reqdate' => $request_details->reqdate,
-                'needdate' => $request_details->needdate,
-                'prepdate' => $request_details->prepdate,
-                'scheddate' => $request_details->schedule,
-                'reqtype' => $request_details->reqtype,
-                'submitted_by' => $request_details->reqby,
-                'requested_by' => $request_details->asset_reqby,
-                'approved_by' => $request_details->asset_apvby,
-                'prepared_by' => $prep->prepby,
-                'received_by' => $request_details->asset_reqby,
-                'role' => '',
-                'items' => $items,
-                'olditems' => $olditems,
-                'incitems' => $incitems,
-                'files' => $attachments,
-                'token' => ''
-            ];
-            Mail::to($request_details->asset_apvby_email)->send(new receivedRequest($details, $subject));
         }
         else{
             $subject = '[RECEIVED] STOCK REQUEST NO. '.$request->request_number;

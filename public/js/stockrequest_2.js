@@ -369,6 +369,10 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $('#btnReceive').val('SEND CONFIRMATION');
                             $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
                         }
+                        if(requestStatus == '7'){
+                            $("#reason_label").css({"margin-top": "-86px"});
+                            $("#reason_details").css({"margin-top": "-31px"});
+                        }
                     }
                     if(req_type_id != '2' && req_type_id != '8'){
                         $(".sales_details").hide();
@@ -777,7 +781,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $("#sd2").remove();
                         }
                     }
-                    if(req_type_id == '7' && (requestStatus == '1' || requestStatus == '6') && req_by_id == $('#current_user').val()){
+                    if(req_type_id == '7' && (requestStatus == '1' || requestStatus == '6' || requestStatus == '7') && req_by_id == $('#current_user').val()){
                         $("#btnDelete").show();
                     }
                     if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24' || requestStatus == '31'){
@@ -1794,6 +1798,10 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $('#btnReceive').val('SEND CONFIRMATION');
                 $('#receive_text').html('Please select item/s for receiving on the list below then click <strong>SEND CONFIRMATION</strong> button.');
             }
+            if(requestStatus == '7'){
+                $("#reason_label").css({"margin-top": "-86px"});
+                $("#reason_details").css({"margin-top": "-31px"});
+            }
         }
         if(req_type_id != '2' && req_type_id != '8'){
             $(".sales_details").hide();
@@ -2202,7 +2210,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $("#sd2").remove();
             }
         }
-        if(req_type_id == '7' && (requestStatus == '1' || requestStatus == '6') && req_by_id == $('#current_user').val()){
+        if(req_type_id == '7' && (requestStatus == '1' || requestStatus == '6' || requestStatus == '7') && req_by_id == $('#current_user').val()){
             $("#btnDelete").show();
         }
         if(requestStatus == '1'|| requestStatus == '5' || requestStatus == '6' || requestStatus == '24' || requestStatus == '31'){

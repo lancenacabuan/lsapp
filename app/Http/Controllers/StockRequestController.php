@@ -657,7 +657,7 @@ class StockRequestController extends Controller
                     END
                 ) AS status')
                 ->whereNotIn('requests.verify', ['Confirmed'])
-                ->whereNotIn('requests.status', ['7','14','19','26'])
+                ->whereNotIn('requests.status', ['14','19','26'])
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')
                 ->join('status', 'status.id', '=', 'requests.status')
@@ -1391,7 +1391,7 @@ class StockRequestController extends Controller
 
     public function logDisapprove(Request $request){
         do{
-            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, client_name, location, contact, remarks, reference, reason, needdate')
+            $request_details = Requests::selectRaw('requests.created_at AS reqdate, users.name AS reqby, users.email AS email, request_type.name AS reqtype, request_type.id AS req_type_id, client_name, location, contact, remarks, reference, reason, needdate, asset_reqby, asset_apvby, asset_reqby_email, asset_apvby_email')
                 ->where('requests.request_number', $request->request_number)
                 ->join('users', 'users.id', '=', 'requests.requested_by')
                 ->join('request_type', 'request_type.id', '=', 'requests.request_type')

@@ -3191,38 +3191,71 @@ $(document).ready(function(){
         setTimeout(function(){location.href="/stockrequest"}, 2000);
     }
     else if(($(location).attr('pathname')+window.location.search).includes('status') == true){
-        url = window.location.search;
-        reqnum = url.replace('?status=7&edit=', '');
-        reqstatus = 7;
-        $.ajax({
-            type:'post',
-            url:'/logSave',
-            headers:{
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data:{
-                'request_number': reqnum,
-                'reqstatus': reqstatus
-            },
-            success: function(data){
-                if(data == 'true'){
-                    $('#loading').hide();
-                    Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
-                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+        var url = new URL(window.location.href);
+        var reqnum = url.searchParams.get("edit");
+        var reqtype = url.searchParams.get("reqtype");
+        if(reqtype == 7){
+            $.ajax({
+                type:'post',
+                url:'/asset_logSave',
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    'request_number': reqnum,
+                    'reqstatus': '7'
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        $('#loading').hide();
+                        Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                    else{
+                        $('#loading').hide();
+                        Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
                 }
-                else{
-                    $('#loading').hide();
-                    Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
-                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+            });
+        }
+        else{
+            $.ajax({
+                type:'post',
+                url:'/logSave',
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{
+                    'request_number': reqnum,
+                    'reqstatus': '7'
+                },
+                success: function(data){
+                    if(data == 'true'){
+                        $('#loading').hide();
+                        Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                    else{
+                        $('#loading').hide();
+                        Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
+                        setTimeout(function(){location.href="/stockrequest"}, 2000);
+                    }
+                },
+                error: function(data){
+                    if(data.status == 401){
+                        window.location.href = '/stockrequest';
+                    }
+                    alert(data.responseText);
                 }
-            },
-            error: function(data){
-                if(data.status == 401){
-                    window.location.href = '/stockrequest';
-                }
-                alert(data.responseText);
-            }
-        });
+            });
+        }
     }
     else if(($(location).attr('pathname')+window.location.search).includes('sale') == true){
         url = window.location.search;

@@ -360,8 +360,9 @@ class StockRequestController extends Controller
             return redirect()->to('/stockrequest?asset='.$request->reqnum);
         }
         else if($request->action == 'EDIT'){
+            $reqtype = Requests::where('request_number', $request->reqnum)->first()->request_type;
             if(Requests::where('request_number', $request->reqnum)->first()->status == 7){
-                return redirect()->to('/stockrequest?status=7&edit='.$request->reqnum);
+                return redirect()->to("/stockrequest?reqtype=$reqtype&status=7&edit=$request->reqnum");
             }
             else{
                 return redirect()->to('/stockrequest?edit=success');

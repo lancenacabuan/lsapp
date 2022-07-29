@@ -301,7 +301,7 @@ function runFunction(){
         var check1, check2, check3;
         var needdate = $('#needdate').val();
         var asset_reqby = $.trim($('#asset_reqby').val());
-        var asset_apvby = $.trim($('#asset_apvby').val());
+        var asset_apvby = $('#asset_apvby').val();
         var asset_reqby_email = $.trim($('#asset_reqby_email').val()).toLowerCase();
         var asset_reqby_verify = $.trim($('#asset_reqby_verify').val()).toLowerCase();
         var asset_apvby_email = $.trim($('#asset_apvby_email').val()).toLowerCase();
@@ -1159,21 +1159,131 @@ $('#btnSave').on('click', function(){
 
 $(document).on('click', '#btnSaveChanges', function(){
     if($('#req_type_id_details').val() == '7'){
+        var needdate = $('#needdate').val();
+        var asset_reqby = $('#asset_reqby').val().toLowerCase();
+        var asset_reqby_email = $('#asset_reqby_email').val().toLowerCase();
+        var asset_apvby = $("#asset_apvby option:selected").text();
+        var needdate_details = $('#needdate_details').val();
+        var asset_reqby_details = $.trim($('#asset_reqby_details').val()).toLowerCase();
+        var asset_reqby_email_details = $.trim($('#asset_reqby_email_details').val()).toLowerCase();
+        var asset_apvby_details = $("#asset_apvby_details option:selected").text();
+        var asset_apvby_email_details = $('#asset_apvby_email_details').val();
+        var reference_upload = $('#reference_upload').val();
+        if($('.reupload').is(':hidden')){
+            if(needdate == needdate_details && asset_reqby == asset_reqby_details && asset_reqby_email == asset_reqby_email_details && asset_apvby == asset_apvby_details){
+                Swal.fire("NO CHANGES FOUND", "Stock Request Details are still all the same!", "error");
+                return false;
+            }
+        }
         Swal.fire('UNDER MAINTENANCE', 'This feature is currently under maintenance. Thank you for understanding.', 'info');
         return false;
+        Swal.fire({
+            title: "EDIT STOCK REQUEST DETAILS?",
+            text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm',
+            allowOutsideClick: false
+        })
+        .then((result) => {
+            if(result.isConfirmed){
+                $('#detailsStockRequest').modal('hide');
+                $('#loading').show();
+                $.ajax({
+                    type:'post',
+                    url:'/editRequest',
+                    async: false,
+                    headers:{
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{
+                        'request_number': $('#request_num_details').val(),
+                        'needdate_orig': needdate,
+                        'asset_reqby_orig': asset_reqby,
+                        'asset_reqby_email_orig': asset_reqby_email,
+                        'asset_apvby_orig': asset_apvby,
+                        'needdate': needdate_details,
+                        'asset_reqby': asset_reqby_details,
+                        'asset_reqby_email': asset_reqby_email_details,
+                        'asset_apvby': asset_apvby_details,
+                        'asset_apvby_email': asset_apvby_email_details,
+                        'reference_upload': reference_upload
+                    },
+                    success: function(data){
+                        $('#loading').hide();
+                        if(data == 'true'){
+                            if(reference_upload){
+                                $('#loading').show();
+                                $('#btnUpload').click();
+                            }
+                            else{
+                                if($('#status_id_details').val() == '7'){
+                                    $('#loading').show();
+                                    $.ajax({
+                                        type: 'post',
+                                        url: '/asset_logSave',
+                                        headers:{
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        },
+                                        data:{
+                                            'request_number': $('#request_num_details').val(),
+                                            'reqstatus': '7'
+                                        },
+                                        success: function(data){
+                                            if(data == 'true'){
+                                                $('#loading').hide();
+                                                Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
+                                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                            }
+                                            else{
+                                                $('#loading').hide();
+                                                Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
+                                                setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                            }
+                                        },
+                                        error: function(data){
+                                            if(data.status == 401){
+                                                window.location.href = '/stockrequest';
+                                            }
+                                            alert(data.responseText);
+                                        }
+                                    });
+                                }
+                                else{
+                                    Swal.fire("EDIT SUCCESS", "STOCK REQUEST", "success");
+                                    setTimeout(function(){location.href="/stockrequest"}, 2000);
+                                }
+                            }
+                        }
+                        else{
+                            Swal.fire("EDIT FAILED", "STOCK REQUEST", "error");
+                            setTimeout(function(){location.href="/stockrequest"}, 2000);
+                        }
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+            }
+        });
     }
     else{
         var needdate = $('#needdate').val();
-        var client_name = $('#client_name').val();
-        var location_name = $('#location').val();
-        var contact = $('#contact').val();
-        var remarks = $('#remarks').val();
+        var client_name = $('#client_name').val().toLowerCase();
+        var location_name = $('#location').val().toLowerCase();
+        var contact = $('#contact').val().toLowerCase();
+        var remarks = $('#remarks').val().toLowerCase();
         var reference = $('#reference').val();
         var needdate_details = $('#needdate_details').val();
-        var client_name_details = $.trim($('#client_name_details').val());
-        var location_details = $.trim($('#location_details').val());
-        var contact_details = $.trim($('#contact_details').val());
-        var remarks_details = $.trim($('#remarks_details').val());
+        var client_name_details = $.trim($('#client_name_details').val()).toLowerCase();
+        var location_details = $.trim($('#location_details').val()).toLowerCase();
+        var contact_details = $.trim($('#contact_details').val()).toLowerCase();
+        var remarks_details = $.trim($('#remarks_details').val()).toLowerCase();
         var reference_details = ($.trim($('#reference_details').val()).toUpperCase().split("\n")).join(', ');
         var reference_upload = $('#reference_upload').val();
         if($('.reupload').is(':hidden')){

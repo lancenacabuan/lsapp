@@ -103,12 +103,16 @@ class StockRequestController extends Controller
     }
 
     public function getApvEmail(Request $request){       
-        return User::where('id',$request->id)->first()->email;
+        return User::where('id', $request->id)->first()->email;
+    }
+
+    public function getCompany(Request $request){       
+        return User::select('id','company')->where('email', $request->email)->first();
     }
     
     public function itemsreq(Request $request){       
         $list = Item::query()->select('items.id','items.item')
-            ->where('items.category_id',$request->category_id)
+            ->where('items.category_id', $request->category_id)
             ->groupBy('items.id')
             ->orderBy('item', 'ASC')
             ->get();
@@ -118,7 +122,7 @@ class StockRequestController extends Controller
 
     public function setuom(Request $request){       
         $data = Item::selectRaw('UOM as uom, prodcode')
-            ->where('id',$request->item_id)
+            ->where('id', $request->item_id)
             ->get();
         
         return response($data);

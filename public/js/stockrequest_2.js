@@ -248,12 +248,12 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                     if($("#current_role").val() == 'sales' && (requestStatus == '6' || requestStatus == '7')){
                         $('#btnEditDetails').show();
                         $('.btnCancelDetails').show();
-                        
+
                         $(document).on('click', '#btnEditDetails', function(){
                             editMode = true;
                             $('#btnEditDetails').hide();
                             $('#btnSaveChanges').show();
-            
+
                             $('#needdate').val(value.needdate);
                             $('#client_name').val(client_name);
                             $('#location').val(location_name);
@@ -276,6 +276,59 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                             $('#reference_details').val(reference);
                             $('#reference_details').prop('readonly', false);
                             $('#btnRemoveAttachment').show();
+                            $('#action').val('EDIT');
+                        });
+                    }
+                    else if(req_type_id == 7 && $('#current_user').val() == req_by_id && (requestStatus == '6' || requestStatus == '7')){
+                        $('#btnEditDetails').show();
+                        $('.btnCancelDetails').show();
+
+                        $(document).on('click', '#btnEditDetails', function(){
+                            editMode = true;
+                            $('#btnEditDetails').hide();
+                            $('#btnSaveChanges').show();
+
+                            $.ajax({
+                                type: 'get', 
+                                url: '/getCompany', 
+                                data:{
+                                    'email': value.asset_apvby_email,
+                                }, 
+                                success: function(data){
+                                    $('#company').val(data.company);
+                                    $('#company_details').val(data.company);
+                                    $('#company').change();
+                                    $('#company_details').change();
+                                    setTimeout(function(){
+                                        $('#asset_apvby').val(data.id);
+                                        $('#asset_apvby_details').val(data.id);
+                                    }, 500);
+                                },
+                                error: function(data){
+                                    if(data.status == 401){
+                                        window.location.href = '/stockrequest';
+                                    }
+                                    alert(data.responseText);
+                                }
+                            });
+
+                            $('#needdate').val(value.needdate);
+                            $('#asset_reqby').val(value.asset_reqby);
+                            $('#asset_apvby').val(value.asset_reqby);
+                            $('#asset_reqby_email').val(value.asset_reqby_email);
+                            $('#asset_apvby_email').val(value.asset_apvby_email);
+
+                            $('.editAssetHide').hide();
+                            $('.editAssetShow').show();
+
+                            $('#needdate_details').prop('readonly', false);
+                            $('#needdate_details').attr('type', 'date');
+                            $('#needdate_details').val(value.needdate);
+                            $('#asset_reqby_details').val(value.asset_reqby);
+                            $('#asset_reqby_email_details').val(value.asset_reqby_email);
+                            $('#asset_apvby_email_details').val(value.asset_apvby_email);
+
+                            //$('#btnRemoveAttachment').show();
                             $('#action').val('EDIT');
                         });
                     }
@@ -1677,7 +1730,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
         if($("#current_role").val() == 'sales' && (requestStatus == '6' || requestStatus == '7')){
             $('#btnEditDetails').show();
             $('.btnCancelDetails').show();
-            
+
             $(document).on('click', '#btnEditDetails', function(){
                 editMode = true;
                 $('#btnEditDetails').hide();
@@ -1705,6 +1758,59 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                 $('#reference_details').val(reference);
                 $('#reference_details').prop('readonly', false);
                 $('#btnRemoveAttachment').show();
+                $('#action').val('EDIT');
+            });
+        }
+        else if(req_type_id == 7 && $('#current_user').val() == req_by_id && (requestStatus == '6' || requestStatus == '7')){
+            $('#btnEditDetails').show();
+            $('.btnCancelDetails').show();
+
+            $(document).on('click', '#btnEditDetails', function(){
+                editMode = true;
+                $('#btnEditDetails').hide();
+                $('#btnSaveChanges').show();
+
+                $.ajax({
+                    type: 'get', 
+                    url: '/getCompany', 
+                    data:{
+                        'email': value.asset_apvby_email,
+                    }, 
+                    success: function(data){
+                        $('#company').val(data.company);
+                        $('#company_details').val(data.company);
+                        $('#company').change();
+                        $('#company_details').change();
+                        setTimeout(function(){
+                            $('#asset_apvby').val(data.id);
+                            $('#asset_apvby_details').val(data.id);
+                        }, 500);
+                    },
+                    error: function(data){
+                        if(data.status == 401){
+                            window.location.href = '/stockrequest';
+                        }
+                        alert(data.responseText);
+                    }
+                });
+
+                $('#needdate').val(value.needdate);
+                $('#asset_reqby').val(value.asset_reqby);
+                $('#asset_apvby').val(value.asset_reqby);
+                $('#asset_reqby_email').val(value.asset_reqby_email);
+                $('#asset_apvby_email').val(value.asset_apvby_email);
+
+                $('.editAssetHide').hide();
+                $('.editAssetShow').show();
+
+                $('#needdate_details').prop('readonly', false);
+                $('#needdate_details').attr('type', 'date');
+                $('#needdate_details').val(value.needdate);
+                $('#asset_reqby_details').val(value.asset_reqby);
+                $('#asset_reqby_email_details').val(value.asset_reqby_email);
+                $('#asset_apvby_email_details').val(value.asset_apvby_email);
+
+                //$('#btnRemoveAttachment').show();
                 $('#action').val('EDIT');
             });
         }

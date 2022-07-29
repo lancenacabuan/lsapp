@@ -500,7 +500,35 @@ $('#company').on('change', function(){
             }
             alert(data.responseText);
         }
-    });    
+    });
+});
+
+$('#company_details').on('change', function(){
+    var company = $('#company_details').val();
+    var descOp = " ";
+    $.ajax({ 
+        type: 'get', 
+        url: '/getApprover', 
+        data:{
+            'company': company
+        }, 
+        success: function(data){
+            var approver = $.map(data, function(value, index){ 
+                return [value];
+            });
+            descOp+='<option value="" selected disabled>Select Approver</option>'; 
+            approver.forEach(value => {
+                descOp+='<option value="'+value.id+'">'+value.name+'</option>'; 
+            });
+            $("#asset_apvby_details").find('option').remove().end().append(descOp);                 
+        },
+        error: function(data){
+            if(data.status == 401){
+                window.location.href = '/stockrequest';
+            }
+            alert(data.responseText);
+        }
+    });
 });
 
 $('#asset_apvby').on('change', function(){
@@ -514,6 +542,26 @@ $('#asset_apvby').on('change', function(){
         success: function(data){
             $('#asset_apvby_email').val(data);
             $('#asset_apvby_verify').val(data);
+        },
+        error: function(data){
+            if(data.status == 401){
+                window.location.href = '/stockrequest';
+            }
+            alert(data.responseText);
+        }
+    });
+});
+
+$('#asset_apvby_details').on('change', function(){
+    var id = $(this).val();
+    $.ajax({
+        type: 'get', 
+        url: '/getApvEmail', 
+        data:{
+            'id': id,
+        }, 
+        success: function(data){
+            $('#asset_apvby_email_details').val(data);
         },
         error: function(data){
             if(data.status == 401){

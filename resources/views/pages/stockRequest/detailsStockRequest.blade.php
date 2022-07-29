@@ -36,12 +36,31 @@
                 <input class="form-control form-control-sm dfchide assethide" id="client_name_details" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" readonly>
                 <label class="form-control form-control-sm dfchide assethide" id="orderID_label" style="width: 160px; display: none;">Order ID</label>
                 <input class="form-control form-control-sm dfchide assethide spChar" id="orderID_details" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field" readonly>
-                <label class="form-control form-control-sm" style="width: 160px;">Requested By</label>
-                <input class="form-control form-control-sm" id="requested_by_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
-                <label class="form-control form-control-sm assetshow" style="width: 160px; display: none;">Approver Name</label>
-                <input class="form-control form-control-sm assetshow" id="approved_by_details" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
+                <label class="form-control form-control-sm editAssetHide" style="width: 160px;">Requested By</label>
+                <input class="form-control form-control-sm editAssetHide" id="requested_by_details" style="width: 280px; margin-right: 10px;" type="text" readonly>
+                <label class="form-control form-control-sm assetshow editAssetHide" style="width: 160px; display: none;">Approver Name</label>
+                <input class="form-control form-control-sm assetshow editAssetHide" id="approved_by_details" style="width: 280px; margin-right: 10px; display: none;" type="text" readonly>
                 <label class="form-control form-control-sm assethide" id="item_desc_label" style="width: 160px; display: none;">Assembled Item Name</label>
                 <input class="form-control form-control-sm assethide" id="item_desc_details" style="width: 450px; margin-right: 10px; display: none;" type="text" readonly>
+                <label class="form-control form-control-sm editAssetShow" style="width: 160px; display: none;">Requested By</label>
+                <input class="form-control form-control-sm editAssetShow" id="asset_reqby_details" style="width: 280px; margin-right: 10px; display: none;" type="text" placeholder="Required Field" maxlength="100">
+                <label class="form-control form-control-sm editAssetShow" style="width: 160px; display: none;">Company Name</label>
+                <select class="form-select form-control editAssetShow" id="company_details" style="margin-right: 10px; zoom: 83%; width: 337px; display: none;">
+                    <option value="" selected disabled>Select Company</option>
+                    <option value="Apsoft" style="color: Black;">Apsoft, Inc.</option>
+                    <option value="Ideaserv" style="color: Black;">Ideaserv Systems, Inc.</option>
+                    <option value="NuServ" style="color: Black;">NuServ Solutions, Inc.</option>
+                    <option value="Phillogix" style="color: Black;">Phillogix Systems, Inc.</option>
+                </select>
+            </div>
+            <div class="form-inline editAssetShow" style="margin-left: 35px; margin-top: 10px; display: none;">
+                <label class="form-control form-control-sm" style="width: 160px;">Requester Email Address</label>
+                <input class="form-control form-control-sm" id="asset_reqby_email_details" style="width: 280px; margin-right: 10px;" type="email" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
+                <label class="form-control form-control-sm" style="width: 160px;">Approver Name</label>
+                <select class="form-select form-control" id="asset_apvby_details" style="margin-right: 10px; zoom: 83%; width: 337px;">
+                    <option value="" selected disabled>Select Approver</option>
+                </select>
+                <input type="hidden" id="asset_apvby_email_details">
             </div>
             <div class="form-inline assethide" style="margin-left: 35px; margin-top: 10px;">
                 <label class="form-control form-control-sm dfchide" id="location_label" style="width: 160px;">Address / Branch</label>
@@ -260,10 +279,10 @@
             @endrole
             @role('sales') {{---ROLES---}}
             <button type="button" id="btnDelete" class="btn btn-outline-danger font-weight-bold mt-4">DELETE</button>
-            <button type="button" id="btnSaveChanges" class="btn btn-success bp my-4 float-right" style="width: 140px; display: none;">SAVE CHANGES</button>
+            @endrole
+            <button type="button" id="btnSaveChanges" class="btn btn-success bp my-4 float-right ml-2" style="width: 140px; display: none;">SAVE CHANGES</button>
             <button type="button" id="btnEditDetails" class="btn btn-primary bp my-4 float-right ml-2" style="width: 140px; display: none;">EDIT DETAILS</button>
             <button type="button" class="btnCancelDetails btnClose btn btn-primary bp mt-4 float-right" style="display: none;" data-bs-dismiss="modal">CANCEL</button>
-            @endrole
         </div>
         </div>
         <div id="requestItems" style="display: none;">

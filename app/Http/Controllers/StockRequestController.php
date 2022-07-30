@@ -187,13 +187,14 @@ class StockRequestController extends Controller
         $req_type_id = Requests::where('request_number', $request->request_number)->first()->request_type;
         if($req_type_id == 7){
             do{
+                $asset_reqby_new = ucwords($request->asset_reqby);
                 $sql = Requests::where('request_number', '=', $request->request_number)
                     ->update([
                         'needdate' => $request->needdate,
-                        'asset_reqby' => ucwords($request->asset_reqby),
-                        'asset_reqby_email' => strtolower($request->asset_reqby_email),
-                        'asset_apvby' => ucwords($request->asset_apvby),
-                        'asset_apvby_email' => strtolower($request->asset_apvby_email),
+                        'asset_reqby' => $asset_reqby_new,
+                        'asset_reqby_email' => $request->asset_reqby_email,
+                        'asset_apvby' => $request->asset_apvby,
+                        'asset_apvby_email' => $request->asset_apvby_email,
                     ]);
             }
             while(!$sql);
@@ -226,8 +227,8 @@ class StockRequestController extends Controller
                 else{
                     $needdate = NULL;
                 }
-                if($request->asset_reqby != $request->asset_reqby_orig){
-                    $asset_reqby = "[Requested By: FROM '$request->asset_reqby_orig' TO '$request->asset_reqby']";
+                if(strtolower($asset_reqby_new) != strtolower($request->asset_reqby_orig)){
+                    $asset_reqby = "[Requested By: FROM '$request->asset_reqby_orig' TO '$asset_reqby_new']";
                 }
                 else{
                     $asset_reqby = NULL;

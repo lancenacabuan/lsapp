@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    @php $version = '1.0.6.6'; @endphp
+    @php $version = '1.0.6.6.1'; @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -389,6 +389,10 @@
             }
         }
         idleLogout();
+        $(document).on('keyup', '.strlower', function(){
+            var lower = $(this).val().toLowerCase();
+            $(this).val(lower);
+        });
         $(document).on('keyup', '#x_serial', function(){
             var serial = $('#x_serial').val().toUpperCase();
             $('#x_serial').val(serial);
@@ -399,8 +403,8 @@
             return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
         });
         $(document).on('keyup', '.spChar', function(){
-            var uppr = $(this).val().toUpperCase();
-            $(this).val(uppr);
+            var upper = $(this).val().toUpperCase();
+            $(this).val(upper);
         });
         $(document).on('keypress', '.spChar', function(e){
             var k;

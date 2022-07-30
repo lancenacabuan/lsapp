@@ -55,7 +55,7 @@
             </div>
             <div class="form-inline editAssetShow" style="margin-left: 35px; margin-top: 10px; display: none;">
                 <label class="form-control form-control-sm" style="width: 160px;">Requester Email Address</label>
-                <input class="form-control form-control-sm" id="asset_reqby_email_details" style="width: 280px; margin-right: 10px;" type="search" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
+                <input class="form-control form-control-sm strlower" id="asset_reqby_email_details" style="width: 280px; margin-right: 10px;" type="search" placeholder="Required Field" maxlength="100" onselectstart="return false" onpaste="return false;" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false">
                 <label class="form-control form-control-sm" style="width: 160px;">Approver Name</label>
                 <select class="form-select form-control" id="asset_apvby_details" style="margin-right: 10px; zoom: 83%; width: 337px;">
                     <option value="" selected disabled>Select Approver</option>

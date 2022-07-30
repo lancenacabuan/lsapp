@@ -20,7 +20,7 @@
             </div>
             <div class="mb-4">
                 <div class="f-outline">
-                    <input class="forminput form-control" type="search" id="email1" name="email1" placeholder=" ">
+                    <input class="forminput form-control strlower" type="search" id="email1" name="email1" placeholder=" ">
                     <label for="email1" class="formlabel form-label">Email Address</label>
                 </div>
             </div>

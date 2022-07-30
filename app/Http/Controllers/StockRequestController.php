@@ -581,7 +581,7 @@ class StockRequestController extends Controller
             $userlogs->activity = "NEW $request_details->reqtype STOCK REQUEST: User successfully submitted $reqtype Stock Request No. $request->request_number.";
             $userlogs->save();
         }
-        
+
         return response('true');
     }
 
@@ -619,9 +619,19 @@ class StockRequestController extends Controller
             }
         }
 
+        if($request->reqstatus != 7){
+            $action = 'new';
+        }
+        else{
+            $action = 'revised';
+            Requests::where('request_number', $request->request_number)
+                ->update(['status' => 6]);
+        }
+
         $subject = '[FIXED ASSET] STOCK REQUEST NO. '.$request->request_number;
         $details = [
             'name' => $request_details->asset_reqby,
+            'action' => $action,
             'request_number' => $request->request_number,
             'reqtype' => $request_details->reqtype,
             'reqdate' => $request_details->reqdate,
@@ -635,6 +645,7 @@ class StockRequestController extends Controller
         Mail::to($request_details->asset_reqby_email)->send(new emailForRequest($details, $subject));
         $details = [
             'name' => $request_details->asset_apvby,
+            'action' => $action,
             'request_number' => $request->request_number,
             'reqtype' => $request_details->reqtype,
             'reqdate' => $request_details->reqdate,
@@ -646,12 +657,14 @@ class StockRequestController extends Controller
             'files' => $attachments
         ];
         Mail::to($request_details->asset_apvby_email)->send(new emailForRequest($details, $subject));
-        
-        $userlogs = new UserLogs;
-        $userlogs->user_id = auth()->user()->id;
-        $userlogs->activity = "NEW FIXED ASSET STOCK REQUEST: User successfully submitted Fixed Asset Stock Request No. $request->request_number.";
-        $userlogs->save();
-        
+
+        if($request->reqstatus != 7){
+            $userlogs = new UserLogs;
+            $userlogs->user_id = auth()->user()->id;
+            $userlogs->activity = "NEW FIXED ASSET STOCK REQUEST: User successfully submitted Fixed Asset Stock Request No. $request->request_number.";
+            $userlogs->save();
+        }
+
         return response('true');
     }
 

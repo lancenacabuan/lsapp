@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    @php $version = '1.0.6.5.16'; @endphp
+    @php $version = '1.0.6.5.17'; @endphp
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -350,6 +350,10 @@
             if(email.includes('@gmail.') || email.includes('@yahoo.') || email.includes('@outlook.')){
                 return true;
             }
+            return false;
+        }
+        function underMaintenance(){
+            Swal.fire('UNDER MAINTENANCE', 'This feature is currently under maintenance. Thank you for understanding.', 'info');
             return false;
         }
         function notifyDeadline(){

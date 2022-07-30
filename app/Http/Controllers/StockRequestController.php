@@ -184,82 +184,164 @@ class StockRequestController extends Controller
     }
 
     public function editRequest(Request $request){
-        do{
-            $sql = Requests::where('request_number', '=', $request->request_number)
-                ->update([
-                    'needdate' => $request->needdate,
-                    'client_name' => ucwords($request->client_name),
-                    'location' => ucwords($request->location),
-                    'contact' => ucwords($request->contact),
-                    'remarks' => ucfirst($request->remarks),
-                    'reference' => strtoupper($request->reference)
-                ]);
-        }
-        while(!$sql);
+        $req_type_id = Requests::where('request_number', $request->request_number)->first()->request_type;
+        if($req_type_id == 7){
+            do{
+                $sql = Requests::where('request_number', '=', $request->request_number)
+                    ->update([
+                        'needdate' => $request->needdate,
+                        'asset_reqby' => ucwords($request->asset_reqby),
+                        'asset_reqby_email' => strtolower($request->asset_reqby_email),
+                        'asset_apvby' => ucwords($request->asset_apvby),
+                        'asset_apvby_email' => strtolower($request->asset_apvby_email),
+                    ]);
+            }
+            while(!$sql);
 
-        if(!$sql){
-            $result = 'false';
-        }
-        else {
-            $result = 'true';
-            if($request->reference_upload){
-                $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
-                if($files != NULL){
-                    $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
-                    foreach($files as $file){
-                        $file = str_replace('"','',$file);
-                        if(file_exists(public_path('uploads/'.$file))){
-                            unlink(public_path('uploads/'.$file));
+            if(!$sql){
+                $result = 'false';
+            }
+            else {
+                $result = 'true';
+                if($request->reference_upload){
+                    $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+                    if($files != NULL){
+                        $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+                        foreach($files as $file){
+                            $file = str_replace('"','',$file);
+                            if(file_exists(public_path('uploads/'.$file))){
+                                unlink(public_path('uploads/'.$file));
+                            }
                         }
                     }
+                    $reference_upload = '[ATTACHMENT SO/PO: Upload Image/s have been changed.]';
                 }
-                $reference_upload = '[ATTACHMENT SO/PO: Upload Image/s have been changed.]';
+                else{
+                    $reference_upload = NULL;
+                }
+    
+                if($request->needdate != $request->needdate_orig){
+                    $needdate = "[Date Needed: FROM '$request->needdate_orig' TO '$request->needdate']";
+                }
+                else{
+                    $needdate = NULL;
+                }
+                if($request->asset_reqby != $request->asset_reqby_orig){
+                    $asset_reqby = "[Requested By: FROM '$request->asset_reqby_orig' TO '$request->asset_reqby']";
+                }
+                else{
+                    $asset_reqby = NULL;
+                }
+                if($request->asset_reqby_email != $request->asset_reqby_email_orig){
+                    $asset_reqby_email = "[Requester Email Address: FROM '$request->asset_reqby_email_orig' TO '$request->asset_reqby_email']";
+                }
+                else{
+                    $asset_reqby_email = NULL;
+                }
+                if($request->asset_apvby != $request->asset_apvby_orig){
+                    $asset_apvby = "[Approver Name: FROM '$request->asset_apvby_orig' TO '$request->asset_apvby']";
+                }
+                else{
+                    $asset_apvby = NULL;
+                }
+    
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = "EDITED FIXED ASSET STOCK REQUEST: User successfully edited details of Fixed Asset Stock Request No. $request->request_number with the following CHANGES: $needdate $asset_reqby $asset_reqby_email $asset_apvby $reference_upload.";
+                $userlogs->save();
             }
-            else{
-                $reference_upload = NULL;
+        }
+        else{
+            do{
+                $sql = Requests::where('request_number', '=', $request->request_number)
+                    ->update([
+                        'needdate' => $request->needdate,
+                        'client_name' => ucwords($request->client_name),
+                        'location' => ucwords($request->location),
+                        'contact' => ucwords($request->contact),
+                        'remarks' => ucfirst($request->remarks),
+                        'reference' => strtoupper($request->reference)
+                    ]);
             }
+            while(!$sql);
 
-            if($request->needdate != $request->needdate_orig){
-                $needdate = "[Date Needed: FROM '$request->needdate_orig' TO '$request->needdate']";
+            if(!$sql){
+                $result = 'false';
             }
-            else{
-                $needdate = NULL;
-            }
-            if($request->client_name != $request->client_name_orig){
-                $client_name = "[Client Name: FROM '$request->client_name_orig' TO '$request->client_name']";
-            }
-            else{
-                $client_name = NULL;
-            }
-            if($request->location != $request->location_orig){
-                $location_name = "[Address / Branch: FROM '$request->location_orig' TO '$request->location']";
-            }
-            else{
-                $location_name = NULL;
-            }
-            if($request->contact != $request->contact_orig){
-                $contact = "[Contact Person: FROM '$request->contact_orig' TO '$request->contact']";
-            }
-            else{
-                $contact = NULL;
-            }
-            if($request->remarks != $request->remarks_orig){
-                $remarks = "[Remarks: FROM '$request->remarks_orig' TO '$request->remarks']";
-            }
-            else{
-                $remarks = NULL;
-            }
-            if($request->reference != $request->reference_orig){
-                $reference = "[Reference SO/PO No.: FROM '$request->reference_orig' TO '$request->reference']";
-            }
-            else{
-                $reference = NULL;
-            }
+            else {
+                $result = 'true';
+                if($request->reference_upload){
+                    $files = Requests::where('request_number', $request->request_number)->first()->reference_upload;
+                    if($files != NULL){
+                        $files = str_replace(']','',(str_replace('[','',(explode(',',$files)))));
+                        foreach($files as $file){
+                            $file = str_replace('"','',$file);
+                            if(file_exists(public_path('uploads/'.$file))){
+                                unlink(public_path('uploads/'.$file));
+                            }
+                        }
+                    }
+                    $reference_upload = '[ATTACHMENT SO/PO: Upload Image/s have been changed.]';
+                }
+                else{
+                    $reference_upload = NULL;
+                }
+    
+                if($request->needdate != $request->needdate_orig){
+                    $needdate = "[Date Needed: FROM '$request->needdate_orig' TO '$request->needdate']";
+                }
+                else{
+                    $needdate = NULL;
+                }
+                if($request->client_name != $request->client_name_orig){
+                    $client_name = "[Client Name: FROM '$request->client_name_orig' TO '$request->client_name']";
+                }
+                else{
+                    $client_name = NULL;
+                }
+                if($request->location != $request->location_orig){
+                    $location_name = "[Address / Branch: FROM '$request->location_orig' TO '$request->location']";
+                }
+                else{
+                    $location_name = NULL;
+                }
+                if($request->contact != $request->contact_orig){
+                    $contact = "[Contact Person: FROM '$request->contact_orig' TO '$request->contact']";
+                }
+                else{
+                    $contact = NULL;
+                }
+                if($request->remarks != $request->remarks_orig){
+                    $remarks = "[Remarks: FROM '$request->remarks_orig' TO '$request->remarks']";
+                }
+                else{
+                    $remarks = NULL;
+                }
+                if($request->reference != $request->reference_orig){
+                    $reference = "[Reference SO/PO No.: FROM '$request->reference_orig' TO '$request->reference']";
+                }
+                else{
+                    $reference = NULL;
+                }
 
-            $userlogs = new UserLogs;
-            $userlogs->user_id = auth()->user()->id;
-            $userlogs->activity = "EDITED STOCK REQUEST: User successfully edited details of Stock Request No. $request->request_number with the following CHANGES: $needdate $client_name $location_name $contact $remarks $reference $reference_upload.";
-            $userlogs->save();
+                switch($req_type_id){
+                    case 1: $reqtype = 'Service Unit'; break;
+                    case 2: $reqtype = 'Sales'; break;
+                    case 3: $reqtype = 'Demo Unit'; break;
+                    case 4: $reqtype = 'Replacement'; break;
+                    case 5: $reqtype = 'Assembly'; break;
+                    case 6: $reqtype = 'Merchant'; break;
+                    case 7: $reqtype = 'Fixed Asset'; break;
+                    case 8: $reqtype = 'For Staging'; break;
+                    default: $reqtype = NULL;
+                }
+                $req_type = strtoupper($reqtype);
+    
+                $userlogs = new UserLogs;
+                $userlogs->user_id = auth()->user()->id;
+                $userlogs->activity = "EDITED $req_type STOCK REQUEST: User successfully edited details of $reqtype Stock Request No. $request->request_number with the following CHANGES: $needdate $client_name $location_name $contact $remarks $reference $reference_upload.";
+                $userlogs->save();
+            }
         }
 
         return response($result);

@@ -442,7 +442,7 @@ function runFunction(){
                 }
             }
         }
-        if(!asset_reqby_email){
+        if(!asset_reqby_email || validateEmail(asset_reqby_email)){
             $('.valid_label').hide();
         }
     }
@@ -1160,23 +1160,21 @@ $('#btnSave').on('click', function(){
 $(document).on('click', '#btnSaveChanges', function(){
     if($('#req_type_id_details').val() == '7'){
         var needdate = $('#needdate').val();
-        var asset_reqby = $('#asset_reqby').val().toLowerCase();
-        var asset_reqby_email = $('#asset_reqby_email').val().toLowerCase();
+        var asset_reqby = $('#asset_reqby').val();
+        var asset_reqby_email = $('#asset_reqby_email').val();
         var asset_apvby = $("#asset_apvby option:selected").text();
         var needdate_details = $('#needdate_details').val();
-        var asset_reqby_details = $.trim($('#asset_reqby_details').val()).toLowerCase();
-        var asset_reqby_email_details = $.trim($('#asset_reqby_email_details').val()).toLowerCase();
+        var asset_reqby_details = $.trim($('#asset_reqby_details').val());
+        var asset_reqby_email_details = $.trim($('#asset_reqby_email_details').val());
         var asset_apvby_details = $("#asset_apvby_details option:selected").text();
         var asset_apvby_email_details = $('#asset_apvby_email_details').val();
         var reference_upload = $('#reference_upload').val();
         if($('.reupload').is(':hidden')){
-            if(needdate == needdate_details && asset_reqby == asset_reqby_details && asset_reqby_email == asset_reqby_email_details && asset_apvby == asset_apvby_details){
+            if(needdate == needdate_details && asset_reqby.toLowerCase() == asset_reqby_details.toLowerCase() && asset_reqby_email.toLowerCase() == asset_reqby_email_details.toLowerCase() && asset_apvby == asset_apvby_details){
                 Swal.fire("NO CHANGES FOUND", "Stock Request Details are still all the same!", "error");
                 return false;
             }
         }
-        Swal.fire('UNDER MAINTENANCE', 'This feature is currently under maintenance. Thank you for understanding.', 'info');
-        return false;
         Swal.fire({
             title: "EDIT STOCK REQUEST DETAILS?",
             text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
@@ -1274,20 +1272,20 @@ $(document).on('click', '#btnSaveChanges', function(){
     }
     else{
         var needdate = $('#needdate').val();
-        var client_name = $('#client_name').val().toLowerCase();
-        var location_name = $('#location').val().toLowerCase();
-        var contact = $('#contact').val().toLowerCase();
-        var remarks = $('#remarks').val().toLowerCase();
+        var client_name = $('#client_name').val();
+        var location_name = $('#location').val();
+        var contact = $('#contact').val();
+        var remarks = $('#remarks').val();
         var reference = $('#reference').val();
         var needdate_details = $('#needdate_details').val();
-        var client_name_details = $.trim($('#client_name_details').val()).toLowerCase();
-        var location_details = $.trim($('#location_details').val()).toLowerCase();
-        var contact_details = $.trim($('#contact_details').val()).toLowerCase();
-        var remarks_details = $.trim($('#remarks_details').val()).toLowerCase();
+        var client_name_details = $.trim($('#client_name_details').val());
+        var location_details = $.trim($('#location_details').val());
+        var contact_details = $.trim($('#contact_details').val());
+        var remarks_details = $.trim($('#remarks_details').val());
         var reference_details = ($.trim($('#reference_details').val()).toUpperCase().split("\n")).join(', ');
         var reference_upload = $('#reference_upload').val();
         if($('.reupload').is(':hidden')){
-            if(needdate == needdate_details && client_name == client_name_details && location_name == location_details && contact == contact_details && remarks == remarks_details && reference == reference_details){
+            if(needdate == needdate_details && client_name.toLowerCase() == client_name_details.toLowerCase() && location_name.toLowerCase() == location_details.toLowerCase() && contact.toLowerCase() == contact_details.toLowerCase() && remarks.toLowerCase() == remarks_details.toLowerCase() && reference == reference_details){
                 Swal.fire("NO CHANGES FOUND", "Stock Request Details are still all the same!", "error");
                 return false;
             }

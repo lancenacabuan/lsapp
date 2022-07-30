@@ -15,7 +15,7 @@
                         @csrf
                         <div class="mb-3">
                             <div class="f-outline">
-                                <input id="email" type="email" class="forminput form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder=" " autofocus>
+                                <input id="email" type="search" class="forminput form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder=" " autofocus>
                                 <label for="email" class="formlabel form-label">{{ __('E-Mail Address') }}</label>
                             </div>
                             @error('email')

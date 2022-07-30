@@ -8,7 +8,7 @@
         <div class="modal-body" style="background-color: white; color: black;">
             <div class="form-inline" style="margin-left: 5px;">
                 <label class="form-control form-control-sm" style="width: 160px;">Order ID</label>
-                <input class="form-control form-control-sm spChar" id="orderID" style="width: 280px; margin-right: 10px;" type="text" placeholder="Required Field" maxlength="50">
+                <input class="form-control form-control-sm spChar" id="orderID" style="width: 280px; margin-right: 10px;" type="search" placeholder="Required Field" maxlength="50">
                 <label class="form-control form-control-sm" style="width: 160px;">Stock Request No.</label>
                 <input class="form-control form-control-sm" id="request_num" style="width: 250px; margin-right: 10px;" type="text" readonly>
             </div>

@@ -391,17 +391,11 @@ $(document).on('click', '#SerialTable tbody tr', function(){
     $('#editSerialModal').modal('show');
 });
 
-document.querySelectorAll('input[type=search]').forEach(function(input){
-    input.addEventListener('mouseup', function(e){
-        if(input.value.length > 0){
-            setTimeout(function(){
-                if(input.value.length === 0){
-                    $('#stocksHeader').html('');
-                    $('#z_serial').keyup();
-                }
-            }, 0);
-        }
-    });
+$('#z_serial').on('search', function(e){
+    if('' == this.value){
+        $('#stocksHeader').html('');
+        $('#z_serial').keyup();
+    }
 });
 
 $('#btnGenerate').on('click', function(){

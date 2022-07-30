@@ -48,13 +48,13 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Rack No.</label>
                         </div>
-                        <input type="text" id="rack" name="rack" placeholder="Enter Rack No. (Optional)" style="width: 630px; border-width: thin;" autocomplete="off">
+                        <input type="search" id="rack" name="rack" placeholder="Enter Rack No. (Optional)" style="width: 630px; border-width: thin;" autocomplete="off">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Row No.</label>
                         </div>
-                        <input type="text" id="row" name="row" placeholder="Enter Row No. (Optional)" style="width: 630px; border-width: thin;" autocomplete="off">
+                        <input type="search" id="row" name="row" placeholder="Enter Row No. (Optional)" style="width: 630px; border-width: thin;" autocomplete="off">
                     </div>
                     <div class="input-group mb-3" id="uomdiv">
                         <div class="input-group-prepend">
@@ -72,7 +72,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 140px;">Serial</label>
                         </div>
-                        <input type="text" id="serial" name="serial" placeholder="Enter Serial (Required)" style="width: 630px; border-width: thin;" autocomplete="off" onkeypress="return specialChar(event)">
+                        <input type="search" id="serial" name="serial" placeholder="Enter Serial (Required)" style="width: 630px; border-width: thin;" autocomplete="off" onkeypress="return specialChar(event)">
                     </div>
                 </form>
                 <hr>

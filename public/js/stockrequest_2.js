@@ -281,6 +281,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
 
                         $(document).on('click', '#btnEditDetails', function(){
                             editMode = true;
+                            $('#loading').show();
                             $('#btnEditDetails').hide();
                             $('#btnSaveChanges').show();
 
@@ -298,6 +299,7 @@ if($(location).attr('pathname')+window.location.search != '/stockrequest'){
                                     setTimeout(function(){
                                         $('#asset_apvby').val(data.id);
                                         $('#asset_apvby_details').val(data.id);
+                                        $('#loading').hide();
                                     }, 500);
                                 },
                                 error: function(data){
@@ -1759,6 +1761,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
 
             $(document).on('click', '#btnEditDetails', function(){
                 editMode = true;
+                $('#loading').show();
                 $('#btnEditDetails').hide();
                 $('#btnSaveChanges').show();
 
@@ -1776,6 +1779,7 @@ $('#stockrequestTable tbody').on('click', 'tr', function(){
                         setTimeout(function(){
                             $('#asset_apvby').val(data.id);
                             $('#asset_apvby_details').val(data.id);
+                            $('#loading').hide();
                         }, 500);
                     },
                     error: function(data){

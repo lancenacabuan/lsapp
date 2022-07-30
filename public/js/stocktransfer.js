@@ -31,7 +31,7 @@ function copyReqNum(){
     navigator.clipboard.writeText(copyText.value);
     Swal.fire({
         title: copyText.value,
-        text: "Copied to Clipboard!",
+        html: "Copied to Clipboard!",
         icon: "success",
         timer: 2000
     });
@@ -40,7 +40,7 @@ function copyReqNum(){
 function sweet(title, text, icon, btnName, url){
     Swal.fire({
         title: title,
-        text: text,
+        html: text,
         icon: icon,
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -365,7 +365,7 @@ $('#btnSave').on('click', function(){
     else{
         Swal.fire({
             title: "SUBMIT STOCK TRANSFER REQUEST?",
-            text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
+            html: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -1367,7 +1367,7 @@ $('#btnEdit').on('click', function(){
     }
     Swal.fire({
         title: "Confirm Serial: "+newserial+'?',
-        text: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
+        html: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -1397,7 +1397,7 @@ $('#btnEdit').on('click', function(){
                         $('#loading').hide();
                         Swal.fire({
                             title: "EDIT SUCCESS",
-                            text: "Item Serial edited successfully!",
+                            html: "Item Serial edited successfully!",
                             icon: "success",
                             timer: 2000
                         });
@@ -1407,7 +1407,7 @@ $('#btnEdit').on('click', function(){
                         $('#loading').hide();
                         Swal.fire({
                             title: "DUPLICATE SERIAL",
-                            text: "Serial already exists!",
+                            html: "Serial already exists!",
                             icon: "error",
                             timer: 2000
                         });
@@ -1417,7 +1417,7 @@ $('#btnEdit').on('click', function(){
                         $('#loading').hide();
                         Swal.fire({
                             title: "EDIT FAILED",
-                            text: "Item Serial edit failed!",
+                            html: "Item Serial edit failed!",
                             icon: "error",
                             timer: 2000
                         });
@@ -1519,7 +1519,7 @@ $('#btnDelete').on('click', function(){
 $('#btnApprove').on('click', function(){
     Swal.fire({
         title: "APPROVE STOCK TRANSFER REQUEST?",
-        text: "You are about to APPROVE this STOCK TRANSFER REQUEST!",
+        html: "You are about to APPROVE this STOCK TRANSFER REQUEST!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -1577,7 +1577,7 @@ $('#btnReason').on('click', function(){
     else{
         Swal.fire({
             title: "DISAPPROVE STOCK TRANSFER REQUEST?",
-            text: "You are about to DISAPPROVE this STOCK TRANSFER REQUEST!",
+            html: "You are about to DISAPPROVE this STOCK TRANSFER REQUEST!",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -1653,7 +1653,7 @@ $('#btnReason').on('click', function(){
 $('.btnTransit').on('click', function(){
     Swal.fire({
         title: "FOR RECEIVING?",
-        text: "You are about to move these items FOR RECEIVING!",
+        html: "You are about to move these items FOR RECEIVING!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -1712,7 +1712,7 @@ $('#btnReschedule').on('click', function(){
     else{
         Swal.fire({
             title: "RESCHEDULE STOCK TRANSFER REQUEST?",
-            text: "You are about to RESCHEDULE this STOCK TRANSFER REQUEST!",
+            html: "You are about to RESCHEDULE this STOCK TRANSFER REQUEST!",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -2144,7 +2144,7 @@ $("#btnProceed").unbind('click').click(function(){
                     else{
                         Swal.fire({
                             title: "SCHEDULE STOCK TRANSFER REQUEST?",
-                            text: "You are about to SCHEDULE this STOCK TRANSFER REQUEST!",
+                            html: "You are about to SCHEDULE this STOCK TRANSFER REQUEST!",
                             icon: "warning",
                             showCancelButton: true,
                             cancelButtonColor: '#3085d6',
@@ -2252,7 +2252,7 @@ $('.btnReceive').on('click', function(){
     }
     Swal.fire({
         title: "RECEIVE "+inctype+" STOCK TRANSFER REQUEST?",
-        text: "You are about to RECEIVE this Stock Transfer Request!",
+        html: "You are about to RECEIVE this Stock Transfer Request!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',

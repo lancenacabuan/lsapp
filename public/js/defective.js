@@ -121,7 +121,7 @@ $(document).on('click', '.btnReturnItem', function(){
 
     Swal.fire({
         title: "RETURN DEFECTIVE ITEM w/ SERIAL: "+data.serial,
-        text: "You are about to RETURN this DEFECTIVE ITEM. CONTINUE?",
+        html: "You are about to RETURN this DEFECTIVE ITEM. CONTINUE?",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -146,7 +146,7 @@ $(document).on('click', '.btnReturnItem', function(){
                     if(data == 'false'){
                         Swal.fire({
                             title: "RETURN FAILED",
-                            text: "Failed to return Defective Item!",
+                            html: "Failed to return Defective Item!",
                             icon: "error",
                             timer: 2000
                         });
@@ -155,7 +155,7 @@ $(document).on('click', '.btnReturnItem', function(){
                     else{
                         Swal.fire({
                             title: "RETURN SUCCESS",
-                            text: "Successfully returned Defective Item!",
+                            html: "Successfully returned Defective Item!",
                             icon: "success",
                             timer: 2000
                         });

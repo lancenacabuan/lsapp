@@ -30,7 +30,7 @@ function copyReqNum(){
     navigator.clipboard.writeText(copyText.value);
     Swal.fire({
         title: copyText.value,
-        text: "Copied to Clipboard!",
+        html: "Copied to Clipboard!",
         icon: "success",
         timer: 2000
     });
@@ -43,7 +43,7 @@ function copyAsmReqNum(){
     navigator.clipboard.writeText(copyText.value);
     Swal.fire({
         title: copyText.value,
-        text: "Copied to Clipboard!",
+        html: "Copied to Clipboard!",
         icon: "success",
         timer: 2000
     });
@@ -325,7 +325,7 @@ $('#btnAssemblySave').on('click', function(){
     else{
         Swal.fire({
             title: "SUBMIT ASSEMBLY REQUEST?",
-            text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
+            html: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -1418,7 +1418,7 @@ $('.btnReceive').on('click', function(){
     }
     Swal.fire({
         title: "RECEIVE "+inctype+" ASSEMBLY PARTS?",
-        text: "You are about to RECEIVE these ASSEMBLY PARTS!",
+        html: "You are about to RECEIVE these ASSEMBLY PARTS!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -1524,7 +1524,7 @@ $('#btnDefective').on('click', function(){
     generateReqNum();
     Swal.fire({
         title: "REQUEST REPLACEMENTS?",
-        text: "You are about to REQUEST REPLACEMENTS for these DEFECTIVE ASSEMBLY PARTS!",
+        html: "You are about to REQUEST REPLACEMENTS for these DEFECTIVE ASSEMBLY PARTS!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -1626,7 +1626,7 @@ $('#btnAssemble').on('click', function(){
     var item_desc_details = decodeHtml($('#item_desc_details').val());
     Swal.fire({
         title: "ASSEMBLE: "+item_desc_details+"?",
-        text: "You are about to ASSEMBLE this Assembly Stock Request!",
+        html: "You are about to ASSEMBLE this Assembly Stock Request!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',

@@ -399,7 +399,7 @@ $('#btnUpload').on('click', function(){
     else{
         Swal.fire({
             title: "UPLOAD FILE IMPORT?",
-            text: "Click 'Confirm' button to ADD ITEMS via uploading import file; otherwise, click 'Cancel' button to select a different file.",
+            html: "Click 'Confirm' button to ADD ITEMS via uploading import file; otherwise, click 'Cancel' button to select a different file.",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -470,7 +470,7 @@ $(document).on('click', '#btnSubmit', function(){
     if($('#btnSubmit').val() == 'SUBMIT'){
         Swal.fire({
             title: "ADD NEW WARRANTY?",
-            text: "You are about to ADD this new warranty!",
+            html: "You are about to ADD this new warranty!",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -510,7 +510,7 @@ $(document).on('click', '#btnSubmit', function(){
     else{
         Swal.fire({
             title: "UPDATE WARRANTY?",
-            text: "You are about to UPDATE this warranty!",
+            html: "You are about to UPDATE this warranty!",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -600,7 +600,7 @@ $('#btnSaveItem').on('click', function(){
     }
     Swal.fire({
         title: "ADD NEW ITEM?",
-        text: "You are about to ADD this new item!",
+        html: "You are about to ADD this new item!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -748,7 +748,7 @@ $('#btnUpdateItem').on('click', function(){
     }
     Swal.fire({
         title: "UPDATE ITEM?",
-        text: "You are about to UPDATE this item!",
+        html: "You are about to UPDATE this item!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -851,7 +851,7 @@ $('#btnSaveCategory').on('click', function(){
     if(category != ""){
         Swal.fire({
             title: "ADD NEW CATEGORY?",
-            text: "You are about to ADD this new category!",
+            html: "You are about to ADD this new category!",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -961,7 +961,7 @@ $('#btnUpdateCategory').on('click', function(){
     else{
         Swal.fire({
             title: "UPDATE CATEGORY?",
-            text: "You are about to UPDATE this category!",
+            html: "You are about to UPDATE this category!",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -1053,7 +1053,7 @@ $('#btnSaveLocation').on('click', function(){
     if(location_name != ""){
         Swal.fire({
             title: "REQUEST NEW LOCATION?",
-            text: "You are about to REQUEST a new location!",
+            html: "You are about to REQUEST a new location!",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -1188,7 +1188,7 @@ $('#btnUpdateLocation').on('click', function(){
     if(location_original == location_details && status != status_original){
         Swal.fire({
             title: "REQUEST STATUS CHANGE?",
-            text: "You are about to request a STATUS CHANGE to this location!",
+            html: "You are about to request a STATUS CHANGE to this location!",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -1265,7 +1265,7 @@ $('#btnUpdateLocation').on('click', function(){
     else{
         Swal.fire({
             title: "UPDATE LOCATION NAME?",
-            text: "You are about to UPDATE this location!",
+            html: "You are about to UPDATE this location!",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -1497,7 +1497,7 @@ $('#btnSave').on('click', function(){
     var minimum = $('#aic_minimum').val();
     Swal.fire({
         title: "CREATE NEW ASSEMBLED ITEM?",
-        text: "You are about to CREATE a new Assembled Item!",
+        html: "You are about to CREATE a new Assembled Item!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -1692,7 +1692,7 @@ $('#btnUpdate').on('click', function(){
     var minimum = $.trim($('#aim_minimum_details').val());
     Swal.fire({
         title: "UPDATE ASSEMBLED ITEM?",
-        text: "You are about to UPDATE this Assembled Item!",
+        html: "You are about to UPDATE this Assembled Item!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',

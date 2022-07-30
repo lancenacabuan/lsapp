@@ -31,7 +31,7 @@ function copyReqNum(){
     navigator.clipboard.writeText(copyText.value);
     Swal.fire({
         title: copyText.value,
-        text: "Copied to Clipboard!",
+        html: "Copied to Clipboard!",
         icon: "success",
         timer: 2000
     });
@@ -359,7 +359,7 @@ $('#btnSave').on('click', function(){
     else{
         Swal.fire({
             title: "SUBMIT MERCHANT STOCK REQUEST?",
-            text: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
+            html: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button.",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',
@@ -1386,7 +1386,7 @@ $('.btnReceive').on('click', function(){
     }
     Swal.fire({
         title: "RECEIVE MERCHANT STOCK REQUEST?",
-        text: "You are about to RECEIVE this Merchant Stock Request!",
+        html: "You are about to RECEIVE this Merchant Stock Request!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',

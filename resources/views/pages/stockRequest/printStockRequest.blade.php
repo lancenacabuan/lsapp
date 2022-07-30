@@ -623,7 +623,7 @@ $(document).on('click', '#btnPrint', function(){
 $(document).on('click', '#btnSavePDF', function(){
     Swal.fire({
         title: "SAVE AS PDF?",
-        text: "You are about to SAVE this Stock Request as PDF!",
+        html: "You are about to SAVE this Stock Request as PDF!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',

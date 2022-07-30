@@ -105,7 +105,7 @@ function copyTicketNum(){
     navigator.clipboard.writeText(copyText.value);
     Swal.fire({
         title: copyText.value,
-        text: "Copied to Clipboard!",
+        html: "Copied to Clipboard!",
         icon: "success",
         timer: 2000
     });
@@ -204,7 +204,7 @@ $('#btnSupport').on('click', function(){
     }
     Swal.fire({
         title: "SUBMIT REPORT?",
-        text: "You are about to REPORT a suggested feature, issue, error, or bug to the technical support team!",
+        html: "You are about to REPORT a suggested feature, issue, error, or bug to the technical support team!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -304,7 +304,7 @@ $('#btnChangePassword').on('click', function(){
                     if(data == 'true'){
                         Swal.fire({
                             title: "CHANGE PASSWORD?",
-                            text: "You are about to CHANGE your current user account password!",
+                            html: "You are about to CHANGE your current user account password!",
                             icon: "warning",
                             showCancelButton: true,
                             cancelButtonColor: '#3085d6',

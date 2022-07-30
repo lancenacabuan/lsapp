@@ -525,7 +525,7 @@ $('#btnEdit').on('click', function(){
     }
     Swal.fire({
         title: "Confirm Serial: "+newserial+'?',
-        text: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
+        html: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: '#3085d6',
@@ -555,7 +555,7 @@ $('#btnEdit').on('click', function(){
                         $('#loading').hide();
                         Swal.fire({
                             title: "EDIT SUCCESS",
-                            text: "Item Serial edited successfully!",
+                            html: "Item Serial edited successfully!",
                             icon: "success",
                             timer: 2000
                         });
@@ -565,7 +565,7 @@ $('#btnEdit').on('click', function(){
                         $('#loading').hide();
                         Swal.fire({
                             title: "DUPLICATE SERIAL",
-                            text: "Serial already exists!",
+                            html: "Serial already exists!",
                             icon: "error",
                             timer: 2000
                         });
@@ -575,7 +575,7 @@ $('#btnEdit').on('click', function(){
                         $('#loading').hide();
                         Swal.fire({
                             title: "EDIT FAILED",
-                            text: "Item Serial edit failed!",
+                            html: "Item Serial edit failed!",
                             icon: "error",
                             timer: 2000
                         });
@@ -700,7 +700,7 @@ $('#btnSave').on('click', function(){
             }
             Swal.fire({
                 title: "Are you really sure all details are entered correctly?",
-                text: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
+                html: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
                 icon: "warning",
                 showCancelButton: true,
                 cancelButtonColor: '#3085d6',
@@ -763,7 +763,7 @@ $('#btnSave').on('click', function(){
         if(qty > 0 && category && item && location_id){
             Swal.fire({
                 title: "Are you really sure all details are entered correctly?",
-                text: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
+                html: "Click 'Confirm' button to submit; otherwise, click 'Cancel' button to review details.",
                 icon: "warning",
                 showCancelButton: true,
                 cancelButtonColor: '#3085d6',
@@ -890,7 +890,7 @@ $('#btnUpload').on('click', function(){
     else{
         Swal.fire({
             title: "UPLOAD FILE IMPORT?",
-            text: "Click 'Confirm' button to ADD STOCKS via uploading import file; otherwise, click 'Cancel' button to select a different file.",
+            html: "Click 'Confirm' button to ADD STOCKS via uploading import file; otherwise, click 'Cancel' button to select a different file.",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#3085d6',

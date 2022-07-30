@@ -9,9 +9,9 @@
             <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
             <div class="form-inline">
                 <label class="form-control form-control-sm" style="width: 85px;">Item Code</label>
-                <input class="form-control form-control-sm" style="width: 215px; margin-right: 10px;" name="aic_item_code" id="aic_item_code" maxlength="100" placeholder="Please enter item code" required>
+                <input class="form-control form-control-sm" style="width: 215px; margin-right: 10px;" name="aic_item_code" id="aic_item_code" maxlength="100" placeholder="Please enter item code" type="search" required>
                 <label class="form-control form-control-sm" style="width: 120px;">Item Description</label>
-                <input class="form-control form-control-sm" style="width: 477px; margin-right: 10px;" name="aic_item_description" id="aic_item_description" maxlength="255" placeholder="Please enter assembled item description to proceed" required>
+                <input class="form-control form-control-sm" style="width: 477px; margin-right: 10px;" name="aic_item_description" id="aic_item_description" maxlength="255" placeholder="Please enter assembled item description to proceed" type="search" required>
                 <label class="form-control form-control-sm" style="width: 110px;">Minimum Stock</label>
                 <input class="form-control form-control-sm" style="width: 80px;" name="aic_minimum" id="aic_minimum" type="number" min="1" placeholder="Qty" onkeyup="if(value<1) value=1;" required>
             </div>

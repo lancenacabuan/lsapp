@@ -11,7 +11,7 @@
                     <div class="form-group row">
                         <label for="warranty" class="col-md-5 col-form-label text-md-right" style="margin-top: -5px;">{{ __('Warranty') }}</label>
                         <div class="col-md-5">
-                            <input id="warranty" type="text" class="form-control form-control-sm" name="warranty" style="color: black;" placeholder="Enter warranty name" autocomplete="off" required>
+                            <input id="warranty" type="search" class="form-control form-control-sm" name="warranty" style="color: black;" placeholder="Enter warranty name" autocomplete="off" required>
                         </div>
                     </div>
                     <div class="form-group row" style="margin-top: -10px;">

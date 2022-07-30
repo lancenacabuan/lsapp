@@ -26,11 +26,11 @@
             </div>
             <div class="form-inline" style="margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 168px;">Item Code</label>
-                <input class="form-control form-control-sm" id="prodcode_details" style="width: 600px;" type="text" maxlength="255" placeholder="Please enter item code">
+                <input class="form-control form-control-sm" id="prodcode_details" style="width: 600px;" type="search" maxlength="255" placeholder="Please enter item code">
             </div>
             <div class="form-inline" style="margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 168px;">Item Description</label>
-                <input class="form-control form-control-sm" id="item_name_details" style="width: 600px;" type="text" maxlength="255" placeholder="Please enter item description">
+                <input class="form-control form-control-sm" id="item_name_details" style="width: 600px;" type="search" maxlength="255" placeholder="Please enter item description">
             </div>
             <div class="form-inline" style="margin-top: 10px;">
                 <label class="form-control form-control-sm" style="width: 168px;">Minimum Stock</label>

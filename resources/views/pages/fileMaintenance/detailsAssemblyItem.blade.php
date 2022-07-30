@@ -13,9 +13,9 @@
             <input type="hidden" name="aim_minimum_details_original" id="aim_minimum_details_original">
             <div class="form-inline">
                 <label class="form-control form-control-sm" style="width: 85px;">Item Code</label>
-                <input class="form-control form-control-sm" style="width: 215px; margin-right: 10px;" name="aim_item_code_details" id="aim_item_code_details" maxlength="100" placeholder="Please enter item code" required>
+                <input class="form-control form-control-sm" style="width: 215px; margin-right: 10px;" name="aim_item_code_details" id="aim_item_code_details" maxlength="100" placeholder="Please enter item code" type="search" required>
                 <label class="form-control form-control-sm" style="width: 120px;">Item Description</label>
-                <input class="form-control form-control-sm" style="width: 477px; margin-right: 10px;" name="aim_item_name_details" id="aim_item_name_details" maxlength="255" placeholder="Please enter assembled item description to proceed" required>
+                <input class="form-control form-control-sm" style="width: 477px; margin-right: 10px;" name="aim_item_name_details" id="aim_item_name_details" maxlength="255" placeholder="Please enter assembled item description to proceed" type="search" required>
                 <label class="form-control form-control-sm" style="width: 110px;">Minimum Stock</label>
                 <input class="form-control form-control-sm" style="width: 80px;" name="aim_minimum_details" id="aim_minimum_details" type="number" min="1" placeholder="Qty" onkeyup="if(value<1) value=1;" required>
             </div>

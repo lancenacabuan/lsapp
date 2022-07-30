@@ -1265,7 +1265,7 @@ $(document).on('click', '#btnSaveChanges', function(){
                                         $('#loading').show();
                                         $.ajax({
                                             type: 'post',
-                                            url: '/asset_logSave',
+                                            url: '/asset/logSave',
                                             headers:{
                                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                             },

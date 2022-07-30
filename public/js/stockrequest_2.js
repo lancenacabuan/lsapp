@@ -3129,8 +3129,8 @@ $(document).ready(function(){
         url = window.location.search;
         reqnum = url.replace('?submit=', '');
         $.ajax({
-            type:'post',
-            url:'/logSave',
+            type: 'post',
+            url: '/logSave',
             headers:{
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -3161,8 +3161,8 @@ $(document).ready(function(){
         var url = new URL(window.location.href);
         var reqnum = url.searchParams.get("asset");
         $.ajax({
-            type:'post',
-            url:'/asset/logSave',
+            type: 'post',
+            url: '/asset/logSave',
             headers:{
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -3200,8 +3200,8 @@ $(document).ready(function(){
         var reqtype = url.searchParams.get("reqtype");
         if(reqtype == 7){
             $.ajax({
-                type:'post',
-                url:'/asset_logSave',
+                type: 'post',
+                url: '/asset/logSave',
                 headers:{
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -3231,8 +3231,8 @@ $(document).ready(function(){
         }
         else{
             $.ajax({
-                type:'post',
-                url:'/logSave',
+                type: 'post',
+                url: '/logSave',
                 headers:{
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -3265,8 +3265,8 @@ $(document).ready(function(){
         url = window.location.search;
         reqnum = url.replace('?sale=', '');
         $.ajax({
-            type:'post',
-            url:'/logSold',
+            type: 'post',
+            url: '/logSold',
             headers:{
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

@@ -1218,6 +1218,7 @@ $(document).on('click', '#btnSaveChanges', function(){
                     warntext = ' <br><strong style="color: red;">WARNING: Requester Email Address is not verified! CONTINUE?</strong>';
                 }
             }
+            $('#loading').hide();
             Swal.fire({
                 title: "EDIT STOCK REQUEST DETAILS?",
                 html: "Please review the details of your request. Click 'Confirm' button to submit; otherwise, click 'Cancel' button."+warntext,
